@@ -58,27 +58,30 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="VLab.CSharp.Plugins.csproj">
+      <Project>{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}</Project>
+      <Name>VLab.CSharp.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\Init.cs" />
     <Compile Include="Assets\NetSyncBase.cs" />
     <Compile Include="Assets\Quad.cs" />
+    <Compile Include="Assets\VLIO.cs" />
     <Compile Include="Assets\VLNet.cs" />
     <Compile Include="Assets\VLPlayer.cs" />
     <Compile Include="Assets\exlogictest.cs" />
     <Compile Include="Assets\player.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Plugins\YamlDotNet\Readme.txt" />
+    <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
     <None Include="Assets\color.shader" />
     <None Include="Assets\grating.shader" />
   </ItemGroup>
