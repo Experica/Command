@@ -4,6 +4,8 @@ using System.Collections;
 
 [NetworkSettings(channel =0,sendInterval =0)]
 public class NetSyncBase : NetworkBehaviour {
+    [SyncVar(hook = "OnVisible")]
+    public bool visible = true;
     [SyncVar(hook ="OnOri")]
     public float ori=0;
     [SyncVar(hook ="OnWidth")]
@@ -14,6 +16,11 @@ public class NetSyncBase : NetworkBehaviour {
     public float height = 1;
     [SyncVar(hook ="OnPosition")]
     public Vector3 position=new Vector3();
+
+    public virtual void OnVisible(bool v)
+    {
+        GetComponent<Renderer>().enabled = v;
+    }
 
     public virtual void OnOri(float o)
     {

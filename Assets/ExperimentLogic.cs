@@ -8,6 +8,7 @@ using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 public class Subject
 {
@@ -74,7 +75,8 @@ public class ConditionManager
     public Dictionary<string, List<object>> cond;
     public SampleMethod samplemethod = SampleMethod.Ascending;
     public int scendingstep = 1;
-    public int idx;
+    public int condidx;
+    public EnvironmentManager envmanager = new EnvironmentManager();
     
 
     public List<int> SubCondIdx;
@@ -92,27 +94,39 @@ public class ConditionManager
         var nc = cond.Values.First().Count;
         
         SubCondIdx = Enumerable.Range(0, nc).ToList();
-        idx = -1;
+        condidx = -1;
     }
 
 
 
-    public int NextCondIdx
+    public int NextCondIdx()
     {
-        get
-        {
             switch (samplemethod)
             {
                 case SampleMethod.Ascending:
-                    idx += scendingstep;
-                    if (idx > SubCondIdx.Count-1)
-                        idx -=SubCondIdx.Count;
-                    return SubCondIdx[idx];
+                    condidx += scendingstep;
+                    if (condidx > SubCondIdx.Count-1)
+                        condidx -=SubCondIdx.Count;
+                    return SubCondIdx[condidx];
                 default:
                     return -1;
             }
+    }
+
+    public void PushCondition(int idx)
+    {
+        foreach(var kv in cond)
+        {
+            envmanager.SetParam(kv.Key, kv.Value[condidx]);
         }
     }
+
+    public void PushNextCondition()
+    {
+        condidx = NextCondIdx();
+        PushCondition(condidx);
+    }
+
 }
 
 public class CondTestManager
@@ -175,8 +189,57 @@ public class CondTestManager
 
 public class EnvironmentManager
 {
-    public string name;
-    public float time;
+    public Scene scene;
+    public Dictionary<string, GameObject> sceneobjects=new Dictionary<string, GameObject>();
+    public Camera maincamera;
+    public NetSyncBase target;
+    public NetSyncBase figure;
+    public Dictionary<string, NetSyncBase> netobjects;
+    public Dictionary<string, Dictionary<string,object>> noparams;
+
+    public void AddScene(string scenename)
+    {
+        scene = SceneManager.GetSceneByName(scenename);
+        RefreshSceneInfo();
+    }
+
+    public void RefreshSceneInfo()
+    {
+        sceneobjects.Clear();
+        foreach (var o in scene.GetRootGameObjects())
+        {
+            sceneobjects[o.name] = o;
+            if (o.tag == "MainCamara")
+            {
+                maincamera = o.GetComponent<Camera>();
+            }
+            var nsb = o.GetComponent<NetSyncBase>();
+            if (nsb)
+            {
+                netobjects[o.name] = nsb;
+                var ps = nsb.GetType().GetFields(BindingFlags.Public);
+                foreach(var p in ps)
+                {
+                    if (p.Attributes.ToString()=="[SyncVar]")
+                    {
+                        noparams[o.name][p.Name] = p;
+                    }
+                }
+            }
+        }
+    }
+
+    public void SetParam(string param, object value)
+    {
+        var nsb = netobjects.Values.First();
+        var f = (FieldInfo)noparams[netobjects.Keys.First()][param];
+        f.SetValue(nsb, value);
+    }
+
+    public void SetMainCameraOrthoSize(float screenhalfheight, float screentoeye)
+    {
+        maincamera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(screenhalfheight, screentoeye);
+    }
 }
 
 
@@ -187,9 +250,9 @@ public class ExperimentLogic : MonoBehaviour
     public EXSTATE exstate;
     public bool isplayercontrol;
 
+    public EnvironmentManager envmanager = new EnvironmentManager();
     public ConditionManager condmanager = new ConditionManager();
     public CondTestManager condtestmanager = new CondTestManager();
-    public int condidx;
     
     public double PreICIOnTime, CondOnTime, SufICIOnTime;
 
@@ -198,16 +261,14 @@ public class ExperimentLogic : MonoBehaviour
     {
         set
         {
-            
             condstate = value;
             switch(condstate)
             {
                 case CONDSTATE.PREICI:
                     condtestmanager.NewCondTest();
-                    condidx = condmanager.NextCondIdx;
-                    PushCondition(condidx);
+                    condmanager.PushNextCondition();
                     PreICIOnTime = timer.ElapsedSeconds;
-                    condtestmanager.Append("CondIdx", condidx);
+                    condtestmanager.Append("CondIdx", condmanager.condidx);
                     condtestmanager.AddEvent(typeof(CONDSTATE).ToString(),condstate.ToString(), PreICIOnTime);
                     break;
                 case CONDSTATE.COND:
@@ -223,27 +284,17 @@ public class ExperimentLogic : MonoBehaviour
         get { return condstate; }
     }
 
-
-    public Camera maincamera;
-    public GameObject player;
-    public NetSyncBase visualobject;
-
-
     // Use this for initialization
     void Start()
     {
         Init();
         //StartPlayer();
+        
         ex.cond = condmanager.ReadCondition("cond.yaml");
         ex.condtest = condtestmanager.condtest;
         UnityEngine.Debug.Log(Timer.IsHighResolution);
     }
 
-    
-    public void PushCondition(int condidx)
-    {
-
-    }
 
     public void PushValue(string obj,string param, object value)
     {
@@ -254,8 +305,7 @@ public class ExperimentLogic : MonoBehaviour
 
     public virtual void OnSceneChange(string sceneName)
     {
-        maincamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        player = GameObject.Find("Player");
+        envmanager.AddScene(sceneName);
     }
     public virtual void Init()
     {
@@ -272,12 +322,7 @@ public class ExperimentLogic : MonoBehaviour
         if (exstate == EXSTATE.Start)
         {
             exstate = EXSTATE.Stop;
-            var t = new EnvironmentManager
-            {
-                name = "a",
-                time = 0.1f
-            };
-            VLIO.WriteYaml("condtest.yaml", t);
+            VLIO.WriteYaml("condtest.yaml", ex.condtest);
         }
         else
         {
@@ -289,6 +334,7 @@ public class ExperimentLogic : MonoBehaviour
     {
         UnityEngine.Debug.Log(isplayercontrol);
         isplayercontrol = !isplayercontrol;
+        Cursor.visible = false;
 
     }
     // Update is called once per frame
@@ -304,16 +350,16 @@ public class ExperimentLogic : MonoBehaviour
         if (isplayercontrol)
         {
             UnityEngine.Debug.Log(ex.cond["ori"][0]);
-            if (visualobject)
+            if (envmanager.figure)
             {
                 float r = System.Convert.ToSingle(Input.GetButton("Fire1"));
                 float r1 = System.Convert.ToSingle(Input.GetButton("Fire2"));
-                visualobject.ori += r - r1;
-                visualobject.length += 0.1f * Input.GetAxis("Horizontal");
-                visualobject.width += 0.1f * Input.GetAxis("Vertical");
-                var p = maincamera.ScreenToWorldPoint(Input.mousePosition);
-                p.z = visualobject.transform.position.z;
-                visualobject.position = p;
+                envmanager.figure.ori += r - r1;
+                envmanager.figure.length += 0.1f * Input.GetAxis("Horizontal");
+                envmanager.figure.width += 0.1f * Input.GetAxis("Vertical");
+                var p = envmanager.maincamera.ScreenToWorldPoint(Input.mousePosition);
+                p.z = envmanager.figure.transform.position.z;
+                envmanager.figure.position = p;
             }
         }
 

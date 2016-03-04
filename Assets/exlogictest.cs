@@ -8,22 +8,17 @@ public class exlogictest : ExperimentLogic {
         ex.sufICI = 0.1;
         timer.Start();
     }
-    public override void OnSceneChange(string sceneName)  {
-        base.OnSceneChange(sceneName);
-        visualobject = GameObject.Find("Quad").GetComponent<NetSyncBase>();
-        //visualobject.GetComponent<Renderer>().enabled = false;
-    }
     public override void Logic()   {
         switch(CondState)
         {
             case CONDSTATE.CONDNONE:
-                visualobject.GetComponent<Renderer>().enabled = false;
+                envmanager.figure.visible = false;
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (timer.ElapsedSeconds - PreICIOnTime >= ex.preICI)
                 {
-                    visualobject.GetComponent<Renderer>().enabled = true;
+                    envmanager.figure.visible = true;
                     CondState = CONDSTATE.COND;
                 }
                 
@@ -31,7 +26,7 @@ public class exlogictest : ExperimentLogic {
             case CONDSTATE.COND:
                 if (timer.ElapsedSeconds - CondOnTime >= ex.conddur)
                 {
-                    visualobject.GetComponent<Renderer>().enabled = false;
+                    envmanager.figure.visible = false;
                     CondState = CONDSTATE.SUFICI;
                 }
                 break;
@@ -42,13 +37,6 @@ public class exlogictest : ExperimentLogic {
                 }
                 break;
         }
-        //if (player)
-        //{
-        //    if (player.activeInHierarchy)
-        //    {
-        //        player.SetActive(false);
-        //    }
-        //}
 
         //if (!experiment.timer.IsRunning)
         //{
