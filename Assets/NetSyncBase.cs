@@ -24,20 +24,21 @@ public class NetSyncBase : NetworkBehaviour {
 
     public virtual void OnOri(float o)
     {
-        ori = o;
-        transform.Rotate(0, 0, ori);
+        Debug.Log(o);
+        //ori = o;
+        transform.Rotate(0, 0, o);
     }
 
     public virtual void OnWidth(float w)
     {
-        width = w;
-        transform.localScale = new Vector3(length, width, height);
+        //width = w;
+        transform.localScale = new Vector3(length, w, height);
     }
 
     public virtual void OnLength(float l)
     {
-        length = l;
-        transform.localScale = new Vector3(length, width, height);
+        //length = l;
+        transform.localScale = new Vector3(l, width, height);
     }
 
     public virtual void OnHeight(float h)

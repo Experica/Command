@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
 using System.Diagnostics;
+using System;
 using System.IO;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
@@ -64,50 +66,50 @@ public enum CONDSTATE
 
 public enum SampleMethod
 {
-    Ascending=0,
-    Descending=1,
-    RandomWithReplacement=2,
-    RandomWithoutReplacement=3
+    Ascending = 0,
+    Descending = 1,
+    UniformWithReplacement = 2,
+    UniformWithoutReplacement = 3
 }
 
 public class ConditionManager
 {
     public Dictionary<string, List<object>> cond;
+    public List<int> popcondidx;
+    public int sampleidx=-1;
+    public int condidx=-1;
     public SampleMethod samplemethod = SampleMethod.Ascending;
     public int scendingstep = 1;
-    public int condidx;
     public EnvironmentManager envmanager = new EnvironmentManager();
     
-
-    public List<int> SubCondIdx;
-
 
     public Dictionary<string, List<object>> ReadCondition(string path)
     {
         cond = VLIO.ReadYaml<Dictionary<string, List<object>>>(path);
-        Init();
         return cond;
     }
 
-    private void Init()
+    public List<int> UpdateCondPopulation()
     {
         var nc = cond.Values.First().Count;
         
-        SubCondIdx = Enumerable.Range(0, nc).ToList();
-        condidx = -1;
+        popcondidx = Enumerable.Range(0, nc).ToList();
+        sampleidx = -1;
+        return popcondidx;
     }
 
 
 
-    public int NextCondIdx()
+    public int SampleCondIdx()
     {
             switch (samplemethod)
             {
                 case SampleMethod.Ascending:
-                    condidx += scendingstep;
-                    if (condidx > SubCondIdx.Count-1)
-                        condidx -=SubCondIdx.Count;
-                    return SubCondIdx[condidx];
+                    sampleidx += scendingstep;
+                    if (sampleidx > popcondidx.Count-1)
+                        sampleidx -=popcondidx.Count;
+                    condidx = popcondidx[sampleidx];
+                return condidx;
                 default:
                     return -1;
             }
@@ -117,14 +119,13 @@ public class ConditionManager
     {
         foreach(var kv in cond)
         {
-            envmanager.SetParam(kv.Key, kv.Value[condidx]);
+            envmanager.SetParam(kv.Key, kv.Value[idx]);
         }
     }
 
-    public void PushNextCondition()
+    public void SamplePushCondition()
     {
-        condidx = NextCondIdx();
-        PushCondition(condidx);
+        PushCondition(SampleCondIdx());
     }
 
 }
@@ -194,22 +195,25 @@ public class EnvironmentManager
     public Camera maincamera;
     public NetSyncBase target;
     public NetSyncBase figure;
-    public Dictionary<string, NetSyncBase> netobjects;
-    public Dictionary<string, Dictionary<string,object>> noparams;
+    public Dictionary<string, NetSyncBase> netobjects = new Dictionary<string, NetSyncBase>();
+    public Dictionary<string, Dictionary<string,object>> noparams=new Dictionary<string, Dictionary<string, object>>();
 
     public void AddScene(string scenename)
     {
+        SceneManager.GetActiveScene();
         scene = SceneManager.GetSceneByName(scenename);
-        RefreshSceneInfo();
+        UpdateEnvironment();
     }
 
-    public void RefreshSceneInfo()
+    public void UpdateEnvironment()
     {
         sceneobjects.Clear();
+        netobjects.Clear();
+        noparams.Clear();
         foreach (var o in scene.GetRootGameObjects())
         {
             sceneobjects[o.name] = o;
-            if (o.tag == "MainCamara")
+            if (o.tag == "MainCamera")
             {
                 maincamera = o.GetComponent<Camera>();
             }
@@ -217,23 +221,54 @@ public class EnvironmentManager
             if (nsb)
             {
                 netobjects[o.name] = nsb;
-                var ps = nsb.GetType().GetFields(BindingFlags.Public);
+                var ps = nsb.GetType().GetFields();
                 foreach(var p in ps)
                 {
-                    if (p.Attributes.ToString()=="[SyncVar]")
+                    var ttt = p.IsDefined(typeof(SyncVarAttribute),true);
+                    var atts = p.GetCustomAttributes(true);
+                    foreach(var a in atts)
                     {
-                        noparams[o.name][p.Name] = p;
+                        if (a.GetType() == typeof(SyncVarAttribute))
+                        {
+                            var aa = (SyncVarAttribute)a;
+                            //aa.
+                            if (noparams.ContainsKey(o.name))
+                            {
+                                noparams[o.name][p.Name] = p;
+                            }
+                            else
+                            {
+                                var pv = new Dictionary<string, object>();
+                                pv[p.Name] = p;
+                                noparams[o.name] = pv;
+
+                            }
+                        }
                     }
                 }
             }
         }
+        figure = netobjects.Values.First();
     }
 
     public void SetParam(string param, object value)
     {
         var nsb = netobjects.Values.First();
-        var f = (FieldInfo)noparams[netobjects.Keys.First()][param];
-        f.SetValue(nsb, value);
+        var f = (FieldInfo)noparams[nsb.name][param];
+        object v=null;
+        if (f.FieldType == typeof(float))
+        {
+            v = float.Parse((string)value);
+        }
+        //UnityEngine.Debug.Log("--------before-----------");
+        //UnityEngine.Debug.Log(nsb.ori);
+        //f.SetValue(nsb, v);
+        //nsb.ori = (float)v;
+        var a= (SyncVarAttribute)f.GetCustomAttributes(typeof(SyncVarAttribute), true)[0];
+        nsb.GetType().GetMethod(a.hook).Invoke(nsb, new object[] { v});
+
+        //UnityEngine.Debug.Log("--------after-----------");
+        //UnityEngine.Debug.Log(nsb.ori);
     }
 
     public void SetMainCameraOrthoSize(float screenhalfheight, float screentoeye)
@@ -266,7 +301,7 @@ public class ExperimentLogic : MonoBehaviour
             {
                 case CONDSTATE.PREICI:
                     condtestmanager.NewCondTest();
-                    condmanager.PushNextCondition();
+                    condmanager.SamplePushCondition();
                     PreICIOnTime = timer.ElapsedSeconds;
                     condtestmanager.Append("CondIdx", condmanager.condidx);
                     condtestmanager.AddEvent(typeof(CONDSTATE).ToString(),condstate.ToString(), PreICIOnTime);
@@ -295,17 +330,12 @@ public class ExperimentLogic : MonoBehaviour
         UnityEngine.Debug.Log(Timer.IsHighResolution);
     }
 
-
-    public void PushValue(string obj,string param, object value)
-    {
-
-    }
-
     
 
     public virtual void OnSceneChange(string sceneName)
     {
         envmanager.AddScene(sceneName);
+        condmanager.envmanager = envmanager;
     }
     public virtual void Init()
     {
@@ -327,6 +357,7 @@ public class ExperimentLogic : MonoBehaviour
         else
         {
             exstate = EXSTATE.Start;
+            condmanager.UpdateCondPopulation();
         }
         
     }
