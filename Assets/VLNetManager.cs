@@ -2,7 +2,8 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class VLNet : NetworkManager {
+public class VLNetManager : NetworkManager
+{
     public ExperimentLogic exlogic;
     public override void OnServerSceneChanged(string sceneName)
     {
@@ -10,12 +11,14 @@ public class VLNet : NetworkManager {
         exlogic.OnSceneChange(sceneName);
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         exlogic = GameObject.FindObjectOfType<ExperimentLogic>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

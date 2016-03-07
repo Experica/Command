@@ -19,7 +19,7 @@ public class Subject
     public string id="";
     public string gender="";
     public float age;
-    //public Vector3 size=new Vector3();
+    public Vector3 size=new Vector3();
     public float weight;
 }
 
@@ -193,9 +193,9 @@ public class EnvironmentManager
     public Scene scene;
     public Dictionary<string, GameObject> sceneobjects=new Dictionary<string, GameObject>();
     public Camera maincamera;
-    public NetSyncBase target;
-    public NetSyncBase figure;
-    public Dictionary<string, NetSyncBase> netobjects = new Dictionary<string, NetSyncBase>();
+    public NetBehaviorBase target;
+    public NetBehaviorBase figure;
+    public Dictionary<string, NetBehaviorBase> netobjects = new Dictionary<string, NetBehaviorBase>();
     public Dictionary<string, Dictionary<string,object>> noparams=new Dictionary<string, Dictionary<string, object>>();
 
     public void AddScene(string scenename)
@@ -217,7 +217,7 @@ public class EnvironmentManager
             {
                 maincamera = o.GetComponent<Camera>();
             }
-            var nsb = o.GetComponent<NetSyncBase>();
+            var nsb = o.GetComponent<NetBehaviorBase>();
             if (nsb)
             {
                 netobjects[o.name] = nsb;
@@ -248,7 +248,14 @@ public class EnvironmentManager
                 }
             }
         }
-        figure = netobjects.Values.First();
+        foreach (var ao in netobjects.Values)
+        {
+            if (ao.isActiveAndEnabled)
+            {
+                figure = ao;
+                break;
+            }
+        }
     }
 
     public void SetParam(string param, object value)

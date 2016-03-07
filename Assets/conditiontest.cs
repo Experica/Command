@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
-public class exlogictest : ExperimentLogic {
+
+public class conditiontest : ExperimentLogic
+{
     // Use this for initialization
-    public override void Init() {
-        ex.conddur =0.1;
+    public override void Init()
+    {
+        ex.conddur = 0.5;
         ex.preICI = 0.1;
         ex.sufICI = 0.1;
         timer.Start();
     }
-    public override void Logic()   {
-        switch(CondState)
+    public override void Logic()
+    {
+        switch (CondState)
         {
             case CONDSTATE.CONDNONE:
                 envmanager.figure.visible = false;
@@ -21,7 +25,7 @@ public class exlogictest : ExperimentLogic {
                     envmanager.figure.visible = true;
                     CondState = CONDSTATE.COND;
                 }
-                
+
                 break;
             case CONDSTATE.COND:
                 if (timer.ElapsedSeconds - CondOnTime >= ex.conddur)
@@ -53,6 +57,12 @@ public class exlogictest : ExperimentLogic {
         //        ontime = experiment.timer.ElapsedSeconds;
         //    }
         //}
+
+
+        //GetComponent<Renderer>().material.SetColor("Color", new Color(0, 0, r2, 1));
+        //GetComponent<Renderer>().material.SetFloat("t", Time.timeSinceLevelLoad);
+        //GetComponent<Renderer>().material.SetFloat("ys", transform.localScale.y);
+        //GetComponent<Renderer>().material.SetFloat("sigma", 0.05f);
     }
-    
+
 }

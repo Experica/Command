@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class Quad : NetSyncBase {
+public class Quad : NetBehaviorBase {
 
 	// Use this for initialization
 	void Start () {
