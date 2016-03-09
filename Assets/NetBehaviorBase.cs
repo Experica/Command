@@ -10,11 +10,11 @@ public class NetBehaviorBase : NetworkBehaviour
     [SyncVar(hook = "OnPosition")]
     public Vector3 position = new Vector3();
     [SyncVar(hook = "OnOri")]
-    public float width = 1;
-    [SyncVar(hook = "OnLength")]
     public float ori = 0;
-    [SyncVar(hook = "OnWidth")]
+    [SyncVar(hook = "OnLength")]
     public float length = 1;
+    [SyncVar(hook = "OnWidth")]
+    public float width = 1;
     [SyncVar(hook = "OnHeight")]
     public float height = 1;
     [SyncVar(hook = "OnColor")]
@@ -35,9 +35,7 @@ public class NetBehaviorBase : NetworkBehaviour
 
     public virtual void OnOri(float o)
     {
-        Debug.Log(o);
-        //ori = o;
-        transform.Rotate(0, 0, o);
+        transform.eulerAngles = new Vector3(0, 0, o);
         ori = o;
     }
 

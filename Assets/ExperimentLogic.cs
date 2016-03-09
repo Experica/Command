@@ -14,10 +14,11 @@ using System.Reflection;
 
 public class Subject
 {
-    public string species="";
-    public string name="";
-    public string id="";
-    public string gender="";
+    public string species;
+    public string name;
+    public string id;
+    public string log;
+    public string gender;
     public float age;
     public Vector3 size=new Vector3();
     public float weight;
@@ -28,9 +29,16 @@ public class Experiment
     public string name;
     public string id;
     public string experimenter;
+    public string log;
     public Subject subject = new Subject();
+    public string condpath;
     public Dictionary<string, List<object>> cond;
+    public string condtestpath;
     public Dictionary<string, List<object>> condtest;
+    public string environmentpath;
+    public List<object> environment;
+    public string experimentlogicpath;
+    public string experimentlogic;
 
     public int nblock, ntrial, ncondtest,blockn,trialn,condtestn;
     public double preIBI, blockdur, sufIBI, preITI, trialdur, sufITI, preICI, conddur, sufICI;
@@ -50,19 +58,45 @@ public class Timer : Stopwatch
     }
 }
 
-public enum EXSTATE
-{
-    Stop = 0,
-    Start = 1
-}
 
 public enum CONDSTATE
 {
     CONDNONE = 0,
-    PREICI = 1,
-    COND = 2,
-    SUFICI = 3    
+    PREICI=1,
+    COND=2,
+    SUFICI=3
 }
+
+public enum TRIALSTATE
+{
+    TRIALNONE=1000,
+    PREITI=1001,
+    TRIAL=1002,
+    SUFITI=1003
+}
+
+public enum BLOCKSTATE
+{
+    BLOCKNONE=2000,
+    PREIBI=2001,
+    BLOCK=2002,
+    SUFIBI=2003
+}
+
+public enum EXPERIMENTSTATE
+{
+    EXPERIMENTNONE=3000,
+    PREIEI=3001,
+    EXPERIMENT=3002,
+    SUFIEI=3003
+}
+
+public enum PUSHCONDATSTATE
+{
+    COND=2,
+    TRIAL=1002
+}
+
 
 public enum SampleMethod
 {
@@ -76,10 +110,10 @@ public class ConditionManager
 {
     public Dictionary<string, List<object>> cond;
     public List<int> popcondidx;
-    public int sampleidx=-1;
-    public int condidx=-1;
+    public int sampleidx = -1;
     public SampleMethod samplemethod = SampleMethod.Ascending;
     public int scendingstep = 1;
+    public int condidx = -1;
     public EnvironmentManager envmanager = new EnvironmentManager();
     
 
@@ -91,28 +125,32 @@ public class ConditionManager
 
     public List<int> UpdateCondPopulation()
     {
-        var nc = cond.Values.First().Count;
-        
-        popcondidx = Enumerable.Range(0, nc).ToList();
-        sampleidx = -1;
+        switch(samplemethod)
+        {
+            case SampleMethod.Ascending:
+                var nc = cond.Values.First().Count;
+
+                popcondidx = Enumerable.Range(0, nc).ToList();
+                sampleidx = -1;
+                break;
+            case SampleMethod.Descending:
+                break;
+        }
         return popcondidx;
     }
 
-
-
     public int SampleCondIdx()
     {
-            switch (samplemethod)
-            {
-                case SampleMethod.Ascending:
-                    sampleidx += scendingstep;
-                    if (sampleidx > popcondidx.Count-1)
-                        sampleidx -=popcondidx.Count;
-                    condidx = popcondidx[sampleidx];
-                return condidx;
-                default:
-                    return -1;
-            }
+        switch (samplemethod)
+        {
+            case SampleMethod.Ascending:
+                sampleidx += scendingstep;
+                if (sampleidx > popcondidx.Count - 1)
+                    sampleidx -= popcondidx.Count;
+                condidx = popcondidx[sampleidx];
+                break;
+        }
+        return condidx;
     }
 
     public void PushCondition(int idx)
@@ -127,6 +165,10 @@ public class ConditionManager
     {
         PushCondition(SampleCondIdx());
     }
+}
+
+public class ConditionDesigner
+{
 
 }
 
@@ -191,91 +233,86 @@ public class CondTestManager
 public class EnvironmentManager
 {
     public Scene scene;
-    public Dictionary<string, GameObject> sceneobjects=new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
+    public Dictionary<string, NetBehaviorBase> netbehavior = new Dictionary<string, NetBehaviorBase>();
+    public Dictionary<string, Dictionary<string, PropertyInfo>> syncvar = new Dictionary<string, Dictionary<string, PropertyInfo>>();
+
     public Camera maincamera;
-    public NetBehaviorBase target;
-    public NetBehaviorBase figure;
-    public Dictionary<string, NetBehaviorBase> netobjects = new Dictionary<string, NetBehaviorBase>();
-    public Dictionary<string, Dictionary<string,object>> noparams=new Dictionary<string, Dictionary<string, object>>();
+    public string activenetbehavior;
+    public NetBehaviorBase ActiveNetBehavior
+    {
+        get { return netbehavior[activenetbehavior]; }
+    }
+
 
     public void AddScene(string scenename)
     {
-        SceneManager.GetActiveScene();
         scene = SceneManager.GetSceneByName(scenename);
         UpdateEnvironment();
     }
 
     public void UpdateEnvironment()
     {
-        sceneobjects.Clear();
-        netobjects.Clear();
-        noparams.Clear();
-        foreach (var o in scene.GetRootGameObjects())
+        sceneobject.Clear();
+        netbehavior.Clear();
+        syncvar.Clear();
+        foreach (var go in scene.GetRootGameObjects())
         {
-            sceneobjects[o.name] = o;
-            if (o.tag == "MainCamera")
+            sceneobject[go.name] = go;
+            var ismaincamera = false;
+            if (go.tag == "MainCamera")
             {
-                maincamera = o.GetComponent<Camera>();
+                maincamera = go.GetComponent<Camera>();
+                ismaincamera = true;
             }
-            var nsb = o.GetComponent<NetBehaviorBase>();
-            if (nsb)
+            var nb = go.GetComponent<NetBehaviorBase>();
+            if (nb)
             {
-                netobjects[o.name] = nsb;
-                var ps = nsb.GetType().GetFields();
-                foreach(var p in ps)
+                netbehavior[go.name] = nb;
+                var fs = nb.GetType().GetFields();
+                foreach(var f in fs)
                 {
-                    var ttt = p.IsDefined(typeof(SyncVarAttribute),true);
-                    var atts = p.GetCustomAttributes(true);
-                    foreach(var a in atts)
+                    if (f.IsDefined(typeof(SyncVarAttribute), true))
                     {
-                        if (a.GetType() == typeof(SyncVarAttribute))
+                        if (syncvar.ContainsKey(go.name))
                         {
-                            var aa = (SyncVarAttribute)a;
-                            //aa.
-                            if (noparams.ContainsKey(o.name))
-                            {
-                                noparams[o.name][p.Name] = p;
-                            }
-                            else
-                            {
-                                var pv = new Dictionary<string, object>();
-                                pv[p.Name] = p;
-                                noparams[o.name] = pv;
-
-                            }
+                            syncvar[go.name][f.Name] = nb.GetType().GetProperty("Network" + f.Name);
+                        }
+                        else
+                        {
+                            var pv = new Dictionary<string, PropertyInfo>();
+                            pv[f.Name] = nb.GetType().GetProperty("Network" + f.Name);
+                            syncvar[go.name] = pv;
                         }
                     }
                 }
-            }
-        }
-        foreach (var ao in netobjects.Values)
-        {
-            if (ao.isActiveAndEnabled)
-            {
-                figure = ao;
-                break;
+                if (!ismaincamera && nb.isActiveAndEnabled)
+                {
+                    activenetbehavior = nb.name;
+                }
             }
         }
     }
 
     public void SetParam(string param, object value)
     {
-        var nsb = netobjects.Values.First();
-        var f = (FieldInfo)noparams[nsb.name][param];
+        NetBehaviorBase nb;
+        if(activenetbehavior!=null)
+        {
+            nb = netbehavior[activenetbehavior];
+        }
+        else
+        {
+            nb = netbehavior.Values.First();
+        }
+        var p = syncvar[nb.name][param];
+
         object v=null;
-        if (f.FieldType == typeof(float))
+        if (p.PropertyType == typeof(float))
         {
             v = float.Parse((string)value);
         }
-        //UnityEngine.Debug.Log("--------before-----------");
-        //UnityEngine.Debug.Log(nsb.ori);
-        //f.SetValue(nsb, v);
-        //nsb.ori = (float)v;
-        var a= (SyncVarAttribute)f.GetCustomAttributes(typeof(SyncVarAttribute), true)[0];
-        nsb.GetType().GetMethod(a.hook).Invoke(nsb, new object[] { v});
-
-        //UnityEngine.Debug.Log("--------after-----------");
-        //UnityEngine.Debug.Log(nsb.ori);
+        p.SetValue(nb, v, null);
     }
 
     public void SetMainCameraOrthoSize(float screenhalfheight, float screentoeye)
@@ -289,29 +326,63 @@ public class ExperimentLogic : MonoBehaviour
 {
     public Experiment ex = new Experiment();
     public Timer timer = new Timer();
-    public EXSTATE exstate;
-    public bool isplayercontrol;
 
     public EnvironmentManager envmanager = new EnvironmentManager();
     public ConditionManager condmanager = new ConditionManager();
     public CondTestManager condtestmanager = new CondTestManager();
-    
-    public double PreICIOnTime, CondOnTime, SufICIOnTime;
+
+    public bool islogicactive = false;
+    public bool usecondition = false;
+    public bool samplecondition = false;
+    public PUSHCONDATSTATE pushcondatstate = PUSHCONDATSTATE.COND;
+
+    public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
+        TrialOnTime, SufITIOnTime;
+
+    public double PreICIHold()
+    {
+        return timer.ElapsedSeconds - PreICIOnTime;
+    }
+
+    public double CondHold()
+    {
+        return timer.ElapsedSeconds - CondOnTime;
+    }
+
+    public double SufICIHold()
+    {
+        return timer.ElapsedSeconds - SufICIOnTime;
+    }
+
+    public double PreITIHold()
+    {
+        return timer.ElapsedSeconds - PreITIOnTime;
+    }
+
+    public double TrialHold()
+    {
+        return timer.ElapsedSeconds - TrialOnTime;
+    }
+
+    public double SufITIHold()
+    {
+        return timer.ElapsedSeconds - SufITIOnTime;
+    }
 
     private CONDSTATE condstate;
     public CONDSTATE CondState
     {
+        get { return condstate; }
         set
         {
-            condstate = value;
-            switch(condstate)
+            switch (value)
             {
                 case CONDSTATE.PREICI:
                     condtestmanager.NewCondTest();
                     condmanager.SamplePushCondition();
                     PreICIOnTime = timer.ElapsedSeconds;
                     condtestmanager.Append("CondIdx", condmanager.condidx);
-                    condtestmanager.AddEvent(typeof(CONDSTATE).ToString(),condstate.ToString(), PreICIOnTime);
+                    condtestmanager.AddEvent(typeof(CONDSTATE).ToString(), condstate.ToString(), PreICIOnTime);
                     break;
                 case CONDSTATE.COND:
                     CondOnTime = timer.ElapsedSeconds;
@@ -322,84 +393,130 @@ public class ExperimentLogic : MonoBehaviour
                     condtestmanager.AddEvent(typeof(CONDSTATE).ToString(), condstate.ToString(), SufICIOnTime);
                     break;
             }
+            condstate = value;
         }
-        get { return condstate; }
     }
 
-    // Use this for initialization
+    private TRIALSTATE trialstate;
+    public TRIALSTATE TrialState
+    {
+        get { return trialstate; }
+        set
+        {
+            trialstate = value;
+        }
+    }
+
+    private BLOCKSTATE blockstate;
+    public BLOCKSTATE BlockState
+    {
+        get { return blockstate; }
+        set
+        {
+            blockstate = value;
+        }
+    }
+
+    private EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.EXPERIMENTNONE;
+    public EXPERIMENTSTATE ExperimentState
+    {
+        get { return experimentstate; }
+        set
+        {
+            switch (value)
+            {
+                case EXPERIMENTSTATE.EXPERIMENTNONE:
+                    switch (experimentstate)
+                    {
+                        case EXPERIMENTSTATE.EXPERIMENT:
+                            VLIO.WriteYaml("condtest.yaml", ex.condtest);
+                            break;
+                    }
+                    break;
+                case EXPERIMENTSTATE.EXPERIMENT:
+                    switch (experimentstate)
+                    {
+                        case EXPERIMENTSTATE.EXPERIMENTNONE:
+                            condmanager.UpdateCondPopulation();
+                            break;
+                    }
+                    break;
+            }
+            experimentstate = value;
+        }
+    }
+
+    public void StartExperiment()
+    {
+        ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
+        islogicactive = true;
+    }
+
+    public void StopExperiment()
+    {
+        ExperimentState = EXPERIMENTSTATE.EXPERIMENTNONE;
+        islogicactive = false;
+    }
+
+
     void Start()
     {
-        Init();
+
         //StartPlayer();
-        
+
         ex.cond = condmanager.ReadCondition("cond.yaml");
         ex.condtest = condtestmanager.condtest;
         UnityEngine.Debug.Log(Timer.IsHighResolution);
+
+        Init();
     }
 
-    
-
-    public virtual void OnSceneChange(string sceneName)
-    {
-        envmanager.AddScene(sceneName);
-        condmanager.envmanager = envmanager;
-    }
     public virtual void Init()
     {
 
     }
-    public virtual void Logic()
-    {
 
+    public virtual void OnSceneChange(string scenename)
+    {
+        envmanager.AddScene(scenename);
+        condmanager.envmanager = envmanager;
     }
 
-    public void StartLogic()
-    {
-        UnityEngine.Debug.Log(exstate);
-        if (exstate == EXSTATE.Start)
-        {
-            exstate = EXSTATE.Stop;
-            VLIO.WriteYaml("condtest.yaml", ex.condtest);
-        }
-        else
-        {
-            exstate = EXSTATE.Start;
-            condmanager.UpdateCondPopulation();
-        }
-        
-    }
+    public bool isplayercontrol;
     public void StartPlayer()
     {
         UnityEngine.Debug.Log(isplayercontrol);
         isplayercontrol = !isplayercontrol;
-        Cursor.visible = false;
-
+        //Cursor.visible = false;
     }
-    // Update is called once per frame
+
+
     void Update()
     {
-        
-        if (exstate == EXSTATE.Start)
-        {
-            //UnityEngine.Debug.Log("uu");
-            Logic();
-        }
-
         if (isplayercontrol)
         {
             UnityEngine.Debug.Log(ex.cond["ori"][0]);
-            if (envmanager.figure)
+            if (envmanager.ActiveNetBehavior)
             {
                 float r = System.Convert.ToSingle(Input.GetButton("Fire1"));
                 float r1 = System.Convert.ToSingle(Input.GetButton("Fire2"));
-                envmanager.figure.ori += r - r1;
-                envmanager.figure.length += 0.1f * Input.GetAxis("Horizontal");
-                envmanager.figure.width += 0.1f * Input.GetAxis("Vertical");
+                envmanager.ActiveNetBehavior.ori += r - r1;
+                envmanager.ActiveNetBehavior.length += 0.1f * Input.GetAxis("Horizontal");
+                envmanager.ActiveNetBehavior.width += 0.1f * Input.GetAxis("Vertical");
                 var p = envmanager.maincamera.ScreenToWorldPoint(Input.mousePosition);
-                p.z = envmanager.figure.transform.position.z;
-                envmanager.figure.position = p;
+                p.z = envmanager.ActiveNetBehavior.transform.position.z;
+                envmanager.ActiveNetBehavior.position = p;
             }
         }
+
+        if (islogicactive)
+        {
+            Logic();
+        }
+    }
+
+    public virtual void Logic()
+    {
 
     }
 }
