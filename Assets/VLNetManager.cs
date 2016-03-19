@@ -14,6 +14,8 @@ public class VLNetManager : NetworkManager
     void Start()
     {
         exlogic = GameObject.FindObjectOfType<ExperimentLogic>();
+        var s = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        var gos = s.GetRootGameObjects();
     }
 
     // Update is called once per frame

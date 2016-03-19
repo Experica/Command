@@ -1,6 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Diagnostics;
 using System.Collections;
+
+public class Timer : Stopwatch
+{
+    public double ElapsedSeconds
+    {
+        get { return Elapsed.TotalSeconds; }
+    }
+
+    public void ReStart()
+    {
+        Reset();
+        Start();
+    }
+}
+
 
 [NetworkSettings(channel = 0, sendInterval = 0)]
 public class NetBehaviorBase : NetworkBehaviour
@@ -19,6 +35,10 @@ public class NetBehaviorBase : NetworkBehaviour
     public float height = 1;
     [SyncVar(hook = "OnColor")]
     public Color color = new Color();
+    [SyncVar(hook ="OnBgColor")]
+    public Color bgcolor = new Color();
+
+    public Timer t = new Timer();
 
 
     public virtual void OnVisible(bool v)
@@ -42,24 +62,33 @@ public class NetBehaviorBase : NetworkBehaviour
     public virtual void OnLength(float l)
     {
         transform.localScale = new Vector3(l, width, height);
+        GetComponent<Renderer>().material.SetFloat("length", l);
         length = l;
     }
 
     public virtual void OnWidth(float w)
     {
         transform.localScale = new Vector3(length, w, height);
+        GetComponent<Renderer>().material.SetFloat("width", w);
         width = w;
     }
 
     public virtual void OnHeight(float h)
     {
-        transform.localScale = new Vector3(length, width, height);
+        transform.localScale = new Vector3(length, width, h);
         height = h;
     }
 
     public virtual void OnColor(Color c)
     {
+        GetComponent<Renderer>().material.color = c;
+        color = c;
+    }
 
+    public virtual void OnBgColor(Color c)
+    {
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = c;
+        bgcolor = c;
     }
 
 }

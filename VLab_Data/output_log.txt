@@ -1,4 +1,4 @@
-Initialize engine version: 5.3.2f1 (e87ab445ead0)
+Initialize engine version: 5.3.3f1 (910d71450a97)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
@@ -16,691 +16,1307 @@ Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.UI.dll (thi
 Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.077 seconds
+- Completed reload, in  0.149 seconds
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.dll (this message is harmless)
 desktop: 2736x1824 60Hz; virtual: 2736x1824 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.536580 ms
+UnloadTime: 0.703999 ms
 True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1cdc -> priority: 1 
+  Thread -> id: 1dbc -> priority: 1 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.486029 ms
+UnloadTime: 0.249970 ms
 
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 416.
-Total: 0.396986 ms (FindLiveObjects: 0.025971 ms CreateObjectMapping: 0.025043 ms MarkObjects: 0.334841 ms  DeleteObjects: 0.009739 ms)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-60
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-90
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-120
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-150
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Empty player list given to NetworkServer.Destroy(), nothing to do.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-30
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 417.
+Total: 0.304695 ms (FindLiveObjects: 0.012057 ms CreateObjectMapping: 0.012985 ms MarkObjects: 0.261564 ms  DeleteObjects: 0.007420 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.499015 ms
+UnloadTime: 0.797216 ms
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 441.
-Total: 0.630261 ms (FindLiveObjects: 0.013449 ms CreateObjectMapping: 0.008347 ms MarkObjects: 0.586203 ms  DeleteObjects: 0.021333 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 442.
+Total: 0.480926 ms (FindLiveObjects: 0.022724 ms CreateObjectMapping: 0.018086 ms MarkObjects: 0.420637 ms  DeleteObjects: 0.019014 ms)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Object:get_name ()
+  at EnvironmentManager.SetParam (System.String param, System.Object value) [0x00000] in <filename unknown>:0 
+  at ConditionManager.PushCondition (Int32 idx) [0x00000] in <filename unknown>:0 
+  at ConditionManager.SamplePushCondition () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.set_CondState (CONDSTATE value) [0x00000] in <filename unknown>:0 
+  at conditiontest.Logic () [0x00000] in <filename unknown>:0 
+  at ExperimentLogic.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 
 NullReferenceException
   at (wrapper managed-to-native) UnityEngine.Object:get_name ()
