@@ -1,64 +1,60 @@
-CONDSTATE:
-- - PREICI: 0.0018523
-  - COND: 0.1096709
-  - SUFICI: 0.6138302
-- - PREICI: 0.7195206
-  - COND: 0.824136
-  - SUFICI: 1.3280115
-- - PREICI: 1.434014
-  - COND: 1.5410808
-  - SUFICI: 2.043526
-- - PREICI: 2.1465929
-  - COND: 2.2476929
-  - SUFICI: 2.7543913
-- - PREICI: 2.8566563
-  - COND: 2.9638391
-  - SUFICI: 3.4658925
-- - PREICI: 3.5665417
-  - COND: 3.66799
-  - SUFICI: 4.1694534
-- - PREICI: 4.2738049
-  - COND: 4.3794253
-  - SUFICI: 4.8800506
-- - PREICI: 4.9840947
-  - COND: 5.0862771
-  - SUFICI: 5.591306
-- - PREICI: 5.6959496
-  - COND: 5.7980161
-  - SUFICI: 6.2982951
-- - PREICI: 6.4024161
-  - COND: 6.505546
-  - SUFICI: 7.0110739
-- - PREICI: 7.111859
-  - COND: 7.21948
-  - SUFICI: 7.7201416
-- - PREICI: 7.8219345
-  - COND: 7.9239106
-  - SUFICI: 8.4267277
-- - PREICI: 8.5267295
-CondIndex:
-- 0
-- 1
-- 2
-- 3
-- 4
-- 5
-- 0
-- 1
-- 2
-- 3
-- 4
-- 5
-CondRepeat:
-- 1
-- 1
-- 1
-- 1
-- 1
-- 1
-- 2
-- 2
-- 2
-- 2
-- 2
-- 2
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  width:
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  length:
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  spatialfreq:
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  time:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+condtest:
+  CONDSTATE:
+  - - PREICI: 0.0018439
+    - COND: 0.1069992
+    - SUFICI: 0.6087659
+  - - PREICI: 0.714301
+    - COND: 0.817362
+  CondIndex:
+  - 0
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+condrepeat: 2
+preICI: 0.1
+conddur: 0.5
+sufICI: 0.1

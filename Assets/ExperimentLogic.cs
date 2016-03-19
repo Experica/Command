@@ -12,36 +12,45 @@ using System.Reflection;
 
 public class Subject
 {
-    public string species;
-    public string name;
-    public string id;
-    public string log;
-    public string gender;
-    public float age;
-    public Vector3 size=new Vector3();
-    public float weight;
+    public string species { get; set; }
+    public string name { get; set; }
+    public string id { get; set; }
+    public string log { get; set; }
+    public string gender { get; set; }
+    public float age { get; set; }
+    public Vector3 size { get; set; }
+    public float weight { get; set; }
 }
 
 public class Experiment
 {
-    public string name;
-    public string id;
-    public string experimenter;
-    public string log;
-    public Subject subject = new Subject();
-    public string condpath;
-    public Dictionary<string, List<object>> cond;
-    public string condtestpath;
-    public Dictionary<string, List<object>> condtest;
-    public string environmentpath;
-    public List<object> environment;
-    public string experimentlogicpath;
-    public string experimentlogic;
+    public string name { get; set; }
+    public string id { get; set; }
+    public string experimenter { get; set; }
+    public string log { get; set; }
+    public Subject subject { get; set; }
+    public string condpath { get; set; }
+    public Dictionary<string, List<object>> cond { get; set; }
+    public string condtestpath { get; set; }
+    public Dictionary<string, List<object>> condtest { get; set; }
+    public string environmentpath { get; set; }
+    public List<object> environment { get; set; }
+    public string experimentlogicpath { get; set; }
+    public string experimentlogic { get; set; }
+    public string recordsession { get; set; }
+    public string recordsite { get; set; }
 
-    public int condrepeat;
-    public double preIBI, blockdur, sufIBI, preITI, trialdur, sufITI, preICI, conddur, sufICI;
+    public int condrepeat { get; set; }
+    public double preIBI { get; set; }
+    public double blockdur { get; set; }
+    public double sufIBI { get; set; }
+    public double preITI { get; set; }
+    public double trialdur { get; set; }
+    public double sufITI { get; set; }
+    public double preICI { get; set; }
+    public double conddur { get; set; }
+    public double sufICI { get; set; }
 }
-
 
 
 public enum SampleMethod
@@ -469,6 +478,8 @@ public enum CONDTESTATSTATE
     PREITI = TRIALSTATE.PREITI
 }
 
+
+
 public class ExperimentLogic : MonoBehaviour
 {
     public Experiment ex = new Experiment();
@@ -657,7 +668,10 @@ public class ExperimentLogic : MonoBehaviour
                     switch (experimentstate)
                     {
                         case EXPERIMENTSTATE.EXPERIMENT:
-                            VLIO.WriteYaml("condtest.yaml", ex.condtest);
+                            ex.cond = condmanager.cond;
+                            ex.condtest = condtestmanager.condtest;
+
+                            VLIO.WriteYaml("condtest.yaml", ex);
                             break;
                     }
                     break;
@@ -667,6 +681,7 @@ public class ExperimentLogic : MonoBehaviour
                         case EXPERIMENTSTATE.NONE:
                             ex.cond = condmanager.ReadCondition("cond.yaml");
                             condmanager.UpdateCondPopulation();
+                            condtestmanager.Clear();
                             timer.ReStart();
                             break;
                     }
@@ -690,6 +705,9 @@ public class ExperimentLogic : MonoBehaviour
 
     public void StopExperiment()
     {
+        envmanager.activenetbehavior.visible = false;
+        CondState = CONDSTATE.NONE;
+        TrialState = TRIALSTATE.NONE;
         ExperimentState = EXPERIMENTSTATE.NONE;
         Application.targetFrameRate = 1000;
         QualitySettings.vSyncCount = 1;
@@ -702,9 +720,10 @@ public class ExperimentLogic : MonoBehaviour
 
     void Start()
     {        
-        ex.condtest = condtestmanager.condtest;
-        UnityEngine.Debug.Log(Timer.IsHighResolution);
-
+        if(!Timer.IsHighResolution)
+        {
+            UnityEngine.Debug.Log("This Machine Doesn't Have High Resolution Timer.");
+        }
         Init();
     }
 
@@ -722,7 +741,6 @@ public class ExperimentLogic : MonoBehaviour
     public bool isplayercontrol;
     public void StartPlayer()
     {
-        UnityEngine.Debug.Log(isplayercontrol);
         isplayercontrol = !isplayercontrol;
         //Cursor.visible = false;
     }

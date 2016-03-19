@@ -37,6 +37,8 @@ public class NetBehaviorBase : NetworkBehaviour
     public Color color = new Color();
     [SyncVar(hook ="OnBgColor")]
     public Color bgcolor = new Color();
+    [SyncVar(hook ="OnTime")]
+    public float time=-1000000;
 
     public Timer t = new Timer();
 
@@ -91,4 +93,8 @@ public class NetBehaviorBase : NetworkBehaviour
         bgcolor = c;
     }
 
+    public virtual void OnTime(float time)
+    {
+        t.ReStart();
+    }
 }

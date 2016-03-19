@@ -77,6 +77,7 @@ public class GratingQuad : NetBehaviorBase
         isdrifting = i;
     }
 
+
     // Use this for initialization
     void Start () {
 	

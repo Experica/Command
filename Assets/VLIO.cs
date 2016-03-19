@@ -7,7 +7,7 @@ using YamlDotNet.Serialization;
 
 public class VLIO {
 
-	public static void WriteYaml(string path, object data)
+	public static void WriteYaml<T>(string path, T data)
     {
         var serializer = new Serializer();
         var s = new StringBuilder();
