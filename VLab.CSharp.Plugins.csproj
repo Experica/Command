@@ -243,6 +243,9 @@
   <ItemGroup>
     <None Include="Assets\Plugins\YamlDotNet\Readme.txt" />
     <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
+    <None Include="Assets\UI Sample\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\UI Sample\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\UI Sample\Textures and Sprites\SF UI\Background\LICENSE.txt" />
     <None Include="Assets\color.shader" />
     <None Include="Assets\grating.shader" />
   </ItemGroup>

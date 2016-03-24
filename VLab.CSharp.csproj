@@ -82,6 +82,20 @@
     <Compile Include="Assets\GratingQuad.cs" />
     <Compile Include="Assets\NetBehaviorBase.cs" />
     <Compile Include="Assets\Quad.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ActiveStateToggler.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\DragMe.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\DragPanel.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\DropMe.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\PanelManager.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ResizePanel.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ScrollDetailTexture.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\ShowSliderValue.cs" />
+    <Compile Include="Assets\UI Sample\Scripts\TiltWindow.cs" />
+    <Compile Include="Assets\UI\Drag.cs" />
+    <Compile Include="Assets\UI\loadex.cs" />
+    <Compile Include="Assets\UI\updateexparam.cs" />
     <Compile Include="Assets\VLIO.cs" />
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\conditiontest.cs" />
@@ -89,6 +103,9 @@
   <ItemGroup>
     <None Include="Assets\Plugins\YamlDotNet\Readme.txt" />
     <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
+    <None Include="Assets\UI Sample\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\UI Sample\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\UI Sample\Textures and Sprites\SF UI\Background\LICENSE.txt" />
     <None Include="Assets\color.shader" />
     <None Include="Assets\grating.shader" />
   </ItemGroup>

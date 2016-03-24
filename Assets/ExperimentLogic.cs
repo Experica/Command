@@ -50,6 +50,7 @@ public class Experiment
     public double preICI { get; set; }
     public double conddur { get; set; }
     public double sufICI { get; set; }
+    public Dictionary<string,object> param { get; set; }
 }
 
 
