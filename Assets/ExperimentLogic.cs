@@ -41,15 +41,15 @@ public class Experiment
     public string recordsite { get; set; }
 
     public int condrepeat { get; set; }
-    public double preIBI { get; set; }
-    public double blockdur { get; set; }
-    public double sufIBI { get; set; }
-    public double preITI { get; set; }
-    public double trialdur { get; set; }
-    public double sufITI { get; set; }
     public double preICI { get; set; }
     public double conddur { get; set; }
     public double sufICI { get; set; }
+    public double preITI { get; set; }
+    public double trialdur { get; set; }
+    public double sufITI { get; set; }
+    public double preIBI { get; set; }
+    public double blockdur { get; set; }
+    public double sufIBI { get; set; }
     public Dictionary<string,object> param { get; set; }
 }
 
@@ -80,7 +80,7 @@ public class ConditionManager
 
     public Dictionary<string, List<object>> ReadCondition(string path)
     {
-        cond = VLIO.ReadYaml<Dictionary<string, List<object>>>(path);
+        cond = Yaml.ReadYaml<Dictionary<string, List<object>>>(path);
         nfactor = cond.Keys.Count;
         if (nfactor == 0)
         {
@@ -672,7 +672,7 @@ public class ExperimentLogic : MonoBehaviour
                             ex.cond = condmanager.cond;
                             ex.condtest = condtestmanager.condtest;
 
-                            VLIO.WriteYaml("condtest.yaml", ex);
+                            Yaml.WriteYaml("condtest.yaml", ex);
                             break;
                     }
                     break;

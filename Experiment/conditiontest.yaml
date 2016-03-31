@@ -1,3 +1,5 @@
+subject:
+  id: 'C1603'
 cond:
   ori:
   - 0
@@ -43,43 +45,43 @@ cond:
   - 6
 condtest:
   CONDSTATE:
-  - - PREICI: 0.0010555
-    - COND: 0.1134206
-    - SUFICI: 0.6136694
-  - - PREICI: 0.7188943
-    - COND: 0.8203774
-    - SUFICI: 1.3242728
-  - - PREICI: 1.4257505
-    - COND: 1.5262314
-    - SUFICI: 2.0296028
-  - - PREICI: 2.1338547
-    - COND: 2.2340305
-    - SUFICI: 2.7407971
-  - - PREICI: 2.8440514
-    - COND: 2.9450231
-    - SUFICI: 3.4485883
-  - - PREICI: 3.5525637
-    - COND: 3.6569209
-    - SUFICI: 4.1601689
-  - - PREICI: 4.2643215
-    - COND: 4.3653224
-    - SUFICI: 4.866194
-  - - PREICI: 4.969562
-    - COND: 5.0727472
-    - SUFICI: 5.5752397
-  - - PREICI: 5.679159
-    - COND: 5.7838283
-    - SUFICI: 6.2866789
-  - - PREICI: 6.3870954
-    - COND: 6.4886439
-    - SUFICI: 6.9910451
-  - - PREICI: 7.0960483
-    - COND: 7.1979604
-    - SUFICI: 7.6989207
-  - - PREICI: 7.8022997
-    - COND: 7.9062325
-    - SUFICI: 8.4093015
-  - - PREICI: 8.5106205
+  - - PREICI: 0.0010912
+    - COND: 0.1107329
+    - SUFICI: 0.612896
+  - - PREICI: 0.715001
+    - COND: 0.8212642
+    - SUFICI: 1.3290383
+  - - PREICI: 1.4320769
+    - COND: 1.5325532
+    - SUFICI: 2.0329961
+  - - PREICI: 2.137964
+    - COND: 2.2441451
+    - SUFICI: 2.7495151
+  - - PREICI: 2.8541746
+    - COND: 2.9623601
+    - SUFICI: 3.465599
+  - - PREICI: 3.5700902
+    - COND: 3.6774001
+    - SUFICI: 4.1799443
+  - - PREICI: 4.2814376
+    - COND: 4.3831531
+    - SUFICI: 4.8863406
+  - - PREICI: 4.9880486
+    - COND: 5.0941523
+    - SUFICI: 5.5945154
+  - - PREICI: 5.69815
+    - COND: 5.7990942
+    - SUFICI: 6.3031058
+  - - PREICI: 6.4044169
+    - COND: 6.5100698
+    - SUFICI: 7.0103698
+  - - PREICI: 7.110675
+    - COND: 7.2161864
+    - SUFICI: 7.7228405
+  - - PREICI: 7.8265725
+    - COND: 7.9276257
+    - SUFICI: 8.4319638
+  - - PREICI: 8.5320357
   CondIndex:
   - 0
   - 1
@@ -106,6 +108,8 @@ condtest:
   - 2
   - 2
   - 2
+recordsession: ''
+recordsite: ''
 condrepeat: 2
 preICI: 0.1
 conddur: 0.5

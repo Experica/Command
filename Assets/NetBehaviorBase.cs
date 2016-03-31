@@ -15,6 +15,20 @@ public class Timer : Stopwatch
         Reset();
         Start();
     }
+
+    public void Countdown(double dur)
+    {
+        if (!IsRunning)
+        {
+            Start();
+        }
+        var start = Elapsed.TotalSeconds;
+        var end = Elapsed.TotalSeconds;
+        while ((end - start) < dur)
+        {
+            end = Elapsed.TotalSeconds;
+        }
+    }
 }
 
 

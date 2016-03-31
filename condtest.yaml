@@ -1,3 +1,7 @@
+name: conditiontest
+id: conditiontest
+subject:
+  id: C1603
 cond:
   ori:
   - 0
@@ -43,43 +47,29 @@ cond:
   - 6
 condtest:
   CONDSTATE:
-  - - PREICI: 0.0010555
-    - COND: 0.1134206
-    - SUFICI: 0.6136694
-  - - PREICI: 0.7188943
-    - COND: 0.8203774
-    - SUFICI: 1.3242728
-  - - PREICI: 1.4257505
-    - COND: 1.5262314
-    - SUFICI: 2.0296028
-  - - PREICI: 2.1338547
-    - COND: 2.2340305
-    - SUFICI: 2.7407971
-  - - PREICI: 2.8440514
-    - COND: 2.9450231
-    - SUFICI: 3.4485883
-  - - PREICI: 3.5525637
-    - COND: 3.6569209
-    - SUFICI: 4.1601689
-  - - PREICI: 4.2643215
-    - COND: 4.3653224
-    - SUFICI: 4.866194
-  - - PREICI: 4.969562
-    - COND: 5.0727472
-    - SUFICI: 5.5752397
-  - - PREICI: 5.679159
-    - COND: 5.7838283
-    - SUFICI: 6.2866789
-  - - PREICI: 6.3870954
-    - COND: 6.4886439
-    - SUFICI: 6.9910451
-  - - PREICI: 7.0960483
-    - COND: 7.1979604
-    - SUFICI: 7.6989207
-  - - PREICI: 7.8022997
-    - COND: 7.9062325
-    - SUFICI: 8.4093015
-  - - PREICI: 8.5106205
+  - - PREICI: 0.0009828
+    - COND: 0.1077974
+    - SUFICI: 0.6107803
+  - - PREICI: 0.7156374
+    - COND: 0.8196035
+    - SUFICI: 1.3223272
+  - - PREICI: 1.4260721
+    - COND: 1.5278113
+    - SUFICI: 2.0326178
+  - - PREICI: 2.1367606
+    - COND: 2.2437964
+    - SUFICI: 2.7465712
+  - - PREICI: 2.8474616
+    - COND: 2.9477194
+    - SUFICI: 3.4477955
+  - - PREICI: 3.5524471
+    - COND: 3.6586505
+    - SUFICI: 4.1638456
+  - - PREICI: 4.2676888
+    - COND: 4.3719467
+    - SUFICI: 4.8739618
+  - - PREICI: 4.97824
+    - COND: 5.0818565
   CondIndex:
   - 0
   - 1
@@ -89,10 +79,6 @@ condtest:
   - 5
   - 0
   - 1
-  - 2
-  - 3
-  - 4
-  - 5
   CondRepeat:
   - 1
   - 1
@@ -102,10 +88,8 @@ condtest:
   - 1
   - 2
   - 2
-  - 2
-  - 2
-  - 2
-  - 2
+recordsession: ''
+recordsite: kjglkiu
 condrepeat: 2
 preICI: 0.1
 conddur: 0.5
