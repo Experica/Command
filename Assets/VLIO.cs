@@ -69,7 +69,7 @@ public class Inpout
     }
 }
 
-public class ParallelPort:Inpout
+public class ParallelPort : Inpout
 {
     public short address;
     private bool isdataoutput;
@@ -83,7 +83,7 @@ public class ParallelPort:Inpout
             isdataoutput = value;
         }
     }
-    public ParallelPort(short address=0x378,bool isdataoutput=true)
+    public ParallelPort(short address = 0x378, bool isdataoutput = true)
     {
         this.address = address;
         IsDataOutput = isdataoutput;
@@ -99,7 +99,7 @@ public class ParallelPort:Inpout
     }
     public byte InpByte(short address)
     {
-        var t =BitConverter.GetBytes(Inp(address));
+        var t = BitConverter.GetBytes(Inp(address));
         return t[0];
     }
     public byte InpByte()
@@ -107,7 +107,7 @@ public class ParallelPort:Inpout
         return InpByte(address);
     }
 
-    public void Out(short address,short data)
+    public void Out(short address, short data)
     {
         Out32(address, data);
     }
@@ -116,44 +116,43 @@ public class ParallelPort:Inpout
         Out(address, data);
     }
 
-    public void SetDataBit(short address=0x378,int bit=0,bool value=true)
+    public void SetDataBit(short address = 0x378, int bit = 0, bool value = true)
     {
         var t = value ? Math.Pow(2.0, bit) : 0;
         Out(address, (short)t);
     }
     public void SetDataBits(int[] bits, bool[] values, short address = 0x378)
     {
-        if(bits!=null&&values!=null)
+        if (bits != null && values != null)
         {
             var bs = bits.Distinct().ToArray();
-            var vs = values.Distinct().ToArray();
-            if (bs.Count() == vs.Count())
+            if (bs.Count() == values.Length)
             {
                 var t = 0.0;
                 for (var i = 0; i < bs.Count(); i++)
                 {
-                    t += vs[i] ? Math.Pow(2.0, bs[i]) : 0;
+                    t += values[i] ? Math.Pow(2.0, bs[i]) : 0;
                 }
                 Out(address, (short)t);
             }
         }
     }
 
-    public bool GetDataBit(short address=0x378,int bit=0)
+    public bool GetDataBit(short address = 0x378, int bit = 0)
     {
         var t = Convert.ToString(InpByte(address), 2).PadLeft(8, '0');
-        return t[7-bit] == '1' ? true : false;
+        return t[7 - bit] == '1' ? true : false;
     }
-    public bool[] GetDataBits(int[] bits,short address=0x378)
+    public bool[] GetDataBits(int[] bits, short address = 0x378)
     {
         var vs = new List<bool>();
-        if(bits!=null)
+        if (bits != null)
         {
             var bs = bits.Distinct().ToArray();
-            if(bs.Count()!=0)
+            if (bs.Count() != 0)
             {
                 var t = Convert.ToString(InpByte(address), 2).PadLeft(8, '0');
-                foreach(var b in bs)
+                foreach (var b in bs)
                 {
                     vs.Add(t[7 - b] == '1' ? true : false);
                 }
@@ -162,25 +161,59 @@ public class ParallelPort:Inpout
         return vs.ToArray();
     }
 
-    public void Pulse(short address = 0x378, int bit = 0, double duration=0.001)
+    public void DataBitPulse(short address = 0x378, int bit = 0, double duration = 0.001)
     {
         var timer = new Timer();
         SetDataBit(address, bit);
         timer.Countdown(duration);
         SetDataBit(address, bit, false);
     }
-    void _Pulse(object p)
+    void _DataBitPulse(object p)
     {
         var param = (List<object>)p;
-        Pulse((short)param[0], (int)param[1], (double)param[2]);
+        DataBitPulse((short)param[0], (int)param[1], (double)param[2]);
     }
-    public void ThreadPulse(short address = 0x378, int bit = 0, double duration = 0.001)
+    public void ThreadDataBitPulse(short address = 0x378, int bit = 0, double duration = 0.001)
     {
-        var t = new Thread(new ParameterizedThreadStart(_Pulse));
-        var o = new List<object>();
-        o.Add(address);
-        o.Add(bit);
-        o.Add(duration);
-        t.Start(o);
+        var t = new Thread(new ParameterizedThreadStart(_DataBitPulse));
+        var p = new List<object>();
+        p.Add(address);
+        p.Add(bit);
+        p.Add(duration);
+        t.Start(p);
     }
+
+    public void SDataBitsPulse(int[] bits, double[] durations, short address = 0x378)
+    {
+        if (bits != null && durations != null)
+        {
+            var bs = bits.Distinct().ToArray();
+            if (bs.Count() == durations.Length)
+            {
+                for (var i = 0; i < bs.Count(); i++)
+                {
+                    DataBitPulse(address, bs[i], durations[i]);
+                }
+            }
+        }
+    }
+    public void PDataBitsPulse(int[] bits, double[] durations, short address = 0x378)
+    {
+        if (bits != null && durations != null)
+        {
+            var bs = bits.Distinct().ToArray();
+            if (bs.Count() == durations.Length)
+            {
+                for (var i = 0; i < bs.Count(); i++)
+                {
+                    ThreadDataBitPulse(address, bs[i], durations[i]);
+                }
+            }
+        }
+    }
+}
+
+public class USB
+{
+
 }
