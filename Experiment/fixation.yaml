@@ -1,116 +1,16 @@
+name: fixation
+id: fixation
+experimenter: ''
 subject:
-  id: 'C1603'
-cond:
-  ori:
-  - 0
-  - 30
-  - 60
-  - 90
-  - 120
-  - 150
-  width:
-  - 6
-  - 6
-  - 6
-  - 6
-  - 6
-  - 6
-  length:
-  - 6
-  - 6
-  - 6
-  - 6
-  - 6
-  - 6
-  temporalfreq:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  spatialfreq:
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  time:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-condtest:
-  CONDSTATE:
-  - - PREICI: 0.0010912
-    - COND: 0.1107329
-    - SUFICI: 0.612896
-  - - PREICI: 0.715001
-    - COND: 0.8212642
-    - SUFICI: 1.3290383
-  - - PREICI: 1.4320769
-    - COND: 1.5325532
-    - SUFICI: 2.0329961
-  - - PREICI: 2.137964
-    - COND: 2.2441451
-    - SUFICI: 2.7495151
-  - - PREICI: 2.8541746
-    - COND: 2.9623601
-    - SUFICI: 3.465599
-  - - PREICI: 3.5700902
-    - COND: 3.6774001
-    - SUFICI: 4.1799443
-  - - PREICI: 4.2814376
-    - COND: 4.3831531
-    - SUFICI: 4.8863406
-  - - PREICI: 4.9880486
-    - COND: 5.0941523
-    - SUFICI: 5.5945154
-  - - PREICI: 5.69815
-    - COND: 5.7990942
-    - SUFICI: 6.3031058
-  - - PREICI: 6.4044169
-    - COND: 6.5100698
-    - SUFICI: 7.0103698
-  - - PREICI: 7.110675
-    - COND: 7.2161864
-    - SUFICI: 7.7228405
-  - - PREICI: 7.8265725
-    - COND: 7.9276257
-    - SUFICI: 8.4319638
-  - - PREICI: 8.5320357
-  CondIndex:
-  - 0
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 0
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  CondRepeat:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 2
-  - 2
-  - 2
-  - 2
-  - 2
-  - 2
+  id: C1603
+condpath: ''
+condtestpath: ConditionTest/
 recordsession: ''
 recordsite: ''
 condrepeat: 2
 preICI: 0.1
 conddur: 0.5
 sufICI: 0.1
+param: {}
+inheritparams:
+- experimenter

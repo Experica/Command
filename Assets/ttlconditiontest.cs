@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections;
 
-public class conditiontest : ExperimentLogic
+public class ttlconditiontest : ExperimentLogic
 {
+    ParallelPort pport = new ParallelPort(0xC010);
+
     public override void Init()
     {
-        ex.conddur = 0.5;
-        ex.preICI = 0.1;
-        ex.sufICI = 0.1;
-        ex.condrepeat = 3;
+        PushCondAtState = PUSHCONDATSTATE.PREICI;
     }
 
     public override void Logic()
@@ -24,6 +25,7 @@ public class conditiontest : ExperimentLogic
                 {
                     envmanager.activenetbehavior.visible = true;
                     CondState = CONDSTATE.COND;
+                    pport.SetBit(bit: 0, value: true);
                 }
                 break;
             case CONDSTATE.COND:
@@ -31,6 +33,7 @@ public class conditiontest : ExperimentLogic
                 {
                     envmanager.activenetbehavior.visible = false;
                     CondState = CONDSTATE.SUFICI;
+                    pport.SetBit(bit: 0, value: false);
                 }
                 break;
             case CONDSTATE.SUFICI:

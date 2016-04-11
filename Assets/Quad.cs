@@ -9,7 +9,7 @@ public class Quad : NetBehaviorBase
 
     public virtual void OnMaskType(int t)
     {
-        GetComponent<Renderer>().material.SetInt("masktype", t);
+        renderer.material.SetInt("masktype", t);
         masktype = t;
     }
 

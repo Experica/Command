@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections;
 
-public class conditiontest : ExperimentLogic
+public class laserttlconditiontest : ExperimentLogic
 {
+    ParallelPort pport = new ParallelPort(0xC010);
+    Omicron luxx473 = new Omicron("COM5");
+    Cobolt mambo594 = new Cobolt("COM6");
+
     public override void Init()
     {
-        ex.conddur = 0.5;
-        ex.preICI = 0.1;
-        ex.sufICI = 0.1;
-        ex.condrepeat = 3;
+        PushCondAtState = PUSHCONDATSTATE.PREICI;
+        luxx473.LaserOn();
     }
 
     public override void Logic()
@@ -18,12 +22,17 @@ public class conditiontest : ExperimentLogic
             case CONDSTATE.NONE:
                 envmanager.activenetbehavior.visible = false;
                 CondState = CONDSTATE.PREICI;
+
+                var v = double.Parse((string)condmanager.cond["laserpower%"][condmanager.condidx]);
+                luxx473.PowerRatio = v;
+                mambo594.PowerRatio = v;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold() >= ex.preICI)
                 {
                     envmanager.activenetbehavior.visible = true;
                     CondState = CONDSTATE.COND;
+                    pport.SetBit(bit: 0, value: true);
                 }
                 break;
             case CONDSTATE.COND:
@@ -31,12 +40,13 @@ public class conditiontest : ExperimentLogic
                 {
                     envmanager.activenetbehavior.visible = false;
                     CondState = CONDSTATE.SUFICI;
+                    pport.SetBit(bit: 0, value: false);
                 }
                 break;
             case CONDSTATE.SUFICI:
                 if (SufICIHold() >= ex.sufICI)
                 {
-                    CondState = CONDSTATE.PREICI;
+                    CondState = CONDSTATE.NONE;
                 }
                 break;
         }

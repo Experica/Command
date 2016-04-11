@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
@@ -64,11 +64,11 @@
     <Reference Include="Mono.Cecil">
       <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    <Reference Include="LibUsbDotNet">
+      <HintPath>Assets\LibUsbDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>Assets\System.Windows.Forms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\GratingQuad.cs" />
+    <Compile Include="Assets\Laser.cs" />
     <Compile Include="Assets\NetBehaviorBase.cs" />
     <Compile Include="Assets\Quad.cs" />
     <Compile Include="Assets\UI Sample\Scripts\ActiveStateToggler.cs" />
@@ -93,12 +94,15 @@
     <Compile Include="Assets\UI Sample\Scripts\ScrollDetailTexture.cs" />
     <Compile Include="Assets\UI Sample\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\UI Sample\Scripts\TiltWindow.cs" />
+    <Compile Include="Assets\UI\CondParam.cs" />
     <Compile Include="Assets\UI\Drag.cs" />
     <Compile Include="Assets\UI\ExParam.cs" />
     <Compile Include="Assets\UI\LoadExperiment.cs" />
     <Compile Include="Assets\VLIO.cs" />
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\conditiontest.cs" />
+    <Compile Include="Assets\laserttlconditiontest.cs" />
+    <Compile Include="Assets\ttlconditiontest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\YamlDotNet\Readme.txt" />

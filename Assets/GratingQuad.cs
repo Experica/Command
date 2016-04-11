@@ -24,43 +24,43 @@ public class GratingQuad : NetBehaviorBase
 
     public virtual void OnSpatialFreq(float sf)
     {
-        GetComponent<Renderer>().material.SetFloat("sf", sf);
+        renderer.material.SetFloat("sf", sf);
         spatialfreq = sf;
     }
 
     public virtual void OnTemporalFreq(float tf)
     {
-        GetComponent<Renderer>().material.SetFloat("tf", tf);
+        renderer.material.SetFloat("tf", tf);
         temporalfreq = tf;
     }
 
     public virtual void OnSpatialPhase(float p)
     {
-        GetComponent<Renderer>().material.SetFloat("phase", p);
+        renderer.material.SetFloat("phase", p);
         spatialphase = p;
     }
 
     public virtual void OnSigma(float s)
     {
-        GetComponent<Renderer>().material.SetFloat("sigma", s);
+        renderer.material.SetFloat("sigma", s);
         sigma = s;
     }
 
     public virtual void OnMinColor(Color c)
     {
-        GetComponent<Renderer>().material.SetColor("mincolor", c);
+        renderer.material.SetColor("mincolor", c);
         mincolor = c;
     }
 
     public virtual void OnMaxColor(Color c)
     {
-        GetComponent<Renderer>().material.SetColor("maxcolor", c);
+        renderer.material.SetColor("maxcolor", c);
         maxcolor = c;
     }
 
     public virtual void OnMaskType(int t)
     {
-        GetComponent<Renderer>().material.SetInt("masktype", t);
+        renderer.material.SetInt("masktype", t);
         masktype = t;
     }
 
@@ -88,7 +88,7 @@ public class GratingQuad : NetBehaviorBase
     {
         if (isdrifting)
         {
-            GetComponent<Renderer>().material.SetFloat("t", (float)t.ElapsedSeconds);
+            renderer.material.SetFloat("t", (float)t.ElapsedSeconds);
         }
 	}
 }

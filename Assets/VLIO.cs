@@ -2,67 +2,80 @@
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.IO.Ports;
 using System.Text;
 using System.Linq;
 using System.Threading;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 using System.Runtime.InteropServices;
+using LibUsbDotNet;
 
-public class Yaml {
+public class Yaml
+{
+    static Serializer serializer = new Serializer();
+    static Deserializer deserializer = new Deserializer();
 
-	public static void WriteYaml<T>(string path, T data)
+    public static void WriteYaml<T>(string path, T data)
     {
-        var serializer = new Serializer();
+        File.WriteAllText(path, Serialize(data));
+    }
+
+    public static string Serialize<T>(T data)
+    {
         var s = new StringBuilder();
         serializer.Serialize(new StringWriter(s), data);
-        File.WriteAllText(path, s.ToString());
+        return s.ToString();
     }
 
     public static T ReadYaml<T>(string path)
     {
         using (var s = new StringReader(File.ReadAllText(path)))
         {
-            var deserializer = new Deserializer();
             return deserializer.Deserialize<T>(s);
         }
+    }
+
+    public static T Deserialize<T>(string data)
+    {
+        return deserializer.Deserialize<T>(new StringReader(data));
     }
 }
 
 public class Inpout
 {
-    [DllImport("inpoutx64.dll")]
-    public static extern uint IsInpOutDriverOpen();
-    [DllImport("inpoutx64.dll")]
-    public static extern void Out32(short PortAddress, short Data);
-    [DllImport("inpoutx64.dll")]
-    public static extern short Inp32(short PortAddress);
+    [DllImport("inpoutx64.dll", EntryPoint = "IsInpOutDriverOpen")]
+    public static extern int IsInpOutDriverOpen();
+    [DllImport("inpoutx64.dll", EntryPoint = "Out32")]
+    public static extern void Out8(ushort PortAddress, byte Data);
+    [DllImport("inpoutx64.dll", EntryPoint = "Inp32")]
+    public static extern byte Inp8(ushort PortAddress);
 
-    [DllImport("inpoutx64.dll")]
-    public static extern void DlPortWritePortUshort(short PortAddress, ushort Data);
-    [DllImport("inpoutx64.dll")]
-    public static extern ushort DlPortReadPortUshort(short PortAddress);
+    [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUshort")]
+    public static extern void Out16(ushort PortAddress, ushort Data);
+    [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUshort")]
+    public static extern ushort Inp16(ushort PortAddress);
 
-    [DllImport("inpoutx64.dll")]
-    public static extern void DlPortWritePortUlong(int PortAddress, uint Data);
-    [DllImport("inpoutx64.dll")]
-    public static extern uint DlPortReadPortUlong(int PortAddress);
+    [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUlong")]
+    public static extern void Out64(ulong PortAddress, ulong Data);
+    [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUlong")]
+    public static extern ulong Inp64(ulong PortAddress);
 
-    [DllImport("inpoutx64.dll")]
-    public static extern bool GetPhysLong(ref int PortAddress, ref uint Data);
-    [DllImport("inpoutx64.dll")]
-    public static extern bool SetPhysLong(ref int PortAddress, ref uint Data);
+    [DllImport("inpoutx64.dll", EntryPoint = "GetPhysLong")]
+    public static extern int GetPhysLong(ref byte PortAddress, ref uint Data);
+    [DllImport("inpoutx64.dll", EntryPoint = "SetPhysLong")]
+    public static extern int SetPhysLong(ref byte PortAddress, uint Data);
 
     public Inpout()
     {
         try
         {
-            if(IsInpOutDriverOpen()==0)
+            if (IsInpOutDriverOpen() == 0)
             {
                 Debug.Log("Unable to open Inpoutx64 driver.");
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.Log(ex.ToString());
         }
@@ -71,57 +84,40 @@ public class Inpout
 
 public class ParallelPort : Inpout
 {
-    public short address;
-    private bool isdataoutput;
-    public bool IsDataOutput
-    {
-        get { return isdataoutput; }
-        set
-        {
-            var t = value ? 0x0 : 0xFF;
-            Out(0x37A, (short)t);
-            isdataoutput = value;
-        }
-    }
-    public ParallelPort(short address = 0x378, bool isdataoutput = true)
+    public int address;
+
+    public ParallelPort(int address = 0x378)
     {
         this.address = address;
-        IsDataOutput = isdataoutput;
     }
 
-    public short Inp(short address)
+    public int Inp()
     {
-        return Inp32(address);
+        return Inp16((ushort)address);
     }
-    public short Inp()
-    {
-        return Inp(address);
-    }
-    public byte InpByte(short address)
-    {
-        var t = BitConverter.GetBytes(Inp(address));
-        return t[0];
-    }
+
     public byte InpByte()
     {
-        return InpByte(address);
+        return Inp8((ushort)address);
     }
 
-    public void Out(short address, short data)
+    public void Out(int data)
     {
-        Out32(address, data);
-    }
-    public void Out(short data)
-    {
-        Out(address, data);
+        Out16((ushort)address, (ushort)data);
     }
 
-    public void SetDataBit(short address = 0x378, int bit = 0, bool value = true)
+    public void OutByte(byte data)
+    {
+        Out8((ushort)address, data);
+    }
+
+    public void SetBit(int bit = 0, bool value = true)
     {
         var t = value ? Math.Pow(2.0, bit) : 0;
-        Out(address, (short)t);
+        Out((int)t);
     }
-    public void SetDataBits(int[] bits, bool[] values, short address = 0x378)
+
+    public void SetBits(int[] bits, bool[] values)
     {
         if (bits != null && values != null)
         {
@@ -133,17 +129,18 @@ public class ParallelPort : Inpout
                 {
                     t += values[i] ? Math.Pow(2.0, bs[i]) : 0;
                 }
-                Out(address, (short)t);
+                Out((int)t);
             }
         }
     }
 
-    public bool GetDataBit(short address = 0x378, int bit = 0)
+    public bool GetBit(int bit = 0)
     {
-        var t = Convert.ToString(InpByte(address), 2).PadLeft(8, '0');
-        return t[7 - bit] == '1' ? true : false;
+        var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
+        return t[15 - bit] == '1' ? true : false;
     }
-    public bool[] GetDataBits(int[] bits, short address = 0x378)
+
+    public bool[] GetBits(int[] bits)
     {
         var vs = new List<bool>();
         if (bits != null)
@@ -151,39 +148,37 @@ public class ParallelPort : Inpout
             var bs = bits.Distinct().ToArray();
             if (bs.Count() != 0)
             {
-                var t = Convert.ToString(InpByte(address), 2).PadLeft(8, '0');
+                var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
                 foreach (var b in bs)
                 {
-                    vs.Add(t[7 - b] == '1' ? true : false);
+                    vs.Add(t[15 - b] == '1' ? true : false);
                 }
             }
         }
         return vs.ToArray();
     }
 
-    public void DataBitPulse(short address = 0x378, int bit = 0, double duration = 0.001)
+    public void BitPulse(int bit = 0, double duration = 0.001)
     {
         var timer = new Timer();
-        SetDataBit(address, bit);
+        SetBit(bit);
         timer.Countdown(duration);
-        SetDataBit(address, bit, false);
-    }
-    void _DataBitPulse(object p)
-    {
-        var param = (List<object>)p;
-        DataBitPulse((short)param[0], (int)param[1], (double)param[2]);
-    }
-    public void ThreadDataBitPulse(short address = 0x378, int bit = 0, double duration = 0.001)
-    {
-        var t = new Thread(new ParameterizedThreadStart(_DataBitPulse));
-        var p = new List<object>();
-        p.Add(address);
-        p.Add(bit);
-        p.Add(duration);
-        t.Start(p);
+        SetBit(bit, false);
     }
 
-    public void SDataBitsPulse(int[] bits, double[] durations, short address = 0x378)
+    void _BitPulse(object p)
+    {
+        var param = (List<object>)p;
+        BitPulse((int)param[0], (double)param[1]);
+    }
+
+    public void ThreadBitPulse(int bit = 0, double duration = 0.001)
+    {
+        var t = new Thread(new ParameterizedThreadStart(_BitPulse));
+        t.Start(new List<object>() { bit, duration });
+    }
+
+    public void BitsPulse(int[] bits, double[] durations)
     {
         if (bits != null && durations != null)
         {
@@ -192,12 +187,13 @@ public class ParallelPort : Inpout
             {
                 for (var i = 0; i < bs.Count(); i++)
                 {
-                    DataBitPulse(address, bs[i], durations[i]);
+                    BitPulse(bs[i], durations[i]);
                 }
             }
         }
     }
-    public void PDataBitsPulse(int[] bits, double[] durations, short address = 0x378)
+
+    public void ThreadBitsPulse(int[] bits, double[] durations)
     {
         if (bits != null && durations != null)
         {
@@ -206,10 +202,197 @@ public class ParallelPort : Inpout
             {
                 for (var i = 0; i < bs.Count(); i++)
                 {
-                    ThreadDataBitPulse(address, bs[i], durations[i]);
+                    ThreadBitPulse(bs[i], durations[i]);
                 }
             }
         }
+    }
+}
+
+public class COM : IDisposable
+{
+    public SerialPort serialport;
+    public string receiveddata = "";
+    SerialDataReceivedEventHandler DataReceivedEventHandler;
+    SerialErrorReceivedEventHandler ErrorReceivedEventHandler;
+    SerialPinChangedEventHandler PinChangedEventHandler;
+
+    public COM(string portname = "COM1", int baudrate = 9600, Parity parity = Parity.None, int databits = 8, StopBits stopbits = StopBits.One,
+        Handshake handshake = Handshake.None, int readtimeout = SerialPort.InfiniteTimeout, int writetimeout = SerialPort.InfiniteTimeout, string newline = "\n", bool isevent = false)
+    {
+        serialport = new SerialPort(portname, baudrate, parity, databits, stopbits);
+        serialport.Handshake = handshake;
+        serialport.ReadTimeout = readtimeout;
+        serialport.WriteTimeout = writetimeout;
+        serialport.NewLine = newline;
+
+        if (isevent)
+        {
+            DataReceivedEventHandler = new SerialDataReceivedEventHandler(DataReceived);
+            ErrorReceivedEventHandler = new SerialErrorReceivedEventHandler(ErrorReceived);
+            PinChangedEventHandler = new SerialPinChangedEventHandler(PinChanged);
+            serialport.DataReceived += DataReceivedEventHandler;
+            serialport.ErrorReceived += ErrorReceivedEventHandler;
+            serialport.PinChanged += PinChangedEventHandler;
+        }
+    }
+
+    ~COM()
+    {
+        Dispose(false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        Close();
+        if (disposing)
+        {
+            serialport.Dispose();
+        }
+    }
+
+    public bool IsPortExist()
+    {
+        var hr = false;
+        foreach (var n in SerialPort.GetPortNames())
+        {
+            if (serialport.PortName == n)
+            {
+                hr = true;
+                break;
+            }
+        }
+        if (!hr)
+        {
+            Debug.Log(serialport.PortName + " does not exist.");
+        }
+        return hr;
+    }
+
+    public void Open()
+    {
+        if (IsPortExist())
+        {
+            if (!serialport.IsOpen)
+            {
+                serialport.Open();
+            }
+        }
+    }
+
+    public void Close()
+    {
+        if (serialport.IsOpen)
+        {
+            serialport.Close();
+        }
+    }
+
+    public string Read()
+    {
+        var nb = serialport.BytesToRead;
+        byte[] databyte = new byte[nb];
+        string data = "";
+        if (!serialport.IsOpen)
+        {
+            Open();
+        }
+        if (serialport.IsOpen)
+        {
+            serialport.Read(databyte, 0, nb);
+            serialport.DiscardInBuffer();
+            data = serialport.Encoding.GetString(databyte);
+        }
+        return data;
+    }
+
+    public string ReadLine()
+    {
+        string data = "";
+        if (!serialport.IsOpen)
+        {
+            Open();
+        }
+        if (serialport.IsOpen)
+        {
+            data = serialport.ReadLine();
+            serialport.DiscardInBuffer();
+        }
+        return data;
+    }
+
+    public void Write(string data)
+    {
+        if (!serialport.IsOpen)
+        {
+            Open();
+        }
+        if (serialport.IsOpen)
+        {
+            serialport.Write(data);
+        }
+    }
+
+    public void Write(byte[] data)
+    {
+        if (!serialport.IsOpen)
+        {
+            Open();
+        }
+        if (serialport.IsOpen)
+        {
+            serialport.Write(data, 0, data.Length);
+        }
+    }
+
+    public void WriteLine(string data)
+    {
+        if (!serialport.IsOpen)
+        {
+            Open();
+        }
+        if (serialport.IsOpen)
+        {
+            serialport.WriteLine(data);
+        }
+    }
+
+    protected virtual void DataReceived(object sender, SerialDataReceivedEventArgs e)
+    {
+        receiveddata = serialport.ReadExisting();
+    }
+
+    protected virtual void ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+    {
+        switch (e.EventType)
+        {
+            case SerialError.Frame:
+                Debug.Log("Frame Error.");
+                break;
+            case SerialError.Overrun:
+                Debug.Log("Buffer Overrun.");
+                break;
+            case SerialError.RXOver:
+                Debug.Log("Input Overflow.");
+                break;
+            case SerialError.RXParity:
+                Debug.Log("Input Parity Error.");
+                break;
+            case SerialError.TXFull:
+                Debug.Log("Output Full.");
+                break;
+        }
+    }
+
+    protected virtual void PinChanged(object sender, SerialPinChangedEventArgs e)
+    {
+
     }
 }
 

@@ -16,17 +16,17 @@ public class Timer : Stopwatch
         Start();
     }
 
-    public void Countdown(double dur)
+    public void Countdown(double duration)
     {
         if (!IsRunning)
         {
             Start();
         }
-        var start = Elapsed.TotalSeconds;
-        var end = Elapsed.TotalSeconds;
-        while ((end - start) < dur)
+        var start = ElapsedSeconds;
+        var end = ElapsedSeconds;
+        while ((end - start) < duration)
         {
-            end = Elapsed.TotalSeconds;
+            end = ElapsedSeconds;
         }
     }
 }
@@ -55,11 +55,16 @@ public class NetBehaviorBase : NetworkBehaviour
     public float time=-1000000;
 
     public Timer t = new Timer();
+    public new Renderer renderer;
 
+    void Awake()
+    {
+        renderer = gameObject.GetComponent<Renderer>();
+    }
 
     public virtual void OnVisible(bool v)
     {
-        GetComponent<Renderer>().enabled = v;
+        renderer.enabled = v;
         visible = v;
     }
 
@@ -78,14 +83,14 @@ public class NetBehaviorBase : NetworkBehaviour
     public virtual void OnLength(float l)
     {
         transform.localScale = new Vector3(l, width, height);
-        GetComponent<Renderer>().material.SetFloat("length", l);
+        renderer.material.SetFloat("length", l);
         length = l;
     }
 
     public virtual void OnWidth(float w)
     {
         transform.localScale = new Vector3(length, w, height);
-        GetComponent<Renderer>().material.SetFloat("width", w);
+        renderer.material.SetFloat("width", w);
         width = w;
     }
 
@@ -97,7 +102,7 @@ public class NetBehaviorBase : NetworkBehaviour
 
     public virtual void OnColor(Color c)
     {
-        GetComponent<Renderer>().material.color = c;
+        renderer.material.color = c;
         color = c;
     }
 

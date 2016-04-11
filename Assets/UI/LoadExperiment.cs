@@ -11,12 +11,14 @@ public class LoadExperiment: MonoBehaviour
     GameObject exlogic;
     ExParam exparam;
     string[] exfiles;
+    CondParam condpath;
 
     void Awake()
     {
         dropdown = gameObject.GetComponent<Dropdown>();
         exlogic = GameObject.Find("ExperimentLogic");
         exparam = GameObject.Find("ExContent").GetComponent<ExParam>();
+        condpath = GameObject.Find("ConditionPath").GetComponent<CondParam>();
 
         UpdateEx();
     }
@@ -54,9 +56,33 @@ public class LoadExperiment: MonoBehaviour
         {
             ex.id = ex.name;
         }
+        if(ex.experimenter==null)
+        {
+            ex.experimenter = "";
+        }
         if(ex.subject==null)
         {
             ex.subject = new Subject();
+        }
+        if(ex.param==null)
+        {
+            ex.param = new Dictionary<string, object>();
+        }
+        if(ex.condpath==null)
+        {
+            ex.condpath = "";
+        }
+        if(ex.condtestpath==null)
+        {
+            ex.condtestpath = "ConditionTest/";
+            if (!Directory.Exists(ex.condtestpath))
+            {
+                Directory.CreateDirectory(ex.condtestpath);
+            }
+        }
+        if(ex.inheritparams==null)
+        {
+            ex.inheritparams = new List<string>();
         }
         OnLoad(ex);
     }
@@ -68,7 +94,26 @@ public class LoadExperiment: MonoBehaviour
         var logic = exlogic.GetComponent<ExperimentLogic>();
         logic.ex = ex;
 
-        exparam.UpdateParam(ex);
+        exparam.UpdateParam(logic.ex);
+        condpath.UpdateParam(logic);
+    }
+
+    public void SaveEx()
+    {
+        var ex = exlogic.GetComponent<ExperimentLogic>().ex;
+        var cond = ex.cond;
+        var condtest = ex.condtest;
+        ex.cond = null;
+        ex.condtest = null;
+        try
+        {
+            Yaml.WriteYaml(exfiles[dropdown.value], ex);
+        }
+        finally
+        {
+            ex.cond = cond;
+            ex.condtest = condtest;
+        }
     }
 
     void Start()
