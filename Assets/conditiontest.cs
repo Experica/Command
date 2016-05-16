@@ -1,14 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿// --------------------------------------------------------------
+// ConditionTest.cs is part of the VLab project.
+// Copyright (c) 2016 All Rights Reserved
+// Li Alex Zhang fff008@gmail.com
+// 5-9-2016
+// --------------------------------------------------------------
 
-public class conditiontest : ExperimentLogic
+using UnityEngine;
+using System.Collections;
+using VLab;
+
+public class ConditionTest : ExperimentLogic
 {
     public override void Init()
     {
-        ex.conddur = 0.5;
-        ex.preICI = 0.1;
-        ex.sufICI = 0.1;
-        ex.condrepeat = 3;
+        //ex.conddur = 500;
+        //ex.preICI = 100;
+        //ex.sufICI = 100;
+        //ex.condrepeat = 3;
     }
 
     public override void Logic()
@@ -16,20 +24,20 @@ public class conditiontest : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.activenetbehavior.visible = false;
+                envmanager.ActiveSyncVisible(false);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold() >= ex.preICI)
                 {
-                    envmanager.activenetbehavior.visible = true;
+                    envmanager.ActiveSyncVisible(true);
                     CondState = CONDSTATE.COND;
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold() >= ex.conddur)
                 {
-                    envmanager.activenetbehavior.visible = false;
+                    envmanager.ActiveSyncVisible(false);
                     CondState = CONDSTATE.SUFICI;
                 }
                 break;

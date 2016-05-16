@@ -3608,7 +3608,7 @@ If relativePath is empty it refers to the game object the animation clip is atta
       </summary>
       <param name="delegateMethod">Delegate method.</param>
       <returns>
-        <para>In case of error returns false and the delegate method will not be invoked.</para>
+        <para>Returns true if successful, or false for platforms which do not support Advertising Identifiers. In this case, the delegate method is not invoked.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.Application.RequestUserAuthorization(UnityEngine.UserAuthorization)">
@@ -4329,6 +4329,7 @@ Note: Every time you call the method with tolerance specified, a new instance of
       </summary>
       <param name="path">Path of the file on disk.</param>
       <param name="crc">An optional CRC-32 checksum of the uncompressed content. If this is non-zero, then the content will be compared against the checksum before loading it, and give an error if it does not match.</param>
+      <param name="offset">An optional byte offset. This value specifies where to start reading the AssetBundle from.</param>
       <returns>
         <para>Loaded AssetBundle object or null if failed.</para>
       </returns>
@@ -4339,6 +4340,7 @@ Note: Every time you call the method with tolerance specified, a new instance of
       </summary>
       <param name="path">Path of the file on disk.</param>
       <param name="crc">An optional CRC-32 checksum of the uncompressed content. If this is non-zero, then the content will be compared against the checksum before loading it, and give an error if it does not match.</param>
+      <param name="offset">An optional byte offset. This value specifies where to start reading the AssetBundle from.</param>
       <returns>
         <para>Asynchronous create request for an AssetBundle. Use AssetBundleCreateRequest.assetBundle property to get an AssetBundle once it is loaded.</para>
       </returns>
@@ -7698,6 +7700,11 @@ See Also: CanvasRenderer.SetMaterialCount, CanvasRenderer.SetTexture.</para>
         <para>An array of CapsuleColliders which this Cloth instance should collide with.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Cloth.clothSolverFrequency">
+      <summary>
+        <para>Number of cloth solver iterations per second.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Cloth.coefficients">
       <summary>
         <para>The cloth skinning coefficients used to set up how the cloth interacts with the skinned mesh.</para>
@@ -7713,9 +7720,19 @@ See Also: CanvasRenderer.SetMaterialCount, CanvasRenderer.SetTexture.</para>
         <para>Damp cloth motion.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Cloth.enableContinuousCollision">
+      <summary>
+        <para>Enable continuous collision to improve collision stability.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Cloth.enabled">
       <summary>
         <para>Is this cloth enabled?</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Cloth.enableTethers">
+      <summary>
+        <para>Enable Tether Anchors.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Cloth.externalAcceleration">
@@ -7756,11 +7773,6 @@ See Also: CanvasRenderer.SetMaterialCount, CanvasRenderer.SetTexture.</para>
     <member name="P:UnityEngine.Cloth.stretchingStiffness">
       <summary>
         <para>Stretching stiffness of the cloth.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Cloth.useContinuousCollision">
-      <summary>
-        <para>Enable continuous collision to improve collision stability.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Cloth.useGravity">
@@ -9119,6 +9131,15 @@ See Also: CanvasRenderer.SetMaterialCount, CanvasRenderer.SetTexture.</para>
         <para>Kernel index, or -1 if not found.</para>
       </returns>
     </member>
+    <member name="M:UnityEngine.ComputeShader.GetKernelThreadGroupSizes(System.Int32,System.UInt32&amp;,System.UInt32&amp;,System.UInt32&amp;)">
+      <summary>
+        <para>Get kernel thread group sizes.</para>
+      </summary>
+      <param name="kernelIndex">Which kernel to query. A single compute shader asset can have multiple kernel entry points.</param>
+      <param name="x">Thread group size in the X dimension.</param>
+      <param name="y">Thread group size in the Y dimension.</param>
+      <param name="z">Thread group size in the Z dimension.</param>
+    </member>
     <member name="M:UnityEngine.ComputeShader.HasKernel(System.String)">
       <summary>
         <para>Checks whether a shader contains a given kernel.</para>
@@ -10348,6 +10369,11 @@ Sometimes it is not possible to project (for example when the joints form a cycl
     <member name="F:UnityEngine.DepthTextureMode.DepthNormals">
       <summary>
         <para>Generate a depth + normals texture.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.DepthTextureMode.MotionVectors">
+      <summary>
+        <para>Specifies whether motion vectors should be rendered (if possible).</para>
       </summary>
     </member>
     <member name="F:UnityEngine.DepthTextureMode.None">
@@ -12522,10 +12548,10 @@ You can specify either the absolute path or the relative path. When the path you
     </member>
     <member name="M:UnityEngine.Experimental.Director.IAnimatorControllerPlayable.HasState(System.Int32,System.Int32)">
       <summary>
-        <para>Returns true if the AnimatorState is present in the Animator's controller.</para>
+        <para>Returns true if the AnimatorState is present in the Animator's controller. For a state named State in sub state machine SubStateMachine of state machine StateMachine, the shortNameHash can be generated using Animator.StringToHash("State"), and the fullPathHash can be generated using Animator.StringToHash("StateMachine.SubStateMachine.State"). Typically, the name of the top level state machine is the name of the Layer.</para>
       </summary>
       <param name="layerIndex">The layer's index.</param>
-      <param name="stateID">The AnimatorState fullPathHash, nameHash or shortNameHash.</param>
+      <param name="stateID">The AnimatorState fullPathHash or shortNameHash.</param>
     </member>
     <member name="M:UnityEngine.Experimental.Director.IAnimatorControllerPlayable.IsInTransition(System.Int32)">
       <summary>
@@ -13744,6 +13770,11 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
         <para>End drawing 3D primitives.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.GL.Flush">
+      <summary>
+        <para>Sends queued-up commands in the driver's command buffer to the GPU.</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.GL.GetGPUProjectionMatrix(UnityEngine.Matrix4x4,System.Boolean)">
       <summary>
         <para>Compute GPU projection matrix from camera's projection matrix.</para>
@@ -14109,8 +14140,9 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32)">
       <summary>
@@ -14127,8 +14159,9 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,System.Boolean,System.Boolean)">
       <summary>
@@ -14145,8 +14178,28 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
+    </member>
+    <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,System.Boolean,System.Boolean,System.Boolean)">
+      <summary>
+        <para>Draw a mesh.</para>
+      </summary>
+      <param name="mesh">The Mesh to draw.</param>
+      <param name="position">Position of the mesh.</param>
+      <param name="rotation">Rotation of the mesh.</param>
+      <param name="matrix">Transformation matrix of the mesh (combines position, rotation and other transformations).</param>
+      <param name="material">Material to use.</param>
+      <param name="layer"> to use.</param>
+      <param name="camera">If null (default), the mesh will be drawn in all cameras. Otherwise it will be rendered in the given camera only.</param>
+      <param name="submeshIndex">Which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
+      <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
+      <param name="castShadows">Should the mesh cast shadows?</param>
+      <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
+      <param name="materialIndex"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,UnityEngine.Rendering.ShadowCastingMode,System.Boolean,UnityEngine.Transform)">
       <summary>
@@ -14163,8 +14216,28 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
+    </member>
+    <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,UnityEngine.Rendering.ShadowCastingMode,System.Boolean,UnityEngine.Transform,System.Boolean)">
+      <summary>
+        <para>Draw a mesh.</para>
+      </summary>
+      <param name="mesh">The Mesh to draw.</param>
+      <param name="position">Position of the mesh.</param>
+      <param name="rotation">Rotation of the mesh.</param>
+      <param name="matrix">Transformation matrix of the mesh (combines position, rotation and other transformations).</param>
+      <param name="material">Material to use.</param>
+      <param name="layer"> to use.</param>
+      <param name="camera">If null (default), the mesh will be drawn in all cameras. Otherwise it will be rendered in the given camera only.</param>
+      <param name="submeshIndex">Which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
+      <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
+      <param name="castShadows">Should the mesh cast shadows?</param>
+      <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
+      <param name="materialIndex"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4)">
       <summary>
@@ -14181,8 +14254,9 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4,System.Int32)">
       <summary>
@@ -14199,8 +14273,9 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,System.Boolean,System.Boolean)">
       <summary>
@@ -14217,8 +14292,28 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
+    </member>
+    <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,System.Boolean,System.Boolean,System.Boolean)">
+      <summary>
+        <para>Draw a mesh.</para>
+      </summary>
+      <param name="mesh">The Mesh to draw.</param>
+      <param name="position">Position of the mesh.</param>
+      <param name="rotation">Rotation of the mesh.</param>
+      <param name="matrix">Transformation matrix of the mesh (combines position, rotation and other transformations).</param>
+      <param name="material">Material to use.</param>
+      <param name="layer"> to use.</param>
+      <param name="camera">If null (default), the mesh will be drawn in all cameras. Otherwise it will be rendered in the given camera only.</param>
+      <param name="submeshIndex">Which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
+      <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
+      <param name="castShadows">Should the mesh cast shadows?</param>
+      <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
+      <param name="materialIndex"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,UnityEngine.Rendering.ShadowCastingMode,System.Boolean)">
       <summary>
@@ -14235,8 +14330,28 @@ A trigger parameter is a bool parameter that gets reset to false when it has bee
       <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
       <param name="castShadows">Should the mesh cast shadows?</param>
       <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
       <param name="materialIndex"></param>
-      <param name="probeAnchor"></param>
+    </member>
+    <member name="M:UnityEngine.Graphics.DrawMesh(UnityEngine.Mesh,UnityEngine.Matrix4x4,UnityEngine.Material,System.Int32,UnityEngine.Camera,System.Int32,UnityEngine.MaterialPropertyBlock,UnityEngine.Rendering.ShadowCastingMode,System.Boolean,UnityEngine.Transform,System.Boolean)">
+      <summary>
+        <para>Draw a mesh.</para>
+      </summary>
+      <param name="mesh">The Mesh to draw.</param>
+      <param name="position">Position of the mesh.</param>
+      <param name="rotation">Rotation of the mesh.</param>
+      <param name="matrix">Transformation matrix of the mesh (combines position, rotation and other transformations).</param>
+      <param name="material">Material to use.</param>
+      <param name="layer"> to use.</param>
+      <param name="camera">If null (default), the mesh will be drawn in all cameras. Otherwise it will be rendered in the given camera only.</param>
+      <param name="submeshIndex">Which subset of the mesh to draw. This applies only to meshes that are composed of several materials.</param>
+      <param name="properties">Additional material properties to apply onto material just before this mesh will be drawn. See MaterialPropertyBlock.</param>
+      <param name="castShadows">Should the mesh cast shadows?</param>
+      <param name="receiveShadows">Should the mesh receive shadows?</param>
+      <param name="useLightProbes">Should the mesh use light probes?</param>
+      <param name="probeAnchor">If used, the mesh will use this Transform's position to sample light probes and find the matching reflection probe.</param>
+      <param name="materialIndex"></param>
     </member>
     <member name="M:UnityEngine.Graphics.DrawMeshNow(UnityEngine.Mesh,UnityEngine.Vector3,UnityEngine.Quaternion)">
       <summary>
@@ -23646,6 +23761,22 @@ Only usable on Android, Windows Phone or Windows Tablets.</para>
       <param name="name"></param>
       <param name="nameID"></param>
     </member>
+    <member name="M:UnityEngine.MaterialPropertyBlock.SetBuffer(System.String,UnityEngine.ComputeBuffer)">
+      <summary>
+        <para>Set a ComputeBuffer property.</para>
+      </summary>
+      <param name="name">The name of the property.</param>
+      <param name="nameID">The name ID of the property retrieved by Shader.PropertyToID.</param>
+      <param name="value">The ComputeBuffer to set.</param>
+    </member>
+    <member name="M:UnityEngine.MaterialPropertyBlock.SetBuffer(System.Int32,UnityEngine.ComputeBuffer)">
+      <summary>
+        <para>Set a ComputeBuffer property.</para>
+      </summary>
+      <param name="name">The name of the property.</param>
+      <param name="nameID">The name ID of the property retrieved by Shader.PropertyToID.</param>
+      <param name="value">The ComputeBuffer to set.</param>
+    </member>
     <member name="M:UnityEngine.MaterialPropertyBlock.SetColor(System.String,UnityEngine.Color)">
       <summary>
         <para>Set a color property.</para>
@@ -29302,6 +29433,11 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
         <para>The maximum number of collision shapes that will be considered for particle collisions. Excess shapes will be ignored. Terrains take priority.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.ParticleSystem.CollisionModule.maxKillSpeed">
+      <summary>
+        <para>Kill particles whose speed goes above this threshold, after a collision.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.ParticleSystem.CollisionModule.maxPlaneCount">
       <summary>
         <para>The maximum number of planes it is possible to set as colliders.</para>
@@ -29487,7 +29623,7 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     </member>
     <member name="P:UnityEngine.ParticleSystem.EmitParams.applyShapeToPosition">
       <summary>
-        <para>When overriding the position of particles, this flag allows you to retain the influence of the shape module.</para>
+        <para>When overriding the position of particles, setting this flag to true allows you to retain the influence of the shape module.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.EmitParams.axisOfRotation">
@@ -29723,6 +29859,11 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
         <para>Script interface for a Min-Max Curve.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.ParticleSystem.MinMaxCurve.constant">
+      <summary>
+        <para>Set the constant value.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.ParticleSystem.MinMaxCurve.constantMax">
       <summary>
         <para>Set a constant for the upper bound.</para>
@@ -29731,6 +29872,11 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     <member name="P:UnityEngine.ParticleSystem.MinMaxCurve.constantMin">
       <summary>
         <para>Set a constant for the lower bound.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.MinMaxCurve.curve">
+      <summary>
+        <para>Set the curve.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.MinMaxCurve.curveMax">
@@ -29781,9 +29927,34 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
       <param name="min">The constant describing the minimum values to be evaluated.</param>
       <param name="max">The constant describing the maximum values to be evaluated.</param>
     </member>
+    <member name="M:UnityEngine.ParticleSystem.MinMaxCurve.Evaluate(System.Single)">
+      <summary>
+        <para>Manually query the curve to calculate values based on what mode it is in.</para>
+      </summary>
+      <param name="time">Percentage along the curve when mode is set to an appropriate value (0-1).</param>
+      <param name="lerpFactor">Blend between the 2 curves/constants when mode is set to an appropriate value (0-1).</param>
+      <returns>
+        <para>Calculated curve/constant value.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.ParticleSystem.MinMaxCurve.Evaluate(System.Single,System.Single)">
+      <summary>
+        <para>Manually query the curve to calculate values based on what mode it is in.</para>
+      </summary>
+      <param name="time">Percentage along the curve when mode is set to an appropriate value (0-1).</param>
+      <param name="lerpFactor">Blend between the 2 curves/constants when mode is set to an appropriate value (0-1).</param>
+      <returns>
+        <para>Calculated curve/constant value.</para>
+      </returns>
+    </member>
     <member name="T:UnityEngine.ParticleSystem.MinMaxGradient">
       <summary>
         <para>Script interface for a Min-Max Gradient.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.MinMaxGradient.color">
+      <summary>
+        <para>Set a constant color.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.MinMaxGradient.colorMax">
@@ -29794,6 +29965,11 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     <member name="P:UnityEngine.ParticleSystem.MinMaxGradient.colorMin">
       <summary>
         <para>Set a constant color for the lower bound.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.MinMaxGradient.gradient">
+      <summary>
+        <para>Set the gradient.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.MinMaxGradient.gradientMax">
@@ -29836,6 +30012,26 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
       </summary>
       <param name="min">The gradient describing the minimum colors to be evaluated.</param>
       <param name="max">The gradient describing the maximum colors to be evaluated.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystem.MinMaxGradient.Evaluate(System.Single)">
+      <summary>
+        <para>Manually query the gradient to calculate colors based on what mode it is in.</para>
+      </summary>
+      <param name="time">Percentage along the gradient when mode is set to an appropriate value (0-1).</param>
+      <param name="lerpFactor">Blend between the 2 gradients/colors when mode is set to an appropriate value (0-1).</param>
+      <returns>
+        <para>Calculated gradient/color value.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.ParticleSystem.MinMaxGradient.Evaluate(System.Single,System.Single)">
+      <summary>
+        <para>Manually query the gradient to calculate colors based on what mode it is in.</para>
+      </summary>
+      <param name="time">Percentage along the gradient when mode is set to an appropriate value (0-1).</param>
+      <param name="lerpFactor">Blend between the 2 gradients/colors when mode is set to an appropriate value (0-1).</param>
+      <returns>
+        <para>Calculated gradient/color value.</para>
+      </returns>
     </member>
     <member name="T:UnityEngine.ParticleSystem.Particle">
       <summary>
@@ -30095,7 +30291,7 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     </member>
     <member name="P:UnityEngine.ParticleSystem.ShapeModule.useMeshColors">
       <summary>
-        <para>Modulate the particle colours with the vertex colors, or the material color if no vertex colors exist.</para>
+        <para>Modulate the particle colors with the vertex colors, or the material color if no vertex colors exist.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.ShapeModule.useMeshMaterialIndex">
@@ -30929,6 +31125,16 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
         <para>The default contact offset of the newly created colliders.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Physics.defaultSolverIterations">
+      <summary>
+        <para>The defaultSolverIterations determines how accurately Rigidbody joints and collision contacts are resolved. (default 6). Must be positive.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Physics.defaultSolverVelocityIterations">
+      <summary>
+        <para>The defaultSolverVelocityIterations affects how how accurately Rigidbody joints and collision contacts are resolved. (default 1). Must be positive.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Physics.gravity">
       <summary>
         <para>The gravity applied to all rigid bodies in the scene.</para>
@@ -30962,11 +31168,6 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     <member name="P:UnityEngine.Physics.sleepVelocity">
       <summary>
         <para>The default linear velocity, below which objects start going to sleep (default 0.15). Must be positive.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Physics.solverIterationCount">
-      <summary>
-        <para>The default solver iteration count permitted for any rigid bodies (default 7). Must be positive.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Physics.AllLayers">
@@ -34493,6 +34694,11 @@ See Also: ReflectionProbeTimeSlicingMode.</para>
         <para>Returns all the instantiated materials of this object.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Renderer.motionVectors">
+      <summary>
+        <para>Specifies whether this renderer has a per-object motion vector pass.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Renderer.probeAnchor">
       <summary>
         <para>If set, Renderer will use this Transform's position to find the light or reflection probe.</para>
@@ -34956,9 +35162,29 @@ See Also: ReflectionProbeTimeSlicingMode.</para>
         <para>Shader used for legacy deferred lighting calculations.</para>
       </summary>
     </member>
+    <member name="F:UnityEngine.Rendering.BuiltinShaderType.LensFlare">
+      <summary>
+        <para>Default shader used for lens flares.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Rendering.BuiltinShaderType.LightHalo">
+      <summary>
+        <para>Default shader used for light halos.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Rendering.BuiltinShaderType.MotionVectors">
+      <summary>
+        <para>Shader used for Motion Vectors when enabled on a Camera.</para>
+      </summary>
+    </member>
     <member name="F:UnityEngine.Rendering.BuiltinShaderType.ScreenSpaceShadows">
       <summary>
         <para>Shader used for screen-space cascaded shadows.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Rendering.BuiltinShaderType.Sprite">
+      <summary>
+        <para>Default shader used by sprites.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Rendering.CameraEvent">
@@ -35823,6 +36049,11 @@ See Also: ReflectionProbeTimeSlicingMode.</para>
         <para>Shader pass used to generate the albedo and emissive values used as input to lightmapping.</para>
       </summary>
     </member>
+    <member name="F:UnityEngine.Rendering.PassType.MotionVectors">
+      <summary>
+        <para>Motion vector render pass.</para>
+      </summary>
+    </member>
     <member name="F:UnityEngine.Rendering.PassType.Normal">
       <summary>
         <para>Regular shader pass that does not interact with lighting.</para>
@@ -36008,7 +36239,7 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
     </member>
     <member name="T:UnityEngine.Rendering.RenderBufferLoadAction">
       <summary>
-        <para>Handling of loading RenderBuffer contents on setting as active RenderTarget. It has effect only on some platforms.</para>
+        <para>Handling of loading RenderBuffer contents on setting as active RenderTarget.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Rendering.RenderBufferLoadAction.DontCare">
@@ -36023,7 +36254,7 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
     </member>
     <member name="T:UnityEngine.Rendering.RenderBufferStoreAction">
       <summary>
-        <para>Handling of storing RenderBuffer contents after it was an active RenderTarget and another RenderTarget was set. It has effect only on some platforms.</para>
+        <para>Handling of storing RenderBuffer contents after it was an active RenderTarget and another RenderTarget was set.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Rendering.RenderBufferStoreAction.DontCare">
@@ -36460,6 +36691,116 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
       <summary>
         <para>The global skybox to use.</para>
       </summary>
+    </member>
+    <member name="T:UnityEngine.RenderTargetSetup">
+      <summary>
+        <para>Fully describes setup of RenderTarget.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.color">
+      <summary>
+        <para>Color Buffers to set.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.colorLoad">
+      <summary>
+        <para>Load Actions for Color Buffers. It will override any actions set on RenderBuffers themselves.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.colorStore">
+      <summary>
+        <para>Store Actions for Color Buffers. It will override any actions set on RenderBuffers themselves.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.cubemapFace">
+      <summary>
+        <para>Cubemap face to render to.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.depth">
+      <summary>
+        <para>Depth Buffer to set.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.depthLoad">
+      <summary>
+        <para>Load Action for Depth Buffer. It will override any actions set on RenderBuffer itself.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.depthSlice">
+      <summary>
+        <para>Slice of a Texture3D or Texture2DArray to set as a render target.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.depthStore">
+      <summary>
+        <para>Store Actions for Depth Buffer. It will override any actions set on RenderBuffer itself.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.RenderTargetSetup.mipLevel">
+      <summary>
+        <para>Mip Level to render to.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer,UnityEngine.RenderBuffer)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer,UnityEngine.RenderBuffer,System.Int32)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer,UnityEngine.RenderBuffer,System.Int32,UnityEngine.CubemapFace)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer[],UnityEngine.RenderBuffer)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer[],UnityEngine.RenderBuffer,System.Int32)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
+    </member>
+    <member name="M:UnityEngine.RenderTargetSetup.#ctor(UnityEngine.RenderBuffer[],UnityEngine.RenderBuffer,System.Int32,UnityEngine.CubemapFace)">
+      <summary>
+        <para>Constructs RenderTargetSetup.</para>
+      </summary>
+      <param name="color">Color Buffer(s) to set.</param>
+      <param name="depth">Depth Buffer to set.</param>
+      <param name="mipLevel">Mip Level to render to.</param>
+      <param name="face">Cubemap face to render to.</param>
+      <param name="mip"></param>
     </member>
     <member name="T:UnityEngine.RenderTexture">
       <summary>
@@ -37028,9 +37369,14 @@ Updating a probe's cubemap is a costly operation. Unity needs to render the enti
         <para>The linear velocity below which objects start going to sleep. (Default 0.14) range { 0, infinity }.</para>
       </summary>
     </member>
-    <member name="P:UnityEngine.Rigidbody.solverIterationCount">
+    <member name="P:UnityEngine.Rigidbody.solverIterations">
       <summary>
-        <para>Allows you to override the solver iteration count per rigidbody.</para>
+        <para>The solverIterations determines how accurately Rigidbody joints and collision contacts are resolved. Overrides Physics.defaultSolverIterations. Must be positive.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Rigidbody.solverVelocityIterations">
+      <summary>
+        <para>The solverVelocityIterations affects how how accurately Rigidbody joints and collision contacts are resolved. Overrides Physics.defaultSolverVelocityIterations. Must be positive.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Rigidbody.useConeFriction">
@@ -38802,6 +39148,11 @@ It is required that the GameObject is at the root of its current scene.</para>
     <member name="P:UnityEngine.SkinnedMeshRenderer.sharedMesh">
       <summary>
         <para>The mesh used for skinning.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.SkinnedMeshRenderer.skinnedMotionVectors">
+      <summary>
+        <para>Specifies whether skinned motion vectors should be used for this renderer.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.SkinnedMeshRenderer.updateWhenOffscreen">

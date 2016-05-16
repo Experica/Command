@@ -1,16 +1,17 @@
 name: fixation
 id: fixation
 experimenter: ''
-subject:
-  id: C1603
+subject_id: ''
+envparam: {}
 condpath: ''
-condtestpath: ConditionTest/
+experimentlogicpath: C:\Users\fff00\VLab\ExperimentLogic\ttlconditiontest.cs
 recordsession: ''
 recordsite: ''
-condrepeat: 2
-preICI: 0.1
-conddur: 0.5
-sufICI: 0.1
+condtestdir: ConditionTest
+condrepeat: 4
+preICI: 100
+conddur: 500
+sufICI: 100
 param: {}
-inheritparams:
-- experimenter
+exinheritparams: []
+envinheritparams: []

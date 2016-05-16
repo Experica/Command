@@ -1,20 +1,20 @@
 name: conditiontest
 id: conditiontest
+designer: alex
 experimenter: alex
-subject:
-  id: C1603
-condpath: C:\Users\LyonLab\VLab\Condition\LaserConditionTest.yaml
-condtestpath: ConditionTest/
+subject_id: ''
+environmentpath: Showroom
+envparam: {}
+condpath: Condition\ConditionTest.yaml
+experimentlogicpath: ConditionTest
 recordsession: V1
-recordsite: ''
-condrepeat: 2
-preICI: 0.2
-conddur: 0.5
-sufICI: 0.1
-param:
-  subject_id: ''
-  subject_age: ''
-inheritparams:
-- experimenter
-- recordsession
-- preICI
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\_V1_358_conditiontest_30.yaml
+condrepeat: 3
+preICI: 100
+conddur: 500
+sufICI: 100
+param: {}
+exinheritparams: []
+envinheritparams: []

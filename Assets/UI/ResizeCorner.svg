@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="110"
+   height="110"
+   viewBox="0 0 110 110"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   inkscape:export-filename="C:\Users\fff00\VLab\Assets\UI\ResizeCorner.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   sodipodi:docname="ResizeCorner.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="-36.071429"
+     inkscape:cy="51.000578"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-page="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px"
+     inkscape:window-width="1368"
+     inkscape:window-height="849"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-607.37958,-546.9336)">
+    <g
+       id="g4168"
+       transform="translate(1.3845544,2.719275)">
+      <rect
+         y="587.23706"
+         x="682.974"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-71"
+         style="fill:#e3e2db;stroke:none" />
+      <rect
+         y="553.28076"
+         x="682.974"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-0"
+         style="fill:#e3e2db;stroke:none" />
+      <rect
+         y="587.23706"
+         x="649.0177"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-8"
+         style="fill:#e3e2db;stroke:none" />
+      <rect
+         transform="matrix(0,1,-1,0,0,0)"
+         y="-639.01605"
+         x="621.1933"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-7-1"
+         style="fill:#e3e2db;stroke:none" />
+      <rect
+         transform="matrix(0,1,-1,0,0,0)"
+         y="-672.97229"
+         x="621.1933"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-71-6"
+         style="fill:#e3e2db;stroke:none" />
+      <rect
+         transform="matrix(0,1,-1,0,0,0)"
+         y="-706.92859"
+         x="621.1933"
+         height="23.95459"
+         width="23.95459"
+         id="rect4239-0-0"
+         style="fill:#e3e2db;stroke:none" />
+    </g>
+  </g>
+</svg>

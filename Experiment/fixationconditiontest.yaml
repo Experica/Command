@@ -1,17 +1,11 @@
 name: fixationconditiontest
 id: fixationconditiontest
 experimenter: alex
-subject:
-  id: C1603
 condpath: ''
 condtestpath: ConditionTest/
 recordsession: V1
 recordsite: ''
-condrepeat: 2
-preICI: 0.1
-conddur: 0.5
-sufICI: 0.1
-param: {}
-inheritparams:
-- experimenter
-- recordsession
+condrepeat: 4
+preICI: 100
+conddur: 500
+sufICI: 100

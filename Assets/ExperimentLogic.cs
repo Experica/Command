@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------
+// ExperimentLogic.cs is part of the VLab project.
+// Copyright (c) 2016 All Rights Reserved
+// Li Alex Zhang fff008@gmail.com
+// 5-9-2016
+// --------------------------------------------------------------
+
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
@@ -9,833 +16,706 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using XippmexDotNet;
+using MathWorks.MATLAB.NET.Arrays;
+using MathWorks.MATLAB.NET;
+using MathWorks.MATLAB.NET.Utility;
+using MathNet.Numerics;
 
-public class Subject
+namespace VLab
 {
-    public string species { get; set; }
-    public string name { get; set; }
-    public string id { get; set; }
-    public string log { get; set; }
-    public string gender { get; set; }
-    public float age { get; set; }
-    public Vector3 size { get; set; }
-    public float weight { get; set; }
-}
-
-public class Experiment
-{
-    public string name { get; set; }
-    public string id { get; set; }
-    public string experimenter { get; set; }
-    public string log { get; set; }
-    public Subject subject { get; set; }
-    public string condpath { get; set; }
-    public Dictionary<string, List<object>> cond { get; set; }
-    public string condtestpath { get; set; }
-    public Dictionary<string, List<object>> condtest { get; set; }
-    public string environmentpath { get; set; }
-    public List<object> environment { get; set; }
-    public string experimentlogicpath { get; set; }
-    public string experimentlogic { get; set; }
-    public string recordsession { get; set; }
-    public string recordsite { get; set; }
-
-    public int condrepeat { get; set; }
-    public double preICI { get; set; }
-    public double conddur { get; set; }
-    public double sufICI { get; set; }
-    public double preITI { get; set; }
-    public double trialdur { get; set; }
-    public double sufITI { get; set; }
-    public double preIBI { get; set; }
-    public double blockdur { get; set; }
-    public double sufIBI { get; set; }
-    public Dictionary<string,object> param { get; set; }
-    public List<string> inheritparams { get; set; }
-}
-
-
-public enum SampleMethod
-{
-    Ascending = 0,
-    Descending = 1,
-    UniformWithReplacement = 2,
-    UniformWithoutReplacement = 3
-}
-
-public class ConditionManager
-{
-    public Dictionary<string, List<object>> cond;
-    public int nfactor;
-    public int ncond;
-    public List<int> popcondidx;
-    public Dictionary<int,int> condrepeat;
-    public int sampleidx = -1;
-    public SampleMethod samplemethod = SampleMethod.Ascending;
-    public int scendingstep = 1;
-    public int condidx = -1;
-    public int sampleignores = 0;
-    public System.Random rng = new System.Random();
-    public EnvironmentManager envmanager = new EnvironmentManager();
-
-
-    public Dictionary<string, List<object>> ReadCondition(string path)
+    public class Experiment
     {
-        if(!File.Exists(path))
+        public string name { get; set; }
+        public string id { get; set; }
+        public string designer { get; set; }
+        public string experimenter { get; set; }
+        public string log { get; set; }
+
+        public string subject_species { get; set; }
+        public string subject_name { get; set; }
+        public string subject_id { get; set; }
+        public string subject_gender { get; set; }
+        public float subject_age { get; set; }
+        public Vector3 subject_size { get; set; }
+        public float subject_weight { get; set; }
+        public string subject_log { get; set; }
+
+        public string environmentpath { get; set; }
+        public Dictionary<string, object> envparam { get; set; }
+        public string condpath { get; set; }
+        public Dictionary<string, List<object>> cond { get; set; }
+        public string experimentlogicpath { get; set; }
+        public string experimentlogic { get; set; }
+
+        public string recordsession { get; set; }
+        public string recordsite { get; set; }
+        public string condtestdir { get; set; }
+        public string condtestpath { get; set; }
+        public Dictionary<string, List<object>> condtest { get; set; }
+        public int condrepeat { get; set; }
+        public int input { get; set; }
+
+        public double preICI { get; set; }
+        public double conddur { get; set; }
+        public double sufICI { get; set; }
+        public double preITI { get; set; }
+        public double trialdur { get; set; }
+        public double sufITI { get; set; }
+        public double preIBI { get; set; }
+        public double blockdur { get; set; }
+        public double sufIBI { get; set; }
+        public Dictionary<string, object> param { get; set; }
+        public List<string> exinheritparams { get; set; }
+        public List<string> envinheritparams { get; set; }
+
+
+        public static readonly Dictionary<string, PropertyInfo> properties;
+        static Experiment()
         {
-            UnityEngine.Debug.Log("File Does not exist.");
-            return null;
-        }
-        cond = Yaml.ReadYaml<Dictionary<string, List<object>>>(path);
-        nfactor = cond.Keys.Count;
-        if (nfactor == 0)
-        {
-            UnityEngine.Debug.Log("Condition Empty.");
-        }
-        else
-        {
-            var fvn = new int[nfactor];
-            for (var i = 0; i < nfactor; i++)
+            properties = new Dictionary<string, PropertyInfo>();
+            foreach (var p in typeof(Experiment).GetProperties())
             {
-                fvn[i] = cond.Values.ElementAt(i).Count;
+                properties[p.Name] = p;
             }
-            var minfvn = fvn.Min();
-            var maxfvn = fvn.Max();
-            if (minfvn != maxfvn)
+        }
+
+        public void SetValue(string name, object value)
+        {
+            if (properties.ContainsKey(name))
             {
-                foreach (var k in cond.Keys)
+                SetValue(this, properties[name], value);
+            }
+        }
+
+        public static void SetValue(Experiment ex, PropertyInfo p, object value)
+        {
+            p.SetValue(ex, VLConvert.Convert(value, p.PropertyType), null);
+        }
+
+        public object GetValue(string name)
+        {
+            object v = null;
+            if (properties.ContainsKey(name))
+            {
+                v = GetValue(this, properties[name]);
+            }
+            return v;
+        }
+
+        public static object GetValue(Experiment ex, PropertyInfo p)
+        {
+            return p.GetValue(ex, null);
+        }
+
+        public virtual Experiment DeepCopy()
+        {
+            var ex = new Experiment();
+            foreach (var pn in properties.Keys)
+            {
+                ex.SetValue(pn, GetValue(pn));
+            }
+            return ex;
+        }
+
+        public virtual string CondTestPath()
+        {
+            var filename = subject_id + "_" + recordsession + "_" + recordsite + "_" + id + "_";
+            var fs = Directory.GetFiles(condtestdir, filename + "*.yaml", SearchOption.AllDirectories);
+            if (fs.Length == 0)
+            {
+                filename = filename + "1.yaml";
+            }
+            else
+            {
+                var ns = new List<int>();
+                foreach (var p in fs)
                 {
-                    cond[k] = cond[k].GetRange(0, minfvn);
+                    var s = p.LastIndexOf('_') + 1;
+                    var e = p.LastIndexOf('.') - 1;
+                    ns.Add(int.Parse(p.Substring(s, e - s + 1)));
                 }
-                UnityEngine.Debug.Log("Cut Condition to Minimum Length.");
+                filename = filename + (ns.Max() + 1).ToString() + ".yaml";
             }
-            ncond = minfvn;
-        }
-        return cond;
-    }
-
-    public List<int> UpdateCondPopulation(bool resetcondrepeat=true)
-    {
-        switch (samplemethod)
-        {
-            case SampleMethod.Ascending:
-                popcondidx = Enumerable.Range(0, ncond).ToList();
-                sampleidx = -1;
-                break;
-            case SampleMethod.Descending:
-                popcondidx = Enumerable.Range(0, ncond).Reverse().ToList();
-                sampleidx = -1;
-                break;
-            case SampleMethod.UniformWithReplacement:
-                popcondidx = Enumerable.Range(0, ncond).ToList();
-                sampleidx = -1;
-                break;
-            case SampleMethod.UniformWithoutReplacement:
-                popcondidx = Enumerable.Range(0, ncond).ToList();
-                sampleidx = -1;
-                break;
-        }
-        if (resetcondrepeat)
-        {
-            condrepeat = new Dictionary<int, int>();
-            foreach(var i in popcondidx)
+            var dir = Path.Combine(condtestdir, subject_id);
+            if (!Directory.Exists(dir))
             {
-                condrepeat[i] = 0;
+                Directory.CreateDirectory(dir);
             }
+            condtestpath = Path.Combine(dir, filename);
+            return condtestpath;
         }
-        return popcondidx;
     }
 
-    public int SampleCondIdx()
+
+
+
+    public class CondTestManager
     {
-        if (sampleignores == 0)
+        public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
+        public int condtestidx = -1;
+
+        public void NewCondTest()
         {
-            switch (samplemethod)
+            condtestidx++;
+        }
+
+        public void Clear()
+        {
+            condtest.Clear();
+            condtestidx = -1;
+        }
+
+        public void Add(string key, object value)
+        {
+            if (condtest.ContainsKey(key))
             {
-                case SampleMethod.Ascending:
-                    sampleidx += scendingstep;
-                    if (sampleidx > popcondidx.Count - 1)
-                    {
-                        sampleidx -= popcondidx.Count;
-                    }
-                    condidx = popcondidx[sampleidx];
-                    break;
-                case SampleMethod.Descending:
-                    sampleidx += scendingstep;
-                    if (sampleidx > popcondidx.Count - 1)
-                    {
-                        sampleidx -= popcondidx.Count;
-                    }
-                    condidx = popcondidx[sampleidx];
-                    break;
-                case SampleMethod.UniformWithReplacement:
-                    sampleidx = rng.Next(popcondidx.Count);
-                    condidx = popcondidx[sampleidx];
-                    break;
-                case SampleMethod.UniformWithoutReplacement:
-                    if (popcondidx.Count == 0)
-                    {
-                        UpdateCondPopulation(false);
-                    }
-                    sampleidx = rng.Next(popcondidx.Count);
-                    condidx = popcondidx[sampleidx];
-                    popcondidx.RemoveAt(sampleidx);
-                    break;
+                var vs = condtest[key];
+                for (var i = vs.Count; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                vs.Add(value);
             }
-            condrepeat[condidx] += 1;
-        }
-        else
-        {
-            sampleignores--;
-        }
-        return condidx;
-    }
-
-    public void PushCondition(int idx)
-    {
-        foreach (var kv in cond)
-        {
-            envmanager.SetParam(kv.Key, kv.Value[idx]);
-        }
-    }
-
-    public void SamplePushCondition()
-    {
-        PushCondition(SampleCondIdx());
-    }
-
-    public bool IsFinishRepeat(int n)
-    {
-        foreach(var i in condrepeat.Values)
-        {
-            if(i<n)
+            else
             {
-                return false;
+                var vs = new List<object>();
+                for (var i = 0; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                vs.Add(value);
+                condtest[key] = vs;
             }
         }
-        return true;
-    }
-}
 
-public class ConditionDesigner
-{
-
-}
-
-public static class ConvertString
-{
-    public static object Convert(Type t, object value)
-    {
-        object v = null;
-        if (t == typeof(float))
+        public void AddEvent(string key, string eventname, double timestamp)
         {
-            v = float.Parse((string)value);
-        }
-        else if (t == typeof(double))
-        {
-            v = double.Parse((string)value);
-        }
-        else if (t == typeof(bool))
-        {
-            v = bool.Parse((string)value);
-        }
-        else if (t == typeof(int))
-        {
-            v = int.Parse((string)value);
-        }
-        else
-        {
-            v = value;
-        }
-        return v;
-    }
-}
-
-public class CondTestManager
-{
-    public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
-    public int condtestidx = -1;
-
-    public void NewCondTest()
-    {
-        condtestidx++;
-    }
-
-    public void Clear()
-    {
-        condtest.Clear();
-        condtestidx = -1;
-    }
-
-    public void Add(string key, object value)
-    {
-        if (condtest.ContainsKey(key))
-        {
-            var vs = condtest[key];
-            for(var i=vs.Count;i<condtestidx;i++)
+            if (condtest.ContainsKey(key))
             {
-                vs.Add(null);
+                var vs = condtest[key];
+                for (var i = vs.Count; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                if (vs.Count < (condtestidx + 1))
+                {
+                    var es = new List<Dictionary<string, double>>();
+                    var e = new Dictionary<string, double>();
+                    e[eventname] = timestamp;
+                    es.Add(e);
+                    vs.Add(es);
+                }
+                else
+                {
+                    var es = (List<Dictionary<string, double>>)vs[condtestidx];
+                    var e = new Dictionary<string, double>();
+                    e[eventname] = timestamp;
+                    es.Add(e);
+                }
             }
-            vs.Add(value);
-        }
-        else
-        {
-            var vs = new List<object>();
-            for(var i=0;i<condtestidx;i++)
+            else
             {
-                vs.Add(null);
-            }
-            vs.Add(value);
-            condtest[key] = vs;
-        }
-    }
-
-    public void AddEvent(string key, string eventname, double timestamp)
-    {
-        if (condtest.ContainsKey(key))
-        {
-            var vs = condtest[key];
-            for (var i = vs.Count; i < condtestidx; i++)
-            {
-                vs.Add(null);
-            }
-            if (vs.Count < (condtestidx + 1))
-            {
+                var vs = new List<object>();
+                for (var i = 0; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
                 var es = new List<Dictionary<string, double>>();
                 var e = new Dictionary<string, double>();
                 e[eventname] = timestamp;
                 es.Add(e);
                 vs.Add(es);
-            }
-            else
-            {
-                var es = (List<Dictionary<string, double>>)vs[condtestidx];
-                var e = new Dictionary<string, double>();
-                e[eventname] = timestamp;
-                es.Add(e);
+                condtest[key] = vs;
             }
         }
-        else
+    }
+
+
+    public class RecordManager
+    {
+        XippmexDotNet.XippmexDotNet xippmex;
+        public RecordManager(string recordsystem)
         {
-            var vs = new List<object>();
-            for (var i = 0; i < condtestidx; i++)
+            switch (recordsystem)
             {
-                vs.Add(null);
-            }
-            var es = new List<Dictionary<string, double>>();
-            var e = new Dictionary<string, double>();
-            e[eventname] = timestamp;
-            es.Add(e);
-            vs.Add(es);
-            condtest[key] = vs;
-        }
-    }
-}
-
-public class EnvironmentManager
-{
-    public Scene scene;
-    public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
-    public Dictionary<string, NetBehaviorBase> netbehavior = new Dictionary<string, NetBehaviorBase>();
-    public Dictionary<string, Dictionary<string, PropertyInfo>> param = new Dictionary<string, Dictionary<string, PropertyInfo>>();
-    public Camera maincamera;
-    public NetBehaviorBase activenetbehavior;
-    public string activenetbehaviorname;
-
-
-    public void AddScene(string scenename)
-    {
-        scene = SceneManager.GetSceneByName(scenename);
-        UpdateEnvironment();
-    }
-
-    public void UpdateEnvironment()
-    {
-        sceneobject.Clear();
-        netbehavior.Clear();
-        param.Clear();
-        maincamera = null;
-        activenetbehavior = null;
-        activenetbehaviorname = null;
-        foreach (var go in scene.GetRootGameObjects())
-        {
-            sceneobject["@" + go.name] = go;
-            ParseSceneObjectInfo(go);
-        }
-    }
-
-    public void ParseSceneObjectInfo(GameObject go)
-    {
-        var ismaincamera = false;
-        if (go.tag == "MainCamera")
-        {
-            maincamera = go.GetComponent<Camera>();
-            ismaincamera = true;
-        }
-        var nbs = go.GetComponents<NetBehaviorBase>();
-        foreach (var nb in nbs)
-        {
-            netbehavior["@" + nb.name + "@" + go.name] = nb;
-            param["@" + nb.name + "@" + go.name] = ParseNetBehaviorInfo(nb);
-            if (!ismaincamera && nb.isActiveAndEnabled)
-            {
-                activenetbehavior = nb;
-                activenetbehaviorname = "@" + nb.name + "@" + go.name;
+                case "ripple":
+                    xippmex = new XippmexDotNet.XippmexDotNet();
+                    break;
             }
         }
-        for (var i = 0; i < go.transform.childCount; i++)
+
+        public void Help()
         {
-            ParseSceneObjectInfo(go.transform.GetChild(i).gameObject);
+            //MWArray[] output = new MWArray[1];
+            //var output = xippmex.xippmex(1,new MWCharArray( "time"));
         }
+
+        public void RecordPath()
+        {
+        }
+
     }
 
-    public Dictionary<string, PropertyInfo> ParseNetBehaviorInfo(NetBehaviorBase nb)
+    public enum CONDSTATE
     {
-        var fs = nb.GetType().GetFields();
-        var ps = new Dictionary<string, PropertyInfo>();
-        foreach (var f in fs)
+        NONE = 0,
+        PREICI = 1,
+        COND = 2,
+        SUFICI = 3
+    }
+
+    public enum TRIALSTATE
+    {
+        NONE = 1000,
+        PREITI = 1001,
+        TRIAL = 1002,
+        SUFITI = 1003
+    }
+
+    public enum BLOCKSTATE
+    {
+        NONE = 2000,
+        PREIBI = 2001,
+        BLOCK = 2002,
+        SUFIBI = 2003
+    }
+
+    public enum EXPERIMENTSTATE
+    {
+        NONE = 3000,
+        PREIEI = 3001,
+        EXPERIMENT = 3002,
+        SUFIEI = 3003
+    }
+
+    public enum PUSHCONDATSTATE
+    {
+        NONE = -1,
+        PREICI = CONDSTATE.PREICI,
+        COND = CONDSTATE.COND,
+        TRIAL = TRIALSTATE.TRIAL
+    }
+
+    public enum CONDTESTATSTATE
+    {
+        NONE = -1,
+        PREICI = CONDSTATE.PREICI,
+        PREITI = TRIALSTATE.PREITI
+    }
+
+
+    public class ExperimentLogic : MonoBehaviour
+    {
+        public Experiment ex = new Experiment();
+        public Timer timer = new Timer();
+
+        public EnvironmentManager envmanager = new EnvironmentManager();
+        public ConditionManager condmanager = new ConditionManager();
+        public CondTestManager condtestmanager = new CondTestManager();
+        public RecordManager recordmanager;
+
+        public bool islogicactive = false;
+
+        public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
+            TrialOnTime, SufITIOnTime;
+
+        public double PreICIHold()
         {
-            if (f.IsDefined(typeof(SyncVarAttribute), true))
+            return timer.ElapsedMS - PreICIOnTime;
+        }
+
+        public double CondHold()
+        {
+            return timer.ElapsedMS - CondOnTime;
+        }
+
+        public double SufICIHold()
+        {
+            return timer.ElapsedMS - SufICIOnTime;
+        }
+
+        public double PreITIHold()
+        {
+            return timer.ElapsedMS - PreITIOnTime;
+        }
+
+        public double TrialHold()
+        {
+            return timer.ElapsedMS - TrialOnTime;
+        }
+
+        public double SufITIHold()
+        {
+            return timer.ElapsedMS - SufITIOnTime;
+        }
+
+        private PUSHCONDATSTATE pushcondatstate = PUSHCONDATSTATE.NONE;
+        public PUSHCONDATSTATE PushCondAtState = PUSHCONDATSTATE.COND;
+        private CONDTESTATSTATE condtestatstate = CONDTESTATSTATE.NONE;
+        public CONDTESTATSTATE CondTestAtState = CONDTESTATSTATE.PREICI;
+
+        private CONDSTATE condstate = CONDSTATE.NONE;
+        public CONDSTATE CondState
+        {
+            get { return condstate; }
+            set
             {
-                ps[f.Name] = nb.GetType().GetProperty("Network" + f.Name);
-            }
-        }
-        return ps;
-    }
-
-    public void SetParam(string key, object value)
-    {
-        NetBehaviorBase nb;
-        string nbkey;
-        string paramname;
-        var i = key.IndexOf("@");
-        if (i == -1)
-        {
-            if (activenetbehavior != null && activenetbehaviorname != null)
-            {
-                paramname = key;
-                nbkey = activenetbehaviorname;
-                nb = activenetbehavior;
-            }
-            else
-            {
-                paramname = key;
-                nbkey = netbehavior.Last().Key;
-                nb = netbehavior.Last().Value;
-            }
-        }
-        else
-        {
-            paramname = key.Substring(0, i);
-            nbkey = key.Substring(i);
-            nb = netbehavior[nbkey];
-        }
-
-        if (!param.ContainsKey(nbkey))
-        {
-            UnityEngine.Debug.Log("Invalid Object Path: " + nbkey);
-            return;
-        }
-        if (!param[nbkey].ContainsKey(paramname))
-        {
-            UnityEngine.Debug.Log("Invalid Param Name: " + paramname);
-            return;
-        }
-        var p = param[nbkey][paramname];
-        p.SetValue(nb, ConvertString.Convert(p.PropertyType,value), null);
-    }
-
-    public void SetMainCameraOrthoSize(float screenhalfheight, float screentoeye)
-    {
-        if (maincamera != null)
-        {
-            maincamera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(screenhalfheight, screentoeye);
-        }
-    }
-}
-
-
-public enum CONDSTATE
-{
-    NONE = 0,
-    PREICI = 1,
-    COND = 2,
-    SUFICI = 3
-}
-
-public enum TRIALSTATE
-{
-    NONE = 1000,
-    PREITI = 1001,
-    TRIAL = 1002,
-    SUFITI = 1003
-}
-
-public enum BLOCKSTATE
-{
-    NONE = 2000,
-    PREIBI = 2001,
-    BLOCK = 2002,
-    SUFIBI = 2003
-}
-
-public enum EXPERIMENTSTATE
-{
-    NONE = 3000,
-    PREIEI = 3001,
-    EXPERIMENT = 3002,
-    SUFIEI = 3003
-}
-
-public enum PUSHCONDATSTATE
-{
-    NONE = -1,
-    PREICI = CONDSTATE.PREICI,
-    COND = CONDSTATE.COND,
-    TRIAL = TRIALSTATE.TRIAL
-}
-
-public enum CONDTESTATSTATE
-{
-    NONE=-1,
-    PREICI = CONDSTATE.PREICI,
-    PREITI = TRIALSTATE.PREITI
-}
-
-
-
-public class ExperimentLogic : MonoBehaviour
-{
-    public Experiment ex = new Experiment();
-    public Timer timer = new Timer();
-
-    public EnvironmentManager envmanager = new EnvironmentManager();
-    public ConditionManager condmanager = new ConditionManager();
-    public CondTestManager condtestmanager = new CondTestManager();
-
-    public bool islogicactive = false;
-
-    public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
-        TrialOnTime, SufITIOnTime;
-
-    public double PreICIHold()
-    {
-        return timer.ElapsedSeconds - PreICIOnTime;
-    }
-
-    public double CondHold()
-    {
-        return timer.ElapsedSeconds - CondOnTime;
-    }
-
-    public double SufICIHold()
-    {
-        return timer.ElapsedSeconds - SufICIOnTime;
-    }
-
-    public double PreITIHold()
-    {
-        return timer.ElapsedSeconds - PreITIOnTime;
-    }
-
-    public double TrialHold()
-    {
-        return timer.ElapsedSeconds - TrialOnTime;
-    }
-
-    public double SufITIHold()
-    {
-        return timer.ElapsedSeconds - SufITIOnTime;
-    }
-
-    private PUSHCONDATSTATE pushcondatstate = PUSHCONDATSTATE.NONE;
-    public PUSHCONDATSTATE PushCondAtState = PUSHCONDATSTATE.COND;
-    private CONDTESTATSTATE condtestatstate = CONDTESTATSTATE.NONE;
-    public CONDTESTATSTATE CondTestAtState = CONDTESTATSTATE.PREICI;
-
-    private CONDSTATE condstate = CONDSTATE.NONE;
-    public CONDSTATE CondState
-    {
-        get { return condstate; }
-        set
-        {
-            switch (value)
-            {
-                case CONDSTATE.PREICI:
-                    if(condtestatstate==CONDTESTATSTATE.PREICI)
-                    {
-                        condtestmanager.NewCondTest();
-                    }
-                    if (pushcondatstate == PUSHCONDATSTATE.PREICI)
-                    {
-                        if (condmanager.IsFinishRepeat(ex.condrepeat))
+                switch (value)
+                {
+                    case CONDSTATE.PREICI:
+                        if (condtestatstate == CONDTESTATSTATE.PREICI)
                         {
-                            StopExperiment();
-                            return;
+                            condtestmanager.NewCondTest();
                         }
-                        else
+                        if (pushcondatstate == PUSHCONDATSTATE.PREICI)
                         {
-                            condmanager.SamplePushCondition();
+                            if (condmanager.IsFinishRepeat(ex.condrepeat))
+                            {
+                                StopExperiment();
+                                return;
+                            }
+                            else
+                            {
+                                condmanager.SamplePushCondition();
+                            }
+                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.Add("CondIndex", condmanager.condidx);
+                                condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            }
                         }
+                        PreICIOnTime = timer.ElapsedMS;
                         if (condtestatstate != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add("CondIndex", condmanager.condidx);
-                            condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.AddEvent("CONDSTATE", value.ToString(), PreICIOnTime);
                         }
-                    }
-                    PreICIOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
-                    {
-                        condtestmanager.AddEvent("CONDSTATE", value.ToString(), PreICIOnTime);
-                    }
-                    break;
-                case CONDSTATE.COND:
-                    if(pushcondatstate==PUSHCONDATSTATE.COND)
-                    {
-                        if (condmanager.IsFinishRepeat(ex.condrepeat))
+                        break;
+                    case CONDSTATE.COND:
+                        if (pushcondatstate == PUSHCONDATSTATE.COND)
                         {
-                            StopExperiment();
-                            return;
+                            if (condmanager.IsFinishRepeat(ex.condrepeat))
+                            {
+                                StopExperiment();
+                                return;
+                            }
+                            else
+                            {
+                                condmanager.SamplePushCondition();
+                            }
+                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.Add("CondIndex", condmanager.condidx);
+                                condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            }
                         }
-                        else
-                        {
-                            condmanager.SamplePushCondition();
-                        }
+                        CondOnTime = timer.ElapsedMS;
                         if (condtestatstate != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add("CondIndex", condmanager.condidx);
-                            condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.AddEvent("CONDSTATE", value.ToString(), CondOnTime);
                         }
-                    }
-                    CondOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
-                    {
-                        condtestmanager.AddEvent("CONDSTATE", value.ToString(), CondOnTime);
-                    }
-                    break;
-                case CONDSTATE.SUFICI:
-                    SufICIOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
-                    {
-                        condtestmanager.AddEvent("CONDSTATE", value.ToString(), SufICIOnTime);
-                    }
-                    break;
-            }
-            condstate = value;
-        }
-    }
-
-    private TRIALSTATE trialstate = TRIALSTATE.NONE;
-    public TRIALSTATE TrialState
-    {
-        get { return trialstate; }
-        set
-        {
-            switch(value)
-            {
-                case TRIALSTATE.PREITI:
-                    if (condtestatstate == CONDTESTATSTATE.PREITI)
-                    {
-                        condtestmanager.NewCondTest();
-                    }
-                    PreITIOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
-                    {
-                        condtestmanager.AddEvent("TRIALSTATE", value.ToString(), PreITIOnTime);
-                    }
-                    break;
-                case TRIALSTATE.TRIAL:
-                    if (pushcondatstate == PUSHCONDATSTATE.TRIAL)
-                    {
-                        if (condmanager.IsFinishRepeat(ex.condrepeat))
-                        {
-                            StopExperiment();
-                            return;
-                        }
-                        else
-                        {
-                            condmanager.SamplePushCondition();
-                        }
+                        break;
+                    case CONDSTATE.SUFICI:
+                        SufICIOnTime = timer.ElapsedMS;
                         if (condtestatstate != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add("CondIndex", condmanager.condidx);
-                            condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.AddEvent("CONDSTATE", value.ToString(), SufICIOnTime);
+                        }
+                        break;
+                }
+                condstate = value;
+            }
+        }
+
+        private TRIALSTATE trialstate = TRIALSTATE.NONE;
+        public TRIALSTATE TrialState
+        {
+            get { return trialstate; }
+            set
+            {
+                switch (value)
+                {
+                    case TRIALSTATE.PREITI:
+                        if (condtestatstate == CONDTESTATSTATE.PREITI)
+                        {
+                            condtestmanager.NewCondTest();
+                        }
+                        PreITIOnTime = timer.ElapsedMS;
+                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        {
+                            condtestmanager.AddEvent("TRIALSTATE", value.ToString(), PreITIOnTime);
+                        }
+                        break;
+                    case TRIALSTATE.TRIAL:
+                        if (pushcondatstate == PUSHCONDATSTATE.TRIAL)
+                        {
+                            if (condmanager.IsFinishRepeat(ex.condrepeat))
+                            {
+                                StopExperiment();
+                                return;
+                            }
+                            else
+                            {
+                                condmanager.SamplePushCondition();
+                            }
+                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.Add("CondIndex", condmanager.condidx);
+                                condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            }
+                        }
+                        TrialOnTime = timer.ElapsedMS;
+                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        {
+                            condtestmanager.AddEvent("TRIALSTATE", value.ToString(), TrialOnTime);
+                        }
+                        break;
+                    case TRIALSTATE.SUFITI:
+                        SufITIOnTime = timer.ElapsedMS;
+                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        {
+                            condtestmanager.AddEvent("TRIALSTATE", value.ToString(), SufITIOnTime);
+                        }
+                        break;
+                }
+                trialstate = value;
+            }
+        }
+
+        private BLOCKSTATE blockstate = BLOCKSTATE.NONE;
+        public BLOCKSTATE BlockState
+        {
+            get { return blockstate; }
+            set
+            {
+                switch (value)
+                {
+                    case BLOCKSTATE.PREIBI:
+                        break;
+                    case BLOCKSTATE.BLOCK:
+                        break;
+                    case BLOCKSTATE.SUFIBI:
+                        break;
+                }
+                blockstate = value;
+            }
+        }
+
+        private EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.NONE;
+        public EXPERIMENTSTATE ExperimentState
+        {
+            get { return experimentstate; }
+            set
+            {
+                switch (value)
+                {
+                    case EXPERIMENTSTATE.NONE:
+                        switch (experimentstate)
+                        {
+                            case EXPERIMENTSTATE.EXPERIMENT:
+                                ex.cond = condmanager.cond;
+                                ex.condtest = condtestmanager.condtest;
+                                ex.envparam = envmanager.GetEnvParam();
+
+                                Yaml.WriteYaml(CondTestPath(), ex);
+                                timer.Stop();
+                                break;
+                        }
+                        break;
+                    case EXPERIMENTSTATE.EXPERIMENT:
+                        switch (experimentstate)
+                        {
+                            case EXPERIMENTSTATE.NONE:
+                                PrepareCondition();
+                                condtestmanager.Clear();
+                                timer.ReStart();
+                                break;
+                        }
+                        break;
+                }
+                experimentstate = value;
+            }
+        }
+
+        public virtual void PrepareCondition()
+        {
+            if (condmanager.cond == null)
+            {
+                var cond = condmanager.ReadCondition(ex.condpath);
+
+                foreach(var f in cond.Keys)
+                {
+                    if(cond[f].Count==0)
+                    {
+                        if (f != "factorlevels")
+                        {
+                            cond.Remove(f);
                         }
                     }
-                    TrialOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
+                    else
                     {
-                        condtestmanager.AddEvent("TRIALSTATE", value.ToString(), TrialOnTime);
+                        if(((string)cond[f][0]).Contains("$"))
+                        {
+                            var p = ((string)cond[f][0]).Substring(1);
+                            if(ex.param.ContainsKey(p)&&ex.param[p]==null)
+                            {
+                                cond[f] = ex.param[p] as List<object>;
+                            }
+                            else
+                            {
+                                cond.Remove(f);
+                            }
+                        }
+                        if((string)cond[f][0]=="conditiondesign"&&cond[f].Count>1)
+                        {
+                            var d = Yaml.Deserialize<Dictionary<string, object>>((string)cond[f][1]);
+                            var fl = new FactorLevel(f, d["start"], d["end"], d["step"], (DesignMethod)d["method"]);
+                            cond[f] = fl.GenerateFactorLevels().Value;
+                        }
                     }
-                    break;
-                case TRIALSTATE.SUFITI:
-                    SufITIOnTime = timer.ElapsedSeconds;
-                    if (condtestatstate != CONDTESTATSTATE.NONE)
+                }
+
+                if(cond.ContainsKey("factorlevels"))
+                {
+                    cond.Remove("factorlevels");
+                    cond = ConditionDesigner.GenerateCondition(cond);
+                }
+                condmanager.TrimCondition(cond);
+                ex.cond = cond;
+            }
+            condmanager.UpdateCondPopulation();
+        }
+
+        public virtual string CondTestPath()
+        {
+            return ex.CondTestPath();
+        }
+
+        public virtual void StartExperiment()
+        {
+            ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
+            pushcondatstate = PushCondAtState;
+            condtestatstate = CondTestAtState;
+
+
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+            QualitySettings.antiAliasing = 2;
+            QualitySettings.vSyncCount = 0;
+            QualitySettings.maxQueuedFrames = 0;
+
+            Time.fixedDeltaTime = 0.0001f;
+            Time.maximumDeltaTime = 0.33f;
+            Process.GetCurrentProcess().PriorityBoostEnabled = true;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+            islogicactive = true;
+        }
+
+        public virtual void StopExperiment()
+        {
+            //envmanager.activenetbehavior.visible = false;
+            CondState = CONDSTATE.NONE;
+            TrialState = TRIALSTATE.NONE;
+            ExperimentState = EXPERIMENTSTATE.NONE;
+            pushcondatstate = PUSHCONDATSTATE.NONE;
+            condtestatstate = CONDTESTATSTATE.NONE;
+
+
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+            QualitySettings.antiAliasing = 0;
+            QualitySettings.vSyncCount = 1;
+            QualitySettings.maxQueuedFrames = 2;
+
+            Time.fixedDeltaTime = 0.02f;
+            Time.maximumDeltaTime = 0.33f;
+            Process.GetCurrentProcess().PriorityBoostEnabled = false;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
+            islogicactive = false;
+        }
+
+        void Awake()
+        {
+            if (!Timer.IsHighResolution)
+            {
+                UnityEngine.Debug.Log("This Machine Doesn't Have High Resolution Timer.");
+            }
+            Init();
+        }
+
+        public virtual void Init()
+        {
+
+        }
+
+        public virtual void UpdateScene(string scenename)
+        {
+            envmanager.AddScene(scenename);
+            envmanager.SetEnvParam(ex.envparam);
+            condmanager.envmanager = envmanager;
+        }
+
+        public bool isplayercontrol;
+        public void StartPlayer()
+        {
+            isplayercontrol = !isplayercontrol;
+            //Cursor.visible = false;
+        }
+
+
+        void Update()
+        {
+            if(ex.input>0&&Input.GetJoystickNames().Count()>0)
+            {
+                if(envmanager.activesync.Count>0)
+                {
+                    if (Input.GetAxis("JX")!=0 ||Input.GetAxis("JY")!=0)
                     {
-                        condtestmanager.AddEvent("TRIALSTATE", value.ToString(), SufITIOnTime);
+                        var p = (Vector3)envmanager.GetParam("position");
+
+                       
+                        var hh = envmanager.maincamera.orthographicSize;
+                        var hw = hh * envmanager.maincamera.aspect;
+
+                        envmanager.SetParam("position", new Vector3(
+                        Mathf.Clamp(p.x + Input.GetAxis("JX"), -hw, hw),
+                        Mathf.Clamp(p.y + Input.GetAxis("JY"), -hh, hh),
+                        p.z));
+
+                        //var pmin = envmanager.maincamera.ScreenToWorldPoint(new Vector3(envmanager.maincamera.v));
+                        //        p.z = envmanager.activenetbehavior.transform.position.z;
+                        //        envmanager.activenetbehavior.position = p;
                     }
-                    break;
+                }
             }
-            trialstate = value;
-        }
-    }
+            //if (isplayercontrol)
+            //{
+            //    if (envmanager.activenetbehavior)
+            //    {
+            //        float r = Convert.ToSingle(Input.GetButton("Fire1"));
+            //        float r1 = Convert.ToSingle(Input.GetButton("Fire2"));
+            //        envmanager.activenetbehavior.ori += r - r1;
+            //        envmanager.activenetbehavior.length += 0.1f * Input.GetAxis("Horizontal");
+            //        envmanager.activenetbehavior.width += 0.1f * Input.GetAxis("Vertical");
+            //        var p = envmanager.maincamera.ScreenToWorldPoint(Input.mousePosition);
+            //        p.z = envmanager.activenetbehavior.transform.position.z;
+            //        envmanager.activenetbehavior.position = p;
+            //    }
+            //}
 
-    private BLOCKSTATE blockstate= BLOCKSTATE.NONE;
-    public BLOCKSTATE BlockState
-    {
-        get { return blockstate; }
-        set
+
+        }
+
+        void FixedUpdate()
         {
-            switch(value)
+            if (islogicactive)
             {
-                case BLOCKSTATE.PREIBI:
-                    break;
-                case BLOCKSTATE.BLOCK:
-                    break;
-                case BLOCKSTATE.SUFIBI:
-                    break;
+                Logic();
             }
-            blockstate = value;
+            //UnityEngine.Debug.Log(timer.ElapsedMS);
         }
-    }
 
-    private EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.NONE;
-    public EXPERIMENTSTATE ExperimentState
-    {
-        get { return experimentstate; }
-        set
+        public virtual void Logic()
         {
-            switch (value)
-            {
-                case EXPERIMENTSTATE.NONE:
-                    switch (experimentstate)
-                    {
-                        case EXPERIMENTSTATE.EXPERIMENT:
-                            ex.cond = condmanager.cond;
-                            ex.condtest = condtestmanager.condtest;
 
-                            Yaml.WriteYaml(GetCondTestPath(ex), ex);
-                            break;
-                    }
-                    break;
-                case EXPERIMENTSTATE.EXPERIMENT:
-                    switch (experimentstate)
-                    {
-                        case EXPERIMENTSTATE.NONE:
-                            //ex.cond = condmanager.ReadCondition("cond.yaml");
-                            condmanager.UpdateCondPopulation();
-                            condtestmanager.Clear();
-                            timer.ReStart();
-                            break;
-                    }
-                    break;
-            }
-            experimentstate = value;
         }
-    }
-
-    public string GetCondTestPath(Experiment ex)
-    {
-        var path = ex.subject.id + "_" + ex.recordsession + "_" + ex.recordsite + "_" + ex.id + "_";
-        var ps = Directory.GetFiles(ex.condtestpath, path + "*.yaml", SearchOption.AllDirectories);
-        if (ps.Length == 0)
-        {
-            path = path + "1.yaml";
-        }
-        else
-        {
-            var ns = new List<int>();
-            foreach (var p in ps)
-            {
-                var s = p.LastIndexOf('_') + 1;
-                var e = p.LastIndexOf('.') - 1;
-                ns.Add(int.Parse(p.Substring(s, e - s + 1)));
-            }
-            path = path + (ns.Max() + 1).ToString() + ".yaml";
-        }
-        return Path.Combine(ex.condtestpath, path);
-    }
-
-    public void StartExperiment()
-    {
-        ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
-        Process.GetCurrentProcess().PriorityBoostEnabled = true;
-        Application.targetFrameRate = -1;
-        QualitySettings.vSyncCount = 0;
-        QualitySettings.maxQueuedFrames = 2;
-        pushcondatstate = PushCondAtState;
-        condtestatstate = CondTestAtState;
-        islogicactive = true;
-    }
-
-    public void StopExperiment()
-    {
-        envmanager.activenetbehavior.visible = false;
-        CondState = CONDSTATE.NONE;
-        TrialState = TRIALSTATE.NONE;
-        ExperimentState = EXPERIMENTSTATE.NONE;
-        Application.targetFrameRate = 1000;
-        QualitySettings.vSyncCount = 1;
-        QualitySettings.maxQueuedFrames = 3;
-        pushcondatstate = PUSHCONDATSTATE.NONE;
-        condtestatstate = CONDTESTATSTATE.NONE;
-        islogicactive = false;
-    }
-
-
-    void Awake()
-    {
-        if (!Timer.IsHighResolution)
-        {
-            UnityEngine.Debug.Log("This Machine Doesn't Have High Resolution Timer.");
-        }
-        Init();
-    }
-
-    public virtual void Init()
-    {
-
-    }
-
-    public virtual void OnSceneChange(string scenename)
-    {
-        envmanager.AddScene(scenename);
-        condmanager.envmanager = envmanager;
-    }
-
-    public bool isplayercontrol;
-    public void StartPlayer()
-    {
-        isplayercontrol = !isplayercontrol;
-        //Cursor.visible = false;
-    }
-
-
-    void Update()
-    {
-        if (isplayercontrol)
-        {
-            if (envmanager.activenetbehavior)
-            {
-                float r = Convert.ToSingle(Input.GetButton("Fire1"));
-                float r1 = Convert.ToSingle(Input.GetButton("Fire2"));
-                envmanager.activenetbehavior.ori += r - r1;
-                envmanager.activenetbehavior.length += 0.1f * Input.GetAxis("Horizontal");
-                envmanager.activenetbehavior.width += 0.1f * Input.GetAxis("Vertical");
-                var p = envmanager.maincamera.ScreenToWorldPoint(Input.mousePosition);
-                p.z = envmanager.activenetbehavior.transform.position.z;
-                envmanager.activenetbehavior.position = p;
-            }
-        }
-
-        if (islogicactive)
-        {
-            Logic();
-        }
-    }
-
-    public virtual void Logic()
-    {
-
     }
 }
