@@ -136,14 +136,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 147930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6748b525ad65b646b83d8c16b9f46ea, type: 3}
+  m_Script: {fileID: 11500000, guid: a54ca45ec35dd4c4686412f54d6b712a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgcolor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
+  bgcolor: {r: 0, g: 0, b: 0, a: 0}
   screenhalfheight: 15
   screentoeye: 57
   camera: {fileID: 0}

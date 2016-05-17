@@ -131,34 +131,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011479128862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff8fab041d3eb5438b510a648b78405, type: 3}
+  m_Script: {fileID: 11500000, guid: 89ed9abd1324d184f95a914970b205a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
   position: {x: 0, y: 0, z: 0}
-  renderer: {fileID: 23000013606837916}
+  renderer: {fileID: 0}
   ori: 0
   length: 1
   width: 1
   height: 1
-  color:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
   masktype: 0
   spatialfreq: 0
   temporalfreq: 0
   spatialphase: 0
   sigma: 0
-  mincolor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  maxcolor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
+  mincolor: {r: 0, g: 0, b: 0, a: 0}
+  maxcolor: {r: 0, g: 0, b: 0, a: 0}
   isdrifting: 1
