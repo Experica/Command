@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ttlrecordconditiontest.cs is part of the VLab project.
+// ttlrecordconditiontest.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -15,9 +15,9 @@ public class ttlrecordconditiontest : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
 
-    public override void Init()
+    public override void OnAwake()
     {
-        PushCondAtState = PUSHCONDATSTATE.PREICI;
+        ex.pushcondatstate = PUSHCONDATSTATE.PREICI;
     }
 
     public override void StartExperiment()

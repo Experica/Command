@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------
+// Showroom.cs is part of the VLAB project.
+// Copyright (c) 2016 All Rights Reserved
+// Li Alex Zhang fff008@gmail.com
+// 5-21-2016
+// --------------------------------------------------------------
+
+using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
@@ -75,38 +82,45 @@ namespace VLab
             if (id == ItemID.None)
             {
                 SetAllItemActive(false);
+#if VLAB
+                uicontroller.exmanager.el.envmanager.UpdateScene();
+#endif
             }
             else
             {
                 if (items.ContainsKey(id))
                 {
                     SetAllItemActiveExceptOtherWise(id, false);
+#if VLAB
+                    uicontroller.exmanager.el.envmanager.UpdateScene();
+#endif
                 }
                 else
                 {
 #if VLAB
-                    LoadItem(id);
+                    var go = LoadItem(id);
+                    uicontroller.exmanager.el.envmanager.UpdateScene();
+                    uicontroller.exmanager.el.envmanager.SetParamsForObject(uicontroller.exmanager.el.ex.envparam,go.name);
+                    uicontroller.exmanager.InheritEnv();
+                    NetworkServer.Spawn(go);
 #endif
                 }
             }
             itemid = id;
 #if VLAB
-            uicontroller.exmanager.el.envmanager.Update();
-            uicontroller.exmanager.el.envmanager.SetEnvParam(uicontroller.exmanager.el.ex.envparam);
-
             uicontroller.UpdateEnv();
 #endif
         }
 
-        void LoadItem(ItemID id)
+        GameObject LoadItem(ItemID id)
         {
             var go = Instantiate(Resources.Load<GameObject>(id.ToString()));
             go.transform.SetParent(transform);
             go.name = id.ToString();
             items[id] = go;
 
-            NetworkServer.Spawn(go);
             SetAllItemActiveExceptOtherWise(id, false);
+            return go;
         }
 
         void SetItemActive(ItemID id, bool isactive)

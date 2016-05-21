@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// Focus.cs is part of the VLab project.
+// Focus.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -10,10 +10,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Focus : MonoBehaviour, IPointerDownHandler
+namespace VLab
 {
-    public void OnPointerDown(PointerEventData ped)
+    public class Focus : MonoBehaviour, IPointerDownHandler
     {
-        transform.SetAsLastSibling();
+        public void OnPointerDown(PointerEventData ped)
+        {
+            transform.SetAsLastSibling();
+        }
     }
 }

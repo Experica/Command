@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// NewExParamPanel.cs is part of the VLab project.
+// NewExParamPanel.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -12,14 +12,14 @@ using VLab;
 
 public class NewExParamPanel : MonoBehaviour
 {
-    public VLUIController uimanager;
+    public VLUIController uicontroller;
     public Text namecheck;
     public Button confirm, cancel;
     public InputField nameinput,valueinput;
 
     public void OnNewExParamName(string name)
     {
-        if(uimanager.exmanager.el.ex.param.ContainsKey(name))
+        if(uicontroller.exmanager.el.ex.param.ContainsKey(name))
         {
             namecheck.text = "Name Exists";
             confirm.interactable = false;
@@ -35,12 +35,15 @@ public class NewExParamPanel : MonoBehaviour
     {
         var newname = nameinput.text;
         var value = valueinput.text;
-        uimanager.exmanager.el.ex.param.Add(newname, value);
+        uicontroller.exmanager.el.ex.param.Add(newname, value);
+
+        uicontroller.expanel.AddCustomParam(newname, value, false);
+        uicontroller.expanel.UpdateViewRect();
         Cancel();
     }
 
     public void Cancel()
     {
-        uimanager.expanel.CancelNewExParam();
+        uicontroller.expanel.CancelNewExParam();
     }
 }

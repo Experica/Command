@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// laserttlconditiontest.cs is part of the VLab project.
+// laserttlconditiontest.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -17,9 +17,9 @@ public class laserttlconditiontest : ExperimentLogic
     Omicron luxx473 = new Omicron("COM5");
     Cobolt mambo594 = new Cobolt("COM6");
 
-    public override void Init()
+    public override void OnAwake()
     {
-        PushCondAtState = PUSHCONDATSTATE.PREICI;
+        ex.pushcondatstate = PUSHCONDATSTATE.PREICI;
         luxx473.LaserOn();
     }
 

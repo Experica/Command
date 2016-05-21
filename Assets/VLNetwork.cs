@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------
+// VLNetwork.cs is part of the VLAB project.
+// Copyright (c) 2016 All Rights Reserved
+// Li Alex Zhang fff008@gmail.com
+// 5-21-2016
+// --------------------------------------------------------------
+
+using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
@@ -6,18 +13,21 @@ namespace VLab
 {
     public class VLMsgType
     {
-        public const short PeerInfo = MsgType.Highest + 1;
+        public const short PeerType = MsgType.Highest + 1;
 
-        public const short Highest = PeerInfo;
+        public const short AspectRatio = PeerType + 1;
+
+        public const short Highest = AspectRatio;
 
         internal static string[] msgLabels = new string[]
         {
-            "PeerInfo"
+            "PeerType",
+            "AspectRatio"
         };
 
         public static string MsgTypeToString(short value)
         {
-            if (value < PeerInfo || value > Highest)
+            if (value < PeerType || value > Highest)
             {
                 return string.Empty;
             }
@@ -35,5 +45,19 @@ namespace VLab
         VLab,
         VLabEnvironment,
         VLabAnalysis
+    }
+
+    public class FloatMessage: MessageBase
+    {
+        public float value;
+
+        public FloatMessage()
+        {
+        }
+
+        public FloatMessage(float value)
+        {
+            this.value = value;
+        }
     }
 }

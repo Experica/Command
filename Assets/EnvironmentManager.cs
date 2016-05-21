@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// EnvironmentManager.cs is part of the VLab project.
+// EnvironmentManager.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -18,27 +18,28 @@ namespace VLab
     public class EnvironmentManager
     {
         public Scene scene;
-        public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
-        public Dictionary<string, NetworkBehaviour> sceneobjectsync = new Dictionary<string, NetworkBehaviour>();
-        public Dictionary<string, PropertyInfo> syncparam = new Dictionary<string, PropertyInfo>();
+        public Dictionary<string, GameObject> sceneobj = new Dictionary<string, GameObject>();
+        public Dictionary<string, NetworkBehaviour> sceneobj_net = new Dictionary<string, NetworkBehaviour>();
+        public Dictionary<string, PropertyInfo> net_syncvar = new Dictionary<string, PropertyInfo>();
+        public List<string> activenet = new List<string>();
         public Camera maincamera;
-        public List<string> activesync = new List<string>();
 
         public void AddScene(string scenename)
         {
             scene = SceneManager.GetSceneByName(scenename);
-            Update();
+            UpdateScene();
         }
 
-        public void Update()
+        public void UpdateScene()
         {
-            sceneobject.Clear();
-            sceneobjectsync.Clear();
-            syncparam.Clear();
-            activesync.Clear();
+            sceneobj.Clear();
+            sceneobj_net.Clear();
+            net_syncvar.Clear();
+            activenet.Clear();
+            maincamera = null;
             foreach (var go in scene.GetRootGameObjects())
             {
-                sceneobject[go.name] = go;
+                sceneobj[go.name] = go;
                 ParseSceneObject(go);
             }
         }
@@ -53,11 +54,11 @@ namespace VLab
             foreach (var nb in nbs)
             {
                 var nbname = nb.GetType().Name + "@" + go.name;
-                sceneobjectsync[nbname] = nb;
-                ParseSceneObjectSync(nb, nbname);
+                sceneobj_net[nbname] = nb;
+                ParseSceneObjectNet(nb, nbname);
                 if (nb.isActiveAndEnabled)
                 {
-                    activesync.Add(nbname);
+                    activenet.Add(nbname);
                 }
             }
             for (var i = 0; i < go.transform.childCount; i++)
@@ -66,7 +67,7 @@ namespace VLab
             }
         }
 
-        public void ParseSceneObjectSync(NetworkBehaviour nb, string nbname)
+        public void ParseSceneObjectNet(NetworkBehaviour nb, string nbname)
         {
             var nbtype = nb.GetType();
             var fs = nbtype.GetFields();
@@ -74,16 +75,27 @@ namespace VLab
             {
                 if (f.IsDefined(typeof(SyncVarAttribute), true))
                 {
-                    syncparam[f.Name + "@" + nbname] = nbtype.GetProperty("Network" + f.Name);
+                    net_syncvar[f.Name + "@" + nbname] = nbtype.GetProperty("Network" + f.Name);
                 }
             }
         }
 
-        public void SetEnvParam(Dictionary<string, object> envparam)
+        public void SetParams(Dictionary<string, object> envparam)
         {
             foreach (var p in envparam.Keys)
             {
                 SetParam(p, envparam[p]);
+            }
+        }
+
+        public void SetParamsForObject(Dictionary<string, object> envparam, string objname)
+        {
+            foreach (var p in envparam.Keys)
+            {
+                if (p.Contains(objname))
+                {
+                    SetParam(p, envparam[p]);
+                }
             }
         }
 
@@ -92,28 +104,32 @@ namespace VLab
             var atidx = name.IndexOf("@");
             if (atidx == -1)
             {
-                foreach (var sname in sceneobjectsync.Keys)
+                foreach (var sname in sceneobj_net.Keys)
                 {
                     var pname = name + "@" + sname;
-                    if (syncparam.ContainsKey(pname))
+                    if (net_syncvar.ContainsKey(pname))
                     {
-                        SetParam(sceneobjectsync[sname], syncparam[pname], value);
+                        SetParam(sceneobj_net[sname], net_syncvar[pname], value);
                     }
                     else
                     {
-                        UnityEngine.Debug.Log("Param: " + name + " does not exist in " + sname);
+#if UNITY_EDITOR
+                        //UnityEngine.Debug.Log("Param: " + name + " does not exist in " + sname);
+#endif
                     }
                 }
             }
             else
             {
-                if (syncparam.ContainsKey(name))
+                if (net_syncvar.ContainsKey(name))
                 {
-                    SetParam(sceneobjectsync[name.Substring(atidx + 1)], syncparam[name], value);
+                    SetParam(sceneobj_net[name.Substring(atidx + 1)], net_syncvar[name], value);
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("Param: " + name + " does not exist.");
+#if UNITY_EDITOR
+                    //UnityEngine.Debug.Log("Param: " + name + " does not exist.");
+#endif
                 }
             }
         }
@@ -125,16 +141,16 @@ namespace VLab
 
         public void PushParams()
         {
-            foreach (var s in sceneobjectsync.Values)
+            foreach (var s in sceneobj_net.Values)
             {
                 s.SetDirtyBit(uint.MaxValue);
             }
         }
 
-        public Dictionary<string, object> GetEnvParam()
+        public Dictionary<string, object> GetParams()
         {
             var envparam = new Dictionary<string, object>();
-            foreach (var p in syncparam.Keys)
+            foreach (var p in net_syncvar.Keys)
             {
                 envparam[p] = GetParam(p);
             }
@@ -146,29 +162,33 @@ namespace VLab
             var atidx = name.IndexOf("@");
             if (atidx == -1)
             {
-                foreach (var sname in sceneobjectsync.Keys)
+                foreach (var sname in sceneobj_net.Keys)
                 {
                     var pname = name + "@" + sname;
-                    if (syncparam.ContainsKey(pname))
+                    if (net_syncvar.ContainsKey(pname))
                     {
-                        return GetParam(sceneobjectsync[sname], syncparam[pname]);
+                        return GetParam(sceneobj_net[sname], net_syncvar[pname]);
                     }
                     else
                     {
-                        UnityEngine.Debug.Log("Param: " + name + " does not exist in " + sname);
+#if UNITY_EDITOR
+                        //UnityEngine.Debug.Log("Param: " + name + " does not exist in " + sname);
+#endif
                     }
                 }
                 return null;
             }
             else
             {
-                if (syncparam.ContainsKey(name))
+                if (net_syncvar.ContainsKey(name))
                 {
-                    return GetParam(sceneobjectsync[name.Substring(atidx + 1)], syncparam[name]);
+                    return GetParam(sceneobj_net[name.Substring(atidx + 1)], net_syncvar[name]);
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("Param: " + name + " does not exist.");
+#if UNITY_EDITOR
+                    //UnityEngine.Debug.Log("Param: " + name + " does not exist.");
+#endif
                     return null;
                 }
             }
@@ -181,10 +201,38 @@ namespace VLab
 
         public void ActiveSyncVisible(bool isvisible)
         {
-            foreach (var anbname in activesync)
+            foreach (var anbname in activenet)
             {
                 SetParam("visible" + "@" + anbname, isvisible);
             }
+        }
+
+        public bool isparamactive(string name)
+        {
+            var i = name.IndexOf("@");
+            if(i>=0&&i<name.Length-1)
+            {
+                var pnet = name.Substring(i + 1);
+                return activenet.Contains(pnet);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static string GetSyncVarName(string name)
+        {
+            var i = name.IndexOf("@");
+            if(i>0)
+            {
+                return name.Substring(0, i);
+            }
+            else
+            {
+                return "";
+            }
+                
         }
 
     }

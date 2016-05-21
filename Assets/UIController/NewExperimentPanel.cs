@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// NewExperimentPanel.cs is part of the VLab project.
+// NewExperimentPanel.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -12,7 +12,7 @@ using VLab;
 
 public class NewExperimentPanel : MonoBehaviour
 {
-    public VLUIController uimanager;
+    public VLUIController uicontroller;
     public Text namecheck;
     public Button confirm, cancel;
     public InputField nameinput;
@@ -22,18 +22,22 @@ public class NewExperimentPanel : MonoBehaviour
     {
         var newname = nameinput.text;
         var copyfrom = copyfromnames.captionText.text;
-        uimanager.exmanager.NewExDef(newname, copyfrom);
+        if (uicontroller.exmanager.NewExDef(newname, copyfrom))
+        {
+            uicontroller.controlpanel.exdropdown.options.Add(new Dropdown.OptionData(newname));
+            uicontroller.controlpanel.exdropdown.value = uicontroller.controlpanel.exdropdown.options.Count - 1;
+        }
         Cancel();
     }
 
     public void Cancel()
     {
-        uimanager.controlpanel.CancelNewEx();
+        uicontroller.controlpanel.CancelNewEx();
     }
-	
-    public void OnNewExName(string name)
+
+    public void OnNewExNameEndEdit(string name)
     {
-        if(uimanager.exmanager.IsExDefNameExist(name))
+        if (uicontroller.exmanager.exdefnames.Contains(name))
         {
             namecheck.text = "Name Exists";
             confirm.interactable = false;
@@ -49,7 +53,7 @@ public class NewExperimentPanel : MonoBehaviour
     {
         var os = new List<string>();
         os.Add("");
-        os.AddRange(uimanager.exmanager.exdefnames);
+        os.AddRange(uicontroller.exmanager.exdefnames);
         copyfromnames.AddOptions(os);
     }
 

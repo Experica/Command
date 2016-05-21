@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ConditionTest.cs is part of the VLab project.
+// conditiontest.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -11,12 +11,14 @@ using VLab;
 
 public class ConditionTest : ExperimentLogic
 {
-    public override void Init()
+    public override void OnAwake()
     {
         //ex.conddur = 500;
         //ex.preICI = 100;
         //ex.sufICI = 100;
         //ex.condrepeat = 3;
+        ex.pushcondatstate = PUSHCONDATSTATE.PREICI;
+        ex.condtestatstate = CONDTESTATSTATE.PREICI;
     }
 
     public override void Logic()

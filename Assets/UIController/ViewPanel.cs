@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ViewPanel.cs is part of the VLab project.
+// ViewPanel.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -17,19 +17,53 @@ namespace VLab
 {
     public class ViewPanel : MonoBehaviour
     {
-        public VLUIController uimanager;
+        public VLUIController uicontroller;
         public RenderTexture rendertexture;
-        public GameObject viewport;
+        public GameObject viewportcontent;
+        public float aspectratio = 4.0f / 3.0f;
 
-        public void UpdateView()
+        public void UpdateView(PointerEventData eventData=null)
         {
-            var vpsize = (viewport.transform as RectTransform).rect.size;
-            rendertexture = new RenderTexture((int)vpsize.x, (int)vpsize.y, 24);
-            uimanager.exmanager.el.envmanager.maincamera.targetTexture = rendertexture;
+            var el = uicontroller.exmanager.el;
+            if (el != null)
+            {
+                var maincamera = el.envmanager.maincamera;
+                if (maincamera != null)
+                {
+                    var vpcsize = (viewportcontent.transform as RectTransform).rect.size;
+                    float width, height;
+                    if (vpcsize.x/vpcsize.y >= aspectratio)
+                    {
+                        width = vpcsize.y * aspectratio;
+                        height = vpcsize.y;
+                    }
+                    else
+                    {
+                        width = vpcsize.x;
+                        height = vpcsize.x / aspectratio;
+                    }
 
-            var ri = viewport.GetComponent<RawImage>();
-            ri.texture = rendertexture;
-            ri.color = new Color(1, 1, 1, 1);
+                    var ri = viewportcontent.GetComponentInChildren<RawImage>();
+                    var rirt = ri.gameObject.transform as RectTransform;
+                    rirt.sizeDelta = new Vector2(width,height);
+                    ri.color = new Color(1, 1, 1, 1);
+                    if(ri.texture!=null)
+                    {
+                        Destroy(ri.texture);
+                    }
+                    rendertexture = new RenderTexture((int)width, (int)height, 24);
+                    rendertexture.generateMips = false;
+                    rendertexture.antiAliasing = (int)VLConvert.Convert( uicontroller.appmanager.config["antialiasing"],typeof(int));
+                    rendertexture.anisoLevel = (int)VLConvert.Convert( uicontroller.appmanager.config["anisotropicfilterlevel"],typeof(int));
+                    maincamera.targetTexture = rendertexture;
+                    ri.texture = rendertexture;
+                }
+            }
+        }
+
+        public void OnEndResize(PointerEventData eventData)
+        {
+            UpdateView(eventData);
         }
 
     }

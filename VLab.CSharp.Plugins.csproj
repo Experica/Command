@@ -253,8 +253,6 @@
     <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlMember.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Game Jam Menu Template\Fonts\OpenSans\License!.txt" />
-    <None Include="Assets\Game Jam Menu Template\GameJamTemplateReadMe.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.xml" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\readme.txt" />
@@ -264,9 +262,6 @@
     <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
     <None Include="Assets\Resources\color.shader" />
     <None Include="Assets\Resources\grating.shader" />
-    <None Include="Assets\UI Sample\Fonts\Jupiter\LICENSE.txt" />
-    <None Include="Assets\UI Sample\Materials\UI-Default-No-Alpha.shader" />
-    <None Include="Assets\UI Sample\Textures and Sprites\SF UI\Background\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

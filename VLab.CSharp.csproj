@@ -99,32 +99,14 @@
     <Compile Include="Assets\EnvironmentManager.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\DontDestroy.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\EventSystemChecker.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\Pause.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\PlayMusic.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\QuitApplication.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\SetAudioLevels.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\ShowPanels.cs" />
-    <Compile Include="Assets\Game Jam Menu Template\Scripts\StartOptions.cs" />
     <Compile Include="Assets\Laser.cs" />
+    <Compile Include="Assets\RecordManager.cs" />
     <Compile Include="Assets\Showroom.cs" />
-    <Compile Include="Assets\Timer.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ActiveStateToggler.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ApplicationManager.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ChangeColor.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\DragMe.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\DragPanel.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\DropMe.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\PanelManager.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ResizePanel.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ScrollDetailTexture.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\ShowSliderValue.cs" />
-    <Compile Include="Assets\UI Sample\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\UI\Drag.cs" />
     <Compile Include="Assets\UI\FilePathInput.cs" />
     <Compile Include="Assets\UI\Focus.cs" />
     <Compile Include="Assets\UI\Resize.cs" />
+    <Compile Include="Assets\UI\ResizeViewPanel.cs" />
     <Compile Include="Assets\UIController\ConditionPanel.cs" />
     <Compile Include="Assets\UIController\ConsolePanel.cs" />
     <Compile Include="Assets\UIController\ControlPanel.cs" />
@@ -141,23 +123,11 @@
     <Compile Include="Assets\VLNetwork.cs" />
     <Compile Include="Assets\VLTimer.cs" />
     <Compile Include="Assets\conditiontest.cs" />
-    <Compile Include="Assets\intCode Studio\Example\Scripts\UI\UISampleWindow.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Controllers\PopupController.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Controllers\PopupDefinition.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Controllers\PopupDefinitions.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Controllers\WindowsController.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Interfaces\IWindow.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\Misc\Tools.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\UI\UIPopup.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\UI\UIWindow.cs" />
-    <Compile Include="Assets\intCode Studio\Windows Manager\UI\UIWindowBackground.cs" />
     <Compile Include="Assets\laserttlconditiontest.cs" />
     <Compile Include="Assets\laserttlrecordconditiontest.cs" />
     <Compile Include="Assets\ttlrecordconditiontest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Game Jam Menu Template\Fonts\OpenSans\License!.txt" />
-    <None Include="Assets\Game Jam Menu Template\GameJamTemplateReadMe.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.xml" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\readme.txt" />
@@ -167,9 +137,6 @@
     <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
     <None Include="Assets\Resources\color.shader" />
     <None Include="Assets\Resources\grating.shader" />
-    <None Include="Assets\UI Sample\Fonts\Jupiter\LICENSE.txt" />
-    <None Include="Assets\UI Sample\Materials\UI-Default-No-Alpha.shader" />
-    <None Include="Assets\UI Sample\Textures and Sprites\SF UI\Background\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

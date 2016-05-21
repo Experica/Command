@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// FilePathInput.cs is part of the VLab project.
+// FilePathInput.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -11,21 +11,24 @@ using System.Collections;
 using System.Windows.Forms;
 using System.IO;
 
-public class FilePathInput : MonoBehaviour
+namespace VLab
 {
-    public InputField input;
-
-    public void OpenFile()
+    public class FilePathInput : MonoBehaviour
     {
-        OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Title = "Choose File";
-        dialog.InitialDirectory = Directory.GetCurrentDirectory();
-        dialog.Filter= "Condition (*.yaml)|*.yaml|All Files (*.*)|*.*";
-        if(dialog.ShowDialog()==DialogResult.OK)
+        public InputField input;
+
+        public void OpenFile()
         {
-            input.text = dialog.FileName;
-            input.onEndEdit.Invoke(input.text);
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Choose File";
+            dialog.InitialDirectory = Directory.GetCurrentDirectory();
+            dialog.Filter = "Condition (*.yaml)|*.yaml|All Files (*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                input.text = dialog.FileName;
+                input.onEndEdit.Invoke(input.text);
+            }
         }
+
     }
-	
 }

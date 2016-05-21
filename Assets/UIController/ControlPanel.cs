@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ControlPanel.cs is part of the VLab project.
+// ControlPanel.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -13,11 +13,13 @@ namespace VLab
 {
     public class ControlPanel : MonoBehaviour
     {
-        public VLUIController uimanager;
+        public VLUIController uicontroller;
         public GameObject newexprefab;
         public Canvas canvas;
-        public CanvasGroup canvasgroup;
-        public Text startstoptext;
+        public CanvasGroup panelcontentcanvasgroup, statusbarcanvasgroup;
+        public Text startstoptext, pauseresumetext;
+        public Toggle pauseresume;
+        public Dropdown exdropdown;
 
         GameObject newexpanel;
 
@@ -29,31 +31,17 @@ namespace VLab
             ((RectTransform)newexpanel.transform).anchoredPosition = new Vector2();
             newexpanel.transform.localScale = new Vector3(1, 1, 1);
 
-            newexpanel.GetComponent<NewExperimentPanel>().uimanager = uimanager;
+            newexpanel.GetComponent<NewExperimentPanel>().uicontroller = uicontroller;
 
-            canvasgroup.interactable = false;
+            panelcontentcanvasgroup.interactable = false;
+            statusbarcanvasgroup.interactable = false;
         }
 
         public void CancelNewEx()
         {
             Destroy(newexpanel);
-            canvasgroup.interactable = true;
-        }
-
-        public void OnStartStopEx(bool ison)
-        {
-            if (ison)
-            {
-                uimanager.exmanager.el.StartExperiment();
-                startstoptext.text = "Stop";
-                uimanager.consolepanel.Log("Experiment Started.");
-            }
-            else
-            {
-                uimanager.exmanager.el.StopExperiment();
-                startstoptext.text = "Start";
-                uimanager.consolepanel.Log("Experiment Stoped.");
-            }
+            panelcontentcanvasgroup.interactable = true;
+            statusbarcanvasgroup.interactable = true;
         }
 
     }

@@ -1,20 +1,22 @@
 ﻿// --------------------------------------------------------------
-// UIManager.cs is part of the VLab project.
+// VLUIController.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System.Diagnostics;
 
 namespace VLab
 {
     public class VLUIController : MonoBehaviour
     {
-        public Dropdown exdropdown;
+        public VLApplicationManager appmanager;
         public Toggle host, server;
         public VLNetManager netmanager;
         public ExperimentManager exmanager;
@@ -29,8 +31,8 @@ namespace VLab
             exmanager.UpdateExDef();
             if (exmanager.exdefnames.Count > 0)
             {
-                exdropdown.ClearOptions();
-                exdropdown.AddOptions(exmanager.exdefnames);
+                controlpanel. exdropdown.ClearOptions();
+                controlpanel.exdropdown.AddOptions(exmanager.exdefnames);
                 OnExDropdownValueChange(0);
             }
         }
@@ -39,22 +41,66 @@ namespace VLab
         {
             exmanager.LoadEx(exmanager.exdefs[i]);
             expanel.UpdateEx(exmanager.el.ex);
-            if (host.isOn || server.isOn)
+            if (NetworkServer.active)
             {
                 ChangeScene();
             }
         }
 
-        public void OnStartEx()
+        public void ToggleStartStopExperiment(bool isstart)
         {
-            exmanager.el.StartExperiment();
+            if (isstart)
+            {
+                controlpanel.startstoptext.text = "Stop";
+                controlpanel.pauseresume.interactable = true;
+                consolepanel.LogError("Experiment Started.");
+
+                QualitySettings.vSyncCount = 0;
+                QualitySettings.maxQueuedFrames = 0;
+
+                Time.fixedDeltaTime = VLConvert.Convert<float>( appmanager.config["logictick"]);
+                Process.GetCurrentProcess().PriorityBoostEnabled = true;
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
+                exmanager.el.StartExperiment();
+            }
+            else
+            {
+                controlpanel.startstoptext.text = "Start";
+                if(controlpanel.pauseresume.isOn)
+                {
+                    controlpanel.pauseresume.isOn = false;
+                    TogglePauseResumeExperiment(false);
+                }
+                controlpanel.pauseresume.interactable = false;
+                consolepanel.LogError("Experiment Stoped.");
+
+                QualitySettings.vSyncCount = 1;
+                QualitySettings.maxQueuedFrames = 2;
+
+                Time.fixedDeltaTime = 0.02f;
+                Process.GetCurrentProcess().PriorityBoostEnabled = false;
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
+
+                exmanager.el.StopExperiment();
+            }
         }
 
-        public void OnStopEx()
+        public void TogglePauseResumeExperiment(bool ispause)
         {
-            exmanager.el.StopExperiment();
+            if (ispause)
+            {
+                controlpanel.pauseresumetext.text = "Resume";
+                consolepanel.LogWarn("Experiment Paused.");
+                exmanager.el.PauseExperiment();
+            }
+            else
+            {
+                controlpanel.pauseresumetext.text = "Pause";
+                consolepanel.LogWarn("Experiment Resumed.");
+                exmanager.el.ResumeExperiment();
+            }
         }
-
 
         public void UpdateEnv()
         {
@@ -82,7 +128,7 @@ namespace VLab
                 {
                     ps.Add(name);
                     exmanager.InheritExParam(name);
-                    expanel.input[name].text = exmanager.el.ex.GetValue(name).ToString();
+                    expanel.UpdateParamUI(name, exmanager.el.ex.GetValue(name));
                 }
             }
         }
@@ -103,7 +149,7 @@ namespace VLab
                 {
                     ps.Add(name);
                     exmanager.InheritEnvParam(name);
-                    envpanel.input[name].text = exmanager.el.envmanager.GetParam(name).ToString();
+                    envpanel.UpdateParamUI(name, exmanager.el.envmanager.GetParam(name));
                 }
             }
         }
@@ -125,19 +171,34 @@ namespace VLab
             exmanager.el.envmanager.SetParam(name, value);
         }
 
-        public void NewEx()
-        {
-            controlpanel.NewEx();
-        }
-
         public void SaveEx()
         {
-            exmanager.SaveExDef(exdropdown.captionText.text);
+            exmanager.SaveExDef(controlpanel.exdropdown.captionText.text);
         }
 
         public void DeleteEx()
         {
-            exmanager.DeleteExDef(exdropdown.captionText.text);
+            var i = exmanager.DeleteExDef(controlpanel.exdropdown.captionText.text);
+            if (i >= 0)
+            {
+                controlpanel.exdropdown.options.RemoveAt(i);
+                if (i < exmanager.exdefnames.Count)
+                {
+                    controlpanel. exdropdown.value = i;
+                    controlpanel. exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
+                    OnExDropdownValueChange(i);
+                }
+                else
+                {
+                    if (exmanager.exdefnames.Count > 0)
+                    {
+                        i = exmanager.exdefnames.Count - 1;
+                        controlpanel.exdropdown.value = i;
+                        controlpanel.exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
+                        OnExDropdownValueChange(i);
+                    }
+                }
+            }
         }
 
         public void ToggleHost(bool ison)
@@ -177,7 +238,10 @@ namespace VLab
                 {
                     scene = "Showroom";
                 }
-                netmanager.ServerChangeScene(scene);
+                if (NetworkServer.active)
+                {
+                    netmanager.ServerChangeScene(scene);
+                }
             }
         }
 

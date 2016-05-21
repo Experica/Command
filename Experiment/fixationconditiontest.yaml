@@ -1,11 +1,20 @@
 name: fixationconditiontest
 id: fixationconditiontest
 experimenter: alex
+envparam:
+  itemid@Showroom@ShowroomManager: None
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
 condpath: ''
-condtestpath: ConditionTest/
 recordsession: V1
 recordsite: ''
+condtestdir: ConditionTest
+condtestpath: ConditionTest/
 condrepeat: 4
 preICI: 100
 conddur: 500
 sufICI: 100
+param: {}
+exinheritparams: []
+envinheritparams: []

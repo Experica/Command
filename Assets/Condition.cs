@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// Condition.cs is part of the VLab project.
+// Condition.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -75,7 +75,13 @@ namespace VLab
             }
         }
 
-        public List<int> UpdateCondPopulation(bool resetcondrepeat = true)
+        public List<int> UpdateCondPopulation(SampleMethod samplemethod, bool resetcondrepeat = true)
+        {
+            this.samplemethod = samplemethod;
+            return UpdateCondPopulation(resetcondrepeat);
+        }
+
+        public List<int> UpdateCondPopulation( bool resetcondrepeat = true)
         {
             switch (samplemethod)
             {
@@ -341,5 +347,85 @@ namespace VLab
         }
     }
 
+    public class CondTestManager
+    {
+        public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
+        public int condtestidx = -1;
+
+        public void NewCondTest()
+        {
+            condtestidx++;
+        }
+
+        public void Clear()
+        {
+            condtest.Clear();
+            condtestidx = -1;
+        }
+
+        public void Add(string key, object value)
+        {
+            if (condtest.ContainsKey(key))
+            {
+                var vs = condtest[key];
+                for (var i = vs.Count; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                vs.Add(value);
+            }
+            else
+            {
+                var vs = new List<object>();
+                for (var i = 0; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                vs.Add(value);
+                condtest[key] = vs;
+            }
+        }
+
+        public void AddEvent(string key, string eventname, double timestamp)
+        {
+            if (condtest.ContainsKey(key))
+            {
+                var vs = condtest[key];
+                for (var i = vs.Count; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                if (vs.Count < (condtestidx + 1))
+                {
+                    var es = new List<Dictionary<string, double>>();
+                    var e = new Dictionary<string, double>();
+                    e[eventname] = timestamp;
+                    es.Add(e);
+                    vs.Add(es);
+                }
+                else
+                {
+                    var es = (List<Dictionary<string, double>>)vs[condtestidx];
+                    var e = new Dictionary<string, double>();
+                    e[eventname] = timestamp;
+                    es.Add(e);
+                }
+            }
+            else
+            {
+                var vs = new List<object>();
+                for (var i = 0; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                var es = new List<Dictionary<string, double>>();
+                var e = new Dictionary<string, double>();
+                e[eventname] = timestamp;
+                es.Add(e);
+                vs.Add(es);
+                condtest[key] = vs;
+            }
+        }
+    }
 
 }

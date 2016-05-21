@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ExperimentLogic.cs is part of the VLab project.
+// ExperimentLogic.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -46,13 +46,13 @@ namespace VLab
         public string condpath { get; set; }
         public Dictionary<string, List<object>> cond { get; set; }
         public string experimentlogicpath { get; set; }
-        public string experimentlogic { get; set; }
 
         public string recordsession { get; set; }
         public string recordsite { get; set; }
         public string condtestdir { get; set; }
         public string condtestpath { get; set; }
         public Dictionary<string, List<object>> condtest { get; set; }
+        public SampleMethod condsampling { get; set; }
         public int condrepeat { get; set; }
         public int input { get; set; }
 
@@ -65,6 +65,8 @@ namespace VLab
         public double preIBI { get; set; }
         public double blockdur { get; set; }
         public double sufIBI { get; set; }
+        public PUSHCONDATSTATE pushcondatstate { get; set; }
+        public CONDTESTATSTATE condtestatstate { get; set; }
         public Dictionary<string, object> param { get; set; }
         public List<string> exinheritparams { get; set; }
         public List<string> envinheritparams { get; set; }
@@ -108,19 +110,20 @@ namespace VLab
             return p.GetValue(ex, null);
         }
 
-        public virtual Experiment DeepCopy()
-        {
-            var ex = new Experiment();
-            foreach (var pn in properties.Keys)
-            {
-                ex.SetValue(pn, GetValue(pn));
-            }
-            return ex;
-        }
-
         public virtual string CondTestPath()
         {
             var filename = subject_id + "_" + recordsession + "_" + recordsite + "_" + id + "_";
+            if (string.IsNullOrEmpty(condtestdir))
+            {
+                condtestdir = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                if (!Directory.Exists(condtestdir))
+                {
+                    Directory.CreateDirectory(condtestdir);
+                }
+            }
             var fs = Directory.GetFiles(condtestdir, filename + "*.yaml", SearchOption.AllDirectories);
             if (fs.Length == 0)
             {
@@ -129,186 +132,77 @@ namespace VLab
             else
             {
                 var ns = new List<int>();
-                foreach (var p in fs)
+                foreach (var f in fs)
                 {
-                    var s = p.LastIndexOf('_') + 1;
-                    var e = p.LastIndexOf('.') - 1;
-                    ns.Add(int.Parse(p.Substring(s, e - s + 1)));
+                    var s = f.LastIndexOf('_') + 1;
+                    var e = f.LastIndexOf('.') - 1;
+                    ns.Add(int.Parse(f.Substring(s, e - s + 1)));
                 }
                 filename = filename + (ns.Max() + 1).ToString() + ".yaml";
             }
-            var dir = Path.Combine(condtestdir, subject_id);
-            if (!Directory.Exists(dir))
+            var subjectdir = Path.Combine(condtestdir, subject_id);
+            if (!Directory.Exists(subjectdir))
             {
-                Directory.CreateDirectory(dir);
+                Directory.CreateDirectory(subjectdir);
             }
-            condtestpath = Path.Combine(dir, filename);
+            condtestpath = Path.Combine(subjectdir, filename);
             return condtestpath;
         }
     }
 
-
-
-
-    public class CondTestManager
-    {
-        public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
-        public int condtestidx = -1;
-
-        public void NewCondTest()
-        {
-            condtestidx++;
-        }
-
-        public void Clear()
-        {
-            condtest.Clear();
-            condtestidx = -1;
-        }
-
-        public void Add(string key, object value)
-        {
-            if (condtest.ContainsKey(key))
-            {
-                var vs = condtest[key];
-                for (var i = vs.Count; i < condtestidx; i++)
-                {
-                    vs.Add(null);
-                }
-                vs.Add(value);
-            }
-            else
-            {
-                var vs = new List<object>();
-                for (var i = 0; i < condtestidx; i++)
-                {
-                    vs.Add(null);
-                }
-                vs.Add(value);
-                condtest[key] = vs;
-            }
-        }
-
-        public void AddEvent(string key, string eventname, double timestamp)
-        {
-            if (condtest.ContainsKey(key))
-            {
-                var vs = condtest[key];
-                for (var i = vs.Count; i < condtestidx; i++)
-                {
-                    vs.Add(null);
-                }
-                if (vs.Count < (condtestidx + 1))
-                {
-                    var es = new List<Dictionary<string, double>>();
-                    var e = new Dictionary<string, double>();
-                    e[eventname] = timestamp;
-                    es.Add(e);
-                    vs.Add(es);
-                }
-                else
-                {
-                    var es = (List<Dictionary<string, double>>)vs[condtestidx];
-                    var e = new Dictionary<string, double>();
-                    e[eventname] = timestamp;
-                    es.Add(e);
-                }
-            }
-            else
-            {
-                var vs = new List<object>();
-                for (var i = 0; i < condtestidx; i++)
-                {
-                    vs.Add(null);
-                }
-                var es = new List<Dictionary<string, double>>();
-                var e = new Dictionary<string, double>();
-                e[eventname] = timestamp;
-                es.Add(e);
-                vs.Add(es);
-                condtest[key] = vs;
-            }
-        }
-    }
-
-
-    public class RecordManager
-    {
-        XippmexDotNet.XippmexDotNet xippmex;
-        public RecordManager(string recordsystem)
-        {
-            switch (recordsystem)
-            {
-                case "ripple":
-                    xippmex = new XippmexDotNet.XippmexDotNet();
-                    break;
-            }
-        }
-
-        public void Help()
-        {
-            //MWArray[] output = new MWArray[1];
-            //var output = xippmex.xippmex(1,new MWCharArray( "time"));
-        }
-
-        public void RecordPath()
-        {
-        }
-
-    }
-
     public enum CONDSTATE
     {
-        NONE = 0,
-        PREICI = 1,
-        COND = 2,
-        SUFICI = 3
+        NONE = 1,
+        PREICI = 2,
+        COND = 3,
+        SUFICI = 4
     }
 
     public enum TRIALSTATE
     {
-        NONE = 1000,
-        PREITI = 1001,
-        TRIAL = 1002,
-        SUFITI = 1003
+        NONE = 1001,
+        PREITI = 1002,
+        TRIAL = 1003,
+        SUFITI = 1004
     }
 
     public enum BLOCKSTATE
     {
-        NONE = 2000,
-        PREIBI = 2001,
-        BLOCK = 2002,
-        SUFIBI = 2003
+        NONE = 2001,
+        PREIBI = 2002,
+        BLOCK = 2003,
+        SUFIBI = 2004
     }
 
     public enum EXPERIMENTSTATE
     {
-        NONE = 3000,
-        PREIEI = 3001,
-        EXPERIMENT = 3002,
-        SUFIEI = 3003
+        NONE = 3001,
+        PREIEI = 3002,
+        EXPERIMENT = 3003,
+        SUFIEI = 3004
     }
 
     public enum PUSHCONDATSTATE
     {
-        NONE = -1,
+        NONE = 0,
         PREICI = CONDSTATE.PREICI,
         COND = CONDSTATE.COND,
+        PREITI = TRIALSTATE.PREITI,
         TRIAL = TRIALSTATE.TRIAL
     }
 
     public enum CONDTESTATSTATE
     {
-        NONE = -1,
+        NONE = 0,
         PREICI = CONDSTATE.PREICI,
-        PREITI = TRIALSTATE.PREITI
+        PREITI = TRIALSTATE.PREITI,
     }
 
 
     public class ExperimentLogic : MonoBehaviour
     {
         public Experiment ex = new Experiment();
-        public Timer timer = new Timer();
+        public VLTimer timer = new VLTimer();
 
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
@@ -316,44 +210,45 @@ namespace VLab
         public RecordManager recordmanager;
 
         public bool islogicactive = false;
-
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
-            TrialOnTime, SufITIOnTime;
+            TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
 
         public double PreICIHold()
         {
             return timer.ElapsedMS - PreICIOnTime;
         }
-
         public double CondHold()
         {
             return timer.ElapsedMS - CondOnTime;
         }
-
         public double SufICIHold()
         {
             return timer.ElapsedMS - SufICIOnTime;
         }
-
         public double PreITIHold()
         {
             return timer.ElapsedMS - PreITIOnTime;
         }
-
         public double TrialHold()
         {
             return timer.ElapsedMS - TrialOnTime;
         }
-
         public double SufITIHold()
         {
             return timer.ElapsedMS - SufITIOnTime;
         }
-
-        private PUSHCONDATSTATE pushcondatstate = PUSHCONDATSTATE.NONE;
-        public PUSHCONDATSTATE PushCondAtState = PUSHCONDATSTATE.COND;
-        private CONDTESTATSTATE condtestatstate = CONDTESTATSTATE.NONE;
-        public CONDTESTATSTATE CondTestAtState = CONDTESTATSTATE.PREICI;
+        public double PreIBIHold()
+        {
+            return timer.ElapsedMS - PreIBIOnTime;
+        }
+        public double BlockHold()
+        {
+            return timer.ElapsedMS - BlockOnTime;
+        }
+        public double SufIBIHold()
+        {
+            return timer.ElapsedMS - SufIBIOnTime;
+        }
 
         private CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState
@@ -364,11 +259,12 @@ namespace VLab
                 switch (value)
                 {
                     case CONDSTATE.PREICI:
-                        if (condtestatstate == CONDTESTATSTATE.PREICI)
+                        PreICIOnTime = timer.ElapsedMS;
+                        if (ex.condtestatstate == CONDTESTATSTATE.PREICI)
                         {
                             condtestmanager.NewCondTest();
                         }
-                        if (pushcondatstate == PUSHCONDATSTATE.PREICI)
+                        if (ex.pushcondatstate == PUSHCONDATSTATE.PREICI)
                         {
                             if (condmanager.IsFinishRepeat(ex.condrepeat))
                             {
@@ -379,20 +275,20 @@ namespace VLab
                             {
                                 condmanager.SamplePushCondition();
                             }
-                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                             {
                                 condtestmanager.Add("CondIndex", condmanager.condidx);
                                 condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
                             }
                         }
-                        PreICIOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.AddEvent("CONDSTATE", value.ToString(), PreICIOnTime);
                         }
                         break;
                     case CONDSTATE.COND:
-                        if (pushcondatstate == PUSHCONDATSTATE.COND)
+                        CondOnTime = timer.ElapsedMS;
+                        if (ex.pushcondatstate == PUSHCONDATSTATE.COND)
                         {
                             if (condmanager.IsFinishRepeat(ex.condrepeat))
                             {
@@ -403,21 +299,20 @@ namespace VLab
                             {
                                 condmanager.SamplePushCondition();
                             }
-                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                             {
                                 condtestmanager.Add("CondIndex", condmanager.condidx);
                                 condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
                             }
                         }
-                        CondOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.AddEvent("CONDSTATE", value.ToString(), CondOnTime);
                         }
                         break;
                     case CONDSTATE.SUFICI:
                         SufICIOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.AddEvent("CONDSTATE", value.ToString(), SufICIOnTime);
                         }
@@ -436,18 +331,12 @@ namespace VLab
                 switch (value)
                 {
                     case TRIALSTATE.PREITI:
-                        if (condtestatstate == CONDTESTATSTATE.PREITI)
+                        PreITIOnTime = timer.ElapsedMS;
+                        if (ex.condtestatstate == CONDTESTATSTATE.PREITI)
                         {
                             condtestmanager.NewCondTest();
                         }
-                        PreITIOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
-                        {
-                            condtestmanager.AddEvent("TRIALSTATE", value.ToString(), PreITIOnTime);
-                        }
-                        break;
-                    case TRIALSTATE.TRIAL:
-                        if (pushcondatstate == PUSHCONDATSTATE.TRIAL)
+                        if (ex.pushcondatstate == PUSHCONDATSTATE.TRIAL)
                         {
                             if (condmanager.IsFinishRepeat(ex.condrepeat))
                             {
@@ -458,21 +347,44 @@ namespace VLab
                             {
                                 condmanager.SamplePushCondition();
                             }
-                            if (condtestatstate != CONDTESTATSTATE.NONE)
+                            if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                             {
                                 condtestmanager.Add("CondIndex", condmanager.condidx);
                                 condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
                             }
                         }
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
+                        {
+                            condtestmanager.AddEvent("TRIALSTATE", value.ToString(), PreITIOnTime);
+                        }
+                        break;
+                    case TRIALSTATE.TRIAL:
                         TrialOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        if (ex.pushcondatstate == PUSHCONDATSTATE.TRIAL)
+                        {
+                            if (condmanager.IsFinishRepeat(ex.condrepeat))
+                            {
+                                StopExperiment();
+                                return;
+                            }
+                            else
+                            {
+                                condmanager.SamplePushCondition();
+                            }
+                            if (ex.condtestatstate != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.Add("CondIndex", condmanager.condidx);
+                                condtestmanager.Add("CondRepeat", condmanager.condrepeat[condmanager.condidx]);
+                            }
+                        }
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.AddEvent("TRIALSTATE", value.ToString(), TrialOnTime);
                         }
                         break;
                     case TRIALSTATE.SUFITI:
                         SufITIOnTime = timer.ElapsedMS;
-                        if (condtestatstate != CONDTESTATSTATE.NONE)
+                        if (ex.condtestatstate != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.AddEvent("TRIALSTATE", value.ToString(), SufITIOnTime);
                         }
@@ -513,11 +425,7 @@ namespace VLab
                         switch (experimentstate)
                         {
                             case EXPERIMENTSTATE.EXPERIMENT:
-                                ex.cond = condmanager.cond;
-                                ex.condtest = condtestmanager.condtest;
-                                ex.envparam = envmanager.GetEnvParam();
-
-                                Yaml.WriteYaml(CondTestPath(), ex);
+                                SaveExperiment();
                                 timer.Stop();
                                 break;
                         }
@@ -543,9 +451,9 @@ namespace VLab
             {
                 var cond = condmanager.ReadCondition(ex.condpath);
 
-                foreach(var f in cond.Keys)
+                foreach (var f in cond.Keys)
                 {
-                    if(cond[f].Count==0)
+                    if (cond[f].Count == 0)
                     {
                         if (f != "factorlevels")
                         {
@@ -554,10 +462,10 @@ namespace VLab
                     }
                     else
                     {
-                        if(((string)cond[f][0]).Contains("$"))
+                        if (((string)cond[f][0]).Contains("$"))
                         {
                             var p = ((string)cond[f][0]).Substring(1);
-                            if(ex.param.ContainsKey(p)&&ex.param[p]==null)
+                            if (ex.param.ContainsKey(p) && ex.param[p] == null)
                             {
                                 cond[f] = ex.param[p] as List<object>;
                             }
@@ -566,7 +474,7 @@ namespace VLab
                                 cond.Remove(f);
                             }
                         }
-                        if((string)cond[f][0]=="conditiondesign"&&cond[f].Count>1)
+                        if ((string)cond[f][0] == "conditiondesign" && cond[f].Count > 1)
                         {
                             var d = Yaml.Deserialize<Dictionary<string, object>>((string)cond[f][1]);
                             var fl = new FactorLevel(f, d["start"], d["end"], d["step"], (DesignMethod)d["method"]);
@@ -575,7 +483,7 @@ namespace VLab
                     }
                 }
 
-                if(cond.ContainsKey("factorlevels"))
+                if (cond.ContainsKey("factorlevels"))
                 {
                     cond.Remove("factorlevels");
                     cond = ConditionDesigner.GenerateCondition(cond);
@@ -583,7 +491,7 @@ namespace VLab
                 condmanager.TrimCondition(cond);
                 ex.cond = cond;
             }
-            condmanager.UpdateCondPopulation();
+            condmanager.UpdateCondPopulation(ex.condsampling);
         }
 
         public virtual string CondTestPath()
@@ -591,87 +499,76 @@ namespace VLab
             return ex.CondTestPath();
         }
 
+        public virtual void SaveExperiment()
+        {
+            ex.cond = condmanager.cond;
+            ex.condtest = condtestmanager.condtest;
+            ex.envparam = envmanager.GetParams();
+
+            Yaml.WriteYaml(CondTestPath(), ex);
+        }
+
+        public virtual void PauseExperiment()
+        {
+            Time.timeScale = 0;
+            timer.Stop();
+        }
+
+        public virtual void ResumeExperiment()
+        {
+            Time.timeScale = 1;
+            timer.Start();
+        }
+
         public virtual void StartExperiment()
         {
             ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
-            pushcondatstate = PushCondAtState;
-            condtestatstate = CondTestAtState;
-
-
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-            QualitySettings.antiAliasing = 2;
-            QualitySettings.vSyncCount = 0;
-            QualitySettings.maxQueuedFrames = 0;
-
-            Time.fixedDeltaTime = 0.0001f;
-            Time.maximumDeltaTime = 0.33f;
-            Process.GetCurrentProcess().PriorityBoostEnabled = true;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             islogicactive = true;
         }
 
         public virtual void StopExperiment()
         {
-            //envmanager.activenetbehavior.visible = false;
             CondState = CONDSTATE.NONE;
             TrialState = TRIALSTATE.NONE;
+            BlockState = BLOCKSTATE.NONE;
             ExperimentState = EXPERIMENTSTATE.NONE;
-            pushcondatstate = PUSHCONDATSTATE.NONE;
-            condtestatstate = CONDTESTATSTATE.NONE;
-
-
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-            QualitySettings.antiAliasing = 0;
-            QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 2;
-
-            Time.fixedDeltaTime = 0.02f;
-            Time.maximumDeltaTime = 0.33f;
-            Process.GetCurrentProcess().PriorityBoostEnabled = false;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
-            islogicactive = false;
+             islogicactive = false;
         }
 
         void Awake()
         {
-            if (!Timer.IsHighResolution)
+            if (!VLTimer.IsHighResolution)
             {
-                UnityEngine.Debug.Log("This Machine Doesn't Have High Resolution Timer.");
+                UnityEngine.Debug.LogWarning("This Machine Doesn't Have High Resolution Timer.");
             }
-            Init();
+            condmanager.envmanager = envmanager;
+            OnAwake();
         }
-
-        public virtual void Init()
+        public virtual void OnAwake()
         {
-
         }
 
-        public virtual void UpdateScene(string scenename)
+        public virtual void OnServerSceneChanged(string scenename)
         {
             envmanager.AddScene(scenename);
-            envmanager.SetEnvParam(ex.envparam);
-            condmanager.envmanager = envmanager;
+            envmanager.SetParams(ex.envparam);
         }
-
-        public bool isplayercontrol;
-        public void StartPlayer()
-        {
-            isplayercontrol = !isplayercontrol;
-            //Cursor.visible = false;
-        }
-
 
         void Update()
         {
-            if(ex.input>0&&Input.GetJoystickNames().Count()>0)
+            OnUpdate();
+        }
+        public virtual void OnUpdate()
+        {
+            if (ex.input > 0 && Input.GetJoystickNames().Count() > 0)
             {
-                if(envmanager.activesync.Count>0)
+                if (envmanager.activenet.Count > 0)
                 {
-                    if (Input.GetAxis("JX")!=0 ||Input.GetAxis("JY")!=0)
+                    if (Input.GetAxis("JX") != 0 || Input.GetAxis("JY") != 0)
                     {
                         var p = (Vector3)envmanager.GetParam("position");
 
-                       
+
                         var hh = envmanager.maincamera.orthographicSize;
                         var hw = hh * envmanager.maincamera.aspect;
 
@@ -700,8 +597,6 @@ namespace VLab
             //        envmanager.activenetbehavior.position = p;
             //    }
             //}
-
-
         }
 
         void FixedUpdate()
@@ -710,12 +605,10 @@ namespace VLab
             {
                 Logic();
             }
-            //UnityEngine.Debug.Log(timer.ElapsedMS);
         }
-
         public virtual void Logic()
         {
-
         }
+
     }
 }

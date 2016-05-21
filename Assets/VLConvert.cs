@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------
+// VLConvert.cs is part of the VLAB project.
+// Copyright (c) 2016 All Rights Reserved
+// Li Alex Zhang fff008@gmail.com
+// 5-21-2016
+// --------------------------------------------------------------
+
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
@@ -8,78 +15,81 @@ using System.Linq;
 
 namespace VLab
 {
-    public static class VLConvert
+    public class VLConvert
     {
+        public static T Convert<T>(object value)
+        {
+            return (T)Convert(value, typeof(T));
+        }
+
         public static object Convert(object value, Type T)
         {
-            object v = 0;
-            var vt = value.GetType();
+            Type VT = value.GetType();
             if (T == typeof(Vector3))
             {
-                if (vt == typeof(Vector3))
+                if (VT == typeof(string))
                 {
-                    return value;
-                }
-                else if (vt == typeof(string))
-                {
-                    var t = value as string;
+                    var t = (string)value;
                     var vs = t.Substring(1, t.Length - 2).Split(',');
-                    v = new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
+                   return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
                 }
                 else
                 {
-
+                    return System.Convert.ChangeType(value, T);
                 }
             }
             else if (T == typeof(Color))
             {
-                if (vt == typeof(Color))
+                if (VT == typeof(string))
                 {
-                    return value;
-                }
-                if (vt == typeof(string))
-                {
-                    var t = value as string;
+                    var t = (string)value;
                     var vs = t.Substring(t.IndexOf('(') + 1, t.Length - 2).Split(',');
-                    v = new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
+                    return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
                 }
                 else
                 {
-
+                    return System.Convert.ChangeType(value, T);
                 }
             }
             else if (T == typeof(string))
             {
-                if (vt == typeof(Vector3))
+                if (VT == typeof(Vector3))
                 {
-                    v = ((Vector3)value).ToString("G3");
+                    return ((Vector3)value).ToString("G3");
                 }
-                else if (vt == typeof(Dictionary<string, object>))
+                else if (VT == typeof(Color))
                 {
-                    v = value.ToString();
-                }
-                else if (vt == typeof(List<string>))
-                {
-                    v = value.ToString();
-                }
-                else if (vt == typeof(Color))
-                {
-                    v = ((Color)value).ToString("G3").Substring(4);
+                    return ((Color)value).ToString("G3").Substring(4);
                 }
                 else
                 {
-                    v = value.ToString();
+                    return value.ToString();
                 }
             }
-            else if (T == typeof(Showroom.ItemID))
+            else if (T.IsEnum)
             {
-                v = Enum.Parse(T, (string)value);
+                if (Enum.IsDefined(T, value))
+                {
+                    if (VT == typeof(string))
+                    {
+                        return Enum.Parse(T, (string)value);
+                    }
+                    else
+                    {
+                        return value;
+                    }
+                }
+                else
+                {
+                    return Activator.CreateInstance(T);
+                }
             }
             else
             {
-                v = System.Convert.ChangeType(value, T);
+                return System.Convert.ChangeType(value, T);
             }
-            return v;
         }
+
     }
+
 }

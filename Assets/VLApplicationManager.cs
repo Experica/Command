@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ApplicationManager.cs is part of the VLab project.
+// VLApplicationManager.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -35,6 +35,42 @@ namespace VLab
             if (!config.ContainsKey("issaveexonquit"))
             {
                 config["issaveexonquit"] = true;
+            }
+            if (!config.ContainsKey("exdefdir"))
+            {
+                config["exdefdir"] = "Experiment";
+            }
+            if (!config.ContainsKey("condtestdir"))
+            {
+                config["condtestdir"] = "ConditionTest";
+            }
+            if (!config.ContainsKey("defaultexperimentlogic"))
+            {
+                config["defaultexperimentlogic"] = "ConditionTest";
+            }
+            if (!config.ContainsKey("antialiasing"))
+            {
+                config["antialiasing"] = 2;
+            }
+            if (!config.ContainsKey("anisotropicfilterlevel"))
+            {
+                config["anisotropicfilterlevel"] = 5;
+            }
+            if (!config.ContainsKey("logictick"))
+            {
+                config["logictick"] = 0.0001f;
+            }
+            if (!config.ContainsKey("isshowinactiveenvparam"))
+            {
+                config["isshowinactiveenvparam"] = false;
+            }
+            if (!config.ContainsKey("isshowenvparamfullname"))
+            {
+                config["isshowenvparamfullname"] = false;
+            }
+            if (!config.ContainsKey("maxlogentry"))
+            {
+                config["maxlogentry"] = 999;
             }
         }
 

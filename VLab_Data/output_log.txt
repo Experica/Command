@@ -30,22 +30,30 @@ Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\MathNet.Numerics.dll (t
 Loading C:\Users\fff00\VLab\VLab_Data\Managed\MathNet.Numerics.dll into Unity Child Domain
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\fff00\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.378 seconds
+- Completed reload, in  0.347 seconds
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-OnLevelWasLoaded was found on StartOptions
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.onSceneLoaded instead to get notifications after scene loading has completed
- 
-(Filename:  Line: 375)
-
-OnLevelWasLoaded was found on EventSystemChecker
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.onSceneLoaded instead to get notifications after scene loading has completed
- 
-(Filename:  Line: 375)
-
 desktop: 2736x1824 60Hz; virtual: 2736x1824 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
+UnloadTime: 1.541565 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: fac -> priority: 1 
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.401043 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 3687.
+Total: 6.526608 ms (FindLiveObjects: 0.702144 ms CreateObjectMapping: 0.272695 ms MarkObjects: 5.522086 ms  DeleteObjects: 0.023652 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 3687.
+Total: 4.532405 ms (FindLiveObjects: 0.171130 ms CreateObjectMapping: 0.047304 ms MarkObjects: 4.305623 ms  DeleteObjects: 0.007420 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.480927 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 3685.
+Total: 4.184115 ms (FindLiveObjects: 0.326028 ms CreateObjectMapping: 0.062608 ms MarkObjects: 3.772289 ms  DeleteObjects: 0.022260 ms)
+

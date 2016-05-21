@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------
-// ExperimentPanel.cs is part of the VLab project.
+// ExperimentPanel.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
-// 5-9-2016
+// 5-21-2016
 // --------------------------------------------------------------
 
 using UnityEngine;
@@ -12,17 +12,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System;
+using System.Linq;
 using VLab;
 
 public class ExperimentPanel:MonoBehaviour
 {
-    public VLUIController uimanager;
-    public GameObject svcontent, inputfield, togglebutton,filepathinput,newexparamprefab;
+    public VLUIController uicontroller;
+    public GameObject svcontent, inputfield, togglebutton,filepathinput,newexparamprefab, 
+        togglebuttoninputfield, togglebuttonfilepathinput, togglebuttondropdown,
+        toggletogglebuttoninputfield, toggletogglebuttonfilepathinput, toggletogglebuttondropdown;
     public Canvas canvas;
     public CanvasGroup panelcontentcanvasgroup,statusbarcanvasgroup;
 
     public Dictionary<string, InputField> input = new Dictionary<string, InputField>();
-    public Dictionary<string, Toggle> toggle = new Dictionary<string, Toggle>();
+    public Dictionary<string, Toggle> inherittoggle = new Dictionary<string, Toggle>();
+    public Dictionary<string, Dropdown> dropdowns = new Dictionary<string, Dropdown>();
+    public Dictionary<string, Toggle> customparamtoggle = new Dictionary<string, Toggle>();
+    public Dictionary<string, GameObject> customparamgo = new Dictionary<string, GameObject>();
 
     GameObject newexparampanel;
 
@@ -40,25 +46,87 @@ public class ExperimentPanel:MonoBehaviour
 
     public void AddView(Experiment ex)
     {
-        GameObject input;
         foreach(var p in Experiment.properties.Keys)
         {
-            if(p=="condpath"||p=="environmentpath"||p=="experimentlogicpath")
+            var vt = Experiment.properties[p].PropertyType;
+            var v = ex.GetValue(p);
+            AddParam(p,vt,v, ex.exinheritparams.Contains(p),
+                ChoosePrefab(p,vt,false),svcontent.transform);
+        }
+
+        UpdateExCustomParam(ex);
+        UpdateViewRect();
+     }
+
+    public GameObject ChoosePrefab(string name, Type T,bool iscustom)
+    {
+        GameObject prefab;
+        var idx = name.LastIndexOf("path");
+        if (idx >= 0 && idx == (name.Length - 4))
+        {
+            if (iscustom)
             {
-                input = filepathinput;
+                prefab = toggletogglebuttonfilepathinput;
             }
             else
             {
-                input = inputfield;
+                prefab = togglebuttonfilepathinput;
             }
-            AddParam(p,Experiment.properties[p].PropertyType,ex.GetValue(p), ex.exinheritparams.Contains(p),
-                input);
         }
+        else
+        {
+            if (T.IsEnum)
+            {
+                if (iscustom)
+                {
+                    prefab = toggletogglebuttondropdown;
+                }
+                else
+                {
+                    prefab = togglebuttondropdown;
+                }
+            }
+            else
+            {
+                if (iscustom)
+                {
+                    prefab = toggletogglebuttoninputfield;
+                }
+                else
+                {
+                    prefab = togglebuttoninputfield;
+                }
+            }
+        }
+        return prefab;
+    }
 
-        var np = Experiment.properties.Keys.Count;
-        var grid = svcontent. GetComponent<GridLayoutGroup>();
+    public void UpdateExCustomParam(Experiment ex)
+    {
+        foreach(var go in customparamtoggle.Values)
+        {
+            Destroy(go);
+        }
+        customparamtoggle.Clear();
+        foreach(var p in ex.param.Keys)
+        {
+            AddCustomParam(p, ex.param[p], ex.exinheritparams.Contains(p));
+        }
+    }
+
+    public void AddCustomParam(string name,object value,bool isinherit)
+    {
+        var pt = value.GetType();
+        AddParam(name, pt, value, isinherit,
+            ChoosePrefab(name,pt,true), svcontent.transform);
+    }
+
+    public void UpdateViewRect()
+    {
+        var np =svcontent. transform.childCount;
+        var grid = svcontent.GetComponent<GridLayoutGroup>();
         var cn = grid.constraintCount;
-        var rn = Mathf.Floor( np / (cn / 2.0f))+1;
+        var rn = Mathf.Floor(np / cn ) + 1;
         var rt = (RectTransform)svcontent.transform;
         rt.sizeDelta = new Vector2((grid.cellSize.x + grid.spacing.x) * cn, (grid.cellSize.y + grid.spacing.y) * rn);
     }
@@ -67,37 +135,93 @@ public class ExperimentPanel:MonoBehaviour
     {
         foreach (var n in Experiment.properties.Keys)
         {
-            toggle[n].isOn = ex.exinheritparams.Contains(n);
+            inherittoggle[n].isOn = ex.exinheritparams.Contains(n);
+            var T = Experiment.properties[n].PropertyType;
             var v = ex.GetValue(n);
-            input[n].text = v == null ? "" : v.ToString();
+            if (T.IsEnum)
+            {
+                var vs = Enum.GetNames(T).ToList();
+                if (v == null || !vs.Contains(v.ToString()))
+                {
+                    v = vs[0];
+                }
+                dropdowns[n].value = vs.IndexOf(v.ToString());
+            }
+            else
+            {
+                input[n].text = v == null ? "" : (string)VLConvert.Convert(v, typeof(string));
+            }
+        }
+
+        UpdateExCustomParam(ex);
+        UpdateViewRect();
+    }
+
+    public void UpdateParamUI(string name,object value)
+    {
+        if(input.ContainsKey(name))
+        {
+            input[name].text = value.ToString();
+        }
+        if(dropdowns.ContainsKey(name))
+        {
+            //dropdowns[name].value = value
         }
     }
 
-    void AddParam(string name,Type T, object value,bool isinherit,GameObject inputprefab)
+    void AddParam(string name,Type T, object value,bool isinherit,GameObject prefab,Transform parent)
     {
-        if (value == null)
+        var go = Instantiate(prefab);
+        go.name = name;
+
+        for(var i=0;i<go.transform.childCount;i++)
         {
-            value = "";
+            var cgo = go.transform.GetChild(i).gameObject;
+            var toggle = cgo.GetComponent<Toggle>();
+            var inputfield = cgo.GetComponent<InputField>();
+            var dropdown = cgo.GetComponent<Dropdown>();
+            if(toggle!=null)
+            {
+                cgo.GetComponentInChildren<Text>().text = name;
+                toggle.isOn = isinherit;
+                toggle.onValueChanged.AddListener((ison) => uicontroller.ToggleExInheritParam(name, ison));
+                inherittoggle[name] = toggle;
+                for(var j=0;j<cgo.transform.childCount;j++)
+                {
+                    var ctoggle = cgo.transform.GetChild(j).gameObject.GetComponent<Toggle>();
+                    if (ctoggle != null)
+                    {
+                        customparamtoggle[name] = ctoggle;
+                        customparamgo[name] = go;
+                    }
+                }
+            }
+            if(inputfield!=null)
+            {
+                if (value == null)
+                {
+                    value = "";
+                }
+                inputfield.text = (string)VLConvert.Convert(value, typeof(string));
+                inputfield.onEndEdit.AddListener((v) => uicontroller.SetExParam(name, v));
+                input[name] = inputfield;
+            }
+            if(dropdown!=null)
+            {
+                var vs = Enum.GetNames(T).ToList();
+                if (value == null || !vs.Contains(value.ToString()))
+                {
+                    value = vs[0];
+                }
+                dropdown.AddOptions(vs);
+                dropdown.value = vs.IndexOf(value.ToString());
+                dropdown.onValueChanged.AddListener((v) => uicontroller.SetExParam(name, dropdown.captionText.text));
+                dropdowns[name] = dropdown;
+            }
         }
-        var tb = UnityEngine.Object.Instantiate(togglebutton);
-        tb.name = name + "_ToggleButton";
-        tb.GetComponentInChildren<Text>().text = name;
-        var tbt = tb.GetComponent<Toggle>();
-        tbt.isOn = isinherit;
-        tbt.onValueChanged.AddListener((ison)=>  uimanager.ToggleExInheritParam(name, ison));
-        toggle[name] = tbt;
 
-        var inpf = UnityEngine.Object.Instantiate(inputprefab);
-        inpf.name = name;
-        var ifif = inpf.GetComponent<InputField>();
-        ifif.text = (string)VLConvert.Convert( value,typeof(string));
-        ifif.onEndEdit.AddListener((v)=>uimanager.SetExParam(name,v));
-        input[name] = ifif;
-
-        tb.transform.SetParent(svcontent. transform);
-        inpf.transform.SetParent(svcontent.transform);
-        tb.transform.localScale = new Vector3(1, 1, 1);
-        inpf.transform.localScale = new Vector3(1, 1, 1);
+        go.transform.SetParent(parent);
+        go.transform.localScale = new Vector3(1, 1, 1);
     }    
 
     public void NewExParam()
@@ -108,7 +232,7 @@ public class ExperimentPanel:MonoBehaviour
         ((RectTransform)newexparampanel.transform).anchoredPosition = new Vector2();
         newexparampanel.transform.localScale = new Vector3(1, 1, 1);
 
-        newexparampanel.GetComponent<NewExParamPanel>().uimanager = uimanager;
+        newexparampanel.GetComponent<NewExParamPanel>().uicontroller = uicontroller;
         panelcontentcanvasgroup.interactable = false;
         statusbarcanvasgroup.interactable = false;
     }
@@ -122,6 +246,20 @@ public class ExperimentPanel:MonoBehaviour
 
     public void DeleteExParam()
     {
+        var ps = new List<string>(customparamgo.Keys);
+        foreach (var p in ps)
+        {
+            if (customparamtoggle[p].isOn)
+            {
+                uicontroller.exmanager.el.ex.param.Remove(p);
+                uicontroller.exmanager.el.ex.exinheritparams.Remove(p);
 
+                var go = customparamgo[p];
+                customparamtoggle.Remove(p);
+                customparamgo.Remove(p);
+                Destroy(go);
+            }
+        }
+        UpdateViewRect();
     }
 }
