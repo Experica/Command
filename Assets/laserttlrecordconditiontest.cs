@@ -21,7 +21,7 @@ public class laserttlrecordconditiontest : ExperimentLogic
     {
         ex.pushcondatstate = PUSHCONDATSTATE.PREICI;
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
-        recordmanager.Help();
+        //recordmanager.recorder.SetRecordPath();
         luxx473.LaserOn();
     }
 

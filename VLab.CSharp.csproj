@@ -70,11 +70,11 @@
     <Reference Include="MWArray">
       <HintPath>Assets\Plugins\MWArray.dll</HintPath>
     </Reference>
+    <Reference Include="Ripple">
+      <HintPath>Assets\Plugins\Ripple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\System.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="XippmexDotNet">
-      <HintPath>Assets\Plugins\XippmexDotNet.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.dll</HintPath>
@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Assets\CompilerService.cs" />
     <Compile Include="Assets\Condition.cs" />
+    <Compile Include="Assets\ConditionTestLogic.cs" />
     <Compile Include="Assets\ENCamera.cs" />
     <Compile Include="Assets\ENGratingQuad.cs" />
     <Compile Include="Assets\ENQuad.cs" />
@@ -100,8 +101,10 @@
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
     <Compile Include="Assets\Laser.cs" />
-    <Compile Include="Assets\RecordManager.cs" />
+    <Compile Include="Assets\LaserRecordTTLConditionTestLogic.cs" />
+    <Compile Include="Assets\Record.cs" />
     <Compile Include="Assets\Showroom.cs" />
+    <Compile Include="Assets\TTLConditionTestLogic.cs" />
     <Compile Include="Assets\UI\Drag.cs" />
     <Compile Include="Assets\UI\FilePathInput.cs" />
     <Compile Include="Assets\UI\Focus.cs" />
@@ -122,10 +125,7 @@
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\VLNetwork.cs" />
     <Compile Include="Assets\VLTimer.cs" />
-    <Compile Include="Assets\conditiontest.cs" />
-    <Compile Include="Assets\laserttlconditiontest.cs" />
     <Compile Include="Assets\laserttlrecordconditiontest.cs" />
-    <Compile Include="Assets\ttlrecordconditiontest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />

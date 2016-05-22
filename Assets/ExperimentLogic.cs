@@ -16,7 +16,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using XippmexDotNet;
 using MathWorks.MATLAB.NET.Arrays;
 using MathWorks.MATLAB.NET;
 using MathWorks.MATLAB.NET.Utility;
@@ -110,7 +109,7 @@ namespace VLab
             return p.GetValue(ex, null);
         }
 
-        public virtual string CondTestPath()
+        public virtual string CondTestPath(string ext = ".yaml")
         {
             var filename = subject_id + "_" + recordsession + "_" + recordsite + "_" + id + "_";
             if (string.IsNullOrEmpty(condtestdir))
@@ -124,10 +123,15 @@ namespace VLab
                     Directory.CreateDirectory(condtestdir);
                 }
             }
-            var fs = Directory.GetFiles(condtestdir, filename + "*.yaml", SearchOption.AllDirectories);
+            var subjectdir = Path.Combine(condtestdir, subject_id);
+            if (!Directory.Exists(subjectdir))
+            {
+                Directory.CreateDirectory(subjectdir);
+            }
+            var fs = Directory.GetFiles(subjectdir, filename + "*.yaml", SearchOption.AllDirectories);
             if (fs.Length == 0)
             {
-                filename = filename + "1.yaml";
+                filename = filename + "1"+ext;
             }
             else
             {
@@ -138,15 +142,10 @@ namespace VLab
                     var e = f.LastIndexOf('.') - 1;
                     ns.Add(int.Parse(f.Substring(s, e - s + 1)));
                 }
-                filename = filename + (ns.Max() + 1).ToString() + ".yaml";
-            }
-            var subjectdir = Path.Combine(condtestdir, subject_id);
-            if (!Directory.Exists(subjectdir))
-            {
-                Directory.CreateDirectory(subjectdir);
+                filename = filename + (ns.Max() + 1).ToString() + ext;
             }
             condtestpath = Path.Combine(subjectdir, filename);
-            return condtestpath;
+                return condtestpath;
         }
     }
 
@@ -564,39 +563,55 @@ namespace VLab
             {
                 if (envmanager.activenet.Count > 0)
                 {
-                    if (Input.GetAxis("JX") != 0 || Input.GetAxis("JY") != 0)
+                    
+                    var jx = Input.GetAxis("JX");
+                    var jy = Input.GetAxis("JY");
+                    var jz = Input.GetAxis("JZ");
+                    var jxr = Input.GetAxis("JXR");
+                    var jyr = Input.GetAxis("JYR");
+                    if (jx != 0 || jy != 0)
                     {
-                        var p = (Vector3)envmanager.GetParam("position");
-
-
-                        var hh = envmanager.maincamera.orthographicSize;
-                        var hw = hh * envmanager.maincamera.aspect;
-
-                        envmanager.SetParam("position", new Vector3(
-                        Mathf.Clamp(p.x + Input.GetAxis("JX"), -hw, hw),
-                        Mathf.Clamp(p.y + Input.GetAxis("JY"), -hh, hh),
-                        p.z));
-
-                        //var pmin = envmanager.maincamera.ScreenToWorldPoint(new Vector3(envmanager.maincamera.v));
-                        //        p.z = envmanager.activenetbehavior.transform.position.z;
-                        //        envmanager.activenetbehavior.position = p;
+                        if(envmanager.maincamera!=null)
+                        {
+                            var po = envmanager.GetParam("position");
+                            if(po!=null)
+                            {
+                                 var p = (Vector3)po;
+                                var hh = envmanager.maincamera.orthographicSize;
+                                var hw = hh * envmanager.maincamera.aspect;
+                                envmanager.SetParam("position", new Vector3(
+                                Mathf.Clamp(p.x + jx, -hw, hw),
+                                Mathf.Clamp(p.y + jy, -hh, hh),
+                                p.z));
+                            }                      
+                        }
+                    }
+                    if(jxr!=0||jyr!=0)
+                    {
+                        var wo = envmanager.GetParam("width");
+                        var lo = envmanager.GetParam("length");
+                        if(wo!=null)
+                        {
+                            var w = (float)wo;
+                            envmanager.SetParam("width", w + jyr);
+                        }
+                        if (lo != null)
+                        {
+                            var l = (float)lo;
+                            envmanager.SetParam("length", l + jxr);
+                        }
+                    }
+                    if(jz!=0)
+                    {
+                        var oo = envmanager.GetParam("ori");
+                        if(oo!=null)
+                        {
+                            var o = (float)oo;
+                            envmanager.SetParam("ori", o + jz);
+                        }
                     }
                 }
             }
-            //if (isplayercontrol)
-            //{
-            //    if (envmanager.activenetbehavior)
-            //    {
-            //        float r = Convert.ToSingle(Input.GetButton("Fire1"));
-            //        float r1 = Convert.ToSingle(Input.GetButton("Fire2"));
-            //        envmanager.activenetbehavior.ori += r - r1;
-            //        envmanager.activenetbehavior.length += 0.1f * Input.GetAxis("Horizontal");
-            //        envmanager.activenetbehavior.width += 0.1f * Input.GetAxis("Vertical");
-            //        var p = envmanager.maincamera.ScreenToWorldPoint(Input.mousePosition);
-            //        p.z = envmanager.activenetbehavior.transform.position.z;
-            //        envmanager.activenetbehavior.position = p;
-            //    }
-            //}
         }
 
         void FixedUpdate()

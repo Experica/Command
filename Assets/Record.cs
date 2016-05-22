@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------
-// RecordManager.cs is part of the VLAB project.
+// Record.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
 // 5-21-2016
@@ -7,10 +7,10 @@
 
 using UnityEngine;
 using System.Collections;
-using XippmexDotNet;
+using Ripple;
 using MathWorks.MATLAB.NET.Arrays;
-using MathWorks.MATLAB.NET;
 using MathWorks.MATLAB.NET.Utility;
+using System;
 
 namespace VLab
 {
@@ -21,27 +21,37 @@ namespace VLab
         TDT
     }
 
+    public interface IRecorder
+    {
+        void SetRecordPath(string path);
+    }
+
+    public class RippleRecorder:IRecorder
+    {
+        XippmexDotNet xippmex = new XippmexDotNet();
+
+        public void SetRecordPath(string path)
+        {
+            var trellis =  xippmex.xippmex(1, new MWCharArray("opers"));
+            if(trellis.Length>0)
+            {
+                xippmex.xippmex(1, new MWCharArray("trial"), trellis[0], MWNumericArray.Empty, new MWCharArray(path));
+            }
+        }
+    }
+
     public class RecordManager
     {
-        XippmexDotNet.XippmexDotNet xippmex;
+        public IRecorder recorder;
+
         public RecordManager(VLRecordSystem recordsystem)
         {
             switch (recordsystem)
             {
                 case VLRecordSystem.Ripple:
-                    xippmex = new XippmexDotNet.XippmexDotNet();
+                    recorder = new RippleRecorder();
                     break;
             }
-        }
-
-        public void Help()
-        {
-            //MWArray[] output = new MWArray[1];
-            //var output = xippmex.xippmex(1,new MWCharArray( "time"));
-        }
-
-        public void RecordPath()
-        {
         }
 
     }

@@ -2,36 +2,37 @@ name: conditiontest
 id: conditiontest
 designer: alex
 experimenter: alex
-subject_id: ''
+subject_id: TestSub
 environmentpath: Showroom
 envparam:
   itemid@Showroom@ShowroomManager: GratingQuad
   spatialfreq@ENGratingQuad@GratingQuad: 0.2
-  temporalfreq@ENGratingQuad@GratingQuad: 4
+  temporalfreq@ENGratingQuad@GratingQuad: 2
   spatialphase@ENGratingQuad@GratingQuad: 0
   sigma@ENGratingQuad@GratingQuad: 0
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
-  ori@ENGratingQuad@GratingQuad: 90
-  length@ENGratingQuad@GratingQuad: 14
-  width@ENGratingQuad@GratingQuad: 14
+  ori@ENGratingQuad@GratingQuad: 19.24684
+  length@ENGratingQuad@GratingQuad: 19.88138
+  width@ENGratingQuad@GratingQuad: 16.70728
   height@ENGratingQuad@GratingQuad: 1
   color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   masktype@ENGratingQuad@GratingQuad: 1
-  visible@ENGratingQuad@GratingQuad: false
-  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (-3.01, 1.53, 0)
   bgcolor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   screenhalfheight@ENCamera@OrthoCamera: 15
   screentoeye@ENCamera@OrthoCamera: 57
 condpath: Condition\ConditionTest.yaml
-experimentlogicpath: ConditionTest
+experimentlogicpath: LaserRecordTTLConditionTest
 recordsession: V1
 recordsite: 358
-condtestdir: ConditionTest
-condtestpath: ConditionTest\_V1_358_conditiontest_47.yaml
+condtestdir: '\\LYONRIPPLE\vlabdata'
+condtestpath: '\\LYONRIPPLE\vlabdata\TestSub\TestSub_V1_358_conditiontest_3.yaml'
 condsampling: UniformWithoutReplacement
 condrepeat: 3
+input: 1
 preICI: 100
 conddur: 500
 sufICI: 100

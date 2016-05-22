@@ -20,7 +20,7 @@ namespace VLab
     {
         public VLUIController uicontroller;
         public GameObject svcontent, inputfield, togglebutton,
-            togglebuttoninputfield, togglebuttonfilepathinput, togglebuttondropdown;
+            togglebuttoninputfield, togglebuttondirinput, togglebuttonfilepathinput, togglebuttondropdown;
         public Dictionary<string, InputField> input = new Dictionary<string, InputField>();
         public Dictionary<string, Dropdown> dropdowns = new Dictionary<string, Dropdown>();
         public void UpdateEnv(EnvironmentManager em)
@@ -62,10 +62,15 @@ namespace VLab
         public GameObject ChoosePrefab(string name, Type T)
         {
             GameObject prefab;
-            var idx = name.LastIndexOf("path");
-            if (idx >= 0 && idx == (name.Length - 4))
+            var pi = name.LastIndexOf("path");
+            var di = name.LastIndexOf("dir");
+            if (pi >= 0 && pi == (name.Length - 4))
             {
                 prefab = togglebuttonfilepathinput;
+            }
+            else if(di >= 0 && di == (name.Length - 3))
+            {
+                prefab = togglebuttondirinput;
             }
             else
             {
