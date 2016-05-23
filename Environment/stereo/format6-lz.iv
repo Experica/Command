@@ -1,0 +1,2133 @@
+#Inventor V2.1 ascii
+#What's new?
+#   cursor and object are separated. cursor serves as the target,
+#it's small and smiple
+#
+#For big magnification:
+#length of 1024 pixels on the barco screen, appears 19.5cm inside the lens,
+#that is 1676 minutes arc
+# interval: 1115
+#
+#For small magnification:
+#length of 1024 pixels on the barco screen, appears 8.9cm inside the lens,
+#that is 765 minutes arc
+# interval: 494
+#
+# 5/9/2000: Texture added to solid cube and cylinder.
+#
+# 11/28/2000: Tilted surface (RIDGE=18) added; Parameter REVCOL added;
+#
+# 12/4/2000: Origin is applied to random dot background too.
+#
+# 12/20/2000: MBCOL added. If MBCOL == 1 and FIGURE == 0, a color at mean value
+#     of BCOL and COL will be used as background. ScreenColor is hardcoded in
+#     vlab/unix program
+#
+# 1/12/2001: Random dot background for random dot roof is moved behind
+#     POSH, POSV, and SHUTTLE
+#
+# 1/15/2001: POSD1 added
+#
+# 1/17/2001: Random dot background for random dot roof in monocular case is
+#     also moved behind POSH, POSV, and SHUTTLE
+#
+# 1/26/2001: Random dot background for random dot roof is moved before SHUTTLE,
+#     and is removed under monocular conditions.
+#
+# 2/7/2001: TEXTLEN and TEXTWID added
+#
+# 2/14/2001: ConcaveCube and MyCube with ability to scale the texture added.
+#    Note: The origin of the ConcaveCube is the center of the concave roof
+#          rather than the center of the concave eave.
+#
+# 2/23/2001: COLGAIN and BCOLGAIN added
+#
+# 2/20/2002: DENSITY changed from 0.05 dots per square minute
+#    to 15 dots per square degree. PIXELSIZE changed from 2.5 to 4
+#
+# 3/8/2002: Parameters STEREO, TTYPE added. For 2D display, set STEREO to 0.
+#    Want simple fixation targets, set TTYPE to 1 or 2.
+#
+# 11/5/2002: Gamma value of labsgi1 has been changed from 1.7 to 2.2, which is
+#    the gamma value of Barco monitor
+#
+# 5/25/2004: RIDGE 20 CheckBoard added.
+#
+# 6/21/2004: pointSize and lineWidth can be scaled now according to WHEIGHT
+#
+# 2/5/2011: RIDGE 21 C-shape added.
+#
+# 2/27/2014: REVFIGCOL added.
+
+
+DEF UF-TARGET       GlobalField { type SFShort TARGET       0 }
+DEF UF-FIGURE       GlobalField { type SFShort FIGURE       0 }
+
+DEF UF-POSH         GlobalField { type SFFloat POSH         0 }
+DEF UF-POSV         GlobalField { type SFFloat POSV         0 }
+DEF UF-POSX         GlobalField { type SFFloat POSX         0 }
+DEF UF-POSY         GlobalField { type SFFloat POSY         0 }
+
+DEF UF-BCOL         GlobalField { type SFColor BCOL         28 28 28 }
+DEF UF-LEN          GlobalField { type SFFloat LEN          60 }
+DEF UF-WID          GlobalField { type SFFloat WID          8 }
+DEF UF-COL          GlobalField { type SFColor COL          100 100 100}
+DEF UF-POSD         GlobalField { type SFFloat POSD         0 }
+DEF UF-POSD2        GlobalField { type SFFloat POSD2        0 }
+DEF UF-OR           GlobalField { type SFFloat OR           0 }
+DEF UF-OR2          GlobalField { type SFFloat OR2          0 }
+DEF UF-SPIN         GlobalField { type SFFloat SPIN         0 }
+DEF UF-SPINFREQ     GlobalField { type SFFloat SPINFREQ     0.5 }
+DEF UF-BLINK        GlobalField { type SFShort BLINK        0 }
+DEF UF-BLINKFREQ    GlobalField { type SFFloat BLINKFREQ    1 }
+DEF UF-SHUTTLETYPE  GlobalField { type SFShort SHUTTLETYPE  2 }
+DEF UF-SHUTTLEAMP   GlobalField { type SFFloat SHUTTLEAMP   30 }
+DEF UF-SHUTTLEFREQ  GlobalField { type SFFloat SHUTTLEFREQ  1 }
+DEF UF-ORIGIN       GlobalField { type SFVec3f ORIGIN       0 0 0 }
+DEF UF-COLLIMT      GlobalField { type SFColor COLLIMT      100 100 100}
+
+DEF UF-RIDGE        GlobalField { type SFShort RIDGE        0 }
+DEF UF-ROOFDEPTH    GlobalField { type SFFloat ROOFDEPTH    0 }
+DEF UF-RANDOMDOT    GlobalField { type SFShort RANDOMDOT    0 }
+DEF UF-TEXTURE      GlobalField { type SFShort TEXTURE      0 }
+DEF UF-TEXTLEN      GlobalField { type SFFloat TEXTLEN      100 }
+DEF UF-TEXTWID      GlobalField { type SFFloat TEXTWID      100 }
+DEF UF-TEXTTRANS    GlobalField { type SFVec2f TEXTTRANS    1 1 }
+
+DEF UF-BGLEN        GlobalField { type SFFloat BGLEN        300 }
+DEF UF-BGWID        GlobalField { type SFFloat BGWID        300 }
+DEF UF-BGDEPTH      GlobalField { type SFFloat BGDEPTH      -300 }
+DEF UF-LINEWID      GlobalField { type SFFloat LINEWID      6 }
+DEF UF-GRATWID      GlobalField { type SFFloat GRATWID      15 }
+DEF UF-GRATDRIFT    GlobalField { type SFShort GRATDRIFT    1 }
+DEF UF-GRATFREQ     GlobalField { type SFFloat GRATFREQ     1 }
+
+DEF UF-ANTIALIAS    GlobalField { type SFShort ANTIALIAS    1 }
+DEF UF-EYE          GlobalField { type SFShort EYE          3 }
+DEF UF-DISPARITY    GlobalField { type SFFloat DISPARITY    2.5 }
+DEF UF-REVCOL       GlobalField { type SFShort REVCOL       0 }
+DEF UF-REVFIGCOL    GlobalField { type SFShort REVFIGCOL    0 }
+DEF UF-MBCOL        GlobalField { type SFShort MBCOL        0 }
+DEF UF-COLGAIN      GlobalField { type SFFloat COLGAIN      100 }
+DEF UF-BCOLGAIN     GlobalField { type SFFloat BCOLGAIN     100 }
+
+DEF UF-ISROTATE     GlobalField { type SFShort ISROTATE     0 }
+DEF UF-ROTATEANGLE  GlobalField { type SFFloat ROTATEANGLE  0 }
+DEF UF-ROTATEFREQ   GlobalField { type SFFloat ROTATEFREQ   0.3 }
+DEF UF-SWINGANGLE   GlobalField { type SFFloat SWINGANGLE   15 }
+DEF UF-SAGITALROT   GlobalField { type SFFloat SAGITALROT   0 }
+
+DEF UF-DENSITY      GlobalField { type SFFloat DENSITY      15 }
+DEF UF-SEED         GlobalField { type SFShort SEED         1 }
+DEF UF-DYNSEED      GlobalField { type SFShort DYNSEED      1 }
+DEF UF-SEEDFREQ     GlobalField { type SFFloat SEEDFREQ     8 }
+DEF UF-PIXELSIZE    GlobalField { type SFFloat PIXELSIZE    4 }
+
+DEF UF-CURSORPOS    GlobalField { type SFShort CURSORPOS    0 }
+DEF UF-LINEOFFSET   GlobalField { type SFFloat LINEOFFSET   60 }
+DEF UF-EGGRADIUS    GlobalField { type SFFloat EGGRADIUS    80 }
+DEF UF-TICKLENGTH   GlobalField { type SFFloat TICKLENGTH   16 }
+DEF UF-TRANSPARENCY GlobalField { type SFShort TRANSPARENCY 0 }
+DEF UF-SHANGLE      GlobalField { type SFFloat SHANGLE      0 }
+
+#@
+DEF UF-RESET        GlobalField { type SFShort RESET        0 }
+DEF UF-WHEIGHT      GlobalField { type SFFloat WHEIGHT      1200 }
+DEF UF-INTERVAL     GlobalField { type SFFloat INTERVAL     494 }
+DEF UF-CURSORDEPTH  GlobalField { type SFFloat CURSORDEPTH  180 }
+DEF UF-STEREO       GlobalField { type SFShort STEREO       1 }
+
+#@
+DEF UF-LIGHTMODEL   GlobalField { type SFShort LIGHTMODEL   0 }
+DEF UF-LIGHTINT     GlobalField { type SFFloat LIGHTINT     1 }
+DEF UF-LIGHTCOL     GlobalField { type SFColor LIGHTCOL     1 1 1 }
+DEF UF-LIGHTDIR     GlobalField { type SFVec3f LIGHTDIR     0 -0.5 -0.5 }
+DEF UF-LIGHTINT2    GlobalField { type SFFloat LIGHTINT2    0.6 }
+DEF UF-LIGHTCOL2    GlobalField { type SFColor LIGHTCOL2    1 1 1 }
+DEF UF-LIGHTDIR2    GlobalField { type SFVec3f LIGHTDIR2    0 0.5 -0.5 }
+DEF UF-LIGHTLINT    GlobalField { type SFFloat LIGHTLINT    0.3 }
+DEF UF-LIGHTLCOL    GlobalField { type SFColor LIGHTLCOL    1 1 1 }
+DEF UF-LIGHTLDIR    GlobalField { type SFVec3f LIGHTLDIR    -1 0 0 }
+DEF UF-LIGHTRINT    GlobalField { type SFFloat LIGHTRINT    0.3 }
+DEF UF-LIGHTRCOL    GlobalField { type SFColor LIGHTRCOL    1 1 1 }
+DEF UF-LIGHTRDIR    GlobalField { type SFVec3f LIGHTRDIR    1 0 0 }
+
+#@
+DEF UF-TCOL         GlobalField { type SFColor TCOL         100 100 100 }
+DEF UF-TPOSH        GlobalField { type SFFloat TPOSH        0 }
+DEF UF-TPOSV        GlobalField { type SFFloat TPOSV        0 }
+DEF UF-TSIZ         GlobalField { type SFFloat TSIZ         12 }
+DEF UF-TBCOL        GlobalField { type SFColor TBCOL        100 100 100 }
+DEF UF-TBWID        GlobalField { type SFFloat TBWID        3 }
+DEF UF-TOFF         GlobalField { type SFFloat TOFF         6 }
+DEF UF-TBLEN        GlobalField { type SFFloat TBLEN        8 }
+DEF UF-TOR          GlobalField { type SFFloat TOR          90 }
+DEF UF-TBDEPTH      GlobalField { type SFFloat TBDEPTH      0 }
+DEF UF-TSSIZ        GlobalField { type SFFloat TSSIZ        24 }
+DEF UF-TSLEN        GlobalField { type SFFloat TSLEN        80 }
+DEF UF-TSCOL        GlobalField { type SFColor TSCOL        15 15 15 }
+DEF UF-TTRANS       GlobalField { type SFVec3f TTRANS       0 0 4000 }
+DEF UF-TTYPE        GlobalField { type SFShort TTYPE        0 }
+
+
+Separator {
+    OrthographicCamera {
+        position     0 0 5000
+        nearDistance 1
+        farDistance  10000
+        height       = USE UF-WHEIGHT.WHEIGHT
+    }
+    Antialiasing {
+        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+    }
+    LightModel {
+        model BASE_COLOR
+    }
+    ScreenColor {
+        color = DEF BCol Calculator {
+            a = USE UF-REVCOL.REVCOL
+            b = USE UF-MBCOL.MBCOL
+            c = USE UF-FIGURE.FIGURE
+            d = USE UF-BCOLGAIN.BCOLGAIN
+            e = USE UF-COLGAIN.COLGAIN
+            A = USE UF-BCOL.BCOL
+            B = USE UF-COL.COL
+            expression["oA=(b==1&&c==0?(A*(d/100.0)+B*(e/100.0)/2.0):(a==1?B*(e/100.0):A*(d/100.0)))"]
+        }.oA
+    }
+    # figure color
+    SoAllColor {
+        color = DEF Col Calculator {
+            a = USE UF-REVCOL.REVCOL
+            b = USE UF-REVFIGCOL.REVFIGCOL                                       
+            d = USE UF-BCOLGAIN.BCOLGAIN
+            e = USE UF-COLGAIN.COLGAIN
+            A = USE UF-BCOL.BCOL
+            B = USE UF-COL.COL
+            C = USE UF-COLLIMT.COLLIMT           
+            expression["oA=(b==1?(a==1?(C-A)*(d/100.0):(C-B)*(e/100.0)):(a==1?A*(d/100.0):B*(e/100.0)))"]
+        }.oA
+    }
+    Switch {
+        whichChild = USE UF-STEREO.STEREO
+        Group{}
+        RotationXYZ {
+            axis Z
+            angle 3.1415926535
+        }
+    }
+    #left figure
+    Separator {
+        Antialiasing {
+            antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+        }
+        Translation {
+            translation = Calculator {
+                a = USE UF-INTERVAL.INTERVAL
+                b = USE UF-TPOSH.TPOSH
+                c = USE UF-TPOSV.TPOSV
+                d = USE UF-STEREO.STEREO
+                expression[ "oA[0] = -d*a/2.0 + b", "oA[1] = c" ]
+            }.oA
+        }
+        #left target
+        Switch {
+            whichChild = USE UF-TARGET.TARGET
+            
+            Group {}
+            
+            Separator {
+                DEF LeftTargetDist Translation {
+                    translation = USE UF-TTRANS.TTRANS
+                }
+                DEF LeftTSurround Separator {
+                    Translation {
+                        translation = Calculator {
+                            a = USE UF-TBDEPTH.TBDEPTH
+                            b = USE UF-TSLEN.TSLEN
+                            expression[ "oA[2] = a-b/2.0" ]
+                        }.oA
+                    }
+                    RotationXYZ {
+                        axis X
+                        angle -1.5707963
+                    }
+                    SoAllColor {
+                        color = USE UF-TSCOL.TSCOL
+                    }
+                    Cylinder {
+                        parts TOP
+                        radius = Calculator {
+                            a = USE UF-TSSIZ.TSSIZ
+                            expression[ "oa = a/2.0" ]
+                        }.oa
+                        height = USE UF-TSLEN.TSLEN
+                    }
+                }
+                DEF LeftDisparity Switch {
+                    whichChild = USE UF-STEREO.STEREO
+                    Group {}
+                    RotationXYZ {
+                        axis Y
+                        angle = Calculator {
+                            a = USE UF-DISPARITY.DISPARITY
+                            expression[ "oa=a*0.0174532925" ]
+                        }.oa
+                    }
+                }
+                DEF LeftTarget Switch {
+                    whichChild = USE UF-TTYPE.TTYPE
+                    Group {
+                        LightModel {
+                            model PHONG
+                        }
+                        DirectionalLight {
+                            intensity = USE UF-LIGHTINT.LIGHTINT
+                            color = USE UF-LIGHTCOL.LIGHTCOL
+                            direction = USE UF-LIGHTDIR.LIGHTDIR
+                        }
+                        DirectionalLight {
+                            intensity = USE UF-LIGHTINT2.LIGHTINT2
+                            color = USE UF-LIGHTCOL2.LIGHTCOL2
+                            direction = USE UF-LIGHTDIR2.LIGHTDIR2
+                        }
+                        DrawStyle {
+                            pointSize = Calculator {
+                                a = USE UF-TSIZ.TSIZ
+                                b = USE UF-WHEIGHT.WHEIGHT
+                                expression[ "oa = a * 1024 / b" ]
+                            }.oa
+                            lineWidth = Calculator {
+                                a = USE UF-TBWID.TBWID
+                                b = USE UF-WHEIGHT.WHEIGHT
+                                expression[ "oa = a * 1024 / b" ]
+                            }.oa
+                        }
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        #RotationXYZ {
+                        #    axis Z
+                        #    angle = Calculator {
+                        #        a = USE UF-TOR.TOR
+                        #        expression["oa=a*0.0174532925"]
+                        #    }.oa
+                        #}
+                        Coordinate3 {
+                            point = Calculator {
+                                a = USE UF-CURSORDEPTH.CURSORDEPTH
+                                b = USE UF-TOFF.TOFF
+                                expression[ "oA[1] = b", "oA[2]=a" ]
+                            }.oA
+                        }
+                        PointSet {
+                            numPoints 1
+                        }
+                        SoAllColor {
+                            color = USE UF-TBCOL.TBCOL
+                        }
+                        Coordinate3 {
+                            point = Concatenate {
+                                type MFVec3f
+                                input0 = Calculator {
+                                    a = USE UF-TBDEPTH.TBDEPTH
+                                    expression[ "oA[2]=a" ]
+                                }.oA
+                                input1 = Calculator {
+                                    a = USE UF-TBDEPTH.TBDEPTH
+                                    b = USE UF-TBLEN.TBLEN
+                                    expression[ "oA[1]=-b", "oA[2]=a" ]
+                                }.oA
+                            }.output
+                        }
+                        LineSet {
+                            numVertices 2
+                        }
+                    }
+                    #disk fixation target
+                    Group {
+                        RotationXYZ {
+                            axis X
+                            angle 1.5707963
+                        }
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        Cylinder {
+                            parts TOP
+                            radius = Calculator {
+                                a = USE UF-TSIZ.TSIZ
+                                expression[ "oa = a/2.0" ]
+                            }.oa
+                            height 4
+                        }
+                    }
+                    #cross fixation target
+                    Group {
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        DrawStyle {
+                            lineWidth = Calculator {
+                                a = USE UF-TBWID.TBWID
+                                b = USE UF-WHEIGHT.WHEIGHT
+                                expression[ "oa = a * 1024 / b" ]
+                            }.oa
+                        }
+                        Coordinate3 {
+                            point = Concatenate {
+                                type MFVec3f
+                                input0 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[0]=-a/2", "oA[2]=2" ]
+                                }.oA
+                                input1 = DEF Pos1 Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[0]=a/2", "oA[2]=2" ]
+                                }.oA
+                                input2 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[1]=-a/2", "oA[2]=2"]
+                                }.oA
+                                input3 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[1]=a/2", "oA[2]=2" ]
+                                }.oA
+                            }.output
+                        }
+                        IndexedLineSet {
+                            coordIndex [0, 1, -1, 2, 3, -1]
+                        }
+                    }
+                }
+            }
+        } #end of left target
+        USE LeftDisparity
+        #objects start here
+        Switch {
+            whichChild = Calculator {
+                a = USE UF-EYE.EYE
+                b = USE UF-STEREO.STEREO
+                expression[ "oa=(a==1||a==3||(a==2&&b==0))?0:1" ]
+            }.oa
+            DEF StimLeft0 Switch {
+                whichChild = DEF FigOn Calculator {
+                    a = TimeCounter {
+                        min 0
+                        max 1000
+                        on = USE UF-BLINK.BLINK
+                        frequency  = USE UF-BLINKFREQ.BLINKFREQ
+                        reset = USE UF-RESET.RESET
+                    }.output
+                    b = USE UF-FIGURE.FIGURE
+                    c = USE UF-BLINK.BLINK
+                    expression[ "oa=(b==0?1:(c==0?0:int(a/500)))" ]
+                }.oa
+                
+                Group{
+                    #background for random roof
+                    DEF RandBG Switch {
+                        whichChild = Calculator {
+                            a = USE UF-RIDGE.RIDGE
+                            b = USE UF-RANDOMDOT.RANDOMDOT
+                            expression [ "oa = (a==1&&b==1)?0:1" ]
+                        }.oa
+                        Separator {
+                            Translation {
+                                translation = Calculator {
+                                    a = USE UF-BGDEPTH.BGDEPTH
+                                    d = USE UF-POSH.POSH
+                                    e = USE UF-POSV.POSV
+                                    expression [ "oA[0]=d", "oA[1]=e", "oA[2] = a" ]
+                                }.oA
+                            }
+                            Randot {
+                                width = USE UF-BGLEN.BGLEN
+                                height = USE UF-BGWID.BGWID
+                                dotcolor = USE Col.oA
+                                bkcolor = USE BCol.oA
+                                density = USE UF-DENSITY.DENSITY
+                                seed = DEF Seed Calculator {
+                                    a = USE UF-SEED.SEED
+                                    b = USE UF-DYNSEED.DYNSEED
+                                    c = TimeCounter {
+                                        min 0
+                                        max 100
+                                        step 1
+                                        on = USE UF-DYNSEED.DYNSEED
+                                        frequency  = Calculator {
+                                            a = USE UF-SEEDFREQ.SEEDFREQ
+                                            expression[ "oa=a/100.0" ]
+                                        }.oa
+                                        duty 1
+                                        reset = USE UF-RESET.RESET
+                                    }.output
+                                    expression[ "oa=(b==0?a:c+a)" ]
+                                }.oa
+                                pixelsize = DEF PixelSize Calculator {
+                                    a = USE UF-PIXELSIZE.PIXELSIZE
+                                    b = USE UF-WHEIGHT.WHEIGHT
+                                    expression[ "oa = a * 1024 / b" ]
+                                }.oa
+                                transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                            }
+                        }
+                    }
+                    #HVD Shuttle
+                    DEF HVD_Shuttle Translation {
+                        translation = Calculator {
+                            a = TimeCounter {
+                                min 0
+                                max 1000
+                                step 1
+                                on = USE UF-SHUTTLETYPE.SHUTTLETYPE
+                                frequency  = USE UF-SHUTTLEFREQ.SHUTTLEFREQ
+                                duty 1
+                                reset = USE UF-RESET.RESET
+                            }.output
+                            b = USE UF-SHUTTLETYPE.SHUTTLETYPE
+                            c = USE UF-SHUTTLEAMP.SHUTTLEAMP
+                            d = USE UF-POSH.POSH
+                            e = USE UF-POSV.POSV
+                            f = USE UF-POSD.POSD
+                            g = USE UF-POSD2.POSD2
+                            expression[ "ta=((a>500?1000-a:a)-250)*c/500.0",
+                                "tb=b>9?(a-500)*c/1000.0:ta",
+                                "oA[0]=((b==7||b==10)?tb:0)+d",
+                                "oA[1]=((b==8||b==11)?tb:0)+e",
+                                "oA[2]=((b==9||b==12)?tb:0)+f+g" ]
+                        }.oA
+                    }
+                    DEF Orient RotationXYZ {
+                        axis Z
+                        angle = Calculator {
+                            a = USE UF-OR.OR
+                            b = USE UF-OR2.OR2
+                            c = TimeCounter {
+                            	min 0
+                            	max 359
+                            	step 1
+                            	on = USE UF-SPIN.SPIN
+                            	frequency = USE UF-SPINFREQ.SPINFREQ
+                            	duty 1
+                            }.output
+                            d = USE UF-SPIN.SPIN
+                            expression[ "oa = (a+b+d*c) * 0.0174532925" ]
+                        }.oa
+                    }
+                    DEF PosTrans1 Translation {
+                        translation = Calculator {
+                            a = USE UF-POSX.POSX
+                            b = USE UF-POSY.POSY
+                            expression[ "oA[0] = a", "oA[1] = b" ]
+                        }.oA
+                    }
+                    DEF Swing RotationXYZ {
+                        axis Y
+                        angle = Calculator {
+                            a = TimeCounter {
+                                min 0
+                                max 1000
+                                step 1
+                                on = USE UF-ISROTATE.ISROTATE
+                                frequency  = USE UF-ROTATEFREQ.ROTATEFREQ
+                                duty 1
+                            }.output
+                            c = USE UF-SWINGANGLE.SWINGANGLE
+                            d = USE UF-ROTATEANGLE.ROTATEANGLE
+                            e = USE UF-ISROTATE.ISROTATE
+                            expression[ "ta=c/2*sin(a*2*M_PI/1000.0)+d",
+                                "tb = (e==1?ta:d)",
+                                "oa = tb*0.0174532925" ]
+                        }.oa
+                    }
+                    #temporary disabled. 5/31/01
+                    #DEF SagitalRot RotationXYZ {
+                    #    axis X
+                    #    angle = Calculator {
+                    #        a = USE UF-SAGITALROT.SAGITALROT
+                    #        expression[ "oa = a * 0.0174532925" ]
+                    #    }.oa
+                    #}
+                    DEF Light Switch {
+                        whichChild = USE UF-LIGHTMODEL.LIGHTMODEL
+                        
+                        LightModel {
+                            model BASE_COLOR
+                        }
+                        
+                        Group {
+                            LightModel {
+                                model PHONG
+                            }
+                            DirectionalLight {
+                                intensity = USE UF-LIGHTINT.LIGHTINT
+                                color = USE UF-LIGHTCOL.LIGHTCOL
+                                direction = USE UF-LIGHTDIR.LIGHTDIR
+                            }
+                            DirectionalLight {
+                                intensity = USE UF-LIGHTINT2.LIGHTINT2
+                                color = USE UF-LIGHTCOL2.LIGHTCOL2
+                                direction = USE UF-LIGHTDIR2.LIGHTDIR2
+                            }
+                            DirectionalLight {
+                                intensity = USE UF-LIGHTLINT.LIGHTLINT
+                                color = USE UF-LIGHTLCOL.LIGHTLCOL
+                                direction = USE UF-LIGHTLDIR.LIGHTLDIR
+                            }
+                            DirectionalLight {
+                                intensity = USE UF-LIGHTRINT.LIGHTRINT
+                                color = USE UF-LIGHTRCOL.LIGHTRCOL
+                                direction = USE UF-LIGHTRDIR.LIGHTRDIR
+                            }
+                        }
+                    }
+                    DEF Flap Switch {
+                        whichChild = Calculator {
+                            a = USE UF-RIDGE.RIDGE
+                            b = USE UF-RANDOMDOT.RANDOMDOT
+                            c = USE UF-ROOFDEPTH.ROOFDEPTH
+                            expression [ "oa = ((a==0||(a==14&&c!=0))&&b==1)?0:1" ]
+                        }.oa
+                        
+                        Separator {
+                            Translation {
+                                translation = Calculator {
+                                    b = USE UF-LEN.LEN
+                                    c = USE UF-WID.WID
+                                    A = USE UF-ORIGIN.ORIGIN
+                                    expression[ "oA[0] = -A[0] * b / 2.0",
+                                        "oA[1] = -A[1] * c / 2.0" ]
+                                }.oA
+                            }
+                            Randot {
+                                width = Calculator {
+                                    a = USE UF-BGLEN.BGLEN
+                                    b = USE UF-LEN.LEN
+                                    c = USE UF-RIDGE.RIDGE
+                                    expression[ "oa = c==14?(a+b)/2.0:a" ]
+                                }.oa
+                                height = Calculator {
+                                    a = USE UF-BGWID.BGWID
+                                    b = USE UF-WID.WID
+                                    c = USE UF-RIDGE.RIDGE
+                                    expression[ "oa = c==14?(a+b)/2.0:a" ]
+                                }.oa
+                                dotcolor = USE Col.oA
+                                bkcolor = USE BCol.oA
+                                density = USE UF-DENSITY.DENSITY
+                                seed = USE Seed.oa
+                                pixelsize = USE PixelSize.oa
+                                transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                            }
+                        }
+                    }
+                    #Shuttle
+                    Translation {
+                        translation = Calculator {
+                            a = TimeCounter {
+                                min 0
+                                max 1000
+                                step 1
+                                on = USE UF-SHUTTLETYPE.SHUTTLETYPE
+                                frequency  = USE UF-SHUTTLEFREQ.SHUTTLEFREQ
+                                duty 1
+                                reset = USE UF-RESET.RESET
+                            }.output
+                            b = USE UF-SHUTTLETYPE.SHUTTLETYPE
+                            c = USE UF-SHUTTLEAMP.SHUTTLEAMP
+                            expression[ "ta=((a>500?1000-a:a)-250)*c/500.0",
+                                "tb=b>3?(a-500)*c/1000.0:ta",
+                                "oA[0]=((b==1||b==4)?tb:0)",
+                                "oA[1]=((b==2||b==5)?tb:0)",
+                                "oA[2]=((b==3||b==6)?tb:0)" ]
+                        }.oA
+                    }
+                    # roof
+                    Switch {
+                        whichChild = USE UF-RIDGE.RIDGE
+                        
+                        #flat 0
+                        Group {
+                            #cover
+                            DEF Origin1 Translation {
+                                translation = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-LEN.LEN
+                                    c = USE UF-WID.WID
+                                    A = USE UF-ORIGIN.ORIGIN
+                                    expression[ "oA[0] = -A[0] * b / 2.0",
+                                        "oA[1] = -A[1] * c / 2.0",
+                                        "oA[2] = -A[2] * a + a" ]
+                                }.oA
+                            }
+                            Switch {
+                                whichChild = Calculator {
+                                    a = USE UF-RANDOMDOT.RANDOMDOT
+                                    b = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    expression[ "oa = a==0?0:(b==0?2:1)" ]
+                                }.oa
+                                Separator {
+                                    DEF Texture Switch {
+                                        whichChild = USE UF-TEXTURE.TEXTURE
+                                        Group {}
+                                        Texture2 {
+                                            filename "RegBigPie.rgb"
+                                        }
+                                        Texture2 {
+                                            filename "Mosaic.rgb"
+                                        }
+                                        Texture2 {
+                                            filename "Ellipse.rgb"
+                                        }
+                                        Texture2 {
+                                            filename "RegBigPie30.rgb"
+                                        }
+                                        Texture2 {
+                                            filename "Ellipse30.rgb"
+                                        }
+                                        Texture2 {
+                                            filename "Mosaic30.rgb"
+                                        }
+                                    }
+                                    DEF Cover Rect {
+                                        width = USE UF-LEN.LEN
+                                        height = USE UF-WID.WID
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                }
+                                Randot {
+                                    width = USE UF-LEN.LEN
+                                    height = USE UF-WID.WID
+                                    dotcolor = USE Col.oA
+                                    bkcolor = USE BCol.oA
+                                    density = USE UF-DENSITY.DENSITY
+                                    seed = USE Seed.oa
+                                    pixelsize = USE PixelSize.oa
+                                    transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                }
+                            }
+                        }
+                        
+                        #ridge 1
+                        Group {
+                            DEF Origin2 Translation {
+                                translation = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-LEN.LEN
+                                    c = USE UF-WID.WID
+                                    A = USE UF-ORIGIN.ORIGIN
+                                    expression[ "oA[0] = -A[0] * b / 2.0",
+                                        "oA[1] = -A[1] * c / 2.0",
+                                        "oA[2] = -A[2] * a" ]
+                                }.oA
+                            }
+                            Switch {
+                                whichChild = USE UF-RANDOMDOT.RANDOMDOT
+                                Group {
+                                    USE Texture
+                                    DEF SRoof SolidRoof {
+                                        width = USE UF-LEN.LEN
+                                        height = USE UF-WID.WID
+                                        depth = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                    }
+                                }
+                                Group {
+                                    Separator {
+                                        SoAllColor {
+                                            color = USE BCol.oA
+                                        }
+                                        Translation {
+                                            translation = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-ROOFDEPTH.ROOFDEPTH
+                                                c = USE UF-PIXELSIZE.PIXELSIZE
+                                                expression[ "oA[2] = -c * sqrt(b*b+a*a/4) / a"]
+                                            }.oA
+                                        }
+                                        USE SRoof
+                                    }
+                                    DEF UpperRoof Separator {
+                                        Translation {
+                                            translation = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-ROOFDEPTH.ROOFDEPTH
+                                                expression[ "oA[1] = a / 4", "oA[2] = b / 2" ]
+                                            }.oA
+                                        }
+                                        RotationXYZ {
+                                            axis X
+                                            angle = Calculator {
+                                                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                                b = USE UF-WID.WID
+                                                expression[ "oa = atan2(-a, b/2)" ]
+                                            }.oa
+                                        }
+                                        Randot {
+                                            width = USE UF-LEN.LEN
+                                            height = DEF RidgeH Calculator {
+                                                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                                b = USE UF-WID.WID
+                                                expression[ "oa = sqrt(a*a+b*b/4)" ]
+                                            }.oa
+                                            dotcolor = USE Col.oA
+                                            bkcolor = USE BCol.oA
+                                            density = Calculator {
+                                                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                                b = USE UF-WID.WID
+                                                c = USE UF-DENSITY.DENSITY
+                                                expression[ "oa = c * b/2/sqrt(b*b/4+a*a)" ]
+                                            }.oa
+                                            seed = USE Seed.oa
+                                            pixelsize = USE PixelSize.oa
+                                            transparency 1
+                                        }
+                                    }
+                                    RotationXYZ {
+                                        axis Z
+                                        angle 3.1415926535
+                                    }
+                                    USE UpperRoof
+                                }
+                            }
+                        }
+                        #cylinder 2
+                        Group {
+                            USE Origin2
+                            Coordinate3 {
+                                point = HalfEllipse {
+                                    width = USE UF-LEN.LEN
+                                    height = USE UF-WID.WID
+                                    depth = USE UF-ROOFDEPTH.ROOFDEPTH
+                                }.points
+                            }
+                            TriangleStripSet {
+                            }
+                        }
+                        #Necker cube -- 3
+                        Group {
+                            USE Origin2
+                            DrawStyle {
+                                lineWidth = DEF LineWid Calculator {
+                                    a = USE UF-LINEWID.LINEWID
+                                    b = USE UF-WHEIGHT.WHEIGHT
+                                    expression[ "oa = a * 1024 / b" ]
+                                }.oa
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=-b/2", "oA[1]=c/2" ]
+                                    }.oA
+                                    input1 = DEF Pos1 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "oA[0]=-b/2", "oA[1]=(d==0?1:-1)*c/6", "oA[2]=a" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=-b/2", "oA[1]=-c/2" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "oA[0]=-b/2", "oA[1]=(d==0?-1:1)*c/6", "oA[2]=-a" ]
+                                    }.oA
+                                    input4 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=b/2", "oA[1]=c/2" ]
+                                    }.oA
+                                    input5 = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "oA[0]=b/2", "oA[1]=(d==0?1:-1)*c/6", "oA[2]=a" ]
+                                    }.oA
+                                    input6 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=b/2", "oA[1]=-c/2" ]
+                                    }.oA
+                                    input7 = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "oA[0]=b/2", "oA[1]=(d==0?-1:1)*c/6", "oA[2]=-a" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedLineSet {
+                                coordIndex [0, 4, -1, 3, 7, -1, 2, 6, -1, 0, 3, 2, 1, 0, -1, 4, 7, 6, 5, 4, -1, 1, 5, -1]
+                            }
+                        }
+                        #WireRoof -- 4
+                        Group {
+                            USE Origin2
+                            DrawStyle {
+                                lineWidth = USE LineWid.oa
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=-b/2", "oA[1]=c/2" ]
+                                    }.oA
+                                    input1 = DEF Pos1 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        expression[ "oA[0]=-b/2", "oA[2]=a" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=-b/2", "oA[1]=-c/2" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=b/2", "oA[1]=c/2" ]
+                                    }.oA
+                                    input4 = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        expression[ "oA[0]=b/2", "oA[2]=a" ]
+                                    }.oA
+                                    input5 = Calculator {
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        expression[ "oA[0]=b/2", "oA[1]=-c/2" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedLineSet {
+                                coordIndex [1, 0, 3, 4, 1, 2, 5, 4, -1]
+                            }
+                        }
+                        #Thick Necker cube -- 5
+                        Group {
+                            USE Texture
+                            USE Origin2
+                            Separator {
+                                Translation {
+                                    translation = DEF CubeCalc1 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        c = USE UF-LEN.LEN
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "ta=(d==0?a:-a)", "oA[0]=-c/2",
+                                            "oA[1]=b/3", "oA[2]=ta/2",
+                                            "oa=-atan(3*ta/b)", "ob=sqrt(ta*ta+b*b/9)",
+                                            "oB[1]=-2*b/3", "oB[2]=-ta",    "oC[0]=c",
+                                            "oD[1]=2*b/3", "oD[2]=ta"  ]
+                                    }.oA
+                                }
+                                DEF CubeSide1 Separator {
+                                    RotationXYZ {
+                                        axis X
+                                        angle = USE CubeCalc1.oa
+                                    }
+                                    Cylinder {
+                                        height = USE CubeCalc1.ob
+                                        radius = Calculator {
+                                            a = USE LineWid.oa
+                                            expression[ "oa = a/2" ]
+                                        }.oa
+                                    }
+                                }
+                                Translation {
+                                    translation = USE CubeCalc1.oB
+                                }
+                                USE CubeSide1
+                                Translation {
+                                    translation = USE CubeCalc1.oC
+                                }
+                                USE CubeSide1
+                                Translation {
+                                    translation = USE CubeCalc1.oD
+                                }
+                                USE CubeSide1
+                            }
+                            Separator {
+                                Translation {
+                                    translation = DEF CubeCalc2 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        c = USE UF-LEN.LEN
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        expression[ "ta=(d==0?a:-a)", "oA[0]=-c/2", 
+                                            "oA[1]=-b/6", "oA[2]=ta/2",
+                                            "oa=atan(3*ta/b/2)", "ob=sqrt(ta*ta+4*b*b/9)",
+                                            "oB[1]=b/3", "oB[2]=-ta",    "oC[0]=c",
+                                            "oD[1]=-b/3", "oD[2]=ta"  ]
+                                    }.oA
+                                }
+                                DEF CubeSide2 Separator {
+                                    RotationXYZ {
+                                        axis X
+                                        angle = USE CubeCalc2.oa
+                                    }
+                                    Cylinder {
+                                        height = USE CubeCalc2.ob
+                                        radius = Calculator {
+                                            a = USE LineWid.oa
+                                            expression[ "oa = a/2" ]
+                                        }.oa
+                                    }
+                                }
+                                Translation {
+                                    translation = USE CubeCalc2.oB
+                                }
+                                USE CubeSide2
+                                Translation {
+                                    translation = USE CubeCalc2.oC
+                                }
+                                USE CubeSide2
+                                Translation {
+                                    translation = USE CubeCalc2.oD
+                                }
+                                USE CubeSide2
+                            }
+                            Translation {
+                                translation = DEF CubeCalc3 Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-WID.WID
+                                    c = USE UF-LEN.LEN
+                                    d = USE UF-CURSORPOS.CURSORPOS
+                                    expression[ "ta=(d==0?a:-a)", "oA[1]=b/6", "oA[2]=ta",
+                                        "oB[1]=-2*b/3", "oB[2]=-ta",
+                                        "oC[1]=b/3", "oC[2]=-ta",
+                                        "oD[1]=2*b/3", "oD[2]=ta"  ]
+                                }.oA
+                            }
+                            DEF CubeSide3 Separator {
+                                RotationXYZ {
+                                    axis Z
+                                    angle 1.57079632675
+                                }
+                                Cylinder {
+                                    height = USE UF-LEN.LEN
+                                    radius = Calculator {
+                                        a = USE LineWid.oa
+                                        expression[ "oa = a/2" ]
+                                    }.oa
+                                }
+                            }
+                            Translation {
+                                translation = USE CubeCalc3.oB
+                            }
+                            USE CubeSide3
+                            Translation {
+                                translation = USE CubeCalc3.oC
+                            }
+                            USE CubeSide3
+                            Translation {
+                                translation = USE CubeCalc3.oD
+                            }
+                            USE CubeSide3
+                        }
+                        #double line 6
+                        Group {
+                            DrawStyle {
+                                lineWidth = USE LineWid.oa
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = DEF Pos0 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        e = USE UF-LINEOFFSET.LINEOFFSET
+                                        f = USE UF-ROTATEANGLE.ROTATEANGLE
+                                        expression[ "oA[0]=-b/2+(e/2-fabs(a)*sin(f*0.0174532925))/cos(f*0.0174532925)",
+                                            "oA[1]=(d==0?1:-1)*c/6", "oA[2]=a" ]
+                                    }.oA
+                                    input1 = DEF Pos1 Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-LEN.LEN
+                                        c = USE UF-WID.WID
+                                        d = USE UF-CURSORPOS.CURSORPOS
+                                        e = USE UF-LINEOFFSET.LINEOFFSET
+                                        f = USE UF-ROTATEANGLE.ROTATEANGLE
+                                        expression[ "oA[0]=-b/2-(e/2-fabs(a)*sin(f*0.0174532925))/cos(f*0.0174532925)",
+                                            "oA[1]=(d==0?-1:1)*c/6", "oA[2]=-a" ]
+                                    }.oA
+                                    input2 = DEF Pos2 Calculator {
+                                        A = USE Pos0.oA
+                                        b = USE UF-LEN.LEN
+                                        expression[ "oA[0]=A[0]+b",    "oA[1]=A[1]", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input3 = DEF Pos3 Calculator {
+                                        A = USE Pos1.oA
+                                        b = USE UF-LEN.LEN
+                                        expression[ "oA[0]=A[0]+b", "oA[1]=A[1]", "oA[2]=A[2]" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedLineSet {
+                                coordIndex [0, 2, -1, 1, 3, -1]
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        A = USE Pos0.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]+a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input1 = Calculator {
+                                        A = USE Pos0.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]-a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        A = USE Pos1.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]+a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        A = USE Pos1.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]-a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input4 = Calculator {
+                                        A = USE Pos2.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]+a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input5 = Calculator {
+                                        A = USE Pos2.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]-a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input6 = Calculator {
+                                        A = USE Pos3.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]+a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                    input7 = Calculator {
+                                        A = USE Pos3.oA
+                                        a = USE UF-TICKLENGTH.TICKLENGTH
+                                        expression[ "oA[0]=A[0]", "oA[1]=A[1]-a/2", "oA[2]=A[2]" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedLineSet {
+                                coordIndex [0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1]
+                            }
+                        }
+                        #solid cylinder 7
+                        Group {
+                            USE Texture
+                            Texture2Transform {
+                                scaleFactor = USE UF-TEXTTRANS.TEXTTRANS
+                            }
+                            DEF Origin3 Translation {
+                                translation = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-LEN.LEN
+                                    A = USE UF-ORIGIN.ORIGIN
+                                    expression[ "oA[0] = -A[0] * b / 2.0",
+                                        "oA[1] = -A[1] * fabs(a)",
+                                        "oA[2] = -A[2] * fabs(a)" ]
+                                }.oA
+                            }
+                            RotationXYZ {
+                                axis Z
+                                angle 1.57079632675
+                            }
+                            Cylinder {
+                                radius = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    expression[ "oa = (a<3?3:a)" ]
+                                }.oa
+                                height = USE UF-LEN.LEN
+                            }
+                        }
+                        #solid cube 8
+                        Group {
+                            USE Texture
+                            USE Origin3
+                            RotationXYZ {
+                                axis X
+                                angle 0.785398163375
+                            }
+                            MyCube {
+                                width = USE UF-LEN.LEN
+                                height = DEF calc Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    expression[ "ta = sqrt(2*a*a)",
+                                        "oa = (ta<3?3:ta)" ]
+                                }.oa
+                                depth = USE calc.oa
+                                textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                textureHeight = USE UF-TEXTWID.TEXTWID
+                            }
+                        }
+                        #egg 9
+                        Group {
+                            Egg {
+                                radius = USE UF-EGGRADIUS.EGGRADIUS
+                                depth = USE UF-ROOFDEPTH.ROOFDEPTH
+                                slice 40
+                                stack 10
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=-a", "oA[1]=-a" ]
+                                    }.oA
+                                    input1 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=-a/2", "oA[1]=-b/2" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=a", "oA[1]=-a" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=a/2", "oA[1]=-b/2" ]
+                                    }.oA
+                                    input4 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=a", "oA[1]=a" ]
+                                    }.oA
+                                    input5 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=a/2", "oA[1]=b/2" ]
+                                    }.oA
+                                    input6 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=-a", "oA[1]=a" ]
+                                    }.oA
+                                    input7 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=-a/2", "oA[1]=b/2" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedTriangleStripSet {
+                                coordIndex [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, -1]
+                            }
+                        }
+                        #half egg 10
+                        Group {
+                            Translation {
+                                translation = Calculator {
+                                    a = USE UF-LEN.LEN
+                                    expression[ "oA[0] = -a/2" ]
+                                }.oA
+                            }
+                            RotationXYZ {
+                                axis Z
+                                angle -1.57079632675
+                            }
+                            HalfEgg {
+                                radius = USE UF-EGGRADIUS.EGGRADIUS
+                                depth = USE UF-ROOFDEPTH.ROOFDEPTH
+                                slice 20
+                                stack 10
+                            }
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=a" ]
+                                    }.oA
+                                    input1 = Calculator {
+                                        a = USE UF-WID.WID
+                                        expression[ "oA[0]=a/2" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=a", "oA[1]=a" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=b/2", "oA[1]=a" ]
+                                    }.oA
+                                    input4 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=-a", "oA[1]=a" ]
+                                    }.oA
+                                    input5 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        expression[ "oA[0]=-b/2", "oA[1]=a" ]
+                                    }.oA
+                                    input6 = Calculator {
+                                        a = USE UF-EGGRADIUS.EGGRADIUS
+                                        expression[ "oA[0]=-a" ]
+                                    }.oA
+                                    input7 = Calculator {
+                                        a = USE UF-WID.WID
+                                        expression[ "oA[0]=-a/2" ]
+                                    }.oA
+                                }.output
+                            }
+                            TriangleStripSet {
+                                numVertices 8
+                            }
+                        }
+                        #sinusoidal grating 11
+                        Group {
+                            DEF Origin4 Translation {
+                                translation = Calculator {
+                                    b = USE UF-LEN.LEN
+                                    c = USE UF-WID.WID
+                                    A = USE UF-ORIGIN.ORIGIN
+                                    expression[ "oA[0] = -A[0] * b / 2.0",
+                                        "oA[1] = -A[1] * c / 2.0" ]
+                                }.oA
+                            }
+                            Separator {
+                                SoAllColor {
+                                    color = USE BCol.oA
+                                }
+                                Translation {
+                                    translation = Calculator {
+                                        a = USE UF-WID.WID
+                                        b = USE UF-GRATWID.GRATWID
+                                        expression[ "oA[1] = -a/2.0-b", "oA[2] = 0.1" ]
+                                    }.oA
+                                }
+                                DEF DBar Rect {
+                                    width = USE UF-LEN.LEN
+                                    height = Calculator {
+                                        a = USE UF-GRATWID.GRATWID
+                                        expression[ "oa=2*a" ]
+                                    }.oa
+                                    antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                    wheight = USE UF-WHEIGHT.WHEIGHT
+                                }
+                                Translation {
+                                    translation = Calculator {
+                                        a = USE UF-WID.WID
+                                        b = USE UF-GRATWID.GRATWID
+                                        expression[ "oA[1] = a+b*2"]
+                                    }.oA
+                                }
+                                USE DBar
+                            }
+                            DEF Drifting Translation {
+                                translation = Calculator {
+                                    b = USE UF-GRATWID.GRATWID
+                                    c = TimeCounter {
+                                        min        -128
+                                        max        128
+                                        step       1
+                                        on         = USE UF-GRATDRIFT.GRATDRIFT
+                                        frequency = USE UF-GRATFREQ.GRATFREQ
+                                        duty       1
+                                        reset = USE UF-RESET.RESET
+                                    }.output
+                                    expression[ "oA[1] = b*c/256.0" ]
+                                }.oA
+                            }
+                            MaterialBinding {
+                                value PER_PART
+                            }
+                            Coordinate3 {
+                                point = DEF GR Grating {
+                                    length = USE UF-LEN.LEN
+                                    width = USE UF-WID.WID
+                                    grades 256
+                                    cyclewidth = USE UF-GRATWID.GRATWID
+                                }.points
+                            }
+                            SoAllColor {
+                                color = Calculator {
+                                    A = USE Col.oA
+                                    B = USE BCol.oA
+                                    a = USE GR.midpoints
+                                    expression ["oA = B + sin(a*2*M_PI)*(A-B)"]
+                                }.oA
+                            }
+                            TriangleStripSet {
+                                numVertices = USE GR.strips
+                            }
+                        }
+                        #square grating 12
+                        Group {
+                            USE Origin4
+                            Separator {
+                                SoAllColor {
+                                    color = USE BCol.oA
+                                }
+                                Translation {
+                                    translation = Calculator {
+                                        a = USE UF-WID.WID
+                                        b = USE UF-GRATWID.GRATWID
+                                        expression[ "oA[1] = -a/2.0-b", "oA[2] = 0.1" ]
+                                    }.oA
+                                }
+                                USE DBar
+                                Translation {
+                                    translation = Calculator {
+                                        a = USE UF-WID.WID
+                                        b = USE UF-GRATWID.GRATWID
+                                        expression[ "oA[1] = a+b*2"]
+                                    }.oA
+                                }
+                                USE DBar
+                            }
+                            USE Drifting
+                            MaterialBinding {
+                                value PER_PART
+                            }
+                            Coordinate3 {
+                                point = DEF GR Grating {
+                                    length = USE UF-LEN.LEN
+                                    width = USE UF-WID.WID
+                                    grades 2
+                                    cyclewidth = USE UF-GRATWID.GRATWID
+                                }.points
+                            }
+                            SoAllColor {
+                                color = Calculator {
+                                    A = USE Col.oA
+                                    B = USE BCol.oA
+                                    a = USE GR.midpoints
+                                    expression ["oA = B + (A-B)*(a*4-1)"]
+                                }.oA
+                            }
+                            TriangleStripSet {
+                                numVertices = USE GR.strips
+                            }
+                        }
+                        #contrast roof 13
+                        Group {
+                            USE Origin2
+                            Separator {
+                                Translation {
+                                    translation = Calculator {
+                                        a = USE UF-WID.WID
+                                        b = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        expression[ "oA[1] = a / 4", "oA[2] = b / 2" ]
+                                    }.oA
+                                }
+                                RotationXYZ {
+                                    axis X
+                                    angle = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        expression[ "oa = atan2(-a, b/2)" ]
+                                    }.oa
+                                }
+                                Switch {
+                                    whichChild = USE UF-RANDOMDOT.RANDOMDOT
+                                    Separator {
+                                        USE Texture
+                                        Rect {
+                                            width = USE UF-LEN.LEN
+                                            height = USE RidgeH.oa
+                                            antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                            sides NO_BOTTOM
+                                            textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                            textureHeight = USE UF-TEXTWID.TEXTWID
+                                            wheight = USE UF-WHEIGHT.WHEIGHT
+                                        }
+                                    }
+                                    Randot {
+                                        width = USE UF-LEN.LEN
+                                        height = USE RidgeH.oa
+                                        dotcolor = USE Col.oA
+                                        bkcolor = USE BCol.oA
+                                        density = Calculator {
+                                            a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                            b = USE UF-WID.WID
+                                            c = USE UF-DENSITY.DENSITY
+                                            expression[ "oa = c * b/2/sqrt(b*b/4+a*a)" ]
+                                        }.oa
+                                        seed = USE Seed.oa
+                                        pixelsize = USE PixelSize.oa
+                                        transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                    }
+                                }
+                            }
+                            Translation {
+                                translation = Calculator {
+                                    a = USE UF-WID.WID
+                                    b = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    expression[ "oA[1] = - a / 4", "oA[2] = b / 2" ]
+                                }.oA
+                            }
+                            RotationXYZ {
+                                axis X
+                                angle = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-WID.WID
+                                    expression[ "oa = atan2(a, b/2)" ]
+                                }.oa
+                            }
+                            SoAllColor {
+                                color = Calculator {
+                                    A = USE Col.oA
+                                    B = USE BCol.oA
+                                    expression[ "oA=B-(A-B)" ]
+                                }.oA
+                            }
+                            Switch {
+                                whichChild = USE UF-RANDOMDOT.RANDOMDOT
+                                Separator {
+                                    USE Texture
+                                    Rect {
+                                        width = USE UF-LEN.LEN
+                                        height = USE RidgeH.oa
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        sides ALL
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                }
+                                Randot {
+                                    width = USE UF-LEN.LEN
+                                    height = USE RidgeH.oa
+                                    dotcolor = Calculator {
+                                        A = USE Col.oA
+                                        B = USE BCol.oA
+                                        expression[ "oA=B-(A-B)" ]
+                                    }.oA
+                                    bkcolor = USE BCol.oA
+                                    density = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        c = USE UF-DENSITY.DENSITY
+                                        expression[ "oa = c * b/2/sqrt(b*b/4+a*a)" ]
+                                    }.oa
+                                    seed = USE Seed.oa
+                                    pixelsize = USE PixelSize.oa
+                                    transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                }
+                            }
+                        }
+                        # window (random dot) -- 14
+                        Group {
+                            USE Origin1
+                            Switch {
+                                whichChild = USE UF-RANDOMDOT.RANDOMDOT
+                                Separator {
+                                    USE Texture
+                                    DEF Trans_Up_14 Translation {
+                                        translation = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            expression[ "oA[1] = (a+b)/4.0" ]
+                                        }.oA
+                                    }
+                                    Rect {
+                                        width = USE UF-BGLEN.BGLEN
+                                        height = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            expression[ "oa = (b-a)/2.0" ]
+                                        }.oa
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        sides ( TOP | LEFT | RIGHT )
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                    DEF Rect_Up_14 Rect {
+                                        width = USE UF-LEN.LEN
+                                        height = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            expression[ "oa = (b-a)/2.0" ]
+                                        }.oa
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        sides ( TOP | BOTTOM )
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                    DEF Trans_Down_14 Translation {
+                                        translation = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            expression[ "oA[1] = -(a+b)/2.0" ]
+                                        }.oA
+                                    }
+                                    Rect {
+                                        width = USE UF-BGLEN.BGLEN
+                                        height = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            expression[ "oa = (b-a)/2.0" ]
+                                        }.oa
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        sides ( LEFT | RIGHT | BOTTOM )
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                    USE Rect_Up_14
+                                    DEF Trans_Left_14 Translation {
+                                        translation = Calculator {
+                                            a = USE UF-WID.WID
+                                            b = USE UF-BGWID.BGWID
+                                            c = USE UF-LEN.LEN
+                                            d = USE UF-BGLEN.BGLEN
+                                            expression[ "oA[0] = -(c+d)/4.0", "oA[1] = (a+b)/4.0" ]
+                                        }.oA
+                                    }
+                                    DEF Rect_Left_14 Rect {
+                                        width = Calculator {
+                                            a = USE UF-LEN.LEN
+                                            b = USE UF-BGLEN.BGLEN
+                                            expression[ "oa = (b-a)/2.0" ]
+                                        }.oa
+                                        height = USE UF-WID.WID
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        sides ( LEFT | RIGHT )
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                    DEF Trans_Right_14 Translation {
+                                        translation = Calculator {
+                                            c = USE UF-LEN.LEN
+                                            d = USE UF-BGLEN.BGLEN
+                                            expression[ "oA[0] = (c+d)/2.0" ]
+                                        }.oA
+                                    }
+                                    USE Rect_Left_14
+                                }
+                                Switch {
+                                    whichChild = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        expression[ "oa = a==0?0:1" ]
+                                    }.oa
+                                    Randot {
+                                        width = USE UF-BGLEN.BGLEN
+                                        height = USE UF-BGWID.BGWID
+                                        dotcolor = USE Col.oA
+                                        bkcolor = USE BCol.oA
+                                        density = USE UF-DENSITY.DENSITY
+                                        seed = USE Seed.oa
+                                        pixelsize = USE PixelSize.oa
+                                        transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                    }
+                                    Separator {
+                                        DEF Trans_Up_14 Translation {
+                                            translation = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-BGWID.BGWID
+                                                expression[ "oA[1] = (a+b)/4.0" ]
+                                            }.oA
+                                        }
+                                        DEF Randot_Up_14 Randot {
+                                            width = USE UF-BGLEN.BGLEN
+                                            height = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-BGWID.BGWID
+                                                expression[ "oa = (b-a)/2.0" ]
+                                            }.oa
+                                            dotcolor = USE Col.oA
+                                            bkcolor = USE BCol.oA
+                                            density = USE UF-DENSITY.DENSITY
+                                            seed = USE Seed.oa
+                                            pixelsize = USE PixelSize.oa
+                                            transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                        }
+                                        DEF Trans_Down_14 Translation {
+                                            translation = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-BGWID.BGWID
+                                                expression[ "oA[1] = -(a+b)/2.0" ]
+                                            }.oA
+                                        }
+                                        USE Randot_Up_14
+                                        DEF Trans_Left_14 Translation {
+                                            translation = Calculator {
+                                                a = USE UF-WID.WID
+                                                b = USE UF-BGWID.BGWID
+                                                c = USE UF-LEN.LEN
+                                                d = USE UF-BGLEN.BGLEN
+                                                expression[ "oA[0] = -(c+d)/4.0", "oA[1] = (a+b)/4.0" ]
+                                            }.oA
+                                        }
+                                        DEF Randot_Left_14 Randot {
+                                            width = Calculator {
+                                                a = USE UF-LEN.LEN
+                                                b = USE UF-BGLEN.BGLEN
+                                                expression[ "oa = (b-a)/2.0" ]
+                                            }.oa
+                                            height = USE UF-WID.WID
+                                            dotcolor = USE Col.oA
+                                            bkcolor = USE BCol.oA
+                                            density = USE UF-DENSITY.DENSITY
+                                            seed = USE Seed.oa
+                                            pixelsize = USE PixelSize.oa
+                                            transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                        }
+                                        DEF Trans_Right_14 Translation {
+                                            translation = Calculator {
+                                                c = USE UF-LEN.LEN
+                                                d = USE UF-BGLEN.BGLEN
+                                                expression[ "oA[0] = (c+d)/2.0" ]
+                                            }.oA
+                                        }
+                                        USE Randot_Left_14
+                                    }
+                                }
+                            }
+                        }
+                        #circular sinusoidal grating -- 15
+                        Group {
+                            Separator {
+                                SoAllColor {
+                                    color = USE BCol.oA
+                                }
+                                Coordinate3 {
+                                    point = DEF GRCover GratingCover {
+                                        diameter = USE UF-WID.WID
+                                        gratwid = USE UF-GRATWID.GRATWID
+                                    }.points
+                                }
+                                TriangleStripSet {
+                                    numVertices = USE GRCover.strips
+                                }
+                            }
+                            USE Drifting
+                            MaterialBinding {
+                                value PER_PART
+                            }
+                            Coordinate3 {
+                                point = DEF GR Grating {
+                                    length = USE UF-WID.WID
+                                    width = USE UF-WID.WID
+                                    grades 256
+                                    cyclewidth = USE UF-GRATWID.GRATWID
+                                }.points
+                            }
+                            SoAllColor {
+                                color = Calculator {
+                                    A = USE Col.oA
+                                    B = USE BCol.oA
+                                    a = USE GR.midpoints
+                                    expression ["oA = B + sin(a*2*M_PI)*(A-B)"]
+                                }.oA
+                            }
+                            TriangleStripSet {
+                                numVertices = USE GR.strips
+                            }
+                        }
+                        #circular square grating -- 16
+                        Group {
+                            Separator {
+                                SoAllColor {
+                                    color = USE BCol.oA
+                                }
+                                Coordinate3 {
+                                    point = DEF GRCover GratingCover {
+                                        diameter = USE UF-WID.WID
+                                        gratwid = USE UF-GRATWID.GRATWID
+                                    }.points
+                                }
+                                TriangleStripSet {
+                                    numVertices = USE GRCover.strips
+                                }
+                            }
+                            USE Drifting
+                            MaterialBinding {
+                                value PER_PART
+                            }
+                            Coordinate3 {
+                                point = DEF GR Grating {
+                                    length = USE UF-WID.WID
+                                    width = USE UF-WID.WID
+                                    grades 2
+                                    cyclewidth = USE UF-GRATWID.GRATWID
+                                }.points
+                            }
+                            SoAllColor {
+                                color = Calculator {
+                                    A = USE Col.oA
+                                    B = USE BCol.oA
+                                    a = USE GR.midpoints
+                                    expression ["oA = B + (A-B)*(a*4-1)"]
+                                }.oA
+                            }
+                            TriangleStripSet {
+                                numVertices = USE GR.strips
+                            }
+                        }
+                        # concave cube -- 17
+                        Group {
+                            USE Texture
+                            USE Origin3
+                            RotationXYZ {
+                                axis X
+                                angle 0.785398163375
+                            }
+                            ConcaveCube {
+                                width = USE UF-LEN.LEN
+                                height = DEF calc Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    expression[ "ta = 2*sqrt(2*a*a)",
+                                        "oa = (ta<3?3:ta)" ]
+                                }.oa
+                                depth = USE calc.oa
+                                textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                textureHeight = USE UF-TEXTWID.TEXTWID
+                            }
+                            #Coordinate3 {
+                            #    point = Concatenate {
+                            #        type MFVec3f
+                            #        input0 = Concatenate {
+                            #            type MFVec3f
+                            #            input0 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[1]=2*a", "oA[2]=a" ]
+                            #            }.oA
+                            #            input1 = DEF Pos1 Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[1]=a" ]
+                            #            }.oA
+                            #            input2 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[2]=a" ]
+                            #            }.oA
+                            #            input3 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[1]=-a" ]
+                            #            }.oA
+                            #            input4 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[1]=-2*a", "oA[2]=a" ]
+                            #            }.oA
+                            #            input5 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=-b/2", "oA[2]=3*a" ]
+                            #            }.oA
+                            #        }.output
+                            #        input1 = Concatenate {
+                            #            type MFVec3f
+                            #            input0 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[1]=2*a", "oA[2]=a" ]
+                            #            }.oA
+                            #            input1 = DEF Pos1 Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[1]=a" ]
+                            #            }.oA
+                            #            input2 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[2]=a" ]
+                            #            }.oA
+                            #            input3 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[1]=-a" ]
+                            #            }.oA
+                            #            input4 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[1]=-2*a", "oA[2]=a" ]
+                            #            }.oA
+                            #            input5 = Calculator {
+                            #                a = USE UF-ROOFDEPTH.ROOFDEPTH
+                            #                b = USE UF-LEN.LEN
+                            #                expression[ "oA[0]=b/2", "oA[2]=3*a" ]
+                            #            }.oA
+                            #        }.output
+                            #    }.output
+                            #}
+                            #IndexedTriangleStripSet {
+                            #    coordIndex [0, 6, 1, 7, -1, 1, 7, 2, 8, -1, 2, 8, 3, 9, -1, 3, 9, 4, 10, -1, 4, 10, 5, 11, -1, 5, 11, 0, 6, -1, 0, 1, 5, 2, 4, 3, -1, 7, 6, 8, 11, 9, 10, -1]
+                            #}
+                        }
+                        #ridge 18 -- tilted surface
+                        Group {
+                            USE Origin2
+                            RotationXYZ {
+                                axis X
+                                angle = Calculator {
+                                    a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                    b = USE UF-WID.WID
+                                    expression[ "oa = atan2(2*a, b)" ]
+                                }.oa
+                            }
+                            Switch {
+                                whichChild = USE UF-RANDOMDOT.RANDOMDOT
+                                Separator {
+                                    USE Texture
+                                    Rect {
+                                        width = USE UF-LEN.LEN
+                                        height = Calculator {
+                                            a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                            b = USE UF-WID.WID
+                                            expression[ "oa = sqrt(4*a*a+b*b)" ]
+                                        }.oa
+                                        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+                                        textureWidth = USE UF-TEXTLEN.TEXTLEN
+                                        textureHeight = USE UF-TEXTWID.TEXTWID
+                                        wheight = USE UF-WHEIGHT.WHEIGHT
+                                    }
+                                }
+                                Randot {
+                                    width = USE UF-LEN.LEN
+                                    height = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        expression[ "oa = sqrt(4*a*a+b*b)" ]
+                                    }.oa
+                                    dotcolor = USE Col.oA
+                                    bkcolor = USE BCol.oA
+                                    density = Calculator {
+                                        a = USE UF-ROOFDEPTH.ROOFDEPTH
+                                        b = USE UF-WID.WID
+                                        c = USE UF-DENSITY.DENSITY
+                                        expression[ "oa = c * b/sqrt(b*b+4*a*a)" ]
+                                    }.oa
+                                    seed = USE Seed.oa
+                                    pixelsize = USE PixelSize.oa
+                                    transparency = USE UF-TRANSPARENCY.TRANSPARENCY
+                                }
+                            }
+                        }
+                        #ridge 19 -- parallelogram
+                        Group {
+                            USE Origin2
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        expression[ "oA[0] = -a/2.0" ]
+                                    }.oA
+                                    input1 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        expression[ "oA[0] = a/2.0" ]
+                                    }.oA
+                                    input2 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        c = USE UF-SHANGLE.SHANGLE
+                                        expression[ "oA[0] = a/2.0 - b * tan(c*0.0174532925)",
+                                            "oA[1] = b" ]
+                                    }.oA
+                                    input3 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        c = USE UF-SHANGLE.SHANGLE
+                                        expression[ "oA[0] = -a/2.0 - b * tan(c*0.0174532925)",
+                                            "oA[1] = b" ]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedTriangleStripSet {
+                                coordIndex [0, 1, 3, 2, -1]
+                            }
+                        }
+                        #ridge 20 -- checkboard
+                        Group {
+                            USE Origin2
+                            CheckBoard {
+                                width = USE UF-LEN.LEN
+                                height = USE UF-WID.WID
+                                hgrid 16
+                                vgrid 16
+                                seed = Calculator {
+                                    a = USE UF-SEED.SEED
+                                    b = USE UF-DYNSEED.DYNSEED
+                                    c = TimeCounter {
+                                        min 0
+                                        max 8500
+                                        step 1
+                                        on = USE UF-DYNSEED.DYNSEED
+                                        frequency  = Calculator {
+                                            a = USE UF-SEEDFREQ.SEEDFREQ
+                                            expression[ "oa=a/8500.0" ]
+                                        }.oa
+                                        duty 1
+                                    }.output
+                                    expression[ "oa=(b==0?a:c+a)" ]
+                                }.oa
+                            }
+                        }
+                        #ridge 21 -- C-Shape
+                        Group {
+                            Coordinate3 {
+                                point = Concatenate {
+                                    type MFVec3f
+                                    input0 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = -a/2.0",
+                                            "oA[1] = 0.0"]
+                                    }.oA
+                                    input1 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = -a/2.0",
+                                            "oA[1] = A[1]*b/2.0"]
+                                    }.oA
+                                    input2 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = -a",
+                                            "oA[1] = A[1]*b/2.0"]
+                                    }.oA
+                                    input3 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = -a",
+                                            "oA[1] = -A[1]*b/2.0"]
+                                    }.oA
+                                    input4 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = a",
+                                            "oA[1] = -A[1]*b/2.0"]
+                                    }.oA
+                                    input5 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = a",
+                                            "oA[1] = A[1]*b/2.0"]
+                                    }.oA
+                                    input6 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = a/2.0",
+                                            "oA[1] = A[1]*b/2.0"]
+                                    }.oA
+                                    input7 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = a/2.0",
+                                            "oA[1] = 0.0"]
+                                    }.oA
+                                    input8 = Calculator {
+                                        a = USE UF-LEN.LEN
+                                        b = USE UF-WID.WID
+                                        A = USE UF-ORIGIN.ORIGIN
+                                        expression[ 
+                                            "oA[0] = 0.0",
+                                            "oA[1] = -A[1]*b/2.0"]
+                                    }.oA
+                                }.output
+                            }
+                            IndexedTriangleStripSet {
+                                coordIndex [0, 1, 2, 3, 8, 4, 5, 6, 7, -1, 0, 8, 7, -1]
+                            }
+                        }
+                        # end of object
+                    } # end of roof
+                } # end of figure on
+            } # end of StimLeft0
+            #DEF StimLeft1 Switch {
+            #    whichChild = USE FigOn.oa
+                
+            #    Separator{
+                    #USE RandBG
+                    #USE HVD_Shuttle
+                    #USE Orient
+                    #USE PosTrans1
+                    #USE Light
+                    #USE SagitalRot
+                    #USE Swing
+                    #USE Flap
+            #    }
+            #}
+        } #end of left object
+    } #end of left figure
+    #right figure
+    Switch {
+        whichChild = USE UF-STEREO.STEREO
+        Group {}
+        Group {
+            Translation {
+                translation = Calculator {
+                    a = USE UF-INTERVAL.INTERVAL
+                    b = USE UF-TPOSH.TPOSH
+                    c = USE UF-TPOSV.TPOSV
+                    expression[ "oA[0] = a/2+b", "oA[1] = c" ]
+                }.oA
+            }
+            #right figure
+            Switch {
+                whichChild = USE UF-TARGET.TARGET
+                Group {}
+                Separator {
+                    USE LeftTargetDist
+                    USE LeftTSurround
+                    DEF RightDisparity RotationXYZ {
+                        axis Y
+                        angle = Calculator {
+                            a = USE UF-DISPARITY.DISPARITY
+                            expression[ "oa=-a*0.0174532925" ]
+                        }.oa
+                    }
+                    USE LeftTarget
+                }
+            }
+            USE RightDisparity
+            Switch {
+                whichChild = Calculator {
+                    a = USE UF-EYE.EYE
+                    expression[ "oa=(a==2||a==3)?0:1" ]
+                }.oa
+                USE StimLeft0
+                #USE StimLeft1
+            }
+        }
+    }
+}

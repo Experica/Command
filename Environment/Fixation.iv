@@ -1,0 +1,82 @@
+#Inventor V2.1 ascii
+# Basic Fixation Control
+
+
+DEF TPOSH GlobalField {type SFFloat TPOSH 0}
+DEF TPOSV GlobalField {type SFFloat TPOSV 0}
+DEF TSIZ GlobalField {type SFFloat TSIZ 10}
+DEF TSSIZ GlobalField {type SFFloat TSSIZ 20}
+DEF TCH GlobalField {type SFFloat TCHEIGHT 2}
+DEF TSH GlobalField {type SFFloat TSHEIGHT 1}
+DEF CAMERAHEIGHT GlobalField {type SFFloat CAMERAHEIGHT 1200}
+DEF ANTIALIAS GlobalField {type SFShort ANTIALIAS 1}
+DEF BGCOL GlobalField {type SFColor BGCOL 50 50 50}
+DEF TARGET GlobalField {type SFLong TARGET 0}
+DEF TCOL GlobalField {type SFColor TCOL 100 100 100}
+DEF TSCOL GlobalField {type SFColor TSCOL 15 15 15}
+
+
+Separator {
+    OrthographicCamera {
+        position		0 0 501
+        nearDistance	1
+        farDistance		1001
+        height			= USE CAMERAHEIGHT.CAMERAHEIGHT
+    }
+    LightModel {
+        model BASE_COLOR
+    }
+    Antialiasing {
+        antialiasing	= USE ANTIALIAS.ANTIALIAS
+    }
+    ScreenColor {
+        color			= USE BGCOL.BGCOL
+    }
+    # Fixation Target
+    Separator {
+        Switch {
+            whichChild	= USE TARGET.TARGET
+		# TARGET = 0, TARGET_OFF
+		Group {
+		}
+		# TARGET = 1, TARGET_ON
+    		Group {
+			    Translation {
+					translation	= Calculator {
+						a = USE TPOSH.TPOSH
+						b = USE TPOSV.TPOSV
+						expression["oA[0]=a","oA[1]=b"]
+					}.oA
+				}
+				DEF TargetNode Separator {
+					RotationXYZ {
+						axis	X
+						angle	1.5707963
+					}
+					SoAllColor {
+						color	= USE TCOL.TCOL
+					}
+					DEF TargetCenter Cylinder {
+						parts		TOP
+						radius = Calculator {
+							a = USE TSIZ.TSIZ
+							expression ["oa = a/2.0"]
+							}.oa
+						height	= USE TCH.TCHEIGHT
+					}
+					SoAllColor {
+						color	= USE TSCOL.TSCOL
+					}
+					DEF TargetSurround Cylinder {
+						parts		TOP
+						radius = Calculator {
+							a = USE TSSIZ.TSSIZ
+							expression ["oa = a/2.0"]
+							}.oa
+						height	= USE TSH.TSHEIGHT
+					}
+				}
+		}
+        }
+    }
+}

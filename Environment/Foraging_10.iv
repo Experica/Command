@@ -1,0 +1,644 @@
+#Inventor V2.1 ascii
+# Foraging Visual Search Task
+
+
+DEF CAMERAHEIGHT GlobalField {type SFFloat CAMERAHEIGHT 1200}
+DEF ANTIALIAS GlobalField {type SFShort ANTIALIAS 1}
+DEF BCOL GlobalField {type SFColor BCOL 50 50 50}
+DEF RESET GlobalField {type SFShort RESET 0}
+DEF REVCOL GlobalField {type SFShort REVCOL 0 }
+DEF MBCOL GlobalField {type SFShort MBCOL 0}
+
+#@ Cursor
+DEF CURSOR GlobalField {type SFLong CURSOR 0}
+DEF CPOSH GlobalField {type SFFloat CPOSH 0}
+DEF CPOSV GlobalField {type SFFloat CPOSV 0}
+DEF CPOSD GlobalField {type SFFloat CPOSD 30}
+DEF CCOL GlobalField {type SFColor CCOL 0 100 0}
+DEF CSIZ GlobalField {type SFFloat CSIZ 6}
+DEF CWID GlobalField {type SFFloat CWID 2}
+
+#@ FixPoint
+DEF TPOSH GlobalField {type SFFloat TPOSH 0}
+DEF TPOSV GlobalField {type SFFloat TPOSV 0}
+DEF TARGET GlobalField {type SFLong TARGET 0}
+DEF FPOSH GlobalField {type SFFloat FPOSH 0}
+DEF FPOSV GlobalField {type SFFloat FPOSV 0}
+DEF FPOSD GlobalField {type SFFloat FPOSD 20}
+DEF FCCOL GlobalField {type SFColor FCCOL 100 100 100}
+DEF FCSIZ GlobalField {type SFFloat FCSIZ 6}
+DEF FCHEIGHT GlobalField {type SFFloat FCHEIGHT 2}
+DEF FSCOL GlobalField {type SFColor FSCOL 15 15 15}
+DEF FSSIZ GlobalField {type SFFloat FSSIZ 12}
+DEF FSHEIGHT GlobalField {type SFFloat FSHEIGHT 1}
+
+#@ Cue
+DEF CUE GlobalField {type SFLong CUE 0}
+DEF CUEPOSH GlobalField {type SFFloat CUEPOSH 0}
+DEF CUEPOSV GlobalField {type SFFloat CUEPOSV 0}
+DEF CUEPOSD GlobalField {type SFFloat CUEPOSD 10}
+
+#@ Figure Array
+DEF FIGURE GlobalField {type SFLong FIGURE 0}
+DEF POSX_1 GlobalField {type SFFloat POSX_1 0}
+DEF POSY_1 GlobalField {type SFFloat POSY_1 0}
+DEF PFIGTYPE_1 GlobalField {type SFFloat PFIGTYPE_1 -1}
+DEF PRFIDX_1 GlobalField {type SFFloat PRFIDX_1 0}
+DEF POSX_2 GlobalField {type SFFloat POSX_2 0}
+DEF POSY_2 GlobalField {type SFFloat POSY_2 0}
+DEF PFIGTYPE_2 GlobalField {type SFFloat PFIGTYPE_2 -1}
+DEF PRFIDX_2 GlobalField {type SFFloat PRFIDX_2 0}
+DEF POSX_3 GlobalField {type SFFloat POSX_3 0}
+DEF POSY_3 GlobalField {type SFFloat POSY_3 0}
+DEF PFIGTYPE_3 GlobalField {type SFFloat PFIGTYPE_3 -1}
+DEF PRFIDX_3 GlobalField {type SFFloat PRFIDX_3 0}
+DEF POSX_4 GlobalField {type SFFloat POSX_4 0}
+DEF POSY_4 GlobalField {type SFFloat POSY_4 0}
+DEF PFIGTYPE_4 GlobalField {type SFFloat PFIGTYPE_4 -1}
+DEF PRFIDX_4 GlobalField {type SFFloat PRFIDX_4 0}
+DEF POSX_5 GlobalField {type SFFloat POSX_5 0}
+DEF POSY_5 GlobalField {type SFFloat POSY_5 0}
+DEF PFIGTYPE_5 GlobalField {type SFFloat PFIGTYPE_5 -1}
+DEF PRFIDX_5 GlobalField {type SFFloat PRFIDX_5 0}
+DEF POSX_6 GlobalField {type SFFloat POSX_6 0}
+DEF POSY_6 GlobalField {type SFFloat POSY_6 0}
+DEF PFIGTYPE_6 GlobalField {type SFFloat PFIGTYPE_6 -1}
+DEF PRFIDX_6 GlobalField {type SFFloat PRFIDX_6 0}
+DEF POSX_7 GlobalField {type SFFloat POSX_7 0}
+DEF POSY_7 GlobalField {type SFFloat POSY_7 0}
+DEF PFIGTYPE_7 GlobalField {type SFFloat PFIGTYPE_7 -1}
+DEF PRFIDX_7 GlobalField {type SFFloat PRFIDX_7 0}
+DEF POSX_8 GlobalField {type SFFloat POSX_8 0}
+DEF POSY_8 GlobalField {type SFFloat POSY_8 0}
+DEF PFIGTYPE_8 GlobalField {type SFFloat PFIGTYPE_8 -1}
+DEF PRFIDX_8 GlobalField {type SFFloat PRFIDX_8 0}
+DEF POSX_9 GlobalField {type SFFloat POSX_9 0}
+DEF POSY_9 GlobalField {type SFFloat POSY_9 0}
+DEF PFIGTYPE_9 GlobalField {type SFFloat PFIGTYPE_9 -1}
+DEF PRFIDX_9 GlobalField {type SFFloat PRFIDX_9 0}
+DEF POSX_10 GlobalField {type SFFloat POSX_10 0}
+DEF POSY_10 GlobalField {type SFFloat POSY_10 0}
+DEF PFIGTYPE_10 GlobalField {type SFFloat PFIGTYPE_10 -1}
+DEF PRFIDX_10 GlobalField {type SFFloat PRFIDX_10 0}
+DEF REWARDTYPE GlobalField {type SFFloat REWARDTYPE 0}
+DEF REWARDIDX GlobalField {type SFFloat REWARDIDX 0}
+
+#@ Figure Type 0: Rectangle
+DEF FT0COL GlobalField {type SFColor FT0COL 100 100 100}
+DEF FT0LEN GlobalField {type SFFloat FT0LEN 60}
+DEF FT0WID GlobalField {type SFFloat FT0WID 60}
+DEF FT0DEPTH GlobalField {type SFFloat FT0DEPTH 0}
+DEF FT0OR GlobalField {type SFFloat FT0OR 0 }
+DEF FT0OR2 GlobalField {type SFFloat FT0OR2 0 }
+DEF FT0ORIGIN GlobalField {type SFVec3f FT0ORIGIN 0 0 0 }
+
+#@ Figure Type 1: Equilateral Triangle
+DEF FT1COL GlobalField {type SFColor FT1COL 100 100 100}
+DEF FT1SIZ GlobalField {type SFFloat FT1SIZ 60}
+DEF FT1HEIGHT GlobalField {type SFFloat FT1HEIGHT 0}
+DEF FT1OR GlobalField {type SFFloat FT1OR 0 }
+DEF FT1OR2 GlobalField {type SFFloat FT1OR2 0 }
+DEF FT1ORIGIN GlobalField {type SFVec3f FT1ORIGIN 0 0 0 }
+
+#@ Figure Type 2: Circle
+DEF FT2COL GlobalField {type SFColor FT2COL 100 100 100}
+DEF FT2SIZ GlobalField {type SFFloat FT2SIZ 60}
+DEF FT2HEIGHT GlobalField {type SFFloat FT2HEIGHT 0}
+DEF FT2OR GlobalField {type SFFloat FT2OR 0 }
+DEF FT2OR2 GlobalField {type SFFloat FT2OR2 0 }
+DEF FT2ORIGIN GlobalField {type SFVec3f FT2ORIGIN 0 0 0 }
+
+
+# Scene Root
+Separator {
+    OrthographicCamera {
+        position		0 0 501
+        nearDistance	1
+        farDistance		1001
+        height			= USE CAMERAHEIGHT.CAMERAHEIGHT
+    }
+    LightModel {
+        model BASE_COLOR
+    }
+    Antialiasing {
+        antialiasing	= USE ANTIALIAS.ANTIALIAS
+    }
+    ScreenColor {
+        color			= DEF BCol Calculator{
+		A = USE BCOL.BCOL
+		B = USE FT0COL.FT0COL
+		a = USE REVCOL.REVCOL
+		expression["oA = (a==0?A:B)"]
+		}.oA
+    }
+
+    # Cursor Cross
+    Separator {
+	Switch {
+		whichChild = USE CURSOR.CURSOR
+			Group {}
+			Group {
+			    Translation {
+					translation	= Calculator {
+						a = USE CPOSH.CPOSH
+						b = USE CPOSV.CPOSV
+						c = USE CPOSD.CPOSD
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+					}.oA
+			    }
+			    DEF CrossNode Separator {
+				SoAllColor {
+				    color = USE CCOL.CCOL
+				}
+				DrawStyle {
+				    lineWidth = USE CWID.CWID
+				}
+				Coordinate3 {
+				  point = Concatenate {
+				    type MFVec3f
+				    input0 = Calculator {
+				      a = USE CSIZ.CSIZ
+				      expression["oA[0]=-a/2"]
+				    }.oA
+				    input1 = Calculator {
+				      a = USE CSIZ.CSIZ
+				      expression["oA[0]=a/2"]
+				    }.oA
+				    input2 = Calculator {
+				      a = USE CSIZ.CSIZ
+				      expression["oA[1]=a/2"]
+				    }.oA
+				    input3 = Calculator {
+				      a = USE CSIZ.CSIZ
+				      expression["oA[1]=-a/2"]
+				    }.oA
+				  }.output
+				}
+				IndexedLineSet {
+				    coordIndex [0,1,-1, 2,3,-1]
+				}
+			  }
+			}
+	}
+    }
+
+    # Fixation Point
+    Separator {
+        Switch {
+            whichChild	= USE TARGET.TARGET
+		Group {}
+    		Group {
+			    DEF FPPos Translation {
+					translation	= Calculator {
+						a = USE FPOSH.FPOSH
+						b = USE FPOSV.FPOSV
+						c = USE FPOSD.FPOSD
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+					}.oA
+				}
+				DEF FixPointNode Separator {
+					RotationXYZ {
+						axis	X
+						angle	1.5707963
+					}
+					SoAllColor {
+						color	= USE FCCOL.FCCOL
+					}
+					DEF FPCenter Cylinder {
+						parts		TOP
+						radius = Calculator {
+							a = USE FCSIZ.FCSIZ
+							expression ["oa = a/2.0"]
+							}.oa
+						height	= USE FCHEIGHT.FCHEIGHT
+					}
+					SoAllColor {
+						color	= USE FSCOL.FSCOL
+					}
+					DEF FPSurround Cylinder {
+						parts		TOP
+						radius = Calculator {
+							a = USE FSSIZ.FSSIZ
+							expression ["oa = a/2.0"]
+							}.oa
+						height	= USE FSHEIGHT .FSHEIGHT
+					}
+				}
+		}
+        }
+    }
+
+# Reward Figure Type Cue
+Separator {
+    Switch {
+	whichChild = USE CUE.CUE
+	  Group{}
+	  Group{
+	    	    DEF CuePos Translation {
+					translation	= Calculator {
+						a = USE FPOSH.FPOSH
+						b = USE FPOSV.FPOSV
+						c = USE CUEPOSD.CUEPOSD
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+					}.oA
+		    }
+	    Separator {
+		Switch {
+		  whichChild = USE REWARDTYPE.REWARDTYPE
+
+		  # Figure Type 0
+		  Group{
+		    DEF FigType0 Separator {
+			DEF FigType0OR RotationXYZ{
+			  axis Z
+			  angle = Calculator{
+			    a = USE FT0OR.FT0OR
+			    b = USE FT0OR2.FT0OR2
+			    expression["oa=(a+b)*0.0174532925"]
+				}.oa
+			}
+			DEF FigType0Origin Translation{
+			  translation = Calculator{
+			    a = USE FT0LEN.FT0LEN
+			    b = USE FT0WID.FT0WID
+			    A = USE FT0ORIGIN.FT0ORIGIN
+			expression["oA[0]=A[0]*(a/2.0)","oA[1]=A[1]*(b/2.0)"]
+			  }.oA
+			}
+				SoAllColor {
+					color	= DEF FT0Col Calculator{
+					A = USE FT0COL.FT0COL
+					B = USE BCOL.BCOL
+					a = USE REVCOL.REVCOL
+					expression["oA = (a==0?A:B)"]
+					}.oA
+				}
+				Rect {
+					width	= USE FT0LEN.FT0LEN
+					height  = USE FT0WID.FT0WID
+					antialiasing = USE ANTIALIAS.ANTIALIAS
+				}
+		    }
+		  }
+
+		  # Figure Type 1
+		  Group{
+		    DEF FigType1 Separator {
+			DEF FigType1OR RotationXYZ{
+			  axis Z
+			  angle = Calculator{
+			    a = USE FT1OR.FT1OR
+			    b = USE FT1OR2.FT1OR2
+			    expression["oa=(a+b)*0.0174532925"]
+				}.oa
+			}
+			DEF FigType1Origin Translation{
+			  translation = Calculator{
+			    a = USE FT1SIZ.FT1SIZ
+			    A = USE FT1ORIGIN.FT1ORIGIN
+			expression["oA[1]=A[1]*(a/2.0)*sin(30*0.0174532925)"]
+			  }.oA
+			}
+			SoAllColor {
+			  color	= DEF FT1Col Calculator{
+					A = USE FT1COL.FT1COL
+					B = USE BCOL.BCOL
+					a = USE REVCOL.REVCOL
+					expression["oA = (a==0?A:B)"]
+					}.oA
+			}
+			ELTriangle {
+				width = USE FT1SIZ.FT1SIZ
+				height = USE FT1SIZ.FT1SIZ
+				antialiasing = USE ANTIALIAS.ANTIALIAS
+			}
+		    }
+		  }
+
+		  # Figure Type 2
+		  Group{
+		    DEF FigType2 Separator {
+			DEF FigType2OR RotationXYZ{
+			  axis Z
+			  angle = Calculator{
+			    a = USE FT2OR.FT2OR
+			    b = USE FT2OR2.FT2OR2
+			    expression["oa=(a+b)*0.0174532925"]
+				}.oa
+			}
+			DEF FigType2Origin Translation{
+			  translation = Calculator{
+			    a = USE FT2SIZ.FT2SIZ
+			    A = USE FT2ORIGIN.FT2ORIGIN
+			expression["oA[0]=A[0]*(a/2.0)","oA[1]=A[1]*(a/2.0)"]
+			  }.oA
+			}
+				RotationXYZ {
+					axis	X
+					angle 1.5707963
+				}
+				SoAllColor {
+					color	= DEF FT2Col Calculator{
+					A = USE FT2COL.FT2COL
+					B = USE BCOL.BCOL
+					a = USE REVCOL.REVCOL
+					expression["oA = (a==0?A:B)"]
+					}.oA
+				}
+				Cylinder {
+					parts		TOP
+					radius = Calculator {
+						a = USE FT2SIZ.FT2SIZ
+						expression ["oa = a/2.0"]
+					}.oa
+					height	= USE FT2HEIGHT.FT2HEIGHT
+				}
+			}
+		  }
+		}
+	    }
+	  }
+    }
+}
+
+# Figure Array
+Separator {
+    Switch {
+	whichChild = USE FIGURE.FIGURE
+	Group{}
+	Group{
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_1.PFIGTYPE_1
+		# Figure Type 0
+    		Group {
+			DEF FigPos_1 Translation {
+				translation	= Calculator {
+					a = USE POSX_1.POSX_1
+					b = USE POSY_1.POSY_1
+					c = USE PFIGTYPE_1.PFIGTYPE_1
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_1
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_1
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_2.PFIGTYPE_2
+		# Figure Type 0
+    		Group {
+			DEF FigPos_2 Translation {
+				translation	= Calculator {
+					a = USE POSX_2.POSX_2
+					b = USE POSY_2.POSY_2
+					c = USE PFIGTYPE_2.PFIGTYPE_2
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_2
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_2
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_3.PFIGTYPE_3
+		# Figure Type 0
+    		Group {
+			DEF FigPos_3 Translation {
+				translation	= Calculator {
+					a = USE POSX_3.POSX_3
+					b = USE POSY_3.POSY_3
+					c = USE PFIGTYPE_3.PFIGTYPE_3
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_3
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_3
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_4.PFIGTYPE_4
+		# Figure Type 0
+    		Group {
+			DEF FigPos_4 Translation {
+				translation	= Calculator {
+					a = USE POSX_4.POSX_4
+					b = USE POSY_4.POSY_4
+					c = USE PFIGTYPE_4.PFIGTYPE_4
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_4
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_4
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_5.PFIGTYPE_5
+		# Figure Type 0
+    		Group {
+			DEF FigPos_5 Translation {
+				translation	= Calculator {
+					a = USE POSX_5.POSX_5
+					b = USE POSY_5.POSY_5
+					c = USE PFIGTYPE_5.PFIGTYPE_5
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_5
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_5
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_6.PFIGTYPE_6
+		# Figure Type 0
+    		Group {
+			DEF FigPos_6 Translation {
+				translation	= Calculator {
+					a = USE POSX_6.POSX_6
+					b = USE POSY_6.POSY_6
+					c = USE PFIGTYPE_6.PFIGTYPE_6
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_6
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_6
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_7.PFIGTYPE_7
+		# Figure Type 0
+    		Group {
+			DEF FigPos_7 Translation {
+				translation	= Calculator {
+					a = USE POSX_7.POSX_7
+					b = USE POSY_7.POSY_7
+					c = USE PFIGTYPE_7.PFIGTYPE_7
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_7
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_7
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_8.PFIGTYPE_8
+		# Figure Type 0
+    		Group {
+			DEF FigPos_8 Translation {
+				translation	= Calculator {
+					a = USE POSX_8.POSX_8
+					b = USE POSY_8.POSY_8
+					c = USE PFIGTYPE_8.PFIGTYPE_8
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_8
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_8
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_9.PFIGTYPE_9
+		# Figure Type 0
+    		Group {
+			DEF FigPos_9 Translation {
+				translation	= Calculator {
+					a = USE POSX_9.POSX_9
+					b = USE POSY_9.POSY_9
+					c = USE PFIGTYPE_9.PFIGTYPE_9
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_9
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_9
+			USE FigType2
+		}
+        }
+    }
+    Separator {
+        Switch {
+            whichChild	= USE PFIGTYPE_10.PFIGTYPE_10
+		# Figure Type 0
+    		Group {
+			DEF FigPos_10 Translation {
+				translation	= Calculator {
+					a = USE POSX_10.POSX_10
+					b = USE POSY_10.POSY_10
+					c = USE PFIGTYPE_10.PFIGTYPE_10
+					expression["oA[0]=a","oA[1]=b","oA[2]=c"]
+				}.oA
+			}
+			USE FigType0
+		}
+		# Figure Type 1
+		Group {
+			USE FigPos_10
+			USE FigType1
+		}
+		# Figure Type 2
+		Group {
+			USE FigPos_10
+			USE FigType2
+		}
+        }
+    }
+
+}
+}
+}
+}

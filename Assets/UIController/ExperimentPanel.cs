@@ -19,8 +19,8 @@ public class ExperimentPanel:MonoBehaviour
 {
     public VLUIController uicontroller;
     public GameObject svcontent, inputfield, togglebutton,filepathinput,newexparamprefab, 
-        togglebuttoninputfield, togglebuttonfilepathinput, togglebuttondropdown,
-        toggletogglebuttoninputfield, toggletogglebuttonfilepathinput, toggletogglebuttondropdown;
+        togglebuttoninputfield, togglebuttondirinput, togglebuttonfilepathinput, togglebuttondropdown,
+        toggletogglebuttoninputfield, toggletogglebuttondirinput, toggletogglebuttonfilepathinput, toggletogglebuttondropdown;
     public Canvas canvas;
     public CanvasGroup panelcontentcanvasgroup,statusbarcanvasgroup;
 
@@ -61,8 +61,9 @@ public class ExperimentPanel:MonoBehaviour
     public GameObject ChoosePrefab(string name, Type T,bool iscustom)
     {
         GameObject prefab;
-        var idx = name.LastIndexOf("path");
-        if (idx >= 0 && idx == (name.Length - 4))
+        var pi = name.LastIndexOf("path");
+        var di = name.LastIndexOf("dir");
+        if (pi >= 0 && pi == (name.Length - 4))
         {
             if (iscustom)
             {
@@ -71,6 +72,17 @@ public class ExperimentPanel:MonoBehaviour
             else
             {
                 prefab = togglebuttonfilepathinput;
+            }
+        }
+        else if(di >= 0 && di == (name.Length - 3))
+        {
+            if (iscustom)
+            {
+                prefab = toggletogglebuttondirinput;
+            }
+            else
+            {
+                prefab = togglebuttondirinput;
             }
         }
         else

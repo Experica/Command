@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8c8e864844805c441ade48c2b09a64dd
-timeCreated: 1460408898
+guid: b864918d36eb4d546ad93a81d8b22bfa
+timeCreated: 1463867406
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
@@ -53,10 +53,6 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: AnyCPU
-        DontProcess: False
-        PlaceholderPath: 
-        SDK: AnySDK
-        ScriptingBackend: AnyScriptingBackend
   userData: 
   assetBundleName: 
   assetBundleVariant: 

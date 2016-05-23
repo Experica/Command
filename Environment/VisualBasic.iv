@@ -1,0 +1,92 @@
+#Inventor V2.1 ascii
+# Basic Visual Task Training
+
+
+DEF UF-TPOS GlobalField {type SFVec3f TPOS 0 0 0}
+DEF UF-TWIDTH GlobalField {type SFFloat TWIDTH 800}
+DEF UF-THEIGHT GlobalField {type SFFloat THEIGHT 800}
+DEF UF-TDEPTH GlobalField {type SFFloat TDEPTH 0}
+DEF UF-BPOS GlobalField {type SFVec3f BPOS 0 0 0}
+DEF UF-BWIDTH GlobalField {type SFFloat BWIDTH 300}
+DEF UF-BHEIGHT GlobalField {type SFFloat BHEIGHT 800}
+DEF UF-BDEPTH GlobalField {type SFFloat BDEPTH 1}
+
+DEF UF-CAMERAHEIGHT GlobalField {type SFFloat CAMERAHEIGHT 1200}
+DEF UF-ANTIALIAS GlobalField {type SFShort ANTIALIAS 1}
+DEF UF-BGCOL GlobalField {type SFColor BGCOL 50 50 50}
+DEF UF-TARGET GlobalField {type SFLong TARGET -1}
+DEF UF-TCOL GlobalField {type SFColor TCOL 100 100 100}
+DEF UF-BAR GlobalField {type SFLong BAR -1}
+DEF UF-BCOL GlobalField {type SFColor BCOL 0 0 0}
+DEF UF-RANGLE GlobalField {type SFFloat RANGLE 1.5707963}
+
+
+Separator {
+    OrthographicCamera {
+        position		0 0 501
+        nearDistance	1
+        farDistance		1001
+        height			= USE UF-CAMERAHEIGHT.CAMERAHEIGHT
+    }
+    LightModel {
+        model BASE_COLOR
+    }
+    Antialiasing {
+        antialiasing	= USE UF-ANTIALIAS.ANTIALIAS
+    }
+    ScreenColor {
+        color			= USE UF-BGCOL.BGCOL
+    }
+    # Cue Target
+    Separator {
+        Switch {
+            whichChild	= USE UF-TARGET.TARGET
+    		Group {
+			    Translation {
+					translation	= USE UF-TPOS.TPOS
+				}
+				DEF TargetNode Separator {
+					SoAllColor {
+						color	= USE UF-TCOL.TCOL
+					}
+					Cube {
+						width	= USE UF-TWIDTH.TWIDTH
+						height	= USE UF-THEIGHT.THEIGHT
+						depth	= USE UF-TDEPTH.TDEPTH
+					}
+				}
+			}
+        }
+    }
+    # Bar
+    Separator {
+        Switch {
+    	    whichChild	= USE UF-BAR.BAR
+    		# Initial Bar
+    		Group {
+    			DEF BTrans Translation {
+    				translation	= USE UF-BPOS.BPOS
+    			}
+    			DEF BarNode Separator {
+    				SoAllColor {
+    					color	= USE UF-BCOL.BCOL
+    				}
+    				Cube {
+    					width	= USE UF-BWIDTH.BWIDTH
+    					height	= USE UF-BHEIGHT.BHEIGHT
+    					depth	= USE UF-BDEPTH.BDEPTH
+    				}
+    			}
+    		}
+    		# Rotated Bar
+    		Group {
+    			USE BTrans
+    			RotationXYZ {
+    				axis	Z
+    				angle	= USE UF-RANGLE.RANGLE
+    			}
+    			USE BarNode
+    		}
+    	}
+    }
+}

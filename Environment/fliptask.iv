@@ -1,0 +1,112 @@
+#Inventor V2.1 ascii
+
+
+DEF CF-0  		GlobalField { type SFLong  TARGET       0 }
+DEF CF-1  		GlobalField { type SFLong  FIGURE       0 }
+DEF CF-3  		GlobalField { type SFShort ANTIALIAS    1 }
+DEF CF-5  		GlobalField { type SFFloat WHEIGHT      1200 }
+
+DEF UF-4  		GlobalField { type SFColor BCOL         50 50 50 }
+DEF UF-30 		GlobalField { type SFColor COL          90 90 90 }
+DEF UF-31 		GlobalField { type SFFloat POSH         0 }
+DEF UF-32 		GlobalField { type SFFloat POSV         0 }
+DEF UF-33 		GlobalField { type SFFloat OR           0 }
+DEF UF-34 		GlobalField { type SFFloat POSX         0 }
+DEF UF-35 		GlobalField { type SFFloat POSY         0 }
+DEF UF-RESET		GlobalField { type SFShort RESET        0 }
+DEF UF-5  		GlobalField { type SFColor TCOL         100 100 100 }
+DEF UF-6  		GlobalField { type SFFloat TPOSH        0 }
+DEF UF-7  		GlobalField { type SFFloat TPOSV        0 }
+DEF UF-8  		GlobalField { type SFFloat TSIZ         7 }
+DEF UF-9  		GlobalField { type SFColor TBCOL        0 0 0 }
+DEF UF-10 		GlobalField { type SFFloat TBWID        3 }
+DEF UF-11 		GlobalField { type SFColor TSCOL        15 15 15 }
+
+
+Separator {
+	OrthographicCamera {
+		position     0 0 5000
+		nearDistance 1
+		farDistance  10000
+		height       = USE CF-5.WHEIGHT
+	}
+	LightModel {
+		model BASE_COLOR
+	}
+	Antialiasing {
+		antialiasing = USE CF-3.ANTIALIAS
+	}
+	ScreenColor {   
+		color = USE UF-4.BCOL
+	}
+	# Controls the target presentation.  The three nodes are (1) a blank screen
+	# (2) an upright target, and (3) a 90 degree rotated target. Target depths are
+	# large so that they are always in front of the figure.
+	
+	# The target has three parts:      a)  a center square, size TSIZ x TSIZ, color TCOL
+	#                                  b)  a center bar, size TSIZ x TBWID, color TBCOL
+	#                                  c)  a surround square, size 15' x 15', color TSCOL
+	Separator {
+		DEF TargetLeft Switch {
+			whichChild = USE CF-0.TARGET
+	
+			# TARGET = 0, TARGET_OFF
+			Group {
+			}
+	
+			# TARGET = 1, TARGET_ON
+			# This is the upright target
+			Group {
+				DEF TPos Translation {
+					translation = Calculator {
+						# Center square pos
+						a = USE UF-6.TPOSH			
+						b = USE UF-7.TPOSV
+						expression[ "oA[0] = a", "oA[1] = b", "oA[2] = 800" ]
+					}.oA
+				}
+				DEF Target1 Separator {
+					SoAllColor {
+						# Center square color
+						color = USE UF-5.TCOL			
+					}
+					Cube {
+						width = USE UF-8.TSIZ
+						height = USE UF-8.TSIZ
+						depth 1.1
+					}
+					SoAllColor {
+						# Center bar color
+						color = USE UF-9.TBCOL			
+					}
+					Cube {
+						height = USE UF-8.TSIZ
+						width = USE UF-10.TBWID
+						depth 1.2
+					}
+					SoAllColor {	
+						# Surround square color			
+						color = USE UF-11.TSCOL			
+					}
+					Cube {
+						# Surround square size, fixed to 15' x 15'
+						width 15
+						height 15
+						depth 1.0		
+					}
+				}
+			}
+			
+			# TARGET = 2, TARGET_FLIP
+			# This is the rotated target
+			Separator {
+				USE TPos
+				RotationXYZ {
+					axis Z
+					angle 1.5707963
+				}
+				USE Target1
+			}
+		}
+	}
+}

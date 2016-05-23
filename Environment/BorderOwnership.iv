@@ -1,0 +1,1032 @@
+#Inventor V2.1 ascii
+#
+#Change log:
+#    8/20/2002 - Use TRAPEZOID, TRAPEZOID10 and TRAPEZOID20 to control
+#                the shape of the objects. 1 and -1 for trapezoid, 0 for square.
+#                FRAME/FRAME10/FRAME20 added to enable outline display for
+#                cue trials.
+#
+#    4/11/2003 - Added parameter OVERWID default to 0. If set to 1, the width of
+#                bottom object will be enlarged to let visible width be the same
+#                as that of the top object.
+
+DEF UF-TARGET           GlobalField { type SFShort TARGET           0 }
+DEF UF-FIGURE           GlobalField { type SFShort FIGURE           0 }
+DEF UF-AUTOPOS          GlobalField { type SFShort AUTOPOS          1 }
+DEF UF-AUTOOR           GlobalField { type SFShort AUTOOR           1 }
+DEF UF-AUTOSIZE         GlobalField { type SFShort AUTOSIZE         1 }
+DEF UF-AUTOOVERLAP      GlobalField { type SFShort AUTOOVERLAP      1 }
+DEF UF-AUTOTABSIZE      GlobalField { type SFShort AUTOTABSIZE      1 }
+DEF UF-OVERLAP          GlobalField { type SFShort OVERLAP          1 }
+DEF UF-NUMFIGS          GlobalField { type SFShort NUMFIGS          2 }
+DEF UF-OVERLAPX         GlobalField { type SFFloat OVERLAPX         10 }
+DEF UF-OVERLAPY         GlobalField { type SFFloat OVERLAPY         40 }
+DEF UF-OFLIP            GlobalField { type SFShort OFLIP            0 }
+DEF UF-OVERWID          GlobalField { type SFShort OVERWID          0 }
+DEF UF-POSD             GlobalField { type SFFloat POSD             0 }
+DEF UF-POSD2            GlobalField { type SFFloat POSD2            0 }
+DEF UF-BCOL             GlobalField { type SFColor BCOL          0 0 0 }
+DEF UF-REVCOL           GlobalField { type SFShort REVCOL           0 }
+DEF UF-MBCOL            GlobalField { type SFShort MBCOL            1 }
+DEF UF-ROUNDRAD         GlobalField { type SFFloat ROUNDRAD         5 }
+DEF UF-TRAPANGLE        GlobalField { type SFFloat TRAPANGLE        15 }
+
+#@ parameters for object 0
+DEF UF-POSH             GlobalField { type SFFloat POSH             0 }
+DEF UF-POSV             GlobalField { type SFFloat POSV             0 }
+DEF UF-POSX             GlobalField { type SFFloat POSX             0 }
+DEF UF-POSY             GlobalField { type SFFloat POSY             0 }
+DEF UF-LEN              GlobalField { type SFFloat LEN             60 }
+DEF UF-WID              GlobalField { type SFFloat WID             60 }
+# Classical Receptive Field Diameter (arcmin)
+DEF UF-RFSIZ            GlobalField { type SFFloat RFSIZ    0 }
+DEF UF-RFSIZ2WID        GlobalField { type SFFloat RFSIZ2WID    0 }
+DEF UF-TABLEN1          GlobalField { type SFFloat TABLEN1          40 }
+DEF UF-TABWID1          GlobalField { type SFFloat TABWID1          40 }
+DEF UF-TABANGLEWID      GlobalField { type SFFloat TABANGLEWID      0  }
+DEF UF-COL              GlobalField { type SFColor COL        25 25 25 }
+DEF UF-OR               GlobalField { type SFFloat OR               90 }
+DEF UF-BLINK            GlobalField { type SFShort BLINK            0 }
+DEF UF-BLINKFREQ        GlobalField { type SFFloat BLINKFREQ        2 }
+DEF UF-SHUTTLETYPE      GlobalField { type SFShort SHUTTLETYPE      0 }
+DEF UF-SHUTTLEAMP       GlobalField { type SFFloat SHUTTLEAMP       30 }
+DEF UF-SHUTTLEFREQ      GlobalField { type SFFloat SHUTTLEFREQ      1 }
+DEF UF-ORIGIN           GlobalField { type SFVec3f ORIGIN      0 1 0   }
+DEF UF-RIDGE            GlobalField { type SFShort RIDGE            2 }
+DEF UF-OR2              GlobalField { type SFFloat OR2              0 }
+
+#@ parameters for object 1
+DEF UF-POSH10           GlobalField { type SFFloat POSH10           0 }
+DEF UF-POSV10           GlobalField { type SFFloat POSV10           0 }
+DEF UF-POSX10           GlobalField { type SFFloat POSX10           0 }
+DEF UF-POSY10           GlobalField { type SFFloat POSY10           0 }
+DEF UF-LEN10            GlobalField { type SFFloat LEN10          60 }
+DEF UF-WID10            GlobalField { type SFFloat WID10          60 }
+DEF UF-COL10            GlobalField { type SFColor COL10      75 75 75 }
+DEF UF-OR10             GlobalField { type SFFloat OR10             90 }
+DEF UF-BLINK10          GlobalField { type SFShort BLINK10          0 }
+DEF UF-BLINKFREQ10      GlobalField { type SFFloat BLINKFREQ10      2 }
+DEF UF-SHUTTLETYPE10    GlobalField { type SFShort SHUTTLETYPE10    0 }
+DEF UF-SHUTTLEAMP10     GlobalField { type SFFloat SHUTTLEAMP10     30 }
+DEF UF-SHUTTLEDIR10     GlobalField { type SFShort SHUTTLEDIR10     1 }
+DEF UF-SHUTTLEFREQ10    GlobalField { type SFFloat SHUTTLEFREQ10    1 }
+DEF UF-ORIGIN10         GlobalField { type SFVec3f ORIGIN10    0 -1 0 }
+DEF UF-RIDGE10          GlobalField { type SFShort RIDGE10          2 }
+DEF UF-OR12             GlobalField { type SFFloat OR12             0 }
+DEF UF-TRAPEZOID10      GlobalField { type SFFloat TRAPEZOID10      0 }
+DEF UF-FRAME10          GlobalField { type SFShort FRAME10          0 }
+
+#@
+DEF UF-ANTIALIAS        GlobalField { type SFShort ANTIALIAS        1 }
+DEF UF-STEREO           GlobalField { type SFShort STEREO           0 }
+DEF UF-EYE              GlobalField { type SFShort EYE              3 }
+DEF UF-DISPARITY        GlobalField { type SFFloat DISPARITY        0 }
+DEF UF-RESET            GlobalField { type SFShort RESET            0 }
+DEF UF-WHEIGHT          GlobalField { type SFFloat WHEIGHT       1200 }
+DEF UF-INTERVAL         GlobalField { type SFFloat INTERVAL       1115 }
+DEF UF-CURSORDEPTH      GlobalField { type SFFloat CURSORDEPTH     180 }
+DEF UF-TEXTURE          GlobalField { type SFShort TEXTURE          0 }
+DEF UF-TEXTLEN          GlobalField { type SFFloat TEXTLEN         100 }
+DEF UF-TEXTWID          GlobalField { type SFFloat TEXTWID         100 }
+
+#@ light source
+DEF UF-LIGHTINT     GlobalField { type SFFloat LIGHTINT     1 }
+DEF UF-LIGHTCOL     GlobalField { type SFColor LIGHTCOL     1 1 1 }
+DEF UF-LIGHTDIR     GlobalField { type SFVec3f LIGHTDIR    0 -0.5 -0.5 }
+DEF UF-LIGHTINT2    GlobalField { type SFFloat LIGHTINT2    0.6 }
+DEF UF-LIGHTCOL2    GlobalField { type SFColor LIGHTCOL2    1 1 1 }
+DEF UF-LIGHTDIR2    GlobalField { type SFVec3f LIGHTDIR2    0 0.5 -0.5 }
+
+#@ target related parameters
+DEF UF-TCOL         GlobalField { type SFColor TCOL        100 100 100 }
+DEF UF-TPOSH        GlobalField { type SFFloat TPOSH        0 }
+DEF UF-TPOSV        GlobalField { type SFFloat TPOSV        0 }
+DEF UF-TSIZ         GlobalField { type SFFloat TSIZ         10 }
+DEF UF-TBCOL        GlobalField { type SFColor TBCOL       100 100 100 }
+DEF UF-TBWID        GlobalField { type SFFloat TBWID        2 }
+DEF UF-TOFF         GlobalField { type SFFloat TOFF         6 }
+DEF UF-TBLEN        GlobalField { type SFFloat TBLEN        8 }
+DEF UF-TOR          GlobalField { type SFFloat TOR          90 }
+DEF UF-TBDEPTH      GlobalField { type SFFloat TBDEPTH      0 }
+DEF UF-TSSIZ        GlobalField { type SFFloat TSSIZ        20 }
+DEF UF-TSLEN        GlobalField { type SFFloat TSLEN        80 }
+DEF UF-TSCOL        GlobalField { type SFColor TSCOL        15 15 15 }
+DEF UF-TTRANS       GlobalField { type SFVec3f TTRANS       0 0 4000 }
+DEF UF-TTYPE        GlobalField { type SFShort TTYPE        1 }
+
+DEF WID0  GlobalField {
+  type SFFloat WID0 = Calculator {
+    a = USE UF-WID.WID
+    b = USE UF-RFSIZ.RFSIZ
+    c = USE UF-RFSIZ2WID.RFSIZ2WID
+    expression["oa=(c==0)?a:((b==0)?a*c:b*c)"]
+  }.oa
+}
+DEF LEN0  GlobalField {
+  type SFFloat LEN0 = Calculator {
+    a = USE UF-LEN.LEN
+    b = USE UF-RFSIZ.RFSIZ
+    c = USE UF-RFSIZ2WID.RFSIZ2WID
+    expression["oa=(c==0)?a:((b==0)?a*c:b*c)"]
+  }.oa
+}
+
+
+# Scene Root
+Separator {
+    OrthographicCamera {
+        position     0 0 5000
+        nearDistance 1
+        farDistance  10000
+        height       = USE UF-WHEIGHT.WHEIGHT
+    }
+    Antialiasing {
+        antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+    }
+    LightModel {
+        model BASE_COLOR
+    }
+    # Background
+    ScreenColor {
+        color = DEF BCol Calculator {
+            A = USE UF-BCOL.BCOL
+            B = USE UF-COL.COL
+            a = USE UF-REVCOL.REVCOL
+            b = USE UF-MBCOL.MBCOL
+            c = USE UF-NUMFIGS.NUMFIGS
+            d = USE UF-OFLIP.OFLIP
+            e = USE UF-FIGURE.FIGURE
+            expression["tA = (B + A)/2",
+                "tB=(b==1?(e==0?tA:(c==2?tA:(d==0?(a==0?A:B):(a==0?B:A)))):A)",
+                "oA = tB"]
+        }.oA
+    }
+
+    Switch {
+        whichChild = USE UF-STEREO.STEREO
+        Group{}
+        RotationXYZ {
+            axis Z
+            angle 3.1415926535
+        }
+    }
+
+    # Left Figure
+    Separator {
+        Translation {
+            translation = Calculator {
+                a = USE UF-INTERVAL.INTERVAL
+                b = USE UF-TPOSH.TPOSH
+                c = USE UF-TPOSV.TPOSV
+                d = USE UF-STEREO.STEREO
+                expression[ "oA[0] = -d*a/2.0 + b", "oA[1] = c" ]
+            }.oA
+        }
+        #left target
+        Switch {
+            whichChild = USE UF-TARGET.TARGET
+
+            Group {}
+
+            Separator {
+                DEF LeftTargetDist Translation {
+                    translation = USE UF-TTRANS.TTRANS
+                }
+                DEF LeftTSurround Separator {
+                    Translation {
+                        translation = Calculator {
+                            a = USE UF-TBDEPTH.TBDEPTH
+                            b = USE UF-TSLEN.TSLEN
+                            expression[ "oA[2] = a-b/2.0" ]
+                        }.oA
+                    }
+                    RotationXYZ {
+                        axis X
+                        angle -1.5707963
+                    }
+                    SoAllColor {
+                        color = USE UF-TSCOL.TSCOL
+                    }
+                    Cylinder {
+                        parts TOP
+                        radius = Calculator {
+                            a = USE UF-TSSIZ.TSSIZ
+                            expression[ "oa = a/2.0" ]
+                        }.oa
+                        height = USE UF-TSLEN.TSLEN
+                    }
+                }
+                DEF LeftDisparity Switch {
+                    whichChild = USE UF-STEREO.STEREO
+                    Group {}
+                    RotationXYZ {
+                        axis Y
+                        angle = Calculator {
+                            a = USE UF-DISPARITY.DISPARITY
+                            expression[ "oa=a*0.0174532925" ]
+                        }.oa
+                    }
+                }
+                DEF LeftTarget Switch {
+                    whichChild = USE UF-TTYPE.TTYPE
+                    Group {
+                        LightModel {
+                            model PHONG
+                        }
+                        DirectionalLight {
+                            intensity = USE UF-LIGHTINT.LIGHTINT
+                            color = USE UF-LIGHTCOL.LIGHTCOL
+                            direction = USE UF-LIGHTDIR.LIGHTDIR
+                        }
+                        DirectionalLight {
+                            intensity = USE UF-LIGHTINT2.LIGHTINT2
+                            color = USE UF-LIGHTCOL2.LIGHTCOL2
+                            direction = USE UF-LIGHTDIR2.LIGHTDIR2
+                        }
+                        DrawStyle {
+                            pointSize = USE UF-TSIZ.TSIZ
+                            lineWidth = USE UF-TBWID.TBWID
+                        }
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        #RotationXYZ {
+                        #    axis Z
+                        #    angle = Calculator {
+                        #        a = USE UF-TOR.TOR
+                        #        expression["oa=a*0.0174532925"]
+                        #    }.oa
+                        #}
+                        Coordinate3 {
+                            point = Calculator {
+                                a = USE UF-CURSORDEPTH.CURSORDEPTH
+                                b = USE UF-TOFF.TOFF
+                                expression[ "oA[1] = b", "oA[2]=a" ]
+                            }.oA
+                        }
+                        PointSet {
+                            numPoints 1
+                        }
+                        SoAllColor {
+                            color = USE UF-TBCOL.TBCOL
+                        }
+                        Coordinate3 {
+                            point = Concatenate {
+                                type MFVec3f
+                                input0 = Calculator {
+                                    a = USE UF-TBDEPTH.TBDEPTH
+                                    expression[ "oA[2]=a" ]
+                                }.oA
+                                input1 = Calculator {
+                                    a = USE UF-TBDEPTH.TBDEPTH
+                                    b = USE UF-TBLEN.TBLEN
+                                    expression[ "oA[1]=-b", "oA[2]=a" ]
+                                }.oA
+                            }.output
+                        }
+                        LineSet {
+                            numVertices 2
+                        }
+                    }
+                    #TTYPE = 1, disk fixation target
+                    Group {
+                        RotationXYZ {
+                            axis X
+                            angle 1.5707963
+                        }
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        Cylinder {
+                            parts TOP
+                            radius = Calculator {
+                                a = USE UF-TSIZ.TSIZ
+                                expression[ "oa = a/2.0" ]
+                            }.oa
+                            height 4
+                        }
+                    }
+                    #TTYPE = 2, cross fixation target
+                    Group {
+                        SoAllColor {
+                            color = USE UF-TCOL.TCOL
+                        }
+                        DrawStyle {
+                            lineWidth = USE UF-TBWID.TBWID
+                        }
+                        Coordinate3 {
+                            point = Concatenate {
+                                type MFVec3f
+                                input0 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[0]=-a/2", "oA[2]=2" ]
+                                }.oA
+                                input1 = DEF Pos1 Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[0]=a/2", "oA[2]=2" ]
+                                }.oA
+                                input2 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[1]=-a/2", "oA[2]=2"]
+                                }.oA
+                                input3 = Calculator {
+                                    a = USE UF-TSIZ.TSIZ
+                                    expression[ "oA[1]=a/2", "oA[2]=2" ]
+                                }.oA
+                            }.output
+                        }
+                        IndexedLineSet {
+                            coordIndex [0, 1, -1, 2, 3, -1]
+                        }
+                    }
+                }
+            }
+        } #end of left target
+        USE LeftDisparity
+        #objects start here
+        Switch {
+            whichChild = Calculator {
+                a = USE UF-EYE.EYE
+                b = USE UF-STEREO.STEREO
+                expression[ "oa=(a==1||a==3||(a==2&&b==0))?0:1" ]
+            }.oa
+            DEF StimLeft0 Group {
+        	    Switch {
+        	        whichChild = USE UF-OFLIP.OFLIP
+
+        	        Group {
+
+        	            #object 1
+        	            DEF Object1 Switch {
+        	                whichChild = DEF FigOn Calculator {
+        	                    a = TimeCounter {
+        	                        min 0
+        	                        max 1
+        	                        step 1
+        	                        on = USE UF-BLINK10.BLINK10
+        	                        frequency  = USE UF-BLINKFREQ10.BLINKFREQ10
+        	                        duty 1
+        	                        reset = USE UF-RESET.RESET
+        	                    }.output
+        	                    b = USE UF-FIGURE.FIGURE
+        	                    c = USE UF-BLINK10.BLINK10
+        	                    expression[ "oa=(b==0?1:(c==0?0:a))" ]
+        	                }.oa
+
+        	                Separator {
+        	                    #HVD Shuttle
+        	                    DEF HVD_Shuttle10 Translation {
+        	                        translation = Calculator {
+        	                            a = DEF Shuttle_Timer10 TimeCounter {
+        	                                min 0
+        	                                max 1000
+        	                                step 1
+        	                                on = USE UF-SHUTTLETYPE10.SHUTTLETYPE10
+        	                                frequency  = USE UF-SHUTTLEFREQ10.SHUTTLEFREQ10
+        	                                duty 1
+        	                                reset = USE UF-RESET.RESET
+        	                            }.output
+        	                            b = USE UF-SHUTTLETYPE10.SHUTTLETYPE10
+        	                            c = USE UF-SHUTTLEAMP10.SHUTTLEAMP10
+        	                            d = Calculator {
+        	                        	    a = USE UF-POSH.POSH
+        	                        	    b = USE UF-POSH10.POSH10
+        	                        	    c = USE UF-AUTOPOS.AUTOPOS
+        	                        	    expression["oa=(c==0?b:a)"]
+        	                    	    }.oa
+        	                    	    e = Calculator {
+        	                        	    a = USE UF-POSV.POSV
+        	                        	    b = USE UF-POSV10.POSV10
+        	                        	    c = USE UF-AUTOPOS.AUTOPOS
+        	                        	    expression["oa=(c==0?b:a)"]
+        	                    	    }.oa
+        	                    	    f = USE UF-SHUTTLEDIR10.SHUTTLEDIR10
+        	                    	    g = USE UF-POSD.POSD
+        	                            h = USE UF-POSD2.POSD2
+        	                            expression[ "ta=(a>250?(a>750?a-1000:500-a):a)*(c*f)/250.0",
+        	                                "tb=b>9?(a-500)*(c*f)/1000.0:ta",
+        	                                "oA[0]=((b==7||b==10)?tb:0)+d",
+        	                                "oA[1]=((b==8||b==11)?tb:0)+e",
+        	                                "oA[2]=((b==9||b==12)?tb:0)+g+h" ]
+        	                        }.oA
+        	                    }
+        	                    DEF Orient10 RotationXYZ {
+        	                        axis Z
+        	                        angle = Calculator {
+        	                            a = USE UF-OR10.OR10
+        	                            b = USE UF-OR12.OR12
+        	                            c = USE UF-OR.OR
+        	                            d = USE UF-OR2.OR2
+        	                            e = USE UF-AUTOOR.AUTOOR
+        	                            h = USE UF-OVERLAP.OVERLAP
+        	                            expression[ "ta = (e==0?a+b:c+d) * 0.0174532925",
+        	                                "oa = (h == 1 ? (c + d + 180) * 0.0174532925 : ta)" ]
+        	                        }.oa
+        	                    }
+        	                    DEF PosTrans1 Translation {
+        	                        translation = Calculator {
+        	                            a = USE UF-POSX10.POSX10
+        	                            b = USE UF-POSY10.POSY10
+        	                            c = USE UF-OVERLAP.OVERLAP
+        	                            d = DEF OverlapX10 Calculator {
+        	                        	    a = USE UF-OVERLAPX.OVERLAPX
+        	                        	    b = USE LEN0.LEN0
+        	                        	    c = USE UF-AUTOOVERLAP.AUTOOVERLAP
+        	                        	expression["oa=(c==0?a/2:(b/8))"]
+        	                            }.oa
+        	                            e = DEF OverlapY10 Calculator {
+        	                        	    a = USE UF-OVERLAPY.OVERLAPY
+        	                        	    b = USE WID0.WID0
+        	                        	    c = USE UF-AUTOOVERLAP.AUTOOVERLAP
+        	                        	    expression["oa=(c==1?(b/4):a)"]
+        	                            }.oa
+        	                            f = USE UF-POSX.POSX
+        	                            g = USE UF-POSY.POSY
+        	                            h = USE UF-OFLIP.OFLIP
+        	                            expression["oA[0] = (c == 1 ? d-f : a)", "oA[1] = (c == 1 ? (h==1?0:-e)-g : b)" ]
+        	                        }.oA
+        	                    }
+        	                    #Shuttle
+        	                    Translation {
+        	                        translation = Calculator {
+        	                            a = USE Shuttle_Timer10.output
+        	                            b = USE UF-SHUTTLETYPE10.SHUTTLETYPE10
+        	                            c = USE UF-SHUTTLEAMP10.SHUTTLEAMP10
+        	                            d = USE UF-SHUTTLEDIR10.SHUTTLEDIR10
+        	                            expression[ "ta=(a>250?(a>750?a-1000:500-a):a)*(c*d)/250.0",
+        	                                "tb=b>3?(a-500)*(c*d)/1000.0:ta",
+        	                                "oA[0]=((b==1||b==4)?tb:0)",
+        	                                "oA[1]=((b==2||b==5)?tb:0)" ]
+        	                        }.oA
+        	                    }
+        	                    # figure color
+        	                    SoAllColor {
+        	                        color = DEF Col10 Calculator {
+        	                            a = USE UF-REVCOL.REVCOL
+        	                            b = USE UF-NUMFIGS.NUMFIGS
+        	                            c = USE UF-MBCOL.MBCOL
+        	                            A = USE UF-COL.COL
+        	                            B = USE UF-COL10.COL10
+        	                            C = USE UF-BCOL.BCOL
+        	                            expression["oA=(c==1?(b==2?(a==0?C:A):(a==0?C:A)):B)"]
+        	                        }.oA
+        	                    }
+
+
+        	                    # objects
+        	                    Switch {
+        	                        whichChild = Calculator {
+        	                        	a = USE UF-RIDGE10.RIDGE10
+        	                        	b = USE UF-NUMFIGS.NUMFIGS
+        	                        	c = USE UF-OFLIP.OFLIP
+        	                        	expression["oa = (b==1?(c==0?0:a):a) "]
+        	                        }.oa
+
+        	                        Group {}
+
+        	                        #bar 1
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = DEF Len10 Calculator {
+        	                                	    a = USE UF-AUTOSIZE.AUTOSIZE
+        	                                	    b = USE UF-LEN10.LEN10
+        	                                	    c = USE LEN0.LEN0
+        	                                	    expression[ "oa = (a==1?c:b)" ]
+        	                            	    }.oa
+        	                                    c = DEF Wid10 Calculator {
+                    	                                a = USE UF-AUTOSIZE.AUTOSIZE
+                    	                                b = USE UF-WID10.WID10
+                    	                                c = USE WID0.WID0
+                    	                                d = USE UF-OVERWID.OVERWID
+                    	                                e = USE OverlapY10.oa
+                    	                                f = USE UF-OFLIP.OFLIP
+                    	                                g = USE UF-OVERLAP.OVERLAP
+                    	                                expression[
+                    	                                    "ta = (a==1?c:b)",
+                    	                                    "oa = (d*g>f?ta+e:ta)"
+                    	                                ]
+                    	                            }.oa
+        	                                    A = USE UF-ORIGIN10.ORIGIN10
+        	                                    expression[ "oA[0] = 0",
+        	                                        "oA[1] = 0" ]
+        	                                }.oA
+        	                            }
+        	                            Rect {
+        	                                width = USE Len10.oa
+        	                                height = USE Wid10.oa
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+        	                                textureWidth = USE UF-TEXTLEN.TEXTLEN
+        	                                textureHeight = USE UF-TEXTWID.TEXTWID
+        	                            }
+        	                        }
+        	                        #ridge 2 -- Trapezoid
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = USE Len10.oa
+        	                                    c = USE Wid10.oa
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = 0",
+        	                                        "oA[1] = 0" ]
+        	                                }.oA
+        	                            }
+              	                            Trapezoid {
+        	                                width = USE Len10.oa
+        	                                height = USE Wid10.oa
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+        	                                radius = USE UF-ROUNDRAD.ROUNDRAD
+        	                                trapangle = Calculator {
+        	                                	a = USE UF-TRAPEZOID10.TRAPEZOID10
+        	                                	b = USE UF-TRAPANGLE.TRAPANGLE
+        	                                	expression["oa = a * b"]
+        	                                }.oa
+        	                                frame = USE UF-FRAME10.FRAME10
+        	                            }
+        	                        }
+        	                        #ridge 3 -- TabFigure1
+        	                        Group {
+
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    a = USE UF-OVERLAP.OVERLAP
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    d = USE OverlapX10.oa
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = (-A[0] * b / 2.0) - 2*(a==1?d:0)",
+        	                                        "oA[1] = A[1] * c / 2.0" ]
+        	                                }.oA
+        	                            }
+        	                            TabFigure3 {
+        	                                width = USE LEN0.LEN0
+        	                                height = USE WID0.WID0
+        	                                tabwidth = DEF Tablen1 Calculator {
+        	                        	        a = USE UF-TABLEN1.TABLEN1
+        	                        	        b = USE LEN0.LEN0
+        	                        	        c = USE UF-AUTOTABSIZE.AUTOTABSIZE
+        	                        	        expression["oa=(c==0?a:b/4)"]
+        	                        	    }.oa
+        	                                tabheight = DEF Tabwid1 Calculator {
+        	                                	    a = USE UF-TABWID1.TABWID1
+        	                                	    b = USE UF-AUTOTABSIZE.AUTOTABSIZE
+        	                                	    c = USE Tablen1.oa
+        	                                	    expression["oa = (b==1?c:a)"]
+        	                                }.oa
+        	                                tabanglewidth = USE UF-TABANGLEWID.TABANGLEWID
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+
+
+        	                            }
+        	                        }
+
+        	                        #ridge4 -- TabFigure2
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = -A[0] * b / 2.0",
+        	                                        "oA[1] = A[1] * c / 2.0" ]
+        	                                }.oA
+        	                            }
+
+             	                        TabFigure2 {
+        	                                width = USE LEN0.LEN0
+        	                                height = USE WID0.WID0
+            	                            tabheight = USE Tabwid1.oa
+        	                                tabwidth = USE Tablen1.oa
+        	                                tabanglewidth = USE UF-TABANGLEWID.TABANGLEWID
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+
+
+        	                            }
+        	                        }
+
+        	                        #ridge5 -- C-Shape
+                                  Group {
+                                      Coordinate3 {
+                                          point = Concatenate {
+                                              type MFVec3f
+                                              input0 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a/2.0",
+                                                      "oA[1] = 0.0"]
+                                              }.oA
+                                              input1 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a/2.0",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input2 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input3 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                              input4 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                              input5 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input6 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a/2.0",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input7 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a/2.0",
+                                                      "oA[1] = 0.0"]
+                                              }.oA
+                                              input8 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = 0.0",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                          }.output
+                                      }
+                                      IndexedTriangleStripSet {
+                                          coordIndex [0, 1, 2, 3, 8, 4, 5, 6, 7, -1, 0, 8, 7, -1]
+                                      }
+        	                        } # end of C-Shape
+
+        	                    } # end of roof
+        	                } # end of figure on
+        	            } # end of StimLeft0
+
+        	            DEF TransOver Translation {
+        	                translation 0 0 1
+        	            }
+
+        	            #object 0
+        	            DEF Object0 Switch {
+        	                whichChild = DEF FigOn Calculator {
+        	                    a = TimeCounter {
+        	                        min 0
+        	                        max 1
+        	                        step 1
+        	                        on = USE UF-BLINK.BLINK
+        	                        frequency  = USE UF-BLINKFREQ.BLINKFREQ
+        	                        duty 1
+        	                        reset = USE UF-RESET.RESET
+        	                    }.output
+        	                    b = USE UF-FIGURE.FIGURE
+        	                    c = USE UF-BLINK.BLINK
+        	                    expression[ "oa=(b==0?1:(c==0?0:a))" ]
+        	                }.oa
+
+        	                Separator {
+        	                    #HVD Shuttle
+        	                    DEF HVD_Shuttle Translation {
+        	                        translation = Calculator {
+        	                            a = DEF Shuttle_Timer TimeCounter {
+        	                                min 0
+        	                                max 1000
+        	                                step 1
+        	                                on = USE UF-SHUTTLETYPE.SHUTTLETYPE
+        	                                frequency  = USE UF-SHUTTLEFREQ.SHUTTLEFREQ
+        	                                duty 1
+        	                                reset = USE UF-RESET.RESET
+        	                            }.output
+        	                            b = USE UF-SHUTTLETYPE.SHUTTLETYPE
+        	                            c = USE UF-SHUTTLEAMP.SHUTTLEAMP
+        	                            d = USE UF-POSH.POSH
+        	                            e = USE UF-POSV.POSV
+        	                            f = USE UF-POSD.POSD
+        	                            g = USE UF-POSD2.POSD2
+        	                            expression[ "ta=((a>500?1000-a:a)-250)*c/500.0",
+        	                                "tb=b>9?(a-500)*c/1000.0:ta",
+        	                                "oA[0]=((b==7||b==10)?tb:0)+d",
+        	                                "oA[1]=((b==8||b==11)?tb:0)+e",
+        	                                "oA[2]=((b==9||b==12)?tb:0)+f+g" ]
+        	                        }.oA
+        	                    }
+        	                    DEF Orient RotationXYZ {
+        	                        axis Z
+        	                        angle = Calculator {
+        	                            a = USE UF-OR.OR
+        	                            b = USE UF-OR2.OR2
+        	                            expression[ "oa = (a+b) * 0.0174532925" ]
+        	                        }.oa
+        	                    }
+        	                    DEF PosTrans1 Translation {
+        	                        translation = Calculator {
+        	                            a = USE UF-POSX.POSX
+        	                            b = USE UF-POSY.POSY
+        	                            c = USE UF-OVERLAP.OVERLAP
+        	                            d = DEF OverlapX Calculator {
+        	                        	    a = USE UF-OVERLAPX.OVERLAPX
+        	                        	    b = USE LEN0.LEN0
+        	                        	    c = USE UF-AUTOOVERLAP.AUTOOVERLAP
+        	                        	    expression["oa=(c==0?a/2:(b/8))"]
+        	                            }.oa
+        	                            e = DEF OverlapY Calculator {
+        	                        	    a = USE UF-OVERLAPY.OVERLAPY
+        	                        	    b = USE WID0.WID0
+        	                        	    c = USE UF-AUTOOVERLAP.AUTOOVERLAP
+        	                        	    expression["oa=(c==0?a:(b/4))"]
+        	                            }.oa
+        	                            f = USE UF-OFLIP.OFLIP
+        	                            expression[ "oA[0] = (c==0?a:a+d)", "oA[1] = (c==1&&f==1?-e:0)+b" ]
+        	                        }.oA
+        	                    }
+        	                    #Shuttle
+        	                    Translation {
+        	                        translation = Calculator {
+        	                            a = USE Shuttle_Timer.output
+        	                            b = USE UF-SHUTTLETYPE.SHUTTLETYPE
+        	                            c = USE UF-SHUTTLEAMP.SHUTTLEAMP
+        	                            expression[ "ta=((a>500?1000-a:a)-250)*c/500.0",
+        	                                "tb=b>3?(a-500)*c/1000.0:ta",
+        	                                "oA[0]=((b==1||b==4)?tb:0)",
+        	                                "oA[1]=((b==2||b==5)?tb:0)" ]
+        	                        }.oA
+        	                    }
+        	                    # figure color
+        	                    SoAllColor {
+        	                        color = DEF Col Calculator {
+        	                            a = USE UF-REVCOL.REVCOL
+        	                            b = USE UF-MBCOL.MBCOL
+        	                            A = USE UF-COL.COL
+        	                            B = USE UF-COL10.COL10
+        	                            C = USE UF-BCOL.BCOL
+        	                            expression["oA=(b==1?(a==1?C:A):(a==1?B:A))"]
+        	                        }.oA
+        	                    }
+
+        	                    # objects
+        	                    Switch {
+        	                        whichChild = Calculator {
+        	                        	a = USE UF-RIDGE.RIDGE
+        	                        	b = USE UF-NUMFIGS.NUMFIGS
+        	                        	c = USE UF-OFLIP.OFLIP
+        	                        	expression["oa = (b==1?(c==1?0:a):a) "]
+        	                        }.oa
+
+        	                        Group {}
+
+        	                        #bar 1
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = 0",
+        	                                        "oA[1] = c" ]
+        	                                }.oA
+        	                            }
+        	                            Rect {
+        	                                width = USE LEN0.LEN0
+        	                                height = DEF Wid Calculator {
+        	                                    a = USE WID0.WID0
+        	                                    d = USE UF-OVERWID.OVERWID
+            	                                    e = USE OverlapY.oa
+            	                                    f = USE UF-OFLIP.OFLIP
+            	                                    g = USE UF-OVERLAP.OVERLAP
+            	                                    expression[
+            	                                        "oa = (d*g*f>0?a+e:a)"
+            	                                    ]
+        	                                }.oa
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+        	                                textureWidth = USE UF-TEXTLEN.TEXTLEN
+        	                                textureHeight = USE UF-TEXTWID.TEXTWID
+        	                            }
+        	                        }
+        	                        #ridge 2 -- Trapezoid
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = 0",
+        	                                        "oA[1] = 0" ]
+        	                                }.oA
+        	                            }
+              	                            Trapezoid {
+        	                                width = USE LEN0.LEN0
+        	                                height = USE Wid.oa
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+        	                                radius = USE UF-ROUNDRAD.ROUNDRAD
+        	                                trapangle = Calculator {
+        	                                	a = USE UF-TRAPEZOID10.TRAPEZOID10
+        	                                	b = USE UF-TRAPANGLE.TRAPANGLE
+        	                                	expression["oa = a * b"]
+        	                                }.oa
+        	                                frame = USE UF-FRAME10.FRAME10
+        	                            }
+        	                        }
+        	                        #ridge 3 -- TabFigure1
+        	                        Group {
+
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                            	    a = USE UF-OVERLAP.OVERLAP
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    d = USE OverlapX.oa
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = (-A[0] * b / 2.0) - 2*(a==1?d:0)",
+        	                                        "oA[1] = A[1] * c / 2.0" ]
+        	                                }.oA
+        	                            }
+        	                            TabFigure3 {
+        	                                width = USE LEN0.LEN0
+        	                                height = USE WID0.WID0
+            	                            tabwidth = USE Tablen1.oa
+        	                                tabheight = USE Tabwid1.oa
+        	                                tabanglewidth = USE UF-TABANGLEWID.TABANGLEWID
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+
+
+        	                            }
+        	                        }
+
+        	                        #ridge4 -- TabFigure2
+        	                        Group {
+        	                            DEF Origin1 Translation {
+        	                                translation = Calculator {
+        	                                    b = USE LEN0.LEN0
+        	                                    c = USE WID0.WID0
+        	                                    A = USE UF-ORIGIN.ORIGIN
+        	                                    expression[ "oA[0] = -A[0] * b / 2.0",
+        	                                        "oA[1] = A[1] * c / 2.0" ]
+        	                                }.oA
+        	                            }
+
+             	                        TabFigure2 {
+        	                                width = USE LEN0.LEN0
+        	                                height = USE WID0.WID0
+            	                            tabheight = USE Tabwid1.oa
+        	                                tabwidth = USE Tablen1.oa
+        	                                tabanglewidth = USE UF-TABANGLEWID.TABANGLEWID
+        	                                antialiasing = USE UF-ANTIALIAS.ANTIALIAS
+
+
+        	                            }
+        	                        }
+
+        	                        #ridge5 -- C-Shape
+                                  Group {
+                                      Coordinate3 {
+                                          point = Concatenate {
+                                              type MFVec3f
+                                              input0 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a/2.0",
+                                                      "oA[1] = 0.0"]
+                                              }.oA
+                                              input1 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a/2.0",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input2 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input3 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = -a",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                              input4 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                              input5 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input6 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a/2.0",
+                                                      "oA[1] = -b/2.0"]
+                                              }.oA
+                                              input7 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = a/2.0",
+                                                      "oA[1] = 0.0"]
+                                              }.oA
+                                              input8 = Calculator {
+                                                  a = USE LEN0.LEN0
+                                                  b = USE WID0.WID0
+                                                  expression[
+                                                      "oA[0] = 0.0",
+                                                      "oA[1] = b/2.0"]
+                                              }.oA
+                                          }.output
+                                      }
+                                      IndexedTriangleStripSet {
+                                          coordIndex [0, 1, 2, 3, 8, 4, 5, 6, 7, -1, 0, 8, 7, -1]
+                                      }
+        	                        } # end of C-Shape
+
+        	                    } # end of roof
+        	                } # end of figure on
+        	            } # end of StimLeft0
+        	        }
+        	        Group {
+        	            USE Object0
+        	            USE TransOver
+        	            USE Object1
+        	        }
+        	    }
+            } # end of StimLeft0
+        } #end of left object
+    } #end of left figure
+
+
+
+    # Right Figure
+    Switch {
+        whichChild = USE UF-STEREO.STEREO
+        Group {}
+        Group {
+            Translation {
+                translation = Calculator {
+                    a = USE UF-INTERVAL.INTERVAL
+                    b = USE UF-TPOSH.TPOSH
+                    c = USE UF-TPOSV.TPOSV
+                    expression[ "oA[0] = a/2+b", "oA[1] = c" ]
+                }.oA
+            }
+            #right target
+            Switch {
+                whichChild = USE UF-TARGET.TARGET
+                Group {}
+                Separator {
+                    USE LeftTargetDist
+                    USE LeftTSurround
+                    DEF RightDisparity RotationXYZ {
+                        axis Y
+                        angle = Calculator {
+                            a = USE UF-DISPARITY.DISPARITY
+                            expression[ "oa=-a*0.0174532925" ]
+                        }.oa
+                    }
+                    USE LeftTarget
+                }
+            }
+            #right stimulus
+            USE RightDisparity
+            Switch {
+                whichChild = Calculator {
+                    a = USE UF-EYE.EYE
+                    expression[ "oa=(a==2||a==3)?0:1" ]
+                }.oa
+                USE StimLeft0
+                #USE StimLeft1
+            }
+        }
+    }
+}

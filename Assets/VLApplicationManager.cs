@@ -46,7 +46,7 @@ namespace VLab
             }
             if (!config.ContainsKey("defaultexperimentlogic"))
             {
-                config["defaultexperimentlogic"] = "ConditionTest";
+                config["defaultexperimentlogic"] = "ConditionTestLogic";
             }
             if (!config.ContainsKey("antialiasing"))
             {

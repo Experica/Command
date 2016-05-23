@@ -22,10 +22,22 @@ namespace VLab
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Choose File";
             dialog.InitialDirectory = Directory.GetCurrentDirectory();
-            dialog.Filter = "Condition (*.yaml)|*.yaml|All Files (*.*)|*.*";
+            dialog.Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 input.text = dialog.FileName;
+                input.onEndEdit.Invoke(input.text);
+            }
+        }
+
+        public void OpenDirectory()
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = "Choose Directory";
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                input.text = dialog.SelectedPath;
                 input.onEndEdit.Invoke(input.text);
             }
         }
