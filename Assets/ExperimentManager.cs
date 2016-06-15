@@ -83,6 +83,14 @@ namespace VLab
             {
                 ex.envinheritparams = new List<string>();
             }
+            if(ex.condtest!=null)
+            {
+                ex.condtest = null;
+            }
+            if(ex.condtestnotifyparams==null)
+            {
+                ex.condtestnotifyparams = VLConvert.Convert<List<string>>(appmanager.config["defaultcondtestnotifyparams"]);
+            }
             return ex;
         }
 
@@ -97,7 +105,7 @@ namespace VLab
             Type eltype;
             if (string.IsNullOrEmpty(elname))
             {
-                eltype = Type.GetType((string)appmanager.config["defaultexperimentlogic"]);
+                eltype = Type.GetType(VLConvert.Convert<string>(appmanager.config["defaultexperimentlogic"]));
             }
             else if (File.Exists(elname))
             {

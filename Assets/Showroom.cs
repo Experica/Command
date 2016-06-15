@@ -73,6 +73,28 @@ namespace VLab
         {
         }
 
+#if VLAB
+        public override bool OnCheckObserver(NetworkConnection conn)
+        {
+            return uicontroller. netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+        }
+
+        public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
+        {
+            var isrebuild = false;
+            var cs =uicontroller. netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            if (cs.Count > 0)
+            {
+                foreach (var c in cs)
+                {
+                    observers.Add(c);
+                }
+                isrebuild = true;
+            }
+            return isrebuild;
+        }
+#endif
+
         void onitemid(ItemID id)
         {
             OnItemID(id);

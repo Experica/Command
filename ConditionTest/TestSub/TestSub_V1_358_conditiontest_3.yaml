@@ -1,0 +1,239 @@
+name: conditiontest
+id: conditiontest
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0.5, 0.5, 0, 1)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 6
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 120
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 15
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0.5, 0.5, 0, 1)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  ori@ENQuad@Quad: 120
+  length@ENQuad@Quad: 1
+  width@ENQuad@Quad: 1
+  height@ENQuad@Quad: 1
+  color@ENQuad@Quad: (0, 0, 0, 0)
+  masktype@ENQuad@Quad: 0
+  visible@ENQuad@Quad: true
+  position@ENQuad@Quad: (0, 0, 0)
+condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_3.yaml
+condtest:
+  CondIndex:
+  - 14
+  - 21
+  - 13
+  - 3
+  - 26
+  - 2
+  - 33
+  - 29
+  - 31
+  - 4
+  - 35
+  - 11
+  - 8
+  - 18
+  - 9
+  - 27
+  - 24
+  - 1
+  - 16
+  - 5
+  - 15
+  - 34
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 4.9929
+    - COND: 108.8711
+    - SUFICI: 609.6772
+  - - PREICI: 712.6084
+    - COND: 817.2064
+    - SUFICI: 1321.1957
+  - - PREICI: 1427.211
+    - COND: 1527.2348
+    - SUFICI: 2031.8113
+  - - PREICI: 2132.2933
+    - COND: 2233.6343
+    - SUFICI: 2735.6939
+  - - PREICI: 2836.7375
+    - COND: 2937.3374
+    - SUFICI: 3438.7978
+  - - PREICI: 3541.3051
+    - COND: 3647.3899
+    - SUFICI: 4147.4182
+  - - PREICI: 4250.3717
+    - COND: 4352.29
+    - SUFICI: 4852.8549
+  - - PREICI: 4957.1616
+    - COND: 5058.3611
+    - SUFICI: 5561.3659
+  - - PREICI: 5661.9017
+    - COND: 5765.1251
+    - SUFICI: 6268.6845
+  - - PREICI: 6373.7199
+    - COND: 6475.6155
+    - SUFICI: 6978.361
+  - - PREICI: 7081.9266
+    - COND: 7182.6401
+    - SUFICI: 7685.7014
+  - - PREICI: 7788.7926
+    - COND: 7891.6547
+    - SUFICI: 8392.8188
+  - - PREICI: 8496.7374
+    - COND: 8599.0082
+    - SUFICI: 9104.3276
+  - - PREICI: 9208.2777
+    - COND: 9314.9395
+    - SUFICI: 9820.367
+  - - PREICI: 9921.3601
+    - COND: 10024.0311
+    - SUFICI: 10529.2188
+  - - PREICI: 10631.6459
+    - COND: 10734.4051
+    - SUFICI: 11234.7946
+  - - PREICI: 11340.6981
+    - COND: 11445.6458
+    - SUFICI: 11952.1655
+  - - PREICI: 12056.4898
+    - COND: 12163.9409
+    - SUFICI: 12670.008
+  - - PREICI: 12770.2015
+    - COND: 12872.7232
+    - SUFICI: 13390.8793
+  - - PREICI: 13494.3861
+    - COND: 13600.2177
+    - SUFICI: 14104.4148
+  - - PREICI: 14206.9555
+    - COND: 14307.1013
+    - SUFICI: 14811.2803
+  - - PREICI: 14913.4806
+    - COND: 15014.528
+    - SUFICI: 15519.6327
+condsampling: UniformWithoutReplacement
+condrepeat: 3
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+param: {}
+exinheritparams: []
+envinheritparams: []

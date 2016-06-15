@@ -15,8 +15,59 @@ namespace VLab
 {
     public class VLNetManager : NetworkManager
     {
+        public GameObject vlabanalysismanagerprefab;
         public VLUIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
+
+        public bool IsPeerTypeConnected(VLPeerType peertype)
+        {
+            foreach(var pi in peerinfo.Values)
+            {
+                if(pi!=null&&pi.ContainsKey("peertype")&&(VLPeerType)pi["peertype"]==peertype)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<NetworkConnection> GetPeerTypeConnection(VLPeerType peertype)
+        {
+            var peertypeconnection = new List<NetworkConnection>();
+            foreach(var c in NetworkServer.connections)
+            {
+                if(IsConnectionPeerType(c,peertype))
+                {
+                    peertypeconnection.Add(c);
+                }
+            }
+            return peertypeconnection;
+        }
+
+        public bool IsConnectionPeerType(NetworkConnection conn,VLPeerType peertype)
+        {
+            var cid = conn.connectionId;
+            return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey("peertype") && (VLPeerType)peerinfo[cid]["peertype"] == peertype);
+        }
+
+        public void SpwanVLAnalysisManager(bool isinstantiate)
+        {
+            GameObject go;
+            if (isinstantiate)
+            {
+                go = Instantiate(vlabanalysismanagerprefab);
+                go.name = "VLAnalysisManager";
+                go.transform.parent = transform;
+                var als = go.GetComponent<VLAnalysisManager>();
+                als.uicontroller = uicontroller;
+                uicontroller.alsmanager = als;
+                NetworkServer.Spawn(go);
+            }
+            else
+            {
+                go = uicontroller.alsmanager.gameObject;
+            }
+        }
 
         public override void OnStartServer()
         {
@@ -39,6 +90,7 @@ namespace VLab
             {
                 Debug.Log("Receive PeerType Message: " + v.ToString());
             }
+            var ispeertypeconnected = IsPeerTypeConnected(v);
             var connid = netMsg.conn.connectionId;
             if (peerinfo.ContainsKey(connid))
             {
@@ -49,6 +101,10 @@ namespace VLab
                 var info = new Dictionary<string, object>();
                 info["peertype"] = v;
                 peerinfo[connid] = info;
+            }
+            if (v == VLPeerType.VLabAnalysis)
+            {
+                SpwanVLAnalysisManager(!ispeertypeconnected);
             }
         }
 
@@ -102,7 +158,7 @@ namespace VLab
             NetworkServer.SpawnObjects();
 
             base.OnServerReady(conn);
-            //uicontroller.exmanager.el.envmanager.PushParams();
+            uicontroller.exmanager.el.envmanager.PushParams();
         }
     }
 }

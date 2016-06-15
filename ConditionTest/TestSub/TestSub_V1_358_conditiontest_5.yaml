@@ -1,0 +1,178 @@
+name: conditiontest
+id: conditiontest
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0
+  temporalfreq@ENGratingQuad@GratingQuad: 1
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 30
+  length@ENGratingQuad@GratingQuad: 1
+  width@ENGratingQuad@GratingQuad: 1
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_5.yaml
+condtest:
+  CondIndex:
+  - 11
+  - 25
+  - 6
+  - 32
+  - 4
+  - 34
+  - 18
+  - 20
+  - 14
+  - 0
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 5.1437
+    - COND: 9109.7356
+    - SUFICI: 9616.5772
+  - - PREICI: 9719.5469
+    - COND: 10594.5022
+    - SUFICI: 11100.6063
+  - - PREICI: 11206.9736
+    - COND: 11959.6238
+    - SUFICI: 12460.671
+  - - PREICI: 12564.1782
+    - COND: 13281.0417
+    - SUFICI: 13784.1851
+  - - PREICI: 13890.0469
+    - COND: 14617.4439
+    - SUFICI: 15120.1987
+  - - PREICI: 15221.1835
+    - COND: 17924.5485
+    - SUFICI: 18428.3973
+  - - PREICI: 18534.1751
+    - COND: 18634.7152
+    - SUFICI: 19139.1015
+  - - PREICI: 19242.5438
+    - COND: 19346.6223
+    - SUFICI: 19849.9494
+  - - PREICI: 19951.9183
+    - COND: 20056.5089
+    - SUFICI: 20557.9183
+  - - PREICI: 20662.9211
+    - COND: 20763.8219
+    - SUFICI: 21266.0819
+  - - PREICI: 21369.2886
+    - COND: 21472.4007
+condsampling: UniformWithoutReplacement
+condrepeat: 3
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 1
+param: {}
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

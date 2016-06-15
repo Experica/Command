@@ -82,6 +82,9 @@
     <Reference Include="System.Threading">
       <HintPath>Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="MsgPack">
+      <HintPath>Assets\Plugins\MsgPack.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="VLab.CSharp.Plugins.csproj">
@@ -98,6 +101,7 @@
     <Compile Include="Assets\ENQuad.cs" />
     <Compile Include="Assets\EnvNet.cs" />
     <Compile Include="Assets\EnvironmentManager.cs" />
+    <Compile Include="Assets\Experiment.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
     <Compile Include="Assets\Laser.cs" />
@@ -119,6 +123,7 @@
     <Compile Include="Assets\UIController\NewExperimentPanel.cs" />
     <Compile Include="Assets\UIController\VLUIController.cs" />
     <Compile Include="Assets\UIController\ViewPanel.cs" />
+    <Compile Include="Assets\VLAnalysisManager.cs" />
     <Compile Include="Assets\VLApplicationManager.cs" />
     <Compile Include="Assets\VLConvert.cs" />
     <Compile Include="Assets\VLIO.cs" />

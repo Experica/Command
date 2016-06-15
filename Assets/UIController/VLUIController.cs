@@ -9,8 +9,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using MsgPack;
+using MsgPack.Serialization;
 
 namespace VLab
 {
@@ -20,6 +23,7 @@ namespace VLab
         public Toggle host, server;
         public VLNetManager netmanager;
         public ExperimentManager exmanager;
+        public VLAnalysisManager alsmanager;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
@@ -47,6 +51,44 @@ namespace VLab
             }
         }
 
+        public void OnNotifyCondTestData(string name, List<object> value)
+        {
+            if (alsmanager != null)
+            {
+                var serializer = SerializationContext.Default.GetSerializer<List<object>>();
+                var stream = new MemoryStream();
+                serializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                alsmanager.RpcNotifyCondTestData(name, stream.ToArray());
+            }
+        }
+
+        public void OnNotifyAnalysis()
+        {
+            if(alsmanager!=null)
+            {
+                alsmanager.RpcAnalysis();
+            }
+        }
+
+        public void OnNotifyExperiment(Experiment ex)
+        {
+            if (alsmanager != null)
+            {
+                var serializer = SerializationContext.Default.GetSerializer<Experiment>();
+                var stream = new MemoryStream();
+                serializer.Pack(stream, ex, PackerCompatibilityOptions.None);
+                alsmanager.RpcNotifyExperiment(stream.ToArray());
+            }
+        }
+
+        public void OnNotifyStartExperiment()
+        {
+            if(alsmanager!=null)
+            {
+                alsmanager.RpcNotifyStartExperiment();
+            }
+        }
+
         public void ToggleStartStopExperiment(bool isstart)
         {
             if (isstart)
@@ -62,7 +104,11 @@ namespace VLab
                 Process.GetCurrentProcess().PriorityBoostEnabled = true;
                 Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
+                exmanager.el.condtestmanager.NotifyCondTestData = OnNotifyCondTestData;
+                exmanager.el.condtestmanager.NotifyAnalysis = OnNotifyAnalysis;
+                OnNotifyStartExperiment();
                 exmanager.el.StartExperiment();
+                OnNotifyExperiment(exmanager.el.ex);
             }
             else
             {

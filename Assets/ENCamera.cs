@@ -7,7 +7,7 @@
 
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace VLab
 {
@@ -22,6 +22,9 @@ namespace VLab
         public float screentoeye = 57;
 
         public new Camera camera;
+#if VLAB
+        VLNetManager netmanager;
+#endif
 
         void Awake()
         {
@@ -30,6 +33,9 @@ namespace VLab
         public virtual void OnAwake()
         {
             camera = gameObject.GetComponent<Camera>();
+#if VLAB
+            netmanager = FindObjectOfType<VLNetManager>();
+#endif
         }
 
         private void onbgcolor(Color c)
@@ -70,6 +76,28 @@ namespace VLab
             }
             screentoeye = ste;
         }
+
+#if VLAB
+        public override bool OnCheckObserver(NetworkConnection conn)
+        {
+            return netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+        }
+
+        public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
+        {
+            var isrebuild = false;
+            var cs = netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            if (cs.Count > 0)
+            {
+                foreach (var c in cs)
+                {
+                    observers.Add(c);
+                }
+                isrebuild = true;
+            }
+            return isrebuild;
+        }
+#endif
 
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine;
 using System.Collections;
 using VLab;
 
-public class ConditionTestLogc : ExperimentLogic
+public class ConditionTestLogic : ExperimentLogic
 {
     public override void OnAwake()
     {

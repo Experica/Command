@@ -23,7 +23,7 @@ namespace VLab
             {
                 config = Yaml.ReadYaml<Dictionary<string, object>>(configpath);
             }
-            else
+            if(config==null)
             {
                 config = new Dictionary<string, object>();
             }
@@ -47,6 +47,10 @@ namespace VLab
             if (!config.ContainsKey("defaultexperimentlogic"))
             {
                 config["defaultexperimentlogic"] = "ConditionTestLogic";
+            }
+            if (!config.ContainsKey("defaultcondtestnotifyparams"))
+            {
+                config["defaultcondtestnotifyparams"] = new List<string> { "CondIndex" };
             }
             if (!config.ContainsKey("antialiasing"))
             {

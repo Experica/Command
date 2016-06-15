@@ -12,14 +12,6 @@ using System.Linq;
 
 namespace VLab
 {
-    public enum SampleMethod
-    {
-        Ascending = 0,
-        Descending = 1,
-        UniformWithReplacement = 2,
-        UniformWithoutReplacement = 3
-    }
-
     public class ConditionManager
     {
         public Dictionary<string, List<object>> cond;
@@ -347,20 +339,55 @@ namespace VLab
         }
     }
 
+    public delegate void NotifyCondTestData(string name, List<object> value);
+    public delegate void NotifyAnalysis();
+
     public class CondTestManager
     {
         public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
         public int condtestidx = -1;
+        public NotifyCondTestData NotifyCondTestData;
+        public NotifyAnalysis NotifyAnalysis;
+        public int notifyidx = 0;
 
-        public void NewCondTest()
+        public virtual void NewCondTest(List<string> notifyparams, int analysispercondtest=0)
         {
             condtestidx++;
+            if(analysispercondtest>0&&condtestidx>0)
+            {
+               if(( (condtestidx - notifyidx) / analysispercondtest)>=1)
+                {
+                    NotifyCondTestAnalysis(notifyidx, notifyparams);
+                    notifyidx = condtestidx;
+                }
+            }
+        }
+
+        public void NotifyCondTest(int startidx, List<string> notifyparams)
+        {
+            if (startidx < condtestidx)
+            {
+                foreach (var p in notifyparams)
+                {
+                    if (condtest.ContainsKey(p))
+                    {
+                        NotifyCondTestData(p, condtest[p].GetRange(startidx, condtestidx - startidx));
+                    }
+                }
+            }
+        }
+
+        public void NotifyCondTestAnalysis(int startidx, List<string> notifyparams)
+        {
+            NotifyCondTest( startidx, notifyparams);
+            NotifyAnalysis();
         }
 
         public void Clear()
         {
             condtest.Clear();
             condtestidx = -1;
+            notifyidx = 0;
         }
 
         public void Add(string key, object value)

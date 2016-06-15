@@ -2,6 +2,8 @@ issaveexonquit: true
 exdefdir: Experiment
 condtestdir: ConditionTest
 defaultexperimentlogic: ConditionTestLogic
+defaultcondtestnotifyparams:
+- CondIndex
 antialiasing: 2
 anisotropicfilterlevel: 5
 logictick: 0.0001

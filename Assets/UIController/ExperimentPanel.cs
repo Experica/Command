@@ -48,15 +48,29 @@ public class ExperimentPanel:MonoBehaviour
     {
         foreach(var p in Experiment.properties.Keys)
         {
-            var vt = Experiment.properties[p].PropertyType;
-            var v = ex.GetValue(p);
-            AddParam(p,vt,v, ex.exinheritparams.Contains(p),
-                ChoosePrefab(p,vt,false),svcontent.transform);
+            if (isshowparam(p))
+            {
+                var vt = Experiment.properties[p].PropertyType;
+                var v = ex.GetValue(p);
+                AddParam(p, vt, v, ex.exinheritparams.Contains(p),
+                    ChoosePrefab(p, vt, false), svcontent.transform);
+            }
         }
 
         UpdateExCustomParam(ex);
         UpdateViewRect();
      }
+
+    bool isshowparam(string name)
+    {
+        switch (name)
+        {
+            case "condtest":
+                return false;
+            default:
+                return true;
+        }
+    }
 
     public GameObject ChoosePrefab(string name, Type T,bool iscustom)
     {
@@ -147,21 +161,24 @@ public class ExperimentPanel:MonoBehaviour
     {
         foreach (var n in Experiment.properties.Keys)
         {
-            inherittoggle[n].isOn = ex.exinheritparams.Contains(n);
-            var T = Experiment.properties[n].PropertyType;
-            var v = ex.GetValue(n);
-            if (T.IsEnum)
+            if (isshowparam(n))
             {
-                var vs = Enum.GetNames(T).ToList();
-                if (v == null || !vs.Contains(v.ToString()))
+                inherittoggle[n].isOn = ex.exinheritparams.Contains(n);
+                var T = Experiment.properties[n].PropertyType;
+                var v = ex.GetValue(n);
+                if (T.IsEnum)
                 {
-                    v = vs[0];
+                    var vs = Enum.GetNames(T).ToList();
+                    if (v == null || !vs.Contains(v.ToString()))
+                    {
+                        v = vs[0];
+                    }
+                    dropdowns[n].value = vs.IndexOf(v.ToString());
                 }
-                dropdowns[n].value = vs.IndexOf(v.ToString());
-            }
-            else
-            {
-                input[n].text = v == null ? "" : (string)VLConvert.Convert(v, typeof(string));
+                else
+                {
+                    input[n].text = v == null ? "" : (string)VLConvert.Convert(v, typeof(string));
+                }
             }
         }
 
