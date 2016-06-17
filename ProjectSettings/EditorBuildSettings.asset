@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Welcome.unity
   - enabled: 1
+    path: Assets/Welcomeback.unity
+  - enabled: 1
     path: Assets/Showroom.unity

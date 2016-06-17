@@ -15,7 +15,6 @@ namespace VLab
 {
     public class VLNetManager : NetworkManager
     {
-        public GameObject vlabanalysismanagerprefab;
         public VLUIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
 
@@ -50,25 +49,10 @@ namespace VLab
             return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey("peertype") && (VLPeerType)peerinfo[cid]["peertype"] == peertype);
         }
 
-        public void SpwanVLAnalysisManager(bool isinstantiate)
-        {
-            GameObject go;
-            if (isinstantiate)
-            {
-                go = Instantiate(vlabanalysismanagerprefab);
-                go.name = "VLAnalysisManager";
-                go.transform.parent = transform;
-                var als = go.GetComponent<VLAnalysisManager>();
-                als.uicontroller = uicontroller;
-                uicontroller.alsmanager = als;
-                NetworkServer.Spawn(go);
-            }
-            else
-            {
-                go = uicontroller.alsmanager.gameObject;
-            }
-        }
-
+        
+        /// <summary>
+        /// Prepare server to handle all kinds of client messages.
+        /// </summary>
         public override void OnStartServer()
         {
             if (LogFilter.logDebug)
@@ -83,6 +67,11 @@ namespace VLab
             NetworkServer.RegisterHandler(VLMsgType.AspectRatio, new NetworkMessageDelegate(AspectRatioHandler));
         }
 
+        /// <summary>
+        /// for every client, we maintain information about the unique connection and 
+        /// peer, so we can talk to each one specificly.
+        /// </summary>
+        /// <param name="netMsg"></param>
         void PeerTypeHandler(NetworkMessage netMsg)
         {
             var v = (VLPeerType)netMsg.ReadMessage<IntegerMessage>().value;
@@ -102,10 +91,29 @@ namespace VLab
                 info["peertype"] = v;
                 peerinfo[connid] = info;
             }
-            if (v == VLPeerType.VLabAnalysis)
+            // whenever a VLabAnalysis client connected to VLab, it will seed peertype message, so
+            // here the function is triggered.
+            // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
+            // so server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
+            // newly conneted client. if not, then this is the first time a VLabAnalysis client connected,
+            // we then create a new instance and spwan to all clients(may include VLabEnvironment, but since
+            // they don't register for the VLabAnalysisManager prefab, they will spawn nothing).
+            if ((v == VLPeerType.VLabAnalysis)&& (!ispeertypeconnected))
             {
-                SpwanVLAnalysisManager(!ispeertypeconnected);
+                SpwanVLAnalysisManager();
             }
+        }
+
+        public void SpwanVLAnalysisManager()
+        {
+            GameObject go = Instantiate(Resources.Load<GameObject>("VLabAnalysisManager"));
+            var als = go.GetComponent<VLAnalysisManager>();
+            als.uicontroller = uicontroller;
+            uicontroller.alsmanager = als;
+            go.name = "VLAnalysisManager";
+            go.transform.parent = transform;
+            
+            NetworkServer.Spawn(go);
         }
 
         void AspectRatioHandler(NetworkMessage netMsg)

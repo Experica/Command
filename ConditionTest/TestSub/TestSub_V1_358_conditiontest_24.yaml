@@ -1,0 +1,283 @@
+name: conditiontest
+id: conditiontest
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 1
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 30
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 15
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 1
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  bgcolor@ENCamera@OrthoCamera: (0, 0.5, 0.5, 1)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_24.yaml
+condtest:
+  CondIndex:
+  - 14
+  - 35
+  - 22
+  - 33
+  - 16
+  - 26
+  - 24
+  - 7
+  - 10
+  - 18
+  - 23
+  - 30
+  - 20
+  - 0
+  - 19
+  - 5
+  - 34
+  - 12
+  - 9
+  - 17
+  - 21
+  - 3
+  - 29
+  - 25
+  - 4
+  - 2
+  - 27
+  - 6
+  - 13
+  - 15
+  - 8
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 37.9246
+    - COND: 137.9724
+    - SUFICI: 638.3868
+  - - PREICI: 738.3906
+    - COND: 842.1736
+    - SUFICI: 1342.2401
+  - - PREICI: 1445.8993
+    - COND: 1548.694
+    - SUFICI: 2051.2204
+  - - PREICI: 2153.4289
+    - COND: 2256.0335
+    - SUFICI: 2756.1394
+  - - PREICI: 2858.0586
+    - COND: 2961.9793
+    - SUFICI: 3462.4062
+  - - PREICI: 3562.409
+    - COND: 3665.3215
+    - SUFICI: 4167.1792
+  - - PREICI: 4269.6576
+    - COND: 4374.2517
+    - SUFICI: 4875.3432
+  - - PREICI: 4976.4248
+    - COND: 5079.4031
+    - SUFICI: 5580.5164
+  - - PREICI: 5681.0164
+    - COND: 5783.7647
+    - SUFICI: 6287.0137
+  - - PREICI: 6388.4774
+    - COND: 6493.7741
+    - SUFICI: 6998.5233
+  - - PREICI: 7099.7018
+    - COND: 7202.817
+    - SUFICI: 7704.3871
+  - - PREICI: 7804.4117
+    - COND: 7904.5328
+    - SUFICI: 8406.2833
+  - - PREICI: 8506.8626
+    - COND: 8607.6227
+    - SUFICI: 9109.2615
+  - - PREICI: 9212.8937
+    - COND: 9315.6068
+    - SUFICI: 9815.7587
+  - - PREICI: 9919.1155
+    - COND: 10021.471
+    - SUFICI: 10525.9596
+  - - PREICI: 10631.0852
+    - COND: 10733.4046
+    - SUFICI: 11234.484
+  - - PREICI: 11337.2889
+    - COND: 11437.4035
+    - SUFICI: 11939.1503
+  - - PREICI: 12042.4964
+    - COND: 12144.8237
+    - SUFICI: 12647.9089
+  - - PREICI: 12748.8773
+    - COND: 12850.847
+    - SUFICI: 13352.3512
+  - - PREICI: 13454.3524
+    - COND: 13558.8881
+    - SUFICI: 14064.0213
+  - - PREICI: 14168.1605
+    - COND: 14270.3871
+    - SUFICI: 14775.3784
+  - - PREICI: 14876.8449
+    - COND: 14978.0039
+    - SUFICI: 15483.1724
+  - - PREICI: 15584.8642
+    - COND: 15688.6491
+    - SUFICI: 16192.7866
+  - - PREICI: 16295.5243
+    - COND: 16401.6234
+    - SUFICI: 16905.5592
+  - - PREICI: 17006.0258
+    - COND: 17109.8041
+    - SUFICI: 17612.9867
+  - - PREICI: 17717.6746
+    - COND: 17822.3031
+    - SUFICI: 18322.3961
+  - - PREICI: 18423.8259
+    - COND: 18527.39
+    - SUFICI: 19027.6759
+  - - PREICI: 19130.1965
+    - COND: 19231.0508
+    - SUFICI: 19732.62
+  - - PREICI: 19833.2971
+    - COND: 19936.3279
+    - SUFICI: 20437.1208
+  - - PREICI: 20540.4396
+    - COND: 20642.7042
+    - SUFICI: 21146.5931
+  - - PREICI: 21247.6733
+    - COND: 21352.7516
+    - SUFICI: 21852.8256
+  - - PREICI: 21955.3828
+    - COND: 22056.834
+condsampling: UniformWithoutReplacement
+condrepeat: 3
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 8
+param: {}
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex
