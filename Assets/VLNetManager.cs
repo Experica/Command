@@ -106,7 +106,7 @@ namespace VLab
 
         public void SpwanVLAnalysisManager()
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("VLabAnalysisManager"));
+            GameObject go = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
             var als = go.GetComponent<VLAnalysisManager>();
             als.uicontroller = uicontroller;
             uicontroller.alsmanager = als;

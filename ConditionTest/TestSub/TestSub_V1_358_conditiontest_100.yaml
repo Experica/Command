@@ -25,10 +25,133 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
 condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_100.yaml
+condtest:
+  CondIndex:
+  - 9
+  - 11
+  - 32
+  - 4
+  - 22
+  - 31
+  - 8
+  - 27
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 88.7509
+    - COND: 201.738
+    - SUFICI: 716.5855
+  - - PREICI: 825.7036
+    - COND: 934.8672
+    - SUFICI: 1449.7311
+  - - PREICI: 1558.8501
+    - COND: 1668.0942
+    - SUFICI: 2182.8808
+  - - PREICI: 2292.0153
+    - COND: 2401.2546
+    - SUFICI: 2916.0732
+  - - PREICI: 3025.191
+    - COND: 3134.4444
+    - SUFICI: 3634.4775
+  - - PREICI: 3743.3371
+    - COND: 3852.5556
+    - SUFICI: 4367.33
+  - - PREICI: 4476.5456
+    - COND: 4585.8246
+    - SUFICI: 5100.854
+  - - PREICI: 5210.0106
+    - COND: 5319.2618
+    - SUFICI: 5834.1914
+  - - PREICI: 5943.1931
+    - COND: 6052.4507
 condsampling: UniformWithoutReplacement
 condrepeat: 3
 input: 1

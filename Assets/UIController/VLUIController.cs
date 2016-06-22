@@ -56,7 +56,14 @@ namespace VLab
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
-                MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                if (name == "CondIndex")
+                {
+                    MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+                }
+                else
+                {
+                    MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                }
                 alsmanager.RpcNotifyCondTestData(name, stream.ToArray());
             }
         }

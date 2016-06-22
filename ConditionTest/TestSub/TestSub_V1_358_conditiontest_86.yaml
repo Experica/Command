@@ -25,10 +25,113 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_100.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_86.yaml
+condtest:
+  CondIndex:
+  - 13
+  - 8
+  - 30
+  - 3
+  - 28
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 6.0349
+    - COND: 112.8229
+    - SUFICI: 627.9042
+  - - PREICI: 736.7516
+    - COND: 838.0816
+    - SUFICI: 1338.7191
+  - - PREICI: 1439.0379
+    - COND: 1547.9686
+    - SUFICI: 2048.0528
+  - - PREICI: 2156.6032
+    - COND: 2265.617
+    - SUFICI: 2765.6878
+  - - PREICI: 2874.1891
+    - COND: 2983.1885
 condsampling: UniformWithoutReplacement
 condrepeat: 3
 input: 1
@@ -37,7 +140,7 @@ conddur: 500
 sufICI: 100
 pushcondatstate: PREICI
 condtestatstate: PREICI
-analysispercondtest: 8
+analysispercondtest: 4
 param:
   dfhd: reyet
 exinheritparams: []

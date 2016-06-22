@@ -25,10 +25,103 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_100.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_97.yaml
+condtest:
+  CondIndex:
+  - 31
+  - 3
+  - 28
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 3.5887
+    - COND: 115.4686
+    - SUFICI: 629.9585
+  - - PREICI: 729.9722
+    - COND: 833.0192
+    - SUFICI: 1347.8048
+  - - PREICI: 1456.9636
+    - COND: 1565.8517
 condsampling: UniformWithoutReplacement
 condrepeat: 3
 input: 1

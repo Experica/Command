@@ -16,7 +16,7 @@ envparam:
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
-  ori@ENGratingQuad@GratingQuad: 90
+  ori@ENGratingQuad@GratingQuad: 0
   length@ENGratingQuad@GratingQuad: 15
   width@ENGratingQuad@GratingQuad: 15
   height@ENGratingQuad@GratingQuad: 1
@@ -25,11 +25,123 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_100.yaml
-condsampling: UniformWithoutReplacement
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_89.yaml
+condtest:
+  CondIndex:
+  - 21
+  - 12
+  - 27
+  - 16
+  - 8
+  - 6
+  - 30
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 6.4737
+    - COND: 106.5205
+    - SUFICI: 621.3417
+  - - PREICI: 730.5185
+    - COND: 839.7055
+    - SUFICI: 1354.5896
+  - - PREICI: 1463.6349
+    - COND: 1572.9675
+    - SUFICI: 2087.6778
+  - - PREICI: 2196.9299
+    - COND: 2306.0794
+    - SUFICI: 2820.952
+  - - PREICI: 2930.0043
+    - COND: 3039.2106
+    - SUFICI: 3554.1008
+  - - PREICI: 3663.1925
+    - COND: 3772.5303
+    - SUFICI: 4287.296
+  - - PREICI: 4396.4452
+    - COND: 4505.6358
 condrepeat: 3
 input: 1
 preICI: 100
@@ -37,7 +149,7 @@ conddur: 500
 sufICI: 100
 pushcondatstate: PREICI
 condtestatstate: PREICI
-analysispercondtest: 8
+analysispercondtest: 4
 param:
   dfhd: reyet
 exinheritparams: []

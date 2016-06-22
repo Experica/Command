@@ -16,19 +16,103 @@ envparam:
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
-  ori@ENGratingQuad@GratingQuad: 90
+  ori@ENGratingQuad@GratingQuad: 0
   length@ENGratingQuad@GratingQuad: 15
   width@ENGratingQuad@GratingQuad: 15
   height@ENGratingQuad@GratingQuad: 1
   color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   masktype@ENGratingQuad@GratingQuad: 1
-  visible@ENGratingQuad@GratingQuad: true
+  visible@ENGratingQuad@GratingQuad: false
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  - 0
+  - 90
+  - 0
+  - 90
+  - 90
+  - 0
+  temporalfreq:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_100.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_68.yaml
+condtest:
+  CondIndex:
+  - 12
+  CondRepeat:
+  - 1
+  CONDSTATE:
+  - - PREICI: 11.7266
+    - COND: 117.6133
+    - SUFICI: 617.6905
 condsampling: UniformWithoutReplacement
 condrepeat: 3
 input: 1
