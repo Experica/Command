@@ -27,6 +27,8 @@ namespace VLab
         public Color maxcolor;
         [SyncVar(hook = "onisdrifting")]
         public bool isdrifting = true;
+        [SyncVar(hook ="onisreversetime")]
+        public bool isreversetime = false;
 
         public override void OnVisible(bool v)
         {
@@ -106,11 +108,21 @@ namespace VLab
             isdrifting = i;
         }
 
+        double reversetime;
+        void onisreversetime(bool r)
+        {
+            OnIsReverseTime(r);
+        }
+        public virtual void OnIsReverseTime(bool r)
+        {
+            reversetime = t.ElapsedS;
+            isreversetime = true;
+        }
         void Update()
         {
             if (isdrifting)
             {
-                renderer.material.SetFloat("t", (float)t.ElapsedS);
+                renderer.material.SetFloat("t", (float)(isreversetime?2*reversetime-t.ElapsedS: t.ElapsedS));
             }
         }
     }

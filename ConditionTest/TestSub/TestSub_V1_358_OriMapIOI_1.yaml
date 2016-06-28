@@ -1,0 +1,101 @@
+name: OriMapIOI
+id: OriMapIOI
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 0
+  length@ENGratingQuad@GratingQuad: 45
+  width@ENGratingQuad@GratingQuad: 45
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_1.yaml
+condtest:
+  CondIndex:
+  - 1
+  - 3
+  - 7
+  - 4
+  - 6
+  - 2
+  - 5
+  - 0
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 6.6575
+    - COND: 114.9636
+    - SUFICI: 615.0367
+  - - PREICI: 715.0414
+    - COND: 824.8819
+    - SUFICI: 1325.2725
+  - - PREICI: 1434.8352
+    - COND: 1544.877
+    - SUFICI: 2045.1288
+  - - PREICI: 2149.6319
+    - COND: 2250.4154
+    - SUFICI: 2757.3202
+  - - PREICI: 2862.297
+    - COND: 2964.8676
+    - SUFICI: 3470.6999
+  - - PREICI: 3575.1554
+    - COND: 3684.8397
+    - SUFICI: 4184.8644
+  - - PREICI: 4286.6951
+    - COND: 4392.3602
+    - SUFICI: 4895.2016
+  - - PREICI: 5004.7886
+    - COND: 5104.8116
+    - SUFICI: 5604.836
+condsampling: UniformWithoutReplacement
+condrepeat: 5
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 4
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

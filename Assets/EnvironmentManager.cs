@@ -199,11 +199,11 @@ namespace VLab
             return p.GetValue(nb, null);
         }
 
-        public void ActiveSyncVisible(bool isvisible)
+        public void ActiveSyncSetParam(string name,object value)
         {
-            foreach (var anbname in activenet)
+            foreach(var anbname in activenet)
             {
-                SetParam("visible" + "@" + anbname, isvisible);
+                SetParam(name + "@" + anbname, value);
             }
         }
 

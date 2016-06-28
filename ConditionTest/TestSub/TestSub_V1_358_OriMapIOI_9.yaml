@@ -1,0 +1,85 @@
+name: OriMapIOI
+id: OriMapIOI
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 112.5
+  length@ENGratingQuad@GratingQuad: 47
+  width@ENGratingQuad@GratingQuad: 47
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_9.yaml
+condtest:
+  CondIndex:
+  - 7
+  - 3
+  - 0
+  - 4
+  - 5
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 3.2058
+    - COND: 1011.2232
+    - SUFICI: 7011.2563
+  - - PREICI: 10021.4383
+    - COND: 11026.1131
+    - SUFICI: 17031.989
+  - - PREICI: 20032.0833
+    - COND: 21036.9578
+    - SUFICI: 27037.5383
+  - - PREICI: 30044.3851
+    - COND: 31049.4851
+    - SUFICI: 37051.5763
+  - - PREICI: 40056.6651
+    - COND: 41061.7754
+    - SUFICI: 47061.8876
+condsampling: UniformWithoutReplacement
+condrepeat: 5
+preICI: 1000
+conddur: 3000
+sufICI: 3000
+pushcondatstate: PREICI
+condtestatstate: PREICI
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

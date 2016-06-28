@@ -1,0 +1,100 @@
+name: OriMapIOI
+id: OriMapIOI
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 22.5
+  length@ENGratingQuad@GratingQuad: 47
+  width@ENGratingQuad@GratingQuad: 47
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_10.yaml
+condtest:
+  CondIndex:
+  - 5
+  - 2
+  - 6
+  - 0
+  - 7
+  - 4
+  - 3
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 3.7786
+    - COND: 1004.7549
+    - SUFICI: 7009.1134
+  - - PREICI: 10010.1805
+    - COND: 11012.3981
+    - SUFICI: 17016.4182
+  - - PREICI: 20019.4882
+    - COND: 21022.5497
+    - SUFICI: 27023.8265
+  - - PREICI: 30023.9763
+    - COND: 31024.9577
+    - SUFICI: 37025.2791
+  - - PREICI: 40025.3051
+    - COND: 41029.3858
+    - SUFICI: 47030.7951
+  - - PREICI: 50033.7125
+    - COND: 51036.8352
+    - SUFICI: 57038.1156
+  - - PREICI: 60038.1669
+    - COND: 61040.2405
+    - SUFICI: 67044.4485
+  - - PREICI: 70045.4941
+    - COND: 71048.7278
+    - SUFICI: 77050.886
+condsampling: UniformWithoutReplacement
+condrepeat: 5
+preICI: 1000
+conddur: 3000
+sufICI: 3000
+pushcondatstate: PREICI
+condtestatstate: PREICI
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

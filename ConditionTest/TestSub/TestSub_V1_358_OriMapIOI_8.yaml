@@ -1,0 +1,89 @@
+name: OriMapIOI
+id: OriMapIOI
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 157.5
+  length@ENGratingQuad@GratingQuad: 45
+  width@ENGratingQuad@GratingQuad: 45
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_8.yaml
+condtest:
+  CondIndex:
+  - 3
+  - 2
+  - 5
+  - 4
+  - 6
+  - 7
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 3.6362
+    - COND: 1003.7215
+    - SUFICI: 7010.2453
+  - - PREICI: 10010.2571
+    - COND: 11015.3911
+    - SUFICI: 17016.8691
+  - - PREICI: 20022.1234
+    - COND: 21026.9296
+    - SUFICI: 27027.0387
+  - - PREICI: 30036.5206
+    - COND: 31036.5427
+    - SUFICI: 37039.1772
+  - - PREICI: 40046.6972
+    - COND: 41056.3789
+    - SUFICI: 47056.4148
+  - - PREICI: 50058.8248
+    - COND: 51066.1979
+condsampling: UniformWithoutReplacement
+condrepeat: 5
+preICI: 1000
+conddur: 3000
+sufICI: 3000
+pushcondatstate: PREICI
+condtestatstate: PREICI
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

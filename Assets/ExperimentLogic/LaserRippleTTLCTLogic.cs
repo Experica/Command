@@ -1,17 +1,13 @@
 ﻿// --------------------------------------------------------------
-// laserttlrecordconditiontest.cs is part of the VLAB project.
+// laserttlconditiontest.cs is part of the VLAB project.
 // Copyright (c) 2016 All Rights Reserved
 // Li Alex Zhang fff008@gmail.com
 // 5-21-2016
 // --------------------------------------------------------------
 
-using UnityEngine;
-using System;
-using System.Linq;
-using System.Collections;
 using VLab;
 
-public class laserttlrecordconditiontest : ExperimentLogic
+public class LaserRippleTTLCTLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
     Omicron luxx473 = new Omicron("COM5");
@@ -19,23 +15,22 @@ public class laserttlrecordconditiontest : ExperimentLogic
 
     public override void OnAwake()
     {
-        ex.pushcondatstate = PUSHCONDATSTATE.PREICI;
-        recordmanager = new RecordManager(VLRecordSystem.Ripple);
-        //recordmanager.recorder.SetRecordPath();
         luxx473.LaserOn();
+        recordmanager = new RecordManager(VLRecordSystem.Ripple);
     }
 
     public override void StartExperiment()
     {
+        recordmanager.recorder.SetRecordPath(ex.CondTestPath(""));
         base.StartExperiment();
-        pport.BitPulse(2, 0.002);
+        pport.BitPulse(2, 0.1);
         timer.ReStart();
     }
 
     public override void StopExperiment()
     {
         base.StopExperiment();
-        pport.BitPulse(3, 0.002);
+        pport.BitPulse(3, 0.1);
         timer.Stop();
     }
 
@@ -44,13 +39,19 @@ public class laserttlrecordconditiontest : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                //envmanager.activenetbehavior.visible = false;
+                envmanager.ActiveSyncSetParam("visible", false);
                 CondState = CONDSTATE.PREICI;
+                if (condmanager.cond.ContainsKey("laserpower%"))
+                {
+                    var v = VLConvert.Convert<double>(condmanager.cond["laserpower%"][condmanager.condidx]);
+                    luxx473.PowerRatio = v;
+                    mambo594.PowerRatio = v;
+                }
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold() >= ex.preICI)
                 {
-                    //envmanager.activenetbehavior.visible = true;
+                    envmanager.ActiveSyncSetParam("visible", true);
                     CondState = CONDSTATE.COND;
                     pport.SetBit(bit: 0, value: true);
                 }
@@ -58,7 +59,7 @@ public class laserttlrecordconditiontest : ExperimentLogic
             case CONDSTATE.COND:
                 if (CondHold() >= ex.conddur)
                 {
-                    //envmanager.activenetbehavior.visible = false;
+                    envmanager.ActiveSyncSetParam("visible", false);
                     CondState = CONDSTATE.SUFICI;
                     pport.SetBit(bit: 0, value: false);
                 }
@@ -66,7 +67,7 @@ public class laserttlrecordconditiontest : ExperimentLogic
             case CONDSTATE.SUFICI:
                 if (SufICIHold() >= ex.sufICI)
                 {
-                    CondState = CONDSTATE.PREICI;
+                    CondState = CONDSTATE.NONE;
                 }
                 break;
         }

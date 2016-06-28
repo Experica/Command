@@ -1,0 +1,121 @@
+name: conditiontest
+id: conditiontest
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  itemid@Showroom@ShowroomManager: GratingQuad
+  ori@ENQuad@Quad: 90
+  length@ENQuad@Quad: 1
+  width@ENQuad@Quad: 1
+  height@ENQuad@Quad: 1
+  color@ENQuad@Quad: (0, 0, 0, 0)
+  masktype@ENQuad@Quad: 0
+  visible@ENQuad@Quad: true
+  position@ENQuad@Quad: (0, 0, 0)
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 90
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 15
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 1
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  bgcolor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_110.yaml
+condtest:
+  CondIndex:
+  - 3
+  - 5
+  - 0
+  - 2
+  - 4
+  - 1
+  - 2
+  - 1
+  - 5
+  - 0
+  - 3
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 11.7585
+    - COND: 115.5687
+    - SUFICI: 616.0918
+  - - PREICI: 717.0206
+    - COND: 817.4173
+    - SUFICI: 1319.1522
+  - - PREICI: 1422.049
+    - COND: 1524.457
+    - SUFICI: 2025.714
+  - - PREICI: 2126.485
+    - COND: 2229.123
+    - SUFICI: 2732.507
+  - - PREICI: 2834.0965
+    - COND: 2934.6995
+    - SUFICI: 3434.8217
+  - - PREICI: 3536.5799
+    - COND: 3638.1604
+    - SUFICI: 4140.6576
+  - - PREICI: 4243.166
+    - COND: 4345.5343
+    - SUFICI: 4845.6568
+  - - PREICI: 4949.3176
+    - COND: 5050.9732
+    - SUFICI: 5553.5695
+  - - PREICI: 5654.9547
+    - COND: 5755.3309
+    - SUFICI: 6258.034
+  - - PREICI: 6358.9785
+    - COND: 6459.3489
+    - SUFICI: 6961.5226
+  - - PREICI: 7064.0217
+    - COND: 7165.0781
+    - SUFICI: 7668.0763
+condsampling: UniformWithoutReplacement
+condrepeat: 3
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 2
+param:
+  dfhd: reyet
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

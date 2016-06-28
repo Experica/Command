@@ -95,7 +95,6 @@
   <ItemGroup>
     <Compile Include="Assets\CompilerService.cs" />
     <Compile Include="Assets\Condition.cs" />
-    <Compile Include="Assets\ConditionTestLogic.cs" />
     <Compile Include="Assets\ENCamera.cs" />
     <Compile Include="Assets\ENGratingQuad.cs" />
     <Compile Include="Assets\ENQuad.cs" />
@@ -103,13 +102,16 @@
     <Compile Include="Assets\EnvironmentManager.cs" />
     <Compile Include="Assets\Experiment.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\ConditionTestLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\LaserRippleTTLCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\OITTLCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\RippleTTLCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\TTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
     <Compile Include="Assets\Laser.cs" />
-    <Compile Include="Assets\LaserRecordTTLConditionTestLogic.cs" />
     <Compile Include="Assets\MsgPackSerializer.cs" />
     <Compile Include="Assets\Record.cs" />
     <Compile Include="Assets\Showroom.cs" />
-    <Compile Include="Assets\TTLConditionTestLogic.cs" />
     <Compile Include="Assets\UI\Drag.cs" />
     <Compile Include="Assets\UI\FilePathInput.cs" />
     <Compile Include="Assets\UI\Focus.cs" />
@@ -131,7 +133,6 @@
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\VLNetwork.cs" />
     <Compile Include="Assets\VLTimer.cs" />
-    <Compile Include="Assets\laserttlrecordconditiontest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
