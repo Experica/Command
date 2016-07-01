@@ -16,9 +16,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using MathWorks.MATLAB.NET.Arrays;
-using MathWorks.MATLAB.NET;
-using MathWorks.MATLAB.NET.Utility;
 using MathNet.Numerics;
 
 namespace VLab

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1491a49e17f9d7a4c810b86004cb2783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uicontroller: {fileID: 0}
 --- !u!114 &114000013453375334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,4 +84,4 @@ MonoBehaviour:
     i14: 67
     i15: 109
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1

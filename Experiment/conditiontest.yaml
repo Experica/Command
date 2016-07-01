@@ -4,27 +4,7 @@ designer: alex
 experimenter: alex
 subject_id: TestSub
 environmentpath: Showroom
-envparam:
-  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  screenhalfheight@ENCamera@OrthoCamera: 15
-  screentoeye@ENCamera@OrthoCamera: 57
-  itemid@Showroom@ShowroomManager: GratingQuad
-  spatialfreq@ENGratingQuad@GratingQuad: 0
-  temporalfreq@ENGratingQuad@GratingQuad: 0
-  spatialphase@ENGratingQuad@GratingQuad: 0
-  sigma@ENGratingQuad@GratingQuad: 0
-  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  isdrifting@ENGratingQuad@GratingQuad: true
-  isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 0
-  length@ENGratingQuad@GratingQuad: 1
-  width@ENGratingQuad@GratingQuad: 1
-  height@ENGratingQuad@GratingQuad: 1
-  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  masktype@ENGratingQuad@GratingQuad: 0
-  visible@ENGratingQuad@GratingQuad: true
-  position@ENGratingQuad@GratingQuad: (10, 10, 0)
+envparam: {}
 condpath: Condition\ConditionTest.yaml
 recordsession: V1
 recordsite: 358

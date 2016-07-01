@@ -77,6 +77,7 @@ namespace VLab
                 foreach (var c in cs)
                 {
                     observers.Add(c);
+                    GetComponent<NetworkIdentity>().AssignClientAuthority(c);
                 }
                 isrebuild = true;
             }
