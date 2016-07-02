@@ -56,7 +56,9 @@ namespace VLab
         /// <returns></returns>
         public override bool OnCheckObserver(NetworkConnection conn)
         {
-            return uicontroller. netmanager.IsConnectionPeerType(conn, VLPeerType.VLabAnalysis);
+            var b= uicontroller. netmanager.IsConnectionPeerType(conn, VLPeerType.VLabAnalysis);
+            //if(b) GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
+            return b;
         }
 
         /// <summary>
@@ -77,7 +79,7 @@ namespace VLab
                 foreach (var c in cs)
                 {
                     observers.Add(c);
-                    GetComponent<NetworkIdentity>().AssignClientAuthority(c);
+                    //GetComponent<NetworkIdentity>().AssignClientAuthority(c);
                 }
                 isrebuild = true;
             }

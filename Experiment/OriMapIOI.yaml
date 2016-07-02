@@ -15,22 +15,22 @@ envparam:
   sigma@ENGratingQuad@GratingQuad: 0
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  isdrifting@ENGratingQuad@GratingQuad: true
+  isdrifting@ENGratingQuad@GratingQuad: false
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 22.5
+  ori@ENGratingQuad@GratingQuad: 45
   length@ENGratingQuad@GratingQuad: 47
   width@ENGratingQuad@GratingQuad: 47
   height@ENGratingQuad@GratingQuad: 1
   color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   masktype@ENGratingQuad@GratingQuad: 0
-  visible@ENGratingQuad@GratingQuad: false
+  visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
 experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_10.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_11.yaml
 condsampling: UniformWithoutReplacement
 condrepeat: 5
 preICI: 1000
