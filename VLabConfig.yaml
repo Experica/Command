@@ -4,6 +4,7 @@ condtestdir: ConditionTest
 defaultexperimentlogic: ConditionTestLogic
 defaultcondtestnotifyparams:
 - CondIndex
+- CONDSTATE
 antialiasing: 2
 anisotropicfilterlevel: 5
 logictick: 0.0001

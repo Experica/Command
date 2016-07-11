@@ -1,0 +1,245 @@
+name: DirGrating
+id: DirGrating
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 60
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 6
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: Condition\ConditionTest.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  width:
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_1.yaml
+condtest:
+  CondIndex:
+  - 27
+  - 6
+  - 29
+  - 23
+  - 16
+  - 14
+  - 4
+  - 17
+  - 20
+  - 5
+  - 1
+  - 26
+  - 24
+  - 34
+  - 9
+  - 22
+  - 19
+  - 21
+  - 33
+  - 31
+  - 7
+  - 0
+  - 12
+  - 32
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 85.5927
+    - COND: 185.6812
+    - SUFICI: 699.7827
+  - - PREICI: 802.6603
+    - COND: 903.0435
+    - SUFICI: 1404.3765
+  - - PREICI: 1504.9409
+    - COND: 1606.8249
+    - SUFICI: 2112.5183
+  - - PREICI: 2212.9258
+    - COND: 2322.1553
+    - SUFICI: 2822.2512
+  - - PREICI: 2930.5258
+    - COND: 3039.7611
+    - SUFICI: 3539.8444
+  - - PREICI: 3648.1287
+    - COND: 3749.5838
+    - SUFICI: 4256.9585
+  - - PREICI: 4365.6857
+    - COND: 4468.6152
+    - SUFICI: 4974.529
+  - - PREICI: 5083.3338
+    - COND: 5185.0753
+    - SUFICI: 5691.772
+  - - PREICI: 5800.9463
+    - COND: 5903.0525
+    - SUFICI: 6409.3367
+  - - PREICI: 6512.7313
+    - COND: 6614.3125
+    - SUFICI: 7126.9084
+  - - PREICI: 7230.8537
+    - COND: 7331.8399
+    - SUFICI: 7844.503
+  - - PREICI: 7948.5948
+    - COND: 8048.6913
+    - SUFICI: 8562.0587
+  - - PREICI: 8666.7744
+    - COND: 8773.7305
+    - SUFICI: 9279.7141
+  - - PREICI: 9383.9532
+    - COND: 9493.0993
+    - SUFICI: 9997.7308
+  - - PREICI: 10106.812
+    - COND: 10212.2626
+    - SUFICI: 10714.9272
+  - - PREICI: 10819.9095
+    - COND: 10933.2829
+    - SUFICI: 11433.3547
+  - - PREICI: 11541.6367
+    - COND: 11650.8633
+    - SUFICI: 12150.9444
+  - - PREICI: 12259.2348
+    - COND: 12363.055
+    - SUFICI: 12868.3654
+  - - PREICI: 12976.7841
+    - COND: 13081.0052
+    - SUFICI: 13585.5687
+  - - PREICI: 13694.3988
+    - COND: 13795.2365
+    - SUFICI: 14296.5179
+  - - PREICI: 14396.6426
+    - COND: 14505.5875
+    - SUFICI: 15005.6626
+  - - PREICI: 15114.2031
+    - COND: 15223.2225
+    - SUFICI: 15723.3004
+  - - PREICI: 15827.984
+    - COND: 15934.6816
+    - SUFICI: 16440.595
+  - - PREICI: 16549.1824
+    - COND: 16649.6727
+condsampling: UniformWithoutReplacement
+condrepeat: 5
+input: 1
+preICI: 100
+conddur: 500
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 4
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

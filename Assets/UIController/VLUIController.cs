@@ -56,23 +56,27 @@ namespace VLab
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
-                if (name == "CondIndex")
+                switch(name)
                 {
-                    MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
-                }
-                else
-                {
-                    MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                    case "CondIndex":
+                        MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+                        break;
+                    case "CONDSTATE":
+                        MsgPackSerializer.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string,double>>)i), PackerCompatibilityOptions.None);
+                        break;
+                    default:
+                        MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                        break;
                 }
                 alsmanager.RpcNotifyCondTestData(name, stream.ToArray());
             }
         }
 
-        public void OnNotifyAnalysis()
+        public void OnNotifyAnalysis(double time)
         {
             if (alsmanager != null)
             {
-                alsmanager.RpcNotifyAnalysis();
+                alsmanager.RpcNotifyAnalysis(time);
             }
         }
 

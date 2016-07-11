@@ -15,9 +15,9 @@ envparam:
   sigma@ENGratingQuad@GratingQuad: 0
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  isdrifting@ENGratingQuad@GratingQuad: true
+  isdrifting@ENGratingQuad@GratingQuad: false
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 0
+  ori@ENGratingQuad@GratingQuad: 157.5
   length@ENGratingQuad@GratingQuad: 47
   width@ENGratingQuad@GratingQuad: 47
   height@ENGratingQuad@GratingQuad: 1
@@ -26,11 +26,68 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
 experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_33.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_21.yaml
+condtest:
+  CondIndex:
+  - 2
+  - 4
+  - 1
+  - 3
+  - 6
+  - 5
+  - 7
+  - 0
+  - 7
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  CONDSTATE:
+  - - PREICI: 30.5685
+    - COND: 87.3495
+    - SUFICI: 492.6179
+  - - PREICI: 555.0298
+    - COND: 606.1828
+    - SUFICI: 1010.4846
+  - - PREICI: 1073.1488
+    - COND: 1135.6887
+    - SUFICI: 1540.9049
+  - - PREICI: 1603.2205
+    - COND: 1665.6137
+    - SUFICI: 2072.075
+  - - PREICI: 2133.9878
+    - COND: 2196.4811
+    - SUFICI: 2601.6495
+  - - PREICI: 2664.3776
+    - COND: 2726.7885
+    - SUFICI: 3131.9691
+  - - PREICI: 3194.3559
+    - COND: 3256.8091
+    - SUFICI: 3662.4965
+  - - PREICI: 3720.3619
+    - COND: 3773.1077
+    - SUFICI: 4177.5628
+  - - PREICI: 4233.2571
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 50

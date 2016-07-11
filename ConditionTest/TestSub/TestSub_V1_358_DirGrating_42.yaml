@@ -17,7 +17,7 @@ envparam:
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 330
+  ori@ENGratingQuad@GratingQuad: 0
   length@ENGratingQuad@GratingQuad: 15
   width@ENGratingQuad@GratingQuad: 15
   height@ENGratingQuad@GratingQuad: 1
@@ -26,11 +26,59 @@ envparam:
   visible@ENGratingQuad@GratingQuad: false
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  - 210
+  - 240
+  - 270
+  - 300
+  - 330
 experimentlogicpath: RippleTTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_49.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_42.yaml
+condtest:
+  CondIndex:
+  - 2
+  - 4
+  - 6
+  - 10
+  - 11
+  - 0
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 2.9582
+    - COND: 118.8442
+    - SUFICI: 274.3079
+  - - PREICI: 378.9312
+    - COND: 486.6818
+    - SUFICI: 643.1638
+  - - PREICI: 743.1711
+    - COND: 851.3398
+    - SUFICI: 1002.097
+  - - PREICI: 1102.1104
+    - COND: 1210.1477
+    - SUFICI: 1365.8997
+  - - PREICI: 1469.0008
+    - COND: 1569.0312
+    - SUFICI: 1725.3391
+  - - PREICI: 1834.1577
+    - COND: 1935.8065
+    - SUFICI: 2092.9418
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 100

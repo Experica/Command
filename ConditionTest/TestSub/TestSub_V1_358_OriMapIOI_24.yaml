@@ -1,5 +1,5 @@
-name: DirGrating
-id: DirGrating
+name: OriMapIOI
+id: OriMapIOI
 designer: alex
 experimenter: alex
 subject_id: TestSub
@@ -17,25 +17,48 @@ envparam:
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 330
-  length@ENGratingQuad@GratingQuad: 15
-  width@ENGratingQuad@GratingQuad: 15
+  ori@ENGratingQuad@GratingQuad: 157.5
+  length@ENGratingQuad@GratingQuad: 47
+  width@ENGratingQuad@GratingQuad: 47
   height@ENGratingQuad@GratingQuad: 1
   color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   masktype@ENGratingQuad@GratingQuad: 0
-  visible@ENGratingQuad@GratingQuad: false
+  visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
-condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
-experimentlogicpath: RippleTTLCTLogic
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_49.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_24.yaml
+condtest:
+  CondIndex:
+  - 5
+  - 7
+  CondRepeat:
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 10.4198
+    - COND: 60.8867
+    - SUFICI: 466.3698
+  - - PREICI: 528.7903
+    - COND: 591.2727
 condsampling: UniformWithoutReplacement
 condrepeat: 500
-preICI: 100
-conddur: 150
-sufICI: 100
+preICI: 50
+conddur: 200
+sufICI: 50
 pushcondatstate: PREICI
 condtestatstate: PREICI
 analysispercondtest: 4
@@ -45,4 +68,3 @@ exinheritparams: []
 envinheritparams: []
 condtestnotifyparams:
 - CondIndex
-- CONDSTATE

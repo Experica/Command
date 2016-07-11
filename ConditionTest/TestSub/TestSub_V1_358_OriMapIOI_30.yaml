@@ -16,8 +16,8 @@ envparam:
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
-  isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 0
+  isreversetime@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 22.5
   length@ENGratingQuad@GratingQuad: 47
   width@ENGratingQuad@GratingQuad: 47
   height@ENGratingQuad@GratingQuad: 1
@@ -26,11 +26,84 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
 experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_33.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_30.yaml
+condtest:
+  CondIndex:
+  - 5
+  - 4
+  - 6
+  - 7
+  - 2
+  - 3
+  - 0
+  - 1
+  - 6
+  - 4
+  - 0
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 11.5748
+    - COND: 67.8942
+    - SUFICI: 478.8151
+  - - PREICI: 541.5948
+    - COND: 595.9077
+    - SUFICI: 1009.541
+  - - PREICI: 1071.7918
+    - COND: 1133.9269
+    - SUFICI: 1539.1565
+  - - PREICI: 1601.5382
+    - COND: 1663.9549
+    - SUFICI: 2064.0893
+  - - PREICI: 2117.1065
+    - COND: 2173.44
+    - SUFICI: 2577.8291
+  - - PREICI: 2631.6275
+    - COND: 2694.0477
+    - SUFICI: 3099.1215
+  - - PREICI: 3161.4939
+    - COND: 3223.906
+    - SUFICI: 3625.0447
+  - - PREICI: 3676.3494
+    - COND: 3732.0749
+    - SUFICI: 4139.1058
+  - - PREICI: 4191.1251
+    - COND: 4244.9367
+    - SUFICI: 4645.0475
+  - - PREICI: 4706.2873
+    - COND: 4768.7126
+    - SUFICI: 5173.9266
+  - - PREICI: 5236.6669
+    - COND: 5299.121
+    - SUFICI: 5704.3876
+  - - PREICI: 5766.7209
+    - COND: 5829.1551
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 50

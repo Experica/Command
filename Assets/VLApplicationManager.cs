@@ -50,7 +50,7 @@ namespace VLab
             }
             if (!config.ContainsKey("defaultcondtestnotifyparams"))
             {
-                config["defaultcondtestnotifyparams"] = new List<string> { "CondIndex" };
+                config["defaultcondtestnotifyparams"] = new List<string> { "CondIndex","CONDSTATE" };
             }
             if (!config.ContainsKey("antialiasing"))
             {

@@ -16,8 +16,8 @@ envparam:
   mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
-  isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 0
+  isreversetime@ENGratingQuad@GratingQuad: true
+  ori@ENGratingQuad@GratingQuad: 22.5
   length@ENGratingQuad@GratingQuad: 47
   width@ENGratingQuad@GratingQuad: 47
   height@ENGratingQuad@GratingQuad: 1
@@ -26,11 +26,89 @@ envparam:
   visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
 experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_33.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_22.yaml
+condtest:
+  CondIndex:
+  - 3
+  - 6
+  - 5
+  - 4
+  - 0
+  - 2
+  - 1
+  - 7
+  - 5
+  - 4
+  - 3
+  - 0
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 12.0132
+    - COND: 71.8752
+    - SUFICI: 471.9836
+  - - PREICI: 526.8078
+    - COND: 580.977
+    - SUFICI: 986.7164
+  - - PREICI: 1039.0757
+    - COND: 1095.9452
+    - SUFICI: 1501.0905
+  - - PREICI: 1554.2093
+    - COND: 1616.5981
+    - SUFICI: 2021.754
+  - - PREICI: 2084.1347
+    - COND: 2136.128
+    - SUFICI: 2537.36
+  - - PREICI: 2599.2966
+    - COND: 2661.845
+    - SUFICI: 3069.41
+  - - PREICI: 3131.9639
+    - COND: 3194.0182
+    - SUFICI: 3596.0017
+  - - PREICI: 3646.4247
+    - COND: 3701.864
+    - SUFICI: 4114.9444
+  - - PREICI: 4177.3273
+    - COND: 4234.0368
+    - SUFICI: 4645.1834
+  - - PREICI: 4707.6809
+    - COND: 4770.1909
+    - SUFICI: 5170.2994
+  - - PREICI: 5222.4313
+    - COND: 5284.819
+    - SUFICI: 5690.0272
+  - - PREICI: 5752.3817
+    - COND: 5815.0395
+    - SUFICI: 6220.418
+  - - PREICI: 6282.8193
+    - COND: 6345.1759
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 50

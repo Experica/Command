@@ -1,0 +1,154 @@
+name: DirGrating
+id: DirGrating
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 60
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 15
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  - 210
+  - 240
+  - 270
+  - 300
+  - 330
+experimentlogicpath: RippleTTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_19.yaml
+condtest:
+  CondIndex:
+  - 6
+  - 7
+  - 1
+  - 10
+  - 5
+  - 2
+  - 0
+  - 9
+  - 3
+  - 8
+  - 4
+  - 11
+  - 11
+  - 8
+  - 3
+  - 9
+  - 5
+  - 2
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 9.8527
+    - COND: 112.043
+    - SUFICI: 262.3521
+  - - PREICI: 363.193
+    - COND: 470.6228
+    - SUFICI: 620.6916
+  - - PREICI: 735.5734
+    - COND: 844.5967
+    - SUFICI: 994.6652
+  - - PREICI: 1110.0364
+    - COND: 1219.398
+    - SUFICI: 1375.2507
+  - - PREICI: 1478.2204
+    - COND: 1578.2999
+    - SUFICI: 1728.548
+  - - PREICI: 1828.5502
+    - COND: 1937.1385
+    - SUFICI: 2087.5271
+  - - PREICI: 2187.5287
+    - COND: 2295.7671
+    - SUFICI: 2446.4511
+  - - PREICI: 2546.4552
+    - COND: 2654.1753
+    - SUFICI: 2810.553
+  - - PREICI: 2919.2975
+    - COND: 3023.9388
+    - SUFICI: 3179.2184
+  - - PREICI: 3294.3103
+    - COND: 3402.904
+    - SUFICI: 3554.5679
+  - - PREICI: 3662.1427
+    - COND: 3777.9206
+    - SUFICI: 3933.3573
+  - - PREICI: 4037.0759
+    - COND: 4137.1474
+    - SUFICI: 4292.1485
+  - - PREICI: 4396.9056
+    - COND: 4504.4894
+    - SUFICI: 4666.5519
+  - - PREICI: 4769.5969
+    - COND: 4885.3876
+    - SUFICI: 5040.8593
+  - - PREICI: 5145.3544
+    - COND: 5252.2841
+    - SUFICI: 5415.8826
+  - - PREICI: 5524.5213
+    - COND: 5628.6283
+    - SUFICI: 5790.2979
+  - - PREICI: 5899.4006
+    - COND: 6008.0595
+    - SUFICI: 6161.0336
+  - - PREICI: 6261.0393
+condsampling: UniformWithoutReplacement
+condrepeat: 500
+preICI: 100
+conddur: 150
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 4
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex
+- CONDSTATE

@@ -14,14 +14,14 @@ public class RippleTTLCTLogic : ExperimentLogic
     public override void StartExperiment()
     {
         base.StartExperiment();
-        pport.BitPulse(2, 0.002);
+        pport.BitPulse(0, 0.1);
         timer.ReStart();
     }
 
     public override void StopExperiment()
     {
         base.StopExperiment();
-        pport.BitPulse(3, 0.002);
+        pport.BitPulse(0, 0.1);
         timer.Stop();
     }
 

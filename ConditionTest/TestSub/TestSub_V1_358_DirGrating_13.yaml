@@ -17,20 +17,86 @@ envparam:
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 330
+  ori@ENGratingQuad@GratingQuad: 30
   length@ENGratingQuad@GratingQuad: 15
   width@ENGratingQuad@GratingQuad: 15
   height@ENGratingQuad@GratingQuad: 1
   color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   masktype@ENGratingQuad@GratingQuad: 0
-  visible@ENGratingQuad@GratingQuad: false
+  visible@ENGratingQuad@GratingQuad: true
   position@ENGratingQuad@GratingQuad: (0, 0, 0)
 condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
-experimentlogicpath: RippleTTLCTLogic
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  - 210
+  - 240
+  - 270
+  - 300
+  - 330
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_49.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_13.yaml
+condtest:
+  CondIndex:
+  - 10
+  - 0
+  - 4
+  - 9
+  - 3
+  - 5
+  - 7
+  - 2
+  - 11
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  CONDSTATE:
+  - - PREICI: 10.5936
+    - COND: 8588.6112
+    - SUFICI: 8743.0857
+  - - PREICI: 8843.959
+    - COND: 8950.0687
+    - SUFICI: 9100.1398
+  - - PREICI: 9211.4062
+    - COND: 9320.1575
+    - SUFICI: 9476.1208
+  - - PREICI: 9585.4045
+    - COND: 9695.3158
+    - SUFICI: 9845.4527
+  - - PREICI: 9945.4571
+    - COND: 10053.8719
+    - SUFICI: 10206.6744
+  - - PREICI: 10308.6494
+    - COND: 10412.5832
+    - SUFICI: 10564.8812
+  - - PREICI: 10666.3623
+    - COND: 10766.6679
+    - SUFICI: 10927.2835
+  - - PREICI: 11035.9812
+    - COND: 11140.8397
+    - SUFICI: 11295.7125
+  - - PREICI: 11397.7479
+    - COND: 11504.6199
+    - SUFICI: 11659.9912
+  - - PREICI: 11763.9157
+    - COND: 11863.9983
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 100
@@ -45,4 +111,3 @@ exinheritparams: []
 envinheritparams: []
 condtestnotifyparams:
 - CondIndex
-- CONDSTATE

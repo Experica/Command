@@ -8,37 +8,19 @@ envparam:
   bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
   screenhalfheight@ENCamera@OrthoCamera: 15
   screentoeye@ENCamera@OrthoCamera: 57
-  itemid@Showroom@ShowroomManager: GratingQuad
-  spatialfreq@ENGratingQuad@GratingQuad: 0
-  temporalfreq@ENGratingQuad@GratingQuad: 0
-  spatialphase@ENGratingQuad@GratingQuad: 0
-  sigma@ENGratingQuad@GratingQuad: 0
-  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  isdrifting@ENGratingQuad@GratingQuad: true
-  isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 120
-  length@ENGratingQuad@GratingQuad: 1
-  width@ENGratingQuad@GratingQuad: 7
-  height@ENGratingQuad@GratingQuad: 1
-  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  masktype@ENGratingQuad@GratingQuad: 0
-  visible@ENGratingQuad@GratingQuad: false
-  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  itemid@Showroom@ShowroomManager: None
 condpath: Condition\ConditionTest.yaml
 recordsession: V1
 recordsite: 358
 condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_117.yaml
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_119.yaml
 condsampling: UniformWithoutReplacement
-condrepeat: 5
+condrepeat: 500
 input: 1
-preICI: 100
-conddur: 500
-sufICI: 100
+conddur: 100
+sufICI: 50
 pushcondatstate: PREICI
 condtestatstate: PREICI
-analysispercondtest: 4
 param:
   rand: 45
 exinheritparams: []

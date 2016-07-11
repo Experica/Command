@@ -1,0 +1,134 @@
+name: DirGrating
+id: DirGrating
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 180
+  length@ENGratingQuad@GratingQuad: 15
+  width@ENGratingQuad@GratingQuad: 15
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: false
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 30
+  - 60
+  - 90
+  - 120
+  - 150
+  - 180
+  - 210
+  - 240
+  - 270
+  - 300
+  - 330
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_10.yaml
+condtest:
+  CondIndex:
+  - 6
+  - 0
+  - 3
+  - 10
+  - 1
+  - 2
+  - 7
+  - 9
+  - 11
+  - 5
+  - 4
+  - 8
+  - 8
+  - 6
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 3.65
+    - COND: 104.1358
+    - SUFICI: 254.4632
+  - - PREICI: 369.294
+    - COND: 473.4263
+    - SUFICI: 628.6411
+  - - PREICI: 744.1053
+    - COND: 852.8726
+    - SUFICI: 1005.4743
+  - - PREICI: 1118.0904
+    - COND: 1219.271
+    - SUFICI: 1369.3629
+  - - PREICI: 1476.9057
+    - COND: 37684.1205
+    - SUFICI: 37840.2253
+  - - PREICI: 37949.4121
+    - COND: 38058.6008
+    - SUFICI: 38210.1877
+  - - PREICI: 38323.6034
+    - COND: 38432.864
+    - SUFICI: 38585.4276
+  - - PREICI: 38698.5213
+    - COND: 38808.0939
+    - SUFICI: 38960.4262
+  - - PREICI: 39063.6252
+    - COND: 39166.3844
+    - SUFICI: 39322.1018
+  - - PREICI: 39422.1492
+    - COND: 39524.9934
+    - SUFICI: 39676.818
+  - - PREICI: 39784.3033
+    - COND: 39899.7133
+    - SUFICI: 40055.2706
+  - - PREICI: 40158.8294
+    - COND: 40258.9041
+    - SUFICI: 40414.04
+  - - PREICI: 40517.4824
+    - COND: 40617.5554
+    - SUFICI: 40772.7984
+  - - PREICI: 40874.0512
+    - COND: 40976.1676
+    - SUFICI: 41127.938
+condsampling: UniformWithoutReplacement
+condrepeat: 500
+preICI: 100
+conddur: 150
+sufICI: 100
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 4
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

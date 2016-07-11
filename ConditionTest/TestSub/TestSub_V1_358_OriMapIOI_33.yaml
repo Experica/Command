@@ -1,0 +1,212 @@
+name: OriMapIOI
+id: OriMapIOI
+designer: alex
+experimenter: alex
+subject_id: TestSub
+environmentpath: Showroom
+envparam:
+  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  screenhalfheight@ENCamera@OrthoCamera: 15
+  screentoeye@ENCamera@OrthoCamera: 57
+  itemid@Showroom@ShowroomManager: GratingQuad
+  spatialfreq@ENGratingQuad@GratingQuad: 0.1
+  temporalfreq@ENGratingQuad@GratingQuad: 2
+  spatialphase@ENGratingQuad@GratingQuad: 0
+  sigma@ENGratingQuad@GratingQuad: 0
+  mincolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  isdrifting@ENGratingQuad@GratingQuad: true
+  isreversetime@ENGratingQuad@GratingQuad: false
+  ori@ENGratingQuad@GratingQuad: 0
+  length@ENGratingQuad@GratingQuad: 47
+  width@ENGratingQuad@GratingQuad: 47
+  height@ENGratingQuad@GratingQuad: 1
+  color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  masktype@ENGratingQuad@GratingQuad: 0
+  visible@ENGratingQuad@GratingQuad: true
+  position@ENGratingQuad@GratingQuad: (0, 0, 0)
+condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
+cond:
+  ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+experimentlogicpath: OITTLCTLogic
+recordsession: V1
+recordsite: 358
+condtestdir: ConditionTest
+condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_33.yaml
+condtest:
+  CondIndex:
+  - 6
+  - 4
+  - 0
+  - 2
+  - 5
+  - 3
+  - 7
+  - 1
+  - 6
+  - 1
+  - 7
+  - 2
+  - 5
+  - 4
+  - 3
+  - 0
+  - 4
+  - 2
+  - 0
+  - 7
+  - 6
+  - 1
+  - 5
+  - 3
+  - 4
+  - 2
+  - 5
+  - 7
+  - 1
+  - 6
+  - 0
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  CONDSTATE:
+  - - PREICI: 3.8219
+    - COND: 53.9088
+    - SUFICI: 456.7644
+  - - PREICI: 519.0585
+    - COND: 581.5091
+    - SUFICI: 986.6012
+  - - PREICI: 1049.0089
+    - COND: 1111.3832
+    - SUFICI: 1511.4785
+  - - PREICI: 1564.1602
+    - COND: 1620.9751
+    - SUFICI: 2026.2427
+  - - PREICI: 2079.0359
+    - COND: 2141.6822
+    - SUFICI: 2546.6014
+  - - PREICI: 2609.0097
+    - COND: 2671.4373
+    - SUFICI: 3071.54
+  - - PREICI: 3123.4288
+    - COND: 3177.6792
+    - SUFICI: 3577.8184
+  - - PREICI: 3639.0442
+    - COND: 3701.677
+    - SUFICI: 4106.5978
+  - - PREICI: 4168.9327
+    - COND: 4231.5074
+  - - PREICI: 8891.1317
+    - COND: 8942.6529
+    - SUFICI: 9342.7749
+  - - PREICI: 9395.2936
+    - COND: 9457.8395
+    - SUFICI: 9864.3992
+  - - PREICI: 9918.1486
+    - COND: 9972.5254
+    - SUFICI: 10377.7708
+  - - PREICI: 10440.1204
+    - COND: 10502.97
+    - SUFICI: 10908.1041
+  - - PREICI: 10970.4871
+    - COND: 11032.9057
+    - SUFICI: 11439.0077
+  - - PREICI: 11501.4484
+    - COND: 11563.9924
+  - - PREICI: 12702.6674
+    - COND: 12764.9718
+    - SUFICI: 13170.0572
+  - - PREICI: 13232.7554
+    - COND: 13295.3209
+    - SUFICI: 13700.5005
+  - - PREICI: 13762.853
+    - COND: 13825.2851
+    - SUFICI: 14225.3817
+  - - PREICI: 14279.4864
+    - COND: 14333.9485
+  - - PREICI: 15431.0451
+    - COND: 15481.1352
+    - SUFICI: 15884.8683
+  - - PREICI: 15947.225
+    - COND: 16003.0653
+    - SUFICI: 16415.3168
+  - - PREICI: 16477.6668
+    - COND: 16540.476
+    - SUFICI: 16945.2518
+  - - PREICI: 17007.7227
+    - COND: 17070.0476
+    - SUFICI: 17475.6449
+  - - PREICI: 17537.9986
+    - COND: 17600.4217
+    - SUFICI: 18006.1928
+  - - PREICI: 18060.4201
+    - COND: 18116.957
+    - SUFICI: 18521.3251
+  - - PREICI: 18583.4117
+    - COND: 18646.0475
+    - SUFICI: 19051.2611
+  - - PREICI: 19113.9398
+    - COND: 19176.5803
+    - SUFICI: 19581.6567
+  - - PREICI: 19643.962
+    - COND: 19706.464
+    - SUFICI: 20107.5854
+  - - PREICI: 20158.6268
+    - COND: 20215.1223
+    - SUFICI: 20627.3854
+  - - PREICI: 20682.0335
+    - COND: 20736.474
+    - SUFICI: 21141.5587
+  - - PREICI: 21203.9613
+    - COND: 21266.3866
+condsampling: UniformWithoutReplacement
+condrepeat: 500
+preICI: 50
+conddur: 200
+sufICI: 50
+pushcondatstate: PREICI
+condtestatstate: PREICI
+analysispercondtest: 4
+param:
+  rand: 45
+exinheritparams: []
+envinheritparams: []
+condtestnotifyparams:
+- CondIndex

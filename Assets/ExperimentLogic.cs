@@ -83,7 +83,7 @@ namespace VLab
                         PreICIOnTime = timer.ElapsedMS;
                         if (ex.condtestatstate == CONDTESTATSTATE.PREICI)
                         {
-                            condtestmanager.NewCondTest(ex.condtestnotifyparams, ex.analysispercondtest);
+                            condtestmanager.NewCondTest(PreICIOnTime,ex.condtestnotifyparams, ex.analysispercondtest);
                         }
                         if (ex.pushcondatstate == PUSHCONDATSTATE.PREICI)
                         {
@@ -155,7 +155,7 @@ namespace VLab
                         PreITIOnTime = timer.ElapsedMS;
                         if (ex.condtestatstate == CONDTESTATSTATE.PREITI)
                         {
-                            condtestmanager.NewCondTest(ex.condtestnotifyparams, ex.analysispercondtest);
+                            condtestmanager.NewCondTest(PreITIOnTime,ex.condtestnotifyparams, ex.analysispercondtest);
                         }
                         if (ex.pushcondatstate == PUSHCONDATSTATE.TRIAL)
                         {
@@ -246,7 +246,7 @@ namespace VLab
                         switch (experimentstate)
                         {
                             case EXPERIMENTSTATE.EXPERIMENT:
-                                condtestmanager.NotifyCondTestAnalysis(condtestmanager.notifyidx, ex.condtestnotifyparams);
+                                condtestmanager.NotifyCondTestAnalysis(condtestmanager.notifyidx, ex.condtestnotifyparams, timer.ElapsedMS);
                                 SaveExperiment();
                                 timer.Stop();
                                 break;
@@ -333,13 +333,16 @@ namespace VLab
         public virtual void PauseExperiment()
         {
             Time.timeScale = 0;
-            timer.Stop();
+            islogicactive = false;
+            CondState = CONDSTATE.NONE;
+            TrialState = TRIALSTATE.NONE;
+            BlockState = BLOCKSTATE.NONE;
         }
 
         public virtual void ResumeExperiment()
         {
             Time.timeScale = 1;
-            timer.Start();
+            islogicactive = true;
         }
 
         public virtual void StartExperiment()

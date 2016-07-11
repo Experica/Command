@@ -42,7 +42,7 @@ namespace VLab
         }
 
         [ClientRpc]
-        public void RpcNotifyAnalysis()
+        public void RpcNotifyAnalysis(double time)
         {
         }
 

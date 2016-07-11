@@ -340,7 +340,7 @@ namespace VLab
     }
 
     public delegate void NotifyCondTestData(string name, List<object> value);
-    public delegate void NotifyAnalysis();
+    public delegate void NotifyAnalysis(double time);
 
     public class CondTestManager
     {
@@ -350,14 +350,14 @@ namespace VLab
         public NotifyAnalysis NotifyAnalysis;
         public int notifyidx = 0;
 
-        public virtual void NewCondTest(List<string> notifyparams, int analysispercondtest=0)
+        public virtual void NewCondTest(double starttime,List<string> notifyparams, int analysispercondtest=0)
         {
             condtestidx++;
             if(analysispercondtest>0&&condtestidx>0)
             {
                if(( (condtestidx - notifyidx) / analysispercondtest)>=1)
                 {
-                    NotifyCondTestAnalysis(notifyidx, notifyparams);
+                    NotifyCondTestAnalysis(notifyidx, notifyparams,starttime);
                     notifyidx = condtestidx;
                 }
             }
@@ -377,10 +377,10 @@ namespace VLab
             }
         }
 
-        public void NotifyCondTestAnalysis(int startidx, List<string> notifyparams)
+        public void NotifyCondTestAnalysis(int startidx, List<string> notifyparams,double endtime)
         {
             NotifyCondTest( startidx, notifyparams);
-            NotifyAnalysis();
+            NotifyAnalysis(endtime);
         }
 
         public void Clear()
