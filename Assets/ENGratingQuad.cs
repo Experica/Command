@@ -14,21 +14,21 @@ namespace VLab
     public class ENGratingQuad : ENQuad
     {
         [SyncVar(hook = "onspatialfreq")]
-        public float spatialfreq;
+        public float SpatialFreq;
         [SyncVar(hook = "ontemporalfreq")]
-        public float temporalfreq;
+        public float TemporalFreq;
         [SyncVar(hook = "onspatialphase")]
-        public float spatialphase;
+        public float SpatialPhase;
         [SyncVar(hook = "onsigma")]
-        public float sigma;
+        public float Sigma;
         [SyncVar(hook = "onmincolor")]
-        public Color mincolor;
+        public Color MinColor;
         [SyncVar(hook = "onmaxcolor")]
-        public Color maxcolor;
+        public Color MaxColor;
         [SyncVar(hook = "onisdrifting")]
-        public bool isdrifting = true;
+        public bool Drifting = true;
         [SyncVar(hook ="onisreversetime")]
-        public bool isreversetime = false;
+        public bool ReverseTime = false;
 
         public override void OnVisible(bool v)
         {
@@ -46,7 +46,7 @@ namespace VLab
         public virtual void OnSpatialFreq(float sf)
         {
             renderer.material.SetFloat("sf", sf);
-            spatialfreq = sf;
+            SpatialFreq = sf;
         }
 
         void ontemporalfreq(float tf)
@@ -56,7 +56,7 @@ namespace VLab
         public virtual void OnTemporalFreq(float tf)
         {
             renderer.material.SetFloat("tf", tf);
-            temporalfreq = tf;
+            TemporalFreq = tf;
         }
 
         void onspatialphase(float p)
@@ -66,7 +66,7 @@ namespace VLab
         public virtual void OnSpatialPhase(float p)
         {
             renderer.material.SetFloat("phase", p);
-            spatialphase = p;
+            SpatialPhase = p;
         }
 
         void onsigma(float s)
@@ -76,7 +76,7 @@ namespace VLab
         public virtual void OnSigma(float s)
         {
             renderer.material.SetFloat("sigma", s);
-            sigma = s;
+            Sigma = s;
         }
 
         void onmincolor(Color c)
@@ -86,7 +86,7 @@ namespace VLab
         public virtual void OnMinColor(Color c)
         {
             renderer.material.SetColor("mincolor", c);
-            mincolor = c;
+            MinColor = c;
         }
 
         void onmaxcolor(Color c)
@@ -96,7 +96,7 @@ namespace VLab
         public virtual void OnMaxColor(Color c)
         {
             renderer.material.SetColor("maxcolor", c);
-            maxcolor = c;
+            MaxColor = c;
         }
 
         void onisdrifting(bool i)
@@ -105,7 +105,7 @@ namespace VLab
         }
         public virtual void OnIsDrifting(bool i)
         {
-            isdrifting = i;
+            Drifting = i;
         }
 
         double reversetime;
@@ -116,13 +116,13 @@ namespace VLab
         public virtual void OnIsReverseTime(bool r)
         {
             reversetime = t.ElapsedS;
-            isreversetime = true;
+            ReverseTime = true;
         }
         void Update()
         {
-            if (isdrifting)
+            if (Drifting)
             {
-                renderer.material.SetFloat("t", (float)(isreversetime?2*reversetime-t.ElapsedS: t.ElapsedS));
+                renderer.material.SetFloat("t", (float)(ReverseTime?2*reversetime-t.ElapsedS: t.ElapsedS));
             }
         }
     }

@@ -29,8 +29,6 @@ condpath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
 experimentlogicpath: OITTLCTLogic
 recordsession: V1
 recordsite: 358
-condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_OriMapIOI_33.yaml
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 50
@@ -43,5 +41,3 @@ param:
   rand: 45
 exinheritparams: []
 envinheritparams: []
-condtestnotifyparams:
-- CondIndex

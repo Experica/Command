@@ -8,73 +8,130 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
+using System.Linq;
 
 namespace VLab
 {
+    public enum VLCFG
+    {
+        IsSaveExOnQuit,
+        ExDir,
+        DataDir,
+        ExLogic,
+        NotifyParams,
+        AntiAliasing,
+        AnisotropicFilterLevel,
+        LogicTick,
+        IsShowInactiveEnvParam,
+        IsShowEnvParamFullname,
+        MaxLogEntry
+    }
+
     public class VLApplicationManager : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public Dictionary<string, object> config;
+        public Dictionary<VLCFG, object> config;
         public readonly string configpath = "VLabConfig.yaml";
 
         void Awake()
         {
             if (File.Exists(configpath))
             {
-                config = Yaml.ReadYaml<Dictionary<string, object>>(configpath);
+                config = Yaml.ReadYaml<Dictionary<VLCFG, object>>(configpath);
             }
-            if(config==null)
+            if (config == null)
             {
-                config = new Dictionary<string, object>();
+                config = new Dictionary<VLCFG, object>();
             }
             ValidateConfig();
         }
 
+        // because Yaml deserialize text string stops working on object type, we need to 
+        // make sure config contain valid type value
         void ValidateConfig()
         {
-            if (!config.ContainsKey("issaveexonquit"))
+            if (!config.ContainsKey(VLCFG.IsSaveExOnQuit))
             {
-                config["issaveexonquit"] = true;
+                config[VLCFG.IsSaveExOnQuit] = true;
             }
-            if (!config.ContainsKey("exdefdir"))
+            else
             {
-                config["exdefdir"] = "Experiment";
+                config[VLCFG.IsSaveExOnQuit] = config[VLCFG.IsSaveExOnQuit].Convert<bool>();
             }
-            if (!config.ContainsKey("condtestdir"))
+            if (!config.ContainsKey(VLCFG.ExDir))
             {
-                config["condtestdir"] = "ConditionTest";
+                config[VLCFG.ExDir] = "Experiment";
             }
-            if (!config.ContainsKey("defaultexperimentlogic"))
+            if (!config.ContainsKey(VLCFG.DataDir))
             {
-                config["defaultexperimentlogic"] = "ConditionTestLogic";
+                config[VLCFG.DataDir] = "Data";
             }
-            if (!config.ContainsKey("defaultcondtestnotifyparams"))
+            if (!config.ContainsKey(VLCFG.ExLogic))
             {
-                config["defaultcondtestnotifyparams"] = new List<string> { "CondIndex","CONDSTATE" };
+                config[VLCFG.ExLogic] = "ConditionTestLogic";
             }
-            if (!config.ContainsKey("antialiasing"))
+            if (!config.ContainsKey(VLCFG.NotifyParams))
             {
-                config["antialiasing"] = 2;
+                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE};
             }
-            if (!config.ContainsKey("anisotropicfilterlevel"))
+            else
             {
-                config["anisotropicfilterlevel"] = 5;
+                var o = config[VLCFG.NotifyParams] as List<object>;
+                config[VLCFG.NotifyParams] =o.Select(i => i.Convert<CONDTESTPARAM>()).ToList();
             }
-            if (!config.ContainsKey("logictick"))
+            if (!config.ContainsKey(VLCFG.AntiAliasing))
             {
-                config["logictick"] = 0.0001f;
+                config[VLCFG.AntiAliasing] = 2;
             }
-            if (!config.ContainsKey("isshowinactiveenvparam"))
+            else
             {
-                config["isshowinactiveenvparam"] = false;
+                config[VLCFG.AntiAliasing] = config[VLCFG.AntiAliasing].Convert<int>();
             }
-            if (!config.ContainsKey("isshowenvparamfullname"))
+            if (!config.ContainsKey(VLCFG.AnisotropicFilterLevel))
             {
-                config["isshowenvparamfullname"] = false;
+                config[VLCFG.AnisotropicFilterLevel] = 5;
             }
-            if (!config.ContainsKey("maxlogentry"))
+            else
             {
-                config["maxlogentry"] = 999;
+                config[VLCFG.AnisotropicFilterLevel] = config[VLCFG.AnisotropicFilterLevel].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.LogicTick))
+            {
+                config[VLCFG.LogicTick] = 0.0001f;
+            }
+            else
+            {
+                config[VLCFG.LogicTick] = config[VLCFG.LogicTick].Convert<float>();
+            }
+            if (!config.ContainsKey(VLCFG.IsShowInactiveEnvParam))
+            {
+                config[VLCFG.IsShowInactiveEnvParam] = false;
+            }
+            else
+            {
+                config[VLCFG.IsShowInactiveEnvParam] = config[VLCFG.IsShowInactiveEnvParam].Convert<bool>();
+            }
+            if (!config.ContainsKey(VLCFG.IsShowEnvParamFullname))
+            {
+                config[VLCFG.IsShowEnvParamFullname] = false;
+            }
+            else
+            {
+                config[VLCFG.IsShowEnvParamFullname] = config[VLCFG.IsShowEnvParamFullname].Convert<bool>();
+            }
+            if (!config.ContainsKey(VLCFG.MaxLogEntry))
+            {
+                config[VLCFG.MaxLogEntry] = 999;
+            }
+            else
+            {
+                config[VLCFG.MaxLogEntry] = config[VLCFG.MaxLogEntry].Convert<int>();
+            }
+
+            if (!VLTimer.IsHighResolution)
+            {
+                MessageBox.Show("This Machine Doesn't Have High Resolution Timer.", "Warning");
             }
         }
 
@@ -84,9 +141,9 @@ namespace VLab
             {
                 uicontroller.netmanager.StopHost();
             }
-            if ((bool)VLConvert.Convert(config["issaveexonquit"], typeof(bool)))
+            if ((bool)config[VLCFG.IsSaveExOnQuit])
             {
-                uicontroller.exmanager.SaveAllExDef();
+                uicontroller.exmanager.SaveAllEx();
             }
             Yaml.WriteYaml(configpath, config);
         }

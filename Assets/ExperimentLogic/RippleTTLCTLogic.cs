@@ -11,18 +11,17 @@ public class RippleTTLCTLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
 
-    public override void StartExperiment()
+    protected override void StartExperiment()
     {
         base.StartExperiment();
         pport.BitPulse(0, 0.1);
         timer.ReStart();
     }
 
-    public override void StopExperiment()
+    protected override void StopExperiment()
     {
         base.StopExperiment();
         pport.BitPulse(0, 0.1);
-        timer.Stop();
     }
 
     public override void Logic()
@@ -34,7 +33,7 @@ public class RippleTTLCTLogic : ExperimentLogic
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
-                if (PreICIHold() >= ex.preICI)
+                if (PreICIHold >= ex.PreICI)
                 {
                     envmanager.ActiveSyncSetParam("visible", true);
                     CondState = CONDSTATE.COND;
@@ -42,7 +41,7 @@ public class RippleTTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.COND:
-                if (CondHold() >= ex.conddur)
+                if (CondHold >= ex.CondDur)
                 {
                     envmanager.ActiveSyncSetParam("visible", false);
                     CondState = CONDSTATE.SUFICI;
@@ -50,7 +49,7 @@ public class RippleTTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold() >= ex.sufICI)
+                if (SufICIHold >= ex.SufICI)
                 {
                     CondState = CONDSTATE.PREICI;
                 }

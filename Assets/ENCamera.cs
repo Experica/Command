@@ -15,11 +15,11 @@ namespace VLab
     public class ENCamera : NetworkBehaviour
     {
         [SyncVar(hook = "onbgcolor")]
-        public Color bgcolor = new Color();
+        public Color BGColor = new Color();
         [SyncVar(hook = "onscreenhalfheight")]
-        public float screenhalfheight = 15;
+        public float ScreenHalfHeight = 15;
         [SyncVar(hook = "onscreentoeye")]
-        public float screentoeye = 57;
+        public float ScreenToEye = 57;
 
         public new Camera camera;
 #if VLAB
@@ -38,20 +38,20 @@ namespace VLab
 #endif
         }
 
-        private void onbgcolor(Color c)
+        void onbgcolor(Color c)
         {
-            OnBgColor(c);
+            OnBGColor(c);
         }
-        public virtual void OnBgColor(Color c)
+        public virtual void OnBGColor(Color c)
         {
             if (camera != null)
             {
                 camera.backgroundColor = c;
             }
-            bgcolor = c;
+            BGColor = c;
         }
 
-        private void onscreenhalfheight(float shh)
+        void onscreenhalfheight(float shh)
         {
             OnScreenHalfHeight(shh);
         }
@@ -59,12 +59,12 @@ namespace VLab
         {
             if (camera != null)
             {
-                camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(shh, screentoeye);
+                camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(shh, ScreenToEye);
             }
-            screenhalfheight = shh;
+            ScreenHalfHeight = shh;
         }
 
-        private void onscreentoeye(float ste)
+        void onscreentoeye(float ste)
         {
             OnScreenToEye(ste);
         }
@@ -72,9 +72,9 @@ namespace VLab
         {
             if (camera != null)
             {
-                camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(screenhalfheight, ste);
+                camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(ScreenHalfHeight, ste);
             }
-            screentoeye = ste;
+            ScreenToEye = ste;
         }
 
 #if VLAB

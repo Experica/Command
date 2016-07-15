@@ -18,137 +18,137 @@ namespace VLab
     public class ExperimentManager : MonoBehaviour
     {
         public VLApplicationManager appmanager;
+        public VLUIController uicontroller;
         public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
 
-        public List<string> exdefs = new List<string>();
-        public List<string> exdefnames = new List<string>();
+        public List<string> exfiles = new List<string>();
+        public List<string> exids = new List<string>();
         public ExperimentLogic el;
 
-        public void UpdateExDef()
+        public void GetExFiles()
         {
-            var exdefdir = (string)appmanager.config["exdefdir"];
-            if (Directory.Exists(exdefdir))
+            var exfiledir = (string)appmanager.config[VLCFG.ExDir];
+            if (Directory.Exists(exfiledir))
             {
-                exdefs = Directory.GetFiles(exdefdir, "*.yaml", SearchOption.AllDirectories).ToList();
-                exdefnames.Clear();
-                foreach (var f in exdefs)
+                exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.AllDirectories).ToList();
+                exids.Clear();
+                foreach (var f in exfiles)
                 {
-                    exdefnames.Add(Path.GetFileNameWithoutExtension(f));
+                    exids.Add(Path.GetFileNameWithoutExtension(f));
                 }
             }
             else
             {
-                Directory.CreateDirectory(exdefdir);
+                Directory.CreateDirectory(exfiledir);
             }
         }
 
-        public Experiment LoadExDef(string path)
+        public Experiment LoadEx(string exfilepath)
         {
-            var ex = Yaml.ReadYaml<Experiment>(path);
-            if (string.IsNullOrEmpty( ex.name))
+            var ex = Yaml.ReadYaml<Experiment>(exfilepath);
+            if (string.IsNullOrEmpty(ex.ID))
             {
-                ex.name = Path.GetFileNameWithoutExtension(path);
+                ex.ID = Path.GetFileNameWithoutExtension(exfilepath);
             }
             return ValidateExperiment(ex);
         }
 
         Experiment ValidateExperiment(Experiment ex)
         {
-            if (string.IsNullOrEmpty(ex.id))
+            if (string.IsNullOrEmpty(ex.Name))
             {
-                ex.id = ex.name;
+                ex.Name = ex.ID;
             }
-            if (string.IsNullOrEmpty(ex.condtestdir))
+            if (string.IsNullOrEmpty(ex.DataDir))
             {
-                var condtestdir = (string)appmanager.config["condtestdir"];
-                if (!Directory.Exists(condtestdir))
+                var datadir = (string)appmanager.config[VLCFG.DataDir];
+                if (!Directory.Exists(datadir))
                 {
-                    Directory.CreateDirectory(condtestdir);
+                    Directory.CreateDirectory(datadir);
                 }
-                ex.condtestdir = condtestdir;
+                ex.DataDir = datadir;
             }
-            if (ex.param == null)
+            if (ex.Param == null)
             {
-                ex.param = new Dictionary<string, object>();
+                ex.Param = new Dictionary<string, object>();
             }
-            if (ex.envparam == null)
+            if (ex.EnvParam == null)
             {
-                ex.envparam = new Dictionary<string, object>();
+                ex.EnvParam = new Dictionary<string, object>();
             }
-            if (ex.exinheritparams == null)
+            if (ex.ExInheritParam == null)
             {
-                ex.exinheritparams = new List<string>();
+                ex.ExInheritParam = new List<string>();
             }
-            if (ex.envinheritparams == null)
+            if (ex.EnvInheritParam == null)
             {
-                ex.envinheritparams = new List<string>();
+                ex.EnvInheritParam = new List<string>();
             }
-            if(ex.condtest!=null)
+            if (ex.CondTest != null)
             {
-                ex.condtest = null;
+                ex.CondTest = null;
             }
-            if(ex.condtestnotifyparams==null)
+            if (ex.NotifyParam == null)
             {
-                ex.condtestnotifyparams = VLConvert.Convert<List<string>>(appmanager.config["defaultcondtestnotifyparams"]);
+                ex.NotifyParam = (List<CONDTESTPARAM>)appmanager.config[VLCFG.NotifyParams];
             }
             return ex;
         }
 
-        public void LoadEx(string path)
+        public void LoadEL(string exfilepath)
         {
-            LoadEx(LoadExDef(path));
+            LoadEL(LoadEx(exfilepath));
         }
 
-        public void LoadEx(Experiment ex)
+        public void LoadEL(Experiment ex)
         {
-            var elname = ex.experimentlogicpath;
-            Type eltype;
-            if (string.IsNullOrEmpty(elname))
+            var elname = ex.ExLogicPath;
+            Type eltype = null;
+            if (!string.IsNullOrEmpty(elname))
             {
-                eltype = Type.GetType(VLConvert.Convert<string>(appmanager.config["defaultexperimentlogic"]));
-            }
-            else if (File.Exists(elname))
-            {
-                var assembly = CompilerService.Compile(elname);
-                eltype = assembly.GetExportedTypes()[0];
-            }
-            else
-            {
-                eltype = Type.GetType(elname);
-                if (eltype == null)
+                if (File.Exists(elname))
                 {
-                    eltype = Type.GetType((string)appmanager.config["defaultexperimentlogic"]);
+                    var assembly = CompilerService.Compile(elname);
+                    eltype = assembly.GetExportedTypes()[0];
                 }
+                else
+                {
+                    eltype = Type.GetType(elname);
+                }
+            }
+            if (eltype == null)
+            {
+                eltype = Type.GetType((string)appmanager.config[VLCFG.ExLogic]);
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.ex = ex;
             AddEL(el);
         }
 
-        public bool NewExDef(string name, string copyfrom)
+        public bool NewEx(string id, string idcopyfrom)
         {
-            if (string.IsNullOrEmpty(copyfrom))
+            if (string.IsNullOrEmpty(idcopyfrom))
             {
-                return NewExDef(name);
+                return NewEx(id);
             }
             else
             {
-                if (exdefnames.Contains(name))
+                if (exids.Contains(id))
                 {
                     return false;
                 }
                 else
                 {
-                    if (exdefnames.Contains(copyfrom))
+                    if (exids.Contains(idcopyfrom))
                     {
-                        var ex = Yaml.ReadYaml<Experiment>(exdefs[exdefnames.IndexOf(copyfrom)]);
-                        ex.name = name;
-                        ex.id = name;
-                        LoadEx(ValidateExperiment(ex));
+                        var ex = Yaml.ReadYaml<Experiment>(exfiles[exids.IndexOf(idcopyfrom)]);
+                        ex.ID = id;
+                        ex.Name = id;
+                        LoadEL(ValidateExperiment(ex));
 
-                        exdefnames.Add(name);
-                        exdefs.Add(Path.Combine((string)appmanager.config["exdefdir"], name + ".yaml"));
-                        SaveExDef(name);
+                        exids.Add(id);
+                        exfiles.Add(Path.Combine((string)appmanager.config[VLCFG.ExDir], id + ".yaml"));
+                        SaveEx(id);
                         return true;
                     }
                     else
@@ -159,74 +159,79 @@ namespace VLab
             }
         }
 
-        public bool NewExDef(string name)
+        public bool NewEx(string id)
         {
-            if (exdefnames.Contains(name))
+            if (exids.Contains(id))
             {
                 return false;
             }
             else
             {
                 var ex = new Experiment();
-                ex.name = name;
-                LoadEx(ValidateExperiment(ex));
+                ex.ID = id;
+                ex.Name = id;
+                LoadEL(ValidateExperiment(ex));
 
-                exdefnames.Add(name);
-                exdefs.Add(Path.Combine((string)appmanager.config["exdefdir"], name + ".yaml"));
-                SaveExDef(name);
+                exids.Add(id);
+                exfiles.Add(Path.Combine((string)appmanager.config[VLCFG.ExDir], id + ".yaml"));
+                SaveEx(id);
                 return true;
             }
         }
 
-        public void SaveExDef(string name)
+        public void SaveEx(string id)
         {
-            if (exdefnames.Contains(name))
+            if (exids.Contains(id))
             {
-                var i = FindFirstInELHistory(name);
+                var i = FindFirstInELHistory(id);
                 if (i >= 0)
                 {
                     var ex = elhistory[i].ex;
-                    var cond = ex.cond;
-                    var condtest = ex.condtest;
-                    ex.cond = null;
-                    ex.condtest = null;
-                    ex.envparam = elhistory[i].envmanager.GetParams();
+                    // Exclude data, only save experiment parameters
+                    var datapath = ex.DataPath;
+                    var condtest = ex.CondTest;
+                    var cond = ex.Cond;
+                    ex.DataPath = null;
+                    ex.CondTest = null;
+                    ex.Cond = null;
+                    ex.EnvParam = elhistory[i].envmanager.GetParams();
                     try
                     {
-                        Yaml.WriteYaml(exdefs[exdefnames.IndexOf(name)], ex);
+                        Yaml.WriteYaml(exfiles[exids.IndexOf(id)], ex);
                     }
                     finally
                     {
-                        ex.cond = cond;
-                        ex.condtest = condtest;
+                        ex.DataPath = datapath;
+                        ex.CondTest = condtest;
+                        ex.Cond = cond;
                     }
                 }
             }
         }
 
-        public void SaveAllExDef()
+        public void SaveAllEx()
         {
-            foreach (var n in exdefnames)
+            foreach (var n in exids)
             {
-                SaveExDef(n);
+                SaveEx(n);
             }
         }
 
-        public int DeleteExDef(string name)
+        public int DeleteEx(string id)
         {
-            if (exdefnames.Contains(name))
+            if (exids.Contains(id))
             {
-                var i = FindFirstInELHistory(name);
+                var i = FindFirstInELHistory(id);
                 if (i >= 0)
                 {
                     Destroy(elhistory[i]);
                     elhistory.RemoveAt(i);
                 }
-                var di = exdefnames.IndexOf(name);
-                File.Delete(exdefs[di]);
-                exdefs.RemoveAt(di);
-                exdefnames.RemoveAt(di);
-                return di;
+                var idi = exids.IndexOf(id);
+                File.Delete(exfiles[idi]);
+                exfiles.RemoveAt(idi);
+                exids.RemoveAt(idi);
+                return idi;
             }
             else
             {
@@ -234,11 +239,11 @@ namespace VLab
             }
         }
 
-        public void DeleteAllExDef()
+        public void DeleteAllEx()
         {
-            foreach (var n in exdefnames)
+            foreach (var n in exids.ToArray())
             {
-                DeleteExDef(n);
+                DeleteEx(n);
             }
         }
 
@@ -250,6 +255,12 @@ namespace VLab
             }
             elhistory.Add(el);
             InheritEx();
+            RemoveDuplicateEx();
+            AddELCallback();
+        }
+
+        void RemoveDuplicateEx()
+        {
             var idx = FindDuplicateOfLast();
             if (idx >= 0)
             {
@@ -258,9 +269,23 @@ namespace VLab
             }
         }
 
+        void AddELCallback()
+        {
+            el.OnBeginStartExperiment = uicontroller.OnBeginStartExperiment;
+            el.OnEndStartExperiment = uicontroller.OnEndStartExperiment;
+            el.OnBeginStopExperiment = uicontroller.OnBeginStopExperiment;
+            el.OnEndStopExperiment = uicontroller.OnEndStopExperiment;
+            el.OnBeginPauseExperiment = uicontroller.OnBeginPauseExperiment;
+            el.OnEndPauseExperiment = uicontroller.OnEndPauseExperiment;
+            el.OnBeginResumeExperiment = uicontroller.OnBeginResumeExperiment;
+            el.OnEndResumeExpeirment = uicontroller.OnEndResumeExpeirment;
+            el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
+            el.condtestmanager.OnNotifyEnd = uicontroller.OnNotifyEnd;
+        }
+
         public int FindDuplicateOfLast()
         {
-            var i = FindFirstInELHistory(elhistory.Last().ex.id);
+            var i = FindFirstInELHistory(elhistory.Last().ex.ID);
             if (i == elhistory.Count - 1)
             {
                 i = -1;
@@ -270,23 +295,23 @@ namespace VLab
 
         public int FindFirstInELHistory(string exid)
         {
-            var idx = -1;
             for (var i = 0; i < elhistory.Count; i++)
             {
-                if (elhistory[i].ex.id == exid)
+                if (elhistory[i].ex.ID == exid)
                 {
                     return i;
                 }
             }
-            return idx;
+            return -1;
         }
 
         public void InheritEx()
         {
-            if (elhistory.Last().ex.exinheritparams.Count > 0)
+            if (elhistory.Last().ex.ExInheritParam.Count > 0)
             {
-                foreach (var ip in elhistory.Last().ex.exinheritparams)
+                foreach (var ip in elhistory.Last().ex.ExInheritParam)
                 {
+                    // prevent modify exinheritparams itself when inheriting by iteration
                     if (ip != "exinheritparams")
                     {
                         InheritExParam(ip);
@@ -300,7 +325,7 @@ namespace VLab
             var hn = elhistory.Count;
             if (hn > 1)
             {
-                if (Experiment.properties.ContainsKey(name))
+                if (Experiment.Properties.ContainsKey(name))
                 {
                     elhistory.Last().ex.SetValue(name, elhistory[hn - 2].ex.GetValue(name));
                 }
@@ -308,9 +333,9 @@ namespace VLab
                 {
                     for (var i = hn - 2; i > -1; i--)
                     {
-                        if (elhistory[i].ex.param.ContainsKey(name))
+                        if (elhistory[i].ex.Param.ContainsKey(name))
                         {
-                            elhistory.Last().ex.param[name] = elhistory[i].ex.param[name];
+                            elhistory.Last().ex.Param[name] = elhistory[i].ex.Param[name];
                             break;
                         }
                     }
@@ -320,9 +345,9 @@ namespace VLab
 
         public void InheritEnv()
         {
-            if (elhistory.Last().ex.envinheritparams.Count > 0)
+            if (elhistory.Last().ex.EnvInheritParam.Count > 0)
             {
-                foreach (var ip in elhistory.Last().ex.envinheritparams)
+                foreach (var ip in elhistory.Last().ex.EnvInheritParam)
                 {
                     if (ip != "envinheritparams")
                     {

@@ -1,0 +1,10 @@
+Name: test
+ID: test
+EnvParam: {}
+DataDir: Data
+Param: {}
+ExInheritParam: []
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

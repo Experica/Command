@@ -16,7 +16,7 @@
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
-    <UnityVersion>5.4.0b21</UnityVersion>
+    <UnityVersion>5.4.0b25</UnityVersion>
     <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
@@ -108,6 +108,7 @@
     <Compile Include="Assets\ExperimentLogic\RippleTTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\TTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
+    <Compile Include="Assets\Extention.cs" />
     <Compile Include="Assets\Laser.cs" />
     <Compile Include="Assets\MsgPackSerializer.cs" />
     <Compile Include="Assets\Record.cs" />
@@ -128,7 +129,6 @@
     <Compile Include="Assets\UIController\ViewPanel.cs" />
     <Compile Include="Assets\VLAnalysisManager.cs" />
     <Compile Include="Assets\VLApplicationManager.cs" />
-    <Compile Include="Assets\VLConvert.cs" />
     <Compile Include="Assets\VLIO.cs" />
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\VLNetwork.cs" />

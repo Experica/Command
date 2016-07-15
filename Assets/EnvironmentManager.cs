@@ -28,6 +28,7 @@ namespace VLab
         {
             scene = SceneManager.GetSceneByName(scenename);
             UpdateScene();
+            
         }
 
         public void UpdateScene()
@@ -136,7 +137,7 @@ namespace VLab
 
         public void SetParam(NetworkBehaviour nb, PropertyInfo p, object value)
         {
-            p.SetValue(nb, VLConvert.Convert(value, p.PropertyType), null);
+            p.SetValue(nb, value.Convert( p.PropertyType), null);
         }
 
         public void PushParams()

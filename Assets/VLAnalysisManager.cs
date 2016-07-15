@@ -37,7 +37,7 @@ namespace VLab
         }
 
         [ClientRpc]
-        public void RpcNotifyCondTestData(string name,byte[] value)
+        public void RpcNotifyCondTestData(CONDTESTPARAM name,byte[] value)
         {
         }
 

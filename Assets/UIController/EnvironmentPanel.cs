@@ -34,7 +34,7 @@ namespace VLab
 
         public void AddView(EnvironmentManager em)
         {
-            var isshowinactive = (bool)VLConvert.Convert(uicontroller.appmanager.config["isshowinactiveenvparam"], typeof(bool));
+            var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullname];
             foreach (var p in em.net_syncvar.Keys)
             {
                 var pt = em.net_syncvar[p].PropertyType;
@@ -42,7 +42,7 @@ namespace VLab
                 if (isshowinactive)
                 {
                     AddParam(p, pt, pv,
-                        uicontroller.exmanager.el.ex.envinheritparams.Contains(p),
+                        uicontroller.exmanager.el.ex.EnvInheritParam.Contains(p),
                         ChoosePrefab(p,pt),svcontent.transform);
                 }
                 else
@@ -50,7 +50,7 @@ namespace VLab
                     if(em.isparamactive(p))
                     {
                         AddParam(p, pt, pv,
-                            uicontroller.exmanager.el.ex.envinheritparams.Contains(p),
+                            uicontroller.exmanager.el.ex.EnvInheritParam.Contains(p),
                             ChoosePrefab(p, pt), svcontent.transform);
                     }
                 }
@@ -112,7 +112,7 @@ namespace VLab
         {
             var go = Instantiate(prefab);
             go.name = name;
-            var isshowenvparamfullname = (bool)VLConvert.Convert(uicontroller.appmanager.config["isshowenvparamfullname"], typeof(bool));
+            var isshowenvparamfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullname];
 
             for (var i = 0; i < go.transform.childCount; i++)
             {
@@ -132,7 +132,7 @@ namespace VLab
                     {
                         value = "";
                     }
-                    inputfield.text = (string)VLConvert.Convert(value, typeof(string));
+                    inputfield.text = value.Convert<string>();
                     inputfield.onEndEdit.AddListener((v) => uicontroller.SetEnvParam(name, v));
                     input[name] = inputfield;
                 }

@@ -53,8 +53,8 @@ namespace VLab
                     }
                     rendertexture = new RenderTexture((int)width, (int)height, 24);
                     rendertexture.generateMips = false;
-                    rendertexture.antiAliasing = (int)VLConvert.Convert( uicontroller.appmanager.config["antialiasing"],typeof(int));
-                    rendertexture.anisoLevel = (int)VLConvert.Convert( uicontroller.appmanager.config["anisotropicfilterlevel"],typeof(int));
+                    rendertexture.antiAliasing =  (int)uicontroller.appmanager.config[VLCFG.AntiAliasing];
+                    rendertexture.anisoLevel = (int)uicontroller.appmanager.config[VLCFG.AnisotropicFilterLevel];
                     maincamera.targetTexture = rendertexture;
                     ri.texture = rendertexture;
                 }

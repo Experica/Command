@@ -8,7 +8,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using System.Linq;
+using MathNet.Numerics.Random;
+using MathNet.Numerics;
 
 namespace VLab
 {
@@ -17,22 +20,21 @@ namespace VLab
         public Dictionary<string, List<object>> cond;
         public int nfactor;
         public int ncond;
-        public List<int> popcondidx;
+        public List<int> condsamplespace;
         public Dictionary<int, int> condrepeat;
-        public int sampleidx = -1;
+
+        public System.Random rng = new MersenneTwister();
         public SampleMethod samplemethod = SampleMethod.Ascending;
         public int scendingstep = 1;
-        public int condidx = -1;
-        public int sampleignores = 0;
-        public System.Random rng = new System.Random();
-        public EnvironmentManager envmanager = new EnvironmentManager();
 
+        public int sampleidx = -1;
+        public int condidx = -1;
+        public int nsampleignore = 0;
 
         public Dictionary<string, List<object>> ReadCondition(string path)
         {
             if (!File.Exists(path))
             {
-                UnityEngine.Debug.Log("File Does not exist.");
                 return null;
             }
             return Yaml.ReadYaml<Dictionary<string, List<object>>>(path);
@@ -42,11 +44,7 @@ namespace VLab
         {
             this.cond = cond;
             nfactor = cond.Keys.Count;
-            if (nfactor == 0)
-            {
-                UnityEngine.Debug.Log("Condition Empty.");
-            }
-            else
+            if (nfactor > 0)
             {
                 var fvn = new int[nfactor];
                 for (var i = 0; i < nfactor; i++)
@@ -61,109 +59,92 @@ namespace VLab
                     {
                         cond[k] = cond[k].GetRange(0, minfvn);
                     }
-                    UnityEngine.Debug.Log("Cut Condition to Minimum Length.");
                 }
                 ncond = minfvn;
             }
         }
 
-        public List<int> UpdateCondPopulation(SampleMethod samplemethod, bool resetcondrepeat = true)
+        public List<int> UpdateSampleSpace(SampleMethod samplemethod, bool resetcondrepeat = true)
         {
             this.samplemethod = samplemethod;
-            return UpdateCondPopulation(resetcondrepeat);
+            return UpdateSampleSpace(resetcondrepeat);
         }
 
-        public List<int> UpdateCondPopulation( bool resetcondrepeat = true)
+        public virtual List<int> UpdateSampleSpace(bool resetcondrepeat = true)
         {
             switch (samplemethod)
             {
-                case SampleMethod.Ascending:
-                    popcondidx = Enumerable.Range(0, ncond).ToList();
-                    sampleidx = -1;
-                    break;
                 case SampleMethod.Descending:
-                    popcondidx = Enumerable.Range(0, ncond).Reverse().ToList();
-                    sampleidx = -1;
-                    break;
-                case SampleMethod.UniformWithReplacement:
-                    popcondidx = Enumerable.Range(0, ncond).ToList();
+                    condsamplespace = Enumerable.Range(0, ncond).Reverse().ToList();
                     sampleidx = -1;
                     break;
                 case SampleMethod.UniformWithoutReplacement:
-                    popcondidx = Enumerable.Range(0, ncond).ToList();
+                    condsamplespace = rng.Sequence(ncond);
+                    sampleidx = -1;
+                    break;
+                default:
+                    condsamplespace = Enumerable.Range(0, ncond).ToList();
                     sampleidx = -1;
                     break;
             }
             if (resetcondrepeat)
             {
-                condrepeat = new Dictionary<int, int>();
-                foreach (var i in popcondidx)
-                {
-                    condrepeat[i] = 0;
-                }
+                ResetCondRepeat();
             }
-            return popcondidx;
+            return condsamplespace;
         }
 
-        public int SampleCondIdx()
+        public int SampleCondIndex()
         {
-            if (sampleignores == 0)
+            if (nsampleignore == 0)
             {
                 switch (samplemethod)
                 {
                     case SampleMethod.Ascending:
-                        sampleidx += scendingstep;
-                        if (sampleidx > popcondidx.Count - 1)
-                        {
-                            sampleidx -= popcondidx.Count;
-                        }
-                        condidx = popcondidx[sampleidx];
-                        break;
                     case SampleMethod.Descending:
                         sampleidx += scendingstep;
-                        if (sampleidx > popcondidx.Count - 1)
+                        if (sampleidx > condsamplespace.Count - 1)
                         {
-                            sampleidx -= popcondidx.Count;
+                            sampleidx -= condsamplespace.Count;
                         }
-                        condidx = popcondidx[sampleidx];
+                        condidx = condsamplespace[sampleidx];
                         break;
                     case SampleMethod.UniformWithReplacement:
-                        sampleidx = rng.Next(popcondidx.Count);
-                        condidx = popcondidx[sampleidx];
+                        sampleidx = rng.Next(condsamplespace.Count);
+                        condidx = condsamplespace[sampleidx];
                         break;
                     case SampleMethod.UniformWithoutReplacement:
-                        if (popcondidx.Count == 0)
+                        if (sampleidx >= condsamplespace.Count - 1)
                         {
-                            UpdateCondPopulation(false);
+                            UpdateSampleSpace(false);
                         }
-                        sampleidx = rng.Next(popcondidx.Count);
-                        condidx = popcondidx[sampleidx];
-                        popcondidx.RemoveAt(sampleidx);
+                        sampleidx++;
+                        condidx = condsamplespace[sampleidx];
                         break;
                 }
                 condrepeat[condidx] += 1;
             }
             else
             {
-                sampleignores--;
+                nsampleignore--;
             }
             return condidx;
         }
 
-        public void PushCondition(int idx)
+        public void PushCondition(int condidx, EnvironmentManager envmanager)
         {
-            foreach (var kv in cond)
+            foreach (var k in cond.Keys)
             {
-                envmanager.SetParam(kv.Key, kv.Value[idx]);
+                envmanager.SetParam(k, cond[k][condidx]);
             }
         }
 
-        public void SamplePushCondition()
+        public void SamplePushCondition(EnvironmentManager envmanager)
         {
-            PushCondition(SampleCondIdx());
+            PushCondition(SampleCondIndex(), envmanager);
         }
 
-        public bool IsFinishRepeat(int n)
+        public bool IsCondRepeat(int n)
         {
             foreach (var i in condrepeat.Values)
             {
@@ -174,213 +155,136 @@ namespace VLab
             }
             return true;
         }
-    }
 
-    public interface IFactorLevelDesign
-    {
-        string FactorName { get; set; }
-        KeyValuePair<string, List<object>> GenerateFactorLevels();
-    }
-
-    public enum DesignMethod
-    {
-        Linear = 0
-    }
-
-    public class FactorLevel : IFactorLevelDesign
-    {
-        string name;
-        public object start, end, step;
-        public DesignMethod method;
-
-        public FactorLevel(string factorname, object startvalue, object endvalue, object stepvalue, DesignMethod designmethod = DesignMethod.Linear)
+        public void ResetCondRepeat()
         {
-            name = factorname;
+            condrepeat = new Dictionary<int, int>();
+            foreach (var i in condsamplespace)
+            {
+                condrepeat[i] = 0;
+            }
+        }
+    }
+
+    public enum FactorLevelDesignMethod
+    {
+        Linear
+    }
+
+    public class FactorLevelDesign
+    {
+        public string factorname;
+        public object start, end;
+        public int[] n;
+        public FactorLevelDesignMethod method;
+        Type T;
+
+        public FactorLevelDesign(string factorname, object startvalue, object endvalue, int[] nvalue,
+            FactorLevelDesignMethod designmethod = FactorLevelDesignMethod.Linear)
+        {
+            T = startvalue.GetType();
+            if (T != endvalue.GetType())
+            {
+                throw new ArgumentException("Type Inconsistency of startvalue and endvalue");
+            }
+            if (n == null)
+            {
+                throw new NullReferenceException();
+            }
+            this.factorname = factorname;
             start = startvalue;
             end = endvalue;
-            step = stepvalue;
+            n = nvalue;
             method = designmethod;
         }
 
-        public string FactorName
-        {
-            get
-            {
-                return name;
-            }
-
-            set
-            {
-                name = value;
-            }
-        }
-
-        public KeyValuePair<string, List<object>> GenerateFactorLevels()
+        public KeyValuePair<string, List<object>> FactorLevel()
         {
             List<object> ls = new List<object>();
-            ls.Add(start);
             switch (method)
             {
-                case DesignMethod.Linear:
-                    if (start.GetType() == typeof(float))
+                case FactorLevelDesignMethod.Linear:
+                    if (T == typeof(float))
                     {
-                        while ((float)ls.Last() < (float)end)
+                        var s = (float)start;
+                        var e = (float)end;
+                        if (e > s)
                         {
-                            ls.Add((float)ls.Last() + (float)step);
+                            ls = Generate.LinearSpacedMap(n[0], s, e, i => (object)(float)i).ToList();
                         }
                     }
-                    if (start.GetType() == typeof(Vector3))
+                    else if (T == typeof(Vector3))
                     {
-                        int xn = Mathf.FloorToInt((((Vector3)end).x - ((Vector3)start).x) / ((Vector3)step).x);
-                        int yn = Mathf.FloorToInt((((Vector3)end).y - ((Vector3)start).y) / ((Vector3)step).y);
-                        int zn = Mathf.Max(1, Mathf.FloorToInt((((Vector3)end).z - ((Vector3)start).z) / ((Vector3)step).z));
-                        for (var xi = 0; xi < xn; xi++)
+                        var s = (Vector3)start;
+                        var e = (Vector3)end;
+                        float[] xl = new float[] { 0 }, yl = new float[] { 0 }, zl = new float[] { 0 };
+                        if (e.x > s.x)
                         {
-                            for (var yi = 0; yi < yn; yi++)
+                            xl = Generate.LinearSpacedMap(n[0], s.x, e.x, i => (float)i);
+                        }
+                        if (e.y > s.y && n.Length > 1)
+                        {
+                            yl = Generate.LinearSpacedMap(n[1], s.y, e.y, i => (float)i);
+                        }
+                        if (e.z > s.z && n.Length > 2)
+                        {
+                            zl = Generate.LinearSpacedMap(n[2], s.z, e.z, i => (float)i);
+                        }
+                        for (var xi = 0; xi < xl.Length; xi++)
+                        {
+                            for (var yi = 0; yi < yl.Length; yi++)
                             {
-                                for (var zi = 0; zi < zn; zi++)
+                                for (var zi = 0; zi < zl.Length; zi++)
                                 {
-                                    ls.Add(new Vector3(
-                                        ((Vector3)start).x + xi * ((Vector3)step).x,
-                                        ((Vector3)start).y + yi * ((Vector3)step).y,
-                                        ((Vector3)start).z + zi * ((Vector3)step).z));
+                                    ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
                                 }
                             }
                         }
                     }
                     break;
             }
-            return new KeyValuePair<string, List<object>>(name, ls);
+            return new KeyValuePair<string, List<object>>(factorname, ls);
         }
     }
-
-    public class ConditionDesigner
-    {
-        public Dictionary<string, List<object>> factorslevels = new Dictionary<string, List<object>>();
-
-        public ConditionDesigner()
-        {
-
-        }
-
-        public ConditionDesigner(params IFactorLevelDesign[] flds)
-        {
-            foreach (var fld in flds)
-            {
-                AddFactorLevels(fld);
-            }
-        }
-
-        public void AddFactorLevels(IFactorLevelDesign fld)
-        {
-            var fls = fld.GenerateFactorLevels();
-            factorslevels.Add(fls.Key, fls.Value);
-        }
-
-        public Dictionary<string, List<object>> GenerateCondition()
-        {
-            return GenerateCondition(factorslevels);
-        }
-
-        public static Dictionary<string, List<object>> GenerateCondition(Dictionary<string, List<object>> fsls)
-        {
-            Dictionary<string, List<object>> cond = new Dictionary<string, List<object>>();
-
-            var fs = fsls.Keys.ToArray();
-            var fn = fs.Length;
-            if (fn == 0)
-            {
-                return cond;
-            }
-            else if (fn == 1)
-            {
-                cond[fs[0]] = fsls[fs[0]];
-                return cond;
-            }
-            else
-            {
-                int[] ln = new int[fn];
-                int[] ern = new int[fn];
-                int cn = 1;
-                ern[0] = 1;
-                for (var i = 0; i < fn; i++)
-                {
-                    var n = fsls[fs[i]].Count;
-                    cn *= n;
-                    ln[i] = n;
-
-                    if (i > 0)
-                    {
-                        ern[i] = ln[i - 1] * ern[i - 1];
-                    }
-                }
-
-                for (var fi = 0; fi < fn; fi++)
-                {
-                    List<object> erls = new List<object>();
-                    for (var j = 0; j < ln[fi]; j++)
-                    {
-                        for (var i = 0; i < ern[fi]; i++)
-                        {
-                            erls.Add(fsls[fs[fi]][j]);
-                        }
-                    }
-
-                    var rn = cn / erls.Count;
-                    List<object> cls = new List<object>();
-                    for (var i = 0; i < rn; i++)
-                    {
-                        cls.AddRange(erls);
-                    }
-                    cond[fs[fi]] = cls;
-                }
-                return cond;
-            }
-        }
-    }
-
-    public delegate void NotifyCondTestData(string name, List<object> value);
-    public delegate void NotifyAnalysis(double time);
 
     public class CondTestManager
     {
-        public Dictionary<string, List<object>> condtest = new Dictionary<string, List<object>>();
+        public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
         public int condtestidx = -1;
-        public NotifyCondTestData NotifyCondTestData;
-        public NotifyAnalysis NotifyAnalysis;
+        public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
+        public Action<double> OnNotifyEnd;
         public int notifyidx = 0;
-
-        public virtual void NewCondTest(double starttime,List<string> notifyparams, int analysispercondtest=0)
+        public virtual void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0)
         {
             condtestidx++;
-            if(analysispercondtest>0&&condtestidx>0)
+            if (notifypercondtest > 0 && condtestidx > 0)
             {
-               if(( (condtestidx - notifyidx) / analysispercondtest)>=1)
+                if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
                 {
-                    NotifyCondTestAnalysis(notifyidx, notifyparams,starttime);
+                    NotifyCondTestEnd(notifyidx, notifyparam, starttime);
                     notifyidx = condtestidx;
                 }
             }
         }
 
-        public void NotifyCondTest(int startidx, List<string> notifyparams)
+        public void NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
         {
             if (startidx < condtestidx)
             {
-                foreach (var p in notifyparams)
+                foreach (var p in notifyparam)
                 {
                     if (condtest.ContainsKey(p))
                     {
-                        NotifyCondTestData(p, condtest[p].GetRange(startidx, condtestidx - startidx));
+                        OnNotifyCondTest(p, condtest[p].GetRange(startidx, condtestidx - startidx));
                     }
                 }
             }
         }
 
-        public void NotifyCondTestAnalysis(int startidx, List<string> notifyparams,double endtime)
+        public void NotifyCondTestEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
         {
-            NotifyCondTest( startidx, notifyparams);
-            NotifyAnalysis(endtime);
+            NotifyCondTest(startidx, notifyparam);
+            OnNotifyEnd(endtime);
         }
 
         public void Clear()
@@ -390,16 +294,16 @@ namespace VLab
             notifyidx = 0;
         }
 
-        public void Add(string key, object value)
+        public void Add(CONDTESTPARAM paramname, object paramvalue)
         {
-            if (condtest.ContainsKey(key))
+            if (condtest.ContainsKey(paramname))
             {
-                var vs = condtest[key];
+                var vs = condtest[paramname];
                 for (var i = vs.Count; i < condtestidx; i++)
                 {
                     vs.Add(null);
                 }
-                vs.Add(value);
+                vs.Add(paramvalue);
             }
             else
             {
@@ -408,16 +312,16 @@ namespace VLab
                 {
                     vs.Add(null);
                 }
-                vs.Add(value);
-                condtest[key] = vs;
+                vs.Add(paramvalue);
+                condtest[paramname] = vs;
             }
         }
 
-        public void AddEvent(string key, string eventname, double timestamp)
+        public void AddEvent(CONDTESTPARAM paramname, string eventname, double timestamp)
         {
-            if (condtest.ContainsKey(key))
+            if (condtest.ContainsKey(paramname))
             {
-                var vs = condtest[key];
+                var vs = condtest[paramname];
                 for (var i = vs.Count; i < condtestidx; i++)
                 {
                     vs.Add(null);
@@ -450,7 +354,7 @@ namespace VLab
                 e[eventname] = timestamp;
                 es.Add(e);
                 vs.Add(es);
-                condtest[key] = vs;
+                condtest[paramname] = vs;
             }
         }
     }

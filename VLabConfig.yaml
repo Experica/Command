@@ -1,13 +1,13 @@
-issaveexonquit: true
-exdefdir: Experiment
-condtestdir: ConditionTest
-defaultexperimentlogic: ConditionTestLogic
-defaultcondtestnotifyparams:
+IsSaveExOnQuit: true
+ExDir: Experiment
+DataDir: Data
+ExLogic: ConditionTestLogic
+NotifyParams:
 - CondIndex
 - CONDSTATE
-antialiasing: 2
-anisotropicfilterlevel: 5
-logictick: 0.0001
-isshowinactiveenvparam: false
-isshowenvparamfullname: false
-maxlogentry: 999
+AntiAliasing: 2
+AnisotropicFilterLevel: 5
+LogicTick: 0.0001
+IsShowInactiveEnvParam: false
+IsShowEnvParamFullname: false
+MaxLogEntry: 999

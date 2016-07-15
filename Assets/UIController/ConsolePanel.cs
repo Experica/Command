@@ -54,7 +54,7 @@ namespace VLab
 
         public void Log(VLLogType logtype, object msg, bool istimestamp = true)
         {
-            var v = VLConvert.Convert<string>(msg);
+            var v = msg.Convert<string>();
             if (istimestamp)
             {
                 v = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + ":  " + v ;
@@ -99,7 +99,7 @@ namespace VLab
 
         void Awake()
         {
-            maxentry = VLConvert.Convert<int>(uicontroller.appmanager.config["maxlogentry"]);
+            maxentry = (int)uicontroller.appmanager.config[VLCFG.MaxLogEntry];
         }
 
     }

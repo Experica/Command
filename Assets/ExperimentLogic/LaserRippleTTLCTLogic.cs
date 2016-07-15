@@ -19,19 +19,18 @@ public class LaserRippleTTLCTLogic : ExperimentLogic
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
     }
 
-    public override void StartExperiment()
+    protected override void StartExperiment()
     {
-        recordmanager.recorder.SetRecordPath(ex.CondTestPath(""));
+        recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
         base.StartExperiment();
         pport.BitPulse(2, 0.1);
         timer.ReStart();
     }
 
-    public override void StopExperiment()
+    protected override void StopExperiment()
     {
         base.StopExperiment();
         pport.BitPulse(3, 0.1);
-        timer.Stop();
     }
 
     public override void Logic()
@@ -43,13 +42,13 @@ public class LaserRippleTTLCTLogic : ExperimentLogic
                 CondState = CONDSTATE.PREICI;
                 if (condmanager.cond.ContainsKey("laserpower%"))
                 {
-                    var v = VLConvert.Convert<double>(condmanager.cond["laserpower%"][condmanager.condidx]);
+                    var v = condmanager.cond["laserpower%"][condmanager.condidx].Convert<double>();
                     luxx473.PowerRatio = v;
                     mambo594.PowerRatio = v;
                 }
                 break;
             case CONDSTATE.PREICI:
-                if (PreICIHold() >= ex.preICI)
+                if (PreICIHold >= ex.PreICI)
                 {
                     envmanager.ActiveSyncSetParam("visible", true);
                     CondState = CONDSTATE.COND;
@@ -57,7 +56,7 @@ public class LaserRippleTTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.COND:
-                if (CondHold() >= ex.conddur)
+                if (CondHold >= ex.CondDur)
                 {
                     envmanager.ActiveSyncSetParam("visible", false);
                     CondState = CONDSTATE.SUFICI;
@@ -65,7 +64,7 @@ public class LaserRippleTTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold() >= ex.sufICI)
+                if (SufICIHold >= ex.SufICI)
                 {
                     CondState = CONDSTATE.NONE;
                 }

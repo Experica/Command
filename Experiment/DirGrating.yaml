@@ -17,7 +17,7 @@ envparam:
   maxcolor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   isdrifting@ENGratingQuad@GratingQuad: true
   isreversetime@ENGratingQuad@GratingQuad: false
-  ori@ENGratingQuad@GratingQuad: 330
+  ori@ENGratingQuad@GratingQuad: 240
   length@ENGratingQuad@GratingQuad: 15
   width@ENGratingQuad@GratingQuad: 15
   height@ENGratingQuad@GratingQuad: 1
@@ -29,8 +29,7 @@ condpath: C:\Users\LyonLab\VLab\Condition\Direction30DegStep.yaml
 experimentlogicpath: RippleTTLCTLogic
 recordsession: V1
 recordsite: 358
-condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_DirGrating_49.yaml
+datadir: Data
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 preICI: 100
@@ -41,8 +40,9 @@ condtestatstate: PREICI
 analysispercondtest: 4
 param:
   rand: 45
-exinheritparams: []
+exinheritparams:
+- rand
 envinheritparams: []
-condtestnotifyparams:
+notifyparams:
 - CondIndex
 - CONDSTATE

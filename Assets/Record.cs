@@ -16,6 +16,7 @@ namespace VLab
 {
     public enum VLRecordSystem
     {
+        VLabRecord,
         Ripple,
         Plexon,
         TDT
@@ -40,16 +41,26 @@ namespace VLab
         }
     }
 
+    public class VLabRecorder : IRecorder
+    {
+        public void SetRecordPath(string path)
+        {
+        }
+    }
+
     public class RecordManager
     {
         public IRecorder recorder;
 
-        public RecordManager(VLRecordSystem recordsystem)
+        public RecordManager(VLRecordSystem recordsystem= VLRecordSystem.VLabRecord)
         {
             switch (recordsystem)
             {
                 case VLRecordSystem.Ripple:
                     recorder = new RippleRecorder();
+                    break;
+                default:
+                    recorder = new VLabRecorder();
                     break;
             }
         }

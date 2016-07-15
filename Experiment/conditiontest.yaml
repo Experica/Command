@@ -4,16 +4,11 @@ designer: alex
 experimenter: alex
 subject_id: TestSub
 environmentpath: Showroom
-envparam:
-  bgcolor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  screenhalfheight@ENCamera@OrthoCamera: 15
-  screentoeye@ENCamera@OrthoCamera: 57
-  itemid@Showroom@ShowroomManager: None
+envparam: {}
 condpath: Condition\ConditionTest.yaml
 recordsession: V1
 recordsite: 358
-condtestdir: ConditionTest
-condtestpath: ConditionTest\TestSub\TestSub_V1_358_conditiontest_119.yaml
+datadir: Data
 condsampling: UniformWithoutReplacement
 condrepeat: 500
 input: 1
@@ -25,5 +20,6 @@ param:
   rand: 45
 exinheritparams: []
 envinheritparams: []
-condtestnotifyparams:
+notifyparams:
 - CondIndex
+- CONDSTATE

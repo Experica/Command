@@ -72,7 +72,7 @@ namespace VLab
                 var inputvalue = Instantiate(inputprefab);
                 inputvalue.name = name + "_" + (i+1).ToString();
                 var ivif = inputvalue.GetComponent<InputField>();
-                ivif.text = VLConvert.Convert<string>(value[i]); 
+                ivif.text = value[i].Convert<string>(); 
 
                 inputvalue.transform.SetParent(parent);
                 inputvalue.transform.localScale = new Vector3(1, 1, 1);

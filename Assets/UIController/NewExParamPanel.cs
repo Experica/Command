@@ -19,7 +19,7 @@ public class NewExParamPanel : MonoBehaviour
 
     public void OnNewExParamName(string name)
     {
-        if(uicontroller.exmanager.el.ex.param.ContainsKey(name))
+        if(uicontroller.exmanager.el.ex.Param.ContainsKey(name))
         {
             namecheck.text = "Name Exists";
             confirm.interactable = false;
@@ -35,7 +35,7 @@ public class NewExParamPanel : MonoBehaviour
     {
         var newname = nameinput.text;
         var value = valueinput.text;
-        uicontroller.exmanager.el.ex.param.Add(newname, value);
+        uicontroller.exmanager.el.ex.Param.Add(newname, value);
 
         uicontroller.expanel.AddCustomParam(newname, value, false);
         uicontroller.expanel.UpdateViewRect();

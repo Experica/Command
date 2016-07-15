@@ -35,14 +35,14 @@ namespace VLab
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var v = VLConvert.Convert(((Scalar)parser.Current).Value, type);
+            var v = ((Scalar)parser.Current).Value.Convert( type);
             parser.MoveNext();
             return v;
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            string v = (string)VLConvert.Convert(value, typeof(string));
+            string v = value.Convert<string>();
             emitter.Emit(new Scalar(v));
         }
     }

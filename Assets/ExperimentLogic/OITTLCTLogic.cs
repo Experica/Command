@@ -17,7 +17,7 @@ public class OITTLCTLogic : ExperimentLogic
                 envmanager.ActiveSyncSetParam("visible", true);
                 break;
             case CONDSTATE.PREICI:
-                if (PreICIHold() >= ex.preICI)
+                if (PreICIHold >= ex.PreICI)
                 {
                     envmanager.ActiveSyncSetParam("isdrifting", true);
                     CondState = CONDSTATE.COND;
@@ -25,14 +25,14 @@ public class OITTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.COND:
-                if (!isreverse && CondHold() >= ex.conddur)
+                if (!isreverse && CondHold >= ex.CondDur)
                 {
                     envmanager.ActiveSyncSetParam("isreversetime", true);
                     //var curori = (float)envmanager.GetParam("ori");
                     //envmanager.ActiveSyncSetParam("ori", curori + 180);
                     isreverse = true;
                 }
-                if (isreverse && CondHold() >= 2 * ex.conddur)
+                if (isreverse && CondHold >= 2 * ex.CondDur)
                 {
                     envmanager.ActiveSyncSetParam("visible", false);
                     isreverse = false;
@@ -42,7 +42,7 @@ public class OITTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold() >= ex.sufICI)
+                if (SufICIHold >= ex.SufICI)
                 {
                     CondState = CONDSTATE.PREICI;
                     envmanager.ActiveSyncSetParam("isdrifting", false);

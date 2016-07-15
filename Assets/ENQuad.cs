@@ -14,17 +14,17 @@ namespace VLab
     public class ENQuad : EnvNet
     {
         [SyncVar(hook = "onori")]
-        public float ori = 0;
-        [SyncVar(hook = "onlength")]
-        public float length = 1;
-        [SyncVar(hook = "onwidth")]
-        public float width = 1;
-        [SyncVar(hook = "onheight")]
-        public float height = 1;
+        public float Ori = 0;
+        [SyncVar(hook ="onorioffset")]
+        public float OriOffset = 0;
+        [SyncVar(hook ="onsize")]
+        public Vector3 Size = new Vector3(1, 1, 1);
+        [SyncVar(hook ="ondiameter")]
+        public float Diameter = 1;
         [SyncVar(hook = "oncolor")]
-        public Color color = new Color();
+        public Color Color = new Color();
         [SyncVar(hook = "onmasktype")]
-        public int masktype = 0;
+        public int MaskType = 0;
 
         public VLTimer t = new VLTimer();
 
@@ -40,40 +40,42 @@ namespace VLab
         }
         public virtual void OnOri(float o)
         {
-            transform.eulerAngles = new Vector3(0, 0, o);
-            ori = o;
+            transform.eulerAngles = new Vector3(0, 0, o+OriOffset);
+            Ori = o;
         }
 
-        void onlength(float l)
+        void onorioffset(float ooffset)
         {
-            OnLength(l);
+            OnOriOffset(ooffset);
         }
-        public virtual void OnLength(float l)
+        public virtual void OnOriOffset(float ooffset)
         {
-            transform.localScale = new Vector3(l, width, height);
-            renderer.material.SetFloat("length", l);
-            length = l;
-        }
-
-        void onwidth(float w)
-        {
-            OnWidth(w);
-        }
-        public virtual void OnWidth(float w)
-        {
-            transform.localScale = new Vector3(length, w, height);
-            renderer.material.SetFloat("width", w);
-            width = w;
+            transform.eulerAngles = new Vector3(0, 0, ooffset+Ori);
+            OriOffset = ooffset;
         }
 
-        void onheight(float h)
+        void onsize(Vector3 s)
         {
-            OnHeight(h);
+            OnSize(s);
         }
-        public virtual void OnHeight(float h)
+        public virtual void OnSize(Vector3 s)
         {
-            transform.localScale = new Vector3(length, width, h);
-            height = h;
+            transform.localScale = s;
+            renderer.material.SetFloat("length", s.x);
+            renderer.material.SetFloat("width", s.y);
+            Size = s;
+        }
+
+        void ondiameter(float d)
+        {
+            OnDiameter(d);
+        }
+        public virtual void OnDiameter(float d)
+        {
+            transform.localScale = new Vector3(d,d,d);
+            renderer.material.SetFloat("length", d);
+            renderer.material.SetFloat("width", d);
+            Diameter = d;
         }
 
         void oncolor(Color c)
@@ -83,7 +85,7 @@ namespace VLab
         public virtual void OnColor(Color c)
         {
             renderer.material.color = c;
-            color = c;
+            Color = c;
         }
 
         void onmasktype(int t)
@@ -93,7 +95,7 @@ namespace VLab
         public virtual void OnMaskType(int t)
         {
             renderer.material.SetInt("masktype", t);
-            masktype = t;
+            MaskType = t;
         }
 
     }

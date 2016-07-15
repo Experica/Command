@@ -15,9 +15,11 @@ namespace VLab
     public class EnvNet : NetworkBehaviour
     {
         [SyncVar(hook = "onvisible")]
-        public bool visible = true;
+        public bool Visible = true;
         [SyncVar(hook = "onposition")]
-        public Vector3 position = new Vector3();
+        public Vector3 Position = new Vector3();
+        [SyncVar(hook ="onpositionoffset")]
+        public Vector3 PositionOffset = new Vector3();
 
         public new Renderer renderer;
 #if VLAB
@@ -46,7 +48,7 @@ namespace VLab
             {
                 renderer.enabled = v;
             }
-            visible = v;
+            Visible = v;
         }
 
         void onposition(Vector3 p)
@@ -55,8 +57,18 @@ namespace VLab
         }
         public virtual void OnPosition(Vector3 p)
         {
-            transform.position = p;
-            position = p;
+            transform.position = p+PositionOffset;
+            Position = p;
+        }
+
+        void onpositionoffset(Vector3 poffset)
+        {
+            OnPositionOffset(poffset);
+        }
+        public virtual void OnPositionOffset(Vector3 poffset)
+        {
+            transform.position = Position+poffset;
+            PositionOffset = poffset;
         }
 
 #if VLAB

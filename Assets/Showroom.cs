@@ -122,7 +122,7 @@ namespace VLab
 #if VLAB
                     var go = LoadItem(id);
                     uicontroller.exmanager.el.envmanager.UpdateScene();
-                    uicontroller.exmanager.el.envmanager.SetParamsForObject(uicontroller.exmanager.el.ex.envparam,go.name);
+                    uicontroller.exmanager.el.envmanager.SetParamsForObject(uicontroller.exmanager.el.ex.EnvParam,go.name);
                     uicontroller.exmanager.InheritEnv();
                     NetworkServer.Spawn(go);
 #endif

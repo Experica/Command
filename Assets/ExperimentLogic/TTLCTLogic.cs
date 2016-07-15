@@ -14,7 +14,7 @@ public class TTLCTLogic : ExperimentLogic
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
-                if (PreICIHold() >= ex.preICI)
+                if (PreICIHold >= ex.PreICI)
                 {
                     envmanager.ActiveSyncSetParam("visible", true);
                     CondState = CONDSTATE.COND;
@@ -22,7 +22,7 @@ public class TTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.COND:
-                if (CondHold() >= ex.conddur)
+                if (CondHold >= ex.CondDur)
                 {
                     envmanager.ActiveSyncSetParam("visible", false);
                     CondState = CONDSTATE.SUFICI;
@@ -30,7 +30,7 @@ public class TTLCTLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold() >= ex.sufICI)
+                if (SufICIHold >= ex.SufICI)
                 {
                     CondState = CONDSTATE.PREICI;
                 }

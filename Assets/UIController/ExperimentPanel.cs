@@ -46,13 +46,13 @@ public class ExperimentPanel:MonoBehaviour
 
     public void AddView(Experiment ex)
     {
-        foreach(var p in Experiment.properties.Keys)
+        foreach(var p in Experiment.Properties.Keys)
         {
             if (isshowparam(p))
             {
-                var vt = Experiment.properties[p].PropertyType;
+                var vt = Experiment.Properties[p].PropertyType;
                 var v = ex.GetValue(p);
-                AddParam(p, vt, v, ex.exinheritparams.Contains(p),
+                AddParam(p, vt, v, ex.ExInheritParam.Contains(p),
                     ChoosePrefab(p, vt, false), svcontent.transform);
             }
         }
@@ -134,9 +134,9 @@ public class ExperimentPanel:MonoBehaviour
             Destroy(go);
         }
         customparamtoggle.Clear();
-        foreach(var p in ex.param.Keys)
+        foreach(var p in ex.Param.Keys)
         {
-            AddCustomParam(p, ex.param[p], ex.exinheritparams.Contains(p));
+            AddCustomParam(p, ex.Param[p], ex.ExInheritParam.Contains(p));
         }
     }
 
@@ -159,12 +159,12 @@ public class ExperimentPanel:MonoBehaviour
 
     public void UpdateView(Experiment ex)
     {
-        foreach (var n in Experiment.properties.Keys)
+        foreach (var n in Experiment.Properties.Keys)
         {
             if (isshowparam(n))
             {
-                inherittoggle[n].isOn = ex.exinheritparams.Contains(n);
-                var T = Experiment.properties[n].PropertyType;
+                inherittoggle[n].isOn = ex.ExInheritParam.Contains(n);
+                var T = Experiment.Properties[n].PropertyType;
                 var v = ex.GetValue(n);
                 if (T.IsEnum)
                 {
@@ -177,7 +177,7 @@ public class ExperimentPanel:MonoBehaviour
                 }
                 else
                 {
-                    input[n].text = v == null ? "" : (string)VLConvert.Convert(v, typeof(string));
+                    input[n].text = v == null ? "" : v.Convert<string>();
                 }
             }
         }
@@ -231,7 +231,7 @@ public class ExperimentPanel:MonoBehaviour
                 {
                     value = "";
                 }
-                inputfield.text = (string)VLConvert.Convert(value, typeof(string));
+                inputfield.text = value.Convert<string>();
                 inputfield.onEndEdit.AddListener((v) => uicontroller.SetExParam(name, v));
                 input[name] = inputfield;
             }
@@ -280,8 +280,8 @@ public class ExperimentPanel:MonoBehaviour
         {
             if (customparamtoggle[p].isOn)
             {
-                uicontroller.exmanager.el.ex.param.Remove(p);
-                uicontroller.exmanager.el.ex.exinheritparams.Remove(p);
+                uicontroller.exmanager.el.ex.Param.Remove(p);
+                uicontroller.exmanager.el.ex.ExInheritParam.Remove(p);
 
                 var go = customparamgo[p];
                 customparamtoggle.Remove(p);

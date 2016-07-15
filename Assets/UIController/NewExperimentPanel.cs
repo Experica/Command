@@ -22,7 +22,7 @@ public class NewExperimentPanel : MonoBehaviour
     {
         var newname = nameinput.text;
         var copyfrom = copyfromnames.captionText.text;
-        if (uicontroller.exmanager.NewExDef(newname, copyfrom))
+        if (uicontroller.exmanager.NewEx(newname, copyfrom))
         {
             uicontroller.controlpanel.exdropdown.options.Add(new Dropdown.OptionData(newname));
             uicontroller.controlpanel.exdropdown.value = uicontroller.controlpanel.exdropdown.options.Count - 1;
@@ -37,7 +37,7 @@ public class NewExperimentPanel : MonoBehaviour
 
     public void OnNewExNameEndEdit(string name)
     {
-        if (uicontroller.exmanager.exdefnames.Contains(name))
+        if (uicontroller.exmanager.exids.Contains(name))
         {
             namecheck.text = "Name Exists";
             confirm.interactable = false;
@@ -53,7 +53,7 @@ public class NewExperimentPanel : MonoBehaviour
     {
         var os = new List<string>();
         os.Add("");
-        os.AddRange(uicontroller.exmanager.exdefnames);
+        os.AddRange(uicontroller.exmanager.exids);
         copyfromnames.AddOptions(os);
     }
 

@@ -32,18 +32,18 @@ namespace VLab
 
         void UpdateExDropdown()
         {
-            exmanager.UpdateExDef();
-            if (exmanager.exdefnames.Count > 0)
+            exmanager.GetExFiles();
+            if (exmanager.exids.Count > 0)
             {
                 controlpanel.exdropdown.ClearOptions();
-                controlpanel.exdropdown.AddOptions(exmanager.exdefnames);
+                controlpanel.exdropdown.AddOptions(exmanager.exids);
                 OnExDropdownValueChange(0);
             }
         }
 
         public void OnExDropdownValueChange(int i)
         {
-            exmanager.LoadEx(exmanager.exdefs[i]);
+            exmanager.LoadEL(exmanager.exfiles[i]);
             expanel.UpdateEx(exmanager.el.ex);
             if (NetworkServer.active)
             {
@@ -51,18 +51,18 @@ namespace VLab
             }
         }
 
-        public void OnNotifyCondTestData(string name, List<object> value)
+        public void OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
         {
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
-                switch(name)
+                switch (name)
                 {
-                    case "CondIndex":
+                    case CONDTESTPARAM.CondIndex:
                         MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
                         break;
-                    case "CONDSTATE":
-                        MsgPackSerializer.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string,double>>)i), PackerCompatibilityOptions.None);
+                    case CONDTESTPARAM.CONDSTATE:
+                        MsgPackSerializer.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
                         break;
                     default:
                         MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
@@ -72,7 +72,7 @@ namespace VLab
             }
         }
 
-        public void OnNotifyAnalysis(double time)
+        public void OnNotifyEnd(double time)
         {
             if (alsmanager != null)
             {
@@ -106,47 +106,57 @@ namespace VLab
             }
         }
 
+        public void OnBeginStartExperiment()
+        {
+            controlpanel.startstoptext.text = "Stop";
+            controlpanel.pauseresume.interactable = true;
+            consolepanel.LogError("Experiment Started.");
+
+            QualitySettings.vSyncCount = 0;
+            QualitySettings.maxQueuedFrames = 0;
+
+            Time.fixedDeltaTime = (float)appmanager.config[VLCFG.LogicTick];
+            Process.GetCurrentProcess().PriorityBoostEnabled = true;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
+            OnNotifyStartExperiment();
+        }
+
+        public void OnEndStartExperiment()
+        {
+            OnNotifyExperiment(exmanager.el.ex);
+        }
+
+        public void OnBeginStopExperiment()
+        {
+            controlpanel.startstoptext.text = "Start";
+            if (controlpanel.pauseresume.isOn)
+            {
+                controlpanel.pauseresume.isOn = false;
+                TogglePauseResumeExperiment(false);
+            }
+            controlpanel.pauseresume.interactable = false;
+            consolepanel.LogError("Experiment Stoped.");
+
+            QualitySettings.vSyncCount = 1;
+            QualitySettings.maxQueuedFrames = 2;
+
+            Time.fixedDeltaTime = 0.02f;
+            Process.GetCurrentProcess().PriorityBoostEnabled = false;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
+        }
+
+        public void OnEndStopExperiment()
+        {
+            OnNotifyStopExperiment();
+            exmanager.el.SaveData();
+        }
+
         public void ToggleStartStopExperiment(bool isstart)
         {
-            if (isstart)
+            if(exmanager.el!=null)
             {
-                controlpanel.startstoptext.text = "Stop";
-                controlpanel.pauseresume.interactable = true;
-                consolepanel.LogError("Experiment Started.");
-
-                QualitySettings.vSyncCount = 0;
-                QualitySettings.maxQueuedFrames = 0;
-
-                Time.fixedDeltaTime = VLConvert.Convert<float>(appmanager.config["logictick"]);
-                Process.GetCurrentProcess().PriorityBoostEnabled = true;
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-
-                exmanager.el.condtestmanager.NotifyCondTestData = OnNotifyCondTestData;
-                exmanager.el.condtestmanager.NotifyAnalysis = OnNotifyAnalysis;
-                OnNotifyStartExperiment();
-                exmanager.el.StartExperiment();
-                OnNotifyExperiment(exmanager.el.ex);
-            }
-            else
-            {
-                controlpanel.startstoptext.text = "Start";
-                if (controlpanel.pauseresume.isOn)
-                {
-                    controlpanel.pauseresume.isOn = false;
-                    TogglePauseResumeExperiment(false);
-                }
-                controlpanel.pauseresume.interactable = false;
-                consolepanel.LogError("Experiment Stoped.");
-
-                QualitySettings.vSyncCount = 1;
-                QualitySettings.maxQueuedFrames = 2;
-
-                Time.fixedDeltaTime = 0.02f;
-                Process.GetCurrentProcess().PriorityBoostEnabled = false;
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
-
-                exmanager.el.StopExperiment();
-                OnNotifyStopExperiment();
+                exmanager.el.StartStopExperiment(isstart);
             }
         }
 
@@ -166,21 +176,33 @@ namespace VLab
             }
         }
 
+        public void OnBeginPauseExperiment()
+        {
+            controlpanel.pauseresumetext.text = "Resume";
+            consolepanel.LogWarn("Experiment Paused.");
+        }
+
+        public void OnEndPauseExperiment()
+        {
+            OnNotifyPauseExperiment();
+        }
+
+        public void OnBeginResumeExperiment()
+        {
+            controlpanel.pauseresumetext.text = "Pause";
+            consolepanel.LogWarn("Experiment Resumed.");
+        }
+
+        public void OnEndResumeExpeirment()
+        {
+            OnNotifyResumeExperiment();
+        }
+
         public void TogglePauseResumeExperiment(bool ispause)
         {
-            if (ispause)
+            if(exmanager.el!=null)
             {
-                controlpanel.pauseresumetext.text = "Resume";
-                consolepanel.LogWarn("Experiment Paused.");
-                exmanager.el.PauseExperiment();
-                OnNotifyPauseExperiment();
-            }
-            else
-            {
-                controlpanel.pauseresumetext.text = "Pause";
-                consolepanel.LogWarn("Experiment Resumed.");
-                exmanager.el.ResumeExperiment();
-                OnNotifyResumeExperiment();
+                exmanager.el.PauseResumeExperiment(ispause);
             }
         }
 
@@ -196,7 +218,7 @@ namespace VLab
 
         public void ToggleExInheritParam(string name, bool isinherit)
         {
-            var ps = exmanager.el.ex.exinheritparams;
+            var ps = exmanager.el.ex.ExInheritParam;
             if (ps.Contains(name))
             {
                 if (!isinherit)
@@ -217,7 +239,7 @@ namespace VLab
 
         public void ToggleEnvInheritParam(string name, bool isinherit)
         {
-            var ps = exmanager.el.ex.envinheritparams;
+            var ps = exmanager.el.ex.EnvInheritParam;
             if (ps.Contains(name))
             {
                 if (!isinherit)
@@ -238,13 +260,13 @@ namespace VLab
 
         public void SetExParam(string name, object value)
         {
-            if (Experiment.properties.ContainsKey(name))
+            if (Experiment.Properties.ContainsKey(name))
             {
                 exmanager.el.ex.SetValue(name, value);
             }
             else
             {
-                exmanager.el.ex.param[name] = value;
+                exmanager.el.ex.Param[name] = value;
             }
         }
 
@@ -255,16 +277,16 @@ namespace VLab
 
         public void SaveEx()
         {
-            exmanager.SaveExDef(controlpanel.exdropdown.captionText.text);
+            exmanager.SaveEx(controlpanel.exdropdown.captionText.text);
         }
 
         public void DeleteEx()
         {
-            var i = exmanager.DeleteExDef(controlpanel.exdropdown.captionText.text);
+            var i = exmanager.DeleteEx(controlpanel.exdropdown.captionText.text);
             if (i >= 0)
             {
                 controlpanel.exdropdown.options.RemoveAt(i);
-                if (i < exmanager.exdefnames.Count)
+                if (i < exmanager.exids.Count)
                 {
                     controlpanel.exdropdown.value = i;
                     controlpanel.exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
@@ -272,9 +294,9 @@ namespace VLab
                 }
                 else
                 {
-                    if (exmanager.exdefnames.Count > 0)
+                    if (exmanager.exids.Count > 0)
                     {
-                        i = exmanager.exdefnames.Count - 1;
+                        i = exmanager.exids.Count - 1;
                         controlpanel.exdropdown.value = i;
                         controlpanel.exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
                         OnExDropdownValueChange(i);
@@ -315,7 +337,7 @@ namespace VLab
         {
             if (exmanager.el != null)
             {
-                var scene = exmanager.el.ex.environmentpath;
+                var scene = exmanager.el.ex.EnvPath;
                 if (string.IsNullOrEmpty(scene))
                 {
                     scene = "Showroom";
