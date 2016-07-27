@@ -1,4 +1,26 @@
-﻿using UnityEngine;
+﻿// -----------------------------------------------------------------------------
+// Extention.cs is part of the VLAB project.
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
+
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,7 +227,7 @@ namespace VLab
             }
             return cond;
         }
-
+#if VLab
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
         {
             foreach(var f in conddesign.Keys)
@@ -223,5 +245,131 @@ namespace VLab
             }
             return conddesign;
         }
+#endif
+        public static bool FirstAtSplit(this string name,out string head,out string tail)
+        {
+            head = null;tail = null;
+            if(!string.IsNullOrEmpty(name))
+            {
+                var ati = name.IndexOf('@');
+                if(ati<0)
+                {
+                    head = name;
+                    tail = null;
+                    return false;
+                }
+                else if(ati==0)
+                {
+                    if (name.Length >= 4)
+                    {
+                        head = null;
+                        tail = name.Substring(1);
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (name.Length >= 5)
+                    {
+                        head = name.Substring(0, ati);
+                        tail = name.Substring(ati + 1);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static string FirstAtSplitHead(this string name)
+        {
+            string head, tail;
+            name.FirstAtSplit(out head, out tail);
+            return head;
+        }
+
+        public static string FirstAtSplitTail(this string name)
+        {
+            string head, tail;
+            name.FirstAtSplit(out head, out tail);
+            return tail;
+        }
+
+        public static bool IsEnvParamFullName(this string name)
+        {
+            string head, tail;
+            return name.FirstAtSplit(out head, out tail);
+        }
+
+        public static bool IsEnvParamShortName(this string name)
+        {
+            string head, tail;
+            name.FirstAtSplit(out head, out tail);
+            return head != null && tail == null;
+        }
+
+        public static bool LastAtSplit(this string name,out string head,out string tail)
+        {
+            head = null; tail = null;
+            if (!string.IsNullOrEmpty(name))
+            {
+                var ati = name.LastIndexOf('@');
+                if (ati < 0)
+                {
+                    head = name;
+                    tail = null;
+                    return false;
+                }
+                else if (ati == 0)
+                {
+                    if (name.Length >= 2)
+                    {
+                        head = null;
+                        tail = name.Substring(1);
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (name.Length >= 5)
+                    {
+                        head = name.Substring(0, ati);
+                        tail = name.Substring(ati + 1);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static string LastAtSplitHead(this string name)
+        {
+            string head, tail;
+            name.LastAtSplit(out head, out tail);
+            return head;
+        }
+
+        public static string LastAtSplitTail(this string name)
+        {
+            string head, tail;
+            name.LastAtSplit(out head, out tail);
+            return tail;
+        }
+
+        public static List<string> GetValue(this Type T)
+        {
+            if (T.IsEnum)
+            {
+                return Enum.GetNames(T).ToList();
+            }
+            else if (T == typeof(bool))
+            {
+                return new List<string> { "True", "False" };
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
 }

@@ -1,11 +1,56 @@
-﻿using UnityEngine;
+﻿// -----------------------------------------------------------------------------
+// Experiment.cs is part of the VLAB project.
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
+
+using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System.Linq;
+using System;
+using Fasterflect;
 
 namespace VLab
 {
+    public class PropertyAccess
+    {
+        public MemberGetter getter;
+        public MemberSetter setter;
+        public Type type;
+
+        public PropertyAccess(MemberGetter g,MemberSetter s,Type t)
+        {
+            getter = g;
+            setter = s;
+            type = t;
+        }
+
+        public PropertyAccess(Type reflectedtype,string propertyname):
+            this(reflectedtype.DelegateForGetPropertyValue(propertyname),
+                reflectedtype.DelegateForSetPropertyValue(propertyname),
+                reflectedtype.GetProperty(propertyname).PropertyType)
+        {
+        }
+    }
+
     public class Experiment
     {
         public string Name { get; set; }
@@ -17,7 +62,7 @@ namespace VLab
         public string Subject_Species { get; set; }
         public string Subject_Name { get; set; }
         public string Subject_ID { get; set; }
-        public string Subject_Gender { get; set; }
+        public GENDER Subject_Gender { get; set; }
         public float Subject_Age { get; set; }
         public Vector3 Subject_Size { get; set; }
         public float Subject_Weight { get; set; }
@@ -37,7 +82,6 @@ namespace VLab
         public SampleMethod CondSampling { get; set; }
         public int CondRepeat { get; set; }
         public int Input { get; set; }
-        public bool AutoSaveData { get; set; }
 
         public double PreICI { get; set; }
         public double CondDur { get; set; }
@@ -56,14 +100,26 @@ namespace VLab
         public List<string> EnvInheritParam { get; set; }
         public List<CONDTESTPARAM> NotifyParam { get; set; }
 
-        public static readonly Dictionary<string, PropertyInfo> Properties;
+        public static readonly Dictionary<string, PropertyAccess> Properties;
 
         static Experiment()
         {
-            Properties = new Dictionary<string, PropertyInfo>();
-            foreach (var p in typeof(Experiment).GetProperties())
+            var T = typeof(Experiment);
+            Properties = new Dictionary<string, PropertyAccess>();
+            foreach (var p in T.GetProperties())
             {
-                Properties[p.Name] = p;
+                var n = p.Name;
+                Properties[n] = new PropertyAccess(T.DelegateForGetPropertyValue(n),
+                    T.DelegateForSetPropertyValue(n),p.PropertyType);
+            }
+        }
+
+        public void SetParam(string name, object value)
+        {
+            SetValue(name, value);
+            if (Param.ContainsKey(name))
+            {
+                Param[name] = value;
             }
         }
 
@@ -75,9 +131,22 @@ namespace VLab
             }
         }
 
-        public static void SetValue(Experiment ex, PropertyInfo p, object value)
+        public static void SetValue(Experiment ex, PropertyAccess p, object value)
         {
-            p.SetValue(ex, value.Convert(p.PropertyType), null);
+            p.setter(ex, value.Convert(p.type));
+        }
+
+        public object GetParam(string name)
+        {
+            var v = GetValue(name);
+            if(v==null)
+            {
+                if(Param.ContainsKey(name))
+                {
+                    v = Param[name];
+                }
+            }
+            return v;
         }
 
         public object GetValue(string name)
@@ -89,9 +158,9 @@ namespace VLab
             return null;
         }
 
-        public static object GetValue(Experiment ex, PropertyInfo p)
+        public static object GetValue(Experiment ex, PropertyAccess p)
         {
-            return p.GetValue(ex, null);
+            return p.getter(ex);
         }
 
         public virtual string GetDataPath(string ext = ".yaml")
@@ -134,6 +203,13 @@ namespace VLab
         }
     }
 
+    public enum GENDER
+    {
+        Male,
+        Female,
+        Others
+    }
+
     public enum CONDSTATE
     {
         NONE = 1,
@@ -166,7 +242,7 @@ namespace VLab
         SUFIEI
     }
 
-    public enum TASTSTATE
+    public enum TASKSTATE
     {
         NONE = 4001,
         FIXTARGET_ON,

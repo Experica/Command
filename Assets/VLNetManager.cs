@@ -1,15 +1,30 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // VLNetManager.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
-using UnityEngine.Networking.Types;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VLab
 {
@@ -18,11 +33,13 @@ namespace VLab
         public VLUIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
 
-        public bool IsPeerTypeConnected(VLPeerType peertype)
+
+        public bool IsPeerTypeConnected(VLPeerType peertype, int[] excludeids)
         {
-            foreach(var pi in peerinfo.Values)
+            foreach(var cid in peerinfo.Keys.Except(excludeids))
             {
-                if(pi!=null&&pi.ContainsKey("peertype")&&(VLPeerType)pi["peertype"]==peertype)
+                var pi = peerinfo[cid];var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+                if(pi!=null&&pi.ContainsKey(strkey)&&(VLPeerType)pi[strkey]==peertype)
                 {
                     return true;
                 }
@@ -45,16 +62,16 @@ namespace VLab
 
         public bool IsConnectionPeerType(NetworkConnection conn,VLPeerType peertype)
         {
-            var cid = conn.connectionId;
-            return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey("peertype") && (VLPeerType)peerinfo[cid]["peertype"] == peertype);
+            var cid = conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+            return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey(strkey) && (VLPeerType)peerinfo[cid][strkey] == peertype);
         }
 
-        
         /// <summary>
         /// Prepare server to handle all kinds of client messages.
         /// </summary>
         public override void OnStartServer()
         {
+            base.OnStartServer();
             if (LogFilter.logDebug)
             {
                 Debug.Log("Register PeerType Message Handler.");
@@ -68,8 +85,7 @@ namespace VLab
         }
 
         /// <summary>
-        /// for every client, we maintain information about the unique connection and 
-        /// peer, so we can talk to each one specificly.
+        /// Peertype message is received whenever a new client is connected.
         /// </summary>
         /// <param name="netMsg"></param>
         void PeerTypeHandler(NetworkMessage netMsg)
@@ -79,26 +95,24 @@ namespace VLab
             {
                 Debug.Log("Receive PeerType Message: " + v.ToString());
             }
-            var ispeertypeconnected = IsPeerTypeConnected(v);
-            var connid = netMsg.conn.connectionId;
-            if (peerinfo.ContainsKey(connid))
+            var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+            if(peerinfo.ContainsKey(connid))
             {
-                peerinfo[connid]["peertype"] = v;
+                peerinfo[connid][strkey] = v;
             }
             else
             {
                 var info = new Dictionary<string, object>();
-                info["peertype"] = v;
+                info[strkey] = v;
                 peerinfo[connid] = info;
             }
-            // whenever a VLabAnalysis client connected to VLab, it will seed peertype message, so
-            // here the function is triggered.
             // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
-            // so server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
+            // and server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
             // newly conneted client. if not, then this is the first time a VLabAnalysis client connected,
-            // we then create a new instance and spwan to all clients(may include VLabEnvironment, but since
-            // they don't register for the VLabAnalysisManager prefab, they will spawn nothing).
-            if ((v == VLPeerType.VLabAnalysis)&& (!ispeertypeconnected))
+            // so we need to create a new instance of VLabAnalysisManager and spwan to all clients,
+            // this may include VLabEnvironment, but since they doesn't register for the VLabAnalysisManager prefab,
+            // they will spawn nothing.
+            if ((v == VLPeerType.VLabAnalysis)&& (!IsPeerTypeConnected(VLPeerType.VLabAnalysis,new[] { connid })))
             {
                 SpwanVLAnalysisManager();
             }
@@ -111,7 +125,7 @@ namespace VLab
             als.uicontroller = uicontroller;
             uicontroller.alsmanager = als;
             go.name = "VLAnalysisManager";
-            go.transform.parent = transform;
+            go.transform.SetParent( transform);
             
             NetworkServer.Spawn(go);
         }
@@ -123,42 +137,32 @@ namespace VLab
             {
                 Debug.Log("Receive AspectRatio Message: " + v.ToString());
             }
-            var connid = netMsg.conn.connectionId;
+            var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.AspectRatio);
             if (peerinfo.ContainsKey(connid))
             {
-                peerinfo[connid]["aspectratio"] = v;
+                peerinfo[connid][strkey] = v;
             }
             else
             {
                 var info = new Dictionary<string, object>();
-                info["aspectratio"] = v;
+                info[strkey] = v;
                 peerinfo[connid] = info;
             }
-            uicontroller.viewpanel.aspectratio = v;
-            uicontroller.viewpanel.UpdateView();
+            uicontroller.OnAspectRatioMessage(v);
         }
 
-        public override void OnServerConnect(NetworkConnection conn)
+        public override void OnServerDisconnect(NetworkConnection conn)
         {
-            //base.OnServerConnect(conn);
-            //conn.SetChannelOption(0, ChannelOption.AllowFragmentation, 1);
-        }
-
-        public override void OnClientConnect(NetworkConnection conn)
-        {
-            //base.OnClientConnect(conn);
+            base.OnServerDisconnect(conn);
+            peerinfo.Remove(conn.connectionId);
         }
 
         public override void OnServerSceneChanged(string sceneName)
         {
-            Resources.UnloadUnusedAssets();
             base.OnServerSceneChanged(sceneName);
-            
-            uicontroller.exmanager.el.OnServerSceneChanged(sceneName);
-            uicontroller.exmanager.InheritEnv();
+            Resources.UnloadUnusedAssets();
 
-            uicontroller.UpdateEnv();
-            uicontroller.UpdateView();
+            uicontroller.OnServerSceneChanged(sceneName);
         }
 
         public override void OnServerReady(NetworkConnection conn)
@@ -166,7 +170,7 @@ namespace VLab
             NetworkServer.SpawnObjects();
 
             base.OnServerReady(conn);
-            uicontroller.exmanager.el.envmanager.PushParams();
+            uicontroller.exmanager.el.envmanager.ForcePushParams();
         }
     }
 }

@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // EnvironmentPanel.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,137 +34,112 @@ namespace VLab
     public class EnvironmentPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public GameObject svcontent, inputfield, togglebutton,
-            togglebuttoninputfield, togglebuttondirinput, togglebuttonfilepathinput, togglebuttondropdown;
-        public Dictionary<string, InputField> input = new Dictionary<string, InputField>();
-        public Dictionary<string, Dropdown> dropdowns = new Dictionary<string, Dropdown>();
+        public GameObject content;
+
+        public Dictionary<string, Toggle> inherittoggle = new Dictionary<string, Toggle>();
+        public Dictionary<string, InputField> inputfield = new Dictionary<string, InputField>();
+        public Dictionary<string, Dropdown> dropdown = new Dictionary<string, Dropdown>();
+
+
         public void UpdateEnv(EnvironmentManager em)
         {
-            for (var i = 0; i < svcontent.transform.childCount; i++)
+            for (var i = 0; i < content.transform.childCount; i++)
             {
-                Destroy(svcontent.transform.GetChild(i).gameObject);
+                Destroy(content.transform.GetChild(i).gameObject);
             }
-            AddView(em);
+            AddEnvUI(em);
         }
 
-        public void AddView(EnvironmentManager em)
+        public void AddEnvUI(EnvironmentManager em)
         {
-            var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullname];
-            foreach (var p in em.net_syncvar.Keys)
+            var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowInactiveEnvParam];
+            var isshowfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullName];
+            foreach (var fullname in em.net_syncvar.Keys)
             {
-                var pt = em.net_syncvar[p].PropertyType;
-                var pv = em.GetParam(p);
-                if (isshowinactive)
+                string paramname, nb;
+                fullname.FirstAtSplit(out paramname, out nb);
+                var showname = isshowfullname ? fullname : paramname;
+                var T = em.net_syncvar[fullname].type;
+                if (!isshowinactive)
                 {
-                    AddParam(p, pt, pv,
-                        uicontroller.exmanager.el.ex.EnvInheritParam.Contains(p),
-                        ChoosePrefab(p,pt),svcontent.transform);
-                }
-                else
-                {
-                    if(em.isparamactive(p))
+                    if (em.activenet.Contains(nb))
                     {
-                        AddParam(p, pt, pv,
-                            uicontroller.exmanager.el.ex.EnvInheritParam.Contains(p),
-                            ChoosePrefab(p, pt), svcontent.transform);
+                        AddParamUI(fullname, showname, paramname, T, em.GetParam(fullname),
+                            uicontroller.exmanager.el.ex.EnvInheritParam.Contains(paramname),
+                            paramname.GetPrefab(T), content.transform);
                     }
                 }
-            }
-
-            UpdateViewRect();
-        }
-
-        public GameObject ChoosePrefab(string name, Type T)
-        {
-            GameObject prefab;
-            var pi = name.LastIndexOf("path");
-            var di = name.LastIndexOf("dir");
-            if (pi >= 0 && pi == (name.Length - 4))
-            {
-                prefab = togglebuttonfilepathinput;
-            }
-            else if(di >= 0 && di == (name.Length - 3))
-            {
-                prefab = togglebuttondirinput;
-            }
-            else
-            {
-                if (T.IsEnum)
-                {
-                    prefab = togglebuttondropdown;
-                }
                 else
                 {
-                    prefab = togglebuttoninputfield;
+                    AddParamUI(fullname, showname, paramname, T, em.GetParam(fullname),
+                        uicontroller.exmanager.el.ex.EnvInheritParam.Contains(paramname),
+                            paramname.GetPrefab(T), content.transform);
                 }
             }
-            return prefab;
+            UpdateContentRect();
         }
 
-        public void UpdateViewRect()
+        public void UpdateContentRect()
         {
-            var np = svcontent.transform.childCount;
-            var grid = svcontent.GetComponent<GridLayoutGroup>();
+            var np = inherittoggle.Count;
+            var grid = content.GetComponent<GridLayoutGroup>();
             var cn = grid.constraintCount;
             var rn = Mathf.Floor(np / cn) + 1;
-            var rt = (RectTransform)svcontent.transform;
+            var rt = (RectTransform)content.transform;
             rt.sizeDelta = new Vector2((grid.cellSize.x + grid.spacing.x) * cn, (grid.cellSize.y + grid.spacing.y) * rn);
         }
 
-        public void UpdateParamUI(string name,object value)
+        public void UpdateParamUI(string fullname, object value)
         {
-            if (input.ContainsKey(name))
+            if (dropdown.ContainsKey(fullname))
             {
-                input[name].text = value.ToString();
+                var vs = dropdown[fullname].options.Select(i => i.text).ToList();
+                dropdown[fullname].value = vs.IndexOf(value.ToString());
+                return;
             }
-            if (dropdowns.ContainsKey(name))
+            if (inputfield.ContainsKey(fullname))
             {
-                //dropdowns[name].value = value;
+                inputfield[fullname].text = value == null ? "" : value.Convert<string>();
+                return;
             }
         }
 
-        void AddParam(string name, Type T, object value, bool isinherit,GameObject prefab,Transform parent)
+        public void AddParamUI(string fullname, string showname, string paramname, Type T, object value, bool isinherit, GameObject prefab, Transform parent)
         {
             var go = Instantiate(prefab);
-            go.name = name;
-            var isshowenvparamfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullname];
-
+            go.name = fullname;
             for (var i = 0; i < go.transform.childCount; i++)
             {
                 var cgo = go.transform.GetChild(i).gameObject;
                 var toggle = cgo.GetComponent<Toggle>();
                 var inputfield = cgo.GetComponent<InputField>();
                 var dropdown = cgo.GetComponent<Dropdown>();
+                // Check Inherit ToggleButton
                 if (toggle != null)
                 {
-                    cgo.GetComponentInChildren<Text>().text = isshowenvparamfullname?name:EnvironmentManager.GetSyncVarName(name);
+                    cgo.GetComponentInChildren<Text>().text = showname;
                     toggle.isOn = isinherit;
-                    toggle.onValueChanged.AddListener((ison) => uicontroller.ToggleEnvInheritParam(name, ison));
+                    toggle.onValueChanged.AddListener(ison => uicontroller.ToggleEnvInherit(fullname, paramname, ison));
+                    inherittoggle[fullname] = toggle;
                 }
                 if (inputfield != null)
                 {
-                    if (value == null)
-                    {
-                        value = "";
-                    }
-                    inputfield.text = value.Convert<string>();
-                    inputfield.onEndEdit.AddListener((v) => uicontroller.SetEnvParam(name, v));
-                    input[name] = inputfield;
+                    inputfield.text = value == null ? "" : value.Convert<string>();
+                    inputfield.onEndEdit.AddListener(s => uicontroller.exmanager.el.envmanager.SetParam(fullname, s));
+                    this.inputfield[fullname] = inputfield;
                 }
                 if (dropdown != null)
                 {
-                    var vs = Enum.GetNames(T).ToList();
-                    if (value == null || !vs.Contains(value.ToString()))
+                    var vs = T.GetValue();
+                    if (vs != null && vs.Contains(value.ToString()))
                     {
-                        value = vs[0];
+                        dropdown.AddOptions(vs);
+                        dropdown.value = vs.IndexOf(value.ToString());
+                        dropdown.onValueChanged.AddListener(vi => uicontroller.exmanager.el.envmanager.SetParam(fullname, dropdown.captionText.text));
+                        this.dropdown[fullname] = dropdown;
                     }
-                    dropdown.AddOptions(vs);
-                    dropdown.value = vs.IndexOf(value.ToString());
-                    dropdown.onValueChanged.AddListener((v) => uicontroller.SetEnvParam(name, dropdown.captionText.text));
-                    dropdowns[name] = dropdown;
                 }
             }
-
             go.transform.SetParent(parent);
             go.transform.localScale = new Vector3(1, 1, 1);
         }

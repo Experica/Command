@@ -7223,6 +7223,14 @@ The values passed to stereoTargetEye are found in the StereoTargetEyeMask enum. 
         <para>Returns the default material that can be used for rendering text elements on the Canvas.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.Canvas.GetETC1SupportedCanvasMaterial">
+      <summary>
+        <para>Gets or generates the ETC1 material.</para>
+      </summary>
+      <returns>
+        <para>The generated ETC1 material from the Canvas.</para>
+      </returns>
+    </member>
     <member name="T:UnityEngine.CanvasGroup">
       <summary>
         <para>A Canvas placable element that can be used to modify children Alpha, Raycasting, Enabled state.</para>
@@ -7386,6 +7394,12 @@ See Also: CanvasRenderer.EnableRectClipping, CanvasRenderer.DisableRectClipping.
         <para>Set the alpha of the renderer. Will be multiplied with the UIVertex alpha and the Canvas alpha.</para>
       </summary>
       <param name="alpha">Alpha.</param>
+    </member>
+    <member name="M:UnityEngine.CanvasRenderer.SetAlphaTexture(UnityEngine.Texture)">
+      <summary>
+        <para>The Alpha Texture that will be passed to the shader under the _AlphaTex property.</para>
+      </summary>
+      <param name="texture">The Texture to be passed.</param>
     </member>
     <member name="M:UnityEngine.CanvasRenderer.SetColor(UnityEngine.Color)">
       <summary>
@@ -28774,6 +28788,34 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
       <param name="original">An existing object that you want to make a copy of.</param>
       <param name="position">Position for the new object (default Vector3.zero).</param>
       <param name="rotation">Orientation of the new object (default Quaternion.identity).</param>
+      <param name="parent">The transform the object will be parented to.</param>
+      <param name="worldPositionStays">If when assigning the parent the original world position should be maintained.</param>
+      <returns>
+        <para>A clone of the original object.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Object.Instantiate(UnityEngine.Object,UnityEngine.Transform)">
+      <summary>
+        <para>Returns a copy of the object original.</para>
+      </summary>
+      <param name="original">An existing object that you want to make a copy of.</param>
+      <param name="position">Position for the new object (default Vector3.zero).</param>
+      <param name="rotation">Orientation of the new object (default Quaternion.identity).</param>
+      <param name="parent">The transform the object will be parented to.</param>
+      <param name="worldPositionStays">If when assigning the parent the original world position should be maintained.</param>
+      <returns>
+        <para>A clone of the original object.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Object.Instantiate(UnityEngine.Object,UnityEngine.Transform,System.Boolean)">
+      <summary>
+        <para>Returns a copy of the object original.</para>
+      </summary>
+      <param name="original">An existing object that you want to make a copy of.</param>
+      <param name="position">Position for the new object (default Vector3.zero).</param>
+      <param name="rotation">Orientation of the new object (default Quaternion.identity).</param>
+      <param name="parent">The transform the object will be parented to.</param>
+      <param name="worldPositionStays">If when assigning the parent the original world position should be maintained.</param>
       <returns>
         <para>A clone of the original object.</para>
       </returns>
@@ -28785,6 +28827,21 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
       <param name="original">An existing object that you want to make a copy of.</param>
       <param name="position">Position for the new object (default Vector3.zero).</param>
       <param name="rotation">Orientation of the new object (default Quaternion.identity).</param>
+      <param name="parent">The transform the object will be parented to.</param>
+      <param name="worldPositionStays">If when assigning the parent the original world position should be maintained.</param>
+      <returns>
+        <para>A clone of the original object.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Object.Instantiate(UnityEngine.Object,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Transform)">
+      <summary>
+        <para>Returns a copy of the object original.</para>
+      </summary>
+      <param name="original">An existing object that you want to make a copy of.</param>
+      <param name="position">Position for the new object (default Vector3.zero).</param>
+      <param name="rotation">Orientation of the new object (default Quaternion.identity).</param>
+      <param name="parent">The transform the object will be parented to.</param>
+      <param name="worldPositionStays">If when assigning the parent the original world position should be maintained.</param>
       <returns>
         <para>A clone of the original object.</para>
       </returns>

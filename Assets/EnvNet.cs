@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // EnvNet.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,6 +26,13 @@ using System.Collections.Generic;
 
 namespace VLab
 {
+    public enum EnvironmentObject
+    {
+        None,
+        Quad,
+        GratingQuad
+    }
+
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class EnvNet : NetworkBehaviour
     {
@@ -18,7 +40,7 @@ namespace VLab
         public bool Visible = true;
         [SyncVar(hook = "onposition")]
         public Vector3 Position = new Vector3();
-        [SyncVar(hook ="onpositionoffset")]
+        [SyncVar(hook = "onpositionoffset")]
         public Vector3 PositionOffset = new Vector3();
 
         public new Renderer renderer;
@@ -57,7 +79,7 @@ namespace VLab
         }
         public virtual void OnPosition(Vector3 p)
         {
-            transform.position = p+PositionOffset;
+            transform.position = p + PositionOffset;
             Position = p;
         }
 
@@ -67,7 +89,7 @@ namespace VLab
         }
         public virtual void OnPositionOffset(Vector3 poffset)
         {
-            transform.position = Position+poffset;
+            transform.position = Position + poffset;
             PositionOffset = poffset;
         }
 
@@ -79,17 +101,16 @@ namespace VLab
 
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var isrebuild = false;
-            var cs = netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
-            if (cs.Count > 0)
+            var vcs = netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            if (vcs.Count > 0)
             {
-                foreach (var c in cs)
+                foreach (var c in vcs)
                 {
                     observers.Add(c);
                 }
-                isrebuild = true;
+                return true;
             }
-            return isrebuild;
+            return false;
         }
 #endif
 

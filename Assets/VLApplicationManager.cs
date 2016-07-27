@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // VLApplicationManager.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -16,6 +31,7 @@ namespace VLab
     public enum VLCFG
     {
         IsSaveExOnQuit,
+        AutoSaveData,
         ExDir,
         DataDir,
         ExLogic,
@@ -24,8 +40,9 @@ namespace VLab
         AnisotropicFilterLevel,
         LogicTick,
         IsShowInactiveEnvParam,
-        IsShowEnvParamFullname,
-        MaxLogEntry
+        IsShowEnvParamFullName,
+        MaxLogEntry,
+        ExHideParams
     }
 
     public class VLApplicationManager : MonoBehaviour
@@ -59,6 +76,14 @@ namespace VLab
             {
                 config[VLCFG.IsSaveExOnQuit] = config[VLCFG.IsSaveExOnQuit].Convert<bool>();
             }
+            if (!config.ContainsKey(VLCFG.AutoSaveData))
+            {
+                config[VLCFG.AutoSaveData] = true;
+            }
+            else
+            {
+                config[VLCFG.AutoSaveData] = config[VLCFG.AutoSaveData].Convert<bool>();
+            }
             if (!config.ContainsKey(VLCFG.ExDir))
             {
                 config[VLCFG.ExDir] = "Experiment";
@@ -73,12 +98,12 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.NotifyParams))
             {
-                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE};
+                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE };
             }
             else
             {
                 var o = config[VLCFG.NotifyParams] as List<object>;
-                config[VLCFG.NotifyParams] =o.Select(i => i.Convert<CONDTESTPARAM>()).ToList();
+                config[VLCFG.NotifyParams] = o.Select(i => i.Convert<CONDTESTPARAM>()).ToList();
             }
             if (!config.ContainsKey(VLCFG.AntiAliasing))
             {
@@ -112,13 +137,13 @@ namespace VLab
             {
                 config[VLCFG.IsShowInactiveEnvParam] = config[VLCFG.IsShowInactiveEnvParam].Convert<bool>();
             }
-            if (!config.ContainsKey(VLCFG.IsShowEnvParamFullname))
+            if (!config.ContainsKey(VLCFG.IsShowEnvParamFullName))
             {
-                config[VLCFG.IsShowEnvParamFullname] = false;
+                config[VLCFG.IsShowEnvParamFullName] = false;
             }
             else
             {
-                config[VLCFG.IsShowEnvParamFullname] = config[VLCFG.IsShowEnvParamFullname].Convert<bool>();
+                config[VLCFG.IsShowEnvParamFullName] = config[VLCFG.IsShowEnvParamFullName].Convert<bool>();
             }
             if (!config.ContainsKey(VLCFG.MaxLogEntry))
             {
@@ -128,6 +153,16 @@ namespace VLab
             {
                 config[VLCFG.MaxLogEntry] = config[VLCFG.MaxLogEntry].Convert<int>();
             }
+            if (!config.ContainsKey(VLCFG.ExHideParams))
+            {
+                config[VLCFG.ExHideParams] = new List<string> { "Cond", "CondTest", "EnvParam", "Param","Log","Subject_Log" };
+            }
+            else
+            {
+                var o = config[VLCFG.ExHideParams] as List<object>;
+                config[VLCFG.ExHideParams] = o.Select(i => i.Convert<string>()).ToList();
+            }
+
 
             if (!VLTimer.IsHighResolution)
             {

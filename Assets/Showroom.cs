@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // Showroom.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,18 +31,11 @@ namespace VLab
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Showroom : NetworkBehaviour
     {
-        public enum ItemID
-        {
-            None,
-            Quad,
-            GratingQuad
-        }
+        [SyncVar(hook = "onshow")]
+        public EnvironmentObject Show;
 
-        [SyncVar(hook = "onitemid")]
-        public ItemID itemid;
-
-        Dictionary<ItemID, GameObject> items = new Dictionary<ItemID, GameObject>();
-        Dictionary<NetworkHash128, ItemID> assetidtoid = new Dictionary<NetworkHash128, ItemID>();
+        Dictionary<EnvironmentObject, GameObject> items = new Dictionary<EnvironmentObject, GameObject>();
+        Dictionary<NetworkHash128, EnvironmentObject> assetidtoid = new Dictionary<NetworkHash128, EnvironmentObject>();
         Dictionary<NetworkHash128, GameObject> prefabs = new Dictionary<NetworkHash128, GameObject>();
 
 #if VLAB
@@ -37,7 +45,7 @@ namespace VLab
         void Awake()
         {
 #if VLAB
-            uicontroller = GameObject.Find("VLUIController").GetComponent<VLUIController>();
+            uicontroller = FindObjectOfType<VLUIController>();
 #endif
 #if VLABENVIRONMENT
             RegisterSpawnHandler();
@@ -46,13 +54,16 @@ namespace VLab
 
         void RegisterSpawnHandler()
         {
-            var ns = Enum.GetNames(typeof(ItemID));
-            for (var i = 1; i < ns.Length; i++)
+            foreach (var n in typeof(EnvironmentObject).GetValue())
             {
-                var prefab = Resources.Load<GameObject>(ns[i]);
+                if (n == "None")
+                {
+                    continue;
+                }
+                var prefab = Resources.Load<GameObject>(n);
                 var assetid = prefab.GetComponent<NetworkIdentity>().assetId;
                 prefabs[assetid] = prefab;
-                assetidtoid[assetid] = (ItemID)i;
+                assetidtoid[assetid] = n.Convert<EnvironmentObject>();
                 ClientScene.RegisterSpawnHandler(assetid, new SpawnDelegate(SpawnHandler), new UnSpawnDelegate(UnSpawnHandler));
             }
         }
@@ -73,35 +84,13 @@ namespace VLab
         {
         }
 
-#if VLAB
-        public override bool OnCheckObserver(NetworkConnection conn)
+        void onshow(EnvironmentObject id)
         {
-            return uicontroller. netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+            OnShow(id);
         }
-
-        public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
+        public virtual void OnShow(EnvironmentObject id)
         {
-            var isrebuild = false;
-            var cs =uicontroller. netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
-            if (cs.Count > 0)
-            {
-                foreach (var c in cs)
-                {
-                    observers.Add(c);
-                }
-                isrebuild = true;
-            }
-            return isrebuild;
-        }
-#endif
-
-        void onitemid(ItemID id)
-        {
-            OnItemID(id);
-        }
-        public virtual void OnItemID(ItemID id)
-        {
-            if (id == ItemID.None)
+            if (id == EnvironmentObject.None)
             {
                 SetAllItemActive(false);
 #if VLAB
@@ -122,19 +111,19 @@ namespace VLab
 #if VLAB
                     var go = LoadItem(id);
                     uicontroller.exmanager.el.envmanager.UpdateScene();
-                    uicontroller.exmanager.el.envmanager.SetParamsForObject(uicontroller.exmanager.el.ex.EnvParam,go.name);
-                    uicontroller.exmanager.InheritEnv();
+                    uicontroller.exmanager.el.envmanager.SetParams(uicontroller.exmanager.el.ex.EnvParam, go.name);
+                    uicontroller.exmanager.InheritEnv(go.name);
                     NetworkServer.Spawn(go);
 #endif
                 }
             }
-            itemid = id;
+            Show = id;
 #if VLAB
-            uicontroller.UpdateEnv();
+            uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
         }
 
-        GameObject LoadItem(ItemID id)
+        GameObject LoadItem(EnvironmentObject id)
         {
             var go = Instantiate(Resources.Load<GameObject>(id.ToString()));
             go.transform.SetParent(transform);
@@ -145,7 +134,7 @@ namespace VLab
             return go;
         }
 
-        void SetItemActive(ItemID id, bool isactive)
+        void SetItemActive(EnvironmentObject id, bool isactive)
         {
             if (items.ContainsKey(id))
             {
@@ -161,7 +150,7 @@ namespace VLab
             }
         }
 
-        void SetAllItemActiveExcept(ItemID id, bool isactive)
+        void SetAllItemActiveExcept(EnvironmentObject id, bool isactive)
         {
             foreach (var i in items.Keys)
             {
@@ -172,7 +161,7 @@ namespace VLab
             }
         }
 
-        void SetAllItemActiveExceptOtherWise(ItemID id, bool isactive)
+        void SetAllItemActiveExceptOtherWise(EnvironmentObject id, bool isactive)
         {
             foreach (var i in items.Keys)
             {
@@ -186,6 +175,27 @@ namespace VLab
                 }
             }
         }
+
+#if VLAB
+        public override bool OnCheckObserver(NetworkConnection conn)
+        {
+            return uicontroller.netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+        }
+
+        public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
+        {
+            var vcs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            if (vcs.Count > 0)
+            {
+                foreach (var c in vcs)
+                {
+                    observers.Add(c);
+                }
+                return true;
+            }
+            return false;
+        }
+#endif
 
     }
 }

@@ -9,5 +9,13 @@ AntiAliasing: 2
 AnisotropicFilterLevel: 5
 LogicTick: 0.0001
 IsShowInactiveEnvParam: false
-IsShowEnvParamFullname: false
+IsShowEnvParamFullName: false
 MaxLogEntry: 999
+ExHideParams:
+- Cond
+- CondTest
+- EnvParam
+- Param
+- Log
+- Subject_Log
+AutoSaveData: true

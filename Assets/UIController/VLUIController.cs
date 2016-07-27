@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // VLUIController.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -12,6 +27,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System;
 using MsgPack;
 using MsgPack.Serialization;
 
@@ -20,35 +36,58 @@ namespace VLab
     public class VLUIController : MonoBehaviour
     {
         public VLApplicationManager appmanager;
-        public Toggle host, server;
+        public Toggle host, server,start,pause;
+        public Dropdown exs;
+        public Button savedata;
+        public Text startstoptext, pauseresumetext;
         public VLNetManager netmanager;
         public ExperimentManager exmanager;
         public VLAnalysisManager alsmanager;
+        public ControlPanel controlpanel;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
-        public ControlPanel controlpanel;
         public ConsolePanel consolepanel;
 
-        void UpdateExDropdown()
+
+        void Start()
         {
-            exmanager.GetExFiles();
-            if (exmanager.exids.Count > 0)
+            UpdateExDropdown();
+            savedata.interactable = !(bool)appmanager.config[VLCFG.AutoSaveData];
+        }
+
+        public void UpdateExDropdown()
+        {
+            var exn = exmanager.exids.Count;
+            if (exn > 0)
             {
-                controlpanel.exdropdown.ClearOptions();
-                controlpanel.exdropdown.AddOptions(exmanager.exids);
-                OnExDropdownValueChange(0);
+                exs.ClearOptions();
+                exs.AddOptions(exmanager.exids);
+                OnExDropdownValueChange(Mathf.Clamp( exs.value,0,exn-1));
             }
         }
 
         public void OnExDropdownValueChange(int i)
         {
-            exmanager.LoadEL(exmanager.exfiles[i]);
-            expanel.UpdateEx(exmanager.el.ex);
-            if (NetworkServer.active)
+            var idx = exmanager.exids.FindIndex(0, s => s == exs.captionText.text);
+            if (idx >= 0)
             {
+                exmanager.LoadEL(exmanager.exfiles[idx]);
+                expanel.UpdateEx(exmanager.el.ex);
                 ChangeScene();
             }
+        }
+
+        public void OnAspectRatioMessage(float ratio)
+        {
+            viewpanel.AspectRatio = ratio;
+        }
+
+        public void OnServerSceneChanged(string sceneName)
+        {
+            exmanager.OnServerSceneChanged(sceneName);
+            envpanel.UpdateEnv(exmanager.el.envmanager);
+            viewpanel.UpdateView();
         }
 
         public void OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
@@ -68,88 +107,44 @@ namespace VLab
                         MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
                         break;
                 }
-                alsmanager.RpcNotifyCondTestData(name, stream.ToArray());
+                alsmanager.RpcNotifyCondTest(name, stream.ToArray());
             }
         }
 
-        public void OnNotifyEnd(double time)
+        public void OnNotifyCondTestEnd(double time)
         {
             if (alsmanager != null)
             {
-                alsmanager.RpcNotifyAnalysis(time);
+                alsmanager.RpcNotifyCondTestEnd(time);
             }
         }
 
-        public void OnNotifyExperiment(Experiment ex)
+        public void OnBeginStartExperiment()
         {
-            if (alsmanager != null)
-            {
-                var stream = new MemoryStream();
-                MsgPackSerializer.ExSerializer.Pack(stream, ex, PackerCompatibilityOptions.None);
-                alsmanager.RpcNotifyExperiment(stream.ToArray());
-            }
-        }
+            startstoptext.text = "Stop";
+            pause.interactable = true;
+            consolepanel.LogError("Experiment Started.");
 
-        public void OnNotifyStartExperiment()
-        {
+            // Get Highest Performance
+            QualitySettings.vSyncCount = 0;
+            QualitySettings.maxQueuedFrames = 0;
+            Time.fixedDeltaTime = (float)appmanager.config[VLCFG.LogicTick];
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
             if (alsmanager != null)
             {
                 alsmanager.RpcNotifyStartExperiment();
             }
         }
 
-        public void OnNotifyStopExperiment()
+        public void OnEndStartExperiment()
         {
             if (alsmanager != null)
             {
-                alsmanager.RpcNotifyStopExperiment();
+                var stream = new MemoryStream();
+                MsgPackSerializer.ExSerializer.Pack(stream,exmanager.el. ex, PackerCompatibilityOptions.None);
+                alsmanager.RpcNotifyExperiment(stream.ToArray());
             }
-        }
-
-        public void OnBeginStartExperiment()
-        {
-            controlpanel.startstoptext.text = "Stop";
-            controlpanel.pauseresume.interactable = true;
-            consolepanel.LogError("Experiment Started.");
-
-            QualitySettings.vSyncCount = 0;
-            QualitySettings.maxQueuedFrames = 0;
-
-            Time.fixedDeltaTime = (float)appmanager.config[VLCFG.LogicTick];
-            Process.GetCurrentProcess().PriorityBoostEnabled = true;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-
-            OnNotifyStartExperiment();
-        }
-
-        public void OnEndStartExperiment()
-        {
-            OnNotifyExperiment(exmanager.el.ex);
-        }
-
-        public void OnBeginStopExperiment()
-        {
-            controlpanel.startstoptext.text = "Start";
-            if (controlpanel.pauseresume.isOn)
-            {
-                controlpanel.pauseresume.isOn = false;
-                TogglePauseResumeExperiment(false);
-            }
-            controlpanel.pauseresume.interactable = false;
-            consolepanel.LogError("Experiment Stoped.");
-
-            QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 2;
-
-            Time.fixedDeltaTime = 0.02f;
-            Process.GetCurrentProcess().PriorityBoostEnabled = false;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
-        }
-
-        public void OnEndStopExperiment()
-        {
-            OnNotifyStopExperiment();
-            exmanager.el.SaveData();
         }
 
         public void ToggleStartStopExperiment(bool isstart)
@@ -160,42 +155,56 @@ namespace VLab
             }
         }
 
-        public void OnNotifyPauseExperiment()
+        public void OnBeginStopExperiment()
+        {
+            startstoptext.text = "Start";
+            if (pause.isOn)
+            {
+                TogglePauseResumeExperiment(false);
+                pause.isOn = false;
+            }
+            pause.interactable = false;
+            consolepanel.LogError("Experiment Stoped.");
+
+            // Return Normal Performance
+            QualitySettings.vSyncCount = 1;
+            QualitySettings.maxQueuedFrames = 1;
+            Time.fixedDeltaTime = 0.02f;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+        }
+
+        public void OnEndStopExperiment()
         {
             if (alsmanager != null)
             {
-                alsmanager.RpcNotifyPauseExperiment();
+                alsmanager.RpcNotifyStopExperiment();
+            }
+            if ((bool)appmanager.config[VLCFG.AutoSaveData])
+            {
+                exmanager.el.SaveData();
             }
         }
 
-        public void OnNotifyResumeExperiment()
+        public void SaveData()
         {
-            if (alsmanager != null)
+            if (exmanager.el != null)
             {
-                alsmanager.RpcNotifyResumeExperiment();
+                exmanager.el.SaveData();
             }
         }
 
         public void OnBeginPauseExperiment()
         {
-            controlpanel.pauseresumetext.text = "Resume";
+            pauseresumetext.text = "Resume";
             consolepanel.LogWarn("Experiment Paused.");
         }
 
         public void OnEndPauseExperiment()
         {
-            OnNotifyPauseExperiment();
-        }
-
-        public void OnBeginResumeExperiment()
-        {
-            controlpanel.pauseresumetext.text = "Pause";
-            consolepanel.LogWarn("Experiment Resumed.");
-        }
-
-        public void OnEndResumeExpeirment()
-        {
-            OnNotifyResumeExperiment();
+            if (alsmanager != null)
+            {
+                alsmanager.RpcNotifyPauseExperiment();
+            }
         }
 
         public void TogglePauseResumeExperiment(bool ispause)
@@ -206,101 +215,85 @@ namespace VLab
             }
         }
 
-        public void UpdateEnv()
+        public void OnBeginResumeExperiment()
         {
-            envpanel.UpdateEnv(exmanager.el.envmanager);
+            pauseresumetext.text = "Pause";
+            consolepanel.LogWarn("Experiment Resumed.");
         }
 
-        public void UpdateView()
+        public void OnEndResumeExpeirment()
         {
-            viewpanel.UpdateView();
-        }
-
-        public void ToggleExInheritParam(string name, bool isinherit)
-        {
-            var ps = exmanager.el.ex.ExInheritParam;
-            if (ps.Contains(name))
+            if (alsmanager != null)
             {
-                if (!isinherit)
+                alsmanager.RpcNotifyResumeExperiment();
+            }
+        }
+
+        public void ToggleExInherit(string name, bool isinherit)
+        {
+            var ip = exmanager.el.ex.ExInheritParam;
+            if(isinherit)
+            {
+                if(!ip.Contains(name))
                 {
-                    ps.Remove(name);
+                    ip.Add(name);
                 }
+                exmanager.InheritExParam(name);
+                expanel.UpdateParamUI(name, exmanager.el.ex.GetParam(name));
             }
             else
             {
-                if (isinherit)
+                if(ip.Contains(name))
                 {
-                    ps.Add(name);
-                    exmanager.InheritExParam(name);
-                    expanel.UpdateParamUI(name, exmanager.el.ex.GetValue(name));
+                    ip.Remove(name);
                 }
             }
         }
 
-        public void ToggleEnvInheritParam(string name, bool isinherit)
+        public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
-            var ps = exmanager.el.ex.EnvInheritParam;
-            if (ps.Contains(name))
+            var ip = exmanager.el.ex.EnvInheritParam;
+            if(isinherit)
             {
-                if (!isinherit)
+                if(!ip.Contains(paramname))
                 {
-                    ps.Remove(name);
+                    ip.Add(paramname);
+                }
+                exmanager.InheritEnvParam(paramname);
+                envpanel.UpdateParamUI(fullname, exmanager.el.envmanager.GetParam(fullname));
+            }
+            {
+                if(ip.Contains(paramname))
+                {
+                    ip.Remove(paramname);
                 }
             }
-            else
-            {
-                if (isinherit)
-                {
-                    ps.Add(name);
-                    exmanager.InheritEnvParam(name);
-                    envpanel.UpdateParamUI(name, exmanager.el.envmanager.GetParam(name));
-                }
-            }
-        }
-
-        public void SetExParam(string name, object value)
-        {
-            if (Experiment.Properties.ContainsKey(name))
-            {
-                exmanager.el.ex.SetValue(name, value);
-            }
-            else
-            {
-                exmanager.el.ex.Param[name] = value;
-            }
-        }
-
-        public void SetEnvParam(string name, object value)
-        {
-            exmanager.el.envmanager.SetParam(name, value);
         }
 
         public void SaveEx()
         {
-            exmanager.SaveEx(controlpanel.exdropdown.captionText.text);
+            exmanager.SaveEx(exs.captionText.text);
         }
 
         public void DeleteEx()
         {
-            var i = exmanager.DeleteEx(controlpanel.exdropdown.captionText.text);
+            var did = exs.captionText.text;
+            var i = exmanager.DeleteEx(exs.captionText.text);
             if (i >= 0)
             {
-                controlpanel.exdropdown.options.RemoveAt(i);
-                if (i < exmanager.exids.Count)
+                exs.options.RemoveAt(i);
+                var exn = exs.options.Count;
+                if(exn>0)
                 {
-                    controlpanel.exdropdown.value = i;
-                    controlpanel.exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
+                    i = Mathf.Clamp(i, 0, exn-1);
+                    exs.value = i;
+                    exs.captionText.text = exs.options[i].text;
                     OnExDropdownValueChange(i);
                 }
                 else
                 {
-                    if (exmanager.exids.Count > 0)
-                    {
-                        i = exmanager.exids.Count - 1;
-                        controlpanel.exdropdown.value = i;
-                        controlpanel.exdropdown.captionText.text = controlpanel.exdropdown.options[i].text;
-                        OnExDropdownValueChange(i);
-                    }
+                    exs.value = 0;
+                    exs.captionText.text = "";
                 }
             }
         }
@@ -314,9 +307,15 @@ namespace VLab
             }
             else
             {
+                if(start.isOn)
+                {
+                    ToggleStartStopExperiment(false);
+                    start.isOn = false;
+                }
                 netmanager.StopHost();
             }
             server.interactable = !ison;
+            start.interactable = ison;
         }
 
         public void ToggleServer(bool ison)
@@ -328,12 +327,18 @@ namespace VLab
             }
             else
             {
+                if (start.isOn)
+                {
+                    ToggleStartStopExperiment(false);
+                    start.isOn = false;
+                }
                 netmanager.StopServer();
             }
             host.interactable = !ison;
+            start.interactable = ison;
         }
 
-        void ChangeScene()
+        public void ChangeScene()
         {
             if (exmanager.el != null)
             {
@@ -341,6 +346,7 @@ namespace VLab
                 if (string.IsNullOrEmpty(scene))
                 {
                     scene = "Showroom";
+                    exmanager.el.ex.EnvPath = scene;
                 }
                 if (NetworkServer.active)
                 {
@@ -348,11 +354,5 @@ namespace VLab
                 }
             }
         }
-
-        void Start()
-        {
-            UpdateExDropdown();
-        }
-
     }
 }

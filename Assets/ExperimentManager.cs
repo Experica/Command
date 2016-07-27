@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // ExperimentManager.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -24,6 +39,11 @@ namespace VLab
         public List<string> exfiles = new List<string>();
         public List<string> exids = new List<string>();
         public ExperimentLogic el;
+
+        void Awake()
+        {
+            GetExFiles();
+        }
 
         public void GetExFiles()
         {
@@ -118,7 +138,9 @@ namespace VLab
             }
             if (eltype == null)
             {
-                eltype = Type.GetType((string)appmanager.config[VLCFG.ExLogic]);
+                var elpath = (string)appmanager.config[VLCFG.ExLogic];
+                eltype = Type.GetType(elpath);
+                ex.ExLogicPath = elpath;
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.ex = ex;
@@ -280,7 +302,7 @@ namespace VLab
             el.OnBeginResumeExperiment = uicontroller.OnBeginResumeExperiment;
             el.OnEndResumeExpeirment = uicontroller.OnEndResumeExpeirment;
             el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
-            el.condtestmanager.OnNotifyEnd = uicontroller.OnNotifyEnd;
+            el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
         }
 
         public int FindDuplicateOfLast()
@@ -309,13 +331,9 @@ namespace VLab
         {
             if (elhistory.Last().ex.ExInheritParam.Count > 0)
             {
-                foreach (var ip in elhistory.Last().ex.ExInheritParam)
+                foreach (var ip in elhistory.Last().ex.ExInheritParam.ToArray())
                 {
-                    // prevent modify exinheritparams itself when inheriting by iteration
-                    if (ip != "exinheritparams")
-                    {
-                        InheritExParam(ip);
-                    }
+                    InheritExParam(ip);
                 }
             }
         }
@@ -343,22 +361,31 @@ namespace VLab
             }
         }
 
-        public void InheritEnv()
+        public void OnServerSceneChanged(string scenename)
         {
-            if (elhistory.Last().ex.EnvInheritParam.Count > 0)
+            el.envmanager.AddScene(scenename);
+            el.envmanager.SetParams(el.ex.EnvParam);
+            InheritEnv();
+        }
+
+        public void InheritEnv(string forobjname = null)
+        {
+            foreach (var ip in elhistory.Last().ex.EnvInheritParam.ToArray())
             {
-                foreach (var ip in elhistory.Last().ex.EnvInheritParam)
-                {
-                    if (ip != "envinheritparams")
-                    {
-                        InheritEnvParam(ip);
-                    }
-                }
+                InheritEnvParam(ip, forobjname);
             }
         }
 
-        public void InheritEnvParam(string name)
+        public void InheritEnvParam(string name, string forobjname = null)
         {
+            if (forobjname != null && name.IsEnvParamFullName())
+            {
+                if (name.LastAtSplitTail() != forobjname)
+                {
+                    return;
+                }
+            }
+
             var hn = elhistory.Count;
             if (hn > 1)
             {
@@ -368,7 +395,29 @@ namespace VLab
                     var v = em.GetParam(name);
                     if (v != null)
                     {
-                        elhistory.Last().envmanager.SetParam(name, v);
+                        if (forobjname == null)
+                        {
+                            elhistory.Last().envmanager.SetParam(name, v);
+                        }
+                        else
+                        {
+                            if (name.IsEnvParamShortName())
+                            {
+                                foreach (var p in elhistory.Last().envmanager.net_syncvar.Keys)
+                                {
+                                    var pshort = p.FirstAtSplitHead();
+                                    var pobj = p.LastAtSplitTail();
+                                    if (pshort == name && pobj == forobjname)
+                                    {
+                                        elhistory.Last().envmanager.SetParam(p, v);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                elhistory.Last().envmanager.SetParam(name, v);
+                            }
+                        }
                         break;
                     }
                 }

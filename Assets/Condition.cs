@@ -1,9 +1,24 @@
-﻿// --------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 // Condition.cs is part of the VLAB project.
-// Copyright (c) 2016 All Rights Reserved
-// Li Alex Zhang fff008@gmail.com
-// 5-21-2016
-// --------------------------------------------------------------
+// Copyright (c) 2016  Li Alex Zhang  fff008@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a 
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the 
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included 
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+// OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -252,8 +267,10 @@ namespace VLab
         public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
         public int condtestidx = -1;
         public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
-        public Action<double> OnNotifyEnd;
+        public Action<double> OnNotifyCondTestEnd;
         public int notifyidx = 0;
+
+
         public virtual void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0)
         {
             condtestidx++;
@@ -261,7 +278,7 @@ namespace VLab
             {
                 if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
                 {
-                    NotifyCondTestEnd(notifyidx, notifyparam, starttime);
+                    NotifyCondTestAndEnd(notifyidx, notifyparam, starttime);
                     notifyidx = condtestidx;
                 }
             }
@@ -281,10 +298,10 @@ namespace VLab
             }
         }
 
-        public void NotifyCondTestEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
+        public void NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
         {
             NotifyCondTest(startidx, notifyparam);
-            OnNotifyEnd(endtime);
+            OnNotifyCondTestEnd(endtime);
         }
 
         public void Clear()

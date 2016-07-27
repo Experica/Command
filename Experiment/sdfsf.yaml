@@ -1,0 +1,12 @@
+Name: sdfsf
+ID: sdfsf
+EnvPath: Showroom
+EnvParam: {}
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+Param: {}
+ExInheritParam: []
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

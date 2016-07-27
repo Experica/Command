@@ -1,0 +1,33 @@
+Name: dfhjuiuouo
+ID: dfhjuiuouo
+EnvPath: Showroom
+EnvParam:
+  Show@Showroom@ShowroomManager: GratingQuad
+  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  Drifting@ENGratingQuad@GratingQuad: true
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 0
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 1
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: 0
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+Param: {}
+ExInheritParam: []
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE
