@@ -227,7 +227,7 @@ namespace VLab
             }
             return cond;
         }
-#if VLab
+#if VLAB
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
         {
             foreach(var f in conddesign.Keys)

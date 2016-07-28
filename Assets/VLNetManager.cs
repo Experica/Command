@@ -167,8 +167,6 @@ namespace VLab
 
         public override void OnServerReady(NetworkConnection conn)
         {
-            NetworkServer.SpawnObjects();
-
             base.OnServerReady(conn);
             uicontroller.exmanager.el.envmanager.ForcePushParams();
         }

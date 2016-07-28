@@ -277,7 +277,6 @@ namespace VLab
 
         public void DeleteEx()
         {
-            var did = exs.captionText.text;
             var i = exmanager.DeleteEx(exs.captionText.text);
             if (i >= 0)
             {

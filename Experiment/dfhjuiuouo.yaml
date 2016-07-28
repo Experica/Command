@@ -2,9 +2,12 @@ Name: dfhjuiuouo
 ID: dfhjuiuouo
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0, 0.3, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
-  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
@@ -20,9 +23,6 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
 ExLogicPath: ConditionTestLogic
 DataDir: Data
 Param: {}
