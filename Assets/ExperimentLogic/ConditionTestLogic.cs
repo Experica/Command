@@ -29,20 +29,20 @@ public class ConditionTestLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("Visible",false);
+                envmanager.SetActiveParam("Visible",false,true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    envmanager.SetActiveParam("Visible", true);
+                    envmanager.SetActiveParam("Visible", true,true);
                     CondState = CONDSTATE.COND;
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("Visible", false);
+                    envmanager.SetActiveParam("Visible", false,true);
                     CondState = CONDSTATE.SUFICI;
                 }
                 break;

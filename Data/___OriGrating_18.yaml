@@ -1,0 +1,201 @@
+Name: OriGrating
+ID: OriGrating
+Designer: Alex
+Experimenter: ''
+Subject_ID: ''
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 202.5
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 10
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (-4.6, -0.114, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+CondPath: Condition\Orientation22.5DegStep.yaml
+Cond:
+  Ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+  - 180
+  - 202.5
+  - 225
+  - 247.5
+  - 270
+  - 292.5
+  - 315
+  - 337.5
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+DataPath: Data\___OriGrating_18.yaml
+CondTest:
+  CondIndex:
+  - 1
+  - 0
+  - 2
+  - 7
+  - 13
+  - 11
+  - 14
+  - 8
+  - 5
+  - 10
+  - 9
+  - 6
+  - 12
+  - 3
+  - 4
+  - 15
+  - 2
+  - 7
+  - 8
+  - 11
+  - 15
+  - 6
+  - 14
+  - 0
+  - 5
+  - 9
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 34.9431
+    - COND: 138.8249
+    - SUFICI: 439.9108
+  - - PREICI: 544.8064
+    - COND: 645.8366
+    - SUFICI: 952.5196
+  - - PREICI: 1055.2272
+    - COND: 1161.1098
+    - SUFICI: 1467.4365
+  - - PREICI: 1569.8971
+    - COND: 1672.539
+    - SUFICI: 1973.3692
+  - - PREICI: 2076.3362
+    - COND: 2179.3117
+    - SUFICI: 2485.3946
+  - - PREICI: 2590.144
+    - COND: 2690.431
+    - SUFICI: 2995.5992
+  - - PREICI: 3099.4515
+    - COND: 3201.5391
+    - SUFICI: 3501.6355
+  - - PREICI: 3605.041
+    - COND: 3708.2352
+    - SUFICI: 4010.8535
+  - - PREICI: 4113.4982
+    - COND: 4220.4283
+    - SUFICI: 4520.5199
+  - - PREICI: 4626.4371
+    - COND: 4729.5071
+    - SUFICI: 5030.4887
+  - - PREICI: 5132.4615
+    - COND: 5241.5088
+    - SUFICI: 5542.6245
+  - - PREICI: 5646.0989
+    - COND: 5748.6465
+    - SUFICI: 6053.51
+  - - PREICI: 6155.4837
+    - COND: 6255.5687
+    - SUFICI: 6560.5867
+  - - PREICI: 6664.508
+    - COND: 6770.5843
+    - SUFICI: 7076.8007
+  - - PREICI: 7179.4614
+    - COND: 7282.6508
+    - SUFICI: 7582.7532
+  - - PREICI: 7689.3722
+    - COND: 7792.619
+    - SUFICI: 8096.5604
+  - - PREICI: 8199.5441
+    - COND: 8307.0727
+    - SUFICI: 8608.725
+  - - PREICI: 8712.6703
+    - COND: 8814.6835
+    - SUFICI: 9117.7095
+  - - PREICI: 9221.7635
+    - COND: 9327.7427
+    - SUFICI: 9627.8442
+  - - PREICI: 9730.4889
+    - COND: 9833.7212
+    - SUFICI: 10139.6258
+  - - PREICI: 10242.8065
+    - COND: 10345.8063
+    - SUFICI: 10650.7217
+  - - PREICI: 10752.563
+    - COND: 10855.8348
+    - SUFICI: 11161.6737
+  - - PREICI: 11264.8441
+    - COND: 11364.9887
+    - SUFICI: 11669.9439
+  - - PREICI: 11775.5638
+    - COND: 11877.6549
+    - SUFICI: 12178.9075
+  - - PREICI: 12282.7958
+    - COND: 12385.8459
+    - SUFICI: 12686.8461
+  - - PREICI: 12791.082
+    - COND: 12893.9734
+CondSampling: UniformWithoutReplacement
+CondRepeat: 5
+PreICI: 100
+CondDur: 300
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+Param: {}
+ExInheritParam:
+- Experimenter
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

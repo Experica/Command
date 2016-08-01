@@ -1,0 +1,99 @@
+Name: RFYBarIn2Deg
+ID: RFYBarIn2Deg
+Experimenter: ''
+Subject_ID: ''
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: Quad
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Size@ENQuad@Quad: (3, 1, 1)
+  Diameter@ENQuad@Quad: 2
+  Color@ENQuad@Quad: (1, 1, 1, 1)
+  MaskType@ENQuad@Quad: None
+  Visible@ENQuad@Quad: false
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, -0.25, 0)
+CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset2Deg0.25DegStep.yaml
+Cond:
+  PositionOffset:
+  - (0, -1, 0)
+  - (0, -0.75, 0)
+  - (0, -0.5, 0)
+  - (0, -0.25, 0)
+  - (0, 0, 0)
+  - (0, 0.25, 0)
+  - (0, 0.5, 0)
+  - (0, 0.75, 0)
+  - (0, 1, 0)
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+DataPath: Data\___RFYBarIn2Deg_2.yaml
+CondTest:
+  CondIndex:
+  - 3
+  - 5
+  - 7
+  - 6
+  - 2
+  - 1
+  - 0
+  - 4
+  - 8
+  - 3
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  CONDSTATE:
+  - - PREICI: 3.8851
+    - COND: 107.8464
+    - SUFICI: 208.2973
+  - - PREICI: 319.1786
+    - COND: 428.7987
+    - SUFICI: 537.6668
+  - - PREICI: 642.514
+    - COND: 747.877
+    - SUFICI: 850.1709
+  - - PREICI: 958.8541
+    - COND: 1061.5553
+    - SUFICI: 1162.2573
+  - - PREICI: 1266.8137
+    - COND: 1380.0585
+    - SUFICI: 1485.7666
+  - - PREICI: 1598.7824
+    - COND: 1707.7328
+    - SUFICI: 1810.2589
+  - - PREICI: 1911.017
+    - COND: 2016.1469
+    - SUFICI: 2128.8631
+  - - PREICI: 2234.5244
+    - COND: 2347.2893
+    - SUFICI: 2456.463
+  - - PREICI: 2565.6303
+    - COND: 2666.0879
+    - SUFICI: 2768.434
+  - - PREICI: 2869.4587
+CondSampling: UniformWithoutReplacement
+CondRepeat: 30
+PreICI: 100
+CondDur: 100
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+Param: {}
+ExInheritParam: []
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

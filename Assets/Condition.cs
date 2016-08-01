@@ -87,24 +87,27 @@ namespace VLab
 
         public virtual List<int> UpdateSampleSpace(bool resetcondrepeat = true)
         {
-            switch (samplemethod)
+            if (ncond > 0)
             {
-                case SampleMethod.Descending:
-                    condsamplespace = Enumerable.Range(0, ncond).Reverse().ToList();
-                    sampleidx = -1;
-                    break;
-                case SampleMethod.UniformWithoutReplacement:
-                    condsamplespace = rng.Sequence(ncond);
-                    sampleidx = -1;
-                    break;
-                default:
-                    condsamplespace = Enumerable.Range(0, ncond).ToList();
-                    sampleidx = -1;
-                    break;
-            }
-            if (resetcondrepeat)
-            {
-                ResetCondRepeat();
+                switch (samplemethod)
+                {
+                    case SampleMethod.Descending:
+                        condsamplespace = Enumerable.Range(0, ncond).Reverse().ToList();
+                        sampleidx = -1;
+                        break;
+                    case SampleMethod.UniformWithoutReplacement:
+                        condsamplespace = rng.Sequence(ncond);
+                        sampleidx = -1;
+                        break;
+                    default:
+                        condsamplespace = Enumerable.Range(0, ncond).ToList();
+                        sampleidx = -1;
+                        break;
+                }
+                if (resetcondrepeat)
+                {
+                    ResetCondRepeat();
+                }
             }
             return condsamplespace;
         }
@@ -150,7 +153,7 @@ namespace VLab
         {
             foreach (var k in cond.Keys)
             {
-                envmanager.SetParam(k, cond[k][condidx]);
+                envmanager.SetParam(k, cond[k][condidx],true);
             }
         }
 
@@ -202,7 +205,7 @@ namespace VLab
             {
                 throw new ArgumentException("Type Inconsistency of startvalue and endvalue");
             }
-            if (n == null)
+            if (nvalue == null)
             {
                 throw new NullReferenceException();
             }

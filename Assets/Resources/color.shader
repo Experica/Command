@@ -3,10 +3,12 @@
 	Properties
 	{
 		col("Color", Color) = (1,1,1,1)
-		length("Length",Float) = 1
-		width("Width", Float) = 1
+		sigma("Sigma", Float) = 0.15
+		sizex("SizeX",Float) = 2
+		sizey("SizeY", Float) = 2
 		masktype("MaskType",Int) = 0
 	}
+
 	SubShader
 	{
 		Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
@@ -19,10 +21,14 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#include "UnityCG.cginc"
+
 			fixed4 col;
-	        float length;
-			float width;
+			float sigma;
+	        float sizex;
+			float sizey;
 	        int masktype;
+			static const float pi = 3.141592653589793238462;
+			static const float pi2 = 6.283185307179586476924;
 
 			struct appdata
 			{
@@ -43,6 +49,7 @@
 				o.uv.y = v.uv.y - 0.5;
 				return o;
 			}
+
 			fixed4 frag(v2f i) : SV_Target
 			{
 				fixed4 c = col;
@@ -57,11 +64,13 @@
 				}
 				else if (masktype == 2)
 				{
-					//float d = pow(i.uv.x, 2) + pow(i.uv.y, 2);
-					//c.a= c.a*exp(-r2 / (2 * pow(sigma, 2)));
+					float d = pow(i.uv.x, 2) + pow(i.uv.y, 2);
+					c.a= c.a*exp(-d / (2 * pow(sigma, 2)));
 				}
+
 				return c;
 			}
+
 			ENDCG
 		}
 	}

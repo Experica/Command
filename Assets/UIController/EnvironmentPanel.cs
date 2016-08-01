@@ -93,8 +93,9 @@ namespace VLab
         {
             if (dropdown.ContainsKey(fullname))
             {
-                var vs = dropdown[fullname].options.Select(i => i.text).ToList();
-                dropdown[fullname].value = vs.IndexOf(value.ToString());
+                var dd = dropdown[fullname];
+                var vs = dd.options.Select(i => i.text).ToList();
+                dd.value = vs.IndexOf(value.ToString());
                 return;
             }
             if (inputfield.ContainsKey(fullname))
@@ -142,6 +143,24 @@ namespace VLab
             }
             go.transform.SetParent(parent);
             go.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        public void OffsetToPosition()
+        {
+            var el = uicontroller.exmanager.el;
+           if(el!=null)
+            {
+                var ori = el.envmanager.GetActiveParam("Ori");
+                var orioffset = el.envmanager.GetActiveParam("OriOffset");
+                var p = el.envmanager.GetActiveParam("Position");
+                var poffset = el.envmanager.GetActiveParam("PositionOffset");
+                if(ori!=null && orioffset!=null && p!=null && poffset!=null)
+                {
+                    var cp = ((Vector3)poffset).RotateZCCW((float)ori + (float)orioffset)+(Vector3)p;
+                    el.envmanager.SetActiveParam("PositionOffset", new Vector3(), true);
+                    el.envmanager.SetActiveParam("Position", cp, true);
+                }
+            }
         }
 
     }

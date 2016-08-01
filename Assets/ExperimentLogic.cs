@@ -240,21 +240,22 @@ namespace VLab
             get { return experimentstate; }
             set
             {
-                // Previous State
                 switch (experimentstate)
                 {
+                    // Previous State
                     case EXPERIMENTSTATE.NONE:
-                        // Enter State
                         switch (value)
                         {
+                            // Enter State
                             case EXPERIMENTSTATE.EXPERIMENT:
                                 break;
                         }
                         break;
+                    // Previous State
                     case EXPERIMENTSTATE.EXPERIMENT:
-                        // Enter State
                         switch (value)
                         {
+                            // Enter State
                             case EXPERIMENTSTATE.NONE:
                                 break;
                         }
@@ -269,13 +270,16 @@ namespace VLab
             if (condmanager.cond == null)
             {
                 var cond = condmanager.ReadCondition(ex.CondPath);
-                cond = cond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
-
-                if (cond.ContainsKey("factorlevel") && cond["factorlevel"].Count == 0)
+                if (cond != null)
                 {
-                    cond = cond.OrthoCondOfFactorLevel();
+                    cond = cond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
+
+                    if (cond.ContainsKey("factorlevel") && cond["factorlevel"].Count == 0)
+                    {
+                        cond = cond.OrthoCondOfFactorLevel();
+                    }
+                    condmanager.TrimCondition(cond);
                 }
-                condmanager.TrimCondition(cond);
             }
             condmanager.UpdateSampleSpace(ex.CondSampling, true);
         }
@@ -287,11 +291,15 @@ namespace VLab
 
         public virtual void SaveData()
         {
-            ex.Cond = condmanager.cond;
-            ex.CondTest = condtestmanager.condtest;
-            ex.EnvParam = envmanager.GetParams();
+            var ct = condtestmanager.condtest;
+            if (ct.Count > 0)
+            {
+                ex.Cond = condmanager.cond;
+                ex.CondTest = ct;
+                ex.EnvParam = envmanager.GetParams();
 
-            Yaml.WriteYaml(DataPath(), ex);
+                Yaml.WriteYaml(DataPath(), ex);
+            }
         }
 
         public virtual void PauseResumeExperiment(bool ispause)
@@ -376,55 +384,62 @@ namespace VLab
         }
         public virtual void OnUpdate()
         {
-            if (ex.Input > 0 && Input.GetJoystickNames().Count() > 0)
+            if (ex.Input > 0 && Input.GetJoystickNames().Count() > 0 && envmanager.activenet.Count > 0)
             {
-                if (envmanager.activenet.Count > 0)
+                var jx = Input.GetAxis("JX");
+                var jy = Input.GetAxis("JY");
+                var jz = Input.GetAxis("JZ");
+                var jxr = Input.GetAxis("JXR");
+                var jyr = Input.GetAxis("JYR");
+                var jrb = Input.GetAxis("JRB");
+                if (jx !=0 || jy !=0)
                 {
+                    if (envmanager.maincamera != null)
+                    {
+                        var po = envmanager.GetParam("Position");
+                        if (po != null)
+                        {
+                            var p = (Vector3)po;
+                            var hh = envmanager.maincamera.orthographicSize;
+                            var hw = hh * envmanager.maincamera.aspect;
+                            envmanager.SetParam("Position", new Vector3(
+                            Mathf.Clamp(p.x +Mathf.Pow( jx,3), -hw, hw),
+                            Mathf.Clamp(p.y +Mathf.Pow( jy,3), -hh, hh),
+                            p.z),true);
+                        }
+                    }
+                }
+                if (jz != 0)
+                {
+                    var oo = envmanager.GetParam("Ori");
+                    if (oo != null)
+                    {
+                        var no = ((float)oo + Mathf.Pow(jz, 3) * 4) % 360f;
+                        envmanager.SetParam("Ori",no<0?360f-no:no ,true);
+                    }
+                }
+                if (jxr != 0 || jyr != 0)
+                {
+                    var so = envmanager.GetParam("Size");
+                    var dio = envmanager.GetParam("Diameter");
 
-                    var jx = Input.GetAxis("JX");
-                    var jy = Input.GetAxis("JY");
-                    var jz = Input.GetAxis("JZ");
-                    var jxr = Input.GetAxis("JXR");
-                    var jyr = Input.GetAxis("JYR");
-                    if (jx != 0 || jy != 0)
+                    if(jrb>0.5)
                     {
-                        if (envmanager.maincamera != null)
+                        if (dio != null)
                         {
-                            var po = envmanager.GetParam("position");
-                            if (po != null)
-                            {
-                                var p = (Vector3)po;
-                                var hh = envmanager.maincamera.orthographicSize;
-                                var hw = hh * envmanager.maincamera.aspect;
-                                envmanager.SetParam("position", new Vector3(
-                                Mathf.Clamp(p.x + jx, -hw, hw),
-                                Mathf.Clamp(p.y + jy, -hh, hh),
-                                p.z));
-                            }
+                            var d = (float)dio;
+                            envmanager.SetParam("Diameter",Mathf.Max(0, d +Mathf.Pow( jxr,3)),true);
                         }
                     }
-                    if (jxr != 0 || jyr != 0)
+                    else
                     {
-                        var wo = envmanager.GetParam("width");
-                        var lo = envmanager.GetParam("length");
-                        if (wo != null)
+                        if (so != null)
                         {
-                            var w = (float)wo;
-                            envmanager.SetParam("width", w + jyr);
-                        }
-                        if (lo != null)
-                        {
-                            var l = (float)lo;
-                            envmanager.SetParam("length", l + jxr);
-                        }
-                    }
-                    if (jz != 0)
-                    {
-                        var oo = envmanager.GetParam("ori");
-                        if (oo != null)
-                        {
-                            var o = (float)oo;
-                            envmanager.SetParam("ori", o + jz);
+                            var s = (Vector3)so;
+                            envmanager.SetParam("Size", new Vector3(
+                                Mathf.Max(0, s.x + Mathf.Pow(jxr, 3)),
+                                Mathf.Max(0, s.y + Mathf.Pow(jyr, 3)),
+                                s.z),true);
                         }
                     }
                 }

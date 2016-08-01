@@ -1,0 +1,200 @@
+Name: OriGrating
+ID: OriGrating
+Designer: Alex
+Experimenter: ''
+Subject_ID: ''
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 45
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 10
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: (-4.6, -0.114, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+CondPath: Condition\Orientation22.5DegStep.yaml
+Cond:
+  Ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+  - 180
+  - 202.5
+  - 225
+  - 247.5
+  - 270
+  - 292.5
+  - 315
+  - 337.5
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+DataPath: Data\___OriGrating_19.yaml
+CondTest:
+  CondIndex:
+  - 0
+  - 2
+  - 12
+  - 1
+  - 15
+  - 10
+  - 8
+  - 13
+  - 4
+  - 6
+  - 3
+  - 7
+  - 14
+  - 11
+  - 5
+  - 9
+  - 12
+  - 0
+  - 10
+  - 14
+  - 8
+  - 6
+  - 3
+  - 13
+  - 11
+  - 2
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 38.3669
+    - COND: 144.9593
+    - SUFICI: 645.0539
+  - - PREICI: 1147.9175
+    - COND: 1255.1789
+    - SUFICI: 1757.0344
+  - - PREICI: 2258.496
+    - COND: 2362.3599
+    - SUFICI: 2867.2476
+  - - PREICI: 3367.2514
+    - COND: 3470.4677
+    - SUFICI: 3974.279
+  - - PREICI: 4475.0126
+    - COND: 4577.1958
+    - SUFICI: 5082.2237
+  - - PREICI: 5586.1633
+    - COND: 5692.4144
+    - SUFICI: 6204.8427
+  - - PREICI: 6706.243
+    - COND: 6808.4076
+    - SUFICI: 7312.3058
+  - - PREICI: 7816.784
+    - COND: 7919.4861
+    - SUFICI: 8423.8594
+  - - PREICI: 8926.2444
+    - COND: 9033.3272
+    - SUFICI: 9537.3884
+  - - PREICI: 10042.271
+    - COND: 10145.273
+    - SUFICI: 10647.5868
+  - - PREICI: 11154.4034
+    - COND: 11258.4174
+    - SUFICI: 11764.8007
+  - - PREICI: 12271.4429
+    - COND: 12374.5925
+    - SUFICI: 12877.7123
+  - - PREICI: 13384.408
+    - COND: 13487.5916
+    - SUFICI: 13996.5617
+  - - PREICI: 14502.5283
+    - COND: 14609.6054
+    - SUFICI: 15113.7124
+  - - PREICI: 15615.5733
+    - COND: 15718.6405
+    - SUFICI: 16223.2241
+  - - PREICI: 16727.6628
+    - COND: 16833.3196
+    - SUFICI: 17337.7205
+  - - PREICI: 17839.7248
+    - COND: 17941.7142
+    - SUFICI: 18442.958
+  - - PREICI: 18944.5954
+    - COND: 19050.7493
+    - SUFICI: 19555.8414
+  - - PREICI: 20056.7218
+    - COND: 20160.9821
+    - SUFICI: 20661.8016
+  - - PREICI: 21166.8468
+    - COND: 21269.9354
+    - SUFICI: 21776.1212
+  - - PREICI: 22277.0003
+    - COND: 22378.0228
+    - SUFICI: 22878.9474
+  - - PREICI: 23383.0183
+    - COND: 23489.033
+    - SUFICI: 23994.0888
+  - - PREICI: 24494.5243
+    - COND: 24598.1027
+    - SUFICI: 25105.1744
+  - - PREICI: 25606.0301
+    - COND: 25708.1883
+    - SUFICI: 26210.5451
+  - - PREICI: 26712.1972
+    - COND: 26813.2693
+    - SUFICI: 27315.2656
+  - - PREICI: 27819.1478
+CondSampling: UniformWithoutReplacement
+CondRepeat: 5
+PreICI: 100
+CondDur: 500
+SufICI: 500
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+Param: {}
+ExInheritParam:
+- Experimenter
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

@@ -10,7 +10,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: fdeb6ae0b1c87a34999d8ed37d308e89, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -107,6 +107,9 @@ Material:
         name: _ZWrite
       second: 1
     - first:
+        name: gratingtype
+      second: 0
+    - first:
         name: length
       second: 1
     - first:
@@ -121,6 +124,12 @@ Material:
     - first:
         name: sigma
       second: 1
+    - first:
+        name: sizex
+      second: 2
+    - first:
+        name: sizey
+      second: 2
     - first:
         name: t
       second: 0
@@ -140,6 +149,9 @@ Material:
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: cdist
+      second: {r: 1, g: 1, b: 1, a: 0}
     - first:
         name: maxc
       second: {r: 1, g: 1, b: 1, a: 1}

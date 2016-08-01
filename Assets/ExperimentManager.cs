@@ -79,6 +79,14 @@ namespace VLab
             {
                 ex.Name = ex.ID;
             }
+            if(ex.Subject_ID==null)
+            {
+                ex.Subject_ID = "";
+            }
+            if(ex.Experimenter==null)
+            {
+                ex.Experimenter = "";
+            }
             if (string.IsNullOrEmpty(ex.DataDir))
             {
                 var datadir = (string)appmanager.config[VLCFG.DataDir];
@@ -303,6 +311,8 @@ namespace VLab
             el.OnEndResumeExpeirment = uicontroller.OnEndResumeExpeirment;
             el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
+            el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
+            el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
         }
 
         public int FindDuplicateOfLast()

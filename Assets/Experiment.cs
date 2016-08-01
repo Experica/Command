@@ -35,18 +35,20 @@ namespace VLab
         public MemberGetter getter;
         public MemberSetter setter;
         public Type type;
+        public string name;
 
-        public PropertyAccess(MemberGetter g,MemberSetter s,Type t)
+        public PropertyAccess(Type t,string n ,MemberGetter g,MemberSetter s)
         {
+            type = t;
+            name = n;
             getter = g;
             setter = s;
-            type = t;
         }
 
         public PropertyAccess(Type reflectedtype,string propertyname):
-            this(reflectedtype.DelegateForGetPropertyValue(propertyname),
-                reflectedtype.DelegateForSetPropertyValue(propertyname),
-                reflectedtype.GetProperty(propertyname).PropertyType)
+            this( reflectedtype.GetProperty(propertyname).PropertyType, propertyname,
+                reflectedtype.DelegateForGetPropertyValue(propertyname),
+                reflectedtype.DelegateForSetPropertyValue(propertyname))
         {
         }
     }
@@ -101,6 +103,7 @@ namespace VLab
         public List<CONDTESTPARAM> NotifyParam { get; set; }
 
         public static readonly Dictionary<string, PropertyAccess> Properties;
+        public Action<string, object> OnNotifyUI;
 
         static Experiment()
         {
@@ -109,31 +112,40 @@ namespace VLab
             foreach (var p in T.GetProperties())
             {
                 var n = p.Name;
-                Properties[n] = new PropertyAccess(T.DelegateForGetPropertyValue(n),
-                    T.DelegateForSetPropertyValue(n),p.PropertyType);
+                Properties[n] = new PropertyAccess(p.PropertyType,n,
+                    T.DelegateForGetPropertyValue(n),T.DelegateForSetPropertyValue(n));
             }
         }
 
-        public void SetParam(string name, object value)
+        public void SetParam(string name, object value,bool notifyui=false)
         {
             SetValue(name, value);
             if (Param.ContainsKey(name))
             {
                 Param[name] = value;
+                if (OnNotifyUI != null)
+                {
+                    OnNotifyUI(name, value);
+                }
             }
         }
 
-        public void SetValue(string name, object value)
+        public void SetValue(string name, object value,bool notifyui=false)
         {
             if (Properties.ContainsKey(name))
             {
-                SetValue(this, Properties[name], value);
+                SetValue(this, Properties[name], value,notifyui);
             }
         }
 
-        public static void SetValue(Experiment ex, PropertyAccess p, object value)
+        public void SetValue(Experiment ex, PropertyAccess p, object value,bool notifyui=false)
         {
-            p.setter(ex, value.Convert(p.type));
+            object v = value.Convert(p.type);
+            p.setter(ex, v);
+            if(OnNotifyUI!=null)
+            {
+                OnNotifyUI(p.name, v);
+            }
         }
 
         public object GetParam(string name)

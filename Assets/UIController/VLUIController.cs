@@ -69,6 +69,10 @@ namespace VLab
 
         public void OnExDropdownValueChange(int i)
         {
+            if ((bool)appmanager. config[VLCFG.IsSaveExOnQuit]&&exmanager.el!=null)
+            {
+                exmanager.SaveEx(exmanager.el.ex.ID);
+            }
             var idx = exmanager.exids.FindIndex(0, s => s == exs.captionText.text);
             if (idx >= 0)
             {
@@ -237,6 +241,10 @@ namespace VLab
                 if(!ip.Contains(name))
                 {
                     ip.Add(name);
+                    if (exmanager.el.ex.OnNotifyUI != null)
+                    {
+                        exmanager.el.ex.OnNotifyUI("ExInheritParam", ip);
+                    }
                 }
                 exmanager.InheritExParam(name);
                 expanel.UpdateParamUI(name, exmanager.el.ex.GetParam(name));
@@ -246,6 +254,10 @@ namespace VLab
                 if(ip.Contains(name))
                 {
                     ip.Remove(name);
+                    if (exmanager.el.ex.OnNotifyUI != null)
+                    {
+                        exmanager.el.ex.OnNotifyUI("ExInheritParam", ip);
+                    }
                 }
             }
         }
@@ -258,6 +270,10 @@ namespace VLab
                 if(!ip.Contains(paramname))
                 {
                     ip.Add(paramname);
+                    if (exmanager.el.ex.OnNotifyUI != null)
+                    {
+                        exmanager.el.ex.OnNotifyUI("EnvInheritParam", ip);
+                    }
                 }
                 exmanager.InheritEnvParam(paramname);
                 envpanel.UpdateParamUI(fullname, exmanager.el.envmanager.GetParam(fullname));
@@ -266,6 +282,10 @@ namespace VLab
                 if(ip.Contains(paramname))
                 {
                     ip.Remove(paramname);
+                    if (exmanager.el.ex.OnNotifyUI != null)
+                    {
+                        exmanager.el.ex.OnNotifyUI("EnvInheritParam", ip);
+                    }
                 }
             }
         }

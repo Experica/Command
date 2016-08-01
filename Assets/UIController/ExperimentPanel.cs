@@ -185,8 +185,9 @@ namespace VLab
         {
             if (dropdown.ContainsKey(name))
             {
-                var vs = dropdown[name].options.Select(i => i.text).ToList();
-                dropdown[name].value = vs.IndexOf(value.ToString());
+                var dd = dropdown[name];
+                var vs = dd.options.Select(i => i.text).ToList();
+                dd.value = vs.IndexOf(value.ToString());
                 return;
             }
             if (inputfield.ContainsKey(name))

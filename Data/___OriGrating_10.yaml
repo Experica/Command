@@ -1,0 +1,160 @@
+Name: OriGrating
+ID: OriGrating
+Designer: Alex
+Experimenter: ''
+Subject_ID: ''
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 0, 0, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 22.5
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 5
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+CondPath: Condition\Orientation22.5DegStep.yaml
+Cond:
+  Ori:
+  - 0
+  - 22.5
+  - 45
+  - 67.5
+  - 90
+  - 112.5
+  - 135
+  - 157.5
+  - 180
+  - 202.5
+  - 225
+  - 247.5
+  - 270
+  - 292.5
+  - 315
+  - 337.5
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+DataPath: Data\___OriGrating_10.yaml
+CondTest:
+  CondIndex:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 0
+  - 1
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  CONDSTATE:
+  - - PREICI: 17.4558
+    - COND: 121.2908
+    - SUFICI: 423.2381
+  - - PREICI: 527.2453
+    - COND: 629.3243
+    - SUFICI: 932.3965
+  - - PREICI: 1040.3067
+    - COND: 1141.3892
+    - SUFICI: 1446.3325
+  - - PREICI: 1549.3214
+    - COND: 1649.3476
+    - SUFICI: 1953.374
+  - - PREICI: 2056.352
+    - COND: 2159.4262
+    - SUFICI: 2465.4074
+  - - PREICI: 2572.4164
+    - COND: 2674.4303
+    - SUFICI: 2976.9325
+  - - PREICI: 3080.2639
+    - COND: 3182.2723
+    - SUFICI: 3487.4966
+  - - PREICI: 3590.3576
+    - COND: 3693.5145
+    - SUFICI: 3999.4335
+  - - PREICI: 4102.3535
+    - COND: 4204.4459
+    - SUFICI: 4505.4897
+  - - PREICI: 4612.3653
+    - COND: 4715.4315
+    - SUFICI: 5020.5775
+  - - PREICI: 5123.3474
+    - COND: 5225.3965
+    - SUFICI: 5531.3829
+  - - PREICI: 5634.2887
+    - COND: 5735.0331
+    - SUFICI: 6037.4557
+  - - PREICI: 6140.324
+    - COND: 6243.5108
+    - SUFICI: 6548.6758
+  - - PREICI: 6654.5234
+    - COND: 6760.4287
+    - SUFICI: 7060.603
+  - - PREICI: 7164.3976
+    - COND: 7266.6844
+    - SUFICI: 7572.539
+  - - PREICI: 7675.6366
+    - COND: 7778.5665
+    - SUFICI: 8085.5984
+  - - PREICI: 8189.5903
+    - COND: 8291.6038
+    - SUFICI: 8594.8165
+  - - PREICI: 8696.5474
+    - COND: 8799.5927
+CondRepeat: 5
+PreICI: 100
+CondDur: 300
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+Param: {}
+ExInheritParam:
+- Experimenter
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE

@@ -23,6 +23,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 
 namespace VLab
@@ -34,76 +35,122 @@ namespace VLab
             return (T)Convert(value, typeof(T));
         }
 
-        public static object Convert(this object value, Type ToT)
+        public static object Convert(this object value, Type CT)
         {
             Type VT = value.GetType();
-            if (ToT == VT)
+            if (VT == CT)
             {
                 return value;
             }
-            else if (ToT == typeof(Vector3))
+            else if (VT == typeof(List<string>))
             {
-                if (VT == typeof(string))
+                var v = (List<string>)value;
+                if(CT==typeof(string))
                 {
-                    var t = (string)value;
-                    var vs = t.Substring(1, t.Length - 2).Split(',');
+                    return v.Count==0?"[]": "[" + v.Aggregate((i, j) => i + ", " + j) + "]";
+                }
+            }
+            else if (VT==typeof(List<CONDTESTPARAM>))
+            {
+                var v = (List<CONDTESTPARAM>)value;
+                if (CT == typeof(string))
+                {
+                    return v.Count == 0 ? "[]" : "[" + v.Select(i=>i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
+                }
+            }
+            else if (VT== typeof(List<object>))
+            {
+                var v = (List<object>)value;
+                var vn = v.Count;
+                if(CT==typeof(Vector3))
+                {
+                    float x=0, y=0, z=0;
+                    if(vn>0)
+                    {
+                        x = v[0].Convert<float>();
+                    }
+                    if(vn>1)
+                    {
+                        y = v[1].Convert<float>();
+                    }
+                    if(vn>2)
+                    {
+                        z = v[2].Convert<float>();
+                    }
+                    return new Vector3(x, y, z);
+                }
+                else if(CT==typeof(Color))
+                {
+                    float r = 0, g = 0, b = 0, a = 1;
+                    if (vn > 0)
+                    {
+                        r = v[0].Convert<float>();
+                    }
+                    if (vn > 1)
+                    {
+                        g = v[1].Convert<float>();
+                    }
+                    if (vn > 2)
+                    {
+                        b = v[2].Convert<float>();
+                    }
+                    if (vn > 3)
+                    {
+                        a = v[3].Convert<float>();
+                    }
+                    return new Color(r, g, b,a);
+                }
+                else if (CT == typeof(string))
+                {
+                    return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i.Convert<string>() + ", " + j.Convert<string>()) + "]";
+                }
+            }
+            else if (VT == typeof(Vector3))
+            {
+                var v = (Vector3)value;
+                if(CT==typeof(string))
+                {
+                    return v.ToString("G3");
+                }
+            }
+            else if (VT == typeof(Color))
+            {
+                var v = (Color)value;
+                if(CT==typeof(string))
+                {
+                    return v.ToString("G3").Substring(4);
+                }
+            }
+            else if (VT == typeof(string))
+            {
+                var v = (string)value;
+                if(CT==typeof(Vector3))
+                {
+                    var vs = v.Substring(1, v.Length - 2).Split(',');
                     return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
                 }
-                else
+                else if(CT==typeof(Color))
                 {
-                    return System.Convert.ChangeType(value, ToT);
-                }
-            }
-            else if (ToT == typeof(Color))
-            {
-                if (VT == typeof(string))
-                {
-                    var t = (string)value;
-                    var vs = t.Substring(t.IndexOf('(') + 1, t.Length - 2).Split(',');
+                    var vs = v.Substring(v.IndexOf('(') + 1, v.Length - 2).Split(',');
                     return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
                 }
-                else
+                else if(CT.IsEnum&& Enum.IsDefined(CT, v))
                 {
-                    return System.Convert.ChangeType(value, ToT);
-                }
-            }
-            else if (ToT == typeof(string))
-            {
-                if (VT == typeof(Vector3))
-                {
-                    return ((Vector3)value).ToString("G3");
-                }
-                else if (VT == typeof(Color))
-                {
-                    return ((Color)value).ToString("G3").Substring(4);
+                    return Enum.Parse(CT, v);
                 }
                 else
                 {
-                    return value.ToString();
-                }
-            }
-            else if (ToT.IsEnum)
-            {
-                if (Enum.IsDefined(ToT, value))
-                {
-                    if (VT == typeof(string))
-                    {
-                        return Enum.Parse(ToT, (string)value);
-                    }
-                    else
-                    {
-                        return value;
-                    }
-                }
-                else
-                {
-                    return Activator.CreateInstance(ToT);
+
                 }
             }
             else
             {
-                return System.Convert.ChangeType(value, ToT);
+                if(CT==typeof(string))
+                {
+                    return value.ToString();
+                }
             }
+            return System.Convert.ChangeType(value, CT);
         }
 
         public static List<int> Sequence(this System.Random rng, int maxvalue)
@@ -230,16 +277,39 @@ namespace VLab
 #if VLAB
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
         {
-            foreach(var f in conddesign.Keys)
+            foreach (var f in conddesign.Keys.ToArray())
             {
-                if(conddesign[f].Count>=5&&conddesign[f][0].GetType()==typeof(string)&&(string)conddesign[f][0]=="factorleveldesign")
+                if (conddesign[f].Count >= 5 && conddesign[f][0].GetType() == typeof(string) && (string)conddesign[f][0] == "factorleveldesign")
                 {
                     var start = conddesign[f][1];
                     var end = conddesign[f][2];
-                    var n = (int[])conddesign[f][3];
-                    var method =conddesign[f][4].Convert<FactorLevelDesignMethod>();
-                    var fld = new FactorLevelDesign(f, start, end, n, method);
+                    var n = conddesign[f][3];
+                    var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
 
+                    object so, eo; int[] no;
+                    if (start.GetType() == typeof(List<object>))
+                    {
+                        var s = (List<object>)start;
+                        if (((List<object>)start).Count < 4)
+                        {
+                            so = start.Convert<Vector3>();
+                            eo = end.Convert<Vector3>();
+                        }
+                        else
+                        {
+                            so = start.Convert<Color>();
+                            eo = end.Convert<Color>();
+                        }
+                        no = ((List<object>)n).Select(i => i.Convert<int>()).ToArray();
+                    }
+                    else
+                    {
+                        so = start.Convert<float>();
+                        eo = end.Convert<float>();
+                        no = new int[] { n.Convert<int>() };
+                    }
+
+                    var fld = new FactorLevelDesign(f, so, eo, no, method);
                     conddesign[f] = fld.FactorLevel().Value;
                 }
             }
@@ -371,5 +441,24 @@ namespace VLab
             }
         }
 
+        public static float GetColorScale(float luminance, float contrast )
+        {
+            luminance = Mathf.Clamp(luminance, 0, 1);
+            contrast = Mathf.Clamp(contrast, 0, 1);
+            return 2*luminance * contrast;
+        }
+
+        public static void GetColor(this float scale,Color minc,Color maxc, out Color sminc,out Color smaxc)
+        {
+            var ac = (minc + maxc) / 2;
+            var acd = maxc - ac;
+             sminc = new Color(ac.r - acd.r * scale, ac.g - acd.g * scale, ac.b - acd.b * scale, minc.a);
+             smaxc = new Color(ac.r + acd.r * scale, ac.g + acd.g * scale, ac.b + acd.b * scale, maxc.a);
+        }
+
+        public static Vector3 RotateZCCW(this Vector3 v,float angle)
+        {
+            return Quaternion.AngleAxis(angle, Vector3.forward) * v;
+        }
     }
 }

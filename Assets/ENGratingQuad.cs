@@ -26,8 +26,19 @@ using System.Collections;
 
 namespace VLab
 {
+    public enum GratingType
+    {
+        Square,
+        Sinusoidal,
+        Linear
+    }
+
     public class ENGratingQuad : ENQuad
     {
+        [SyncVar(hook ="onluminance")]
+        public float Luminance=0.5f;
+        [SyncVar(hook ="oncontrast")]
+        public float Contrast=1f;
         [SyncVar(hook = "onspatialfreq")]
         public float SpatialFreq;
         [SyncVar(hook = "ontemporalfreq")]
@@ -42,6 +53,8 @@ namespace VLab
         public Color MaxColor;
         [SyncVar(hook = "onisdrifting")]
         public bool Drifting = true;
+        [SyncVar(hook ="ongratingtype")]
+        public GratingType GratingType;
         [SyncVar(hook ="onisreversetime")]
         public bool ReverseTime = false;
 
@@ -52,6 +65,36 @@ namespace VLab
             {
                 t.ReStart();
             }
+        }
+
+        void onluminance(float l)
+        {
+            OnLuminance(l);
+        }
+        public virtual void OnLuminance(float l)
+        {
+            Color minc, maxc;
+            Extention.GetColorScale(l, Contrast).GetColor(MinColor,MaxColor,out minc,out maxc);
+
+            renderer.material.SetColor("minc", minc);
+            renderer.material.SetColor("maxc", maxc);
+            renderer.material.SetColor("cdist", maxc - minc);
+            Luminance = l;
+        }
+
+        void oncontrast(float ct)
+        {
+            OnContrast(ct);
+        }
+        public virtual void OnContrast(float ct)
+        {
+            Color minc, maxc;
+            Extention.GetColorScale(Luminance, ct).GetColor(MinColor,MaxColor,out minc,out maxc);
+
+            renderer.material.SetColor("minc", minc);
+            renderer.material.SetColor("maxc", maxc);
+            renderer.material.SetColor("cdist", maxc - minc);
+            Contrast = ct;
         }
 
         void onspatialfreq(float sf)
@@ -100,7 +143,8 @@ namespace VLab
         }
         public virtual void OnMinColor(Color c)
         {
-            renderer.material.SetColor("mincolor", c);
+            renderer.material.SetColor("minc", c);
+            renderer.material.SetColor("cdist", MaxColor - c);
             MinColor = c;
         }
 
@@ -110,7 +154,8 @@ namespace VLab
         }
         public virtual void OnMaxColor(Color c)
         {
-            renderer.material.SetColor("maxcolor", c);
+            renderer.material.SetColor("maxc", c);
+            renderer.material.SetColor("cdist", c - MinColor);
             MaxColor = c;
         }
 
@@ -121,6 +166,16 @@ namespace VLab
         public virtual void OnIsDrifting(bool i)
         {
             Drifting = i;
+        }
+
+        void ongratingtype(GratingType t)
+        {
+            OnGratingType(t);
+        }
+        public virtual void OnGratingType(GratingType t)
+        {
+            renderer.material.SetInt("gratingtype", (int)t);
+            GratingType = t;
         }
 
         double reversetime;

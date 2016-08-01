@@ -34,6 +34,7 @@ namespace VLab
     {
         public Scene scene;
         public Camera maincamera;
+        public Action<string, object> OnNotifyUI;
         public Dictionary<string, GameObject> sceneobj = new Dictionary<string, GameObject>();
         public Dictionary<string, NetworkBehaviour> sceneobj_net = new Dictionary<string, NetworkBehaviour>();
         public Dictionary<string, PropertyAccess> net_syncvar = new Dictionary<string, PropertyAccess>();
@@ -115,14 +116,14 @@ namespace VLab
             }
         }
 
-        public void SetParam(string name, object value)
+        public void SetParam(string name, object value,bool notifyui=false)
         {
             var atidx = name.IndexOf('@');
             if (atidx > 0)
             {
                 if (net_syncvar.ContainsKey(name))
                 {
-                    SetParam(sceneobj_net[name.Substring(atidx + 1)], net_syncvar[name], value);
+                    SetParam(sceneobj_net[name.Substring(atidx + 1)], net_syncvar[name], value,name,notifyui);
                 }
             }
             else
@@ -132,15 +133,20 @@ namespace VLab
                     var pname = name + "@" + sn;
                     if (net_syncvar.ContainsKey(pname))
                     {
-                        SetParam(sceneobj_net[sn], net_syncvar[pname], value);
+                        SetParam(sceneobj_net[sn], net_syncvar[pname], value,pname,notifyui);
                     }
                 }
             }
         }
 
-        public static void SetParam(NetworkBehaviour nb, PropertyAccess p, object value)
+        public void SetParam(NetworkBehaviour nb, PropertyAccess p, object value,string fullname="",bool notifyui=false)
         {
-            p.setter(nb, value.Convert(p.type));
+            object v = value.Convert(p.type);
+            p.setter(nb, v);
+            if(OnNotifyUI!=null)
+            {
+                OnNotifyUI(fullname, v);
+            }
         }
 
         public void ForcePushParams()
@@ -190,14 +196,14 @@ namespace VLab
             return p.getter(nb);
         }
 
-        public void SetActiveParam(string name, object value)
+        public void SetActiveParam(string name, object value,bool notifyui=false)
         {
             string pn, nn;
             if (name.FirstAtSplit(out pn, out nn))
             {
                 if (activenet.Contains(nn) && net_syncvar.ContainsKey(name))
                 {
-                    SetParam(sceneobj_net[nn], net_syncvar[name], value);
+                    SetParam(sceneobj_net[nn], net_syncvar[name], value,name,notifyui);
                 }
             }
             else
@@ -209,7 +215,7 @@ namespace VLab
                         var pname = pn + "@" + asn;
                         if (net_syncvar.ContainsKey(pname))
                         {
-                            SetParam(sceneobj_net[asn], net_syncvar[pname], value);
+                            SetParam(sceneobj_net[asn], net_syncvar[pname], value,pname,notifyui);
                         }
                     }
                 }

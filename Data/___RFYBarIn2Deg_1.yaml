@@ -1,0 +1,655 @@
+Name: RFYBarIn2Deg
+ID: RFYBarIn2Deg
+Experimenter: ''
+Subject_ID: ''
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: Quad
+  Ori@ENQuad@Quad: 45
+  OriOffset@ENQuad@Quad: 0
+  Size@ENQuad@Quad: (3, 1, 1)
+  Diameter@ENQuad@Quad: 2
+  Color@ENQuad@Quad: (1, 1, 1, 1)
+  MaskType@ENQuad@Quad: None
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, -0.25, 0)
+CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset2Deg0.25DegStep.yaml
+Cond:
+  PositionOffset:
+  - (0, -1, 0)
+  - (0, -0.75, 0)
+  - (0, -0.5, 0)
+  - (0, -0.25, 0)
+  - (0, 0, 0)
+  - (0, 0.25, 0)
+  - (0, 0.5, 0)
+  - (0, 0.75, 0)
+  - (0, 1, 0)
+ExLogicPath: ConditionTestLogic
+DataDir: Data
+DataPath: Data\___RFYBarIn2Deg_1.yaml
+CondTest:
+  CondIndex:
+  - 7
+  - 4
+  - 3
+  - 5
+  - 8
+  - 2
+  - 1
+  - 6
+  - 0
+  - 5
+  - 2
+  - 6
+  - 1
+  - 8
+  - 4
+  - 3
+  - 7
+  - 0
+  - 6
+  - 5
+  - 8
+  - 1
+  - 3
+  - 0
+  - 4
+  - 7
+  - 2
+  - 2
+  - 5
+  - 4
+  - 6
+  - 7
+  - 8
+  - 1
+  - 0
+  - 3
+  - 3
+  - 1
+  - 6
+  - 4
+  - 7
+  - 8
+  - 0
+  - 5
+  - 2
+  - 0
+  - 2
+  - 3
+  - 6
+  - 5
+  - 4
+  - 8
+  - 7
+  - 1
+  - 4
+  - 7
+  - 6
+  - 1
+  - 2
+  - 8
+  - 3
+  - 5
+  - 0
+  - 3
+  - 7
+  - 2
+  - 5
+  - 0
+  - 6
+  - 1
+  - 4
+  - 8
+  - 3
+  - 1
+  - 7
+  - 6
+  - 8
+  - 4
+  - 2
+  - 0
+  - 5
+  - 8
+  - 5
+  - 1
+  - 7
+  - 3
+  - 4
+  - 0
+  - 6
+  - 2
+  - 0
+  - 4
+  - 1
+  - 5
+  - 2
+  - 6
+  - 3
+  - 7
+  - 8
+  - 7
+  - 6
+  - 2
+  - 4
+  - 5
+  - 0
+  - 8
+  - 3
+  - 1
+  - 5
+  - 7
+  - 2
+  - 1
+  - 0
+  - 6
+  - 4
+  - 8
+  - 3
+  - 1
+  - 4
+  - 6
+  - 3
+  CondRepeat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 14
+  - 14
+  - 14
+  - 14
+  CONDSTATE:
+  - - PREICI: 4.2577
+    - COND: 114.0315
+    - SUFICI: 222.7257
+  - - PREICI: 331.8416
+    - COND: 436.2338
+    - SUFICI: 551.0357
+  - - PREICI: 659.4448
+    - COND: 769.3436
+    - SUFICI: 869.495
+  - - PREICI: 971.505
+    - COND: 1072.1387
+    - SUFICI: 1174.2613
+  - - PREICI: 1279.2884
+    - COND: 1380.3927
+    - SUFICI: 1486.2798
+  - - PREICI: 1595.4011
+    - COND: 1700.58
+    - SUFICI: 1814.3092
+  - - PREICI: 1914.7273
+    - COND: 2016.6408
+    - SUFICI: 2117.5163
+  - - PREICI: 2219.4314
+    - COND: 2321.8818
+    - SUFICI: 2422.435
+  - - PREICI: 2527.8801
+    - COND: 2640.6835
+    - SUFICI: 2749.8752
+  - - PREICI: 2858.9789
+    - COND: 2968.313
+    - SUFICI: 3077.5457
+  - - PREICI: 3178.3247
+    - COND: 3279.2573
+    - SUFICI: 3381.3786
+  - - PREICI: 3482.9928
+    - COND: 3587.1752
+    - SUFICI: 3691.5904
+  - - PREICI: 3795.2371
+    - COND: 3904.3867
+    - SUFICI: 4013.9424
+  - - PREICI: 4122.9137
+    - COND: 4231.8507
+    - SUFICI: 4341.2627
+  - - PREICI: 4450.4982
+    - COND: 4559.4272
+    - SUFICI: 4668.6519
+  - - PREICI: 4769.3536
+    - COND: 4872.1385
+    - SUFICI: 4972.6199
+  - - PREICI: 5077.7205
+    - COND: 5183.4212
+    - SUFICI: 5292.6568
+  - - PREICI: 5401.7586
+    - COND: 5511.4596
+    - SUFICI: 5620.4087
+  - - PREICI: 5720.688
+    - COND: 5823.04
+    - SUFICI: 5925.415
+  - - PREICI: 6029.7981
+    - COND: 6134.9901
+    - SUFICI: 6244.2802
+  - - PREICI: 6349.0316
+    - COND: 6463.1202
+    - SUFICI: 6564.0125
+  - - PREICI: 6665.5038
+    - COND: 6774.6252
+    - SUFICI: 6883.8275
+  - - PREICI: 6993.0563
+    - COND: 7098.5463
+    - SUFICI: 7211.8225
+  - - PREICI: 7320.553
+    - COND: 7422.1624
+    - SUFICI: 7523.849
+  - - PREICI: 7628.1485
+    - COND: 7733.3158
+    - SUFICI: 7835.415
+  - - PREICI: 7936.4025
+    - COND: 8038.2329
+    - SUFICI: 8147.9005
+  - - PREICI: 8256.4965
+    - COND: 8365.8065
+    - SUFICI: 8475.0754
+  - - PREICI: 8584.2045
+    - COND: 8693.2746
+    - SUFICI: 8802.4874
+  - - PREICI: 8903.7953
+    - COND: 9005.2729
+    - SUFICI: 9114.7971
+  - - PREICI: 9224.4067
+    - COND: 9332.9992
+    - SUFICI: 9438.1883
+  - - PREICI: 9551.8029
+    - COND: 9660.6254
+    - SUFICI: 9770.4537
+  - - PREICI: 9871.7504
+    - COND: 9974.0776
+    - SUFICI: 10082.8029
+  - - PREICI: 10187.9613
+    - COND: 10301.6407
+    - SUFICI: 10410.483
+  - - PREICI: 10519.9011
+    - COND: 10620.7661
+    - SUFICI: 10738.0515
+  - - PREICI: 10847.4542
+    - COND: 10956.404
+    - SUFICI: 11066.0761
+  - - PREICI: 11174.7231
+    - COND: 11280.9066
+    - SUFICI: 11385.146
+  - - PREICI: 11486.892
+    - COND: 11591.6017
+    - SUFICI: 11705.2426
+  - - PREICI: 11814.6312
+    - COND: 11924.0566
+    - SUFICI: 12032.8188
+  - - PREICI: 12137.8748
+    - COND: 12251.6174
+    - SUFICI: 12360.3892
+  - - PREICI: 12469.5613
+    - COND: 12570.2005
+    - SUFICI: 12672.8984
+  - - PREICI: 12781.5221
+    - COND: 12887.0781
+    - SUFICI: 12999.9743
+  - - PREICI: 13109.0784
+    - COND: 13218.3348
+    - SUFICI: 13327.5729
+  - - PREICI: 13436.7899
+    - COND: 13542.0464
+    - SUFICI: 13655.1819
+  - - PREICI: 13764.6952
+    - COND: 13874.1223
+    - SUFICI: 13982.7744
+  - - PREICI: 14091.9096
+    - COND: 14201.5628
+    - SUFICI: 14310.3779
+  - - PREICI: 14419.6747
+    - COND: 14520.8761
+    - SUFICI: 14622.5083
+  - - PREICI: 14731.5017
+    - COND: 14835.2309
+    - SUFICI: 14949.9787
+  - - PREICI: 15055.8061
+    - COND: 15168.86
+    - SUFICI: 15269.2849
+  - - PREICI: 15371.1833
+    - COND: 15472.4043
+    - SUFICI: 15578.5698
+  - - PREICI: 15683.0373
+    - COND: 15788.7778
+    - SUFICI: 15901.6015
+  - - PREICI: 16011.1202
+    - COND: 16120.1502
+    - SUFICI: 16220.8866
+  - - PREICI: 16322.7991
+    - COND: 16427.3984
+    - SUFICI: 16541.566
+  - - PREICI: 16650.2861
+    - COND: 16759.9688
+    - SUFICI: 16861.4297
+  - - PREICI: 16962.286
+    - COND: 17067.4456
+    - SUFICI: 17180.9714
+  - - PREICI: 17281.7216
+    - COND: 17383.5234
+    - SUFICI: 17492.8571
+  - - PREICI: 17597.6479
+    - COND: 17711.4097
+    - SUFICI: 17812.5489
+  - - PREICI: 17913.7962
+    - COND: 18023.4151
+    - SUFICI: 18132.2802
+  - - PREICI: 18241.4606
+    - COND: 18350.7543
+    - SUFICI: 18459.9911
+  - - PREICI: 18569.1558
+    - COND: 18672.6675
+    - SUFICI: 18772.833
+  - - PREICI: 18872.9721
+    - COND: 18975.0568
+    - SUFICI: 19083.9582
+  - - PREICI: 19188.249
+    - COND: 19302.344
+    - SUFICI: 19411.5806
+  - - PREICI: 19521.5866
+    - COND: 19621.8967
+    - SUFICI: 19723.9955
+  - - PREICI: 19832.7003
+    - COND: 19939.3084
+    - SUFICI: 20051.6249
+  - - PREICI: 20160.2598
+    - COND: 20270.2497
+    - SUFICI: 20370.394
+  - - PREICI: 20472.7065
+    - COND: 20581.4911
+    - SUFICI: 20690.7023
+  - - PREICI: 20799.7528
+    - COND: 20909.058
+    - SUFICI: 21018.3801
+  - - PREICI: 21118.9715
+    - COND: 21221.5127
+    - SUFICI: 21322.1999
+  - - PREICI: 21428.0819
+    - COND: 21533.1065
+    - SUFICI: 21639.2598
+  - - PREICI: 21742.7647
+    - COND: 21845.0852
+    - SUFICI: 21950.7593
+  - - PREICI: 22063.6199
+    - COND: 22172.775
+    - SUFICI: 22278.4106
+  - - PREICI: 22391.4055
+    - COND: 22500.2626
+    - SUFICI: 22609.9508
+  - - PREICI: 22718.6597
+    - COND: 22823.9066
+    - SUFICI: 22924.0765
+  - - PREICI: 23030.633
+    - COND: 23131.7693
+    - SUFICI: 23232.141
+  - - PREICI: 23344.6179
+    - COND: 23453.8269
+    - SUFICI: 23563.294
+  - - PREICI: 23672.2156
+    - COND: 23781.5063
+    - SUFICI: 23891.3847
+  - - PREICI: 23999.8739
+    - COND: 24109.5803
+    - SUFICI: 24218.3912
+  - - PREICI: 24318.973
+    - COND: 24421.1527
+    - SUFICI: 24523.7435
+  - - PREICI: 24624.1367
+    - COND: 24729.3967
+    - SUFICI: 24842.2948
+  - - PREICI: 24947.7001
+    - COND: 25060.9661
+    - SUFICI: 25169.8614
+  - - PREICI: 25272.5337
+    - COND: 25372.7078
+    - SUFICI: 25478.7203
+  - - PREICI: 25591.026
+    - COND: 25695.8838
+    - SUFICI: 25809.4343
+  - - PREICI: 25918.6724
+    - COND: 26028.2602
+    - SUFICI: 26137.1596
+  - - PREICI: 26246.1941
+    - COND: 26355.8671
+    - SUFICI: 26464.7271
+  - - PREICI: 26574.2042
+    - COND: 26678.9254
+    - SUFICI: 26792.3081
+  - - PREICI: 26897.4861
+    - COND: 27011.059
+    - SUFICI: 27119.867
+  - - PREICI: 27222.2023
+    - COND: 27322.9922
+    - SUFICI: 27429.4915
+  - - PREICI: 27541.0236
+    - COND: 27650.4102
+    - SUFICI: 27759.5008
+  - - PREICI: 27868.6194
+    - COND: 27978.0839
+    - SUFICI: 28079.0573
+  - - PREICI: 28180.4114
+    - COND: 28289.8308
+    - SUFICI: 28399.864
+  - - PREICI: 28508.2381
+    - COND: 28617.5407
+    - SUFICI: 28727.3648
+  - - PREICI: 28827.8286
+    - COND: 28928.2314
+    - SUFICI: 29033.4391
+  - - PREICI: 29148.0586
+    - COND: 29257.0822
+    - SUFICI: 29358.0151
+  - - PREICI: 29459.8089
+    - COND: 29569.0837
+    - SUFICI: 29669.8582
+  - - PREICI: 29771.8339
+    - COND: 29872.9612
+    - SUFICI: 29974.6662
+  - - PREICI: 30079.4496
+    - COND: 30182.6049
+    - SUFICI: 30282.8714
+  - - PREICI: 30395.791
+    - COND: 30500.9442
+    - SUFICI: 30614.6781
+  - - PREICI: 30714.7878
+    - COND: 30817.1349
+    - SUFICI: 30918.632
+  - - PREICI: 31019.8992
+    - COND: 31123.3813
+    - SUFICI: 31223.5455
+  - - PREICI: 31326.5103
+    - COND: 31441.0208
+    - SUFICI: 31550.7147
+  - - PREICI: 31659.4493
+    - COND: 31768.8786
+    - SUFICI: 31877.8774
+  - - PREICI: 31987.0543
+    - COND: 32096.2161
+    - SUFICI: 32201.1118
+  - - PREICI: 32306.207
+    - COND: 32408.2423
+    - SUFICI: 32512.4786
+  - - PREICI: 32626.6016
+    - COND: 32735.7913
+    - SUFICI: 32841.3836
+  - - PREICI: 32944.8231
+    - COND: 33048.2389
+    - SUFICI: 33157.0213
+  - - PREICI: 33257.6989
+    - COND: 33359.819
+    - SUFICI: 33469.4657
+  - - PREICI: 33569.8339
+    - COND: 33671.2559
+    - SUFICI: 33772.7592
+  - - PREICI: 33874.5803
+    - COND: 33979.7906
+    - SUFICI: 34082.8718
+  - - PREICI: 34187.0641
+    - COND: 34295.8077
+    - SUFICI: 34405.0327
+  - - PREICI: 34514.3873
+    - COND: 34623.4952
+    - SUFICI: 34727.8511
+  - - PREICI: 34831.0003
+    - COND: 34935.8928
+    - SUFICI: 35044.5921
+  - - PREICI: 35154.1436
+    - COND: 35263.1544
+    - SUFICI: 35363.8628
+  - - PREICI: 35465.8202
+    - COND: 35575.0288
+    - SUFICI: 35684.1637
+  - - PREICI: 35793.2893
+    - COND: 35899.1988
+    - SUFICI: 36012.2361
+  - - PREICI: 36120.98
+    - COND: 36224.0324
+    - SUFICI: 36324.1904
+  - - PREICI: 36432.9279
+    - COND: 36542.1648
+    - SUFICI: 36642.3347
+  - - PREICI: 36745.9045
+    - COND: 36854.2282
+    - SUFICI: 36955.1573
+  - - PREICI: 37056.853
+    - COND: 37157.9194
+    - SUFICI: 37259.752
+  - - PREICI: 37368.9728
+    - COND: 37470.0831
+    - SUFICI: 37571.8343
+  - - PREICI: 37672.7394
+    - COND: 37778.5001
+    - SUFICI: 37883.8252
+  - - PREICI: 37988.1532
+    - COND: 38102.1995
+    - SUFICI: 38211.8267
+  - - PREICI: 38320.5619
+    - COND: 38429.7683
+CondSampling: UniformWithoutReplacement
+CondRepeat: 30
+PreICI: 100
+CondDur: 100
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+Param: {}
+ExInheritParam: []
+EnvInheritParam: []
+NotifyParam:
+- CondIndex
+- CONDSTATE
