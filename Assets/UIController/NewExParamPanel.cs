@@ -23,35 +23,81 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 namespace VLab
 {
     public class NewExParamPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public Text namecheck;
+        public Text namecheck,valuecheck;
         public Button confirm, cancel;
+        public Dropdown typedropdown;
         public InputField nameinput, valueinput;
+
+        string pname;Param param;bool isvalidname, isvalidvalue;
+
+        void Start()
+        {
+            UpdateType();
+        }
+
+        public void UpdateType()
+        {
+            typedropdown.AddOptions(typeof(ParamType).GetValue());
+        }
 
         public void OnNewExParamName(string name)
         {
             if (Experiment.Properties.ContainsKey(name) || uicontroller.exmanager.el.ex.Param.ContainsKey(name))
             {
                 namecheck.text = "Name Already Exists";
-                confirm.interactable = false;
+                isvalidname = false;
             }
             else
             {
                 namecheck.text = "";
+                pname = nameinput.text;
+                isvalidname = true;
+            }
+            if(isvalidname&&isvalidvalue)
+            {
                 confirm.interactable = true;
+            }
+            else
+            {
+                confirm.interactable = false;
+            }
+        }
+
+        public void OnNewExParamValue(string name)
+        {
+            var value = valueinput.text;
+            var type = typedropdown.captionText.text.Convert<ParamType>();
+            try
+            {
+                param =new Param(type,  value.Convert(type));
+                valuecheck.text = "";
+                isvalidvalue = true;
+            }
+            catch (Exception ex)
+            {
+                valuecheck.text = "Invalid Value Format";
+                isvalidvalue = false;
+            }
+            if (isvalidname && isvalidvalue)
+            {
+                confirm.interactable = true;
+            }
+            else
+            {
+                confirm.interactable = false;
             }
         }
 
         public void Confirm()
         {
-            var name = nameinput.text;
-            var value = valueinput.text;
-            uicontroller.expanel.NewExParam(name, value);
+            uicontroller.expanel.NewExParam(pname, param);
             uicontroller.expanel.DeleteExParamPanel();
         }
 

@@ -1,46 +1,39 @@
-Name: ConditionTest
 ID: ConditionTest
-Designer: Alex
+Name: ConditionTest
 Experimenter: ''
 Subject_ID: ''
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
-  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  Sigma@ENGratingQuad@GratingQuad: 0.15
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
   Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
-  Diameter@ENGratingQuad@GratingQuad: 2
+  Diameter@ENGratingQuad@GratingQuad: 5
+  Size@ENGratingQuad@GratingQuad: (5, 5, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
+  MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 ExLogicPath: ConditionTestLogic
 DataDir: Data
-Input: 1
-PreICI: 50
-CondDur: 200
-SufICI: 50
-Param:
-  laserpower: 0, 2, 12, 45
-  tat: 2, 5, 654, 65
-  sdfsdf: wer, 546 ,werw, 6566
-ExInheritParam: []
-EnvInheritParam: []
 NotifyParam:
 - CondIndex
 - CONDSTATE
+ExInheritParam:
+- '[Experimente'
+EnvInheritParam: []
+Param: {}

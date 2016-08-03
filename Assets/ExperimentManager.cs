@@ -98,7 +98,7 @@ namespace VLab
             }
             if (ex.Param == null)
             {
-                ex.Param = new Dictionary<string, object>();
+                ex.Param = new Dictionary<string, Param>();
             }
             if (ex.EnvParam == null)
             {

@@ -59,7 +59,7 @@ namespace VLab
                 string paramname, nb;
                 fullname.FirstAtSplit(out paramname, out nb);
                 var showname = isshowfullname ? fullname : paramname;
-                var T = em.net_syncvar[fullname].type;
+                var T = em.net_syncvar[fullname].Type;
                 if (!isshowinactive)
                 {
                     if (em.activenet.Contains(nb))

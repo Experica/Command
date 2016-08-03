@@ -1,6 +1,5 @@
-Name: OriBar
 ID: OriBar
-Designer: Alex
+Name: OriBar
 Experimenter: ''
 Subject_ID: ''
 EnvPath: Showroom
@@ -11,8 +10,8 @@ EnvParam:
   Show@Showroom@ShowroomManager: Quad
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Size@ENQuad@Quad: (2, 2, 1)
-  Diameter@ENQuad@Quad: 2
+  Diameter@ENQuad@Quad: 5
+  Size@ENQuad@Quad: (3, 1, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
@@ -20,13 +19,9 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
 ExLogicPath: ConditionTestLogic
 DataDir: Data
-CondSampling: UniformWithoutReplacement
-PushCondAtState: PREICI
-CondTestAtState: PREICI
-NotifyPerCondTest: 2
-Param: {}
-ExInheritParam: []
-EnvInheritParam: []
 NotifyParam:
 - CondIndex
 - CONDSTATE
+ExInheritParam: []
+EnvInheritParam: []
+Param: {}

@@ -37,11 +37,11 @@ using YamlDotNet.Core.Events;
 
 namespace VLab
 {
-    public class YamlVLabConverter : IYamlTypeConverter
+    public class VLabYamlConverter : IYamlTypeConverter
     {
         public bool Accepts(Type type)
         {
-            if (type == typeof(Vector3) || type == typeof(Color))
+            if (type == typeof(Vector3) || type == typeof(Color) || type == typeof(Param))
             {
                 return true;
             }
@@ -50,15 +50,35 @@ namespace VLab
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var v = ((Scalar)parser.Current).Value.Convert( type);
+            object o;
+            var e = (Scalar)parser.Current;
+            if (type == typeof(Param))
+            {
+                var t = e.Tag.Substring(e.Tag.LastIndexOf(':') + 1).Convert<ParamType>();
+                var v = e.Value.Convert(t);
+                o = new Param(t, v);
+            }
+            else
+            {
+                o = e.Value.Convert(type);
+            }
             parser.MoveNext();
-            return v;
+            return o;
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            string v = value.Convert<string>();
-            emitter.Emit(new Scalar(v));
+            Scalar e;
+            if (type == typeof(Param))
+            {
+                var v = (Param)value;
+                e = new Scalar(null, "tag:yaml.org,2002:" + v.Type.ToString(), v.Value.Convert<string>(), ScalarStyle.Plain, false, false);
+            }
+            else
+            {
+                e = new Scalar(value.Convert<string>());
+            }
+            emitter.Emit(e);
         }
     }
 
@@ -69,8 +89,8 @@ namespace VLab
 
         static Yaml()
         {
-            serializer.RegisterTypeConverter(new YamlVLabConverter());
-            deserializer.RegisterTypeConverter(new YamlVLabConverter());
+            serializer.RegisterTypeConverter(new VLabYamlConverter());
+            deserializer.RegisterTypeConverter(new VLabYamlConverter());
         }
 
         public static void WriteYaml<T>(string path, T data)

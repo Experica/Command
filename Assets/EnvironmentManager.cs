@@ -141,8 +141,8 @@ namespace VLab
 
         public void SetParam(NetworkBehaviour nb, PropertyAccess p, object value,string fullname="",bool notifyui=false)
         {
-            object v = value.Convert(p.type);
-            p.setter(nb, v);
+            object v = value.Convert(p.Type);
+            p.Setter(nb, v);
             if(OnNotifyUI!=null)
             {
                 OnNotifyUI(fullname, v);
@@ -193,7 +193,7 @@ namespace VLab
 
         public static object GetParam(NetworkBehaviour nb, PropertyAccess p)
         {
-            return p.getter(nb);
+            return p.Getter(nb);
         }
 
         public void SetActiveParam(string name, object value,bool notifyui=false)

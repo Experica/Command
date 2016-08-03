@@ -65,8 +65,8 @@ namespace VLab
                 if (IsShowParam(p))
                 {
                     var pa = Experiment.Properties[p];
-                    AddParamUI(p, pa.type, ex.GetValue(p), ex.ExInheritParam.Contains(p),
-                        p.GetPrefab(pa.type),content.transform);
+                    AddParamUI(p, pa.Type, ex.GetValue(p), ex.ExInheritParam.Contains(p),
+                        p.GetPrefab(pa.Type),content.transform);
                 }
             }
             UpdateExParam(ex);
@@ -83,7 +83,7 @@ namespace VLab
                     var v = ex.GetValue(p);
                     if (dropdown.ContainsKey(p))
                     {
-                        dropdown[p].value = dropdown[p].options.Select(i => i.text).ToList().IndexOf(v.ToString());
+                        dropdown[p].value = dropdown[p].options.Select(i => i.text).ToList().IndexOf(v.Convert<string>());
                     }
                     else
                     {
@@ -111,7 +111,7 @@ namespace VLab
             exparamtoggle.Clear();
             foreach (var p in ex.Param.Keys)
             {
-                AddExParamUI(p, ex.Param[p], ex.ExInheritParam.Contains(p));
+                AddExParamUI(p, ex.Param[p].Value, ex.ExInheritParam.Contains(p));
             }
         }
 
@@ -217,7 +217,7 @@ namespace VLab
             statusbarcanvasgroup.interactable = true;
         }
 
-        public void NewExParam(string name,object value)
+        public void NewExParam(string name,Param value)
         {
             uicontroller.exmanager.el.ex.Param[name] = value;
             AddExParamUI(name, value, false);

@@ -35,6 +35,25 @@ namespace VLab
             return (T)Convert(value, typeof(T));
         }
 
+        public static object Convert(this object value, ParamType type)
+        {
+            switch (type)
+            {
+                case ParamType.Float:
+                    return  value.Convert<float>();
+                case ParamType.ListOfFloat:
+                    return  value.Convert<List<float>>();
+                case ParamType.ListOfString:
+                    return  value.Convert<List<string>>();
+                case ParamType.Vector3:
+                    return  value.Convert<Vector3>();
+                case ParamType.Color:
+                    return value.Convert<Color>();
+                default:
+                    return value.Convert<string>();
+            }
+        }
+
         public static object Convert(this object value, Type CT)
         {
             Type VT = value.GetType();
@@ -45,9 +64,9 @@ namespace VLab
             else if (VT == typeof(List<string>))
             {
                 var v = (List<string>)value;
-                if(CT==typeof(string))
+                if (CT == typeof(string))
                 {
-                    return v.Count==0?"[]": "[" + v.Aggregate((i, j) => i + ", " + j) + "]";
+                    return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i + ", " + j) + "]";
                 }
             }
             else if (VT==typeof(List<CONDTESTPARAM>))
@@ -124,7 +143,11 @@ namespace VLab
             else if (VT == typeof(string))
             {
                 var v = (string)value;
-                if(CT==typeof(Vector3))
+                if (CT == typeof(float))
+                {
+                    return float.Parse(v);
+                }
+                else    if (CT==typeof(Vector3))
                 {
                     var vs = v.Substring(1, v.Length - 2).Split(',');
                     return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
@@ -138,9 +161,15 @@ namespace VLab
                 {
                     return Enum.Parse(CT, v);
                 }
-                else
+                else if(CT==typeof(List<float>))
                 {
-
+                    var vs = v.Substring(v.IndexOf('['), v.Length - 2).Split(',');
+                    return vs.Select(i => float.Parse(i)).ToList();
+                }
+                else if(CT==typeof(List<string>))
+                {
+                    var vs = v.Substring(v.IndexOf('['), v.Length - 2).Split(',');
+                    return vs.ToList();
                 }
             }
             else
@@ -225,12 +254,12 @@ namespace VLab
             }
         }
 
-        public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond,Dictionary<string,object> param)
+        public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond,Dictionary<string,Param> param)
         {
             return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
         }
 
-        public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, object> param)
+        public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
         {
             // Replace Factor with known reference in parameter
             foreach (var f in cond.Keys.ToArray())
@@ -239,10 +268,13 @@ namespace VLab
                 {
                     var fname = f.Substring(1);
                     var fl = cond[f];
-                    if (param.ContainsKey(fname) && param[fname] != null &&
-                       typeof(List<object>).IsInstanceOfType(param[fname]))
+                    if (param.ContainsKey(fname) && param[fname] != null &&param[fname].Type.IsList())
                     {
-                        fl = param[fname] as List<object>;
+                        fl.Clear();
+                        foreach(var i in (IEnumerable)param[fname].Value)
+                        {
+                            fl.Add(i);
+                        }
                     }
                     cond.Remove(f);
                     cond[fname] = fl;
@@ -251,7 +283,7 @@ namespace VLab
             return cond;
         }
 
-        public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, object> param)
+        public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
         {
             // Replace Level with known reference in parameter
             foreach (var f in cond.Keys)
@@ -266,7 +298,7 @@ namespace VLab
                             var lname = l.Substring(1);
                             if (param.ContainsKey(lname) && param[lname] != null)
                             {
-                                cond[f][i] = param[lname];
+                                cond[f][i] = param[lname].Value;
                             }
                         }
                     }
@@ -460,5 +492,19 @@ namespace VLab
         {
             return Quaternion.AngleAxis(angle, Vector3.forward) * v;
         }
+
+        public static bool IsList(this ParamType type)
+        {
+            switch(type)
+            {
+                case ParamType.ListOfBool:
+                case ParamType.ListOfFloat:
+                case ParamType.ListOfString:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+       
     }
 }

@@ -21,16 +21,10 @@
 // -----------------------------------------------------------------------------
 
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using System.Collections;
-using System.Diagnostics;
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using MathNet.Numerics;
 
 namespace VLab
 {
@@ -384,7 +378,7 @@ namespace VLab
         }
         public virtual void OnUpdate()
         {
-            if (ex.Input > 0 && Input.GetJoystickNames().Count() > 0 && envmanager.activenet.Count > 0)
+            if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.activenet.Count > 0)
             {
                 var jx = Input.GetAxis("JX");
                 var jy = Input.GetAxis("JY");

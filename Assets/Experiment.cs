@@ -32,39 +32,61 @@ namespace VLab
 {
     public class PropertyAccess
     {
-        public MemberGetter getter;
-        public MemberSetter setter;
-        public Type type;
-        public string name;
+        MemberGetter g;
+        public MemberGetter Getter { get { return g; } }
+        MemberSetter s;
+        public MemberSetter Setter { get { return s; } }
+        Type t;
+        public Type Type { get { return t; } }
+        string n;
+        public string Name { get { return n; } }
 
-        public PropertyAccess(Type t,string n ,MemberGetter g,MemberSetter s)
+        public PropertyAccess(Type t, string n, MemberGetter g, MemberSetter s)
         {
-            type = t;
-            name = n;
-            getter = g;
-            setter = s;
+            this.t = t;
+            this.n = n;
+            this.g = g;
+            this.s = s;
         }
 
-        public PropertyAccess(Type reflectedtype,string propertyname):
-            this( reflectedtype.GetProperty(propertyname).PropertyType, propertyname,
+        public PropertyAccess(Type reflectedtype, string propertyname) :
+            this(reflectedtype.GetProperty(propertyname).PropertyType, propertyname,
                 reflectedtype.DelegateForGetPropertyValue(propertyname),
                 reflectedtype.DelegateForSetPropertyValue(propertyname))
         {
         }
     }
 
+    public class Param
+    {
+        ParamType t;
+        public ParamType Type { get { return t; } }
+        object v;
+        public object Value
+        {
+            get { return v; }
+            set { v = value.Convert(t); }
+        }
+
+        public Param(ParamType t, object v)
+        {
+            this.t = t;
+            this.v = v;
+        }
+    }
+
     public class Experiment
     {
-        public string Name { get; set; }
         public string ID { get; set; }
+        public string Name { get; set; }
         public string Designer { get; set; }
         public string Experimenter { get; set; }
         public string Log { get; set; }
 
-        public string Subject_Species { get; set; }
-        public string Subject_Name { get; set; }
         public string Subject_ID { get; set; }
-        public GENDER Subject_Gender { get; set; }
+        public string Subject_Name { get; set; }
+        public string Subject_Species { get; set; }
+        public Gender Subject_Gender { get; set; }
         public float Subject_Age { get; set; }
         public Vector3 Subject_Size { get; set; }
         public float Subject_Weight { get; set; }
@@ -80,10 +102,9 @@ namespace VLab
         public string RecordSite { get; set; }
         public string DataDir { get; set; }
         public string DataPath { get; set; }
-        public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
         public SampleMethod CondSampling { get; set; }
         public int CondRepeat { get; set; }
-        public int Input { get; set; }
+        public InputMethod Input { get; set; }
 
         public double PreICI { get; set; }
         public double CondDur { get; set; }
@@ -94,13 +115,15 @@ namespace VLab
         public double PreIBI { get; set; }
         public double BlockDur { get; set; }
         public double SufIBI { get; set; }
+
         public PUSHCONDATSTATE PushCondAtState { get; set; }
         public CONDTESTATSTATE CondTestAtState { get; set; }
         public int NotifyPerCondTest { get; set; }
-        public Dictionary<string, object> Param { get; set; }
+        public List<CONDTESTPARAM> NotifyParam { get; set; }
         public List<string> ExInheritParam { get; set; }
         public List<string> EnvInheritParam { get; set; }
-        public List<CONDTESTPARAM> NotifyParam { get; set; }
+        public Dictionary<string, Param> Param { get; set; }
+        public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
 
         public static readonly Dictionary<string, PropertyAccess> Properties;
         public Action<string, object> OnNotifyUI;
@@ -112,50 +135,57 @@ namespace VLab
             foreach (var p in T.GetProperties())
             {
                 var n = p.Name;
-                Properties[n] = new PropertyAccess(p.PropertyType,n,
-                    T.DelegateForGetPropertyValue(n),T.DelegateForSetPropertyValue(n));
+                Properties[n] = new PropertyAccess(p.PropertyType, n,
+                    T.DelegateForGetPropertyValue(n), T.DelegateForSetPropertyValue(n));
             }
         }
 
-        public void SetParam(string name, object value,bool notifyui=false)
+        public bool SetParam(string name, object value, bool notifyui = false)
         {
-            SetValue(name, value);
-            if (Param.ContainsKey(name))
+            if (!SetValue(name, value, notifyui))
             {
-                Param[name] = value;
-                if (OnNotifyUI != null)
+                if (Param.ContainsKey(name))
                 {
-                    OnNotifyUI(name, value);
+                    Param[name].Value = value;
+                    if (notifyui && OnNotifyUI != null)
+                    {
+                        OnNotifyUI(name, Param[name].Value);
+                    }
+                    return true;
                 }
+                return false;
             }
+            return true;
         }
 
-        public void SetValue(string name, object value,bool notifyui=false)
+        public bool SetValue(string name, object value, bool notifyui = false)
         {
             if (Properties.ContainsKey(name))
             {
-                SetValue(this, Properties[name], value,notifyui);
+                return SetValue(this, Properties[name], value, notifyui);
             }
+            return false;
         }
 
-        public void SetValue(Experiment ex, PropertyAccess p, object value,bool notifyui=false)
+        public bool SetValue(Experiment ex, PropertyAccess p, object value, bool notifyui = false)
         {
-            object v = value.Convert(p.type);
-            p.setter(ex, v);
-            if(OnNotifyUI!=null)
+            object v = value.Convert(p.Type);
+            p.Setter(ex, v);
+            if (notifyui && OnNotifyUI != null)
             {
-                OnNotifyUI(p.name, v);
+                OnNotifyUI(p.Name, v);
             }
+            return true;
         }
 
         public object GetParam(string name)
         {
             var v = GetValue(name);
-            if(v==null)
+            if (v == null)
             {
-                if(Param.ContainsKey(name))
+                if (Param.ContainsKey(name))
                 {
-                    v = Param[name];
+                    v = Param[name].Value;
                 }
             }
             return v;
@@ -170,9 +200,9 @@ namespace VLab
             return null;
         }
 
-        public static object GetValue(Experiment ex, PropertyAccess p)
+        public object GetValue(Experiment ex, PropertyAccess p)
         {
-            return p.getter(ex);
+            return p.Getter(ex);
         }
 
         public virtual string GetDataPath(string ext = ".yaml")
@@ -215,11 +245,37 @@ namespace VLab
         }
     }
 
-    public enum GENDER
+    public enum ParamType
+    {
+        String,
+        Float,
+        Bool,
+        Vector3,
+        Color,
+        ListOfString,
+        ListOfFloat,
+        ListOfBool
+    }
+
+    public enum Gender
     {
         Male,
         Female,
         Others
+    }
+
+    public enum InputMethod
+    {
+        None,
+        Joystick
+    }
+
+    public enum SampleMethod
+    {
+        Ascending,
+        Descending,
+        UniformWithReplacement,
+        UniformWithoutReplacement
     }
 
     public enum CONDSTATE
@@ -294,11 +350,5 @@ namespace VLab
         TASKSTATE
     }
 
-    public enum SampleMethod
-    {
-        Ascending,
-        Descending,
-        UniformWithReplacement,
-        UniformWithoutReplacement
-    }
+
 }
