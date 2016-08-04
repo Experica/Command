@@ -69,7 +69,7 @@ namespace VLab
         }
 
         /// <summary>
-        /// whenever a client connected, server will try to spwan this network object if it exists to the client.
+        /// whenever a client connected, server will try to spwan this network object to the client.
         /// but we want this object only talk to VLabAnalysis clients, save time and bandwidth, so when a new
         /// connection established, we check if the connection is to a relevent client,
         /// if not, excluded it from observers of this object.
@@ -94,18 +94,17 @@ namespace VLab
         /// <returns></returns>
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var isrebuild = false;
-            var cs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabAnalysis);
-            if(cs.Count>0)
+            var vcs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabAnalysis);
+            if(vcs.Count>0)
             {
-                foreach (var c in cs)
+                foreach (var c in vcs)
                 {
                     observers.Add(c);
                     //GetComponent<NetworkIdentity>().AssignClientAuthority(c);
                 }
-                isrebuild = true;
+                return true;
             }
-            return isrebuild;
+            return false;
         }
     }
 }
