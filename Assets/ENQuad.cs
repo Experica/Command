@@ -50,12 +50,6 @@ namespace VLab
 
         public VLTimer t = new VLTimer();
 
-        public override void OnAwake()
-        {
-            base.OnAwake();
-            t.Start();
-        }
-
         void onori(float o)
         {
             OnOri(o);

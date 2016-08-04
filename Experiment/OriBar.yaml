@@ -10,15 +10,22 @@ EnvParam:
   Show@Showroom@ShowroomManager: Quad
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 5
+  Diameter@ENQuad@Quad: 10
   Size@ENQuad@Quad: (3, 1, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (-10.5, -5.1, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
+CondPath: Condition\Orientation22.5DegStep.yaml
 ExLogicPath: ConditionTestLogic
+RecordSession: ''
 DataDir: Data
+CondRepeat: 10
+PreICI: 100
+CondDur: 500
+SufICI: 100
+PushCondAtState: PREICI
 NotifyParam:
 - CondIndex
 - CONDSTATE

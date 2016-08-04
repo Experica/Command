@@ -35,8 +35,8 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    envmanager.SetActiveParam("Visible", true,true);
                     CondState = CONDSTATE.COND;
+                    envmanager.SetActiveParam("Visible", true, true);
                 }
                 break;
             case CONDSTATE.COND:

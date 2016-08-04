@@ -60,11 +60,11 @@ namespace VLab
 
         public override void OnVisible(bool v)
         {
-            base.OnVisible(v);
             if (v)
             {
                 t.ReStart();
             }
+            base.OnVisible(v);
         }
 
         void onluminance(float l)
@@ -186,9 +186,9 @@ namespace VLab
         public virtual void OnIsReverseTime(bool r)
         {
             reversetime = t.ElapsedS;
-            ReverseTime = true;
+            ReverseTime = r; 
         }
-        void Update()
+        void LateUpdate()
         {
             if (Drifting)
             {
