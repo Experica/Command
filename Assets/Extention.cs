@@ -28,6 +28,46 @@ using System.Linq;
 
 namespace VLab
 {
+    public enum CONDTESTPARAM
+    {
+        CondIndex,
+        CondRepeat,
+        CONDSTATE,
+        TRIALSTATE,
+        BLOCKSTATE,
+        TASKSTATE
+    }
+
+    public enum ParamType
+    {
+        String,
+        Float,
+        Bool,
+        Vector3,
+        Color,
+        ListOfString,
+        ListOfFloat,
+        ListOfBool
+    }
+
+    public class Param
+    {
+        ParamType t;
+        public ParamType Type { get { return t; } }
+        object v;
+        public object Value
+        {
+            get { return v; }
+            set { v = value.Convert(t); }
+        }
+
+        public Param(ParamType t, object v)
+        {
+            this.t = t;
+            this.v = v;
+        }
+    }
+
     public static class Extention
     {
         public static T Convert<T>(this object value)

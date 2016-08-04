@@ -57,23 +57,7 @@ namespace VLab
         }
     }
 
-    public class Param
-    {
-        ParamType t;
-        public ParamType Type { get { return t; } }
-        object v;
-        public object Value
-        {
-            get { return v; }
-            set { v = value.Convert(t); }
-        }
-
-        public Param(ParamType t, object v)
-        {
-            this.t = t;
-            this.v = v;
-        }
-    }
+    
 
     public class Experiment
     {
@@ -245,18 +229,7 @@ namespace VLab
         }
     }
 
-    public enum ParamType
-    {
-        String,
-        Float,
-        Bool,
-        Vector3,
-        Color,
-        ListOfString,
-        ListOfFloat,
-        ListOfBool
-    }
-
+   
     public enum Gender
     {
         Male,
@@ -339,16 +312,5 @@ namespace VLab
         PREICI = CONDSTATE.PREICI,
         PREITI = TRIALSTATE.PREITI,
     }
-
-    public enum CONDTESTPARAM
-    {
-        CondIndex,
-        CondRepeat,
-        CONDSTATE,
-        TRIALSTATE,
-        BLOCKSTATE,
-        TASKSTATE
-    }
-
 
 }
