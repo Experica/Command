@@ -176,8 +176,7 @@ namespace VLab
                     }
                 }
             }
-            go.transform.SetParent(parent);
-            go.transform.localScale = new Vector3(1, 1, 1);
+            go.transform.SetParent(parent,false);
         }
 
         public void UpdateParamUI(string name, object value)

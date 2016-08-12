@@ -1,0 +1,63 @@
+ID: RFGrating2Deg
+Name: RFGrating2Deg
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R001
+Subject_Species: Rat
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0.15
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 0
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 0.5
+  Size@ENGratingQuad@GratingQuad: (0.5, 0.5, 1)
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0.75, 0.75, 0)
+CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset2Deg0.25DegStep.yaml
+ExLogicPath: RippleTTLCTLogic
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+CondSampling: UniformWithoutReplacement
+CondRepeat: 15
+PreICI: 50
+CondDur: 200
+SufICI: 50
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 4
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+EnvInheritParam: []
+Param: {}

@@ -82,6 +82,10 @@ namespace VLab
             {
                 ex.Subject_ID = "";
             }
+            if(string.IsNullOrEmpty(ex.Subject_Name))
+            {
+                ex.Subject_Name = ex.Subject_ID;
+            }
             if(ex.Experimenter==null)
             {
                 ex.Experimenter = "";
@@ -387,9 +391,11 @@ namespace VLab
 
         public void InheritEnvParam(string name, string forobjname = null)
         {
-            if (forobjname != null && name.IsEnvParamFullName())
+            string paramname, fullname;
+            var isfullname = name.IsEnvParamFullName(out paramname,out fullname);
+            if(forobjname!=null&&isfullname)
             {
-                if (name.LastAtSplitTail() != forobjname)
+                if (fullname.LastAtSplitTail() != forobjname)
                 {
                     return;
                 }
@@ -398,35 +404,44 @@ namespace VLab
             var hn = elhistory.Count;
             if (hn > 1)
             {
+                object v = null;
                 for (var i = hn - 2; i > -1; i--)
                 {
-                    var em = elhistory[i].envmanager;
-                    var v = em.GetParam(name);
+                    var ep = elhistory[i].ex.EnvParam;
+                    if (isfullname)
+                    {
+                        if (ep.ContainsKey(fullname))
+                        { v = ep[fullname]; }
+                    }
+                    else
+                    {
+                        foreach(var p in ep.Keys)
+                        {
+                            if(p.FirstAtSplitHead()==paramname)
+                            {
+                                v = ep[p];
+                                break;
+                            }
+                        }
+                    }
+
                     if (v != null)
                     {
-                        if (forobjname == null)
+                        string pname = name; 
+                        if (forobjname != null&&!isfullname)
                         {
-                            elhistory.Last().envmanager.SetParam(name, v);
-                        }
-                        else
-                        {
-                            if (name.IsEnvParamShortName())
+                            foreach (var p in elhistory.Last().envmanager.net_syncvar.Keys)
                             {
-                                foreach (var p in elhistory.Last().envmanager.net_syncvar.Keys)
+                                var pparam = p.FirstAtSplitHead();
+                                var pobj = p.LastAtSplitTail();
+                                if (pparam == paramname && pobj == forobjname)
                                 {
-                                    var pshort = p.FirstAtSplitHead();
-                                    var pobj = p.LastAtSplitTail();
-                                    if (pshort == name && pobj == forobjname)
-                                    {
-                                        elhistory.Last().envmanager.SetParam(p, v);
-                                    }
+                                    elhistory.Last().envmanager.SetParam(p, v);
                                 }
                             }
-                            else
-                            {
-                                elhistory.Last().envmanager.SetParam(name, v);
-                            }
+                            return;
                         }
+                        elhistory.Last().envmanager.SetParam(name,v);
                         break;
                     }
                 }

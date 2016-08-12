@@ -73,7 +73,7 @@ namespace VLab
         public virtual void OnLuminance(float l)
         {
             Color minc, maxc;
-            Extention.GetColorScale(l, Contrast).GetColor(MinColor,MaxColor,out minc,out maxc);
+            VLExtention.GetColorScale(l, Contrast).GetColor(MinColor,MaxColor,out minc,out maxc);
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);
@@ -88,7 +88,7 @@ namespace VLab
         public virtual void OnContrast(float ct)
         {
             Color minc, maxc;
-            Extention.GetColorScale(Luminance, ct).GetColor(MinColor,MaxColor,out minc,out maxc);
+            VLExtention.GetColorScale(Luminance, ct).GetColor(MinColor,MaxColor,out minc,out maxc);
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);

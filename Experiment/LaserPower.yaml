@@ -1,0 +1,44 @@
+ID: LaserPower
+Name: LaserPower
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R001
+Subject_Species: Rat
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
+CondPath: Condition\LaserPower.yaml
+ExLogicPath: RippleTTLCTLogic
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+CondSampling: UniformWithoutReplacement
+CondRepeat: 10
+PreICI: 200
+CondDur: 500
+SufICI: 200
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+EnvInheritParam: []
+Param:
+  LaserPower: !!Float 5

@@ -1,34 +1,52 @@
 ID: OriBar
 Name: OriBar
-Experimenter: ''
-Subject_ID: ''
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R1601
+Subject_Species: Rat
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 225
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 10
+  Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (3, 1, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (-10.5, -5.1, 0)
+  Visible@ENQuad@Quad: false
+  Position@ENQuad@Quad: (-1.2, 1.3, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: Condition\Orientation22.5DegStep.yaml
-ExLogicPath: ConditionTestLogic
-RecordSession: ''
-DataDir: Data
-CondRepeat: 10
+ExLogicPath: RippleTTLCTLogic
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+CondSampling: UniformWithoutReplacement
+CondRepeat: 8
 PreICI: 100
-CondDur: 500
+CondDur: 300
 SufICI: 100
 PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
 - CONDSTATE
-ExInheritParam: []
+ExInheritParam:
+- Subject_ID
+- Subject_Species
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Gender
+- Experimenter
 EnvInheritParam: []
 Param: {}

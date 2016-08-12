@@ -1,0 +1,50 @@
+ID: RFBarY2Deg
+Name: RFBarY2Deg
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R001
+Subject_Species: Rat
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: Quad
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 0.5, 1)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
+  MaskType@ENQuad@Quad: None
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0.25, 0)
+CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset2Deg0.25DegStep.yaml
+ExLogicPath: RippleTTLCTLogic
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+CondSampling: UniformWithoutReplacement
+CondRepeat: 15
+CondDur: 50
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 4
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+EnvInheritParam: []
+Param: {}

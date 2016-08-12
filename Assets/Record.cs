@@ -47,10 +47,17 @@ namespace VLab
 
         public void SetRecordPath(string path)
         {
-            var trellis =  xippmex.xippmex(1, new MWCharArray("opers"));
-            if(trellis.Length>0)
+            try
             {
-                xippmex.xippmex(1, new MWCharArray("trial"), trellis[0], MWNumericArray.Empty, new MWCharArray(path));
+                var trellis = xippmex.xippmex(1, "opers");
+                if (trellis.Length > 0)
+                {
+                    xippmex.xippmex(1, "trial", trellis[0], MWNumericArray.Empty, path);
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
         }
     }

@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System;
 using Fasterflect;
+using MsgPack.Serialization;
 
 namespace VLab
 {
@@ -108,7 +109,9 @@ namespace VLab
         public Dictionary<string, Param> Param { get; set; }
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
 
+        [MessagePackIgnore]
         public static readonly Dictionary<string, PropertyAccess> Properties;
+        [MessagePackIgnore]
         public Action<string, object> OnNotifyUI;
 
         static Experiment()

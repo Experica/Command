@@ -1,3 +1,1 @@
-PositionOffset: [factorleveldesign, [-3, -3, 0], [3, 3, 0], [3, 3, 0], Linear]
-#Ori: [factorleveldesign, 0, 180, 2, Linear]
-#factorlevel: []
+PositionOffset: [factorleveldesign, [-1, -1, 0], [1, 1, 0], [9, 9, 0], Linear]

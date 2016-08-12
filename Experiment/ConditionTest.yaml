@@ -1,32 +1,47 @@
 ID: ConditionTest
 Name: ConditionTest
-Experimenter: ''
-Subject_ID: ''
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R1601
+Subject_Species: Rat
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
-  MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 76.82321
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 3.447067
+  Size@ENGratingQuad@GratingQuad: (3.45, 3.45, 1)
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (-10.3, 2.66, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 ExLogicPath: ConditionTestLogic
-DataDir: Data
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
 Input: Joystick
-PreICI: 50
-CondDur: 500
-SufICI: 50
+PreICI: 100
+CondDur: 300
+SufICI: 100
 NotifyParam:
 - CondIndex
 - CONDSTATE
-ExInheritParam:
-- '[Experimente'
+ExInheritParam: []
 EnvInheritParam: []
 Param: {}

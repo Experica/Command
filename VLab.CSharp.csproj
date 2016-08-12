@@ -109,9 +109,9 @@
     <Compile Include="Assets\ExperimentLogic\LaserRippleTTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\OITTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleTTLCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\RippleTTLDisplayLatency.cs" />
     <Compile Include="Assets\ExperimentLogic\TTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentManager.cs" />
-    <Compile Include="Assets\Extention.cs" />
     <Compile Include="Assets\Laser.cs" />
     <Compile Include="Assets\MsgPackSerializer.cs" />
     <Compile Include="Assets\Record.cs" />
@@ -133,6 +133,7 @@
     <Compile Include="Assets\UIController\ViewPanel.cs" />
     <Compile Include="Assets\VLAnalysisManager.cs" />
     <Compile Include="Assets\VLApplicationManager.cs" />
+    <Compile Include="Assets\VLExtention.cs" />
     <Compile Include="Assets\VLIO.cs" />
     <Compile Include="Assets\VLNetManager.cs" />
     <Compile Include="Assets\VLNetwork.cs" />

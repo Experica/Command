@@ -104,7 +104,7 @@ namespace VLab
                         MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
                         break;
                     case CONDTESTPARAM.CONDSTATE:
-                        MsgPackSerializer.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+                        MsgPackSerializer.StateEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
                         break;
                     default:
                         MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);

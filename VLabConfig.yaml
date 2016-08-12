@@ -1,4 +1,5 @@
 IsSaveExOnQuit: true
+AutoSaveData: true
 ExDir: Experiment
 DataDir: Data
 ExLogic: ConditionTestLogic
@@ -18,4 +19,3 @@ ExHideParams:
 - Param
 - Log
 - Subject_Log
-AutoSaveData: true

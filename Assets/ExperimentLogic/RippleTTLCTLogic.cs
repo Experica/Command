@@ -25,17 +25,23 @@ public class RippleTTLCTLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
 
+    public override void OnAwake()
+    {
+        recordmanager = new RecordManager(VLRecordSystem.Ripple);
+    }
+
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        pport.BitPulse(0, 0.1);
+        recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
+        pport.BitPulse(2, 0.1);
         timer.ReStart();
     }
 
     protected override void StopExperiment()
     {
         base.StopExperiment();
-        pport.BitPulse(0, 0.1);
+        pport.BitPulse(3, 0.1);
     }
 
     public override void Logic()
@@ -43,21 +49,21 @@ public class RippleTTLCTLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("visible", false);
+                envmanager.SetActiveParam("Visible", false,true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    envmanager.SetActiveParam("visible", true);
                     CondState = CONDSTATE.COND;
+                    envmanager.SetActiveParam("Visible", true,true);
                     pport.SetBit(bit: 0, value: true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("visible", false);
+                    envmanager.SetActiveParam("Visible", false,true);
                     CondState = CONDSTATE.SUFICI;
                     pport.SetBit(bit: 0, value: false);
                 }

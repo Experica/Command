@@ -1,0 +1,52 @@
+ID: OriOffsetBar
+Name: OriOffsetBar
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R1601
+Subject_Species: Rat
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: Quad
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 2, 1)
+  Color@ENQuad@Quad: (0, 0, 0, 0)
+  MaskType@ENQuad@Quad: None
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
+CondPath: Condition\OrientationOffset7.5DegStep.yaml
+ExLogicPath: RippleTTLCTLogic
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+CondSampling: UniformWithoutReplacement
+CondRepeat: 8
+PreICI: 100
+CondDur: 300
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+EnvInheritParam: []
+Param: {}

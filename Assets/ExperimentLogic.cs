@@ -274,6 +274,7 @@ namespace VLab
                     condmanager.TrimCondition(cond);
                 }
             }
+            ex.Cond = condmanager.cond;
             condmanager.UpdateSampleSpace(ex.CondSampling, true);
         }
 
@@ -287,7 +288,6 @@ namespace VLab
             var ct = condtestmanager.condtest;
             if (ct.Count > 0)
             {
-                ex.Cond = condmanager.cond;
                 ex.CondTest = ct;
                 ex.EnvParam = envmanager.GetParams();
 
@@ -355,7 +355,10 @@ namespace VLab
         {
             islogicactive = false;
             // Nofity any condtest left
-            condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMS);
+            if (ex.NotifyPerCondTest > 0 && condtestmanager.condtestidx > 0)
+            {
+                condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMS);
+            }
             timer.Stop();
             CondState = CONDSTATE.NONE;
             TrialState = TRIALSTATE.NONE;

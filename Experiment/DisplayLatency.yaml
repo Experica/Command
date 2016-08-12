@@ -1,0 +1,28 @@
+ID: DisplayLatency
+Name: DisplayLatency
+Designer: Alex
+Experimenter: Alex
+Subject_ID: R1601
+Subject_Name: R1601
+Subject_Species: Rat
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (1, 1, 1, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
+ExLogicPath: RippleTTLDisplayLatency
+RecordSession: V1
+RecordSite: 1
+DataDir: '\\LyonRipple\VLabData'
+PreICI: 100
+CondDur: 300
+SufICI: 100
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam: []
+EnvInheritParam: []
+Param: {}
