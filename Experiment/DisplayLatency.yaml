@@ -7,7 +7,7 @@ Subject_Name: R1601
 Subject_Species: Rat
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (1, 1, 1, 1)
+  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: None

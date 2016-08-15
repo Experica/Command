@@ -13,15 +13,17 @@ public class RippleTTLDisplayLatency : ExperimentLogic
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
-        pport.BitPulse(2, 0.1);
+        //recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
+        //recordmanager.recorder.StartRecord();
+        //pport.BitPulse(2, 0.1);
         timer.ReStart();
     }
 
     protected override void StopExperiment()
     {
         base.StopExperiment();
-        pport.BitPulse(3, 0.1);
+        //recordmanager.recorder.StopRecord();
+        //pport.BitPulse(3, 0.1);
     }
 
     public override void Logic()

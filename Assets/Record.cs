@@ -39,6 +39,8 @@ namespace VLab
     public interface IRecorder
     {
         void SetRecordPath(string path);
+        void StartRecord();
+        void StopRecord();
     }
 
     public class RippleRecorder:IRecorder
@@ -60,11 +62,52 @@ namespace VLab
 
             }
         }
+
+        public void StartRecord()
+        {
+            try
+            {
+                var trellis = xippmex.xippmex(1, "opers");
+                if (trellis.Length > 0)
+                {
+                    xippmex.xippmex(1, "trial", trellis[0], "stopped");
+                    xippmex.xippmex(1, "trial", trellis[0], "recording");
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void StopRecord()
+        {
+            try
+            {
+                var trellis = xippmex.xippmex(1, "opers");
+                if (trellis.Length > 0)
+                {
+                    xippmex.xippmex(1, "trial", trellis[0], "stopped");
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 
     public class VLabRecorder : IRecorder
     {
         public void SetRecordPath(string path)
+        {
+        }
+
+        public void StartRecord()
+        {
+        }
+
+        public void StopRecord()
         {
         }
     }
