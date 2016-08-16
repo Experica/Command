@@ -64,9 +64,6 @@
     <Reference Include="LibUsbDotNet">
       <HintPath>Assets\Plugins\LibUsbDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="mcs">
-      <HintPath>Assets\Plugins\mcs.dll</HintPath>
-    </Reference>
     <Reference Include="MsgPack">
       <HintPath>Assets\Plugins\MsgPack.dll</HintPath>
     </Reference>
@@ -88,8 +85,18 @@
     <Reference Include="System.Threading">
       <HintPath>Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="mcs">
+      <HintPath>Assets\Plugins\MCSCompiler\mcs.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\MCSCompiler\CodeCompiler.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\CustomDynamicDriver.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\CustomReportPrinter.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\DeferredSynchronizeInvoke.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\ScriptBundleLoader.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\UnityErrorTextWriter.cs" />
+    <Compile Include="Assets\Plugins\MCSCompiler\UnityLogTextWriter.cs" />
     <Compile Include="Assets\Plugins\YamlDotNet\Core\AnchorNotFoundException.cs" />
     <Compile Include="Assets\Plugins\YamlDotNet\Core\CharacterAnalyzer.cs" />
     <Compile Include="Assets\Plugins\YamlDotNet\Core\Constants.cs" />

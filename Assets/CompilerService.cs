@@ -27,33 +27,50 @@ using System.CodeDom.Compiler;
 using System;
 using System.Text;
 using System.Reflection;
+using CSharpCompiler;
 
-public class CompilerService
+namespace VLab
 {
-    static CSharpCodeProvider provider = new CSharpCodeProvider();
-    static CompilerParameters param = new CompilerParameters();
-
-    public static Assembly Compile(string sourcefile)
+    public class CompilerService1
     {
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-        {
-            param.ReferencedAssemblies.Add(assembly.Location);
-        }
-        param.GenerateExecutable = false;
-        param.GenerateInMemory = true;
+        static CSharpCodeProvider provider = new CSharpCodeProvider();
+        static CompilerParameters param = new CompilerParameters();
 
-        var result = provider.CompileAssemblyFromFile(param, sourcefile);
-        if (result.Errors.Count > 0)
+        public static Assembly Compile(string sourcefile)
         {
-            var msg = new StringBuilder();
-            foreach (CompilerError error in result.Errors)
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                msg.AppendFormat("Error ({0}): {1}\n",
-                    error.ErrorNumber, error.ErrorText);
+                param.ReferencedAssemblies.Add(assembly.Location);
             }
-            throw new Exception(msg.ToString());
+            param.GenerateExecutable = false;
+            param.GenerateInMemory = true;
+
+            var result = provider.CompileAssemblyFromFile(param, sourcefile);
+            if (result.Errors.Count > 0)
+            {
+                var msg = new StringBuilder();
+                foreach (CompilerError error in result.Errors)
+                {
+                    msg.AppendFormat("Error ({0}): {1}\n",
+                        error.ErrorNumber, error.ErrorText);
+                }
+                throw new Exception(msg.ToString());
+            }
+            return result.CompiledAssembly;
         }
-        return result.CompiledAssembly;
+
     }
 
+    public class CompilerService
+    {
+        static ScriptBundleLoader loader = new ScriptBundleLoader(new DeferredSynchronizeInvoke());
+
+        public static Assembly Compile(string sourcefile)
+        {
+            var bundle = loader.LoadScriptsBundle(new[] { sourcefile });
+            loader.logWriter = new UnityLogTextWriter();
+
+            return bundle.Assembly;
+        }
+    }
 }

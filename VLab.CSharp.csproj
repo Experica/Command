@@ -64,9 +64,6 @@
     <Reference Include="LibUsbDotNet">
       <HintPath>Assets\Plugins\LibUsbDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="mcs">
-      <HintPath>Assets\Plugins\mcs.dll</HintPath>
-    </Reference>
     <Reference Include="MsgPack">
       <HintPath>Assets\Plugins\MsgPack.dll</HintPath>
     </Reference>
@@ -87,6 +84,9 @@
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="mcs">
+      <HintPath>Assets\Plugins\MCSCompiler\mcs.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
