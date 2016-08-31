@@ -2,40 +2,43 @@ ID: SpatialFreq
 Name: SpatialFreq
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 24
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 1.5
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
+  TemporalFreq@ENGratingQuad@GratingQuad: 3
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0.15
+  Sigma@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 90
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 10
-  Size@ENGratingQuad@GratingQuad: (10, 10, 1)
+  Diameter@ENGratingQuad@GratingQuad: 53.16422
+  Size@ENGratingQuad@GratingQuad: (53.2, 53.2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (-10.3, 2.66, 0)
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (-6.89, 18.2, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\SpatialFreq.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1
 RecordSite: 1
-DataDir: '\\LyonRipple\VLabData'
+DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
 PreICI: 100
@@ -59,5 +62,7 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
+- Latency
+- TimerDriftSpeed
 EnvInheritParam: []
 Param: {}

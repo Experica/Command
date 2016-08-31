@@ -2,29 +2,19 @@ ID: OriBar
 Name: OriBar
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Lone Enans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
-EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 225
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (3, 1, 1)
-  Color@ENQuad@Quad: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (-1.2, 1.3, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+EnvParam: {}
 CondPath: Condition\Orientation22.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1
 RecordSite: 1
-DataDir: '\\LyonRipple\VLabData'
+DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
 PreICI: 100
@@ -48,5 +38,9 @@ ExInheritParam:
 - Subject_Name
 - Subject_Gender
 - Experimenter
+- Latency
+- TimerDriftSpeed
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5E-05

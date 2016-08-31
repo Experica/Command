@@ -26,6 +26,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System;
 using MsgPack;
 using MsgPack.Serialization;
@@ -133,6 +134,7 @@ namespace VLab
             QualitySettings.maxQueuedFrames = 0;
             Time.fixedDeltaTime = (float)appmanager.config[VLCFG.LogicTick];
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
 
             if (alsmanager != null)
             {
@@ -160,10 +162,17 @@ namespace VLab
 
         public void OnBeginStopExperiment()
         {
+            if(start.isOn)
+            {
+                var eh = start.onValueChanged;
+                start.onValueChanged = new Toggle.ToggleEvent();
+                start.isOn = false;
+                start.onValueChanged = eh;
+            }
             startstoptext.text = "Start";
             if (pause.isOn)
             {
-                TogglePauseResumeExperiment(false);
+                //TogglePauseResumeExperiment(false);
                 pause.isOn = false;
             }
             pause.interactable = false;
@@ -277,6 +286,7 @@ namespace VLab
                 exmanager.InheritEnvParam(paramname);
                 envpanel.UpdateParamUI(fullname, exmanager.el.envmanager.GetParam(fullname));
             }
+            else
             {
                 if(ip.Contains(paramname))
                 {

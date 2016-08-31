@@ -28,7 +28,7 @@ public class ConditionTestLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("Visible",false,true);
+                envmanager.SetActiveParam("Visible", false, true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
@@ -41,7 +41,7 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("Visible", false,true);
+                    envmanager.SetActiveParam("Visible", false, true);
                     CondState = CONDSTATE.SUFICI;
                 }
                 break;

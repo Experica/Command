@@ -2,15 +2,18 @@ ID: ConditionTest
 Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
 EnvParam: {}
 ExLogicPath: ConditionTestLogic
 RecordSession: V1
 RecordSite: 1
-DataDir: '\\LyonRipple\VLabData'
+DataDir: X:\
 Input: Joystick
 PreICI: 100
 CondDur: 300
@@ -21,3 +24,5 @@ NotifyParam:
 ExInheritParam: []
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5E-05

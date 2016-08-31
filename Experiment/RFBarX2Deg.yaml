@@ -2,9 +2,12 @@ ID: RFBarX2Deg
 Name: RFBarX2Deg
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
@@ -17,14 +20,14 @@ EnvParam:
   Size@ENQuad@Quad: (0.5, 0.25, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0.5, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset2Deg0.25DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1
 RecordSite: 1
-DataDir: '\\LyonRipple\VLabData'
+DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15
 CondDur: 50

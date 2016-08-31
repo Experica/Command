@@ -25,33 +25,34 @@ namespace VLab
 {
     public class VLTimer : Stopwatch
     {
-        public double ElapsedS
+        public double ElapsedSecond
         {
             get { return Elapsed.TotalSeconds; }
         }
 
-        public double ElapsedMS
+        public double ElapsedMillisecond
         {
+
             get { return Elapsed.TotalMilliseconds; }
         }
 
-        public void ReStart()
+        public void Restart()
         {
             Reset();
             Start();
         }
 
-        public void Countdown(double durationms)
+        public void Countdown(double duration_ms)
         {
             if (!IsRunning)
             {
                 Start();
             }
-            var start = ElapsedMS;
-            var end = ElapsedMS;
-            while ((end - start) < durationms)
+            var start = ElapsedMillisecond;
+            var end = ElapsedMillisecond;
+            while ((end - start) < duration_ms)
             {
-                end = ElapsedMS;
+                end = ElapsedMillisecond;
             }
         }
     }

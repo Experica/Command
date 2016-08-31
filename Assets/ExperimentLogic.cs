@@ -45,15 +45,15 @@ namespace VLab
         public bool islogicactive = false;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
             TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
-        public double PreICIHold { get { return timer.ElapsedMS - PreICIOnTime; } }
-        public double CondHold { get { return timer.ElapsedMS - CondOnTime; } }
-        public double SufICIHold { get { return timer.ElapsedMS - SufICIOnTime; } }
-        public double PreITIHold { get { return timer.ElapsedMS - PreITIOnTime; } }
-        public double TrialHold { get { return timer.ElapsedMS - TrialOnTime; } }
-        public double SufITIHold { get { return timer.ElapsedMS - SufITIOnTime; } }
-        public double PreIBIHold { get { return timer.ElapsedMS - PreIBIOnTime; } }
-        public double BlockHold { get { return timer.ElapsedMS - BlockOnTime; } }
-        public double SufIBIHold { get { return timer.ElapsedMS - SufIBIOnTime; } }
+        public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
+        public double CondHold { get { return timer.ElapsedMillisecond - CondOnTime; } }
+        public double SufICIHold { get { return timer.ElapsedMillisecond - SufICIOnTime; } }
+        public double PreITIHold { get { return timer.ElapsedMillisecond - PreITIOnTime; } }
+        public double TrialHold { get { return timer.ElapsedMillisecond - TrialOnTime; } }
+        public double SufITIHold { get { return timer.ElapsedMillisecond - SufITIOnTime; } }
+        public double PreIBIHold { get { return timer.ElapsedMillisecond - PreIBIOnTime; } }
+        public double BlockHold { get { return timer.ElapsedMillisecond - BlockOnTime; } }
+        public double SufIBIHold { get { return timer.ElapsedMillisecond - SufIBIOnTime; } }
 
         private CONDSTATE condstate = CONDSTATE.NONE;
         public virtual CONDSTATE CondState
@@ -66,7 +66,7 @@ namespace VLab
                     switch (value)
                     {
                         case CONDSTATE.PREICI:
-                            PreICIOnTime = timer.ElapsedMS;
+                            PreICIOnTime = timer.ElapsedMillisecond;
                             if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
                             {
                                 condtestmanager.NewCondTest(PreICIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
@@ -94,7 +94,7 @@ namespace VLab
                             }
                             break;
                         case CONDSTATE.COND:
-                            CondOnTime = timer.ElapsedMS;
+                            CondOnTime = timer.ElapsedMillisecond;
                             if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                             {
                                 if (condmanager.IsCondRepeat(ex.CondRepeat))
@@ -118,7 +118,7 @@ namespace VLab
                             }
                             break;
                         case CONDSTATE.SUFICI:
-                            SufICIOnTime = timer.ElapsedMS;
+                            SufICIOnTime = timer.ElapsedMillisecond;
                             if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                             {
                                 condtestmanager.AddEvent(CONDTESTPARAM.CONDSTATE, value.ToString(), SufICIOnTime);
@@ -141,7 +141,7 @@ namespace VLab
                     switch (value)
                     {
                         case TRIALSTATE.PREITI:
-                            PreITIOnTime = timer.ElapsedMS;
+                            PreITIOnTime = timer.ElapsedMillisecond;
                             if (ex.CondTestAtState == CONDTESTATSTATE.PREITI)
                             {
                                 condtestmanager.NewCondTest(PreITIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
@@ -169,7 +169,7 @@ namespace VLab
                             }
                             break;
                         case TRIALSTATE.TRIAL:
-                            TrialOnTime = timer.ElapsedMS;
+                            TrialOnTime = timer.ElapsedMillisecond;
                             if (ex.PushCondAtState == PUSHCONDATSTATE.TRIAL)
                             {
                                 if (condmanager.IsCondRepeat(ex.CondRepeat))
@@ -193,7 +193,7 @@ namespace VLab
                             }
                             break;
                         case TRIALSTATE.SUFITI:
-                            SufITIOnTime = timer.ElapsedMS;
+                            SufITIOnTime = timer.ElapsedMillisecond;
                             if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                             {
                                 condtestmanager.AddEvent(CONDTESTPARAM.TRIALSTATE, value.ToString(), SufITIOnTime);
@@ -292,6 +292,7 @@ namespace VLab
                 ex.EnvParam = envmanager.GetParams();
 
                 Yaml.WriteYaml(DataPath(), ex);
+                ex.DataPath = null;
             }
         }
 
@@ -347,7 +348,7 @@ namespace VLab
             ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
             condtestmanager.Clear();
             PrepareCondition();
-            timer.ReStart();
+            timer.Restart();
             islogicactive = true;
         }
 
@@ -357,7 +358,7 @@ namespace VLab
             // Nofity any condtest left
             if (ex.NotifyPerCondTest > 0 && condtestmanager.condtestidx > 0)
             {
-                condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMS);
+                condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMillisecond);
             }
             timer.Stop();
             CondState = CONDSTATE.NONE;
@@ -372,6 +373,15 @@ namespace VLab
         }
         public virtual void OnAwake()
         {
+        }
+
+        void Start()
+        {
+            OnStart();
+        }
+        public virtual void OnStart()
+        {
+
         }
 
         void Update()

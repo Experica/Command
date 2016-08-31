@@ -58,7 +58,9 @@ namespace VLab
     }
 
     
-
+    /// <summary>
+    /// Holds all information that define an experiment
+    /// </summary>
     public class Experiment
     {
         public string ID { get; set; }
@@ -107,6 +109,8 @@ namespace VLab
         public List<string> ExInheritParam { get; set; }
         public List<string> EnvInheritParam { get; set; }
         public Dictionary<string, Param> Param { get; set; }
+        public double Latency { get; set; }
+        public double TimerDriftSpeed { get; set; }
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
 
         [MessagePackIgnore]
@@ -191,42 +195,60 @@ namespace VLab
             return p.Getter(ex);
         }
 
-        public virtual string GetDataPath(string ext = ".yaml")
+        public virtual string GetDataPath(string ext = ".yaml", string searchext = ".yaml")
         {
-            var filename = Subject_ID + "_" + RecordSession + "_" + RecordSite + "_" + ID + "_";
-            if (string.IsNullOrEmpty(DataDir))
+            if (string.IsNullOrEmpty(DataPath))
             {
-                DataDir = Directory.GetCurrentDirectory();
+                var filename = Subject_ID + "_" + RecordSession + "_" + RecordSite + "_" + ID + "_";
+                if (string.IsNullOrEmpty(DataDir))
+                {
+                    DataDir = Directory.GetCurrentDirectory();
+                }
+                else
+                {
+                    if (!Directory.Exists(DataDir))
+                    {
+                        Directory.CreateDirectory(DataDir);
+                    }
+                }
+                var subjectdir = Path.Combine(DataDir, Subject_ID);
+                if (!Directory.Exists(subjectdir))
+                {
+                    Directory.CreateDirectory(subjectdir);
+                }
+                var sessionsitedir = Path.Combine(subjectdir, RecordSession + "_" + RecordSite);
+                if (!Directory.Exists(sessionsitedir))
+                {
+                    Directory.CreateDirectory(sessionsitedir);
+                }
+                var fs = Directory.GetFiles(sessionsitedir, filename + "*" + searchext, SearchOption.TopDirectoryOnly);
+                if (fs.Length == 0)
+                {
+                    filename = filename + "1" + ext;
+                }
+                else
+                {
+                    var ns = new List<int>();
+                    foreach (var f in fs)
+                    {
+                        var s = f.LastIndexOf('_') + 1;
+                        var e = f.LastIndexOf('.') - 1;
+                        ns.Add(int.Parse(f.Substring(s, e - s + 1)));
+                    }
+                    filename = filename + (ns.Max() + 1).ToString() + ext;
+                }
+                DataPath = Path.Combine(sessionsitedir, filename);
             }
             else
             {
-                if (!Directory.Exists(DataDir))
+                var ddir = Path.GetDirectoryName(DataPath);
+                if (!Directory.Exists(ddir))
                 {
-                    Directory.CreateDirectory(DataDir);
+                    Directory.CreateDirectory(ddir);
                 }
+                var fname = Path.GetFileNameWithoutExtension(DataPath) + ext;
+                DataPath = Path.Combine(ddir, fname);
             }
-            var subjectdir = Path.Combine(DataDir, Subject_ID);
-            if (!Directory.Exists(subjectdir))
-            {
-                Directory.CreateDirectory(subjectdir);
-            }
-            var fs = Directory.GetFiles(subjectdir, filename + "*" + ext, SearchOption.AllDirectories);
-            if (fs.Length == 0)
-            {
-                filename = filename + "1" + ext;
-            }
-            else
-            {
-                var ns = new List<int>();
-                foreach (var f in fs)
-                {
-                    var s = f.LastIndexOf('_') + 1;
-                    var e = f.LastIndexOf('.') - 1;
-                    ns.Add(int.Parse(f.Substring(s, e - s + 1)));
-                }
-                filename = filename + (ns.Max() + 1).ToString() + ext;
-            }
-            DataPath = Path.Combine(subjectdir, filename);
             return DataPath;
         }
     }

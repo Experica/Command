@@ -61,7 +61,7 @@ namespace VLab
         {
             if (v)
             {
-                t.ReStart();
+                t.Restart();
             }
             base.OnVisible(v);
         }
@@ -184,14 +184,14 @@ namespace VLab
         }
         public virtual void OnIsReverseTime(bool r)
         {
-            reversetime = t.ElapsedS;
+            reversetime = t.ElapsedSecond;
             ReverseTime = r; 
         }
         void LateUpdate()
         {
             if (Drifting)
             {
-                renderer.material.SetFloat("t", (float)(ReverseTime?2*reversetime-t.ElapsedS: t.ElapsedS));
+                renderer.material.SetFloat("t", (float)(ReverseTime?2*reversetime-t.ElapsedSecond: t.ElapsedSecond));
             }
         }
     }

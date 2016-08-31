@@ -234,11 +234,11 @@ namespace VLab
             return vs.ToArray();
         }
 
-        public void BitPulse(int bit = 0, double duration = 0.001)
+        public void BitPulse(int bit = 0, double duration_ms = 1)
         {
             var timer = new VLTimer();
             SetBit(bit);
-            timer.Countdown(duration);
+            timer.Countdown(duration_ms);
             SetBit(bit, false);
         }
 
@@ -248,37 +248,37 @@ namespace VLab
             BitPulse((int)param[0], (double)param[1]);
         }
 
-        public void ThreadBitPulse(int bit = 0, double duration = 0.001)
+        public void ThreadBitPulse(int bit = 0, double duration_ms = 1)
         {
             var t = new Thread(new ParameterizedThreadStart(_BitPulse));
-            t.Start(new List<object>() { bit, duration });
+            t.Start(new List<object>() { bit, duration_ms });
         }
 
-        public void BitsPulse(int[] bits, double[] durations)
+        public void BitsPulse(int[] bits, double[] durations_ms)
         {
-            if (bits != null && durations != null)
+            if (bits != null && durations_ms != null)
             {
                 var bs = bits.Distinct().ToArray();
-                if (bs.Count() == durations.Length)
+                if (bs.Count() == durations_ms.Length)
                 {
                     for (var i = 0; i < bs.Count(); i++)
                     {
-                        BitPulse(bs[i], durations[i]);
+                        BitPulse(bs[i], durations_ms[i]);
                     }
                 }
             }
         }
 
-        public void ThreadBitsPulse(int[] bits, double[] durations)
+        public void ThreadBitsPulse(int[] bits, double[] durations_ms)
         {
-            if (bits != null && durations != null)
+            if (bits != null && durations_ms != null)
             {
                 var bs = bits.Distinct().ToArray();
-                if (bs.Count() == durations.Length)
+                if (bs.Count() == durations_ms.Length)
                 {
                     for (var i = 0; i < bs.Count(); i++)
                     {
-                        ThreadBitPulse(bs[i], durations[i]);
+                        ThreadBitPulse(bs[i], durations_ms[i]);
                     }
                 }
             }

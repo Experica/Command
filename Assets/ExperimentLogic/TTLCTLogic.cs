@@ -30,21 +30,21 @@ public class TTLCTLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("Visible", false,true);
+                envmanager.SetActiveParam("Visible", false, true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    envmanager.SetActiveParam("Visible", true,true);
+                    envmanager.SetActiveParam("Visible", true, true);
                     pport.SetBit(bit: 0, value: true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("Visible", false,true);
+                    envmanager.SetActiveParam("Visible", false, true);
                     CondState = CONDSTATE.SUFICI;
                     pport.SetBit(bit: 0, value: false);
                 }

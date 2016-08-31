@@ -59,7 +59,7 @@ namespace VLab
             }
             catch(Exception ex)
             {
-
+                Debug.Log(ex.Message);
             }
         }
 
@@ -70,13 +70,12 @@ namespace VLab
                 var trellis = xippmex.xippmex(1, "opers");
                 if (trellis.Length > 0)
                 {
-                    xippmex.xippmex(1, "trial", trellis[0], "stopped");
                     xippmex.xippmex(1, "trial", trellis[0], "recording");
                 }
             }
             catch (Exception ex)
             {
-
+                Debug.Log(ex.Message);
             }
         }
 
@@ -92,7 +91,7 @@ namespace VLab
             }
             catch (Exception ex)
             {
-
+                Debug.Log(ex.Message);
             }
         }
     }

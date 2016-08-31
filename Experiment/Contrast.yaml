@@ -2,16 +2,23 @@ ID: Contrast
 Name: Contrast
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
 CondPath: C:\Users\LyonLab\VLab\Condition\Contrast - Copy.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1
-RecordSite: 1
-DataDir: '\\LyonRipple\VLabData'
+RecordSite: 1091
+DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
 PreICI: 100
@@ -35,5 +42,9 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
+- Latency
+- TimerDriftSpeed
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5E-05

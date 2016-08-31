@@ -38,7 +38,7 @@ public class LaserRippleTTLCTLogic : ExperimentLogic
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
         base.StartExperiment();
         pport.BitPulse(2, 0.1);
-        timer.ReStart();
+        timer.Restart();
     }
 
     protected override void StopExperiment()

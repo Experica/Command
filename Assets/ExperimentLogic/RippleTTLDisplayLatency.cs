@@ -5,7 +5,7 @@ public class RippleTTLDisplayLatency : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
 
-    public override void OnAwake()
+    public override void OnStart()
     {
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
     }
@@ -13,17 +13,15 @@ public class RippleTTLDisplayLatency : ExperimentLogic
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        //recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
-        //recordmanager.recorder.StartRecord();
-        //pport.BitPulse(2, 0.1);
-        timer.ReStart();
+        recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
+        pport.BitPulse(bit: 2, duration_ms: 100);
+        timer.Restart();
     }
 
     protected override void StopExperiment()
     {
         base.StopExperiment();
-        //recordmanager.recorder.StopRecord();
-        //pport.BitPulse(3, 0.1);
+        pport.BitPulse(bit: 3, duration_ms: 1);
     }
 
     public override void Logic()
