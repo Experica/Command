@@ -29596,7 +29596,7 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     </member>
     <member name="P:UnityEngine.ParticleSystem.randomSeed">
       <summary>
-        <para>Random seed used for the particle system emission. If set to 0, it will be assigned a random value on awake.</para>
+        <para>Override the random seed used for the particle system emission.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.rotationBySpeed">
@@ -29687,6 +29687,11 @@ If a string, the string will be converted to raw bytes via &lt;a href="http:msdn
     <member name="P:UnityEngine.ParticleSystem.trigger">
       <summary>
         <para>Access the particle system trigger module.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.useAutoRandomSeed">
+      <summary>
+        <para>Set to false to support providing your own random seed for the Particle System.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.velocityOverLifetime">

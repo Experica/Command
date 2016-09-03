@@ -31,9 +31,9 @@ EnvParam:
   Size@ENGratingQuad@GratingQuad: (3, 3, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: true
+  Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (-1.5, 4.5, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (4.5, 6, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset12Deg1.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1

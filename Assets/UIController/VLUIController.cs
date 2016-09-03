@@ -102,13 +102,13 @@ namespace VLab
                 switch (name)
                 {
                     case CONDTESTPARAM.CondIndex:
-                        MsgPackSerializer.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+                        VLMsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
                         break;
                     case CONDTESTPARAM.CONDSTATE:
-                        MsgPackSerializer.StateEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+                        VLMsgPack.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
                         break;
                     default:
-                        MsgPackSerializer.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
+                        VLMsgPack.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
                         break;
                 }
                 alsmanager.RpcNotifyCondTest(name, stream.ToArray());
@@ -147,7 +147,7 @@ namespace VLab
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
-                MsgPackSerializer.ExSerializer.Pack(stream,exmanager.el. ex, PackerCompatibilityOptions.None);
+                VLMsgPack.ExSerializer.Pack(stream,exmanager.el. ex, PackerCompatibilityOptions.None);
                 alsmanager.RpcNotifyExperiment(stream.ToArray());
             }
         }

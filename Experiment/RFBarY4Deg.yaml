@@ -22,7 +22,7 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, -2, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1

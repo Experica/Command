@@ -16,7 +16,7 @@
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
-    <UnityVersion>5.4.0p2</UnityVersion>
+    <UnityVersion>5.4.0p4</UnityVersion>
     <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
@@ -64,9 +64,6 @@
     <Reference Include="LibUsbDotNet">
       <HintPath>Assets\Plugins\LibUsbDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="MsgPack">
-      <HintPath>Assets\Plugins\MsgPack.dll</HintPath>
-    </Reference>
     <Reference Include="MWArray">
       <HintPath>Assets\Plugins\MWArray.dll</HintPath>
     </Reference>
@@ -85,8 +82,14 @@
     <Reference Include="mcs">
       <HintPath>Assets\Plugins\MCSCompiler\mcs.dll</HintPath>
     </Reference>
+    <Reference Include="MsgPack">
+      <HintPath>Assets\Plugins\MsgPack\MsgPack.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading">
       <HintPath>Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>Assets\Plugins\YamlDotNet\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -97,183 +100,16 @@
     <Compile Include="Assets\Plugins\MCSCompiler\ScriptBundleLoader.cs" />
     <Compile Include="Assets\Plugins\MCSCompiler\UnityErrorTextWriter.cs" />
     <Compile Include="Assets\Plugins\MCSCompiler\UnityLogTextWriter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\AnchorNotFoundException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\CharacterAnalyzer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Constants.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Cursor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\DuplicateAnchorException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Emitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\EmitterState.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\EventReader.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\AnchorAlias.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\Comment.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\DocumentEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\DocumentStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\EventType.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\IParsingEventVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\MappingEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\MappingStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\MappingStyle.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\NodeEvent.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\ParsingEvent.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\Scalar.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\SequenceEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\SequenceStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\SequenceStyle.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\StreamEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Events\StreamStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\FakeList.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\ForwardAnchorNotSupportedException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\HashCode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\IEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\ILookAheadBuffer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\IParser.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\IScanner.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\InsertionQueue.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\LookAheadBuffer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Mark.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\MergingParser.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Parser.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\ParserState.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\ScalarStyle.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Scanner.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\SemanticErrorException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\SimpleKey.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\StringLookAheadBuffer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\SyntaxErrorException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\TagDirectiveCollection.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Anchor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\AnchorAlias.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\BlockEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\BlockEntry.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\BlockMappingStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\BlockSequenceStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Comment.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\DocumentEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\DocumentStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\FlowEntry.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\FlowMappingEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\FlowMappingStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\FlowSequenceEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\FlowSequenceStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Key.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Scalar.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\StreamEnd.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\StreamStart.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Tag.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\TagDirective.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Token.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\Value.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Tokens\VersionDirective.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\Version.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Core\YamlException.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Examples\Deserializing_an_object_graph.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Examples\Deserializing_multiple_documents.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Examples\Loading_a_YAML_stream.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Examples\Serializing_an_object_graph.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Examples\Validating_during_deserialization.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Helpers\GenericCollectionToNonGenericAdapter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Helpers\GenericDictionaryToNonGenericAdapter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Helpers\Portability.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\DocumentLoadingState.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\EmitterState.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\IYamlVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlAliasNode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlDocument.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlMappingNode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlNode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlNodeIdentityEqualityComparer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlScalarNode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlSequenceNode.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlStream.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\RepresentationModel\YamlVisitorBase.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Converters\GuidConverter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Deserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\EventEmitters\ChainedEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\EventEmitters\JsonEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\EventEmitters\TypeAssigningEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\EventEmitters\WriterEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\EventInfo.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IAliasProvider.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\INamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\INodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\INodeTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IObjectDescriptor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IObjectFactory.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IObjectGraphTraversalStrategy.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IPropertyDescriptor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ITypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ITypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IValueDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IValuePromise.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IYamlSerializable.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\IYamlTypeConverter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NamingConventions\CamelCaseNamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NamingConventions\HyphenatedNamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NamingConventions\NullNamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NamingConventions\PascalCaseNamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NamingConventions\UnderscoredNamingConvention.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\ArrayNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\CollectionNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\DictionaryNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\EnumerableNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\NullNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\ObjectNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\ScalarNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeDeserializers\TypeConverterNodeDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeTypeResolvers\DefaultContainersNodeTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeTypeResolvers\TagNodeTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\NodeTypeResolvers\TypeNameInTagNodeTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectDescriptor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectFactories\DefaultObjectFactory.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectFactories\LambdaObjectFactory.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphTraversalStrategies\FullObjectGraphTraversalStrategy.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphTraversalStrategies\RoundtripObjectGraphTraversalStrategy.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\AnchorAssigner.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\AnchorAssigningObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\ChainedObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\CustomSerializationObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\DefaultExclusiveObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ObjectGraphVisitors\EmittingObjectGraphVisitor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\PropertyDescriptor.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\SerializationOptions.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Serializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\StreamFragment.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TagMappings.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeInspectors\CachedTypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeInspectors\NamingConventionTypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeInspectors\ReadableAndWritablePropertiesTypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeInspectors\ReadablePropertiesTypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeInspectors\TypeInspectorSkeleton.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeResolvers\DynamicTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\TypeResolvers\StaticTypeResolver.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\IPostDeserializationCallback.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\ObjectAnchorCollection.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\ReflectionUtility.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\SerializerState.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\StringExtensions.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\TypeConverter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\Utilities\YamlTypeConverters.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ValueDeserializers\AliasValueDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\ValueDeserializers\NodeValueDeserializer.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlAliasAttribute.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlAttributesTypeInspector.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlFormatter.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlIgnoreAttribute.cs" />
-    <Compile Include="Assets\Plugins\YamlDotNet\Serialization\YamlMember.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Fasterflect\Fasterflect.XML" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.xml" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\readme.txt" />
+    <None Include="Assets\Plugins\MsgPack\MsgPack.XML" />
     <None Include="Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.xml" />
     <None Include="Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\redist.txt" />
-    <None Include="Assets\Plugins\YamlDotNet\Readme.txt" />
-    <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.license.txt" />
+    <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.xml" />
     <None Include="Assets\Resources\color.shader" />
     <None Include="Assets\Resources\grating.shader" />
   </ItemGroup>

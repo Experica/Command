@@ -4,7 +4,7 @@ Designer: Alex
 Experimenter: Alex
 Subject_ID: LZR1602
 Subject_Name: LZR1602
-Subject_Species: Lone Enans Rat
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 3
 Subject_Weight: 260
@@ -20,9 +20,9 @@ EnvParam:
   Size@ENQuad@Quad: (2, 0.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0.25, 0)
+  PositionOffset@ENQuad@Quad: (0, -0.25, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset2Deg0.25DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1

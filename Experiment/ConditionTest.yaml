@@ -9,7 +9,31 @@ Subject_Gender: Female
 Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0, 0, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 0
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: None
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 ExLogicPath: ConditionTestLogic
 RecordSession: V1
 RecordSite: 1
@@ -25,4 +49,4 @@ ExInheritParam: []
 EnvInheritParam: []
 Param: {}
 Latency: 150
-TimerDriftSpeed: 2.5E-05
+TimerDriftSpeed: 2.5000000000000001E-05
