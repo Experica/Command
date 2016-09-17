@@ -159,7 +159,6 @@ namespace VLab
         public override void OnServerSceneChanged(string sceneName)
         {
             base.OnServerSceneChanged(sceneName);
-            Resources.UnloadUnusedAssets();
 
             uicontroller.OnServerSceneChanged(sceneName);
         }

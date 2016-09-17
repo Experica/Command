@@ -16,8 +16,8 @@ EnvParam:
   Show@Showroom@ShowroomManager: None
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15

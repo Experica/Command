@@ -97,7 +97,7 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.NotifyParams))
             {
-                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE };
+                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE,CONDTESTPARAM.CondRepeat };
             }
             else
             {

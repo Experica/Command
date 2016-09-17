@@ -1,5 +1,5 @@
-ID: RFBarY4Deg
-Name: RFBarY4Deg
+ID: RFBarY12Deg
+Name: RFBarY12Deg
 Designer: Alex
 Experimenter: Alex
 Subject_ID: LZR1602
@@ -9,24 +9,11 @@ Subject_Gender: Female
 Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
-EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
-  MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (21.3, 1.63, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
-CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset4Deg0.5DegStep.yaml
+EnvParam: {}
+CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset12Deg1.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
-RecordSite: 1728
+RecordSession: V1
+RecordSite: 1698
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 50
@@ -60,3 +47,5 @@ EnvInheritParam:
 - Ori
 - Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05

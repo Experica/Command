@@ -101,6 +101,7 @@ namespace VLab
                 var stream = new MemoryStream();
                 switch (name)
                 {
+                    case CONDTESTPARAM.CondRepeat:
                     case CONDTESTPARAM.CondIndex:
                         VLMsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
                         break;

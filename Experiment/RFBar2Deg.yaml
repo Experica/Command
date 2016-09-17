@@ -25,8 +25,8 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0.75, 0.75, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset2Deg0.25DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15
@@ -37,6 +37,7 @@ NotifyPerCondTest: 4
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -49,5 +50,6 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
+- NotifyParam
 EnvInheritParam: []
 Param: {}

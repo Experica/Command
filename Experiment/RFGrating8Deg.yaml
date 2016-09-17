@@ -36,8 +36,8 @@ EnvParam:
   PositionOffset@ENGratingQuad@GratingQuad: (-4, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset8Deg1DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15

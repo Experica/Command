@@ -11,15 +11,15 @@ Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 24
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.2
-  TemporalFreq@ENGratingQuad@GratingQuad: 3
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.5
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
@@ -27,29 +27,30 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 53.16422
-  Size@ENGratingQuad@GratingQuad: (53.2, 53.2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (-6.89, 18.2, 0)
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\SpatialFreq.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
-PreICI: 100
-CondDur: 300
-SufICI: 100
+PreICI: 150
+CondDur: 500
+SufICI: 150
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -64,5 +65,14 @@ ExInheritParam:
 - Experimenter
 - Latency
 - TimerDriftSpeed
-EnvInheritParam: []
+- NotifyParam
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- TemporalFreq
+- Ori
+- Diameter
+- Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05

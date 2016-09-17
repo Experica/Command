@@ -6,6 +6,7 @@ ExLogic: ConditionTestLogic
 NotifyParams:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
 LogicTick: 9.99999975E-05
