@@ -10,18 +10,18 @@ Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
+  Size@ENQuad@Quad: (8, 1.5, 1)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (21.3, 1.63, 0)
+  Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
@@ -39,6 +39,7 @@ NotifyPerCondTest: 4
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -51,12 +52,15 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- Designer
 - Latency
 - TimerDriftSpeed
+- Delay
 EnvInheritParam:
 - ScreenHalfHeight
 - ScreenToEye
 - Ori
 - Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

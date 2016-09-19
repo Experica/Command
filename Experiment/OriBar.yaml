@@ -13,11 +13,20 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: None
+  Show@Showroom@ShowroomManager: Quad
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 2, 1)
+  Color@ENQuad@Quad: (0, 0, 0, 0)
+  MaskType@ENQuad@Quad: None
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: Condition\Orientation22.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1499
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -30,6 +39,7 @@ NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Species
@@ -44,6 +54,7 @@ ExInheritParam:
 - Experimenter
 - Latency
 - TimerDriftSpeed
+- NotifyParam
 EnvInheritParam: []
 Param: {}
 Latency: 150

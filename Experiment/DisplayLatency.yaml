@@ -2,14 +2,21 @@ ID: DisplayLatency
 Name: DisplayLatency
 Designer: Alex
 Experimenter: Alex
-Subject_ID: R1601
-Subject_Name: R1601
-Subject_Species: Rat
+Subject_ID: LZR1602
+Subject_Name: LZR1602
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Weight: 260
 EnvPath: Showroom
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
 ExLogicPath: RippleTTLDisplayLatency
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 PreICI: 100
 CondDur: 300
@@ -19,9 +26,18 @@ NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - DataDir
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
 EnvInheritParam: []
 Param: {}
-Latency: 150
-TimerDriftSpeed: 2.5E-05

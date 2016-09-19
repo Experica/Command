@@ -17,12 +17,12 @@ EnvParam:
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (0.5, 0.5, 1)
+  Size@ENQuad@Quad: (1, 0.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0.5, 2, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A
@@ -50,6 +50,15 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- NotifyParam
-EnvInheritParam: []
+- TimerDriftSpeed
+- Latency
+- Delay
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- Ori
+- Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

@@ -50,6 +50,15 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- NotifyParam
-EnvInheritParam: []
+- Latency
+- TimerDriftSpeed
+- Delay
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- Ori
+- Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

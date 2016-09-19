@@ -20,9 +20,9 @@ EnvParam:
   Size@ENQuad@Quad: (2, 2, 1)
   Color@ENQuad@Quad: (0, 0, 0, 0)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (-2, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A
@@ -37,6 +37,7 @@ NotifyPerCondTest: 4
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -49,5 +50,10 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
+- TimerDriftSpeed
+- Latency
+- NotifyParam
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05

@@ -16,8 +16,8 @@ EnvParam:
   Show@Showroom@ShowroomManager: None
 CondPath: Condition\OrientationOffset7.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 1
+RecordSession: V1A
+RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -30,6 +30,7 @@ NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -42,5 +43,10 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
+- NotifyParam
+- Latency
+- TimerDriftSpeed
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05

@@ -10,28 +10,28 @@ Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 1, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
-  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 135
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 2
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
-  Visible@ENGratingQuad@GratingQuad: false
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (-4, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset8Deg1DegStep.yaml
@@ -50,6 +50,7 @@ NotifyPerCondTest: 4
 NotifyParam:
 - CondIndex
 - CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -62,5 +63,17 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-EnvInheritParam: []
+- Latency
+- TimerDriftSpeed
+- Delay
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- SpatialFreq
+- TemporalFreq
+- Ori
+- Position
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

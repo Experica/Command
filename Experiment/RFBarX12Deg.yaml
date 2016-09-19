@@ -10,7 +10,7 @@ Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
@@ -22,7 +22,7 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (1, 0, 0)
+  PositionOffset@ENQuad@Quad: (-0.5, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A
@@ -51,5 +51,9 @@ ExInheritParam:
 - DataDir
 - Experimenter
 - NotifyParam
+- TimerDriftSpeed
+- Latency
 EnvInheritParam: []
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
