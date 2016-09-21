@@ -16,8 +16,8 @@ EnvParam:
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 1
-  TemporalFreq@ENGratingQuad@GratingQuad: 5
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -25,15 +25,15 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 135
+  Ori@ENGratingQuad@GratingQuad: 292.5
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 5
   Size@ENGratingQuad@GratingQuad: (5, 5, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (6, -1.5, 0)
+  Position@ENGratingQuad@GratingQuad: (4.73, -1.16, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 4.5, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset12Deg1.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A

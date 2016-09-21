@@ -1152,8 +1152,6 @@ MonoBehaviour:
   confirm: {fileID: 114000010262910398}
   cancel: {fileID: 114000012972640438}
   typedropdown: {fileID: 114000011176191544}
-  nameinput: {fileID: 114000013864731488}
-  valueinput: {fileID: 114000014211134632}
 --- !u!114 &114000012434308490
 MonoBehaviour:
   m_ObjectHideFlags: 1

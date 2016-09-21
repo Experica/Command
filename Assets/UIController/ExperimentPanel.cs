@@ -65,7 +65,7 @@ namespace VLab
                 {
                     var pa = Experiment.Properties[p];
                     AddParamUI(p, pa.Type, ex.GetValue(p), ex.ExInheritParam.Contains(p),
-                        p.GetPrefab(pa.Type),content.transform);
+                        p.GetPrefab(pa.Type), content.transform);
                 }
             }
             UpdateExParam(ex);
@@ -102,9 +102,21 @@ namespace VLab
 
         public void UpdateExParam(Experiment ex)
         {
-            foreach (var go in exparamgo.Values)
+            foreach (var p in exparamgo.Keys.ToList())
             {
-                Destroy(go);
+                if (inherittoggle.ContainsKey(p))
+                {
+                    inherittoggle.Remove(p);
+                }
+                if (dropdown.ContainsKey(p))
+                {
+                    dropdown.Remove(p);
+                }
+                if (inputfield.ContainsKey(p))
+                {
+                    inputfield.Remove(p);
+                }
+                Destroy(exparamgo[p]);
             }
             exparamgo.Clear();
             exparamtoggle.Clear();
@@ -117,7 +129,7 @@ namespace VLab
         public void AddExParamUI(string name, object value, bool isinherit)
         {
             var t = value.GetType();
-            AddParamUI(name, t, value, isinherit,name.GetPrefab(t,true), content.transform);
+            AddParamUI(name, t, value, isinherit, name.GetPrefab(t, true), content.transform);
         }
 
         public void UpdateContentRect()
@@ -125,7 +137,7 @@ namespace VLab
             var np = inherittoggle.Count;
             var grid = content.GetComponent<GridLayoutGroup>();
             var cn = grid.constraintCount;
-            var rn = Mathf.Floor(np / cn)+1;
+            var rn = Mathf.Floor(np / cn) + 1;
             var rt = (RectTransform)content.transform;
             rt.sizeDelta = new Vector2((grid.cellSize.x + grid.spacing.x) * cn, (grid.cellSize.y + grid.spacing.y) * rn);
         }
@@ -160,23 +172,23 @@ namespace VLab
                 }
                 if (inputfield != null)
                 {
-                    inputfield.text =value==null?"":value.Convert<string>();
+                    inputfield.text = value == null ? "" : value.Convert<string>();
                     inputfield.onEndEdit.AddListener(s => uicontroller.exmanager.el.ex.SetParam(name, s));
                     this.inputfield[name] = inputfield;
                 }
                 if (dropdown != null)
                 {
-                    var vs = T.GetValue();
-                    if (vs != null&&vs.Contains(value.ToString()))
+                    var vs = T.GetValue(); var v = value.ToString();
+                    if (vs != null && vs.Contains(v))
                     {
                         dropdown.AddOptions(vs);
-                        dropdown.value = vs.IndexOf(value.ToString());
+                        dropdown.value = vs.IndexOf(v);
                         dropdown.onValueChanged.AddListener(vi => uicontroller.exmanager.el.ex.SetParam(name, dropdown.captionText.text));
                         this.dropdown[name] = dropdown;
                     }
                 }
             }
-            go.transform.SetParent(parent,false);
+            go.transform.SetParent(parent, false);
         }
 
         public void UpdateParamUI(string name, object value)
@@ -199,9 +211,7 @@ namespace VLab
         {
             newexparampanel = Instantiate(newexparampanelprefab);
             newexparampanel.name = "NewExParamPanel";
-            newexparampanel.transform.SetParent(canvas.transform);
-            ((RectTransform)newexparampanel.transform).anchoredPosition = new Vector2();
-            newexparampanel.transform.localScale = new Vector3(1, 1, 1);
+            newexparampanel.transform.SetParent(canvas.transform, false);
             newexparampanel.GetComponent<NewExParamPanel>().uicontroller = uicontroller;
 
             panelcontentcanvasgroup.interactable = false;
@@ -215,7 +225,7 @@ namespace VLab
             statusbarcanvasgroup.interactable = true;
         }
 
-        public void NewExParam(string name,Param value)
+        public void NewExParam(string name, Param value)
         {
             uicontroller.exmanager.el.ex.Param[name] = value;
             AddExParamUI(name, value, false);
@@ -224,9 +234,9 @@ namespace VLab
 
         public void DeleteExParam()
         {
-            foreach(var s in exparamtoggle.Keys.ToArray())
+            foreach (var s in exparamtoggle.Keys.ToList())
             {
-                if(exparamtoggle[s].isOn)
+                if (exparamtoggle[s].isOn)
                 {
                     uicontroller.exmanager.el.ex.Param.Remove(s);
                     uicontroller.exmanager.el.ex.ExInheritParam.Remove(s);

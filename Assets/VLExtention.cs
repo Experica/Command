@@ -60,39 +60,68 @@ namespace VLab
             set { v = value.Convert(t); }
         }
 
-        public Param()
-        { }
-
-        public Param(ParamType t, object v)
+        public Param(ParamType type, object value)
         {
-            this.t = t;
-            this.v = v;
+            t = type;
+            v = value;
         }
     }
 
     public static class VLExtention
     {
+        static Type TString, TFloat,TBool,TVector3,TColor, TListOfString, TListOfFloat, TListOfBool,TParam;
+
+        static VLExtention()
+        {
+            TString = typeof(string);
+            TFloat = typeof(float);
+            TBool = typeof(bool);
+            TVector3 = typeof(Vector3);
+            TColor = typeof(Color);
+            TListOfString = typeof(List<string>);
+            TListOfFloat = typeof(List<float>);
+            TListOfBool = typeof(List<bool>);
+            TParam = typeof(Param);
+        }
+
         public static T Convert<T>(this object value)
         {
             return (T)Convert(value, typeof(T));
         }
 
-        public static object Convert(this object value, ParamType type)
+        public static object Convert(this object value, ParamType paramtype)
+        {
+            switch (paramtype)
+            {
+                case ParamType.Float:
+                    return value.Convert<float>();
+                case ParamType.Bool:
+                    return value.Convert<bool>();
+                case ParamType.Vector3:
+                    return value.Convert<Vector3>();
+                case ParamType.Color:
+                    return value.Convert<Color>();
+                case ParamType.ListOfString:
+                    return value.Convert<List<string>>();
+                case ParamType.ListOfFloat:
+                    return value.Convert<List<float>>();
+                case ParamType.ListOfBool:
+                    return value.Convert<List<bool>>();
+                default:
+                    return value.Convert<string>();
+            }
+        }
+
+        public static bool IsList(this ParamType type)
         {
             switch (type)
             {
-                case ParamType.Float:
-                    return  value.Convert<float>();
+                case ParamType.ListOfBool:
                 case ParamType.ListOfFloat:
-                    return  value.Convert<List<float>>();
                 case ParamType.ListOfString:
-                    return  value.Convert<List<string>>();
-                case ParamType.Vector3:
-                    return  value.Convert<Vector3>();
-                case ParamType.Color:
-                    return value.Convert<Color>();
+                    return true;
                 default:
-                    return value.Convert<string>();
+                    return false;
             }
         }
 
@@ -103,44 +132,60 @@ namespace VLab
             {
                 return value;
             }
-            else if (VT == typeof(List<string>))
+            else if (VT == TListOfString)
             {
                 var v = (List<string>)value;
-                if (CT == typeof(string))
+                if (CT == TString)
                 {
                     return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i + ", " + j) + "]";
                 }
             }
-            else if (VT==typeof(List<CONDTESTPARAM>))
+            else if (VT == TListOfFloat)
+            {
+                var v = (List<float>)value;
+                if (CT == TString)
+                {
+                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString("G3")).Aggregate((i, j) => i + ", " + j) + "]";
+                }
+            }
+            else if (VT == TListOfBool)
+            {
+                var v = (List<bool>)value;
+                if (CT == TString)
+                {
+                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
+                }
+            }
+            else if (VT == typeof(List<CONDTESTPARAM>))
             {
                 var v = (List<CONDTESTPARAM>)value;
                 if (CT == typeof(string))
                 {
-                    return v.Count == 0 ? "[]" : "[" + v.Select(i=>i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
+                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
                 }
             }
-            else if (VT== typeof(List<object>))
+            else if (VT == typeof(List<object>))
             {
                 var v = (List<object>)value;
                 var vn = v.Count;
-                if(CT==typeof(Vector3))
+                if (CT == typeof(Vector3))
                 {
-                    float x=0, y=0, z=0;
-                    if(vn>0)
+                    float x = 0, y = 0, z = 0;
+                    if (vn > 0)
                     {
                         x = v[0].Convert<float>();
                     }
-                    if(vn>1)
+                    if (vn > 1)
                     {
                         y = v[1].Convert<float>();
                     }
-                    if(vn>2)
+                    if (vn > 2)
                     {
                         z = v[2].Convert<float>();
                     }
                     return new Vector3(x, y, z);
                 }
-                else if(CT==typeof(Color))
+                else if (CT == typeof(Color))
                 {
                     float r = 0, g = 0, b = 0, a = 1;
                     if (vn > 0)
@@ -159,64 +204,83 @@ namespace VLab
                     {
                         a = v[3].Convert<float>();
                     }
-                    return new Color(r, g, b,a);
+                    return new Color(r, g, b, a);
                 }
                 else if (CT == typeof(string))
                 {
                     return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i.Convert<string>() + ", " + j.Convert<string>()) + "]";
                 }
             }
-            else if (VT == typeof(Vector3))
+            else if (VT == TVector3)
             {
                 var v = (Vector3)value;
-                if(CT==typeof(string))
+                if (CT == TString)
                 {
                     return v.ToString("G3");
                 }
             }
-            else if (VT == typeof(Color))
+            else if (VT == TColor)
             {
                 var v = (Color)value;
-                if(CT==typeof(string))
+                if (CT == TString)
                 {
                     return v.ToString("G3").Substring(4);
                 }
             }
-            else if (VT == typeof(string))
+            else if (VT == TParam)
+            {
+                var v = (Param)value;
+                if (CT == TString)
+                {
+                    return v.Value.Convert<string>();
+                }
+            }
+            else if (VT == TString)
             {
                 var v = (string)value;
-                if (CT == typeof(float))
+                if (CT == TFloat)
                 {
                     return float.Parse(v);
                 }
-                else    if (CT==typeof(Vector3))
+                else if (CT == TBool)
                 {
-                    var vs = v.Substring(1, v.Length - 2).Split(',');
+                    return bool.Parse(v);
+                }
+                else if (CT == TVector3)
+                {
+                    var si = v.IndexOf('(') + 1; var ei = v.LastIndexOf(')');
+                    var vs = v.Substring(si, ei - si).Split(',');
                     return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
                 }
-                else if(CT==typeof(Color))
+                else if (CT == TColor)
                 {
-                    var vs = v.Substring(v.IndexOf('(') + 1, v.Length - 2).Split(',');
+                    var si = v.IndexOf('(') + 1; var ei = v.LastIndexOf(')');
+                    var vs = v.Substring(si, ei - si).Split(',');
                     return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
                 }
-                else if(CT.IsEnum&& Enum.IsDefined(CT, v))
+                else if (CT.IsEnum && Enum.IsDefined(CT, v))
                 {
                     return Enum.Parse(CT, v);
                 }
-                else if(CT==typeof(List<float>))
+                else if (CT == TListOfString)
                 {
-                    var vs = v.Substring(v.IndexOf('['), v.Length - 2).Split(',');
-                    return vs.Select(i => float.Parse(i)).ToList();
+                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
+                    return v.Substring(si, ei - si).Split(',').Select(i => i.Trim()).ToList();
                 }
-                else if(CT==typeof(List<string>))
+                else if (CT == TListOfFloat)
                 {
-                    var vs = v.Substring(v.IndexOf('['), v.Length - 2).Split(',');
-                    return vs.ToList();
+                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
+                    return v.Substring(si, ei - si).Split(',').Select(i => float.Parse(i.Trim())).ToList();
+                }
+                else if (CT == TListOfBool)
+                {
+                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
+                    return v.Substring(si, ei - si).Split(',').Select(i => bool.Parse(i.Trim())).ToList();
                 }
             }
             else
             {
-                if(CT==typeof(string))
+                if (CT == TString)
                 {
                     return value.ToString();
                 }
@@ -240,11 +304,117 @@ namespace VLab
             return seq;
         }
 
+        
+
+        public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond,Dictionary<string,Param> param)
+        {
+            return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
+        }
+
+        /// <summary>
+        /// Replace all factor values with known reference in experiment parameters
+        /// </summary>
+        /// <param name="cond"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
+        {
+            foreach (var f in cond.Keys.ToList())
+            {
+                if (f.Count() > 1 && f.First() == '$')
+                {
+                    var rf = f.Substring(1);
+                    if (param.ContainsKey(rf) && param[rf] != null &&param[rf].Type.IsList())
+                    {
+                        var fl = cond[f]; fl.Clear();
+                        foreach(var i in (IEnumerable)param[rf].Value)
+                        {
+                            fl.Add(i);
+                        }
+                        cond.Remove(f);
+                        cond[rf] = fl;
+                    }
+                }
+            }
+            return cond;
+        }
+
+        /// <summary>
+        /// Replace factor values with known reference in experiment parameter
+        /// </summary>
+        /// <param name="cond"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
+        {
+            foreach (var f in cond.Keys)
+            {
+                for (var i = 0; i < cond[f].Count; i++)
+                {
+                    if (cond[f][i].GetType() == typeof(string))
+                    {
+                        var v = (string)cond[f][i];
+                        if (v.Count() > 1 && v.First() == '$')
+                        {
+                            var r = v.Substring(1);
+                            if (param.ContainsKey(r) && param[r] != null)
+                            {
+                                cond[f][i] = param[r].Value;
+                            }
+                        }
+                    }
+                }
+            }
+            return cond;
+        }
+
+#if VLAB
+        public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
+        {
+            foreach (var f in conddesign.Keys.ToArray())
+            {
+                if (conddesign[f].Count >= 5 && conddesign[f][0].GetType() == typeof(string) && (string)conddesign[f][0] == "factorleveldesign")
+                {
+                    var start = conddesign[f][1];
+                    var end = conddesign[f][2];
+                    var n = conddesign[f][3];
+                    var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
+
+                    object so, eo; int[] no;
+                    if (start.GetType() == typeof(List<object>))
+                    {
+                        if (((List<object>)start).Count < 4)
+                        {
+                            so = start.Convert<Vector3>();
+                            eo = end.Convert<Vector3>();
+                        }
+                        else
+                        {
+                            so = start.Convert<Color>();
+                            eo = end.Convert<Color>();
+                        }
+                        no = ((List<object>)n).Select(i => i.Convert<int>()).ToArray();
+                    }
+                    else
+                    {
+                        so = start.Convert<float>();
+                        eo = end.Convert<float>();
+                        no = new int[] { n.Convert<int>() };
+                    }
+
+                    var fld = new FactorLevelDesign(f, so, eo, no, method);
+                    conddesign[f] = fld.FactorLevel().Value;
+                }
+            }
+            return conddesign;
+        }
+#endif
+
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
         {
-            foreach(var f in fsls.Keys.ToArray())
+            foreach (var f in fsls.Keys.ToArray())
             {
-                if(fsls[f].Count==0)
+                if (fsls[f].Count == 0)
                 {
                     fsls.Remove(f);
                 }
@@ -296,100 +466,6 @@ namespace VLab
             }
         }
 
-        public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond,Dictionary<string,Param> param)
-        {
-            return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
-        }
-
-        public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
-        {
-            // Replace Factor with known reference in parameter
-            foreach (var f in cond.Keys.ToArray())
-            {
-                if (f.Count() > 1 && f.First() == '$')
-                {
-                    var fname = f.Substring(1);
-                    var fl = cond[f];
-                    if (param.ContainsKey(fname) && param[fname] != null &&param[fname].Type.IsList())
-                    {
-                        fl.Clear();
-                        foreach(var i in (IEnumerable)param[fname].Value)
-                        {
-                            fl.Add(i);
-                        }
-                    }
-                    cond.Remove(f);
-                    cond[fname] = fl;
-                }
-            }
-            return cond;
-        }
-
-        public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
-        {
-            // Replace Level with known reference in parameter
-            foreach (var f in cond.Keys)
-            {
-                for (var i = 0; i < cond[f].Count; i++)
-                {
-                    if (cond[f][i].GetType() == typeof(string))
-                    {
-                        var l = (string)cond[f][i];
-                        if (l.Count() > 1 && l.First() == '$')
-                        {
-                            var lname = l.Substring(1);
-                            if (param.ContainsKey(lname) && param[lname] != null)
-                            {
-                                cond[f][i] = param[lname].Value;
-                            }
-                        }
-                    }
-                }
-            }
-            return cond;
-        }
-#if VLAB
-        public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
-        {
-            foreach (var f in conddesign.Keys.ToArray())
-            {
-                if (conddesign[f].Count >= 5 && conddesign[f][0].GetType() == typeof(string) && (string)conddesign[f][0] == "factorleveldesign")
-                {
-                    var start = conddesign[f][1];
-                    var end = conddesign[f][2];
-                    var n = conddesign[f][3];
-                    var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
-
-                    object so, eo; int[] no;
-                    if (start.GetType() == typeof(List<object>))
-                    {
-                        var s = (List<object>)start;
-                        if (((List<object>)start).Count < 4)
-                        {
-                            so = start.Convert<Vector3>();
-                            eo = end.Convert<Vector3>();
-                        }
-                        else
-                        {
-                            so = start.Convert<Color>();
-                            eo = end.Convert<Color>();
-                        }
-                        no = ((List<object>)n).Select(i => i.Convert<int>()).ToArray();
-                    }
-                    else
-                    {
-                        so = start.Convert<float>();
-                        eo = end.Convert<float>();
-                        no = new int[] { n.Convert<int>() };
-                    }
-
-                    var fld = new FactorLevelDesign(f, so, eo, no, method);
-                    conddesign[f] = fld.FactorLevel().Value;
-                }
-            }
-            return conddesign;
-        }
-#endif
         public static bool FirstAtSplit(this string name,out string head,out string tail)
         {
             head = null;tail = null;
@@ -552,18 +628,7 @@ namespace VLab
             return Quaternion.AngleAxis(angle, Vector3.forward) * v;
         }
 
-        public static bool IsList(this ParamType type)
-        {
-            switch(type)
-            {
-                case ParamType.ListOfBool:
-                case ParamType.ListOfFloat:
-                case ParamType.ListOfString:
-                    return true;
-                default:
-                    return false;
-            }
-        }
+        
        
     }
 }

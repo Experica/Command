@@ -9,12 +9,8 @@ Subject_Gender: Female
 Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
-EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: None
-CondPath: Condition\LaserPower.yaml
+EnvParam: {}
+CondPath: C:\Users\LyonLab\VLab\Condition\LaserPower.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A
 RecordSite: 1728
@@ -44,4 +40,4 @@ ExInheritParam:
 - Experimenter
 EnvInheritParam: []
 Param:
-  LaserPower: !!Float 5
+  LaserPower: !!ListOfFloat '[2.4, 5.6, 7.8]'

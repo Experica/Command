@@ -29,12 +29,10 @@ namespace VLab
     public class NewExParamPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public Text namecheck,valuecheck;
+        public Text namecheck, valuecheck;
         public Button confirm, cancel;
         public Dropdown typedropdown;
-        public InputField nameinput, valueinput;
-
-        string pname;Param param;bool isvalidname, isvalidvalue;
+        string pname; Param param; bool isvalidname, isvalidvalue;
 
         void Start()
         {
@@ -43,6 +41,7 @@ namespace VLab
 
         public void UpdateType()
         {
+            typedropdown.ClearOptions();
             typedropdown.AddOptions(typeof(ParamType).GetValue());
         }
 
@@ -56,10 +55,10 @@ namespace VLab
             else
             {
                 namecheck.text = "";
-                pname = nameinput.text;
+                pname = name;
                 isvalidname = true;
             }
-            if(isvalidname&&isvalidvalue)
+            if (isvalidname && isvalidvalue)
             {
                 confirm.interactable = true;
             }
@@ -69,13 +68,12 @@ namespace VLab
             }
         }
 
-        public void OnNewExParamValue(string name)
+        public void OnNewExParamValue(string value)
         {
-            var value = valueinput.text;
             var type = typedropdown.captionText.text.Convert<ParamType>();
             try
             {
-                param =new Param(type,  value.Convert(type));
+                param = new Param(type, value.Convert(type));
                 valuecheck.text = "";
                 isvalidvalue = true;
             }
