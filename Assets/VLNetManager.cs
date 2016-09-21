@@ -33,9 +33,9 @@ namespace VLab
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
 
 
-        public bool IsPeerTypeConnected(VLPeerType peertype, int[] excludeids)
+        public bool IsPeerTypeConnected(VLPeerType peertype, int[] excludeconns)
         {
-            foreach(var cid in peerinfo.Keys.Except(excludeids))
+            foreach(var cid in peerinfo.Keys.Except(excludeconns))
             {
                 var pi = peerinfo[cid];var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
                 if(pi!=null&&pi.ContainsKey(strkey)&&(VLPeerType)pi[strkey]==peertype)
@@ -84,34 +84,29 @@ namespace VLab
         }
 
         /// <summary>
-        /// Peertype message is received whenever a new client is connected.
+        /// Peertype message is the first message received whenever a new client is connected.
         /// </summary>
         /// <param name="netMsg"></param>
         void PeerTypeHandler(NetworkMessage netMsg)
         {
-            var v = (VLPeerType)netMsg.ReadMessage<IntegerMessage>().value;
+            var pt = (VLPeerType)netMsg.ReadMessage<IntegerMessage>().value;
             if (LogFilter.logDebug)
             {
-                Debug.Log("Receive PeerType Message: " + v.ToString());
+                Debug.Log("Receive PeerType Message: " + pt.ToString());
             }
             var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
-            if(peerinfo.ContainsKey(connid))
+            if (!peerinfo.ContainsKey(connid))
             {
-                peerinfo[connid][strkey] = v;
+                peerinfo[connid] = new Dictionary<string, object>();
             }
-            else
-            {
-                var info = new Dictionary<string, object>();
-                info[strkey] = v;
-                peerinfo[connid] = info;
-            }
+            peerinfo[connid][strkey] = pt;
             // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
             // and server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
             // newly conneted client. if not, then this is the first time a VLabAnalysis client connected,
             // so we need to create a new instance of VLabAnalysisManager and spwan to all clients,
             // this may include VLabEnvironment, but since they doesn't register for the VLabAnalysisManager prefab,
             // they will spawn nothing.
-            if ((v == VLPeerType.VLabAnalysis)&& (!IsPeerTypeConnected(VLPeerType.VLabAnalysis,new[] { connid })))
+            if ((pt == VLPeerType.VLabAnalysis)&& (uicontroller.alsmanager==null))
             {
                 SpwanVLAnalysisManager();
             }
@@ -124,30 +119,25 @@ namespace VLab
             als.uicontroller = uicontroller;
             uicontroller.alsmanager = als;
             go.name = "VLAnalysisManager";
-            go.transform.SetParent( transform);
-            
+            go.transform.SetParent(transform, false);
+
             NetworkServer.Spawn(go);
         }
 
         void AspectRatioHandler(NetworkMessage netMsg)
         {
-            var v = netMsg.ReadMessage<FloatMessage>().value;
+            var r = netMsg.ReadMessage<FloatMessage>().value;
             if (LogFilter.logDebug)
             {
-                Debug.Log("Receive AspectRatio Message: " + v.ToString());
+                Debug.Log("Receive AspectRatio Message: " + r.ToString());
             }
             var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.AspectRatio);
-            if (peerinfo.ContainsKey(connid))
+            if(!peerinfo.ContainsKey(connid))
             {
-                peerinfo[connid][strkey] = v;
+                peerinfo[connid] = new Dictionary<string, object>();
             }
-            else
-            {
-                var info = new Dictionary<string, object>();
-                info[strkey] = v;
-                peerinfo[connid] = info;
-            }
-            uicontroller.OnAspectRatioMessage(v);
+            peerinfo[connid][strkey] = r;
+            uicontroller.OnAspectRatioMessage(r);
         }
 
         public override void OnServerDisconnect(NetworkConnection conn)
