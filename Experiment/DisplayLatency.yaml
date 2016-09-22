@@ -10,7 +10,7 @@ Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: None
@@ -39,5 +39,12 @@ ExInheritParam:
 - Subject_Weight
 - RecordSession
 - RecordSite
-EnvInheritParam: []
+- TimerDriftSpeed
+- Latency
+- Delay
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
 Param: {}
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05

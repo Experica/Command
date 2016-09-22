@@ -76,7 +76,7 @@ namespace VLab
                     Destroy(ri.texture);
                 }
                 rendertexture = new RenderTexture((int)width, (int)height, 24);
-                rendertexture.generateMips = false;
+                rendertexture.autoGenerateMips = false;
                 rendertexture.antiAliasing = (int)uicontroller.appmanager.config[VLCFG.AntiAliasing];
                 rendertexture.anisoLevel = (int)uicontroller.appmanager.config[VLCFG.AnisotropicFilterLevel];
                 maincamera.targetTexture = rendertexture;

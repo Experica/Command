@@ -10,7 +10,7 @@ Subject_Age: 3
 Subject_Weight: 260
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
@@ -18,7 +18,7 @@ EnvParam:
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
@@ -55,6 +55,7 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - NotifyParam
+- Delay
 EnvInheritParam: []
 Param: {}
 Latency: 150

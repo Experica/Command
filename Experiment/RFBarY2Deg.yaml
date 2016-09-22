@@ -22,7 +22,7 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, -0.25, 0)
+  PositionOffset@ENQuad@Quad: (0, 0.25, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionYOffset2Deg0.25DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
 RecordSession: V1A
@@ -61,4 +61,3 @@ EnvInheritParam:
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
-Delay: 40

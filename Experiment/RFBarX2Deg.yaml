@@ -20,7 +20,7 @@ EnvParam:
   Size@ENQuad@Quad: (0.5, 0.25, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0.5, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset2Deg0.25DegStep.yaml
@@ -53,6 +53,7 @@ ExInheritParam:
 - NotifyParam
 - Latency
 - TimerDriftSpeed
+- Delay
 EnvInheritParam: []
 Param: {}
 Latency: 150

@@ -58,7 +58,7 @@ namespace VLab
         }
 
         [ClientRpc]
-        public void RpcNotifyCondTest(CONDTESTPARAM name,byte[] value)
+        public void RpcNotifyCondTest(CONDTESTPARAM name, byte[] value)
         {
         }
 
@@ -77,7 +77,7 @@ namespace VLab
         /// <returns></returns>
         public override bool OnCheckObserver(NetworkConnection conn)
         {
-            var b= uicontroller. netmanager.IsConnectionPeerType(conn, VLPeerType.VLabAnalysis);
+            var b = uicontroller.netmanager.IsConnectionPeerType(conn, VLPeerType.VLabAnalysis);
             //if(b) GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
             return b;
         }
@@ -93,10 +93,10 @@ namespace VLab
         /// <returns></returns>
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var vcs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabAnalysis);
-            if(vcs.Count>0)
+            var acs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabAnalysis);
+            if (acs.Count > 0)
             {
-                foreach (var c in vcs)
+                foreach (var c in acs)
                 {
                     observers.Add(c);
                     //GetComponent<NetworkIdentity>().AssignClientAuthority(c);
