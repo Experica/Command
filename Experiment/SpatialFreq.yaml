@@ -2,8 +2,8 @@ ID: SpatialFreq
 Name: SpatialFreq
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1603
+Subject_Name: LZR1603
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 3
@@ -27,16 +27,16 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 15.9797697
+  Size@ENGratingQuad@GratingQuad: (16, 16, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-1.67, -0.693, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\SpatialFreq.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
+RecordSession: LGN1
 RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
@@ -76,3 +76,4 @@ EnvInheritParam:
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

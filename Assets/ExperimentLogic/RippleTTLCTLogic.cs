@@ -44,13 +44,14 @@ public class RippleTTLCTLogic : ExperimentLogic
         pport.BitPulse(bit: 2, duration_ms: 100);
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
-        in VLab, so we can align VLab time zero with the ripple time of the triggering TTL. 
+        in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
         */
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
+        pport.SetBit(bit: 0, value: false);
         base.StopExperiment();
         pport.BitPulse(bit: 3, duration_ms: 1);
     }

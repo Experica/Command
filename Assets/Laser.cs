@@ -25,17 +25,44 @@ using System;
 using System.Linq;
 using VLab;
 
-public class Omicron
+public class Omicron : IDisposable
 {
+    private bool disposed = false;
     COM com;
-    public double MaxPower;
+    public float MaxPower;
 
-    public Omicron(string comname, int baudrate = 500000, double maxpower = 0.1)
+    public Omicron(string comname, int baudrate = 500000, float maxpower = 0.1f)
     {
         com = new COM(portname: comname, baudrate: baudrate, newline: "\r");
         MaxPower = maxpower;
     }
 
+    ~Omicron()
+    {
+        Dispose(false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+            }
+            com.Dispose();
+            disposed = true;
+        }
+    }
+
+    /// <summary>
+    /// Turn on Laser in 3 seconds
+    /// </summary>
     public void LaserOn()
     {
         com.WriteLine("?LOn");
@@ -56,7 +83,7 @@ public class Omicron
         com.WriteLine("?POf");
     }
 
-    public double Power
+    public float Power
     {
         set
         {
@@ -64,7 +91,10 @@ public class Omicron
         }
     }
 
-    public double PowerRatio
+    /// <summary>
+    /// Power percentage change in 100ms
+    /// </summary>
+    public float PowerRatio
     {
         set
         {
@@ -76,18 +106,42 @@ public class Omicron
     }
 }
 
-public class Cobolt
+public class Cobolt : IDisposable
 {
+    private bool disposed = false;
     COM com;
-    public double MaxPower;
+    public float MaxPower;
 
-    public Cobolt(string comname, int baudrate = 115200, double maxpower = 0.1)
+    public Cobolt(string comname, int baudrate = 115200, float maxpower = 0.1f)
     {
         com = new COM(portname: comname, baudrate: baudrate, newline: "\r");
         MaxPower = maxpower;
     }
 
-    public double Power
+    ~Cobolt()
+    {
+        Dispose(false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+            }
+            com.Dispose();
+            disposed = true;
+        }
+    }
+
+    public float Power
     {
         set
         {
@@ -100,7 +154,7 @@ public class Cobolt
         com.WriteLine("cf");
     }
 
-    public double PowerRatio
+    public float PowerRatio
     {
         set
         {

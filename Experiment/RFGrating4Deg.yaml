@@ -2,8 +2,8 @@ ID: RFGrating4Deg
 Name: RFGrating4Deg
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1603
+Subject_Name: LZR1603
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 3
@@ -25,7 +25,7 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 180
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 2
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
@@ -36,7 +36,7 @@ EnvParam:
   PositionOffset@ENGratingQuad@GratingQuad: (-2, -1.5, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
+RecordSession: LGN1
 RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
@@ -76,3 +76,4 @@ EnvInheritParam:
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

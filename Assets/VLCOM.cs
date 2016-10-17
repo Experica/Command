@@ -12,6 +12,7 @@ namespace VLab
 {
     public class COM : IDisposable
     {
+        bool disposed=false;
         public SerialPort serialport;
         public string receiveddata = "";
         SerialDataReceivedEventHandler DataReceivedEventHandler;
@@ -51,10 +52,14 @@ namespace VLab
 
         protected virtual void Dispose(bool disposing)
         {
-            Close();
-            if (disposing)
+            if (!disposed)
             {
+                if (disposing)
+                {
+                }
+                Close();
                 serialport.Dispose();
+                disposed = true;
             }
         }
 

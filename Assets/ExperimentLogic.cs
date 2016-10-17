@@ -80,7 +80,7 @@ namespace VLab
                                 }
                                 else
                                 {
-                                    condmanager.SamplePushCondition(envmanager);
+                                    SamplePushCondition();
                                 }
                                 if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                                 {
@@ -104,7 +104,7 @@ namespace VLab
                                 }
                                 else
                                 {
-                                    condmanager.SamplePushCondition(envmanager);
+                                    SamplePushCondition();
                                 }
                                 if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                                 {
@@ -155,7 +155,7 @@ namespace VLab
                                 }
                                 else
                                 {
-                                    condmanager.SamplePushCondition(envmanager);
+                                    SamplePushCondition();
                                 }
                                 if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                                 {
@@ -179,7 +179,7 @@ namespace VLab
                                 }
                                 else
                                 {
-                                    condmanager.SamplePushCondition(envmanager);
+                                    SamplePushCondition();
                                 }
                                 if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                                 {
@@ -276,6 +276,11 @@ namespace VLab
             }
             ex.Cond = condmanager.cond;
             condmanager.UpdateSampleSpace(ex.CondSampling, true);
+        }
+
+        public virtual void SamplePushCondition()
+        {
+            condmanager.SamplePushCondition(envmanager);
         }
 
         public virtual string DataPath()

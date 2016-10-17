@@ -2,8 +2,8 @@ ID: RFBarX12Deg
 Name: RFBarX12Deg
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1603
+Subject_Name: LZR1603
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 3
@@ -25,7 +25,7 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (-0.5, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset4Deg0.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
+RecordSession: LGN1
 RecordSite: 1728
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
@@ -58,3 +58,4 @@ EnvInheritParam: []
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

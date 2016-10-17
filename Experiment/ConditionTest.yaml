@@ -2,46 +2,27 @@ ID: ConditionTest
 Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1604
+Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
-Subject_Weight: 260
+Subject_Age: 4
+Subject_Weight: 264
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: GratingQuad
-  Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 65.4787445
-  OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 10.1925077
-  Size@ENGratingQuad@GratingQuad: (10.2, 10.2, 1)
-  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (1.1, 5.26, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Show@Showroom@ShowroomManager: None
+CondPath: ''
 ExLogicPath: ConditionTestLogic
-RecordSession: V1A
-RecordSite: 1728
+RecordSession: LGN2
+RecordSite: 3914
 DataDir: X:\
 Input: Joystick
-PreICI: 150
-CondDur: 500
-SufICI: 150
+PreICI: 100
+CondDur: 300
+SufICI: 100
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -49,9 +30,7 @@ NotifyParam:
 ExInheritParam: []
 EnvInheritParam:
 - ''
-Param:
-  a: !!ListOfFloat '[1.2, 4.5, 6.8]'
-  b: !!ListOfFloat '[2.3, 6.8, 6.9]'
+Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
 Delay: 40

@@ -2,22 +2,22 @@ ID: Diameter
 Name: Diameter
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1603
+Subject_Name: LZR1603
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
-Subject_Weight: 260
+Subject_Age: 4
+Subject_Weight: 264
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 28
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -32,12 +32,12 @@ EnvParam:
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-84.1, -37.3, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\Diameter.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
-RecordSite: 1728
+RecordSession: LGN2
+RecordSite: 3914
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -76,3 +76,4 @@ EnvInheritParam:
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

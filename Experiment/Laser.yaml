@@ -1,0 +1,57 @@
+ID: Laser
+Name: Laser
+Designer: Alex
+Experimenter: Alex
+Subject_ID: LZR1604
+Subject_Name: LZR1604
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 4
+Subject_Weight: 264
+EnvPath: Showroom
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
+CondPath: ''
+ExLogicPath: LaserLogic
+RecordSession: LGN2
+RecordSite: 3914
+DataDir: X:\
+CondSampling: UniformWithoutReplacement
+CondRepeat: 15
+PreICI: 500
+CondDur: 300
+SufICI: 500
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+- Latency
+- Delay
+- TimerDriftSpeed
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+Param:
+  LaserPower: !!ListOfFloat '[0.1, 0.2, 0.3]'
+  LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
+Latency: 150
+TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

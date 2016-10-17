@@ -778,9 +778,22 @@
       <param name="customEventName">Name of custom event. Name cannot include the prefix "unity." - This is a reserved keyword.</param>
       <param name="eventData">Additional parameters sent to Unity Analytics at the time the custom event was triggered. Dictionary key cannot include the prefix "unity." - This is a reserved keyword.</param>
     </member>
+    <member name="M:UnityEngine.Analytics.Analytics.CustomEvent(System.String)">
+      <summary>
+        <para>Custom Events (optional).</para>
+      </summary>
+      <param name="customEventName"></param>
+    </member>
+    <member name="M:UnityEngine.Analytics.Analytics.CustomEvent(System.String,UnityEngine.Vector3)">
+      <summary>
+        <para>Custom Events (optional).</para>
+      </summary>
+      <param name="customEventName"></param>
+      <param name="position"></param>
+    </member>
     <member name="M:UnityEngine.Analytics.Analytics.FlushEvents">
       <summary>
-        <para>Attempts to flush immediately all queued analytics events to the network and filesystem cache if possible.</para>
+        <para>Attempts to flush immediately all queued analytics events to the network and filesystem cache if possible (optional).</para>
       </summary>
     </member>
     <member name="M:UnityEngine.Analytics.Analytics.SetUserBirthYear(System.Int32)">
@@ -10683,6 +10696,16 @@ Sometimes it is not possible to project (for example when the joints form a cycl
     <member name="M:UnityEngine.CrashReport.RemoveAll">
       <summary>
         <para>Remove all reports from available reports list.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.CrashReportHandler.CrashReportHandler">
+      <summary>
+        <para>Engine API for CrashReporting Service.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.CrashReportHandler.CrashReportHandler.enableCaptureLogs">
+      <summary>
+        <para>This Boolean field will cause CrashReportHandler to capture logs when set to true. By default enable capture logs is true.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.CreateAssetMenuAttribute">
@@ -47334,9 +47357,19 @@ Useful for restarting a trail from a new position.</para>
         <para>Left Eye node.</para>
       </summary>
     </member>
+    <member name="F:UnityEngine.VR.VRNode.LeftHand">
+      <summary>
+        <para>Left Hand node.</para>
+      </summary>
+    </member>
     <member name="F:UnityEngine.VR.VRNode.RightEye">
       <summary>
         <para>Right Eye node.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.VR.VRNode.RightHand">
+      <summary>
+        <para>Right Hand node.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.VR.VRSettings">

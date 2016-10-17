@@ -2,12 +2,12 @@ ID: OriBar
 Name: OriBar
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1602
-Subject_Name: LZR1602
+Subject_ID: LZR1604
+Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
-Subject_Weight: 260
+Subject_Age: 4
+Subject_Weight: 264
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
@@ -25,8 +25,8 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: Condition\Orientation22.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1A
-RecordSite: 1728
+RecordSession: LGN2
+RecordSite: 3914
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -60,3 +60,4 @@ EnvInheritParam: []
 Param: {}
 Latency: 150
 TimerDriftSpeed: 2.5000000000000001E-05
+Delay: 40

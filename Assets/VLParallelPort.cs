@@ -6,6 +6,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Linq;
 using System.Threading;
+using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 
 namespace VLab
@@ -177,4 +178,117 @@ namespace VLab
         }
     }
 
+    /// <summary>
+    /// Square wave can be reliably delivered upon 10kHz
+    /// </summary>
+    public class ParallelPortSquareWave
+    {
+        ParallelPort pport;
+        public ParallelPort PPort
+        {
+            get { lock (lockobj) { return pport; } }
+            set { lock (lockobj) { pport = value; } }
+        }
+        ConcurrentDictionary<int, Thread> bitthread=new ConcurrentDictionary<int, Thread>();
+        ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
+        ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
+        public ConcurrentDictionary<int, float> bitfreq = new ConcurrentDictionary<int, float>();
+        object lockobj = new object();
+
+        public ParallelPortSquareWave(ParallelPort pp)
+        {
+            pport = pp;
+        }
+
+        public void Start(params KeyValuePair<int,float>[] bf)
+        {
+            foreach(var kv in bf)
+            {
+                bitfreq[kv.Key] = kv.Value;
+            }
+            Start(bf.Select(i => i.Key).ToArray());
+        }
+
+        public void Start(params int[] bs)
+        {
+            var vbs = bitfreq.Keys.Intersect(bs).ToArray();
+            var vbn = vbs.Length;
+            if (vbn > 0)
+            {
+                foreach(var b in vbs)
+                {
+                    if (!bitthread.ContainsKey(b))
+                    {
+                        bitthread[b] = new Thread(_BitSquareWave);
+                        bitthreadevent[b] = new ManualResetEvent(false);
+                    }
+                    bitthreadbreak[b] = false;
+                }
+                foreach(var b in vbs)
+                {
+                    if (!bitthread[b].IsAlive)
+                    {
+                        bitthread[b].Start(b);
+                    }
+                    bitthreadevent[b].Set();
+                }
+            }
+        }
+
+        public void Stop(params int[] bs)
+        {
+            var vbs = bitthread.Keys.Intersect(bs).ToArray();
+            var vbn = vbs.Length;
+            if (vbn > 0)
+            {
+                foreach(var b in vbs)
+                {
+                    bitthreadevent[b].Reset();
+                    bitthreadbreak[b] = true;
+                }
+            }
+        }
+
+        public void BitSquareWave(int bit)
+        {
+            var timer = new VLTimer();
+            double start,end;float halfcycle;
+            Break:
+            bitthreadevent[bit].WaitOne();
+            halfcycle = (1 / Mathf.Max(0.001f, bitfreq[bit])) / 2;
+            timer.Restart();
+            while (true)
+            {
+                PPort.SetBit(bit);
+                start = timer.ElapsedSecond;
+                end = timer.ElapsedSecond;
+                while ((end - start) < halfcycle)
+                {
+                    if(bitthreadbreak[bit])
+                    {
+                        PPort.SetBit(bit, false);
+                        goto Break;
+                    }
+                    end = timer.ElapsedSecond;
+                }
+
+                PPort.SetBit(bit, false);
+                start = timer.ElapsedSecond;
+                end = timer.ElapsedSecond;
+                while ((end - start) < halfcycle)
+                {
+                    if (bitthreadbreak[bit])
+                    {
+                        goto Break;
+                    }
+                    end = timer.ElapsedSecond;
+                }
+            }
+        }
+
+        void _BitSquareWave(object p)
+        {
+            BitSquareWave((int)p);
+        }
+    }
 }
