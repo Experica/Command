@@ -6,8 +6,8 @@ Subject_ID: LZR1604
 Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 4
-Subject_Weight: 264
+Subject_Age: 5
+Subject_Weight: 309
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)

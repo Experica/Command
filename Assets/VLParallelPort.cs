@@ -189,24 +189,16 @@ namespace VLab
             get { lock (lockobj) { return pport; } }
             set { lock (lockobj) { pport = value; } }
         }
-        ConcurrentDictionary<int, Thread> bitthread=new ConcurrentDictionary<int, Thread>();
+        ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
         ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
         ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
-        public ConcurrentDictionary<int, float> bitfreq = new ConcurrentDictionary<int, float>();
+        public ConcurrentDictionary<int, double> bitfreq = new ConcurrentDictionary<int, double>();
+        public ConcurrentDictionary<int, double> bitlatency = new ConcurrentDictionary<int, double>();
         object lockobj = new object();
 
         public ParallelPortSquareWave(ParallelPort pp)
         {
             pport = pp;
-        }
-
-        public void Start(params KeyValuePair<int,float>[] bf)
-        {
-            foreach(var kv in bf)
-            {
-                bitfreq[kv.Key] = kv.Value;
-            }
-            Start(bf.Select(i => i.Key).ToArray());
         }
 
         public void Start(params int[] bs)
@@ -215,7 +207,7 @@ namespace VLab
             var vbn = vbs.Length;
             if (vbn > 0)
             {
-                foreach(var b in vbs)
+                foreach (var b in vbs)
                 {
                     if (!bitthread.ContainsKey(b))
                     {
@@ -224,7 +216,7 @@ namespace VLab
                     }
                     bitthreadbreak[b] = false;
                 }
-                foreach(var b in vbs)
+                foreach (var b in vbs)
                 {
                     if (!bitthread[b].IsAlive)
                     {
@@ -241,7 +233,7 @@ namespace VLab
             var vbn = vbs.Length;
             if (vbn > 0)
             {
-                foreach(var b in vbs)
+                foreach (var b in vbs)
                 {
                     bitthreadevent[b].Reset();
                     bitthreadbreak[b] = true;
@@ -251,37 +243,56 @@ namespace VLab
 
         public void BitSquareWave(int bit)
         {
-            var timer = new VLTimer();
-            double start,end;float halfcycle;
+            var timer = new VLTimer(); bool isbreakstarted;
+            double start, end, breakstart = 0; double halfcycle, latency;
             Break:
             bitthreadevent[bit].WaitOne();
-            halfcycle = (1 / Mathf.Max(0.001f, bitfreq[bit])) / 2;
+            isbreakstarted = false;
+            halfcycle = (1 / Math.Max(0.001, bitfreq[bit])) * 1000 / 2;
+            latency = bitlatency[bit];
             timer.Restart();
+            timer.Countdown(latency);
             while (true)
             {
                 PPort.SetBit(bit);
-                start = timer.ElapsedSecond;
-                end = timer.ElapsedSecond;
-                while ((end - start) < halfcycle)
-                {
-                    if(bitthreadbreak[bit])
-                    {
-                        PPort.SetBit(bit, false);
-                        goto Break;
-                    }
-                    end = timer.ElapsedSecond;
-                }
-
-                PPort.SetBit(bit, false);
-                start = timer.ElapsedSecond;
-                end = timer.ElapsedSecond;
+                start = timer.ElapsedMillisecond;
+                end = timer.ElapsedMillisecond;
                 while ((end - start) < halfcycle)
                 {
                     if (bitthreadbreak[bit])
                     {
-                        goto Break;
+                        if (!isbreakstarted)
+                        {
+                            breakstart = timer.ElapsedMillisecond;
+                            isbreakstarted = true;
+                        }
+                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= latency)
+                        {
+                            PPort.SetBit(bit, false);
+                            goto Break;
+                        }
                     }
-                    end = timer.ElapsedSecond;
+                    end = timer.ElapsedMillisecond;
+                }
+
+                PPort.SetBit(bit, false);
+                start = timer.ElapsedMillisecond;
+                end = timer.ElapsedMillisecond;
+                while ((end - start) < halfcycle)
+                {
+                    if (bitthreadbreak[bit])
+                    {
+                        if (!isbreakstarted)
+                        {
+                            breakstart = timer.ElapsedMillisecond;
+                            isbreakstarted = true;
+                        }
+                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= latency)
+                        {
+                            goto Break;
+                        }
+                    }
+                    end = timer.ElapsedMillisecond;
                 }
             }
         }

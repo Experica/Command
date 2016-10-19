@@ -20,6 +20,7 @@ public class RippleTTLDisplayLatency : ExperimentLogic
 
     protected override void StopExperiment()
     {
+        pport.SetBit(bit: 0, value: false);
         base.StopExperiment();
         pport.BitPulse(bit: 3, duration_ms: 1);
     }

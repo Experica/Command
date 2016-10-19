@@ -146,6 +146,7 @@ public class LaserCTLogic : ExperimentLogic
                     envmanager.SetActiveParam("Visible", true, true);
                     if (power > 0)
                     {
+                        ppsw.bitlatency[ppbit] = ex.Latency;
                         ppsw.bitfreq[ppbit] = condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>();
                         ppsw.Start(ppbit);
                     }

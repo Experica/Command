@@ -31,7 +31,7 @@ public class LaserLogic : ExperimentLogic
     int ppbit = 0;
     Omicron luxx473;
     Cobolt mambo594;
-    float power, frequency;
+    float power;
 
     public override void OnStart()
     {
@@ -101,8 +101,9 @@ public class LaserLogic : ExperimentLogic
                     CondState = CONDSTATE.COND;
                     if (power > 0)
                     {
-                        frequency = condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>();
-                        ppsw.Start(new KeyValuePair<int, float>(ppbit, frequency));
+                        ppsw.bitlatency[ppbit] = ex.Latency;
+                        ppsw.bitfreq[ppbit] = condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>();
+                        ppsw.Start(ppbit);
                     }
                 }
                 break;

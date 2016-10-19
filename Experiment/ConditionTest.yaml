@@ -6,14 +6,34 @@ Subject_ID: LZR1604
 Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 4
-Subject_Weight: 264
+Subject_Age: 5
+Subject_Weight: 309
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  Show@Showroom@ShowroomManager: None
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 0
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: None
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: ''
 ExLogicPath: ConditionTestLogic
 RecordSession: LGN2

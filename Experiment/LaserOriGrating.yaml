@@ -6,8 +6,8 @@ Subject_ID: LZR1604
 Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 4
-Subject_Weight: 264
+Subject_Age: 5
+Subject_Weight: 309
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
@@ -19,19 +19,19 @@ EnvParam:
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
   TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  Sigma@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 337.5
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 10
   Size@ENGratingQuad@GratingQuad: (10, 10, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: false
+  Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
@@ -71,6 +71,10 @@ ExInheritParam:
 EnvInheritParam:
 - ScreenHalfHeight
 - ScreenToEye
+- SpatialFreq
+- TemporalFreq
+- Position
+- Diameter
 Param:
   LaserPower: !!ListOfFloat '[0.1, 0.2, 0.3]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
