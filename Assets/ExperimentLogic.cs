@@ -296,7 +296,7 @@ namespace VLab
                 ex.CondTest = ct;
                 ex.EnvParam = envmanager.GetParams();
 
-                Yaml.WriteYaml(DataPath(), ex);
+                Yaml.WriteYaml(DataPath(), ex,false);
                 ex.DataPath = null;
             }
         }

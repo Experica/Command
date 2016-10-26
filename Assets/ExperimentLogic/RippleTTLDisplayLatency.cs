@@ -20,7 +20,9 @@ public class RippleTTLDisplayLatency : ExperimentLogic
 
     protected override void StopExperiment()
     {
+        envmanager.SetActiveParam("BGColor", Color.black, true);
         pport.SetBit(bit: 0, value: false);
+
         base.StopExperiment();
         pport.BitPulse(bit: 3, duration_ms: 1);
     }

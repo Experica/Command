@@ -2,17 +2,17 @@ ID: RFGrating48Deg
 Name: RFGrating48Deg
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1603
-Subject_Name: LZR1603
+Subject_ID: LZR1604
+Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 4
-Subject_Weight: 264
+Subject_Age: 5
+Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.2, 0.2, 0.2, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 28
+  ScreenToEye@ENCamera@OrthoCamera: 30
   Show@Showroom@ShowroomManager: Quad
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
@@ -21,17 +21,17 @@ EnvParam:
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: Disk
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (-7.27, -2.03, 0)
-  PositionOffset@ENQuad@Quad: (-12, -6, 0)
+  Position@ENQuad@Quad: (23, 2.36, 0)
+  PositionOffset@ENQuad@Quad: (-6, -6, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset48Deg6DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: LGN2
-RecordSite: 3914
+RecordSession: LGN3
+RecordSite: 4100
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15
 PreICI: 50
-CondDur: 250
+CondDur: 300
 SufICI: 50
 PushCondAtState: PREICI
 CondTestAtState: PREICI

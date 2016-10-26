@@ -2,12 +2,12 @@ ID: OriOffsetBar
 Name: OriOffsetBar
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1603
-Subject_Name: LZR1603
+Subject_ID: LZR1604
+Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
-Subject_Weight: 260
+Subject_Age: 5
+Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
@@ -25,8 +25,8 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: Condition\OrientationOffset7.5DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: LGN1
-RecordSite: 1728
+RecordSession: V1
+RecordSite: 500
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -60,5 +60,5 @@ EnvInheritParam:
 - ScreenHalfHeight
 - ScreenToEye
 Param: {}
-Latency: 150
-TimerDriftSpeed: 2.5000000000000001E-05
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
