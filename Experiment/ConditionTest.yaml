@@ -2,35 +2,45 @@ ID: ConditionTest
 Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1604
-Subject_Name: LZR1604
+Subject_ID: LZR1605
+Subject_Name: LZR1605
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.2, 0.2, 0.2, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 30
-  Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 62.7536545
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 18.1180668
-  Size@ENQuad@Quad: (18.1, 18.1, 1)
-  Color@ENQuad@Quad: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad: Disk
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (19, -33.6, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (25.7, -13.7, -100)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: On
+  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
+  Show@Showroom@ShowroomManager: ImageQuad
+  Marker@Showroom@ShowroomManager: true
+  Image@ENImageQuad@ImageQuad: 0
+  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Ori@ENImageQuad@ImageQuad: 328.132629
+  OriOffset@ENImageQuad@ImageQuad: 0
+  Diameter@ENImageQuad@ImageQuad: 24.0442352
+  Size@ENImageQuad@ImageQuad: (24, 24, 1)
+  Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
+  MaskType@ENImageQuad@ImageQuad: None
+  Sigma@ENImageQuad@ImageQuad: 0
+  Visible@ENImageQuad@ImageQuad: true
+  Position@ENImageQuad@ImageQuad: (-0.583, -0.428, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 ExLogicPath: ConditionTestLogic
-RecordSession: V1
-RecordSite: 500
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 Input: Joystick
 PreICI: 100
-CondDur: 300
+CondDur: 500
 SufICI: 100
 NotifyParam:
 - CondIndex

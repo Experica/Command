@@ -46,6 +46,8 @@ namespace VLab
         public Color Color = new Color();
         [SyncVar(hook = "onmasktype")]
         public MaskType MaskType;
+        [SyncVar(hook = "onsigma")]
+        public float Sigma;
 
         public VLTimer t = new VLTimer();
 
@@ -128,5 +130,14 @@ namespace VLab
             MaskType = t;
         }
 
+        void onsigma(float s)
+        {
+            OnSigma(s);
+        }
+        public virtual void OnSigma(float s)
+        {
+            renderer.material.SetFloat("sigma", s);
+            Sigma = s;
+        }
     }
 }

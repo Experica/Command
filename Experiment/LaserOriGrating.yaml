@@ -16,31 +16,31 @@ EnvParam:
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
+  TemporalFreq@ENGratingQuad@GratingQuad: 4
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 45
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 18.1180668
-  Size@ENGratingQuad@GratingQuad: (18.1, 18.1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 30
+  Size@ENGratingQuad@GratingQuad: (30, 30, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (19, -33.6, 0)
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: (6.7, 9.97, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
 ExLogicPath: LaserCTLogic
-RecordSession: V1
-RecordSite: 500
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
-CondRepeat: 15
+CondRepeat: 10
 PreICI: 500
 CondDur: 300
 SufICI: 500
@@ -76,7 +76,7 @@ EnvInheritParam:
 - Position
 - Diameter
 Param:
-  LaserPower: !!ListOfFloat '[0.1, 0.2, 0.3]'
+  LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
 Latency: 186
 TimerDriftSpeed: 3.1220000000000003E-05

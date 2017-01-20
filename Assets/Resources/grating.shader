@@ -59,8 +59,7 @@
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.uv.x = v.uv.x - 0.5;
-				o.uv.y = v.uv.y - 0.5;
+				o.uv = v.uv - 0.5;
 				return o;
 			}
 

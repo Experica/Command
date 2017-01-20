@@ -11,13 +11,13 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 30
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 5
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
+  TemporalFreq@ENGratingQuad@GratingQuad: 4
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -25,19 +25,19 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 22.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 10
-  Size@ENGratingQuad@GratingQuad: (10, 10, 1)
+  Diameter@ENGratingQuad@GratingQuad: 30
+  Size@ENGratingQuad@GratingQuad: (30, 30, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-6.98, 11.5, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\TemporalFreq.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 500
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8
@@ -76,3 +76,4 @@ EnvInheritParam:
 Param: {}
 Latency: 186
 TimerDriftSpeed: 3.1220000000000003E-05
+Delay: 40

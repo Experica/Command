@@ -1,11 +1,11 @@
-Initialize engine version: 5.5.0b6 (e398e763a5a6)
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
     Renderer: NVIDIA GeForce GT 720 (ID=0x1286)
     Vendor:   NVIDIA
     VRAM:     973 MB
-    Driver:   21.21.13.7557
+    Driver:   21.21.13.7619
 Begin MonoManager ReloadAssembly
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -39,10 +39,53 @@ Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll 
 Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
 Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
-- Completed reload, in  0.102 seconds
+- Completed reload, in  0.033 seconds
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.826916 ms
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
+Setting up 1 worker threads for Enlighten.
+GfxDevice: creating device client; threaded=1
+  Thread -> id: 2280 -> priority: 1 
+GfxDevice: creating device client; threaded=1
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.254344 ms
+GfxDevice: creating device client; threaded=1
+GfxDevice: creating device client; threaded=1
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4288.
+Total: 4.291136 ms (FindLiveObjects: 0.224194 ms CreateObjectMapping: 0.055487 ms MarkObjects: 3.970079 ms  DeleteObjects: 0.040733 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4288.
+Total: 4.468824 ms (FindLiveObjects: 0.368526 ms CreateObjectMapping: 0.075373 ms MarkObjects: 4.010491 ms  DeleteObjects: 0.014112 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4288.
+Total: 4.661587 ms (FindLiveObjects: 0.236382 ms CreateObjectMapping: 0.196932 ms MarkObjects: 4.223140 ms  DeleteObjects: 0.004811 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4288.
+Total: 3.874499 ms (FindLiveObjects: 0.233817 ms CreateObjectMapping: 0.086278 ms MarkObjects: 3.539008 ms  DeleteObjects: 0.014753 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4288.
+Total: 4.248799 ms (FindLiveObjects: 0.304699 ms CreateObjectMapping: 0.060939 ms MarkObjects: 3.868084 ms  DeleteObjects: 0.014753 ms)
+
+Log: connection {1} has been disconnected by timeout; address {fe80::60ee:6f8:54e7:bc83%15:55661}
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.438767 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 4261.
+Total: 4.299154 ms (FindLiveObjects: 0.279040 ms CreateObjectMapping: 0.069920 ms MarkObjects: 3.932232 ms  DeleteObjects: 0.016357 ms)
+

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab.CSharp.Plugins", "VLab.CSharp.Plugins.csproj", "{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab.Plugins", "VLab.Plugins.csproj", "{B0FC0262-A999-3290-120B-872F8366A3C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab.CSharp", "VLab.CSharp.csproj", "{93E50083-306D-FA15-22A3-A0FE575D518F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab", "VLab.csproj", "{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F39DFABE-FED3-D729-DBEA-C9AD3524CE90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93E50083-306D-FA15-22A3-A0FE575D518F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93E50083-306D-FA15-22A3-A0FE575D518F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93E50083-306D-FA15-22A3-A0FE575D518F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93E50083-306D-FA15-22A3-A0FE575D518F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FC0262-A999-3290-120B-872F8366A3C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FC0262-A999-3290-120B-872F8366A3C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FC0262-A999-3290-120B-872F8366A3C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FC0262-A999-3290-120B-872F8366A3C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

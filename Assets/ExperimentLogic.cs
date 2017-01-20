@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
@@ -299,6 +300,38 @@ namespace VLab
                 Yaml.WriteYaml(DataPath(), ex,false);
                 ex.DataPath = null;
             }
+        }
+
+        public virtual void SetEnvActiveParam(string name, object value, bool notifyui = false)
+        {
+            envmanager.SetActiveParam(name, value, notifyui);
+        }
+
+        public virtual void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = false)
+        {
+            StartCoroutine(WaitSetEnvActiveParam_Coroutine(waittime_ms, name, value, notifyui));
+        }
+
+        IEnumerator WaitSetEnvActiveParam_Coroutine(float waittime_ms, string name, object value, bool notifyui = false)
+        {
+            waittime_ms /= 1000;
+            var start = Time.realtimeSinceStartup;
+            while(Time.realtimeSinceStartup-start<waittime_ms)
+            {
+                yield return null;
+            }
+            envmanager.SetActiveParam(name, value, notifyui);
+        }
+
+        public virtual void SetEnvActiveParamTwice(string name, object value1, float interval_ms, object value2, bool notifyui = false)
+        {
+            SetEnvActiveParamTwice(name, value1, interval_ms, name, value2, notifyui);
+        }
+
+        public virtual void SetEnvActiveParamTwice(string name1, object value1, float interval_ms, string name2, object value2, bool notifyui = false)
+        {
+            envmanager.SetActiveParam(name1, value1, notifyui);
+            StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
         }
 
         public virtual void PauseResumeExperiment(bool ispause)

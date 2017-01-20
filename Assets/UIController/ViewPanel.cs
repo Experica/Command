@@ -34,6 +34,7 @@ namespace VLab
         public VLUIController uicontroller;
         public RenderTexture rendertexture;
         public GameObject viewportcontent;
+        public Action OnViewUpdated;
 
         float aspectratio = 4.0f / 3.0f;
         public float AspectRatio
@@ -45,6 +46,10 @@ namespace VLab
                 {
                     aspectratio = value;
                     UpdateView();
+                    if(OnViewUpdated!=null)
+                    {
+                        OnViewUpdated();
+                    }
                 }
             }
         }

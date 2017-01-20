@@ -32,7 +32,10 @@ namespace VLab
     {
         [SyncVar(hook = "onshow")]
         public EnvironmentObject Show;
+        [SyncVar(hook ="onmarker")]
+        public bool Marker;
 
+        public GameObject marker;
         Dictionary<EnvironmentObject, GameObject> items = new Dictionary<EnvironmentObject, GameObject>();
         Dictionary<NetworkHash128, EnvironmentObject> assetidtoid = new Dictionary<NetworkHash128, EnvironmentObject>();
         Dictionary<NetworkHash128, GameObject> prefabs = new Dictionary<NetworkHash128, GameObject>();
@@ -81,6 +84,26 @@ namespace VLab
 
         void UnSpawnHandler(GameObject spawned)
         {
+        }
+
+        void onmarker(bool ismarker)
+        {
+            OnMarker(ismarker);
+        }
+        public virtual void OnMarker(bool ismarker)
+        {
+            if(ismarker)
+            {
+                marker.SetActive(true);
+            }
+            else
+            {
+                marker.SetActive(false);
+            }
+#if VLAB
+            uicontroller.exmanager.el.envmanager.UpdateScene();
+            uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
+#endif
         }
 
         void onshow(EnvironmentObject id)

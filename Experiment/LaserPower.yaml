@@ -2,22 +2,18 @@ ID: LaserPower
 Name: LaserPower
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1603
-Subject_Name: LZR1603
+Subject_ID: LZR1604
+Subject_Name: LZR1604
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 4
-Subject_Weight: 264
+Subject_Age: 5
+Subject_Weight: 300
 EnvPath: Showroom
-EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 32
-  Show@Showroom@ShowroomManager: None
+EnvParam: {}
 CondPath: C:\Users\LyonLab\VLab\Condition\LaserPower.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: LGN1
-RecordSite: 3361
+RecordSession: V1a
+RecordSite: 500
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 10
@@ -51,6 +47,6 @@ EnvInheritParam:
 - ScreenToEye
 Param:
   LaserPower: !!ListOfFloat '[2.4, 5.6, 7.8]'
-Latency: 150
-TimerDriftSpeed: 2.5000000000000001E-05
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
 Delay: 40

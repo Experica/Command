@@ -2,21 +2,28 @@ ID: DisplayLatency
 Name: DisplayLatency
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1604
-Subject_Name: LZR1604
+Subject_ID: LZR1605
+Subject_Name: LZR1605
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
-Subject_Weight: 309
+Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (1, 1, 1, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
   Show@Showroom@ShowroomManager: None
+  Marker@Showroom@ShowroomManager: true
 ExLogicPath: RippleTTLDisplayLatency
-RecordSession: LGN2
-RecordSite: 3914
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 PreICI: 100
 CondDur: 300
@@ -46,6 +53,6 @@ EnvInheritParam:
 - ScreenHalfHeight
 - ScreenToEye
 Param: {}
-Latency: 150
-TimerDriftSpeed: 2.5000000000000001E-05
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
 Delay: 40

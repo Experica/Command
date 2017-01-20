@@ -28,20 +28,24 @@ public class ConditionTestLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("Visible", false, true);
+                SetEnvActiveParam("Visible", false, true);
+                SetEnvActiveParam("Mark", OnOff.Off, true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    envmanager.SetActiveParam("Visible", true, true);
+                    SetEnvActiveParam("Visible", true, true);
+                    // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
+                    // marker params will take effect on screen.
+                    SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off, true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("Visible", false, true);
+                    SetEnvActiveParam("Visible", false, true);
                     CondState = CONDSTATE.SUFICI;
                 }
                 break;

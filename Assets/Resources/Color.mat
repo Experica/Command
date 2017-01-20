@@ -106,6 +106,18 @@ Material:
     - first:
         name: _ZWrite
       second: 1
+    - first:
+        name: masktype
+      second: 0
+    - first:
+        name: sigma
+      second: 0.15
+    - first:
+        name: sizex
+      second: 2
+    - first:
+        name: sizey
+      second: 2
     m_Colors:
     - first:
         name: _Color
@@ -115,4 +127,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: c
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: col
       second: {r: 1, g: 1, b: 1, a: 1}

@@ -10,23 +10,34 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.2, 0.2, 0.2, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 30
-  Show@Showroom@ShowroomManager: Quad
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 18
-  Size@ENQuad@Quad: (18, 18, 1)
-  Color@ENQuad@Quad: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad: Disk
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (23, 2.36, 0)
-  PositionOffset@ENQuad@Quad: (-6, -6, 0)
+  Show@Showroom@ShowroomManager: GratingQuad
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
+  TemporalFreq@ENGratingQuad@GratingQuad: 4
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 22.5
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 25
+  Size@ENGratingQuad@GratingQuad: (25, 25, 1)
+  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (6.7, 9.97, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: C:\Users\LyonLab\VLab\Condition\PositionOffset48Deg6DegStep.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: LGN3
-RecordSite: 4100
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 15
@@ -63,6 +74,6 @@ EnvInheritParam:
 - Ori
 - Position
 Param: {}
-Latency: 150
-TimerDriftSpeed: 2.5000000000000001E-05
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
 Delay: 40

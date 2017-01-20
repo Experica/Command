@@ -16,8 +16,8 @@ EnvParam:
   Show@Showroom@ShowroomManager: GratingQuad
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
+  TemporalFreq@ENGratingQuad@GratingQuad: 4
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -25,19 +25,19 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 45
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 30
-  Size@ENGratingQuad@GratingQuad: (30, 30, 1)
+  Diameter@ENGratingQuad@GratingQuad: 14
+  Size@ENGratingQuad@GratingQuad: (14, 14, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (19, -33.6, 0)
+  Position@ENGratingQuad@GratingQuad: (6.7, 9.97, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
 CondPath: Condition\Diameter.yaml
 ExLogicPath: RippleTTLCTLogic
-RecordSession: V1
-RecordSite: 500
+RecordSession: V1c
+RecordSite: 1696
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 8

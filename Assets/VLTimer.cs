@@ -49,10 +49,8 @@ namespace VLab
                 Start();
             }
             var start = ElapsedMillisecond;
-            var end = ElapsedMillisecond;
-            while ((end - start) < duration_ms)
+            while ((ElapsedMillisecond - start) < duration_ms)
             {
-                end = ElapsedMillisecond;
             }
         }
     }

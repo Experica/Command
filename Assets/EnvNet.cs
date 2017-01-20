@@ -29,7 +29,8 @@ namespace VLab
     {
         None,
         Quad,
-        GratingQuad
+        GratingQuad,
+        ImageQuad
     }
 
     [NetworkSettings(channel = 0, sendInterval = 0)]

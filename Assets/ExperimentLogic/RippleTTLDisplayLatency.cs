@@ -20,7 +20,7 @@ public class RippleTTLDisplayLatency : ExperimentLogic
 
     protected override void StopExperiment()
     {
-        envmanager.SetActiveParam("BGColor", Color.black, true);
+        SetEnvActiveParam("Mark", OnOff.Off, true);
         pport.SetBit(bit: 0, value: false);
 
         base.StopExperiment();
@@ -32,21 +32,21 @@ public class RippleTTLDisplayLatency : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                envmanager.SetActiveParam("BGColor", Color.black, true);
+                SetEnvActiveParam("Mark", OnOff.Off, true);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    envmanager.SetActiveParam("BGColor", Color.white, true);
+                    SetEnvActiveParam("Mark", OnOff.On, true);
                     pport.SetBit(bit: 0, value: true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    envmanager.SetActiveParam("BGColor", Color.black, true);
+                    SetEnvActiveParam("Mark", OnOff.Off, true);
                     CondState = CONDSTATE.SUFICI;
                     pport.SetBit(bit: 0, value: false);
                 }
