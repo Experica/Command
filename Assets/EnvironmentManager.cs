@@ -127,7 +127,7 @@ namespace VLab
             }
             else
             {
-                foreach (var sn in sceneobj_net.Keys)
+                foreach (var sn in sceneobj_net.Keys.ToList())
                 {
                     var pname = name + "@" + sn;
                     if (net_syncvar.ContainsKey(pname))
@@ -142,7 +142,7 @@ namespace VLab
         {
             object v = value.Convert(p.Type);
             p.Setter(nb, v);
-            if(OnNotifyUI!=null)
+            if(notifyui && OnNotifyUI!=null)
             {
                 OnNotifyUI(fullname, v);
             }
@@ -195,7 +195,7 @@ namespace VLab
             return p.Getter(nb);
         }
 
-        public void SetActiveParam(string name, object value,bool notifyui=false)
+        public void SetActiveParam(string name, object value,bool notifyui=true)
         {
             string pn, nn;
             if (name.FirstAtSplit(out pn, out nn))

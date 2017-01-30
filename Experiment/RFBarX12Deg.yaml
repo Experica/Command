@@ -2,38 +2,46 @@ ID: RFBarX12Deg
 Name: RFBarX12Deg
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1603
-Subject_Name: LZR1603
+Subject_ID: LZR1701
+Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
-Subject_Weight: 260
+Subject_Age: 5
+Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 57
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   Show@Showroom@ShowroomManager: Quad
+  Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
+  Diameter@ENQuad@Quad: 0
+  Size@ENQuad@Quad: (3, 1.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Visible@ENQuad@Quad: true
+  Sigma@ENQuad@Quad: 0.150000006
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (-0.5, 0, 0)
-CondPath: C:\Users\LyonLab\VLab\Condition\PositionXOffset4Deg0.5DegStep.yaml
-ExLogicPath: RippleTTLCTLogic
+  PositionOffset@ENQuad@Quad: (3, 0, 0)
+CondPath: Condition\PositionXOffset12Deg1.5DegStep.yaml
+ExLogicPath: RippleCTLogic
 RecordSession: LGN1
-RecordSite: 1728
+RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
-CondRepeat: 15
+CondRepeat: 12
 CondDur: 50
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 4
+NotifyPerCondTest: 8
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -50,12 +58,20 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- NotifyParam
 - TimerDriftSpeed
 - Latency
 - Delay
-EnvInheritParam: []
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- Ori
+- Position
+- MarkerSize
+- MarkerCorner
+- MarkOnColor
+- MarkOffColor
+- Marker
 Param: {}
-Latency: 150
-TimerDriftSpeed: 2.5000000000000001E-05
-Delay: 40
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
+Delay: 30

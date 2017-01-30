@@ -23,30 +23,53 @@ using VLab;
 
 public class ConditionTestLogic : ExperimentLogic
 {
+    protected override void StopExperiment()
+    {
+        SetEnvActiveParam("Visible", true);
+        SetEnvActiveParam("Mark", OnOff.Off);
+        base.StopExperiment();
+    }
+
     public override void Logic()
     {
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false, true);
-                SetEnvActiveParam("Mark", OnOff.Off, true);
+                SetEnvActiveParam("Visible", false);
+                SetEnvActiveParam("Mark", OnOff.Off);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    SetEnvActiveParam("Visible", true, true);
-                    // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                    // marker params will take effect on screen.
-                    SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off, true);
+                    SetEnvActiveParam("Visible", true);
+                    // None ICI Mode
+                    if (ex.PreICI == 0 && ex.SufICI == 0)
+                    {
+                        // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
+                        // marker params will take effect on screen.
+                        SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                    }
+                    else // ICI Mode
+                    {
+                        SetEnvActiveParam("Mark", OnOff.On);
+                    }
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    SetEnvActiveParam("Visible", false, true);
                     CondState = CONDSTATE.SUFICI;
+                    // None ICI Mode
+                    if (ex.PreICI == 0 && ex.SufICI == 0)
+                    {
+                    }
+                    else // ICI Mode
+                    {
+                        SetEnvActiveParam("Visible", false);
+                        SetEnvActiveParam("Mark", OnOff.Off);
+                    }
                 }
                 break;
             case CONDSTATE.SUFICI:

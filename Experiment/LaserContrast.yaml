@@ -2,8 +2,8 @@ ID: LaserContrast
 Name: LaserContrast
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1604
-Subject_Name: LZR1604
+Subject_ID: LZR1701
+Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
@@ -11,15 +11,21 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (79.6, -44.5, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   Show@Showroom@ShowroomManager: GratingQuad
+  Marker@Showroom@ShowroomManager: true
   Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  Contrast@ENGratingQuad@GratingQuad: 0.100000001
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
@@ -27,22 +33,23 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 10
-  Size@ENGratingQuad@GratingQuad: (10, 10, 1)
+  Diameter@ENGratingQuad@GratingQuad: 7
+  Size@ENGratingQuad@GratingQuad: (7, 7, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: true
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-CondPath: C:\Users\LyonLab\VLab\Condition\Contrast.yaml
-ExLogicPath: LaserCTLogic
-RecordSession: V1a
-RecordSite: 500
+CondPath: Condition\Contrast.yaml
+ExLogicPath: RippleLaserCTLogic
+RecordSession: LGN1
+RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 10
 PreICI: 500
-CondDur: 300
+CondDur: 500
 SufICI: 500
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -76,9 +83,14 @@ EnvInheritParam:
 - Ori
 - Position
 - Diameter
+- MarkerSize
+- MarkerCorner
+- MarkOnColor
+- MarkOffColor
+- Marker
 Param:
-  LaserPower: !!ListOfFloat '[0.1, 0.2, 0.3]'
+  LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
 Latency: 186
 TimerDriftSpeed: 3.1220000000000003E-05
-Delay: 40
+Delay: 30

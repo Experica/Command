@@ -2,47 +2,54 @@ ID: LaserOriGrating
 Name: LaserOriGrating
 Designer: Alex
 Experimenter: Alex
-Subject_ID: LZR1604
-Subject_Name: LZR1604
+Subject_ID: LZR1701
+Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (62.6, -30.3, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 30
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
+  Marker@Showroom@ShowroomManager: true
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
-  TemporalFreq@ENGratingQuad@GratingQuad: 4
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.699999988
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 45
+  Ori@ENGratingQuad@GratingQuad: 202.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 30
-  Size@ENGratingQuad@GratingQuad: (30, 30, 1)
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (6.7, 9.97, 0)
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-CondPath: C:\Users\LyonLab\VLab\Condition\Orientation22.5DegStep.yaml
-ExLogicPath: LaserCTLogic
-RecordSession: V1c
-RecordSite: 1696
+CondPath: Condition\Orientation22.5DegStep.yaml
+ExLogicPath: RippleLaserCTLogic
+RecordSession: LGN1
+RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 10
 PreICI: 500
-CondDur: 300
+CondDur: 500
 SufICI: 500
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -75,9 +82,14 @@ EnvInheritParam:
 - TemporalFreq
 - Position
 - Diameter
+- MarkerSize
+- MarkerCorner
+- MarkOnColor
+- MarkOffColor
+- Marker
 Param:
   LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
 Latency: 186
 TimerDriftSpeed: 3.1220000000000003E-05
-Delay: 40
+Delay: 30

@@ -302,7 +302,7 @@ namespace VLab
             }
         }
 
-        public virtual void SetEnvActiveParam(string name, object value, bool notifyui = false)
+        public virtual void SetEnvActiveParam(string name, object value, bool notifyui = true)
         {
             envmanager.SetActiveParam(name, value, notifyui);
         }

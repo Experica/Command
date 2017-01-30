@@ -51,9 +51,9 @@ namespace VLab
         [SyncVar(hook = "onmark")]
         public OnOff Mark = OnOff.Off;
         [SyncVar(hook = "onmarkoncolor")]
-        public Color MarkOnColor = Color.black;
+        public Color MarkOnColor = Color.white;
         [SyncVar(hook = "onmarkoffcolor")]
-        public Color MarkOffColor = Color.white;
+        public Color MarkOffColor = Color.black;
 
         public new Camera camera;
         public new Renderer renderer;

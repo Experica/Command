@@ -84,6 +84,7 @@ namespace VLab
 
         void UnSpawnHandler(GameObject spawned)
         {
+            Destroy(spawned);
         }
 
         void onmarker(bool ismarker)
@@ -136,6 +137,7 @@ namespace VLab
                     uicontroller.exmanager.el.envmanager.SetParams(uicontroller.exmanager.el.ex.EnvParam, go.name);
                     uicontroller.exmanager.InheritEnv(go.name);
                     NetworkServer.Spawn(go);
+                    uicontroller.exmanager.el.envmanager.ForcePushParams();
 #endif
                 }
             }

@@ -1,0 +1,65 @@
+ID: Timing
+Name: Timing
+Designer: Alex
+Experimenter: Alex
+Subject_ID: LZR1701
+Subject_Name: LZR1701
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 5
+Subject_Weight: 300
+EnvPath: Showroom
+EnvParam:
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (62.6, -30.3, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  Show@Showroom@ShowroomManager: None
+  Marker@Showroom@ShowroomManager: true
+CondPath: Condition\Mark.yaml
+ExLogicPath: RippleTimingLogic
+RecordSession: LGN1
+RecordSite: 4000
+DataDir: X:\
+CondRepeat: 600
+PreICI: 100
+CondDur: 300
+SufICI: 100
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- DataDir
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- TimerDriftSpeed
+- Latency
+- Delay
+EnvInheritParam:
+- ScreenHalfHeight
+- ScreenToEye
+- MarkerSize
+- MarkerCorner
+- MarkOnColor
+- MarkOffColor
+Param: {}
+Latency: 186
+TimerDriftSpeed: 3.1220000000000003E-05
+Delay: 30

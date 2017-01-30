@@ -148,18 +148,18 @@ namespace VLab
             return condidx;
         }
 
-        public void PushCondition(int condidx, EnvironmentManager envmanager,List<string> except=null)
+        public void PushCondition(int condidx, EnvironmentManager envmanager,List<string> except=null,bool notifyui=true)
         {
             var factors = except == null ? cond.Keys : cond.Keys.Except(except);
             foreach (var k in factors)
             {
-                envmanager.SetParam(k, cond[k][condidx],true);
+                envmanager.SetParam(k, cond[k][condidx],notifyui);
             }
         }
 
-        public void SamplePushCondition(EnvironmentManager envmanager,List<string> except=null)
+        public void SamplePushCondition(EnvironmentManager envmanager,List<string> except=null,bool notifyui=true)
         {
-            PushCondition(SampleCondIndex(), envmanager,except);
+            PushCondition(SampleCondIndex(), envmanager,except,notifyui);
         }
 
         public bool IsCondRepeat(int n)
