@@ -21,10 +21,10 @@ EnvParam:
   MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 10
+  Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
+  Diameter@ENQuad@Quad: 0
+  Size@ENQuad@Quad: (0, 0, 1)
   Color@ENQuad@Quad: (0, 0, 0, 0)
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0
@@ -41,10 +41,10 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 10
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 10
-  Size@ENGratingQuad@GratingQuad: (10, 10, 1)
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: (20, 20, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
@@ -53,10 +53,10 @@ EnvParam:
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
-  Ori@ENImageQuad@ImageQuad: 10
+  Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Diameter@ENImageQuad@ImageQuad: 0
+  Size@ENImageQuad@ImageQuad: (0, 0, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
   Sigma@ENImageQuad@ImageQuad: 0
