@@ -22,7 +22,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 
 namespace VLab
@@ -31,14 +30,12 @@ namespace VLab
     public class Showroom : NetworkBehaviour
     {
         [SyncVar(hook = "onshow")]
-        public EnvironmentObject Show;
-        [SyncVar(hook ="onmarker")]
-        public bool Marker;
+        public EnvironmentObject Show = EnvironmentObject.None;
+        [SyncVar(hook = "onmarker")]
+        public bool Marker = true;
 
         public GameObject marker;
         Dictionary<EnvironmentObject, GameObject> items = new Dictionary<EnvironmentObject, GameObject>();
-        Dictionary<NetworkHash128, EnvironmentObject> assetidtoid = new Dictionary<NetworkHash128, EnvironmentObject>();
-        Dictionary<NetworkHash128, GameObject> prefabs = new Dictionary<NetworkHash128, GameObject>();
 
 #if VLAB
         VLUIController uicontroller;
@@ -49,42 +46,14 @@ namespace VLab
 #if VLAB
             uicontroller = FindObjectOfType<VLUIController>();
 #endif
-#if VLABENVIRONMENT
-            RegisterSpawnHandler();
-#endif
-        }
-
-        void RegisterSpawnHandler()
-        {
-            foreach (var n in typeof(EnvironmentObject).GetValue())
+            foreach (var n in typeof(EnvironmentObject).GetValue().Except(new List<string> { "None" }))
             {
-                if (n == "None")
+                var t = transform.FindChild(n);
+                if (t != null)
                 {
-                    continue;
+                    items[n.Convert<EnvironmentObject>()] = t.gameObject;
                 }
-                var prefab = Resources.Load<GameObject>(n);
-                var assetid = prefab.GetComponent<NetworkIdentity>().assetId;
-                prefabs[assetid] = prefab;
-                assetidtoid[assetid] = n.Convert<EnvironmentObject>();
-                ClientScene.RegisterSpawnHandler(assetid, new SpawnDelegate(SpawnHandler), new UnSpawnDelegate(UnSpawnHandler));
             }
-        }
-
-        GameObject SpawnHandler(Vector3 position, NetworkHash128 assetId)
-        {
-            var go = Instantiate(prefabs[assetId]);
-            go.transform.SetParent(transform);
-            var id = assetidtoid[assetId];
-            go.name = id.ToString();
-            items[id] = go;
-
-            SetAllItemActiveExceptOtherWise(id, false);
-            return go;
-        }
-
-        void UnSpawnHandler(GameObject spawned)
-        {
-            Destroy(spawned);
         }
 
         void onmarker(bool ismarker)
@@ -93,7 +62,7 @@ namespace VLab
         }
         public virtual void OnMarker(bool ismarker)
         {
-            if(ismarker)
+            if (ismarker)
             {
                 marker.SetActive(true);
             }
@@ -101,6 +70,7 @@ namespace VLab
             {
                 marker.SetActive(false);
             }
+            Marker = ismarker;
 #if VLAB
             uicontroller.exmanager.el.envmanager.UpdateScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
@@ -116,46 +86,19 @@ namespace VLab
             if (id == EnvironmentObject.None)
             {
                 SetAllItemActive(false);
-#if VLAB
-                uicontroller.exmanager.el.envmanager.UpdateScene();
-#endif
             }
             else
             {
                 if (items.ContainsKey(id))
                 {
                     SetAllItemActiveExceptOtherWise(id, false);
-#if VLAB
-                    uicontroller.exmanager.el.envmanager.UpdateScene();
-#endif
-                }
-                else
-                {
-#if VLAB
-                    var go = LoadItem(id);
-                    uicontroller.exmanager.el.envmanager.UpdateScene();
-                    uicontroller.exmanager.el.envmanager.SetParams(uicontroller.exmanager.el.ex.EnvParam, go.name);
-                    uicontroller.exmanager.InheritEnv(go.name);
-                    NetworkServer.Spawn(go);
-                    uicontroller.exmanager.el.envmanager.ForcePushParams();
-#endif
                 }
             }
             Show = id;
 #if VLAB
+            uicontroller.exmanager.el.envmanager.UpdateScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
-        }
-
-        GameObject LoadItem(EnvironmentObject id)
-        {
-            var go = Instantiate(Resources.Load<GameObject>(id.ToString()));
-            go.transform.SetParent(transform);
-            go.name = id.ToString();
-            items[id] = go;
-
-            SetAllItemActiveExceptOtherWise(id, false);
-            return go;
         }
 
         void SetItemActive(EnvironmentObject id, bool isactive)

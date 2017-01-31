@@ -46,6 +46,7 @@ namespace VLab
         }
         public virtual void OnAwake()
         {
+            camera = gameObject.GetComponent<Camera>();
 #if VLAB
             netmanager = FindObjectOfType<VLNetManager>();
 #endif
