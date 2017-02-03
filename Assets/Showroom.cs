@@ -62,16 +62,14 @@ namespace VLab
         }
         public virtual void OnMarker(bool ismarker)
         {
-            if (ismarker)
-            {
-                marker.SetActive(true);
-            }
-            else
-            {
-                marker.SetActive(false);
-            }
+            marker.SetActive(ismarker);
             Marker = ismarker;
 #if VLAB
+            if (ismarker)
+            {
+                NetworkServer.Spawn(marker);
+                uicontroller.exmanager.el.envmanager.ForcePushParams(marker.name);
+            }
             uicontroller.exmanager.el.envmanager.UpdateScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
@@ -106,6 +104,13 @@ namespace VLab
             if (items.ContainsKey(id))
             {
                 items[id].SetActive(isactive);
+#if VLAB
+                if (isactive)
+                {
+                    NetworkServer.Spawn(items[id]);
+                    uicontroller.exmanager.el.envmanager.ForcePushParams(items[id].name);
+                }
+#endif
             }
         }
 
@@ -114,32 +119,45 @@ namespace VLab
             foreach (var i in items.Values)
             {
                 i.SetActive(isactive);
+#if VLAB
+                if (isactive)
+                {
+                    NetworkServer.Spawn(i);
+                    uicontroller.exmanager.el.envmanager.ForcePushParams(i.name);
+                }
+#endif
             }
         }
 
         void SetAllItemActiveExcept(EnvironmentObject id, bool isactive)
         {
-            foreach (var i in items.Keys)
+            foreach (var i in items.Keys.Except(new List<EnvironmentObject> { id }))
             {
-                if (i != id)
+                items[i].SetActive(isactive);
+#if VLAB
+                if (isactive)
                 {
-                    items[i].SetActive(isactive);
+                    NetworkServer.Spawn(items[i]);
+                    uicontroller.exmanager.el.envmanager.ForcePushParams(items[i].name);
                 }
+#endif
             }
         }
 
         void SetAllItemActiveExceptOtherWise(EnvironmentObject id, bool isactive)
         {
+            var activestate = false;
             foreach (var i in items.Keys)
             {
-                if (i != id)
+                activestate = i != id ? isactive : !isactive;
+                items[i].SetActive(activestate);
+#if VLAB
+                if (activestate)
                 {
-                    items[i].SetActive(isactive);
+                    NetworkServer.Spawn(items[i]);
+                    uicontroller.exmanager.el.envmanager.ForcePushParams(items[i].name);
                 }
-                else
-                {
-                    items[i].SetActive(!isactive);
-                }
+#endif
             }
         }
 

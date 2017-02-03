@@ -156,6 +156,17 @@ namespace VLab
             }
         }
 
+        public void ForcePushParams(string forobjname)
+        {
+            foreach (var sn in sceneobj_net.Values)
+            {
+                if (sn.gameObject.name == forobjname)
+                {
+                    sn.SetDirtyBit(uint.MaxValue);
+                }
+            }
+        }
+
         public Dictionary<string, object> GetParams()
         {
             var envparam = new Dictionary<string, object>();

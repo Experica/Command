@@ -121,7 +121,7 @@ public class RippleLaserCTLogic : ExperimentLogic
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        pport.BitPulse(3, 1);
+        pport.BitPulse(3, 400);
     }
 
     public override void SamplePushCondition()
@@ -138,6 +138,7 @@ public class RippleLaserCTLogic : ExperimentLogic
         {
             case CONDSTATE.NONE:
                 SetEnvActiveParam("Visible", false);
+                SetEnvActiveParam("Mark", OnOff.Off);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
@@ -145,6 +146,7 @@ public class RippleLaserCTLogic : ExperimentLogic
                 {
                     CondState = CONDSTATE.COND;
                     SetEnvActiveParam("Visible", true);
+                    SetEnvActiveParam("Mark", OnOff.On);
                     if (power > 0)
                     {
                         ppsw.bitlatency[ppbit] = ex.Latency;
@@ -156,8 +158,9 @@ public class RippleLaserCTLogic : ExperimentLogic
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    SetEnvActiveParam("Visible", false);
                     CondState = CONDSTATE.SUFICI;
+                    SetEnvActiveParam("Visible", false);
+                    SetEnvActiveParam("Mark", OnOff.Off);
                     if (power > 0)
                     {
                         ppsw.Stop(ppbit);

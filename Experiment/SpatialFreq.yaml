@@ -14,7 +14,7 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -33,7 +33,7 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
   TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -43,12 +43,12 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: (20, 20, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  Visible@ENGratingQuad@GratingQuad: true
+  Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0

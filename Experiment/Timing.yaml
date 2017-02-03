@@ -14,11 +14,11 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: On
+  Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -72,7 +72,7 @@ CondRepeat: 600
 PreICI: 100
 CondDur: 300
 SufICI: 100
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:

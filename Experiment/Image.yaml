@@ -14,7 +14,7 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -29,7 +29,7 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (-4.09, 0.547, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -49,9 +49,9 @@ EnvParam:
   MaskType@ENGratingQuad@GratingQuad: None
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-4.09, 0.547, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 0
+  Image@ENImageQuad@ImageQuad: 2
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
@@ -60,8 +60,8 @@ EnvParam:
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: Disk
   Sigma@ENImageQuad@ImageQuad: 0.150000006
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: (-4.09, 0.547, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Image.yaml
 ExLogicPath: RippleCTLogic

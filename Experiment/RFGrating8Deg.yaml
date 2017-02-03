@@ -10,20 +10,30 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (48.8, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 2, 1)
+  Color@ENQuad@Quad: (0, 0, 0, 0)
+  MaskType@ENQuad@Quad: None
+  Sigma@ENQuad@Quad: 0
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
   TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -41,6 +51,18 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (3, -1, 0)
+  Image@ENImageQuad@ImageQuad: 0
+  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Ori@ENImageQuad@ImageQuad: 0
+  OriOffset@ENImageQuad@ImageQuad: 0
+  Diameter@ENImageQuad@ImageQuad: 2
+  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
+  MaskType@ENImageQuad@ImageQuad: None
+  Sigma@ENImageQuad@ImageQuad: 0
+  Visible@ENImageQuad@ImageQuad: true
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\PositionOffset8Deg1DegStep.yaml
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1

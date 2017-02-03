@@ -38,7 +38,7 @@ public class RippleCTLogic : ExperimentLogic
         Ripple recorder set path through UDP network and Trellis receive
         message and change file path, all of which need time to complete.
         Issue record triggering TTL before file path change completion will
-        not successfully start recording, so here a long TTL pulse is used to 
+        not successfully start recording, so here a long TTL pulse(100ms) is used to 
         wait Trellis ready, then trigger recording by hi->lo edge of TTL.
         */
         pport.BitPulse(bit: 2, duration_ms: 100);
@@ -55,7 +55,8 @@ public class RippleCTLogic : ExperimentLogic
         SetEnvActiveParam("Mark", OnOff.Off);
         pport.SetBit(bit: 0, value: false);
         base.StopExperiment();
-        pport.BitPulse(bit: 3, duration_ms: 1);
+        // Tail period(400ms) to make sure lagged effect is recorded
+        pport.BitPulse(bit: 3, duration_ms: 400);
     }
 
     public override void Logic()

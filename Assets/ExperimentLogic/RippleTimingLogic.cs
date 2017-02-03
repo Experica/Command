@@ -45,7 +45,7 @@ public class RippleTimingLogic : ExperimentLogic
         pport.SetBit(bit: 0, value: false);
 
         base.StopExperiment();
-        pport.BitPulse(bit: 3, duration_ms: 1);
+        pport.BitPulse(bit: 3, duration_ms: 400);
     }
 
     public override void Logic()

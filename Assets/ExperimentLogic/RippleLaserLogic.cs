@@ -77,7 +77,7 @@ public class RippleLaserLogic : ExperimentLogic
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        pport.BitPulse(3, 1);
+        pport.BitPulse(3, 400);
     }
 
     public override void SamplePushCondition()

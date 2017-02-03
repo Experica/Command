@@ -1,1075 +1,192 @@
 Initialize engine version: 5.5.1f1 (88d00a7498cd)
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: Intel(R) Iris(TM) Graphics 540 (ID=0x1926)
-    Vendor:   Intel
-    VRAM:     4205 MB
-    Driver:   20.19.15.4463
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GT 720 (ID=0x1286)
+    Vendor:   NVIDIA
+    VRAM:     973 MB
+    Driver:   21.21.13.7849
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\LibUsbDotNet.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\LibUsbDotNet.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\MWArray.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\MWArray.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\Ripple.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\Ripple.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Windows.Forms.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\Fasterflect.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\Fasterflect.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\MathNet.Numerics.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\MathNet.Numerics.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\mcs.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\mcs.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\MsgPack.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\MsgPack.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Threading.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
-Loading C:\Users\fff00\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
-- Completed reload, in  0.497 seconds
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-desktop: 2736x1824 60Hz; virtual: 9312x2160 at 0,0
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\LibUsbDotNet.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\LibUsbDotNet.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MWArray.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MWArray.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Ripple.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Ripple.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Windows.Forms.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Fasterflect.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Fasterflect.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MathNet.Numerics.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MathNet.Numerics.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\mcs.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\mcs.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MsgPack.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MsgPack.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
+Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
+- Completed reload, in  0.033 seconds
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
 <RI> Initializing input.
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.304925 ms
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
-Platform assembly: C:\Users\fff00\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
+UnloadTime: 1.560058 ms
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
+Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
 Setting up 1 worker threads for Enlighten.
 GfxDevice: creating device client; threaded=1
-  Thread -> id: 24c0 -> priority: 1 
+  Thread -> id: 26f0 -> priority: 1 
 GfxDevice: creating device client; threaded=1
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.192693 ms
+UnloadTime: 0.327471 ms
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
 
 Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4667.
-Total: 29.587450 ms (FindLiveObjects: 1.243824 ms CreateObjectMapping: 0.501332 ms MarkObjects: 27.692032 ms  DeleteObjects: 0.093681 ms)
+Total: 5.440639 ms (FindLiveObjects: 0.264927 ms CreateObjectMapping: 0.077297 ms MarkObjects: 5.069869 ms  DeleteObjects: 0.025979 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
 
 Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4667.
-Total: 27.412378 ms (FindLiveObjects: 0.954433 ms CreateObjectMapping: 0.256927 ms MarkObjects: 26.159281 ms  DeleteObjects: 0.036637 ms)
+Total: 4.791470 ms (FindLiveObjects: 0.269417 ms CreateObjectMapping: 0.072486 ms MarkObjects: 4.434491 ms  DeleteObjects: 0.014433 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
 Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4667.
-Total: 27.410990 ms (FindLiveObjects: 1.024926 ms CreateObjectMapping: 0.460521 ms MarkObjects: 25.908381 ms  DeleteObjects: 0.014840 ms)
-
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libinpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libinpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libinpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/inpoutx64
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libinpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libinpoutx64.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libinpoutx64.dll
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/mclmcrrt9_0_1
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/.\libmclmcrrt9_0_1.dll
-Fallback handler could not load library C:/Users/fff00/VLab/VLab_Data/Mono/libmclmcrrt9_0_1.dll
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-UnloadTime: 3.253330 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4704.
-Total: 10.693555 ms (FindLiveObjects: 0.243941 ms CreateObjectMapping: 0.069565 ms MarkObjects: 10.321149 ms  DeleteObjects: 0.057970 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4704.
-Total: 7.887760 ms (FindLiveObjects: 0.473970 ms CreateObjectMapping: 0.061217 ms MarkObjects: 7.345152 ms  DeleteObjects: 0.006492 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4704.
-Total: 9.269788 ms (FindLiveObjects: 0.641390 ms CreateObjectMapping: 0.063999 ms MarkObjects: 8.554658 ms  DeleteObjects: 0.008811 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Total: 4.636234 ms (FindLiveObjects: 0.266852 ms CreateObjectMapping: 0.068637 ms MarkObjects: 4.294650 ms  DeleteObjects: 0.005773 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.798607 ms
+UnloadTime: 6.636342 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5259.
-Total: 9.565208 ms (FindLiveObjects: 0.330202 ms CreateObjectMapping: 0.089970 ms MarkObjects: 9.073614 ms  DeleteObjects: 0.070492 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4705.
-Total: 5.848110 ms (FindLiveObjects: 0.254608 ms CreateObjectMapping: 0.063999 ms MarkObjects: 5.523936 ms  DeleteObjects: 0.005101 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4689.
+Total: 6.160049 ms (FindLiveObjects: 0.276794 ms CreateObjectMapping: 0.077618 ms MarkObjects: 5.784468 ms  DeleteObjects: 0.020206 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4705.
-Total: 10.009498 ms (FindLiveObjects: 0.361738 ms CreateObjectMapping: 0.070028 ms MarkObjects: 9.551759 ms  DeleteObjects: 0.023652 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4689.
+Total: 4.434170 ms (FindLiveObjects: 0.204950 ms CreateObjectMapping: 0.108408 ms MarkObjects: 4.109265 ms  DeleteObjects: 0.011225 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4689.
+Total: 5.667399 ms (FindLiveObjects: 0.236061 ms CreateObjectMapping: 0.072807 ms MarkObjects: 5.351474 ms  DeleteObjects: 0.006735 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.772173 ms
+UnloadTime: 1.418613 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4345.
-Total: 10.647178 ms (FindLiveObjects: 0.285680 ms CreateObjectMapping: 0.060289 ms MarkObjects: 10.266425 ms  DeleteObjects: 0.033855 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4345.
-Total: 8.490194 ms (FindLiveObjects: 0.490202 ms CreateObjectMapping: 0.063072 ms MarkObjects: 7.919760 ms  DeleteObjects: 0.015768 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5243.
+Total: 5.743414 ms (FindLiveObjects: 0.309189 ms CreateObjectMapping: 0.134067 ms MarkObjects: 5.248198 ms  DeleteObjects: 0.050996 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4345.
-Total: 9.945961 ms (FindLiveObjects: 0.425738 ms CreateObjectMapping: 0.073739 ms MarkObjects: 9.333789 ms  DeleteObjects: 0.110840 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4689.
+Total: 4.713852 ms (FindLiveObjects: 0.236702 ms CreateObjectMapping: 0.052600 ms MarkObjects: 4.396644 ms  DeleteObjects: 0.027262 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4689.
+Total: 4.630140 ms (FindLiveObjects: 0.243759 ms CreateObjectMapping: 0.052600 ms MarkObjects: 4.327686 ms  DeleteObjects: 0.005131 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.620984 ms
+UnloadTime: 1.532795 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4822.
-Total: 8.020862 ms (FindLiveObjects: 0.257391 ms CreateObjectMapping: 0.074202 ms MarkObjects: 7.517210 ms  DeleteObjects: 0.170666 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4268.
-Total: 7.104920 ms (FindLiveObjects: 0.348753 ms CreateObjectMapping: 0.068637 ms MarkObjects: 6.679645 ms  DeleteObjects: 0.006492 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4399.
+Total: 4.886408 ms (FindLiveObjects: 0.233174 ms CreateObjectMapping: 0.053883 ms MarkObjects: 4.556691 ms  DeleteObjects: 0.042337 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4268.
-Total: 9.963584 ms (FindLiveObjects: 0.349680 ms CreateObjectMapping: 0.065391 ms MarkObjects: 9.517440 ms  DeleteObjects: 0.029681 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4399.
+Total: 4.713852 ms (FindLiveObjects: 0.202704 ms CreateObjectMapping: 0.050996 ms MarkObjects: 4.454377 ms  DeleteObjects: 0.004811 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4399.
+Total: 5.468222 ms (FindLiveObjects: 0.270700 ms CreateObjectMapping: 0.070882 ms MarkObjects: 5.121186 ms  DeleteObjects: 0.005131 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.673854 ms
+UnloadTime: 0.665205 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5262.
-Total: 9.573556 ms (FindLiveObjects: 0.430376 ms CreateObjectMapping: 0.197565 ms MarkObjects: 8.770774 ms  DeleteObjects: 0.173912 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 12.237437 ms (FindLiveObjects: 0.314434 ms CreateObjectMapping: 0.061217 ms MarkObjects: 11.842307 ms  DeleteObjects: 0.018086 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5260.
+Total: 9.086121 ms (FindLiveObjects: 0.278719 ms CreateObjectMapping: 0.124445 ms MarkObjects: 8.650561 ms  DeleteObjects: 0.031432 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 9.663991 ms (FindLiveObjects: 0.537042 ms CreateObjectMapping: 0.065391 ms MarkObjects: 9.049962 ms  DeleteObjects: 0.009739 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4706.
+Total: 7.296736 ms (FindLiveObjects: 0.272625 ms CreateObjectMapping: 0.080504 ms MarkObjects: 6.919872 ms  DeleteObjects: 0.023092 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4706.
+Total: 6.960926 ms (FindLiveObjects: 0.268776 ms CreateObjectMapping: 0.076335 ms MarkObjects: 6.587590 ms  DeleteObjects: 0.027262 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.746202 ms
+UnloadTime: 1.239964 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4901.
-Total: 8.949788 ms (FindLiveObjects: 0.466550 ms CreateObjectMapping: 0.074666 ms MarkObjects: 8.365441 ms  DeleteObjects: 0.041739 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4347.
-Total: 6.800225 ms (FindLiveObjects: 0.425738 ms CreateObjectMapping: 0.079768 ms MarkObjects: 6.286834 ms  DeleteObjects: 0.007420 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5261.
+Total: 8.453951 ms (FindLiveObjects: 0.292190 ms CreateObjectMapping: 0.113861 ms MarkObjects: 7.994337 ms  DeleteObjects: 0.053242 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4347.
-Total: 8.735991 ms (FindLiveObjects: 0.290318 ms CreateObjectMapping: 0.074666 ms MarkObjects: 8.361267 ms  DeleteObjects: 0.009275 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 7.491744 ms (FindLiveObjects: 0.245683 ms CreateObjectMapping: 0.076976 ms MarkObjects: 7.161707 ms  DeleteObjects: 0.006735 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 6.768485 ms (FindLiveObjects: 0.247607 ms CreateObjectMapping: 0.072165 ms MarkObjects: 6.442938 ms  DeleteObjects: 0.005773 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.648810 ms
+UnloadTime: 0.515101 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5262.
-Total: 9.416801 ms (FindLiveObjects: 0.278724 ms CreateObjectMapping: 0.085797 ms MarkObjects: 9.009151 ms  DeleteObjects: 0.042202 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 12.851466 ms (FindLiveObjects: 0.438260 ms CreateObjectMapping: 0.103883 ms MarkObjects: 12.300046 ms  DeleteObjects: 0.007420 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5261.
+Total: 8.344901 ms (FindLiveObjects: 0.262682 ms CreateObjectMapping: 0.112898 ms MarkObjects: 7.926341 ms  DeleteObjects: 0.042337 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 7.853905 ms (FindLiveObjects: 0.406724 ms CreateObjectMapping: 0.082086 ms MarkObjects: 7.357674 ms  DeleteObjects: 0.006492 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 7.616510 ms (FindLiveObjects: 0.265889 ms CreateObjectMapping: 0.075693 ms MarkObjects: 7.248626 ms  DeleteObjects: 0.025979 ms)
 
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 7.017055 ms (FindLiveObjects: 0.276794 ms CreateObjectMapping: 0.072807 ms MarkObjects: 6.660397 ms  DeleteObjects: 0.006735 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.606608 ms
+UnloadTime: 0.417597 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5262.
-Total: 9.507701 ms (FindLiveObjects: 0.264347 ms CreateObjectMapping: 0.084869 ms MarkObjects: 9.079179 ms  DeleteObjects: 0.077449 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 9.190484 ms (FindLiveObjects: 0.293101 ms CreateObjectMapping: 0.062608 ms MarkObjects: 8.816688 ms  DeleteObjects: 0.016695 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5261.
+Total: 8.361900 ms (FindLiveObjects: 0.284492 ms CreateObjectMapping: 0.121238 ms MarkObjects: 7.915756 ms  DeleteObjects: 0.039771 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4708.
-Total: 11.018656 ms (FindLiveObjects: 0.443825 ms CreateObjectMapping: 0.093681 ms MarkObjects: 10.453323 ms  DeleteObjects: 0.026434 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.619129 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4901.
-Total: 8.682194 ms (FindLiveObjects: 0.390956 ms CreateObjectMapping: 0.092289 ms MarkObjects: 8.144688 ms  DeleteObjects: 0.051478 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 7.145670 ms (FindLiveObjects: 0.262041 ms CreateObjectMapping: 0.117068 ms MarkObjects: 6.758863 ms  DeleteObjects: 0.007056 ms)
 
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4347.
-Total: 7.296920 ms (FindLiveObjects: 0.441970 ms CreateObjectMapping: 0.211478 ms MarkObjects: 6.636979 ms  DeleteObjects: 0.005565 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4347.
-Total: 9.499353 ms (FindLiveObjects: 0.486956 ms CreateObjectMapping: 0.121043 ms MarkObjects: 8.881151 ms  DeleteObjects: 0.009275 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.760115 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4823.
-Total: 10.342484 ms (FindLiveObjects: 0.428985 ms CreateObjectMapping: 0.127999 ms MarkObjects: 9.717324 ms  DeleteObjects: 0.067246 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4269.
-Total: 8.818542 ms (FindLiveObjects: 0.362202 ms CreateObjectMapping: 0.079768 ms MarkObjects: 8.367760 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4269.
-Total: 9.434426 ms (FindLiveObjects: 0.361275 ms CreateObjectMapping: 0.064927 ms MarkObjects: 8.998948 ms  DeleteObjects: 0.006956 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.703071 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5269.
-Total: 9.689961 ms (FindLiveObjects: 0.390956 ms CreateObjectMapping: 0.147941 ms MarkObjects: 9.086599 ms  DeleteObjects: 0.063536 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4715.
-Total: 11.332627 ms (FindLiveObjects: 0.388173 ms CreateObjectMapping: 0.084869 ms MarkObjects: 10.850772 ms  DeleteObjects: 0.006956 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4715.
-Total: 10.133324 ms (FindLiveObjects: 0.279651 ms CreateObjectMapping: 0.064927 ms MarkObjects: 9.779469 ms  DeleteObjects: 0.008347 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.783303 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5269.
-Total: 9.257730 ms (FindLiveObjects: 0.485100 ms CreateObjectMapping: 0.160463 ms MarkObjects: 8.547238 ms  DeleteObjects: 0.063072 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4715.
-Total: 7.685558 ms (FindLiveObjects: 0.293101 ms CreateObjectMapping: 0.065855 ms MarkObjects: 7.318254 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4715.
-Total: 9.113962 ms (FindLiveObjects: 0.300057 ms CreateObjectMapping: 0.095536 ms MarkObjects: 8.699354 ms  DeleteObjects: 0.018550 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.642318 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4830.
-Total: 10.014599 ms (FindLiveObjects: 0.300057 ms CreateObjectMapping: 0.060289 ms MarkObjects: 9.612049 ms  DeleteObjects: 0.041739 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4276.
-Total: 7.624340 ms (FindLiveObjects: 0.561158 ms CreateObjectMapping: 0.067710 ms MarkObjects: 6.989442 ms  DeleteObjects: 0.005565 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4276.
-Total: 9.503991 ms (FindLiveObjects: 0.394202 ms CreateObjectMapping: 0.133565 ms MarkObjects: 8.967875 ms  DeleteObjects: 0.006956 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.661796 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5270.
-Total: 9.532281 ms (FindLiveObjects: 0.366376 ms CreateObjectMapping: 0.118260 ms MarkObjects: 8.582021 ms  DeleteObjects: 0.465158 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4716.
-Total: 11.172627 ms (FindLiveObjects: 0.397912 ms CreateObjectMapping: 0.085333 ms MarkObjects: 10.681497 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4716.
-Total: 10.401381 ms (FindLiveObjects: 0.317680 ms CreateObjectMapping: 0.061681 ms MarkObjects: 10.012744 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.645564 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5270.
-Total: 8.299586 ms (FindLiveObjects: 0.282434 ms CreateObjectMapping: 0.095072 ms MarkObjects: 7.859007 ms  DeleteObjects: 0.062608 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4716.
-Total: 7.795934 ms (FindLiveObjects: 0.325564 ms CreateObjectMapping: 0.113159 ms MarkObjects: 7.348398 ms  DeleteObjects: 0.005565 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4716.
-Total: 10.121265 ms (FindLiveObjects: 0.379825 ms CreateObjectMapping: 0.108521 ms MarkObjects: 9.622715 ms  DeleteObjects: 0.008811 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.638144 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5277.
-Total: 9.553614 ms (FindLiveObjects: 0.467014 ms CreateObjectMapping: 0.237912 ms MarkObjects: 8.804165 ms  DeleteObjects: 0.042666 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4723.
-Total: 7.019123 ms (FindLiveObjects: 0.405796 ms CreateObjectMapping: 0.104811 ms MarkObjects: 6.502486 ms  DeleteObjects: 0.005565 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4723.
-Total: 9.503527 ms (FindLiveObjects: 0.361275 ms CreateObjectMapping: 0.090434 ms MarkObjects: 9.041151 ms  DeleteObjects: 0.009739 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.742028 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5277.
-Total: 10.208454 ms (FindLiveObjects: 0.370550 ms CreateObjectMapping: 0.179478 ms MarkObjects: 9.598136 ms  DeleteObjects: 0.058898 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4723.
-Total: 7.451355 ms (FindLiveObjects: 0.489738 ms CreateObjectMapping: 0.129854 ms MarkObjects: 6.824805 ms  DeleteObjects: 0.005565 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4723.
-Total: 10.236744 ms (FindLiveObjects: 0.336695 ms CreateObjectMapping: 0.456811 ms MarkObjects: 9.434889 ms  DeleteObjects: 0.007884 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.750376 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5278.
-Total: 10.976454 ms (FindLiveObjects: 0.345043 ms CreateObjectMapping: 0.161391 ms MarkObjects: 10.429671 ms  DeleteObjects: 0.036637 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.711883 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5278.
-Total: 10.776569 ms (FindLiveObjects: 0.509216 ms CreateObjectMapping: 0.230956 ms MarkObjects: 9.971469 ms  DeleteObjects: 0.063536 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4724.
-Total: 7.613210 ms (FindLiveObjects: 0.384927 ms CreateObjectMapping: 0.093681 ms MarkObjects: 7.126254 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4724.
-Total: 10.490888 ms (FindLiveObjects: 0.357101 ms CreateObjectMapping: 0.063536 ms MarkObjects: 10.054947 ms  DeleteObjects: 0.013913 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.708173 ms
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 5279.
-Total: 9.852280 ms (FindLiveObjects: 0.511999 ms CreateObjectMapping: 0.213796 ms MarkObjects: 9.083817 ms  DeleteObjects: 0.041739 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.693796 ms
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 5281.
-Total: 10.962541 ms (FindLiveObjects: 0.334376 ms CreateObjectMapping: 0.148405 ms MarkObjects: 10.419003 ms  DeleteObjects: 0.059826 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.736463 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4921.
-Total: 9.869904 ms (FindLiveObjects: 0.282898 ms CreateObjectMapping: 0.061681 ms MarkObjects: 9.469209 ms  DeleteObjects: 0.055652 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4367.
-Total: 11.663293 ms (FindLiveObjects: 0.360347 ms CreateObjectMapping: 0.097391 ms MarkObjects: 11.197206 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4367.
-Total: 10.622599 ms (FindLiveObjects: 0.427130 ms CreateObjectMapping: 0.309333 ms MarkObjects: 9.860164 ms  DeleteObjects: 0.024579 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.764289 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5282.
-Total: 9.275352 ms (FindLiveObjects: 0.270840 ms CreateObjectMapping: 0.099710 ms MarkObjects: 8.825499 ms  DeleteObjects: 0.076521 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 11.526945 ms (FindLiveObjects: 0.364057 ms CreateObjectMapping: 0.090434 ms MarkObjects: 11.063641 ms  DeleteObjects: 0.006956 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 10.835468 ms (FindLiveObjects: 0.416927 ms CreateObjectMapping: 0.065391 ms MarkObjects: 10.328106 ms  DeleteObjects: 0.023188 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.616811 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5282.
-Total: 9.350020 ms (FindLiveObjects: 0.338550 ms CreateObjectMapping: 0.111304 ms MarkObjects: 8.838948 ms  DeleteObjects: 0.047304 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 7.960572 ms (FindLiveObjects: 0.422956 ms CreateObjectMapping: 0.118724 ms MarkObjects: 7.411007 ms  DeleteObjects: 0.007420 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 10.663410 ms (FindLiveObjects: 0.588057 ms CreateObjectMapping: 0.063072 ms MarkObjects: 9.999758 ms  DeleteObjects: 0.010202 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.524521 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5282.
-Total: 12.909902 ms (FindLiveObjects: 0.298202 ms CreateObjectMapping: 0.097854 ms MarkObjects: 12.464684 ms  DeleteObjects: 0.047768 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 15.733318 ms (FindLiveObjects: 0.252753 ms CreateObjectMapping: 0.058898 ms MarkObjects: 15.385491 ms  DeleteObjects: 0.033391 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4728.
-Total: 8.404398 ms (FindLiveObjects: 0.473506 ms CreateObjectMapping: 0.177623 ms MarkObjects: 7.745847 ms  DeleteObjects: 0.006492 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.139013 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4921.
-Total: 13.552218 ms (FindLiveObjects: 0.463303 ms CreateObjectMapping: 0.281043 ms MarkObjects: 12.761031 ms  DeleteObjects: 0.044057 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4367.
-Total: 12.115467 ms (FindLiveObjects: 0.305622 ms CreateObjectMapping: 0.067246 ms MarkObjects: 11.735641 ms  DeleteObjects: 0.006492 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4367.
-Total: 6.796515 ms (FindLiveObjects: 0.241159 ms CreateObjectMapping: 0.057970 ms MarkObjects: 6.491356 ms  DeleteObjects: 0.005565 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.105622 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5286.
-Total: 9.582830 ms (FindLiveObjects: 0.453564 ms CreateObjectMapping: 0.161391 ms MarkObjects: 8.919180 ms  DeleteObjects: 0.047768 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4732.
-Total: 8.089035 ms (FindLiveObjects: 0.389564 ms CreateObjectMapping: 0.065391 ms MarkObjects: 7.627123 ms  DeleteObjects: 0.006492 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4732.
-Total: 10.297497 ms (FindLiveObjects: 0.406724 ms CreateObjectMapping: 0.059826 ms MarkObjects: 9.818890 ms  DeleteObjects: 0.010666 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.151535 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4925.
-Total: 10.993149 ms (FindLiveObjects: 0.268521 ms CreateObjectMapping: 0.075594 ms MarkObjects: 10.609149 ms  DeleteObjects: 0.038956 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4371.
-Total: 11.696221 ms (FindLiveObjects: 0.355709 ms CreateObjectMapping: 0.109449 ms MarkObjects: 11.215293 ms  DeleteObjects: 0.014840 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4371.
-Total: 8.849614 ms (FindLiveObjects: 0.477680 ms CreateObjectMapping: 0.153507 ms MarkObjects: 8.210543 ms  DeleteObjects: 0.006492 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.625158 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5286.
-Total: 10.643932 ms (FindLiveObjects: 0.452637 ms CreateObjectMapping: 0.094608 ms MarkObjects: 10.052164 ms  DeleteObjects: 0.043130 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4732.
-Total: 15.130884 ms (FindLiveObjects: 0.524057 ms CreateObjectMapping: 0.198956 ms MarkObjects: 14.392102 ms  DeleteObjects: 0.014376 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4732.
-Total: 6.245559 ms (FindLiveObjects: 0.378898 ms CreateObjectMapping: 0.059826 ms MarkObjects: 5.798023 ms  DeleteObjects: 0.006956 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.658550 ms
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4848.
-Total: 9.803585 ms (FindLiveObjects: 0.278260 ms CreateObjectMapping: 0.067710 ms MarkObjects: 9.413556 ms  DeleteObjects: 0.043130 ms)
-
-System.DllNotFoundException: inpoutx64.dll
-  at (wrapper managed-to-native) VLab.Inpout:IsInpOutDriverOpen ()
-  at VLab.Inpout..ctor () [0x00000] in <filename unknown>:0 
-DllNotFoundException: mclmcrrt9_0_1.dll
-  at (wrapper managed-to-native) MathWorks.MATLAB.NET.Arrays.MWArray:mclmcrInitialize2 (int)
-  at MathWorks.MATLAB.NET.Arrays.MWArray..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Arrays.MWArray
-  at MathWorks.MATLAB.NET.Utility.MWMCR..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for MathWorks.MATLAB.NET.Utility.MWMCR
-  at Ripple.XippmexDotNet..cctor () [0x00000] in <filename unknown>:0 
-Rethrow as TypeInitializationException: An exception was thrown by the type initializer for Ripple.XippmexDotNet
-  at VLab.RippleRecorder..ctor () [0x00000] in <filename unknown>:0 
-  at VLab.RecordManager..ctor (VLRecordSystem recordsystem) [0x00000] in <filename unknown>:0 
-  at RippleCTLogic.OnStart () [0x00000] in <filename unknown>:0 
-  at VLab.ExperimentLogic.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.587129 ms
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 5288.
-Total: 11.745380 ms (FindLiveObjects: 0.474434 ms CreateObjectMapping: 0.234202 ms MarkObjects: 10.996395 ms  DeleteObjects: 0.039420 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4734.
-Total: 9.567063 ms (FindLiveObjects: 0.422028 ms CreateObjectMapping: 0.070956 ms MarkObjects: 9.063411 ms  DeleteObjects: 0.009739 ms)
-
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-
-Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4734.
-Total: 10.783989 ms (FindLiveObjects: 0.319535 ms CreateObjectMapping: 0.120115 ms MarkObjects: 10.333672 ms  DeleteObjects: 0.008347 ms)
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 4707.
+Total: 7.012565 ms (FindLiveObjects: 0.258512 ms CreateObjectMapping: 0.071524 ms MarkObjects: 6.652699 ms  DeleteObjects: 0.029186 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.697970 ms
+UnloadTime: 0.524082 ms
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4688.
-Total: 13.316625 ms (FindLiveObjects: 0.445216 ms CreateObjectMapping: 0.105739 ms MarkObjects: 12.123351 ms  DeleteObjects: 0.640463 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4669.
+Total: 8.472554 ms (FindLiveObjects: 0.291228 ms CreateObjectMapping: 0.078900 ms MarkObjects: 7.684506 ms  DeleteObjects: 0.417277 ms)
 

@@ -72,6 +72,10 @@ namespace VLab
                             {
                                 condtestmanager.NewCondTest(PreICIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
                             }
+                            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.AddEvent(CONDTESTPARAM.CONDSTATE, value.ToString(), PreICIOnTime);
+                            }
                             if (ex.PushCondAtState == PUSHCONDATSTATE.PREICI)
                             {
                                 if (condmanager.IsCondRepeat(ex.CondRepeat))
@@ -88,19 +92,19 @@ namespace VLab
                                     condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
                                     condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                                 }
-                            }
-                            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
-                            {
-                                condtestmanager.AddEvent(CONDTESTPARAM.CONDSTATE, value.ToString(), PreICIOnTime);
-                            }
+                            } 
                             break;
                         case CONDSTATE.COND:
                             CondOnTime = timer.ElapsedMillisecond;
+                            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+                            {
+                                condtestmanager.AddEvent(CONDTESTPARAM.CONDSTATE, value.ToString(), CondOnTime);
+                            }
                             if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                             {
                                 if (condmanager.IsCondRepeat(ex.CondRepeat))
                                 {
-                                    StopExperiment();
+                                    StartStopExperiment(false);
                                     return;
                                 }
                                 else
@@ -112,11 +116,7 @@ namespace VLab
                                     condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
                                     condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                                 }
-                            }
-                            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
-                            {
-                                condtestmanager.AddEvent(CONDTESTPARAM.CONDSTATE, value.ToString(), CondOnTime);
-                            }
+                            } 
                             break;
                         case CONDSTATE.SUFICI:
                             SufICIOnTime = timer.ElapsedMillisecond;
