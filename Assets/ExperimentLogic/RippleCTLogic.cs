@@ -24,6 +24,9 @@ using VLab;
 public class RippleCTLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
+    int notifylatency = 200;
+    int exlatencyerror = 20;
+    int onlinesignallatency = 50;
 
     public override void OnStart()
     {
@@ -38,10 +41,14 @@ public class RippleCTLogic : ExperimentLogic
         Ripple recorder set path through UDP network and Trellis receive
         message and change file path, all of which need time to complete.
         Issue record triggering TTL before file path change completion will
-        not successfully start recording, so here a long TTL pulse(100ms) is used to 
-        wait Trellis ready, then trigger recording by hi->lo edge of TTL.
+        not successfully start recording.
+
+        VLab online analysis also need time to complete signal clear buffer,
+        otherwise the delayed action may clear up the start TTL pluse which is
+        needed to mark the start time of VLab.
         */
-        pport.BitPulse(bit: 2, duration_ms: 100);
+        timer.Countdown(notifylatency);
+        pport.BitPulse(bit: 2, duration_ms: 5);
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
         in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
@@ -55,8 +62,10 @@ public class RippleCTLogic : ExperimentLogic
         SetEnvActiveParam("Mark", OnOff.Off);
         pport.SetBit(bit: 0, value: false);
         base.StopExperiment();
-        // Tail period(400ms) to make sure lagged effect is recorded
-        pport.BitPulse(bit: 3, duration_ms: 400);
+        // Tail period to make sure lagged effect data is recorded before stop recording
+        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        pport.BitPulse(bit: 3, duration_ms: 5);
+        timer.Stop();
     }
 
     public override void Logic()

@@ -12,13 +12,13 @@ EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
+  ScreenToEye@ENCamera@OrthoCamera: 34
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (79.1, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -29,12 +29,12 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (-4.09, 0.547, 0)
+  Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  TemporalFreq@ENGratingQuad@GratingQuad: 0
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
@@ -49,9 +49,9 @@ EnvParam:
   MaskType@ENGratingQuad@GratingQuad: None
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (-4.09, 0.547, 0)
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 2
+  Image@ENImageQuad@ImageQuad: 4
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
@@ -61,7 +61,7 @@ EnvParam:
   MaskType@ENImageQuad@ImageQuad: Disk
   Sigma@ENImageQuad@ImageQuad: 0.150000006
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: (-4.09, 0.547, 0)
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Image.yaml
 ExLogicPath: RippleCTLogic
@@ -105,6 +105,6 @@ EnvInheritParam:
 - MarkOffColor
 - Marker
 Param: {}
-Latency: 186
-TimerDriftSpeed: 3.1220000000000003E-05
+Latency: 183
+TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

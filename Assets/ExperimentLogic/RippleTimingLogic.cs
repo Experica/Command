@@ -25,6 +25,9 @@ using VLab;
 public class RippleTimingLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
+    int notifylatency = 200;
+    int exlatencyerror = 20;
+    int onlinesignallatency = 50;
 
     public override void OnStart()
     {
@@ -35,7 +38,8 @@ public class RippleTimingLogic : ExperimentLogic
     {
         base.StartExperiment();
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
-        pport.BitPulse(bit: 2, duration_ms: 100);
+        timer.Countdown(notifylatency);
+        pport.BitPulse(bit: 2, duration_ms: 5);
         timer.Restart();
     }
 
@@ -45,7 +49,9 @@ public class RippleTimingLogic : ExperimentLogic
         pport.SetBit(bit: 0, value: false);
 
         base.StopExperiment();
-        pport.BitPulse(bit: 3, duration_ms: 400);
+        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        pport.BitPulse(bit: 3, duration_ms: 5);
+        timer.Stop();
     }
 
     public override void Logic()

@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -691,11 +691,11 @@ RectTransform:
   - {fileID: 1996178765}
   - {fileID: 386045323}
   - {fileID: 116732423}
+  - {fileID: 1318028122}
+  - {fileID: 377719023}
+  - {fileID: 1394811413}
   - {fileID: 1343119229}
   - {fileID: 713751378}
-  - {fileID: 377719023}
-  - {fileID: 1318028122}
-  - {fileID: 1394811413}
   - {fileID: 126350015}
   m_Father: {fileID: 652919583}
   m_RootOrder: 5
@@ -2241,7 +2241,7 @@ RectTransform:
   - {fileID: 628594741}
   - {fileID: 1839210949}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2833,8 +2833,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 266458365}
   m_HandleRect: {fileID: 266458364}
   m_Direction: 0
-  m_Value: 0.5
-  m_Size: 0.9999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4046,7 +4046,7 @@ RectTransform:
   - {fileID: 750833734}
   - {fileID: 1935933893}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -6639,7 +6639,7 @@ Prefab:
     - target: {fileID: 224000013618907912, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224000013618907912, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
@@ -6788,7 +6788,7 @@ Prefab:
     - target: {fileID: 224000012133763976, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.000000059604645
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011435201336, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
@@ -6967,7 +6967,7 @@ RectTransform:
   - {fileID: 407220476}
   - {fileID: 1319159902}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -7044,7 +7044,7 @@ Prefab:
     - target: {fileID: 224000013618907912, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 224000013618907912, guid: ddafa1c872d688b4db36513eb583eecb,
         type: 2}
@@ -8976,7 +8976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000046133995, y: -0.000004604459}
+  m_AnchoredPosition: {x: -0.000073611736, y: -0.000050738454}
   m_SizeDelta: {x: 575, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1779045715
