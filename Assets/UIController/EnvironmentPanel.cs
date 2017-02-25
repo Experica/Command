@@ -64,14 +64,14 @@ namespace VLab
                     if (em.activenet.Contains(nb))
                     {
                         AddParamUI(fullname, showname, paramname, T, em.GetParam(fullname),
-                            uicontroller.exmanager.el.ex.EnvInheritParam.Contains(paramname),
+                            uicontroller.exmanager.el.ex.EnvInheritParam.Contains(fullname),
                             paramname.GetPrefab(T), content.transform);
                     }
                 }
                 else
                 {
                     AddParamUI(fullname, showname, paramname, T, em.GetParam(fullname),
-                        uicontroller.exmanager.el.ex.EnvInheritParam.Contains(paramname),
+                        uicontroller.exmanager.el.ex.EnvInheritParam.Contains(fullname),
                             paramname.GetPrefab(T), content.transform);
                 }
             }

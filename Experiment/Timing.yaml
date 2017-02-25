@@ -95,12 +95,13 @@ ExInheritParam:
 - Latency
 - Delay
 EnvInheritParam:
-- ScreenHalfHeight
-- ScreenToEye
-- MarkerSize
-- MarkerCorner
-- MarkOnColor
-- MarkOffColor
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05

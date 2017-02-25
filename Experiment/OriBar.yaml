@@ -11,7 +11,7 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (62.6, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -21,10 +21,10 @@ EnvParam:
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 10
+  Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 10
-  Size@ENQuad@Quad: (10, 10, 1)
+  Size@ENQuad@Quad: (1, 0.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0.150000006
@@ -41,7 +41,7 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 247.5
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 2
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
@@ -53,7 +53,7 @@ EnvParam:
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
-  Ori@ENImageQuad@ImageQuad: 0
+  Ori@ENImageQuad@ImageQuad: 247.5
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
@@ -96,15 +96,17 @@ ExInheritParam:
 - TimerDriftSpeed
 - Delay
 EnvInheritParam:
-- ScreenHalfHeight
-- ScreenToEye
-- Position
-- MarkerSize
-- MarkerCorner
-- MarkOnColor
-- MarkOffColor
-- Marker
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- Marker@Showroom@ShowroomManager
+- Ori@ENQuad@Quad
+- Size@ENQuad@Quad
+- Position@ENQuad@Quad
 Param: {}
-Latency: 186
-TimerDriftSpeed: 3.1220000000000003E-05
+Latency: 183
+TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

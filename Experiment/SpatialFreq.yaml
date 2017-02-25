@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -41,15 +41,15 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 2.80313945
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: (20, 20, 1)
+  Diameter@ENGratingQuad@GratingQuad: 21.9127483
+  Size@ENGratingQuad@GratingQuad: (21.9, 21.9, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (-0.175, -9.07, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
@@ -96,18 +96,18 @@ ExInheritParam:
 - TimerDriftSpeed
 - Delay
 EnvInheritParam:
-- ScreenHalfHeight
-- ScreenToEye
-- TemporalFreq
-- Ori
-- Diameter
-- Position
-- MarkerSize
-- MarkerCorner
-- MarkOnColor
-- MarkOffColor
-- Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
+- TemporalFreq@ENGratingQuad@GratingQuad
+- Ori@ENGratingQuad@GratingQuad
+- Diameter@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
 Param: {}
-Latency: 186
-TimerDriftSpeed: 3.1220000000000003E-05
+Latency: 183
+TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

@@ -10,58 +10,58 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 34
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (79.1, -44, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
-  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 2.80313945
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
+  Diameter@ENQuad@Quad: 21.9127483
+  Size@ENQuad@Quad: (21, 2, 1)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
-  Sigma@ENQuad@Quad: 0
+  Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (-0.175, -9.07, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
-  TemporalFreq@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 2.80313945
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 21.9127483
+  Size@ENGratingQuad@GratingQuad: (21.9, 21.9, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
-  Sigma@ENGratingQuad@GratingQuad: 0
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-0.175, -9.07, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
-  Ori@ENImageQuad@ImageQuad: 0
+  Ori@ENImageQuad@ImageQuad: 2.80313945
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Diameter@ENImageQuad@ImageQuad: 21.9127483
+  Size@ENImageQuad@ImageQuad: (21.9, 21.9, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  Position@ENImageQuad@ImageQuad: (-0.175, -9.07, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 ExLogicPath: ConditionTestLogic
@@ -77,8 +77,7 @@ NotifyParam:
 - CONDSTATE
 - CondRepeat
 ExInheritParam: []
-EnvInheritParam:
-- ''
+EnvInheritParam: []
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05

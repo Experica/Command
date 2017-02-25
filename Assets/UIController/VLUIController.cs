@@ -276,22 +276,22 @@ namespace VLab
             var ip = exmanager.el.ex.EnvInheritParam;
             if(isinherit)
             {
-                if(!ip.Contains(paramname))
+                if(!ip.Contains(fullname))
                 {
-                    ip.Add(paramname);
+                    ip.Add(fullname);
                     if (exmanager.el.ex.OnNotifyUI != null)
                     {
                         exmanager.el.ex.OnNotifyUI("EnvInheritParam", ip);
                     }
                 }
-                exmanager.InheritEnvParam(paramname);
+                exmanager.InheritEnvParam(fullname);
                 envpanel.UpdateParamUI(fullname, exmanager.el.envmanager.GetParam(fullname));
             }
             else
             {
-                if(ip.Contains(paramname))
+                if(ip.Contains(fullname))
                 {
-                    ip.Remove(paramname);
+                    ip.Remove(fullname);
                     if (exmanager.el.ex.OnNotifyUI != null)
                     {
                         exmanager.el.ex.OnNotifyUI("EnvInheritParam", ip);

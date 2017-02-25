@@ -30,7 +30,7 @@ EnvParam:
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, -1.5, 0)
+  PositionOffset@ENQuad@Quad: (0, -4.5, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0
@@ -50,7 +50,7 @@ EnvParam:
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, -1.5, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, -4.5, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 0
@@ -62,7 +62,7 @@ EnvParam:
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, -1.5, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, -4.5, 0)
 CondPath: Condition\PositionYOffset12Deg1.5DegStep.yaml
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1

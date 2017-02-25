@@ -21,3 +21,4 @@ ExHideParams:
 - Log
 - Subject_Log
 - DataPath
+CrossEnvInheritRulePath: DefaultCrossEnvInheritRule.yaml

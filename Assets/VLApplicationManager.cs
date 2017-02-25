@@ -34,6 +34,7 @@ namespace VLab
         ExDir,
         DataDir,
         ExLogic,
+        CrossEnvInheritRulePath,
         NotifyParams,
         AntiAliasing,
         AnisotropicFilterLevel,
@@ -49,8 +50,17 @@ namespace VLab
         public VLUIController uicontroller;
         public Dictionary<VLCFG, object> config;
         public readonly string configpath = "VLabConfig.yaml";
+        public Dictionary<string,Dictionary<string,List<string>>> crossenvinheritrule;
 
         void Awake()
+        {
+            ValidateConfig();
+            ValidateCrossEnvInheritRule();
+        }
+
+        // because Yaml deserialize text string stops working on object type, we need to 
+        // make sure config contain valid type value
+        void ValidateConfig()
         {
             if (File.Exists(configpath))
             {
@@ -60,13 +70,7 @@ namespace VLab
             {
                 config = new Dictionary<VLCFG, object>();
             }
-            ValidateConfig();
-        }
 
-        // because Yaml deserialize text string stops working on object type, we need to 
-        // make sure config contain valid type value
-        void ValidateConfig()
-        {
             if (!config.ContainsKey(VLCFG.IsSaveExOnQuit))
             {
                 config[VLCFG.IsSaveExOnQuit] = true;
@@ -94,6 +98,10 @@ namespace VLab
             if (!config.ContainsKey(VLCFG.ExLogic))
             {
                 config[VLCFG.ExLogic] = "ConditionTestLogic";
+            }
+            if (!config.ContainsKey(VLCFG.CrossEnvInheritRulePath))
+            {
+                config[VLCFG.CrossEnvInheritRulePath] = "DefaultCrossEnvInheritRule.yaml";
             }
             if (!config.ContainsKey(VLCFG.NotifyParams))
             {
@@ -169,6 +177,62 @@ namespace VLab
             }
         }
 
+        void ValidateCrossEnvInheritRule()
+        {
+            var rulefile = (string)config[VLCFG.CrossEnvInheritRulePath];
+            if (File.Exists(rulefile))
+            {
+                crossenvinheritrule = Yaml.ReadYaml<Dictionary<string, Dictionary<string, List<string>>>>(rulefile);
+            }
+            if (crossenvinheritrule == null)
+            {
+                crossenvinheritrule = new Dictionary<string, Dictionary<string, List<string>>>();
+            }
+            
+            if(!crossenvinheritrule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
+            {
+                var gratingquadsourcelist = new Dictionary<string, List<string>>();
+                gratingquadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" };
+                gratingquadsourcelist[EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" };
+
+                crossenvinheritrule[EnvironmentObject.GratingQuad.ToString()] = gratingquadsourcelist;
+            }
+            if (!crossenvinheritrule.ContainsKey(EnvironmentObject.Quad.ToString()))
+            {
+                var quadsourcelist = new Dictionary<string, List<string>>();
+                quadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" };
+                quadsourcelist[EnvironmentObject.ImageQuad.ToString()] = new List<string> {  "Position" };
+
+                crossenvinheritrule[EnvironmentObject.Quad.ToString()] = quadsourcelist;
+            }
+            if (!crossenvinheritrule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
+            {
+                var imagequadsourcelist = new Dictionary<string, List<string>>();
+                imagequadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> {  "Position" };
+                imagequadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> {  "Position" };
+
+                crossenvinheritrule[EnvironmentObject.ImageQuad.ToString()] = imagequadsourcelist;
+            }
+        }
+
+        public bool IsFollowCrossEnvInheritRule(string target,string source,string param)
+        {
+            if(crossenvinheritrule.ContainsKey(target))
+            {
+                var sl = crossenvinheritrule[target];
+                if(sl.ContainsKey(source)&&sl[source].Contains(param))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsCrossEnvInheritTarget(string target)
+        {
+            return crossenvinheritrule.ContainsKey(target);
+        }
+
         void OnApplicationQuit()
         {
             if (uicontroller.netmanager.isNetworkActive)
@@ -180,6 +244,7 @@ namespace VLab
                 uicontroller.exmanager.SaveAllEx();
             }
             Yaml.WriteYaml(configpath, config);
+            Yaml.WriteYaml((string)config[VLCFG.CrossEnvInheritRulePath], crossenvinheritrule);
         }
 
     }
