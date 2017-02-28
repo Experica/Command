@@ -113,6 +113,7 @@ namespace VLab
         public double TimerDriftSpeed { get; set; }
         public double Delay { get; set; }
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
+        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
 
         [MessagePackIgnore]
         public static readonly Dictionary<string, PropertyAccess> Properties;
@@ -336,6 +337,13 @@ namespace VLab
         NONE = 0,
         PREICI = CONDSTATE.PREICI,
         PREITI = TRIALSTATE.PREITI,
+    }
+
+    public enum CONDTESTSHOWLEVEL
+    {
+        NONE,
+        SHORT,
+        FULL
     }
 
 }

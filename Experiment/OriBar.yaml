@@ -10,18 +10,18 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 2.80313945
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 10
   Size@ENQuad@Quad: (1, 0.5, 1)
@@ -29,7 +29,7 @@ EnvParam:
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (-0.175, -9.07, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -104,7 +104,6 @@ EnvInheritParam:
 - ScreenToEye@ENCamera@OrthoCamera
 - Marker@Showroom@ShowroomManager
 - Ori@ENQuad@Quad
-- Size@ENQuad@Quad
 - Position@ENQuad@Quad
 Param: {}
 Latency: 183

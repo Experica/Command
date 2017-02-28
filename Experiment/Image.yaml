@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -51,7 +51,7 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 2
+  Image@ENImageQuad@ImageQuad: 1
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
@@ -60,8 +60,8 @@ EnvParam:
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: Disk
   Sigma@ENImageQuad@ImageQuad: 0.150000006
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (-0.175, -9.07, 0)
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Image.yaml
 ExLogicPath: RippleCTLogic
@@ -69,7 +69,7 @@ RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
-CondRepeat: 12
+CondRepeat: 50
 CondDur: 100
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -106,3 +106,4 @@ Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: SHORT

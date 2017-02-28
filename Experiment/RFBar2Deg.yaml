@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 1
   MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -28,9 +28,9 @@ EnvParam:
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0.150000006
-  Visible@ENQuad@Quad: true
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0.25, -0.25, 0)
+  PositionOffset@ENQuad@Quad: (-0.75, -0.75, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0
@@ -50,7 +50,7 @@ EnvParam:
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (-0.75, -0.75, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 0
@@ -62,14 +62,14 @@ EnvParam:
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (-0.75, -0.75, 0)
 CondPath: Condition\PositionOffset2Deg0.25DegStep.yaml
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
-CondRepeat: 12
+CondRepeat: 50
 CondDur: 50
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -98,3 +98,4 @@ Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: SHORT

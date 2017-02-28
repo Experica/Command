@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System;
+using System.Runtime;
 using MsgPack;
 using MsgPack.Serialization;
 
@@ -48,6 +49,8 @@ namespace VLab
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
         public ConsolePanel consolepanel;
+        public ConditionPanel condpanel;
+        public ConditionTestPanel ctpanel;
 
 
         void Start()
@@ -151,6 +154,10 @@ namespace VLab
                 VLMsgPack.ExSerializer.Pack(stream,exmanager.el. ex, PackerCompatibilityOptions.None);
                 alsmanager.RpcNotifyExperiment(stream.ToArray());
             }
+
+            // Get Lowest GC Intrusiveness
+            GC.Collect();
+            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
         }
 
         public void ToggleStartStopExperiment(bool isstart)
@@ -196,6 +203,10 @@ namespace VLab
             {
                 exmanager.el.SaveData();
             }
+
+            // Return Normal GC
+            GCSettings.LatencyMode = GCLatencyMode.Interactive;
+            GC.Collect();
         }
 
         public void SaveData()

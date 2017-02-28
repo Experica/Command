@@ -14,13 +14,23 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (79.6, -44.5, -1E+03)
+  MarkerPosition@ENMarker@Marker: (59.5, -44.5, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 2, 1)
+  Color@ENQuad@Quad: (0, 0, 0, 0)
+  MaskType@ENQuad@Quad: None
+  Sigma@ENQuad@Quad: 0
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
@@ -41,6 +51,18 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Image@ENImageQuad@ImageQuad: 0
+  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Ori@ENImageQuad@ImageQuad: 0
+  OriOffset@ENImageQuad@ImageQuad: 0
+  Diameter@ENImageQuad@ImageQuad: 2
+  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
+  MaskType@ENImageQuad@ImageQuad: None
+  Sigma@ENImageQuad@ImageQuad: 0
+  Visible@ENImageQuad@ImageQuad: true
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Diameter.yaml
 ExLogicPath: RippleLaserCTLogic
 RecordSession: LGN1
@@ -75,21 +97,10 @@ ExInheritParam:
 - TimerDriftSpeed
 - LaserPower
 - LaserFreq
-EnvInheritParam:
-- ScreenHalfHeight
-- ScreenToEye
-- SpatialFreq
-- TemporalFreq
-- Ori
-- Position
-- MarkerSize
-- MarkerCorner
-- MarkOnColor
-- MarkOffColor
-- Marker
+EnvInheritParam: []
 Param:
   LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
-Latency: 186
-TimerDriftSpeed: 3.1220000000000003E-05
+Latency: 183
+TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

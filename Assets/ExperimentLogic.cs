@@ -36,7 +36,8 @@ namespace VLab
         public Action OnBeginStartExperiment, OnEndStartExperiment,
             OnBeginStopExperiment, OnEndStopExperiment,
             OnBeginPauseExperiment, OnEndPauseExperiment,
-            OnBeginResumeExperiment, OnEndResumeExpeirment;
+            OnBeginResumeExperiment, OnEndResumeExpeirment,
+        OnConditionPrepared;
 
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
@@ -277,6 +278,7 @@ namespace VLab
             }
             ex.Cond = condmanager.cond;
             condmanager.UpdateSampleSpace(ex.CondSampling, true);
+            OnConditionPrepared();
         }
 
         public virtual void SamplePushCondition()

@@ -148,18 +148,18 @@ namespace VLab
             return condidx;
         }
 
-        public void PushCondition(int condidx, EnvironmentManager envmanager,List<string> except=null,bool notifyui=true)
+        public void PushCondition(int condidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
             var factors = except == null ? cond.Keys : cond.Keys.Except(except);
             foreach (var k in factors)
             {
-                envmanager.SetParam(k, cond[k][condidx],notifyui);
+                envmanager.SetParam(k, cond[k][condidx], notifyui);
             }
         }
 
-        public void SamplePushCondition(EnvironmentManager envmanager,List<string> except=null,bool notifyui=true)
+        public void SamplePushCondition(EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
-            PushCondition(SampleCondIndex(), envmanager,except,notifyui);
+            PushCondition(SampleCondIndex(), envmanager, except, notifyui);
         }
 
         public bool IsCondRepeat(int n)
@@ -271,18 +271,23 @@ namespace VLab
         public int condtestidx = -1;
         public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
         public Action<double> OnNotifyCondTestEnd;
+        public Action OnStartCondTest, OnClearCondTest;
         public int notifyidx = 0;
 
 
         public virtual void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0)
         {
             condtestidx++;
-            if (notifypercondtest > 0 && condtestidx > 0)
+            if (condtestidx > 0)
             {
-                if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
+                OnStartCondTest();
+                if (notifypercondtest > 0)
                 {
-                    NotifyCondTestAndEnd(notifyidx, notifyparam, starttime);
-                    notifyidx = condtestidx;
+                    if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
+                    {
+                        NotifyCondTestAndEnd(notifyidx, notifyparam, starttime);
+                        notifyidx = condtestidx;
+                    }
                 }
             }
         }
@@ -312,6 +317,7 @@ namespace VLab
             condtest.Clear();
             condtestidx = -1;
             notifyidx = 0;
+            OnClearCondTest();
         }
 
         public void Add(CONDTESTPARAM paramname, object paramvalue)

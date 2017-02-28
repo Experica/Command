@@ -21,10 +21,10 @@ EnvParam:
   ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 2.80313945
+  Ori@ENQuad@Quad: 90
   OriOffset@ENQuad@Quad: 22.5
   Diameter@ENQuad@Quad: 20
-  Size@ENQuad@Quad: (21, 2, 1)
+  Size@ENQuad@Quad: (1, 0.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   Sigma@ENQuad@Quad: 0.150000006
@@ -104,9 +104,7 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
 - Ori@ENQuad@Quad
-- Size@ENQuad@Quad
 - Position@ENQuad@Quad
-- Color@ENQuad@Quad
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05

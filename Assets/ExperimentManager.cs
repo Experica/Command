@@ -312,8 +312,11 @@ namespace VLab
             el.OnEndPauseExperiment = uicontroller.OnEndPauseExperiment;
             el.OnBeginResumeExperiment = uicontroller.OnBeginResumeExperiment;
             el.OnEndResumeExpeirment = uicontroller.OnEndResumeExpeirment;
+            el.OnConditionPrepared = uicontroller.condpanel.RefreshCondition;
             el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
+            el.condtestmanager.OnStartCondTest = uicontroller.ctpanel.StartCondTest;
+            el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
             el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
             el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
         }

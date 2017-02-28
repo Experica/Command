@@ -32,50 +32,78 @@ public class ConditionTestLogic : ExperimentLogic
 
     public override void Logic()
     {
-        switch (CondState)
+        switch (TrialState)
         {
-            case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false);
-                SetEnvActiveParam("Mark", OnOff.Off);
-                CondState = CONDSTATE.PREICI;
+            case TRIALSTATE.NONE:
+                TrialState = TRIALSTATE.PREITI;
                 break;
-            case CONDSTATE.PREICI:
-                if (PreICIHold >= ex.PreICI)
+            case TRIALSTATE.PREITI:
+                if (PreITIHold >= ex.PreITI)
                 {
-                    CondState = CONDSTATE.COND;
-                    SetEnvActiveParam("Visible", true);
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                        // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                        // marker params will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Mark", OnOff.On);
-                    }
+                    TrialState = TRIALSTATE.TRIAL;
                 }
                 break;
-            case CONDSTATE.COND:
-                if (CondHold >= ex.CondDur)
+            case TRIALSTATE.TRIAL:
+                switch (CondState)
                 {
-                    CondState = CONDSTATE.SUFICI;
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                    }
-                    else // ICI Mode
-                    {
+                    case CONDSTATE.NONE:
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
-                    }
+                        CondState = CONDSTATE.PREICI;
+                        break;
+                    case CONDSTATE.PREICI:
+                        if (PreICIHold >= ex.PreICI)
+                        {
+                            CondState = CONDSTATE.COND;
+                            SetEnvActiveParam("Visible", true);
+                            // None ICI Mode
+                            if (ex.PreICI == 0 && ex.SufICI == 0)
+                            {
+                                // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
+                                // marker params will take effect on screen.
+                                SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Mark", OnOff.On);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.COND:
+                        if (CondHold >= ex.CondDur)
+                        {
+                            CondState = CONDSTATE.SUFICI;
+                            // None ICI Mode
+                            if (ex.PreICI == 0 && ex.SufICI == 0)
+                            {
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Visible", false);
+                                SetEnvActiveParam("Mark", OnOff.Off);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.SUFICI:
+                        if (SufICIHold >= ex.SufICI)
+                        {
+                            if (TrialHold >= ex.TrialDur)
+                            {
+                                CondState = CONDSTATE.NONE;
+                                TrialState = TRIALSTATE.SUFITI;
+                            }
+                            else
+                            {
+                                CondState = CONDSTATE.PREICI;
+                            }
+                        }
+                        break;
                 }
                 break;
-            case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI)
+            case TRIALSTATE.SUFITI:
+                if (SufITIHold >= ex.SufITI)
                 {
-                    CondState = CONDSTATE.PREICI;
+                    TrialState = TRIALSTATE.PREITI;
                 }
                 break;
         }

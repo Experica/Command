@@ -11,7 +11,7 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (62.6, -30.3, -1E+03)
+  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -97,21 +97,10 @@ ExInheritParam:
 - TimerDriftSpeed
 - LaserPower
 - LaserFreq
-EnvInheritParam:
-- ScreenHalfHeight
-- ScreenToEye
-- SpatialFreq
-- TemporalFreq
-- Position
-- Diameter
-- MarkerSize
-- MarkerCorner
-- MarkOnColor
-- MarkOffColor
-- Marker
+EnvInheritParam: []
 Param:
   LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
-Latency: 186
-TimerDriftSpeed: 3.1220000000000003E-05
+Latency: 183
+TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

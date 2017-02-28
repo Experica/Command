@@ -30,18 +30,27 @@ namespace VLab
     public class ConditionPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public GameObject condcontent, inputprefab,headertextprefab;
+        public GameObject condcontent, condheadcontent, inputprefab, blueheadertextprefab, redheadertextprefab, textprefab;
+        public Canvas panel;
 
         public void OnConditionPanel(bool ison)
         {
             if (ison)
             {
                 uicontroller.exmanager.el.PrepareCondition();
-                CreateConditionUI();
             }
             else
             {
                 DestroyConditionUI();
+            }
+        }
+
+        public void RefreshCondition()
+        {
+            if (panel.enabled)
+            {
+                DestroyConditionUI();
+                CreateConditionUI();
             }
         }
 
@@ -52,53 +61,72 @@ namespace VLab
             var fn = cond.Keys.Count;
             if (fn > 0)
             {
-                var rn = cond.First().Value.Count + 1;
+                var rn = cond.First().Value.Count;
                 grid.constraintCount = rn;
-            }
-            foreach (var f in cond.Keys)
-            {
-                AddCondFactorLevels(f, cond[f], condcontent.transform);
-            }
+                AddCondIndex(rn);
 
-            UpdateViewRect();
+                foreach (var f in cond.Keys)
+                {
+                    AddCondFactorLevels(f, cond[f]);
+                }
+                UpdateViewRect(rn, fn + 1);
+            }
         }
 
-        public void UpdateViewRect()
+        public void UpdateViewRect(int rn,int cn)
         {
-            var np = condcontent.transform.childCount;
             var grid = condcontent.GetComponent<GridLayoutGroup>();
-            var rn = grid.constraintCount;
-            var cn = Mathf.Floor(np / rn);
             var rt = (RectTransform)condcontent.transform;
             rt.sizeDelta = new Vector2((grid.cellSize.x + grid.spacing.x) * cn, (grid.cellSize.y + grid.spacing.y) * rn);
         }
 
-        void AddCondFactorLevels(string name, List<object> value,Transform parent)
+        void AddCondIndex(int condn)
         {
-            var headertext = Instantiate(headertextprefab);
+            var headertext = Instantiate(redheadertextprefab);
+            headertext.name = "CondIndex";
+            headertext.GetComponentInChildren<Text>().text = "CondIndex";
+            headertext.transform.SetParent(condheadcontent.transform, false);
+
+            for (var i = 0; i < condn; i++)
+            {
+                var textvalue = Instantiate(textprefab);
+                textvalue.name = "CondIndex" + "_" + i;
+                textvalue.GetComponent<Text>().text = i.ToString();
+
+                textvalue.transform.SetParent(condcontent.transform, false);
+            }
+        }
+
+        void AddCondFactorLevels(string name, List<object> value)
+        {
+            var headertext = Instantiate(blueheadertextprefab);
             headertext.name = name;
             headertext.GetComponentInChildren<Text>().text = name;
-            headertext.transform.parent = parent;
-            headertext.transform.localScale = new Vector3(1, 1, 1);
+            headertext.transform.SetParent(condheadcontent.transform, false);
 
             for (var i = 0; i < value.Count; i++)
             {
                 var inputvalue = Instantiate(inputprefab);
-                inputvalue.name = name + "_" + (i+1).ToString();
-                var ivif = inputvalue.GetComponent<InputField>();
-                ivif.text = value[i].Convert<string>(); 
+                inputvalue.name = name + "_" + i;
+                inputvalue.GetComponent<InputField>().text = value[i].Convert<string>();
 
-                inputvalue.transform.SetParent(parent);
-                inputvalue.transform.localScale = new Vector3(1, 1, 1);
+                inputvalue.transform.SetParent(condcontent.transform, false);
             }
         }
 
         void DestroyConditionUI()
         {
+            for (var i = 0; i < condheadcontent.transform.childCount; i++)
+            {
+                Destroy(condheadcontent.transform.GetChild(i).gameObject);
+            }
             for (var i = 0; i < condcontent.transform.childCount; i++)
             {
                 Destroy(condcontent.transform.GetChild(i).gameObject);
             }
+            var rt = (RectTransform)condcontent.transform;
+            rt.sizeDelta = new Vector2();
+            rt.anchoredPosition = new Vector2();
         }
 
     }

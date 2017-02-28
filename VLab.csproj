@@ -140,6 +140,7 @@
     <Compile Include="Assets\Resources\UI\ResizeViewPanel.cs" />
     <Compile Include="Assets\Showroom.cs" />
     <Compile Include="Assets\UIController\ConditionPanel.cs" />
+    <Compile Include="Assets\UIController\ConditionTestPanel.cs" />
     <Compile Include="Assets\UIController\ConsolePanel.cs" />
     <Compile Include="Assets\UIController\ControlPanel.cs" />
     <Compile Include="Assets\UIController\EnvironmentPanel.cs" />

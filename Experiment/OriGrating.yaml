@@ -10,18 +10,18 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
   ScreenToEye@ENCamera@OrthoCamera: 34
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (59.5, -44.5, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 90
+  Ori@ENQuad@Quad: 135
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (2, 2, 1)
@@ -34,26 +34,26 @@ EnvParam:
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 90
+  Ori@ENGratingQuad@GratingQuad: 135
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 21.9127483
-  Size@ENGratingQuad@GratingQuad: (21.9, 21.9, 1)
+  Diameter@ENGratingQuad@GratingQuad: 1
+  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (-0.175, -9.07, 0)
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
-  Ori@ENImageQuad@ImageQuad: 90
+  Ori@ENImageQuad@ImageQuad: 135
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
@@ -111,3 +111,4 @@ Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: FULL
