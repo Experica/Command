@@ -32,17 +32,24 @@ namespace VLab
     public class ConditionManager
     {
         public Dictionary<string, List<object>> cond;
+        public Dictionary<string, List<object>> blockcond;
         public int nfactor;
         public int ncond;
-        public List<int> condsamplespace;
+        public Dictionary<int, Dictionary<int, int>> condsamplespacerepeat;
+        public Dictionary<int, int> blockrepeat;
         public Dictionary<int, int> condrepeat;
 
         public System.Random rng = new MersenneTwister();
-        public SampleMethod samplemethod = SampleMethod.Ascending;
+        public SampleMethod condsamplemethod = SampleMethod.Ascending;
+        public SampleMethod blocksamplemethod = SampleMethod.Ascending;
+        public List<int> blocksamplespace;
+        public List<List<int>> condsamplespaces;
         public int scendingstep = 1;
 
-        public int sampleidx = -1;
+        public int blockidx = -1;
         public int condidx = -1;
+        public int condsampleidx = -1;
+        public int blocksampleidx = -1; 
         public int nsampleignore = 0;
 
         public Dictionary<string, List<object>> ReadCondition(string path)
@@ -78,78 +85,198 @@ namespace VLab
             }
         }
 
-        public List<int> UpdateSampleSpace(SampleMethod samplemethod, bool resetcondrepeat = true)
+        public void UpdateSampleSpace(SampleMethod condsamplemethod, List<string> blockparams, SampleMethod blocksamplemethod)
         {
-            this.samplemethod = samplemethod;
-            return UpdateSampleSpace(resetcondrepeat);
+            this.condsamplemethod = condsamplemethod;
+            this.blocksamplemethod = blocksamplemethod;
+            if (ncond > 0)
+            {
+                var vbp = cond.Keys.Intersect(blockparams).ToList();
+                blockcond = null; int bcn = 0;
+                if (vbp.Count > 0)
+                {
+                    var bpfl = new Dictionary<string, List<object>>();
+                    foreach (var p in vbp)
+                    {
+                        bpfl[p] = cond[p].Distinct().ToList();
+                    }
+                    blockcond = bpfl.OrthoCondOfFactorLevel();
+                    bcn = blockcond.Values.First().Count;
+                }
+                condsamplespaces = new List<List<int>>();
+                condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
+                if (bcn < 2)
+                {
+                    condsamplespaces.Add(PrepareSampleSpace(ncond, condsamplemethod));
+                    ResetCondSampleSpace(0);
+                    blocksamplespace = new List<int> { 0 };
+                }
+                else
+                {
+                    for (var bci = bcn-1; bci >=0; bci--)
+                    {
+                        var l = Enumerable.Repeat(true, ncond).ToList();
+                        foreach (var f in blockcond.Keys)
+                        {
+                            var fl = blockcond[f][bci];
+                            l = cond[f].Select((v, i) => v == fl & l[i]).ToList();
+                        }
+                        var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
+                        if (space.Count > 0)
+                        {
+                            condsamplespaces.Add(PrepareSampleSpace(space, condsamplemethod));
+                            ResetCondSampleSpace(condsamplespaces.Count - 1);
+                        }
+                        else
+                        {
+                            foreach(var bp in blockcond.Keys)
+                            {
+                                blockcond[bp].RemoveAt(bci);
+                            }
+                        }
+                    }
+                    blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
+                }
+                ResetBlockRepeat();
+                ResetCondRepeat();
+                blocksampleidx = -1;
+                condsampleidx = -1;
+                blockidx = -1;
+                condidx = -1;
+            }
         }
 
-        public virtual List<int> UpdateSampleSpace(bool resetcondrepeat = true)
+        public List<int> PrepareSampleSpace(List<int> space,SampleMethod samplemethod)
+        {
+            switch (samplemethod)
+            {
+                case SampleMethod.Descending:
+                    space.Reverse();
+                    break;
+                case SampleMethod.UniformWithoutReplacement:
+                    space = rng.Shuffle(space);
+                    break;
+                default:
+                    break;
+            }
+            return space;
+        }
+
+        public List<int> PrepareSampleSpace(int spacesize, SampleMethod samplemethod)
+        {
+            switch (samplemethod)
+            {
+                case SampleMethod.Descending:
+                    return Enumerable.Range(0, spacesize).Reverse().ToList();
+                case SampleMethod.UniformWithoutReplacement:
+                    return rng.Permutation(spacesize);
+                default:
+                    return Enumerable.Range(0, spacesize).ToList();
+            }
+        }
+
+        public int SampleBlockSpace()
         {
             if (ncond > 0)
             {
-                switch (samplemethod)
-                {
-                    case SampleMethod.Descending:
-                        condsamplespace = Enumerable.Range(0, ncond).Reverse().ToList();
-                        sampleidx = -1;
-                        break;
-                    case SampleMethod.UniformWithoutReplacement:
-                        condsamplespace = rng.Sequence(ncond);
-                        sampleidx = -1;
-                        break;
-                    default:
-                        condsamplespace = Enumerable.Range(0, ncond).ToList();
-                        sampleidx = -1;
-                        break;
-                }
-                if (resetcondrepeat)
-                {
-                    ResetCondRepeat();
-                }
-            }
-            return condsamplespace;
-        }
-
-        public int SampleCondIndex()
-        {
-            if (nsampleignore == 0)
-            {
-                switch (samplemethod)
+                switch (blocksamplemethod)
                 {
                     case SampleMethod.Ascending:
                     case SampleMethod.Descending:
-                        sampleidx += scendingstep;
-                        if (sampleidx > condsamplespace.Count - 1)
+                        blocksampleidx += scendingstep;
+                        if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            sampleidx -= condsamplespace.Count;
+                            blocksampleidx -= blocksamplespace.Count;
                         }
-                        condidx = condsamplespace[sampleidx];
                         break;
                     case SampleMethod.UniformWithReplacement:
-                        sampleidx = rng.Next(condsamplespace.Count);
-                        condidx = condsamplespace[sampleidx];
+                        blocksampleidx = rng.Next(blocksamplespace.Count);
                         break;
                     case SampleMethod.UniformWithoutReplacement:
-                        if (sampleidx >= condsamplespace.Count - 1)
+                        blocksampleidx++;
+                        if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            UpdateSampleSpace(false);
+                            blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
+                            blocksampleidx -= blocksamplespace.Count;
                         }
-                        sampleidx++;
-                        condidx = condsamplespace[sampleidx];
                         break;
                 }
+                blockidx = blocksamplespace[blocksampleidx];
+                blockrepeat[blockidx] += 1;
+                ResetCondSampleSpace(blockidx);
+            }
+            return blockidx;
+        }
+
+        public int SampleCondSpace()
+        {
+            if (ncond > 0)
+            {
+                switch (condsamplemethod)
+                {
+                    case SampleMethod.Ascending:
+                    case SampleMethod.Descending:
+                        condsampleidx += scendingstep;
+                        if (condsampleidx > condsamplespaces[blockidx].Count - 1)
+                        {
+                            condsampleidx =0;
+                        } 
+                        break;
+                    case SampleMethod.UniformWithReplacement:
+                        condsampleidx = rng.Next(condsamplespaces[blockidx].Count);
+                        break;
+                    case SampleMethod.UniformWithoutReplacement:
+                        condsampleidx++;
+                        if (condsampleidx > condsamplespaces[blockidx].Count - 1)
+                        {
+                            condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx].Count, condsamplemethod);
+                            condsampleidx = 0;
+                        }
+                        break;
+                }
+                condidx = condsamplespaces[blockidx][condsampleidx];
+                condsamplespacerepeat[blockidx][condidx] += 1;
                 condrepeat[condidx] += 1;
             }
-            else
+            return condidx;
+        }
+
+        public int CondRepeatInBlock(int condrepeat,int blockrepeat)
+        {
+            return (int)Math.Ceiling((decimal)(Math.Max(0, condrepeat) / Math.Max(1, blockrepeat)));
+        }
+
+        public int SampleCondition(int condrepeat, int blockrepeat,bool isautosampleblock=true)
+        {
+            if (ncond > 0)
             {
-                nsampleignore--;
+                if (nsampleignore == 0)
+                {
+                    if (isautosampleblock)
+                    {
+                        if (blockidx < 0)
+                        {
+                            SampleBlockSpace();
+                        }
+                        if (IsCondSampleSpaceRepeat(CondRepeatInBlock(condrepeat,blockrepeat), blockidx))
+                        {
+                            SampleBlockSpace();
+                        }
+                    }
+                    SampleCondSpace();
+                }
+                else
+                {
+                    nsampleignore--;
+                }
             }
             return condidx;
         }
 
         public void PushCondition(int condidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
+            if (condidx < 0) return;
+            if (cond == null) return;
             var factors = except == null ? cond.Keys : cond.Keys.Except(except);
             foreach (var k in factors)
             {
@@ -157,29 +284,100 @@ namespace VLab
             }
         }
 
-        public void SamplePushCondition(EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
+        public void PushBlock(int blockidx,EnvironmentManager envmanager,List<string> except = null,bool notifyui=true)
         {
-            PushCondition(SampleCondIndex(), envmanager, except, notifyui);
+            if (blockidx < 0) return;
+            if (blockcond == null) return;
+            var factors = except == null ? blockcond.Keys : blockcond.Keys.Except(except);
+            foreach (var k in factors)
+            {
+                envmanager.SetParam(k, blockcond[k][blockidx], notifyui);
+            }
         }
 
-        public bool IsCondRepeat(int n)
+        public bool IsCondSampleSpaceRepeat(int n, int blockidx)
         {
-            foreach (var i in condrepeat.Values)
+            foreach(var c in condsamplespaces[blockidx])
             {
-                if (i < n)
+                if(!condsamplespacerepeat[blockidx].ContainsKey(c))
                 {
                     return false;
+                }
+                else
+                {
+                    if(condsamplespacerepeat[blockidx][c]<n)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
         }
 
+        public bool IsCondRepeat(int n)
+        {
+            for(var i=0;i<ncond;i++)
+            {
+                if(!condrepeat.ContainsKey(i))
+                {
+                    return false;
+                }
+                else
+                {
+                    if(condrepeat[i]<n)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool IsBlockRepeat(int n)
+        {
+            for (var i = 0; i < condsamplespaces.Count; i++)
+            {
+                if (!blockrepeat.ContainsKey(i))
+                {
+                    return false;
+                }
+                else
+                {
+                    if (blockrepeat[i] < n)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void ResetCondSampleSpace(int blockidx)
+        {
+            var samplespacerepeat = new Dictionary<int, int>();
+            foreach (var i in condsamplespaces[blockidx])
+            {
+                samplespacerepeat[i] = 0;
+            }
+            condsamplespacerepeat[blockidx] = samplespacerepeat;
+            condsampleidx = -1;
+        }
+
         public void ResetCondRepeat()
         {
             condrepeat = new Dictionary<int, int>();
-            foreach (var i in condsamplespace)
+            for(var i=0;i<ncond;i++)
             {
                 condrepeat[i] = 0;
+            }
+        }
+
+        public void ResetBlockRepeat()
+        {
+            blockrepeat = new Dictionary<int, int>();
+            foreach(var i in blocksamplespace)
+            {
+                blockrepeat[i] = 0;
             }
         }
     }

@@ -30,7 +30,8 @@ namespace VLab
     public class ConditionPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public GameObject condcontent, condheadcontent, inputprefab, blueheadertextprefab, redheadertextprefab, textprefab;
+        public GameObject condcontent, condheadcontent, inputprefab,
+            blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;
 
         public void OnConditionPanel(bool ison)
@@ -64,6 +65,11 @@ namespace VLab
                 var rn = cond.First().Value.Count;
                 grid.constraintCount = rn;
                 AddCondIndex(rn);
+                
+                if(uicontroller.exmanager.el.condmanager.condsamplespaces.Count>1)
+                {
+                    AddBlockIndex(rn);
+                }
 
                 foreach (var f in cond.Keys)
                 {
@@ -93,6 +99,29 @@ namespace VLab
                 textvalue.name = "CondIndex" + "_" + i;
                 textvalue.GetComponent<Text>().text = i.ToString();
 
+                textvalue.transform.SetParent(condcontent.transform, false);
+            }
+        }
+
+        void AddBlockIndex(int condn)
+        {
+            var headertext = Instantiate(greenheadertextprefab);
+            headertext.name = "BlockIndex";
+            headertext.GetComponentInChildren<Text>().text = "BlockIndex";
+            headertext.transform.SetParent(condheadcontent.transform, false);
+
+            var condsamplesapces = uicontroller.exmanager.el.condmanager.condsamplespaces;
+            for (var i = 0; i < condn; i++)
+            {
+                var textvalue = Instantiate(textprefab);
+                for(var j=0;j<condsamplesapces.Count;j++)
+                {
+                    if(condsamplesapces[j].Contains(i))
+                    {
+                        textvalue.name = "BlockIndex" + "_" + j;
+                        textvalue.GetComponent<Text>().text = j.ToString();
+                    }
+                }
                 textvalue.transform.SetParent(condcontent.transform, false);
             }
         }

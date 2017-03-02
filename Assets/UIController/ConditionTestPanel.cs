@@ -31,9 +31,10 @@ namespace VLab
     public class ConditionTestPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public GameObject ctcontent, ctheadcontent, blueheadertextprefab, redheadertextprefab, yellowheadertextprefab, textprefab;
+        public GameObject ctcontent, ctheadcontent, blueheadertextprefab, redheadertextprefab,
+            yellowheadertextprefab, greenheadertextprefab, textprefab;
         GridLayoutGroup grid; float ctcontentheight, textheight;
-        Text cti, ci, cr;
+        Text cti, ci, cr,bi,br;
 
         void Start()
         {
@@ -52,13 +53,25 @@ namespace VLab
             buleheadertext.GetComponentInChildren<Text>().text = "CondRepeat";
             buleheadertext.transform.SetParent(ctheadcontent.transform, false);
 
+            var greenheadertext = Instantiate(greenheadertextprefab);
+            greenheadertext.name = "BlockIndex";
+            greenheadertext.GetComponentInChildren<Text>().text = "BlockIndex";
+            greenheadertext.transform.SetParent(ctheadcontent.transform, false);
+
+            buleheadertext = Instantiate(blueheadertextprefab);
+            buleheadertext.name = "BlockRepeat";
+            buleheadertext.GetComponentInChildren<Text>().text = "BlockRepeat";
+            buleheadertext.transform.SetParent(ctheadcontent.transform, false);
+
             grid = ctcontent.GetComponent<GridLayoutGroup>();
-            grid.constraintCount = 3;
+            grid.constraintCount = 5;
             ctcontentheight = (ctcontent.transform.parent as RectTransform).rect.height;
 
             cti = AddText("");
             ci = AddText("");
             cr = AddText("");
+            bi = AddText("");
+            br = AddText("");
             textheight = cti.fontSize+3;
         }
 
@@ -72,7 +85,7 @@ namespace VLab
                     cti.text = cti.text + (ctm.condtestidx - 1).ToString() + "\n";
                     ci.text = ci.text + ctm.condtest[CONDTESTPARAM.CondIndex].Last().ToString() + "\n";
                     cr.text = cr.text + ctm.condtest[CONDTESTPARAM.CondRepeat].Last().ToString() + "\n";
-
+                    
                     UpdateViewRect(ctm.condtestidx);
                     return;
                 case CONDTESTSHOWLEVEL.SHORT:
@@ -97,6 +110,8 @@ namespace VLab
             cti.text = "";
             ci.text = "";
             cr.text = "";
+            bi.text = "";
+            br.text = "";
             var rt = (RectTransform)ctcontent.transform;
             grid.cellSize = ctheadcontent.GetComponent<GridLayoutGroup>().cellSize;
             rt.sizeDelta = new Vector2((grid.cellSize.x + grid.spacing.x) * grid.constraintCount, grid.cellSize.y + grid.spacing.y);

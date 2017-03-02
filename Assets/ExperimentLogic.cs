@@ -276,14 +276,22 @@ namespace VLab
                     condmanager.TrimCondition(cond);
                 }
             }
-            ex.Cond = condmanager.cond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, true);
-            OnConditionPrepared();
+            if (condmanager.ncond>0)
+            {
+                ex.Cond = condmanager.cond;
+                condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+                OnConditionPrepared();
+            }
         }
 
-        public virtual void SamplePushCondition()
+        public virtual void SamplePushCondition(bool isautosampleblock=true)
         {
-            condmanager.SamplePushCondition(envmanager);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat,ex.BlockRepeat,isautosampleblock),envmanager);
+        }
+
+        public virtual void SamplePushBlock()
+        {
+            condmanager.PushBlock(condmanager.SampleBlockSpace(), envmanager);
         }
 
         public virtual string DataPath()

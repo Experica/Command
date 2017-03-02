@@ -288,15 +288,15 @@ namespace VLab
             return System.Convert.ChangeType(value, CT);
         }
 
-        public static List<int> Sequence(this System.Random rng, int maxvalue)
+        public static List<int> Permutation(this System.Random rng, int maxexclusive)
         {
-            var seq = Enumerable.Repeat(-1, maxvalue).ToList();
+            var seq = Enumerable.Repeat(-1, maxexclusive).ToList();
             int i, j;
-            for (i = 0; i < maxvalue; i++)
+            for (i = 0; i < maxexclusive; i++)
             {
                 do
                 {
-                    j = rng.Next(maxvalue);
+                    j = rng.Next(maxexclusive);
                 }
                 while (seq[j] >= 0);
                 seq[j] = i;
@@ -304,8 +304,11 @@ namespace VLab
             return seq;
         }
 
+        public static List<T> Shuffle<T>(this System.Random rng, List<T> seq)
+        {
+            return rng.Permutation(seq.Count).Select(i => seq[i]).ToList();
+        }
         
-
         public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond,Dictionary<string,Param> param)
         {
             return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
@@ -409,7 +412,6 @@ namespace VLab
             return conddesign;
         }
 #endif
-
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
         {
             foreach (var f in fsls.Keys.ToArray())

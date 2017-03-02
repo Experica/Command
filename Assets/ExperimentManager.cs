@@ -103,6 +103,10 @@ namespace VLab
             {
                 ex.Param = new Dictionary<string, Param>();
             }
+            if(ex.BlockParam==null)
+            {
+                ex.BlockParam = new List<string>();
+            }
             if (ex.EnvParam == null)
             {
                 ex.EnvParam = new Dictionary<string, object>();

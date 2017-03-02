@@ -97,7 +97,8 @@ public class RippleLaserCTLogic : ExperimentLogic
 
         condmanager.TrimCondition(fcond);
         ex.Cond = condmanager.cond;
-        condmanager.UpdateSampleSpace(ex.CondSampling, true);
+        condmanager.UpdateSampleSpace(ex.CondSampling,ex.BlockParam,ex.BlockSampling);
+        OnConditionPrepared();
     }
 
     protected override void StartExperiment()
@@ -124,9 +125,10 @@ public class RippleLaserCTLogic : ExperimentLogic
         pport.BitPulse(3, 400);
     }
 
-    public override void SamplePushCondition()
+    public override void SamplePushCondition(bool isautosampleblock = true)
     {
-        condmanager.SamplePushCondition(envmanager, condpushexcept);
+        base.SamplePushCondition(isautosampleblock);
+        //condmanager.SamplePushCondition(envmanager,ex.CondRepeat,ex.BlockRepeat, condpushexcept);
         power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();
         luxx473.PowerRatio = power;
         mambo594.PowerRatio = power;

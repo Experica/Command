@@ -89,9 +89,12 @@ namespace VLab
         public string DataDir { get; set; }
         public string DataPath { get; set; }
         public SampleMethod CondSampling { get; set; }
+        public SampleMethod BlockSampling { get; set; }
         public int CondRepeat { get; set; }
+        public int BlockRepeat { get; set; }
+        public List<string> BlockParam { get; set; }
         public InputMethod Input { get; set; }
-
+        
         public double PreICI { get; set; }
         public double CondDur { get; set; }
         public double SufICI { get; set; }
