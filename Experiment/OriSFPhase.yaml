@@ -11,17 +11,17 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
   MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
-  BGColor@ENCamera@OrthoCamera: (0, 0, 0, 0)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 75
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (2, 2, 1)
@@ -33,27 +33,27 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
   TemporalFreq@ENGratingQuad@GratingQuad: 0
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
+  SpatialPhase@ENGratingQuad@GratingQuad: 0.5
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 75
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: (20, 20, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
+  MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0
-  Visible@ENGratingQuad@GratingQuad: true
+  Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
-  Ori@ENImageQuad@ImageQuad: 0
+  Ori@ENImageQuad@ImageQuad: 75
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
@@ -63,14 +63,17 @@ EnvParam:
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
-CondPath: OriSFPhase.yaml
+CondPath: C:\Users\LyonLab\VLab\Condition\OriSFPhase.yaml
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
-CondRepeat: 50
-BlockParam: []
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 2
+BlockRepeat: 2
+BlockParam:
+- Ori
 CondDur: 100
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -103,6 +106,8 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
 - Position@ENImageQuad@ImageQuad
+- Position@ENGratingQuad@GratingQuad
+- Diameter@ENGratingQuad@GratingQuad
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05

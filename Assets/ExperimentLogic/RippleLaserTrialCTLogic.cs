@@ -1,5 +1,5 @@
 ﻿/*
-RippleLaserCTLogic.cs is part of the VLAB project.
+RippleLaserTrialCTLogic.cs is part of the VLAB project.
 Copyright (c) 2017 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-public class RippleLaserCTLogic : ExperimentLogic
+public class RippleLaserTrialCTLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
     ParallelPortSquareWave ppsw;
@@ -37,6 +37,7 @@ public class RippleLaserCTLogic : ExperimentLogic
     Cobolt mambo594;
     float power;
     int ICIFactor = 5;
+    int ITIFactor = 5;
     List<string> condpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
 
     public override void OnStart()
@@ -101,7 +102,7 @@ public class RippleLaserCTLogic : ExperimentLogic
 
         condmanager.TrimCondition(fcond);
         ex.Cond = condmanager.cond;
-        condmanager.UpdateSampleSpace(ex.CondSampling,ex.BlockParam,ex.BlockSampling);
+        condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
         OnConditionPrepared();
     }
 
@@ -136,69 +137,113 @@ public class RippleLaserCTLogic : ExperimentLogic
 
     public override void SamplePushCondition(bool isautosampleblock = true)
     {
-        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock),
+        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, false),
             envmanager, condpushexcept);
-        power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();
-        luxx473.PowerRatio = power;
-        mambo594.PowerRatio = power;
     }
 
     public override void Logic()
     {
-        switch (CondState)
+        switch (TrialState)
         {
-            case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false);
-                SetEnvActiveParam("Mark", OnOff.Off);
-                CondState = CONDSTATE.PREICI;
-                break;
-            case CONDSTATE.PREICI:
-                if (PreICIHold >= ex.PreICI)
+            case TRIALSTATE.NONE:
+                TrialState = TRIALSTATE.PREITI;
+                if(condmanager.blockidx==-1)
                 {
-                    CondState = CONDSTATE.COND;
-                    SetEnvActiveParam("Visible", true);
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                        // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                        // marker params will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Mark", OnOff.On);
-                    }
+                    condmanager.SampleBlockSpace();
+                }
+                power = condmanager.blockcond["LaserPower"][condmanager.blockidx].Convert<float>();
+                luxx473.PowerRatio = power;
+                mambo594.PowerRatio = power;
+                break;
+            case TRIALSTATE.PREITI:
+                if (PreITIHold >= ex.PreITI)
+                {
+                    TrialState = TRIALSTATE.TRIAL;
                     if (power > 0)
                     {
                         ppsw.bitlatency[ppbit] = ex.Latency;
-                        ppsw.bitfreq[ppbit] = condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>();
+                        ppsw.bitfreq[ppbit] = condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>();
                         ppsw.Start(ppbit);
                     }
                 }
                 break;
-            case CONDSTATE.COND:
-                if (CondHold >= ex.CondDur)
+            case TRIALSTATE.TRIAL:
+                switch (CondState)
                 {
-                    CondState = CONDSTATE.SUFICI;
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                    }
-                    else // ICI Mode
-                    {
+                    case CONDSTATE.NONE:
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
-                    }
-                    if (power > 0)
-                    {
-                        ppsw.Stop(ppbit);
-                    }
+                        CondState = CONDSTATE.PREICI;
+                        break;
+                    case CONDSTATE.PREICI:
+                        if (PreICIHold >= ex.PreICI)
+                        {
+                            CondState = CONDSTATE.COND;
+                            SetEnvActiveParam("Visible", true);
+                            // None ICI Mode
+                            if (ex.PreICI == 0 && ex.SufICI == 0)
+                            {
+                                // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
+                                // marker params will take effect on screen.
+                                SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Mark", OnOff.On);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.COND:
+                        if (CondHold >= ex.CondDur)
+                        {
+                            CondState = CONDSTATE.SUFICI;
+                            // None ICI Mode
+                            if (ex.PreICI == 0 && ex.SufICI == 0)
+                            {
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Visible", false);
+                                SetEnvActiveParam("Mark", OnOff.Off);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.SUFICI:
+                        if (SufICIHold >= ex.SufICI * (1 + power * ICIFactor))
+                        {
+                            if (TrialHold >= ex.TrialDur )
+                            {
+                                CondState = CONDSTATE.NONE;
+                                SetEnvActiveParam("Visible", false);
+                                TrialState = TRIALSTATE.SUFITI;
+                                if (power > 0)
+                                {
+                                    ppsw.Stop(ppbit);
+                                }
+                            }
+                            else if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
+                            {
+                                CondState = CONDSTATE.NONE;
+                                SetEnvActiveParam("Visible", false);
+                                TrialState = TRIALSTATE.SUFITI;
+                                if (power > 0)
+                                {
+                                    ppsw.Stop(ppbit);
+                                }
+                                condmanager.SampleBlockSpace();
+                            }
+                            else
+                            {
+                                CondState = CONDSTATE.PREICI;
+                            }
+                        }
+                        break;
                 }
                 break;
-            case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI * (1 + power * ICIFactor))
+            case TRIALSTATE.SUFITI:
+                if (SufITIHold >= ex.SufITI * (1 + power * ITIFactor))
                 {
-                    CondState = CONDSTATE.PREICI;
+                    TrialState = TRIALSTATE.NONE;
                 }
                 break;
         }

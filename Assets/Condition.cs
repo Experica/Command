@@ -92,7 +92,8 @@ namespace VLab
             if (ncond > 0)
             {
                 var vbp = cond.Keys.Intersect(blockparams).ToList();
-                blockcond = null; int bcn = 0;
+                blockcond = new Dictionary<string, List<object>>();
+                Dictionary<string, List<object>>  blockcondfull = null; int bcn = 0;
                 if (vbp.Count > 0)
                 {
                     var bpfl = new Dictionary<string, List<object>>();
@@ -100,8 +101,8 @@ namespace VLab
                     {
                         bpfl[p] = cond[p].Distinct().ToList();
                     }
-                    blockcond = bpfl.OrthoCondOfFactorLevel();
-                    bcn = blockcond.Values.First().Count;
+                    blockcondfull = bpfl.OrthoCondOfFactorLevel();
+                    bcn = blockcondfull.Values.First().Count;
                 }
                 condsamplespaces = new List<List<int>>();
                 condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
@@ -113,25 +114,27 @@ namespace VLab
                 }
                 else
                 {
-                    for (var bci = bcn-1; bci >=0; bci--)
+                    foreach (var bp in blockcondfull.Keys)
+                    {
+                        blockcond[bp] = new List<object>();
+                    }
+                    for (var bci = 0; bci <bcn; bci++)
                     {
                         var l = Enumerable.Repeat(true, ncond).ToList();
-                        foreach (var f in blockcond.Keys)
+                        foreach (var f in blockcondfull.Keys)
                         {
-                            var fl = blockcond[f][bci];
-                            l = cond[f].Select((v, i) => v == fl & l[i]).ToList();
+                            var fl = blockcondfull[f][bci];
+                            l = cond[f].Select((v, i) => Equals(v,fl)&l[i] ).ToList();
                         }
                         var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
                         if (space.Count > 0)
                         {
                             condsamplespaces.Add(PrepareSampleSpace(space, condsamplemethod));
                             ResetCondSampleSpace(condsamplespaces.Count - 1);
-                        }
-                        else
-                        {
-                            foreach(var bp in blockcond.Keys)
+                            foreach (var bp in blockcondfull.Keys)
                             {
-                                blockcond[bp].RemoveAt(bci);
+
+                                blockcond[bp].Add(blockcondfull[bp][ bci]);
                             }
                         }
                     }
@@ -196,7 +199,7 @@ namespace VLab
                         blocksampleidx++;
                         if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
+                            blocksamplespace = PrepareSampleSpace(blocksamplespace.Count, blocksamplemethod);
                             blocksampleidx -= blocksamplespace.Count;
                         }
                         break;
@@ -229,7 +232,7 @@ namespace VLab
                         condsampleidx++;
                         if (condsampleidx > condsamplespaces[blockidx].Count - 1)
                         {
-                            condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx].Count, condsamplemethod);
+                            condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx], condsamplemethod);
                             condsampleidx = 0;
                         }
                         break;
@@ -252,13 +255,13 @@ namespace VLab
             {
                 if (nsampleignore == 0)
                 {
+                    if (blockidx < 0)
+                    {
+                        SampleBlockSpace();
+                    }
                     if (isautosampleblock)
                     {
-                        if (blockidx < 0)
-                        {
-                            SampleBlockSpace();
-                        }
-                        if (IsCondSampleSpaceRepeat(CondRepeatInBlock(condrepeat,blockrepeat), blockidx))
+                        if (IsCondRepeatInBlock(condrepeat,blockrepeat))
                         {
                             SampleBlockSpace();
                         }
@@ -293,6 +296,11 @@ namespace VLab
             {
                 envmanager.SetParam(k, blockcond[k][blockidx], notifyui);
             }
+        }
+
+        public bool IsCondRepeatInBlock(int condrepeat,int blockrepeat)
+        {
+            return IsCondSampleSpaceRepeat(CondRepeatInBlock(condrepeat, blockrepeat),blockidx);
         }
 
         public bool IsCondSampleSpaceRepeat(int n, int blockidx)
@@ -466,6 +474,7 @@ namespace VLab
     public class CondTestManager
     {
         public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
+        public Dictionary<CONDTESTPARAM, List<object>> trialtest = new Dictionary<CONDTESTPARAM, List<object>>();
         public int condtestidx = -1;
         public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
         public Action<double> OnNotifyCondTestEnd;
@@ -518,7 +527,7 @@ namespace VLab
             OnClearCondTest();
         }
 
-        public void Add(CONDTESTPARAM paramname, object paramvalue)
+        public void AddToCondTest(CONDTESTPARAM paramname, object paramvalue)
         {
             if (condtest.ContainsKey(paramname))
             {
@@ -541,8 +550,9 @@ namespace VLab
             }
         }
 
-        public void AddEvent(CONDTESTPARAM paramname, string eventname, double timestamp)
+        public void AddEventToCondTest(CONDTESTPARAM paramname, string eventname, double timestamp)
         {
+            if (condtestidx == -1) return;
             if (condtest.ContainsKey(paramname))
             {
                 var vs = condtest[paramname];

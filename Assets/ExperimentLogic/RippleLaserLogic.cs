@@ -28,6 +28,10 @@ public class RippleLaserLogic : ExperimentLogic
 {
     ParallelPort pport = new ParallelPort(0xC010);
     ParallelPortSquareWave ppsw;
+    int notifylatency = 200;
+    int exlatencyerror = 20;
+    int onlinesignallatency = 50;
+
     int ppbit = 0;
     Omicron luxx473;
     Cobolt mambo594;
@@ -66,7 +70,8 @@ public class RippleLaserLogic : ExperimentLogic
 
         base.StartExperiment();
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
-        pport.BitPulse(2, 100);
+        timer.Countdown(notifylatency);
+        pport.BitPulse(bit: 2, duration_ms: 5);
         timer.Restart();
     }
 
@@ -78,13 +83,14 @@ public class RippleLaserLogic : ExperimentLogic
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        pport.BitPulse(3, 400);
+        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        pport.BitPulse(bit: 3, duration_ms: 5);
+        timer.Stop();
     }
 
     public override void SamplePushCondition(bool isautosampleblock = true)
     {
-        base.SamplePushCondition(isautosampleblock);
-        condmanager.SampleCondition(ex.CondRepeat,ex.BlockRepeat);
+        condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock);
         power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();
         luxx473.PowerRatio = power;
         mambo594.PowerRatio = power;
