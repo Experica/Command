@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
+  MarkerPosition@ENMarker@Marker: (60.9, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
   MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -51,8 +51,9 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 2
+  Image@ENImageQuad@ImageQuad: 5
   ImageDir@ENImageQuad@ImageQuad: SampleImage
+  IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 20
@@ -70,13 +71,13 @@ RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 50
+CondRepeat: 30
 BlockRepeat: 1
 BlockParam: []
-CondDur: 100
+CondDur: 50
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 2
+NotifyPerCondTest: 8
 NotifyParam:
 - CondIndex
 - CONDSTATE

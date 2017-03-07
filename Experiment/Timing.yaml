@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
   MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -69,6 +69,8 @@ RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondRepeat: 600
+BlockRepeat: 1
+BlockParam: []
 PreICI: 100
 CondDur: 300
 SufICI: 100
@@ -106,3 +108,4 @@ Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: SHORT

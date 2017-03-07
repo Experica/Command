@@ -57,6 +57,27 @@ namespace VLab
         }
     }
 
+    public class MethodAccess
+    {
+        MethodInvoker m;
+        public MethodInvoker Call { get { return m; } }
+
+        string n;
+        public string Name { get { return n; } }
+
+        public MethodAccess(string n,MethodInvoker m)
+        {
+            this.n = n;
+            this.m = m;
+        }
+
+        public MethodAccess(Type reflectedtype,string methodname)
+        {
+            n = methodname;
+            var minfo = reflectedtype.GetMethod(methodname);
+            m= reflectedtype.DelegateForCallMethod(methodname, minfo.GetParameters().Select(i => i.ParameterType).ToArray());
+        }
+    }
     
     /// <summary>
     /// Holds all information that define an experiment

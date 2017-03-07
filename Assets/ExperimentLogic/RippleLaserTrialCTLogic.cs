@@ -150,6 +150,8 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                 if(condmanager.blockidx==-1)
                 {
                     condmanager.SampleBlockSpace();
+                    var imageidx=condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
+                    envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
                 }
                 power = condmanager.blockcond["LaserPower"][condmanager.blockidx].Convert<float>();
                 luxx473.PowerRatio = power;
@@ -231,6 +233,8 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                                     ppsw.Stop(ppbit);
                                 }
                                 condmanager.SampleBlockSpace();
+                                var imageidx = condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
+                                envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
                             }
                             else
                             {

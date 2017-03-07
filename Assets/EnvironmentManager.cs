@@ -37,6 +37,7 @@ namespace VLab
         public Dictionary<string, GameObject> sceneobj = new Dictionary<string, GameObject>();
         public Dictionary<string, NetworkBehaviour> sceneobj_net = new Dictionary<string, NetworkBehaviour>();
         public Dictionary<string, PropertyAccess> net_syncvar = new Dictionary<string, PropertyAccess>();
+        public Dictionary<string, MethodAccess> net_clientrpc = new Dictionary<string, MethodAccess>();
 
         public List<string> activenet = new List<string>();
 
@@ -51,6 +52,7 @@ namespace VLab
             sceneobj.Clear();
             sceneobj_net.Clear();
             net_syncvar.Clear();
+            net_clientrpc.Clear();
             activenet.Clear();
             maincamera = null;
             foreach (var go in scene.GetRootGameObjects())
@@ -93,6 +95,48 @@ namespace VLab
                     net_syncvar[f.Name + "@" + nbname] = new PropertyAccess(nbtype, "Network" + f.Name);
                 }
             }
+            foreach(var m in nbtype.GetMethods())
+            {
+                if(m.Name.IndexOf("CallRpc")==0)
+                {
+                    net_clientrpc[m.Name.Substring(4) + "@" + nbname] = new MethodAccess(nbtype, m.Name);
+                }
+            }
+        }
+
+        public object Invoke(string name, object[] param, bool notifyui = false)
+        {
+            object r = null;
+            var atidx = name.IndexOf('@');
+            if (atidx > 0)
+            {
+                if (net_clientrpc.ContainsKey(name))
+                {
+                    r=Invoke(sceneobj_net[name.Substring(atidx + 1)], net_clientrpc[name], param, name, notifyui);
+                }
+            }
+            else
+            {
+                foreach (var sn in sceneobj_net.Keys.ToList())
+                {
+                    var pname = name + "@" + sn;
+                    if (net_clientrpc.ContainsKey(pname))
+                    {
+                        r=Invoke(sceneobj_net[sn], net_clientrpc[pname], param, pname, notifyui);
+                    }
+                }
+            }
+            return r;
+        }
+
+        public object Invoke(NetworkBehaviour nb, MethodAccess m, object[] param, string fullname = "", bool notifyui = false)
+        {
+            object r = m.Call(nb, param);            
+            if (notifyui && OnNotifyUI != null)
+            {
+                OnNotifyUI(fullname, r);
+            }
+            return r;
         }
 
         public void SetParams(Dictionary<string, object> envparam)

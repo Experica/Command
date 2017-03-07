@@ -12,13 +12,13 @@ EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  ScreenToEye@ENCamera@OrthoCamera: 34
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -69,7 +69,10 @@ RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
 CondRepeat: 10
+BlockRepeat: 1
+BlockParam: []
 PreICI: 500
 CondDur: 500
 SufICI: 500
@@ -95,10 +98,18 @@ ExInheritParam:
 - Latency
 - Delay
 - TimerDriftSpeed
-EnvInheritParam: []
+EnvInheritParam:
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
 Param:
   LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: FULL

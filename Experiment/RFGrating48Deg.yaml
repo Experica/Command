@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
   MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 90
@@ -30,7 +30,7 @@ EnvParam:
   Sigma@ENQuad@Quad: 0
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (-24, 12, 0)
+  PositionOffset@ENQuad@Quad: (6, 18, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
@@ -41,7 +41,7 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 90
+  Ori@ENGratingQuad@GratingQuad: 15
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 12
   Size@ENGratingQuad@GratingQuad: (12, 12, 1)
@@ -49,8 +49,8 @@ EnvParam:
   MaskType@ENGratingQuad@GratingQuad: Disk
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (-24, 12, 0)
+  Position@ENGratingQuad@GratingQuad: (1.14, 18.9, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
   ImageDir@ENImageQuad@ImageQuad: SampleImage
   Ori@ENImageQuad@ImageQuad: 90
@@ -62,14 +62,17 @@ EnvParam:
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (-24, 12, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (6, 18, 0)
 CondPath: Condition\PositionOffset48Deg6DegStep.yaml
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
 CondRepeat: 12
+BlockRepeat: 1
+BlockParam: []
 PreICI: 50
 CondDur: 300
 SufICI: 50
@@ -95,8 +98,20 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
-EnvInheritParam: []
+EnvInheritParam:
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
+- SpatialFreq@ENGratingQuad@GratingQuad
+- TemporalFreq@ENGratingQuad@GratingQuad
+- Ori@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30
+CondTestShowLevel: SHORT

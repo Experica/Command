@@ -388,6 +388,9 @@ namespace VLab
                 blockrepeat[i] = 0;
             }
         }
+
+        public List<int> CurrentCondSampleSpace
+        { get { return condsamplespaces[blockidx]; } }
     }
 
     public enum FactorLevelDesignMethod

@@ -21,7 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace VLab
 {
@@ -31,6 +31,20 @@ namespace VLab
         public string Image="0";
         [SyncVar(hook ="onimagedir")]
         public string ImageDir = "SampleImage";
+        [SyncVar]
+        public bool IsCacheImage = false;
+        private Dictionary<string, Texture2D> imagecache=new Dictionary<string, Texture2D>();
+
+        [ClientRpc]
+        void RpcPreLoadImage(string[] iidx)
+        {
+            imagecache.Clear();
+            Resources.UnloadUnusedAssets();
+            foreach (var i in iidx)
+            {
+                imagecache[i]= Resources.Load<Texture2D>(ImageDir + "/" + i);
+            }
+        }
 
         void onimage(string i)
         {
@@ -38,9 +52,21 @@ namespace VLab
         }
         public virtual void OnImage(string i)
         {
-            Resources.UnloadUnusedAssets();
-            renderer.material.SetTexture("img", Resources.Load<Texture2D>(ImageDir+"/" + i));
             Image = i;
+            if (imagecache.ContainsKey(i))
+            {
+                renderer.material.SetTexture("img", imagecache[i]);
+            }
+            else
+            {
+                Resources.UnloadUnusedAssets();
+                var img = Resources.Load<Texture2D>(ImageDir + "/" + i);
+                renderer.material.SetTexture("img", img);
+                if (IsCacheImage)
+                {
+                    imagecache[i] = img;
+                }
+            }
         }
 
         void onimagedir(string idir)
