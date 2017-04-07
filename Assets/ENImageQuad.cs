@@ -28,9 +28,9 @@ namespace VLab
     public class ENImageQuad : ENQuad
     {
         [SyncVar(hook ="onimage")]
-        public string Image="0";
-        [SyncVar(hook ="onimagedir")]
-        public string ImageDir = "SampleImage";
+        public string Image="1";
+        [SyncVar(hook ="onimageset")]
+        public string ImageSet = "ExampleImageSet";
         [SyncVar]
         public bool IsCacheImage = false;
         private Dictionary<string, Texture2D> imagecache=new Dictionary<string, Texture2D>();
@@ -42,7 +42,7 @@ namespace VLab
             Resources.UnloadUnusedAssets();
             foreach (var i in iidx)
             {
-                imagecache[i]= Resources.Load<Texture2D>(ImageDir + "/" + i);
+                imagecache[i]= Resources.Load<Texture2D>(ImageSet + "/" + i);
             }
         }
 
@@ -59,8 +59,7 @@ namespace VLab
             }
             else
             {
-                Resources.UnloadUnusedAssets();
-                var img = Resources.Load<Texture2D>(ImageDir + "/" + i);
+                var img = Resources.Load<Texture2D>(ImageSet + "/" + i);
                 renderer.material.SetTexture("img", img);
                 if (IsCacheImage)
                 {
@@ -69,14 +68,18 @@ namespace VLab
             }
         }
 
-        void onimagedir(string idir)
+        void onimageset(string iset)
         {
-            OnImageDir(idir);
+            OnImageSet(iset);
         }
-        public virtual void OnImageDir(string idir)
+        public virtual void OnImageSet(string iset)
         {
-            ImageDir = idir;
-            OnImage(Image);
+            ImageSet = iset;
+            if (IsCacheImage)
+            {
+                imagecache.Clear();
+            }
+            OnImage("1");
         }
     }
 }

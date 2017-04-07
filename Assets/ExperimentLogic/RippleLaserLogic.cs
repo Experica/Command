@@ -58,7 +58,7 @@ public class RippleLaserLogic : ExperimentLogic
         condmanager.TrimCondition(cond);
         ex.Cond = condmanager.cond;
         condmanager.UpdateSampleSpace(ex.CondSampling,ex.BlockParam,ex.BlockSampling);
-        OnConditionPrepared();
+        OnConditionPrepared(true);
     }
 
     protected override void StartExperiment()

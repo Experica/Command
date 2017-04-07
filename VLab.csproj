@@ -126,6 +126,7 @@
     <Compile Include="Assets\ExperimentLogic\ConditionTestLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\OITTLCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\RippleImageLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleLaserCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleLaserLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleLaserTrialCTLogic.cs" />
@@ -163,6 +164,8 @@
     <Compile Include="Assets\VLYaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\AssetBundleGraph\Editor\GUI\GraphicResources\LineDraw.shader" />
+    <None Include="Assets\AssetBundleGraph\Editor\SettingTemplate\readme.txt" />
     <None Include="Assets\Plugins\Fasterflect\Fasterflect.XML" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.xml" />

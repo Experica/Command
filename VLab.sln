@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab.Plugins", "VLab.Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab", "VLab.csproj", "{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLab.Editor", "VLab.Editor.csproj", "{56A4BF96-CD07-C565-4DC9-66EF7E9183F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E8A7AA-FE3E-A0E4-CAB8-D40F860F8E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A4BF96-CD07-C565-4DC9-66EF7E9183F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A4BF96-CD07-C565-4DC9-66EF7E9183F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A4BF96-CD07-C565-4DC9-66EF7E9183F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A4BF96-CD07-C565-4DC9-66EF7E9183F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

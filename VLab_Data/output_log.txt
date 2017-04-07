@@ -39,7 +39,7 @@ Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll 
 Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
 Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
-- Completed reload, in  0.033 seconds
+- Completed reload, in  0.030 seconds
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
@@ -47,106 +47,24 @@ desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.741210 ms
+UnloadTime: 0.765277 ms
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
 Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
 Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1bfc -> priority: 1 
 GfxDevice: creating device client; threaded=1
-  Thread -> id: 252c -> priority: 1 
 GfxDevice: creating device client; threaded=1
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.281281 ms
+UnloadTime: 0.288663 ms
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
 
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4972.
-Total: 5.620822 ms (FindLiveObjects: 0.255623 ms CreateObjectMapping: 0.074730 ms MarkObjects: 5.267376 ms  DeleteObjects: 0.022771 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4703.
+Total: 4.610269 ms (FindLiveObjects: 0.240552 ms CreateObjectMapping: 0.055166 ms MarkObjects: 4.291457 ms  DeleteObjects: 0.022451 ms)
 
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-An abnormal situation has occurred: the PlayerLoop internal function has been called recursively. Please contact Customer Support with a sample project so that we can reproduce the problem and troubleshoot it.
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.580244 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.600098 ms
 
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4684.
-Total: 5.974589 ms (FindLiveObjects: 0.223870 ms CreateObjectMapping: 0.076013 ms MarkObjects: 5.637500 ms  DeleteObjects: 0.036884 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.614201 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5551.
-Total: 7.462784 ms (FindLiveObjects: 0.325542 ms CreateObjectMapping: 0.128292 ms MarkObjects: 6.985535 ms  DeleteObjects: 0.023092 ms)
-
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-COM6 does not exist.
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.348676 ms
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 10201.
-Total: 14.786371 ms (FindLiveObjects: 0.630879 ms CreateObjectMapping: 0.148178 ms MarkObjects: 13.933225 ms  DeleteObjects: 0.073768 ms)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.196008 ms
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 4909.
-Total: 9.778146 ms (FindLiveObjects: 0.745701 ms CreateObjectMapping: 0.274867 ms MarkObjects: 8.734165 ms  DeleteObjects: 0.022451 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 4672.
+Total: 6.570612 ms (FindLiveObjects: 0.387449 ms CreateObjectMapping: 0.058694 ms MarkObjects: 6.096884 ms  DeleteObjects: 0.026300 ms)
 

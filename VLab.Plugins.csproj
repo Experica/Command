@@ -114,6 +114,8 @@
     <Compile Include="Assets\Plugins\MCSCompiler\UnityLogTextWriter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\AssetBundleGraph\Editor\GUI\GraphicResources\LineDraw.shader" />
+    <None Include="Assets\AssetBundleGraph\Editor\SettingTemplate\readme.txt" />
     <None Include="Assets\Plugins\Fasterflect\Fasterflect.XML" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\license.txt" />
     <None Include="Assets\Plugins\MathNet.Numerics.3.11.1\net35\MathNet.Numerics.xml" />

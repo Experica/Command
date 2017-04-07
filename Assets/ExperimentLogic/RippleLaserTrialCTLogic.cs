@@ -60,6 +60,14 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
 
         // get base conditions
         var bcond = condmanager.ReadCondition(ex.CondPath);
+        bool isshowcond = true;
+        if(bcond==null)
+        {
+            var ni = (float)ex.GetParam("NumOfImage");
+            bcond = new Dictionary<string, List<object>>();
+            bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
+            isshowcond = false;
+        }
         if (bcond != null)
         {
             bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
@@ -103,7 +111,7 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         condmanager.TrimCondition(fcond);
         ex.Cond = condmanager.cond;
         condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-        OnConditionPrepared();
+        OnConditionPrepared(isshowcond);
     }
 
     protected override void StartExperiment()

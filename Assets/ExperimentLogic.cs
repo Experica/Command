@@ -36,8 +36,8 @@ namespace VLab
         public Action OnBeginStartExperiment, OnEndStartExperiment,
             OnBeginStopExperiment, OnEndStopExperiment,
             OnBeginPauseExperiment, OnEndPauseExperiment,
-            OnBeginResumeExperiment, OnEndResumeExpeirment,
-        OnConditionPrepared;
+            OnBeginResumeExperiment, OnEndResumeExpeirment;
+        public Action<bool> OnConditionPrepared;
 
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
@@ -307,7 +307,7 @@ namespace VLab
             {
                 ex.Cond = condmanager.cond;
                 condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-                OnConditionPrepared();
+                OnConditionPrepared(true);
             }
         }
 
@@ -525,14 +525,18 @@ namespace VLab
                     }
                 }
             }
-        }
-
-        void FixedUpdate()
-        {
             if (islogicactive)
             {
                 Logic();
             }
+        }
+
+        void FixedUpdate()
+        {
+            //if (islogicactive)
+            //{
+            //    Logic();
+            //}
         }
         public virtual void Logic()
         {

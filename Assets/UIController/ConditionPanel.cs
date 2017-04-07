@@ -46,12 +46,12 @@ namespace VLab
             }
         }
 
-        public void RefreshCondition()
+        public void RefreshCondition(bool isfullrefresh=true)
         {
             if (panel.enabled)
             {
                 DestroyConditionUI();
-                CreateConditionUI();
+                if (isfullrefresh) CreateConditionUI();
             }
         }
 

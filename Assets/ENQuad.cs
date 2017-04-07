@@ -29,23 +29,26 @@ namespace VLab
     {
         None,
         Disk,
-        Gaussian
+        Gaussian,
+        DiskFade
     }
 
     public class ENQuad : EnvNet
     {
         [SyncVar(hook = "onori")]
         public float Ori = 0;
-        [SyncVar(hook ="onorioffset")]
+        [SyncVar(hook = "onorioffset")]
         public float OriOffset = 0;
         [SyncVar(hook = "ondiameter")]
         public float Diameter = 2;
-        [SyncVar(hook ="onsize")]
+        [SyncVar(hook = "onsize")]
         public Vector3 Size = new Vector3(2, 2, 1);
         [SyncVar(hook = "oncolor")]
         public Color Color = new Color();
         [SyncVar(hook = "onmasktype")]
         public MaskType MaskType;
+        [SyncVar(hook = "onmaskradius")]
+        public float MaskRadius;
         [SyncVar(hook = "onsigma")]
         public float Sigma;
 
@@ -57,7 +60,7 @@ namespace VLab
         }
         public virtual void OnOri(float o)
         {
-            transform.eulerAngles = new Vector3(0, 0, o+OriOffset);
+            transform.eulerAngles = new Vector3(0, 0, o + OriOffset);
             transform.position = Position + PositionOffset.RotateZCCW(OriOffset + o);
             Ori = o;
         }
@@ -68,14 +71,14 @@ namespace VLab
         }
         public virtual void OnOriOffset(float ooffset)
         {
-            transform.eulerAngles = new Vector3(0, 0, ooffset+Ori);
+            transform.eulerAngles = new Vector3(0, 0, ooffset + Ori);
             transform.position = Position + PositionOffset.RotateZCCW(Ori + ooffset);
             OriOffset = ooffset;
         }
 
         public override void OnPosition(Vector3 p)
         {
-            transform.position = p + PositionOffset.RotateZCCW(Ori+OriOffset);
+            transform.position = p + PositionOffset.RotateZCCW(Ori + OriOffset);
             Position = p;
         }
 
@@ -128,6 +131,16 @@ namespace VLab
         {
             renderer.material.SetInt("masktype", (int)t);
             MaskType = t;
+        }
+
+        void onmaskradius(float r)
+        {
+            OnMaskRadius(r);
+        }
+        public virtual void OnMaskRadius(float r)
+        {
+            renderer.material.SetFloat("maskradius", r);
+            MaskRadius = r;
         }
 
         void onsigma(float s)

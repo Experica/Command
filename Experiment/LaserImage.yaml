@@ -10,15 +10,15 @@ Subject_Age: 5
 Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (60.9, -44, -1E+03)
+  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
   MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 34
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -27,6 +27,7 @@ EnvParam:
   Size@ENQuad@Quad: (2, 2, 1)
   Color@ENQuad@Quad: (0, 0, 0, 0)
   MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0
   Sigma@ENQuad@Quad: 0
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
@@ -47,24 +48,26 @@ EnvParam:
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 1
-  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Image@ENImageQuad@ImageQuad: 89
+  ImageSet@ENImageQuad@ImageQuad: testimageset
   IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 20
-  Size@ENImageQuad@ImageQuad: (20, 20, 1)
+  Diameter@ENImageQuad@ImageQuad: 60
+  Size@ENImageQuad@ImageQuad: (60, 60, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
-  MaskType@ENImageQuad@ImageQuad: Disk
-  Sigma@ENImageQuad@ImageQuad: 0.150000006
+  MaskType@ENImageQuad@ImageQuad: DiskFade
+  MaskRadius@ENImageQuad@ImageQuad: 0.449999988
+  Sigma@ENImageQuad@ImageQuad: 20
   Visible@ENImageQuad@ImageQuad: false
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
-CondPath: Condition\Image.yaml
+CondPath: ''
 ExLogicPath: RippleLaserTrialCTLogic
 RecordSession: LGN1
 RecordSite: 4000
@@ -76,7 +79,7 @@ BlockRepeat: 1
 BlockParam:
 - LaserPower
 - LaserFreq
-CondDur: 100
+CondDur: 50
 PreITI: 500
 TrialDur: 1000
 SufITI: 500
@@ -116,6 +119,7 @@ EnvInheritParam:
 Param:
   LaserPower: !!ListOfFloat '[0.27, 0.55, 0.83]'
   LaserFreq: !!ListOfFloat '[0.1, 10, 30, 60]'
+  NumOfImage: !!Float 100
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
 Delay: 30

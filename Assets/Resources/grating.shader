@@ -9,6 +9,7 @@
 		tf("TemporalFreq", Float) = 1
 		t("Time", Float) = 0
 		phase("SpatialPhase", Float) = 0
+		maskradius("MaskRadius",Float) = 0.5
 		sigma("Sigma", Float) = 0.15
 		sizex("SizeX",Float) = 2
 		sizey("SizeY", Float) = 2
@@ -36,6 +37,7 @@
 			float tf;
 			float t;
 			float phase;
+			float maskradius;
 			float sigma;
 			float sizex;
 			float sizey;
@@ -43,6 +45,20 @@
 			int masktype;
 			static const float pi = 3.141592653589793238462;
 			static const float pi2 = 6.283185307179586476924;
+
+			inline float erf(const float x)
+			{
+				const float sign_x = sign(x);
+				const float t = 1.0 / (1.0 + 0.47047*abs(x));
+				const float result = 1.0 - t*(0.3480242 + t*(-0.0958798 + t*0.7478556))*exp(-(x*x));
+
+				return result * sign_x;
+			}
+
+			inline float erfc(const float x)
+			{
+				return 1.3693*exp(-0.8072*pow(x + 0.6388, 2));
+			}
 
 			struct appdata
 			{
@@ -102,7 +118,7 @@
 				{ }
 				else if (masktype == 1)
 				{
-					if (sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2))>0.5)
+					if (sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2)) >= maskradius)
 					{
 						c.a = 0;
 					}
@@ -111,6 +127,14 @@
 				{
 					float d = pow(i.uv.x, 2) + pow(i.uv.y, 2);
 					c.a = c.a*exp(-d / (2 * pow(sigma, 2)));
+				}
+				else if (masktype == 3)
+				{
+					float d = sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2)) - maskradius;
+					if (d >= 0)
+					{
+						c.a = c.a*erfc(sigma*d);
+					}
 				}
 
 				return c;
