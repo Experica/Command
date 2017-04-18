@@ -44,13 +44,13 @@ namespace VLab
         [SyncVar(hook = "onsize")]
         public Vector3 Size = new Vector3(2, 2, 1);
         [SyncVar(hook = "oncolor")]
-        public Color Color = new Color();
+        public Color Color = Color.white;
         [SyncVar(hook = "onmasktype")]
         public MaskType MaskType;
         [SyncVar(hook = "onmaskradius")]
-        public float MaskRadius;
+        public float MaskRadius=0.5f;
         [SyncVar(hook = "onsigma")]
-        public float Sigma;
+        public float Sigma=0.15f;
 
         public VLTimer t = new VLTimer();
 

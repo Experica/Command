@@ -1,70 +1,48 @@
-Initialize engine version: 5.5.2f1 (3829d7f588f3)
+Initialize engine version: 5.5.3f1 (4d2f809fd6f3)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GT 720 (ID=0x1286)
+    Renderer: NVIDIA GeForce GTX 1070 (ID=0x1b81)
     Vendor:   NVIDIA
-    VRAM:     973 MB
-    Driver:   21.21.13.7866
+    VRAM:     8085 MB
+    Driver:   22.21.13.8165
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\LibUsbDotNet.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\LibUsbDotNet.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MWArray.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MWArray.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Ripple.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Ripple.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Windows.Forms.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Fasterflect.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\Fasterflect.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MathNet.Numerics.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MathNet.Numerics.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\mcs.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\mcs.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\MsgPack.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\MsgPack.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
-Loading C:\Users\LyonLab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
-- Completed reload, in  0.030 seconds
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\LibUsbDotNet.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\LibUsbDotNet.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\MWArray.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\MWArray.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Ripple.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\Ripple.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Windows.Forms.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Fasterflect.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\Fasterflect.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\MathNet.Numerics.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\MathNet.Numerics.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\mcs.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\mcs.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\MsgPack.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\MsgPack.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Threading.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
+Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
+- Completed reload, in  0.018 seconds
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
+desktop: 1680x1050 59Hz; virtual: 3600x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 0.765277 ms
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
-Platform assembly: C:\Users\LyonLab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1bfc -> priority: 1 
-GfxDevice: creating device client; threaded=1
-GfxDevice: creating device client; threaded=1
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.288663 ms
-GfxDevice: creating device client; threaded=1
-GfxDevice: creating device client; threaded=1
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4703.
-Total: 4.610269 ms (FindLiveObjects: 0.240552 ms CreateObjectMapping: 0.055166 ms MarkObjects: 4.291457 ms  DeleteObjects: 0.022451 ms)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.600098 ms
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 4672.
-Total: 6.570612 ms (FindLiveObjects: 0.387449 ms CreateObjectMapping: 0.058694 ms MarkObjects: 6.096884 ms  DeleteObjects: 0.026300 ms)
-

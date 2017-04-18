@@ -171,8 +171,8 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                     TrialState = TRIALSTATE.TRIAL;
                     if (power > 0)
                     {
-                        ppsw.bitlatency[ppbit] = ex.Latency;
-                        ppsw.bitfreq[ppbit] = condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>();
+                        ppsw.bitlatency_ms[ppbit] = ex.Latency;
+                        ppsw.SetBitFreq(ppbit, condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>());
                         ppsw.Start(ppbit);
                     }
                 }

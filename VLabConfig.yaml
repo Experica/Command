@@ -9,7 +9,7 @@ NotifyParams:
 - CondRepeat
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
-LogicTick: 9.99999975E-05
+FixedDeltaTime: 1000000
 IsShowInactiveEnvParam: false
 IsShowEnvParamFullName: false
 MaxLogEntry: 999
@@ -21,4 +21,4 @@ ExHideParams:
 - Log
 - Subject_Log
 - DataPath
-CrossEnvInheritRulePath: DefaultCrossEnvInheritRule.yaml
+CrossEnvInheritRulePath: CrossEnvInheritRule.yaml

@@ -29,7 +29,7 @@ namespace VLab
     public class ENCamera : NetworkBehaviour
     {
         [SyncVar(hook = "onbgcolor")]
-        public Color BGColor = new Color();
+        public Color BGColor = Color.gray;
         [SyncVar(hook = "onscreenhalfheight")]
         public float ScreenHalfHeight = 15;
         [SyncVar(hook = "onscreentoeye")]

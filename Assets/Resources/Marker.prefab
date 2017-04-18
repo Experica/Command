@@ -143,7 +143,7 @@ MonoBehaviour:
   MarkerPosition: {x: 0, y: 0, z: 0}
   MarkerCorner: 2
   Mark: 1
-  MarkOnColor: {r: 0, g: 0, b: 0, a: 1}
-  MarkOffColor: {r: 1, g: 1, b: 1, a: 1}
+  MarkOnColor: {r: 1, g: 1, b: 1, a: 1}
+  MarkOffColor: {r: 0, g: 0, b: 0, a: 1}
   camera: {fileID: 0}
   renderer: {fileID: 0}

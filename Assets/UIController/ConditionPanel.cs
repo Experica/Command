@@ -38,7 +38,11 @@ namespace VLab
         {
             if (ison)
             {
-                uicontroller.exmanager.el.PrepareCondition();
+                var el = uicontroller.exmanager.el;
+                if(el!=null)
+                {
+                    el.PrepareCondition();
+                }
             }
             else
             {

@@ -38,7 +38,7 @@ namespace VLab
         NotifyParams,
         AntiAliasing,
         AnisotropicFilterLevel,
-        LogicTick,
+        FixedDeltaTime,
         IsShowInactiveEnvParam,
         IsShowEnvParamFullName,
         MaxLogEntry,
@@ -101,7 +101,7 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.CrossEnvInheritRulePath))
             {
-                config[VLCFG.CrossEnvInheritRulePath] = "DefaultCrossEnvInheritRule.yaml";
+                config[VLCFG.CrossEnvInheritRulePath] = "CrossEnvInheritRule.yaml";
             }
             if (!config.ContainsKey(VLCFG.NotifyParams))
             {
@@ -128,13 +128,13 @@ namespace VLab
             {
                 config[VLCFG.AnisotropicFilterLevel] = config[VLCFG.AnisotropicFilterLevel].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.LogicTick))
+            if (!config.ContainsKey(VLCFG.FixedDeltaTime))
             {
-                config[VLCFG.LogicTick] = 0.0001f;
+                config[VLCFG.FixedDeltaTime] = 1000000f;
             }
             else
             {
-                config[VLCFG.LogicTick] = config[VLCFG.LogicTick].Convert<float>();
+                config[VLCFG.FixedDeltaTime] = config[VLCFG.FixedDeltaTime].Convert<float>();
             }
             if (!config.ContainsKey(VLCFG.IsShowInactiveEnvParam))
             {
@@ -208,7 +208,7 @@ namespace VLab
             if (!crossenvinheritrule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
             {
                 var imagequadsourcelist = new Dictionary<string, List<string>>();
-                imagequadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> {  "Position" };
+                imagequadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> {  "Position","Diameter" };
                 imagequadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> {  "Position" };
 
                 crossenvinheritrule[EnvironmentObject.ImageQuad.ToString()] = imagequadsourcelist;

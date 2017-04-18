@@ -39,19 +39,19 @@ namespace VLab
         [SyncVar(hook ="oncontrast")]
         public float Contrast=1f;
         [SyncVar(hook = "onspatialfreq")]
-        public float SpatialFreq;
+        public float SpatialFreq=0.1f;
         [SyncVar(hook = "ontemporalfreq")]
-        public float TemporalFreq;
+        public float TemporalFreq=2f;
         [SyncVar(hook = "onspatialphase")]
-        public float SpatialPhase;
+        public float SpatialPhase=0;
         [SyncVar(hook = "onmincolor")]
-        public Color MinColor;
+        public Color MinColor=Color.black;
         [SyncVar(hook = "onmaxcolor")]
-        public Color MaxColor;
+        public Color MaxColor=Color.white;
         [SyncVar(hook = "onisdrifting")]
         public bool Drifting = true;
         [SyncVar(hook ="ongratingtype")]
-        public GratingType GratingType;
+        public GratingType GratingType = GratingType.Square;
         [SyncVar(hook ="onisreversetime")]
         public bool ReverseTime = false;
 

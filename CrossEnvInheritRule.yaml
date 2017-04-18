@@ -1,0 +1,18 @@
+GratingQuad:
+  Quad:
+  - Ori
+  - Position
+  ImageQuad:
+  - Position
+Quad:
+  GratingQuad:
+  - Ori
+  - Position
+  ImageQuad:
+  - Position
+ImageQuad:
+  GratingQuad:
+  - Position
+  - Diameter
+  Quad:
+  - Position

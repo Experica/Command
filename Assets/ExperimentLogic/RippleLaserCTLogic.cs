@@ -170,8 +170,8 @@ public class RippleLaserCTLogic : ExperimentLogic
                     }
                     if (power > 0)
                     {
-                        ppsw.bitlatency[ppbit] = ex.Latency;
-                        ppsw.bitfreq[ppbit] = condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>();
+                        ppsw.bitlatency_ms[ppbit] = ex.Latency;
+                        ppsw.SetBitFreq(ppbit, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
                         ppsw.Start(ppbit);
                     }
                 }

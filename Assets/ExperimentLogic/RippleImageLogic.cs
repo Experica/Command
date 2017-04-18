@@ -29,6 +29,7 @@ public class RippleImageLogic : ExperimentLogic
     int notifylatency = 200;
     int exlatencyerror = 20;
     int onlinesignallatency = 50;
+    float diameter;
 
     public override void OnStart()
     {
@@ -49,6 +50,12 @@ public class RippleImageLogic : ExperimentLogic
     protected override void StartExperiment()
     {
         base.StartExperiment();
+        if ((MaskType)GetEnvActiveParam("MaskType")== MaskType.DiskFade)
+        {
+            diameter = (float)GetEnvActiveParam("Diameter");
+            var mrr = (float)GetEnvActiveParam("MaskRadius")/0.5f;
+            SetEnvActiveParam("Diameter", diameter/mrr);
+        }
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
         /* 
         Ripple recorder set path through UDP network and Trellis receive
@@ -75,6 +82,10 @@ public class RippleImageLogic : ExperimentLogic
         SetEnvActiveParam("Mark", OnOff.Off);
         pport.SetBit(bit: 0, value: false);
         base.StopExperiment();
+        if ((MaskType)GetEnvActiveParam("MaskType") == MaskType.DiskFade)
+        {
+            SetEnvActiveParam("Diameter", diameter);
+        }
         // Tail period to make sure lagged effect data is recorded before stop recording
         timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
         pport.BitPulse(bit: 3, duration_ms: 5);

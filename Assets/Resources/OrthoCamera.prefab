@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2031852}
   - component: {fileID: 81000010540390862}
   - component: {fileID: 114000014067321596}
-  - component: {fileID: 114000014195594034}
+  - component: {fileID: 114999724234113986}
   m_Layer: 0
   m_Name: OrthoCamera
   m_TagString: MainCamera
@@ -128,7 +128,7 @@ MonoBehaviour:
     i15: 233
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114000014195594034
+--- !u!114 &114999724234113986
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54ca45ec35dd4c4686412f54d6b712a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGColor: {r: 0, g: 0, b: 0, a: 0}
+  BGColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   ScreenHalfHeight: 15
   ScreenToEye: 57
-  camera: {fileID: 2031852}
+  camera: {fileID: 0}

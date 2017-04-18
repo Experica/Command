@@ -75,6 +75,8 @@ namespace VLab
     public class ParallelPort : Inpout
     {
         public int address;
+        private int valuecache;
+        private object lockobj = new object();
 
         public ParallelPort(int address = 0x378)
         {
@@ -83,28 +85,44 @@ namespace VLab
 
         public int Inp()
         {
-            return Inp16((ushort)address);
+            lock (lockobj)
+            {
+                return Inp16((ushort)address);
+            }
         }
 
         public byte InpByte()
         {
-            return Inp8((ushort)address);
+            lock (lockobj)
+            {
+                return Inp8((ushort)address);
+            }
         }
 
         public void Out(int data)
         {
-            Out16((ushort)address, (ushort)data);
+            lock (lockobj)
+            {
+                Out16((ushort)address, (ushort)data);
+            }
         }
 
         public void OutByte(byte data)
         {
-            Out8((ushort)address, data);
+            lock (lockobj)
+            {
+                Out8((ushort)address, data);
+            }
         }
 
         public void SetBit(int bit = 0, bool value = true)
         {
-            var t = value ? Math.Pow(2.0, bit) : 0;
-            Out((int)t);
+            var t = value ? (1 << bit) : ~(1 << bit);
+            lock (lockobj)
+            {
+                valuecache = value ? valuecache | t : valuecache & t;
+                Out(valuecache);
+            }
         }
 
         public void SetBits(int[] bits, bool[] values)
@@ -114,12 +132,15 @@ namespace VLab
                 var bs = bits.Distinct().ToArray();
                 if (bs.Count() == values.Length)
                 {
-                    var t = 0.0;
-                    for (var i = 0; i < bs.Count(); i++)
+                    lock(lockobj)
                     {
-                        t += values[i] ? Math.Pow(2.0, bs[i]) : 0;
+                        for (var i = 0; i < bs.Count(); i++)
+                        {
+                            var t = values[i] ? (1 << bs[i]) : ~(1 << bs[i]);
+                            valuecache = values[i] ? valuecache | t : valuecache & t;
+                        }
+                        Out(valuecache);
                     }
-                    Out((int)t);
                 }
             }
         }
@@ -213,8 +234,11 @@ namespace VLab
         ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
         ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
         ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
-        public ConcurrentDictionary<int, double> bitfreq = new ConcurrentDictionary<int, double>();
-        public ConcurrentDictionary<int, double> bitlatency = new ConcurrentDictionary<int, double>();
+
+        public ConcurrentDictionary<int, double> bitlatency_ms = new ConcurrentDictionary<int, double>();
+        public ConcurrentDictionary<int, double> bithighdur_ms = new ConcurrentDictionary<int, double>();
+        public ConcurrentDictionary<int, double> bitlowdur_ms = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> _bitfreq = new ConcurrentDictionary<int, double>();
         object lockobj = new object();
 
         public ParallelPortSquareWave(ParallelPort pp)
@@ -222,9 +246,22 @@ namespace VLab
             pport = pp;
         }
 
+        public void SetBitFreq(int bit, double freq)
+        {
+            _bitfreq[bit] = freq;
+            var halfcycle = (1 / Math.Max(0.001, freq)) * 1000 / 2;
+            bithighdur_ms[bit] = halfcycle;
+            bitlowdur_ms[bit] = halfcycle;
+        }
+
+        public double GetBitFreq(int bit)
+        {
+            return _bitfreq[bit];
+        }
+
         public void Start(params int[] bs)
         {
-            var vbs = bitfreq.Keys.Intersect(bs).ToArray();
+            var vbs = bitlatency_ms.Keys.Intersect(bs).ToArray();
             var vbn = vbs.Length;
             if (vbn > 0)
             {
@@ -265,20 +302,20 @@ namespace VLab
         public void BitSquareWave(int bit)
         {
             var timer = new VLTimer(); bool isbreakstarted;
-            double start, end, breakstart = 0; double halfcycle, latency;
-            Break:
+            double start, breakstart = 0; double highdur, lowdur, latency;
+        Break:
             bitthreadevent[bit].WaitOne();
             isbreakstarted = false;
-            halfcycle = (1 / Math.Max(0.001, bitfreq[bit])) * 1000 / 2;
-            latency = bitlatency[bit];
+            highdur = bithighdur_ms[bit];
+            lowdur = bitlowdur_ms[bit];
+            latency = bitlatency_ms[bit];
             timer.Restart();
             timer.Countdown(latency);
             while (true)
             {
                 PPort.SetBit(bit);
                 start = timer.ElapsedMillisecond;
-                end = timer.ElapsedMillisecond;
-                while ((end - start) < halfcycle)
+                while ((timer.ElapsedMillisecond - start) < highdur)
                 {
                     if (bitthreadbreak[bit])
                     {
@@ -293,13 +330,11 @@ namespace VLab
                             goto Break;
                         }
                     }
-                    end = timer.ElapsedMillisecond;
                 }
 
                 PPort.SetBit(bit, false);
                 start = timer.ElapsedMillisecond;
-                end = timer.ElapsedMillisecond;
-                while ((end - start) < halfcycle)
+                while ((timer.ElapsedMillisecond - start) < lowdur)
                 {
                     if (bitthreadbreak[bit])
                     {
@@ -313,7 +348,6 @@ namespace VLab
                             goto Break;
                         }
                     }
-                    end = timer.ElapsedMillisecond;
                 }
             }
         }

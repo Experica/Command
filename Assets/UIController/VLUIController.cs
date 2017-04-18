@@ -136,7 +136,7 @@ namespace VLab
             // Get Highest Performance
             QualitySettings.vSyncCount = 0;
             QualitySettings.maxQueuedFrames = 0;
-            //Time.fixedDeltaTime = (float)appmanager.config[VLCFG.LogicTick];
+            Time.fixedDeltaTime = (float)appmanager.config[VLCFG.FixedDeltaTime];
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
 
@@ -189,8 +189,9 @@ namespace VLab
             // Return Normal Performance
             QualitySettings.vSyncCount = 1;
             QualitySettings.maxQueuedFrames = 1;
-            //Time.fixedDeltaTime = 0.02f;
+            Time.fixedDeltaTime = 0.02f;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
         }
 
         public void OnEndStopExperiment()

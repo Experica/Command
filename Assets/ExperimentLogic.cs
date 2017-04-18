@@ -339,6 +339,11 @@ namespace VLab
             }
         }
 
+        public virtual object GetEnvActiveParam(string name)
+        {
+            return envmanager.GetActiveParam(name);
+        }
+
         public virtual void SetEnvActiveParam(string name, object value, bool notifyui = true)
         {
             envmanager.SetActiveParam(name, value, notifyui);
@@ -525,19 +530,13 @@ namespace VLab
                     }
                 }
             }
+
             if (islogicactive)
             {
                 Logic();
             }
         }
 
-        void FixedUpdate()
-        {
-            //if (islogicactive)
-            //{
-            //    Logic();
-            //}
-        }
         public virtual void Logic()
         {
         }
