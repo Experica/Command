@@ -2,11 +2,12 @@
 
 public class ParallelPortPinSignal : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
+    ParallelPort pport;
     ParallelPortSquareWave ppsw;
 
     public override void OnStart()
     {
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
         ppsw = new ParallelPortSquareWave(pport);
     }
 

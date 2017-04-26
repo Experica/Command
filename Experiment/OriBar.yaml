@@ -2,31 +2,35 @@ ID: OriBar
 Name: OriBar
 Designer: Alex
 Experimenter: Alex
+Log: 
 Subject_ID: LZR1701
 Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
+Subject_Size: (0, 0, 0)
 Subject_Weight: 300
+Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
-  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 67.5
+  Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 10
   Size@ENQuad@Quad: (1, 0.5, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
@@ -47,35 +51,47 @@ EnvParam:
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 0
-  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Image@ENImageQuad@ImageQuad: 1
+  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
+  IsCacheImage@ENImageQuad@ImageQuad: false
   Ori@ENImageQuad@ImageQuad: 67.5
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
+  MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Orientation22.5DegStep.yaml
+Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
+DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
+Input: None
 PreICI: 150
 CondDur: 500
 SufICI: 150
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
@@ -109,7 +125,8 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 Param: {}
-Latency: 183
-TimerDriftSpeed: 3.0599999999999998E-05
+Latency: 21
+TimerDriftSpeed: 3.2199999999999997E-05
 Delay: 30
+CondTest: 
 CondTestShowLevel: FULL

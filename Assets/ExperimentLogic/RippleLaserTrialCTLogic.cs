@@ -26,13 +26,11 @@ using System.Linq;
 
 public class RippleLaserTrialCTLogic : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
+    ParallelPort pport;
     ParallelPortSquareWave ppsw;
-    int notifylatency = 200;
-    int exlatencyerror = 20;
-    int onlinesignallatency = 50;
+    int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
+    int startbit, stopbit, condbit, signalbit;
 
-    int ppbit = 0;
     Omicron luxx473;
     Cobolt mambo594;
     float power;
@@ -43,7 +41,16 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
     public override void OnStart()
     {
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
         ppsw = new ParallelPortSquareWave(pport);
+        startbit = (int)config[VLCFG.StartBit];
+        stopbit = (int)config[VLCFG.StopBit];
+        condbit = (int)config[VLCFG.ConditionBit];
+        signalbit = (int)config[VLCFG.Signal1Bit];
+        notifylatency = (int)config[VLCFG.NotifyLatency];
+        exlatencyerror = (int)config[VLCFG.ExLatencyError];
+        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
+        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
     public override void PrepareCondition()
@@ -61,13 +68,6 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         // get base conditions
         var bcond = condmanager.ReadCondition(ex.CondPath);
         bool isshowcond = true;
-        if(bcond==null)
-        {
-            var ni = (float)ex.GetParam("NumOfImage");
-            bcond = new Dictionary<string, List<object>>();
-            bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
-            isshowcond = false;
-        }
         if (bcond != null)
         {
             bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
@@ -116,15 +116,15 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
 
     protected override void StartExperiment()
     {
-        luxx473 = new Omicron("COM5");
-        mambo594 = new Cobolt("COM6");
+        luxx473 = new Omicron((string)config[VLCFG.COMPort1]);
+        mambo594 = new Cobolt((string)config[VLCFG.COMPort2]);
         luxx473.LaserOn();
         timer.Countdown(3000);
 
         base.StartExperiment();
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
         timer.Countdown(notifylatency);
-        pport.BitPulse(bit: 2, duration_ms: 5);
+        pport.BitPulse(bit: startbit, duration_ms: 5);
         timer.Restart();
     }
 
@@ -132,14 +132,14 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        ppsw.Stop(ppbit);
+        ppsw.Stop(signalbit);
         base.StopExperiment();
 
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
         timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: 3, duration_ms: 5);
+        pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }
 
@@ -155,11 +155,9 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         {
             case TRIALSTATE.NONE:
                 TrialState = TRIALSTATE.PREITI;
-                if(condmanager.blockidx==-1)
+                if (condmanager.blockidx == -1)
                 {
                     condmanager.SampleBlockSpace();
-                    var imageidx=condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
-                    envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
                 }
                 power = condmanager.blockcond["LaserPower"][condmanager.blockidx].Convert<float>();
                 luxx473.PowerRatio = power;
@@ -171,9 +169,9 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                     TrialState = TRIALSTATE.TRIAL;
                     if (power > 0)
                     {
-                        ppsw.bitlatency_ms[ppbit] = ex.Latency;
-                        ppsw.SetBitFreq(ppbit, condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>());
-                        ppsw.Start(ppbit);
+                        ppsw.bitlatency_ms[signalbit] = ex.Latency;
+                        ppsw.SetBitFreq(signalbit, condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>());
+                        ppsw.Start(signalbit);
                     }
                 }
                 break;
@@ -195,7 +193,7 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                             {
                                 // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                                 // marker params will take effect on screen.
-                                SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                                SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
                             }
                             else // ICI Mode
                             {
@@ -221,14 +219,14 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                     case CONDSTATE.SUFICI:
                         if (SufICIHold >= ex.SufICI * (1 + power * ICIFactor))
                         {
-                            if (TrialHold >= ex.TrialDur )
+                            if (TrialHold >= ex.TrialDur)
                             {
                                 CondState = CONDSTATE.NONE;
                                 SetEnvActiveParam("Visible", false);
                                 TrialState = TRIALSTATE.SUFITI;
                                 if (power > 0)
                                 {
-                                    ppsw.Stop(ppbit);
+                                    ppsw.Stop(signalbit);
                                 }
                             }
                             else if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
@@ -238,11 +236,9 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
                                 TrialState = TRIALSTATE.SUFITI;
                                 if (power > 0)
                                 {
-                                    ppsw.Stop(ppbit);
+                                    ppsw.Stop(signalbit);
                                 }
                                 condmanager.SampleBlockSpace();
-                                var imageidx = condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
-                                envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
                             }
                             else
                             {

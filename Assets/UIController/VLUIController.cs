@@ -37,7 +37,7 @@ namespace VLab
     public class VLUIController : MonoBehaviour
     {
         public VLApplicationManager appmanager;
-        public Toggle host, server,start,pause;
+        public Toggle host, server, start, pause;
         public Dropdown exs;
         public Button savedata;
         public Text startstoptext, pauseresumetext;
@@ -66,13 +66,13 @@ namespace VLab
             {
                 exs.ClearOptions();
                 exs.AddOptions(exmanager.exids);
-                OnExDropdownValueChange(Mathf.Clamp( exs.value,0,exn-1));
+                OnExDropdownValueChange(Mathf.Clamp(exs.value, 0, exn - 1));
             }
         }
 
         public void OnExDropdownValueChange(int i)
         {
-            if ((bool)appmanager. config[VLCFG.IsSaveExOnQuit]&&exmanager.el!=null)
+            if ((bool)appmanager.config[VLCFG.IsSaveExOnQuit] && exmanager.el != null)
             {
                 exmanager.SaveEx(exmanager.el.ex.ID);
             }
@@ -151,7 +151,7 @@ namespace VLab
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
-                VLMsgPack.ExSerializer.Pack(stream,exmanager.el. ex, PackerCompatibilityOptions.None);
+                VLMsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
                 alsmanager.RpcNotifyExperiment(stream.ToArray());
             }
 
@@ -162,7 +162,7 @@ namespace VLab
 
         public void ToggleStartStopExperiment(bool isstart)
         {
-            if(exmanager.el!=null)
+            if (exmanager.el != null)
             {
                 exmanager.el.StartStopExperiment(isstart);
             }
@@ -170,7 +170,7 @@ namespace VLab
 
         public void OnBeginStopExperiment()
         {
-            if(start.isOn)
+            if (start.isOn)
             {
                 var eh = start.onValueChanged;
                 start.onValueChanged = new Toggle.ToggleEvent();
@@ -234,7 +234,7 @@ namespace VLab
 
         public void TogglePauseResumeExperiment(bool ispause)
         {
-            if(exmanager.el!=null)
+            if (exmanager.el != null)
             {
                 exmanager.el.PauseResumeExperiment(ispause);
             }
@@ -257,9 +257,9 @@ namespace VLab
         public void ToggleExInherit(string name, bool isinherit)
         {
             var ip = exmanager.el.ex.ExInheritParam;
-            if(isinherit)
+            if (isinherit)
             {
-                if(!ip.Contains(name))
+                if (!ip.Contains(name))
                 {
                     ip.Add(name);
                     if (exmanager.el.ex.OnNotifyUI != null)
@@ -272,7 +272,7 @@ namespace VLab
             }
             else
             {
-                if(ip.Contains(name))
+                if (ip.Contains(name))
                 {
                     ip.Remove(name);
                     if (exmanager.el.ex.OnNotifyUI != null)
@@ -286,9 +286,9 @@ namespace VLab
         public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
             var ip = exmanager.el.ex.EnvInheritParam;
-            if(isinherit)
+            if (isinherit)
             {
-                if(!ip.Contains(fullname))
+                if (!ip.Contains(fullname))
                 {
                     ip.Add(fullname);
                     if (exmanager.el.ex.OnNotifyUI != null)
@@ -301,7 +301,7 @@ namespace VLab
             }
             else
             {
-                if(ip.Contains(fullname))
+                if (ip.Contains(fullname))
                 {
                     ip.Remove(fullname);
                     if (exmanager.el.ex.OnNotifyUI != null)
@@ -324,9 +324,9 @@ namespace VLab
             {
                 exs.options.RemoveAt(i);
                 var exn = exs.options.Count;
-                if(exn>0)
+                if (exn > 0)
                 {
-                    i = Mathf.Clamp(i, 0, exn-1);
+                    i = Mathf.Clamp(i, 0, exn - 1);
                     exs.value = i;
                     exs.captionText.text = exs.options[i].text;
                     OnExDropdownValueChange(i);
@@ -348,7 +348,7 @@ namespace VLab
             }
             else
             {
-                if(start.isOn)
+                if (start.isOn)
                 {
                     ToggleStartStopExperiment(false);
                     start.isOn = false;

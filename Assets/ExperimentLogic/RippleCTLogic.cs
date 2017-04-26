@@ -25,14 +25,21 @@ using System.Linq;
 
 public class RippleCTLogic : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
-    int notifylatency = 200;
-    int exlatencyerror = 20;
-    int onlinesignallatency = 50;
+    ParallelPort pport;
+    int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
+    int startbit, stopbit, condbit;
 
     public override void OnStart()
     {
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
+        startbit = (int)config[VLCFG.StartBit];
+        stopbit = (int)config[VLCFG.StopBit];
+        condbit = (int)config[VLCFG.ConditionBit];
+        notifylatency = (int)config[VLCFG.NotifyLatency];
+        exlatencyerror = (int)config[VLCFG.ExLatencyError];
+        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
+        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
     protected override void StartExperiment()
@@ -50,7 +57,7 @@ public class RippleCTLogic : ExperimentLogic
         needed to mark the start time of VLab.
         */
         timer.Countdown(notifylatency);
-        pport.BitPulse(bit: 2, duration_ms: 5);
+        pport.BitPulse(bit: startbit, duration_ms: 5);
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
         in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
@@ -62,11 +69,11 @@ public class RippleCTLogic : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: 0, value: false);
+        pport.SetBit(bit: condbit, value: false);
         base.StopExperiment();
         // Tail period to make sure lagged effect data is recorded before stop recording
         timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: 3, duration_ms: 5);
+        pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }
 
@@ -89,13 +96,13 @@ public class RippleCTLogic : ExperimentLogic
                     {
                         // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                         // marker params will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
-                        pport.ThreadBitPulse(bit: 0, duration_ms: 35);
+                        SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
+                        pport.ThreadBitPulse(bit: condbit, duration_ms: markpulsewidth);
                     }
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Mark", OnOff.On);
-                        pport.SetBit(bit: 0, value: true);
+                        pport.SetBit(bit: condbit, value: true);
                     }
                 }
                 break;
@@ -111,7 +118,7 @@ public class RippleCTLogic : ExperimentLogic
                     {
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
-                        pport.SetBit(bit: 0, value: false);
+                        pport.SetBit(bit: condbit, value: false);
                     }
                 }
                 break;

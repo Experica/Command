@@ -42,7 +42,25 @@ namespace VLab
         IsShowInactiveEnvParam,
         IsShowEnvParamFullName,
         MaxLogEntry,
-        ExHideParams
+        ExHideParams,
+        NotifyLatency,
+        ExLatencyError,
+        OnlineSignalLatency,
+        ParallelPort1,
+        ParallelPort2,
+        ParallelPort3,
+        StartBit,
+        StopBit,
+        ConditionBit,
+        Signal1Bit,
+        Signal2Bit,
+        Signal3Bit,
+        COMPort1,
+        COMPort2,
+        COMPort3,
+        MarkPulseWidth,
+        ParallelPortSquareWaveHighDur,
+        ParallelPortSquareWaveLowDur
     }
 
     public class VLApplicationManager : MonoBehaviour
@@ -50,7 +68,7 @@ namespace VLab
         public VLUIController uicontroller;
         public Dictionary<VLCFG, object> config;
         public readonly string configpath = "VLabConfig.yaml";
-        public Dictionary<string,Dictionary<string,List<string>>> crossenvinheritrule;
+        public Dictionary<string, Dictionary<string, List<string>>> crossenvinheritrule;
 
         void Awake()
         {
@@ -105,7 +123,7 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.NotifyParams))
             {
-                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE,CONDTESTPARAM.CondRepeat };
+                config[VLCFG.NotifyParams] = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE, CONDTESTPARAM.CondRepeat };
             }
             else
             {
@@ -162,12 +180,144 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.ExHideParams))
             {
-                config[VLCFG.ExHideParams] = new List<string> { "Cond", "CondTest", "EnvParam", "Param","Log","Subject_Log","DataPath" };
+                config[VLCFG.ExHideParams] = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath" };
             }
             else
             {
                 var o = config[VLCFG.ExHideParams] as List<object>;
                 config[VLCFG.ExHideParams] = o.Select(i => i.Convert<string>()).ToList();
+            }
+            if (!config.ContainsKey(VLCFG.NotifyLatency))
+            {
+                config[VLCFG.NotifyLatency] = 200;
+            }
+            else
+            {
+                config[VLCFG.NotifyLatency] = config[VLCFG.NotifyLatency].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ExLatencyError))
+            {
+                config[VLCFG.ExLatencyError] = 20;
+            }
+            else
+            {
+                config[VLCFG.ExLatencyError] = config[VLCFG.ExLatencyError].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.OnlineSignalLatency))
+            {
+                config[VLCFG.OnlineSignalLatency] = 50;
+            }
+            else
+            {
+                config[VLCFG.OnlineSignalLatency] = config[VLCFG.OnlineSignalLatency].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ParallelPort1))
+            {
+                config[VLCFG.ParallelPort1] = 0xC010;
+            }
+            else
+            {
+                config[VLCFG.ParallelPort1] = config[VLCFG.ParallelPort1].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ParallelPort2))
+            {
+                config[VLCFG.ParallelPort2] = 0xC010;
+            }
+            else
+            {
+                config[VLCFG.ParallelPort2] = config[VLCFG.ParallelPort2].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ParallelPort3))
+            {
+                config[VLCFG.ParallelPort3] = 0xC010;
+            }
+            else
+            {
+                config[VLCFG.ParallelPort3] = config[VLCFG.ParallelPort3].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.StartBit))
+            {
+                config[VLCFG.StartBit] = 0;
+            }
+            else
+            {
+                config[VLCFG.StartBit] = config[VLCFG.StartBit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.StopBit))
+            {
+                config[VLCFG.StopBit] = 1;
+            }
+            else
+            {
+                config[VLCFG.StopBit] = config[VLCFG.StopBit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ConditionBit))
+            {
+                config[VLCFG.ConditionBit] = 2;
+            }
+            else
+            {
+                config[VLCFG.ConditionBit] = config[VLCFG.ConditionBit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.Signal1Bit))
+            {
+                config[VLCFG.Signal1Bit] = 3;
+            }
+            else
+            {
+                config[VLCFG.Signal1Bit] = config[VLCFG.Signal1Bit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.Signal2Bit))
+            {
+                config[VLCFG.Signal2Bit] = 4;
+            }
+            else
+            {
+                config[VLCFG.Signal2Bit] = config[VLCFG.Signal2Bit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.Signal3Bit))
+            {
+                config[VLCFG.Signal3Bit] = 5;
+            }
+            else
+            {
+                config[VLCFG.Signal3Bit] = config[VLCFG.Signal3Bit].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.COMPort1))
+            {
+                config[VLCFG.COMPort1] = "COM1";
+            }
+            if (!config.ContainsKey(VLCFG.COMPort2))
+            {
+                config[VLCFG.COMPort2] = "COM2";
+            }
+            if (!config.ContainsKey(VLCFG.COMPort3))
+            {
+                config[VLCFG.COMPort3] = "COM3";
+            }
+            if (!config.ContainsKey(VLCFG.MarkPulseWidth))
+            {
+                config[VLCFG.MarkPulseWidth] = 35;
+            }
+            else
+            {
+                config[VLCFG.MarkPulseWidth] = config[VLCFG.MarkPulseWidth].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.ParallelPortSquareWaveHighDur))
+            {
+                config[VLCFG.ParallelPortSquareWaveHighDur] = 5f;
+            }
+            else
+            {
+                config[VLCFG.ParallelPortSquareWaveHighDur] = config[VLCFG.ParallelPortSquareWaveHighDur].Convert<float>();
+            }
+            if (!config.ContainsKey(VLCFG.ParallelPortSquareWaveLowDur))
+            {
+                config[VLCFG.ParallelPortSquareWaveLowDur] = 20f;
+            }
+            else
+            {
+                config[VLCFG.ParallelPortSquareWaveLowDur] = config[VLCFG.ParallelPortSquareWaveLowDur].Convert<float>();
             }
 
 
@@ -188,8 +338,8 @@ namespace VLab
             {
                 crossenvinheritrule = new Dictionary<string, Dictionary<string, List<string>>>();
             }
-            
-            if(!crossenvinheritrule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
+
+            if (!crossenvinheritrule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
             {
                 var gratingquadsourcelist = new Dictionary<string, List<string>>();
                 gratingquadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" };
@@ -201,26 +351,26 @@ namespace VLab
             {
                 var quadsourcelist = new Dictionary<string, List<string>>();
                 quadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" };
-                quadsourcelist[EnvironmentObject.ImageQuad.ToString()] = new List<string> {  "Position" };
+                quadsourcelist[EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" };
 
                 crossenvinheritrule[EnvironmentObject.Quad.ToString()] = quadsourcelist;
             }
             if (!crossenvinheritrule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
             {
                 var imagequadsourcelist = new Dictionary<string, List<string>>();
-                imagequadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> {  "Position","Diameter" };
-                imagequadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> {  "Position" };
+                imagequadsourcelist[EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Position", "Diameter" };
+                imagequadsourcelist[EnvironmentObject.Quad.ToString()] = new List<string> { "Position" };
 
                 crossenvinheritrule[EnvironmentObject.ImageQuad.ToString()] = imagequadsourcelist;
             }
         }
 
-        public bool IsFollowCrossEnvInheritRule(string target,string source,string param)
+        public bool IsFollowCrossEnvInheritRule(string target, string source, string param)
         {
-            if(crossenvinheritrule.ContainsKey(target))
+            if (crossenvinheritrule.ContainsKey(target))
             {
                 var sl = crossenvinheritrule[target];
-                if(sl.ContainsKey(source)&&sl[source].Contains(param))
+                if (sl.ContainsKey(source) && sl[source].Contains(param))
                 {
                     return true;
                 }

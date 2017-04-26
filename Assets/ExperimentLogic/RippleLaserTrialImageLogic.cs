@@ -26,14 +26,12 @@ using System.Linq;
 
 public class RippleLaserTrialImageLogic : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
+    ParallelPort pport;
     ParallelPortSquareWave ppsw;
-    int notifylatency = 200;
-    int exlatencyerror = 20;
-    int onlinesignallatency = 50;
+    int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
+    int startbit, stopbit, condbit, signalbit;
     float diameter;
 
-    int ppbit = 0;
     Omicron luxx473;
     Cobolt mambo594;
     float power;
@@ -44,7 +42,16 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
     public override void OnStart()
     {
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
         ppsw = new ParallelPortSquareWave(pport);
+        startbit = (int)config[VLCFG.StartBit];
+        stopbit = (int)config[VLCFG.StopBit];
+        condbit = (int)config[VLCFG.ConditionBit];
+        signalbit = (int)config[VLCFG.Signal1Bit];
+        notifylatency = (int)config[VLCFG.NotifyLatency];
+        exlatencyerror = (int)config[VLCFG.ExLatencyError];
+        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
+        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
     public override void PrepareCondition()
@@ -117,8 +124,8 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
 
     protected override void StartExperiment()
     {
-        luxx473 = new Omicron("COM5");
-        mambo594 = new Cobolt("COM6");
+        luxx473 = new Omicron((string)config[VLCFG.COMPort1]);
+        mambo594 = new Cobolt((string)config[VLCFG.COMPort2]);
         luxx473.LaserOn();
         timer.Countdown(3000);
 
@@ -131,7 +138,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
         }
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
         timer.Countdown(notifylatency);
-        pport.BitPulse(bit: 2, duration_ms: 5);
+        pport.BitPulse(bit: startbit, duration_ms: 5);
         timer.Restart();
     }
 
@@ -139,7 +146,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        ppsw.Stop(ppbit);
+        ppsw.Stop(signalbit);
         base.StopExperiment();
         if ((MaskType)GetEnvActiveParam("MaskType") == MaskType.DiskFade)
         {
@@ -150,7 +157,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
         luxx473.Dispose();
         mambo594.Dispose();
         timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: 3, duration_ms: 5);
+        pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }
 
@@ -182,9 +189,9 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                     TrialState = TRIALSTATE.TRIAL;
                     if (power > 0)
                     {
-                        ppsw.bitlatency_ms[ppbit] = ex.Latency;
-                        ppsw.SetBitFreq(ppbit, condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>());
-                        ppsw.Start(ppbit);
+                        ppsw.bitlatency_ms[signalbit] = ex.Latency;
+                        ppsw.SetBitFreq(signalbit, condmanager.blockcond["LaserFreq"][condmanager.blockidx].Convert<float>());
+                        ppsw.Start(signalbit);
                     }
                 }
                 break;
@@ -206,7 +213,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                             {
                                 // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                                 // marker params will take effect on screen.
-                                SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                                SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
                             }
                             else // ICI Mode
                             {
@@ -239,7 +246,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                                 TrialState = TRIALSTATE.SUFITI;
                                 if (power > 0)
                                 {
-                                    ppsw.Stop(ppbit);
+                                    ppsw.Stop(signalbit);
                                 }
                             }
                             else if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
@@ -249,7 +256,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                                 TrialState = TRIALSTATE.SUFITI;
                                 if (power > 0)
                                 {
-                                    ppsw.Stop(ppbit);
+                                    ppsw.Stop(signalbit);
                                 }
                                 condmanager.SampleBlockSpace();
                                 var imageidx = condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();

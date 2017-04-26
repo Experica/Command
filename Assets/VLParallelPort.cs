@@ -78,7 +78,7 @@ namespace VLab
         private int valuecache;
         private object lockobj = new object();
 
-        public ParallelPort(int address = 0x378)
+        public ParallelPort(int address = 0xC010)
         {
             this.address = address;
         }

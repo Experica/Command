@@ -19,19 +19,24 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
 using VLab;
 
 public class RippleTimingLogic : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
-    int notifylatency = 200;
-    int exlatencyerror = 20;
-    int onlinesignallatency = 50;
+    ParallelPort pport;
+    int notifylatency, exlatencyerror, onlinesignallatency;
+    int startbit, stopbit, condbit;
 
     public override void OnStart()
     {
         recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
+        startbit = (int)config[VLCFG.StartBit];
+        stopbit = (int)config[VLCFG.StopBit];
+        condbit = (int)config[VLCFG.ConditionBit];
+        notifylatency = (int)config[VLCFG.NotifyLatency];
+        exlatencyerror = (int)config[VLCFG.ExLatencyError];
+        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
     }
 
     protected override void StartExperiment()
@@ -39,18 +44,18 @@ public class RippleTimingLogic : ExperimentLogic
         base.StartExperiment();
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
         timer.Countdown(notifylatency);
-        pport.BitPulse(bit: 2, duration_ms: 5);
+        pport.BitPulse(bit: startbit, duration_ms: 5);
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: 0, value: false);
+        pport.SetBit(bit: condbit, value: false);
 
         base.StopExperiment();
         timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: 3, duration_ms: 5);
+        pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }
 
@@ -66,14 +71,14 @@ public class RippleTimingLogic : ExperimentLogic
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    pport.SetBit(bit: 0, value: true);
+                    pport.SetBit(bit: condbit, value: true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
                     CondState = CONDSTATE.SUFICI;
-                    pport.SetBit(bit: 0, value: false);
+                    pport.SetBit(bit: condbit, value: false);
                 }
                 break;
             case CONDSTATE.SUFICI:

@@ -30,6 +30,7 @@ namespace VLab
 {
     public class ExperimentLogic : MonoBehaviour
     {
+        public Dictionary<VLCFG, object> config;
         public Experiment ex = new Experiment();
         public VLTimer timer = new VLTimer();
 
@@ -303,7 +304,7 @@ namespace VLab
                     condmanager.TrimCondition(cond);
                 }
             }
-            if (condmanager.ncond>0)
+            if (condmanager.ncond > 0)
             {
                 ex.Cond = condmanager.cond;
                 condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
@@ -311,9 +312,9 @@ namespace VLab
             }
         }
 
-        public virtual void SamplePushCondition(bool isautosampleblock=true)
+        public virtual void SamplePushCondition(bool isautosampleblock = true)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat,ex.BlockRepeat,isautosampleblock),envmanager);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock), envmanager);
         }
 
         public virtual void SamplePushBlock()
@@ -334,7 +335,7 @@ namespace VLab
                 ex.CondTest = ct;
                 ex.EnvParam = envmanager.GetParams();
 
-                Yaml.WriteYaml(DataPath(), ex,false);
+                Yaml.WriteYaml(DataPath(), ex, false);
                 ex.DataPath = null;
             }
         }
@@ -358,7 +359,7 @@ namespace VLab
         {
             waittime_ms /= 1000;
             var start = Time.realtimeSinceStartup;
-            while(Time.realtimeSinceStartup-start<waittime_ms)
+            while (Time.realtimeSinceStartup - start < waittime_ms)
             {
                 yield return null;
             }
@@ -478,7 +479,7 @@ namespace VLab
                 var jxr = Input.GetAxis("JXR");
                 var jyr = Input.GetAxis("JYR");
                 var jrb = Input.GetAxis("JRB");
-                if (jx !=0 || jy !=0)
+                if (jx != 0 || jy != 0)
                 {
                     if (envmanager.maincamera != null)
                     {
@@ -489,9 +490,9 @@ namespace VLab
                             var hh = envmanager.maincamera.orthographicSize;
                             var hw = hh * envmanager.maincamera.aspect;
                             envmanager.SetParam("Position", new Vector3(
-                            Mathf.Clamp(p.x +Mathf.Pow( jx,3), -hw, hw),
-                            Mathf.Clamp(p.y +Mathf.Pow( jy,3), -hh, hh),
-                            p.z),true);
+                            Mathf.Clamp(p.x + Mathf.Pow(jx, 3), -hw, hw),
+                            Mathf.Clamp(p.y + Mathf.Pow(jy, 3), -hh, hh),
+                            p.z), true);
                         }
                     }
                 }
@@ -501,7 +502,7 @@ namespace VLab
                     if (oo != null)
                     {
                         var no = ((float)oo + Mathf.Pow(jz, 3) * 4) % 360f;
-                        envmanager.SetParam("Ori",no<0?360f-no:no ,true);
+                        envmanager.SetParam("Ori", no < 0 ? 360f - no : no, true);
                     }
                 }
                 if (jxr != 0 || jyr != 0)
@@ -509,12 +510,12 @@ namespace VLab
                     var so = envmanager.GetParam("Size");
                     var dio = envmanager.GetParam("Diameter");
 
-                    if(jrb>0.5)
+                    if (jrb > 0.5)
                     {
                         if (dio != null)
                         {
                             var d = (float)dio;
-                            envmanager.SetParam("Diameter",Mathf.Max(0, d +Mathf.Pow( jxr,3)),true);
+                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxr, 3)), true);
                         }
                     }
                     else
@@ -525,7 +526,7 @@ namespace VLab
                             envmanager.SetParam("Size", new Vector3(
                                 Mathf.Max(0, s.x + Mathf.Pow(jxr, 3)),
                                 Mathf.Max(0, s.y + Mathf.Pow(jyr, 3)),
-                                s.z),true);
+                                s.z), true);
                         }
                     }
                 }

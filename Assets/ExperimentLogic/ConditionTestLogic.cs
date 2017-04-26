@@ -23,6 +23,13 @@ using VLab;
 
 public class ConditionTestLogic : ExperimentLogic
 {
+    int markpulsewidth;
+
+    public override void OnStart()
+    {
+        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
+    }
+
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Visible", true);
@@ -61,7 +68,7 @@ public class ConditionTestLogic : ExperimentLogic
                             {
                                 // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                                 // marker params will take effect on screen.
-                                SetEnvActiveParamTwice("Mark", OnOff.On, 35, OnOff.Off);
+                                SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
                             }
                             else // ICI Mode
                             {

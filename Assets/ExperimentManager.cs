@@ -103,7 +103,7 @@ namespace VLab
             {
                 ex.Param = new Dictionary<string, Param>();
             }
-            if(ex.BlockParam==null)
+            if (ex.BlockParam == null)
             {
                 ex.BlockParam = new List<string>();
             }
@@ -158,6 +158,7 @@ namespace VLab
                 ex.ExLogicPath = elpath;
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
+            el.config = appmanager.config;
             el.ex = ex;
             AddEL(el);
         }

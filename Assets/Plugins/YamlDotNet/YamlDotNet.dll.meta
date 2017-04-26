@@ -1,20 +1,64 @@
 fileFormatVersion: 2
 guid: b2bfbd3d439091e418c85c1056a46ce7
-timeCreated: 1472863252
+timeCreated: 1493084959
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
+  isOverridable: 0
   platformData:
     Any:
       enabled: 1
-      settings: {}
+      settings:
+        Exclude Editor: 0
+        Exclude Linux: 1
+        Exclude Linux64: 0
+        Exclude LinuxUniversal: 0
+        Exclude OSXIntel: 1
+        Exclude OSXIntel64: 0
+        Exclude OSXUniversal: 0
+        Exclude Win: 1
+        Exclude Win64: 0
     Editor:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+        DefaultValueInitialized: true
+        OS: AnyOS
+    Linux:
       enabled: 0
       settings:
-        DefaultValueInitialized: true
+        CPU: None
+    Linux64:
+      enabled: 1
+      settings:
+        CPU: x86_64
+    LinuxUniversal:
+      enabled: 1
+      settings:
+        CPU: x86_64
+    OSXIntel:
+      enabled: 0
+      settings:
+        CPU: None
+    OSXIntel64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    OSXUniversal:
+      enabled: 1
+      settings:
+        CPU: x86_64
+    Win:
+      enabled: 0
+      settings:
+        CPU: None
+    Win64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
     WindowsStoreApps:
       enabled: 0
       settings:

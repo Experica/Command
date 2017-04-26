@@ -40,7 +40,7 @@ namespace VLab
 
         public bool Accepts(Type type)
         {
-            if (type == typeof(Vector3) || type == typeof(Color) || type == typeof(Param))
+            if (type == typeof(Param) || type == typeof(Vector3) || type == typeof(Color))
             {
                 return true;
             }
@@ -90,8 +90,8 @@ namespace VLab
 
     public static class Yaml
     {
-        static Serializer serializer = new Serializer(SerializationOptions.DisableAliases);
-        static Deserializer deserializer = new Deserializer();
+        static Serializer serializer = new Serializer(SerializationOptions.DisableAliases | SerializationOptions.EmitDefaults);
+        static Deserializer deserializer = new Deserializer(ignoreUnmatched: true);
         static VLabYamlConverter vlabyamlconverter = new VLabYamlConverter();
 
         static Yaml()

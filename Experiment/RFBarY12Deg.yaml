@@ -11,14 +11,14 @@ Subject_Weight: 300
 EnvPath: Showroom
 EnvParam:
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
+  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
-  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -27,9 +27,10 @@ EnvParam:
   Size@ENQuad@Quad: (12, 3, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (2.34, 0.677, 0)
   PositionOffset@ENQuad@Quad: (0, 6, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -47,18 +48,21 @@ EnvParam:
   Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 6, 0)
-  Image@ENImageQuad@ImageQuad: 0
-  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  Image@ENImageQuad@ImageQuad: 1
+  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
+  IsCacheImage@ENImageQuad@ImageQuad: false
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
+  MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
@@ -70,6 +74,7 @@ RecordSite: 4000
 DataDir: X:\
 CondSampling: UniformWithoutReplacement
 CondRepeat: 12
+BlockParam: []
 CondDur: 50
 PushCondAtState: PREICI
 CondTestAtState: PREICI
@@ -93,7 +98,16 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
-EnvInheritParam: []
+EnvInheritParam:
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- Marker@Showroom@ShowroomManager
+- Position@ENQuad@Quad
+- Ori@ENQuad@Quad
 Param: {}
 Latency: 183
 TimerDriftSpeed: 3.0599999999999998E-05
