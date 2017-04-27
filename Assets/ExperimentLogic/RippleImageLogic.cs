@@ -26,7 +26,7 @@ using System.Linq;
 public class RippleImageLogic : ExperimentLogic
 {
     ParallelPort pport;
-    int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
+    int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
     int startbit, stopbit, condbit;
     float diameter;
 
@@ -43,15 +43,23 @@ public class RippleImageLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition()
+    public override void PrepareCondition(bool isforceprepare = true)
     {
-        var ni = (float)ex.GetParam("NumOfImage");
-        var cond = new Dictionary<string, List<object>>();
-        cond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
-        condmanager.TrimCondition(cond);
-        ex.Cond = condmanager.cond;
-        condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-        OnConditionPrepared(false);
+        if (isforceprepare == false && condmanager.cond != null)
+        { }
+        else
+        {
+            var ni = (float)ex.GetParam("NumOfImage");
+            var cond = new Dictionary<string, List<object>>();
+            cond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
+            condmanager.TrimCondition(cond);
+        }
+        if (condmanager.ncond > 0)
+        {
+            ex.Cond = condmanager.cond;
+            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            OnConditionPrepared(false);
+        }
     }
 
     protected override void StartExperiment()

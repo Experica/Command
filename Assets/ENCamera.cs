@@ -1,5 +1,5 @@
 ﻿/*
-encamera.cs is part of the VLAB project.
+ENCamera.cs is part of the VLAB project.
 Copyright (c) 2017 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 

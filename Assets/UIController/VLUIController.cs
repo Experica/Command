@@ -170,6 +170,13 @@ namespace VLab
 
         public void OnBeginStopExperiment()
         {
+            if (pause.isOn)
+            {
+                var eh = pause.onValueChanged;
+                pause.onValueChanged = new Toggle.ToggleEvent();
+                pause.isOn = false;
+                pause.onValueChanged = eh;
+            }
             if (start.isOn)
             {
                 var eh = start.onValueChanged;
@@ -178,11 +185,6 @@ namespace VLab
                 start.onValueChanged = eh;
             }
             startstoptext.text = "Start";
-            if (pause.isOn)
-            {
-                //TogglePauseResumeExperiment(false);
-                pause.isOn = false;
-            }
             pause.interactable = false;
             consolepanel.LogError("Experiment Stoped.");
 

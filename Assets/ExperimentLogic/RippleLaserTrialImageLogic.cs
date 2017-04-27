@@ -54,72 +54,80 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition()
+    public override void PrepareCondition(bool isforceprepare = true)
     {
-        // get laser conditions
-        var lcond = new Dictionary<string, List<object>>()
+        bool isshowcond = true;
+        if (isforceprepare == false && condmanager.cond != null)
+        { }
+        else
+        {
+            // get laser conditions
+            var lcond = new Dictionary<string, List<object>>()
             {
                 {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
                 {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
             };
-        lcond = lcond.OrthoCondOfFactorLevel();
-        lcond["LaserPower"].Add(0f);
-        lcond["LaserFreq"].Add(0.1f);
+            lcond = lcond.OrthoCondOfFactorLevel();
+            lcond["LaserPower"].Add(0f);
+            lcond["LaserFreq"].Add(0.1f);
 
-        // get base conditions
-        var bcond = condmanager.ReadCondition(ex.CondPath);
-        bool isshowcond = true;
-        if (bcond == null)
-        {
-            var ni = (float)ex.GetParam("NumOfImage");
-            bcond = new Dictionary<string, List<object>>();
-            bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
-            isshowcond = false;
-        }
-        if (bcond != null)
-        {
-            bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
-            if (bcond.ContainsKey("factorlevel") && bcond["factorlevel"].Count == 0)
+            // get base conditions
+            var bcond = condmanager.ReadCondition(ex.CondPath);
+            if (bcond == null)
             {
-                bcond = bcond.OrthoCondOfFactorLevel();
+                var ni = (float)ex.GetParam("NumOfImage");
+                bcond = new Dictionary<string, List<object>>();
+                bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
+                isshowcond = false;
             }
-            condmanager.TrimCondition(bcond);
-        }
+            if (bcond != null)
+            {
+                bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
+                if (bcond.ContainsKey("factorlevel") && bcond["factorlevel"].Count == 0)
+                {
+                    bcond = bcond.OrthoCondOfFactorLevel();
+                }
+                condmanager.TrimCondition(bcond);
+            }
 
-        // get final conditions
-        var fcond = new Dictionary<string, List<object>>()
+            // get final conditions
+            var fcond = new Dictionary<string, List<object>>()
         {
             {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
             {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
         };
-        fcond = fcond.OrthoCondOfFactorLevel();
-        foreach (var bf in bcond.Keys)
-        {
-            fcond[bf] = new List<object>();
-        }
-        foreach (var lf in lcond.Keys)
-        {
-            fcond[lf] = new List<object>();
-        }
-        for (var i = 0; i < fcond["l"].Count; i++)
-        {
-            var bci = (int)fcond["b"][i];
-            var lci = (int)fcond["l"][i];
+            fcond = fcond.OrthoCondOfFactorLevel();
             foreach (var bf in bcond.Keys)
             {
-                fcond[bf].Add(bcond[bf][bci]);
+                fcond[bf] = new List<object>();
             }
             foreach (var lf in lcond.Keys)
             {
-                fcond[lf].Add(lcond[lf][lci]);
+                fcond[lf] = new List<object>();
             }
-        }
-        fcond.Remove("b"); fcond.Remove("l");
+            for (var i = 0; i < fcond["l"].Count; i++)
+            {
+                var bci = (int)fcond["b"][i];
+                var lci = (int)fcond["l"][i];
+                foreach (var bf in bcond.Keys)
+                {
+                    fcond[bf].Add(bcond[bf][bci]);
+                }
+                foreach (var lf in lcond.Keys)
+                {
+                    fcond[lf].Add(lcond[lf][lci]);
+                }
+            }
+            fcond.Remove("b"); fcond.Remove("l");
 
-        condmanager.TrimCondition(fcond);
-        ex.Cond = condmanager.cond;
-        condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-        OnConditionPrepared(isshowcond);
+            condmanager.TrimCondition(fcond);
+        }
+        if (condmanager.ncond > 0)
+        {
+            ex.Cond = condmanager.cond;
+            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            OnConditionPrepared(isshowcond);
+        }
     }
 
     protected override void StartExperiment()

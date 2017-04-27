@@ -13,15 +13,15 @@ Subject_Weight: 300
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -125,8 +125,8 @@ EnvInheritParam:
 Param:
   LaserPower: !!ListOfFloat '[0.55]'
   LaserFreq: !!ListOfFloat '[0.1]'
-Latency: 21
-TimerDriftSpeed: 3.2199999999999997E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
 CondTestShowLevel: FULL

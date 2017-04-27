@@ -33,15 +33,16 @@ namespace VLab
         public GameObject condcontent, condheadcontent, inputprefab,
             blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;
+        public Toggle forceprepare;
 
         public void OnConditionPanel(bool ison)
         {
             if (ison)
             {
                 var el = uicontroller.exmanager.el;
-                if(el!=null)
+                if (el != null)
                 {
-                    el.PrepareCondition();
+                    el.PrepareCondition(el.isforcepreparecond);
                 }
             }
             else
@@ -50,7 +51,16 @@ namespace VLab
             }
         }
 
-        public void RefreshCondition(bool isfullrefresh=true)
+        public void OnForcePrepare(bool isforceprepare)
+        {
+            var el = uicontroller.exmanager.el;
+            if (el != null)
+            {
+                el.isforcepreparecond = isforceprepare;
+            }
+        }
+
+        public void RefreshCondition(bool isfullrefresh = true)
         {
             if (panel.enabled)
             {
@@ -69,8 +79,8 @@ namespace VLab
                 var rn = cond.First().Value.Count;
                 grid.constraintCount = rn;
                 AddCondIndex(rn);
-                
-                if(uicontroller.exmanager.el.condmanager.condsamplespaces.Count>1)
+
+                if (uicontroller.exmanager.el.condmanager.condsamplespaces.Count > 1)
                 {
                     AddBlockIndex(rn);
                 }
@@ -83,7 +93,7 @@ namespace VLab
             }
         }
 
-        public void UpdateViewRect(int rn,int cn)
+        public void UpdateViewRect(int rn, int cn)
         {
             var grid = condcontent.GetComponent<GridLayoutGroup>();
             var rt = (RectTransform)condcontent.transform;
@@ -118,9 +128,9 @@ namespace VLab
             for (var i = 0; i < condn; i++)
             {
                 var textvalue = Instantiate(textprefab);
-                for(var j=0;j<condsamplesapces.Count;j++)
+                for (var j = 0; j < condsamplesapces.Count; j++)
                 {
-                    if(condsamplesapces[j].Contains(i))
+                    if (condsamplesapces[j].Contains(i))
                     {
                         textvalue.name = "BlockIndex" + "_" + j;
                         textvalue.GetComponent<Text>().text = j.ToString();
@@ -141,7 +151,9 @@ namespace VLab
             {
                 var inputvalue = Instantiate(inputprefab);
                 inputvalue.name = name + "_" + i;
-                inputvalue.GetComponent<InputField>().text = value[i].Convert<string>();
+                var inputfield = inputvalue.GetComponent<InputField>();
+                inputfield.text = value[i].Convert<string>();
+                inputfield.onEndEdit.AddListener(s => value[inputvalue.name.Substring(inputvalue.name.LastIndexOf('_') + 1).Convert<int>()] = s);
 
                 inputvalue.transform.SetParent(condcontent.transform, false);
             }

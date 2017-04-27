@@ -160,6 +160,7 @@ namespace VLab
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.config = appmanager.config;
             el.ex = ex;
+            uicontroller.condpanel.forceprepare.isOn = el.isforcepreparecond;
             AddEL(el);
         }
 

@@ -45,7 +45,7 @@ namespace VLab
         public CondTestManager condtestmanager = new CondTestManager();
         public RecordManager recordmanager = new RecordManager();
 
-        public bool islogicactive = false;
+        public bool islogicactive = false,isforcepreparecond=true;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
             TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
         public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
@@ -288,9 +288,11 @@ namespace VLab
             }
         }
 
-        public virtual void PrepareCondition()
+        public virtual void PrepareCondition(bool isforceprepare=true)
         {
-            if (condmanager.cond == null)
+            if (isforceprepare==false && condmanager.cond != null)
+            { }
+            else
             {
                 var cond = condmanager.ReadCondition(ex.CondPath);
                 if (cond != null)
@@ -428,7 +430,7 @@ namespace VLab
         {
             ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
             condtestmanager.Clear();
-            PrepareCondition();
+            PrepareCondition(isforcepreparecond);
             timer.Restart();
             islogicactive = true;
         }

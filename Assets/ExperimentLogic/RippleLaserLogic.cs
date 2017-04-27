@@ -51,21 +51,29 @@ public class RippleLaserLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition()
+    public override void PrepareCondition(bool isforceprepare = true)
     {
-        var cond = new Dictionary<string, List<object>>()
+        if (isforceprepare == false && condmanager.cond != null)
+        { }
+        else
+        {
+            var cond = new Dictionary<string, List<object>>()
             {
                 {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
                 {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
             };
-        cond = cond.OrthoCondOfFactorLevel();
-        cond["LaserPower"].Add(0f);
-        cond["LaserFreq"].Add(0.1f);
+            cond = cond.OrthoCondOfFactorLevel();
+            cond["LaserPower"].Add(0f);
+            cond["LaserFreq"].Add(0.1f);
 
-        condmanager.TrimCondition(cond);
-        ex.Cond = condmanager.cond;
-        condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-        OnConditionPrepared(true);
+            condmanager.TrimCondition(cond);
+        }
+        if (condmanager.ncond > 0)
+        {
+            ex.Cond = condmanager.cond;
+            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            OnConditionPrepared(true);
+        }
     }
 
     protected override void StartExperiment()
