@@ -138,6 +138,7 @@ namespace VLab
             QualitySettings.maxQueuedFrames = 0;
             Time.fixedDeltaTime = (float)appmanager.config[VLCFG.FixedDeltaTime];
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+                        
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
 
             if (alsmanager != null)

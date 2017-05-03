@@ -42,30 +42,31 @@ Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child 
 - Completed reload, in  0.017 seconds
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-desktop: 1680x1050 59Hz; virtual: 3600x1080 at 0,0
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 0.522782 ms
+UnloadTime: 49.999813 ms
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: a10 -> priority: 1 
-  Thread -> id: 194c -> priority: 1 
+  Thread -> id: fe4 -> priority: 1 
+  Thread -> id: fe8 -> priority: 1 
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.213891 ms
+UnloadTime: 0.184600 ms
 
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3621.
-Total: 2.038796 ms (FindLiveObjects: 0.093861 ms CreateObjectMapping: 0.035838 ms MarkObjects: 1.900847 ms  DeleteObjects: 0.007110 ms)
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3635.
+Total: 2.968689 ms (FindLiveObjects: 0.080211 ms CreateObjectMapping: 0.035270 ms MarkObjects: 2.845811 ms  DeleteObjects: 0.006542 ms)
 
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.476705 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.097081 ms
 
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4965.
-Total: 3.590932 ms (FindLiveObjects: 0.188861 ms CreateObjectMapping: 0.048068 ms MarkObjects: 3.337504 ms  DeleteObjects: 0.015643 ms)
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 5033.
+Total: 3.457639 ms (FindLiveObjects: 0.168103 ms CreateObjectMapping: 0.046647 ms MarkObjects: 3.223546 ms  DeleteObjects: 0.019057 ms)
 

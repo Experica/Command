@@ -45,7 +45,7 @@ namespace VLab
         public CondTestManager condtestmanager = new CondTestManager();
         public RecordManager recordmanager = new RecordManager();
 
-        public bool islogicactive = false,isforcepreparecond=true;
+        public bool islogicactive = false, isforcepreparecond = true;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
             TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
         public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
@@ -66,8 +66,8 @@ namespace VLab
             {
                 if (value != condstate)
                 {
-                    OnEnterCondState(value);
                     condstate = value;
+                    OnEnterCondState(value);
                 }
             }
         }
@@ -145,8 +145,8 @@ namespace VLab
             {
                 if (value != trialstate)
                 {
-                    OnEnterTrialState(value);
                     trialstate = value;
+                    OnEnterTrialState(value);
                 }
             }
         }
@@ -224,8 +224,8 @@ namespace VLab
             {
                 if (value != blockstate)
                 {
-                    OnEnterBlockState(value);
                     blockstate = value;
+                    OnEnterBlockState(value);
                 }
             }
         }
@@ -288,9 +288,9 @@ namespace VLab
             }
         }
 
-        public virtual void PrepareCondition(bool isforceprepare=true)
+        public virtual void PrepareCondition(bool isforceprepare = true)
         {
-            if (isforceprepare==false && condmanager.cond != null)
+            if (isforceprepare == false && condmanager.cond != null)
             { }
             else
             {
@@ -429,6 +429,9 @@ namespace VLab
         protected virtual void StartExperiment()
         {
             ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
+            CondState = CONDSTATE.NONE;
+            TrialState = TRIALSTATE.NONE;
+            BlockState = BLOCKSTATE.NONE;
             condtestmanager.Clear();
             PrepareCondition(isforcepreparecond);
             timer.Restart();
@@ -444,9 +447,6 @@ namespace VLab
                 condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMillisecond);
             }
             timer.Stop();
-            CondState = CONDSTATE.NONE;
-            TrialState = TRIALSTATE.NONE;
-            BlockState = BLOCKSTATE.NONE;
             ExperimentState = EXPERIMENTSTATE.NONE;
         }
 

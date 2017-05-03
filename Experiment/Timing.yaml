@@ -123,8 +123,8 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
 Param: {}
-Latency: 21
-TimerDriftSpeed: 3.2199999999999997E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
 CondTestShowLevel: SHORT

@@ -2,23 +2,26 @@ ID: TemporalFreq
 Name: TemporalFreq
 Designer: Alex
 Experimenter: Alex
+Log: 
 Subject_ID: LZR1701
 Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
+Subject_Size: (0, 0, 0)
 Subject_Weight: 300
+Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (21.3, -15.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 50
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -42,16 +45,16 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 337.5
+  Ori@ENGratingQuad@GratingQuad: 45
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 9.66548538
-  Size@ENGratingQuad@GratingQuad: (9.67, 9.67, 1)
+  Diameter@ENGratingQuad@GratingQuad: 25.9086113
+  Size@ENGratingQuad@GratingQuad: (25.9, 25.9, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (-3.99, 0.74, 0)
+  Position@ENGratingQuad@GratingQuad: (2.41, 0.872, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
@@ -68,18 +71,27 @@ EnvParam:
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\TemporalFreq.yaml
+Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
+DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
+Input: None
 PreICI: 150
 CondDur: 500
 SufICI: 150
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
@@ -115,7 +127,8 @@ EnvInheritParam:
 - Diameter@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
 Param: {}
-Latency: 21
-TimerDriftSpeed: 3.2199999999999997E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
+CondTest: 
 CondTestShowLevel: FULL
