@@ -14,17 +14,17 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 202.5
+  Ori@ENQuad@Quad: 22.5
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (2, 2, 1)
@@ -37,7 +37,7 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
   TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
@@ -45,21 +45,21 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 202.5
+  Ori@ENGratingQuad@GratingQuad: 22.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 25.9086113
-  Size@ENGratingQuad@GratingQuad: (25.9, 25.9, 1)
+  Diameter@ENGratingQuad@GratingQuad: 17.4608021
+  Size@ENGratingQuad@GratingQuad: (17.5, 17.5, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (2.41, 0.872, 0)
+  Position@ENGratingQuad@GratingQuad: (-17.8, 6.61, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
-  Ori@ENImageQuad@ImageQuad: 202.5
+  Ori@ENImageQuad@ImageQuad: 22.5
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)

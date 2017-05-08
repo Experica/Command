@@ -13,14 +13,6 @@ FixedDeltaTime: 1000000
 IsShowInactiveEnvParam: false
 IsShowEnvParamFullName: false
 MaxLogEntry: 999
-ExHideParams:
-- Cond
-- CondTest
-- EnvParam
-- Param
-- Log
-- Subject_Log
-- DataPath
 CrossEnvInheritRulePath: CrossEnvInheritRule.yaml
 ParallelPort1: 49168
 ParallelPort2: 49168
@@ -37,6 +29,16 @@ Signal3Bit: 5
 NotifyLatency: 200
 ExLatencyError: 20
 OnlineSignalLatency: 50
-MarkPulseWidth: 22
+MarkPulseWidth: 20
 ParallelPortSquareWaveHighDur: 5
 ParallelPortSquareWaveLowDur: 20
+ExHideParams:
+- Cond
+- CondTest
+- EnvParam
+- Param
+- Log
+- Subject_Log
+- DataPath
+- ExInheritParam
+- EnvInheritParam

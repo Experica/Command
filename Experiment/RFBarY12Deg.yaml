@@ -2,36 +2,39 @@ ID: RFBarY12Deg
 Name: RFBarY12Deg
 Designer: Alex
 Experimenter: Alex
+Log: 
 Subject_ID: LZR1701
 Subject_Name: LZR1701
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 5
+Subject_Size: (0, 0, 0)
 Subject_Weight: 300
+Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 45
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 0
-  Size@ENQuad@Quad: (12, 3, 1)
+  Size@ENQuad@Quad: (12, 2, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (2.34, 0.677, 0)
-  PositionOffset@ENQuad@Quad: (0, 6, 0)
+  Position@ENQuad@Quad: (-26.2, 9.69, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0
@@ -52,7 +55,7 @@ EnvParam:
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 6, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, -3, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
@@ -66,16 +69,29 @@ EnvParam:
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 6, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, -3, 0)
 CondPath: Condition\PositionYOffset12Deg1.5DegStep.yaml
+Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: LGN1
 RecordSite: 4000
 DataDir: X:\
+DataPath: 
 CondSampling: UniformWithoutReplacement
-CondRepeat: 12
+BlockSampling: Ascending
+CondRepeat: 30
+BlockRepeat: 0
 BlockParam: []
+Input: None
+PreICI: 0
 CondDur: 50
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 8
@@ -109,6 +125,8 @@ EnvInheritParam:
 - Position@ENQuad@Quad
 - Ori@ENQuad@Quad
 Param: {}
-Latency: 183
-TimerDriftSpeed: 3.0599999999999998E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
+CondTest: 
+CondTestShowLevel: NONE

@@ -39,34 +39,404 @@ Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Threading.dll 
 Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Threading.dll into Unity Child Domain
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\YamlDotNet.dll (this message is harmless)
 Loading C:\Users\lyonlab\VLab\VLab_Data\Managed\YamlDotNet.dll into Unity Child Domain
-- Completed reload, in  0.017 seconds
+- Completed reload, in  0.020 seconds
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+desktop: 1680x1050 59Hz; virtual: 3600x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 49.999813 ms
+UnloadTime: 152.450790 ms
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\System.Drawing.dll (this message is harmless)
 Platform assembly: C:\Users\lyonlab\VLab\VLab_Data\Managed\Accessibility.dll (this message is harmless)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: fe4 -> priority: 1 
-  Thread -> id: fe8 -> priority: 1 
+  Thread -> id: 900 -> priority: 1 
+  Thread -> id: 450 -> priority: 1 
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.184600 ms
-
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3635.
-Total: 2.968689 ms (FindLiveObjects: 0.080211 ms CreateObjectMapping: 0.035270 ms MarkObjects: 2.845811 ms  DeleteObjects: 0.006542 ms)
-
+UnloadTime: 0.375168 ms
 GfxDevice: creating device client; threaded=1
 GfxDevice: creating device client; threaded=1
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 4960.
+Total: 4.506291 ms (FindLiveObjects: 0.210481 ms CreateObjectMapping: 0.055749 ms MarkObjects: 4.223279 ms  DeleteObjects: 0.014221 ms)
+
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.097081 ms
+UnloadTime: 2.849177 ms
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 5033.
-Total: 3.457639 ms (FindLiveObjects: 0.168103 ms CreateObjectMapping: 0.046647 ms MarkObjects: 3.223546 ms  DeleteObjects: 0.019057 ms)
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4989.
+Total: 5.748700 ms (FindLiveObjects: 0.220720 ms CreateObjectMapping: 0.067979 ms MarkObjects: 5.435254 ms  DeleteObjects: 0.024176 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.509421 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5559.
+Total: 4.145060 ms (FindLiveObjects: 0.181753 ms CreateObjectMapping: 0.072815 ms MarkObjects: 3.874563 ms  DeleteObjects: 0.015643 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.972765 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5559.
+Total: 3.974968 ms (FindLiveObjects: 0.183175 ms CreateObjectMapping: 0.068833 ms MarkObjects: 3.709022 ms  DeleteObjects: 0.013652 ms)
+
+Log: connection {3} has been disconnected by timeout; address {::ffff:192.168.42.129:57424}
+Log: connection {4} has been disconnected by timeout; address {::ffff:192.168.42.129:64990}
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.420678 ms
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.ENCamera.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 5959.
+Total: 4.826849 ms (FindLiveObjects: 0.203939 ms CreateObjectMapping: 0.071392 ms MarkObjects: 4.534735 ms  DeleteObjects: 0.016212 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.Showroom.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.ENMarker.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection,VLab.VLPeerType) <0x00019>
+at VLab.VLNetManager.GetPeerTypeConnection (VLab.VLPeerType) <0x000ba>
+at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1<UnityEngine.Networking.NetworkConnection>,bool) <0x0003f>
+at UnityEngine.Networking.NetworkIdentity.RebuildObservers (bool) <0x00127>
+at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject) <0x0045e>
+at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject) <0x0003b>
+at VLab.Showroom.SetAllItemActiveExceptOtherWise (VLab.EnvironmentObject,bool) <0x0012a>
+at VLab.Showroom.OnShow (VLab.EnvironmentObject) <0x0006e>
+at VLab.Showroom.onshow (VLab.EnvironmentObject) <0x0001f>
+at VLab.Showroom.set_NetworkShow (VLab.EnvironmentObject) <0x00081>
+at (wrapper dynamic-method) VLab.Showroom.setter (object,object) <0x0007f>
+at VLab.EnvironmentManager.SetParam (UnityEngine.Networking.NetworkBehaviour,VLab.PropertyAccess,object,string,bool) <0x00059>
+at VLab.EnvironmentManager.SetParam (string,object,bool) <0x0011f>
+at VLab.EnvironmentManager.SetParams (System.Collections.Generic.Dictionary`2<string, object>) <0x000ad>
+at VLab.ExperimentManager.OnServerSceneChanged (string) <0x00067>
+at VLab.VLUIController.OnServerSceneChanged (string) <0x0002e>
+at VLab.VLNetManager.OnServerSceneChanged (string) <0x00034>
+at UnityEngine.Networking.NetworkManager.FinishLoadScene () <0x000e3>
+at UnityEngine.Networking.NetworkManager.UpdateScene () <0x000dc>
+at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () <0x0003e>
+
+ 
+(Filename:  Line: -1)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.548104 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 6358.
+Total: 7.755953 ms (FindLiveObjects: 0.330512 ms CreateObjectMapping: 0.116049 ms MarkObjects: 7.284361 ms  DeleteObjects: 0.024745 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.889425 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 5386.
+Total: 4.205929 ms (FindLiveObjects: 0.188864 ms CreateObjectMapping: 0.069970 ms MarkObjects: 3.933156 ms  DeleteObjects: 0.013652 ms)
+
+Log: connection {4} has been disconnected by timeout; address {::ffff:192.168.42.129:57137}
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.918153 ms
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.ENCamera.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 5821.
+Total: 9.835167 ms (FindLiveObjects: 0.394225 ms CreateObjectMapping: 0.172936 ms MarkObjects: 9.245251 ms  DeleteObjects: 0.021901 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.Showroom.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.ENMarker.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection conn, VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.VLNetManager.GetPeerTypeConnection (VLPeerType peertype) [0x00000] in <filename unknown>:0 
+  at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1 observers, Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.RebuildObservers (Boolean initialize) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.SpawnObjects () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+at VLab.VLNetManager.IsConnectionPeerType (UnityEngine.Networking.NetworkConnection,VLab.VLPeerType) <0x00019>
+at VLab.VLNetManager.GetPeerTypeConnection (VLab.VLPeerType) <0x000ba>
+at VLab.EnvNet.OnRebuildObservers (System.Collections.Generic.HashSet`1<UnityEngine.Networking.NetworkConnection>,bool) <0x0003f>
+at UnityEngine.Networking.NetworkIdentity.RebuildObservers (bool) <0x00127>
+at UnityEngine.Networking.NetworkServer.SpawnObject (UnityEngine.GameObject) <0x0045e>
+at UnityEngine.Networking.NetworkServer.Spawn (UnityEngine.GameObject) <0x0003b>
+at VLab.Showroom.SetAllItemActiveExceptOtherWise (VLab.EnvironmentObject,bool) <0x0012a>
+at VLab.Showroom.OnShow (VLab.EnvironmentObject) <0x0006e>
+at VLab.Showroom.onshow (VLab.EnvironmentObject) <0x0001f>
+at VLab.Showroom.set_NetworkShow (VLab.EnvironmentObject) <0x00081>
+at (wrapper dynamic-method) VLab.Showroom.setter (object,object) <0x0007f>
+at VLab.EnvironmentManager.SetParam (UnityEngine.Networking.NetworkBehaviour,VLab.PropertyAccess,object,string,bool) <0x00059>
+at VLab.EnvironmentManager.SetParam (string,object,bool) <0x0011f>
+at VLab.EnvironmentManager.SetParams (System.Collections.Generic.Dictionary`2<string, object>) <0x000ad>
+at VLab.ExperimentManager.OnServerSceneChanged (string) <0x00067>
+at VLab.VLUIController.OnServerSceneChanged (string) <0x0002e>
+at VLab.VLNetManager.OnServerSceneChanged (string) <0x00034>
+at UnityEngine.Networking.NetworkManager.FinishLoadScene () <0x000e3>
+at UnityEngine.Networking.NetworkManager.UpdateScene () <0x000dc>
+at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () <0x0003e>
+
+ 
+(Filename:  Line: -1)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.533598 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 6220.
+Total: 7.120811 ms (FindLiveObjects: 0.311739 ms CreateObjectMapping: 0.108369 ms MarkObjects: 6.676809 ms  DeleteObjects: 0.023323 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.929531 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 5248.
+Total: 4.764842 ms (FindLiveObjects: 0.214178 ms CreateObjectMapping: 0.074806 ms MarkObjects: 4.461351 ms  DeleteObjects: 0.014506 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.679797 ms
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 5823.
+Total: 4.679796 ms (FindLiveObjects: 0.193699 ms CreateObjectMapping: 0.068548 ms MarkObjects: 4.396784 ms  DeleteObjects: 0.020194 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.561757 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5854.
+Total: 5.239278 ms (FindLiveObjects: 0.202517 ms CreateObjectMapping: 0.100120 ms MarkObjects: 4.914454 ms  DeleteObjects: 0.021048 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.415842 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 7416.
+Total: 6.315862 ms (FindLiveObjects: 0.380288 ms CreateObjectMapping: 0.091018 ms MarkObjects: 5.821231 ms  DeleteObjects: 0.022470 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.771385 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 7416.
+Total: 6.305054 ms (FindLiveObjects: 0.307757 ms CreateObjectMapping: 0.125719 ms MarkObjects: 5.848252 ms  DeleteObjects: 0.022754 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.595605 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 6986.
+Total: 7.724096 ms (FindLiveObjects: 0.407594 ms CreateObjectMapping: 0.102680 ms MarkObjects: 7.193057 ms  DeleteObjects: 0.019910 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.772807 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5420.
+Total: 5.631229 ms (FindLiveObjects: 0.188011 ms CreateObjectMapping: 0.075943 ms MarkObjects: 5.346510 ms  DeleteObjects: 0.019910 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.394225 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5868.
+Total: 6.190711 ms (FindLiveObjects: 0.199388 ms CreateObjectMapping: 0.135675 ms MarkObjects: 5.834030 ms  DeleteObjects: 0.021332 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.932659 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5268.
+Total: 10.024600 ms (FindLiveObjects: 0.320557 ms CreateObjectMapping: 0.178624 ms MarkObjects: 9.494984 ms  DeleteObjects: 0.030434 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.146270 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 5958.
+Total: 6.128704 ms (FindLiveObjects: 0.201095 ms CreateObjectMapping: 0.092441 ms MarkObjects: 5.812698 ms  DeleteObjects: 0.021048 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.095640 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 9689.
+Total: 9.236716 ms (FindLiveObjects: 0.372039 ms CreateObjectMapping: 0.085045 ms MarkObjects: 8.753748 ms  DeleteObjects: 0.025314 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.542202 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 32045.
+Total: 32.065979 ms (FindLiveObjects: 1.601933 ms CreateObjectMapping: 0.309180 ms MarkObjects: 30.093996 ms  DeleteObjects: 0.060300 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.459787 ms
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 8981.
+Total: 13.680717 ms (FindLiveObjects: 0.518808 ms CreateObjectMapping: 0.119462 ms MarkObjects: 13.010876 ms  DeleteObjects: 0.030434 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.439735 ms
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 7268.
+Total: 10.164542 ms (FindLiveObjects: 0.282443 ms CreateObjectMapping: 0.183744 ms MarkObjects: 9.669911 ms  DeleteObjects: 0.027305 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.848182 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 7863.
+Total: 25.596239 ms (FindLiveObjects: 0.422953 ms CreateObjectMapping: 0.208205 ms MarkObjects: 24.931231 ms  DeleteObjects: 0.032709 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.394865 ms
+
+Unloading 1197 unused Assets to reduce memory usage. Loaded Objects now: 6711.
+Total: 16.548384 ms (FindLiveObjects: 0.349569 ms CreateObjectMapping: 0.155869 ms MarkObjects: 15.410932 ms  DeleteObjects: 0.631728 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.043944 ms
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 8585.
+Total: 18.252714 ms (FindLiveObjects: 0.315153 ms CreateObjectMapping: 0.181469 ms MarkObjects: 17.718832 ms  DeleteObjects: 0.036692 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.002346 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 7977.
+Total: 34.272053 ms (FindLiveObjects: 0.540993 ms CreateObjectMapping: 0.260541 ms MarkObjects: 33.436096 ms  DeleteObjects: 0.033278 ms)
 

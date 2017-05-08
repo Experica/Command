@@ -180,7 +180,9 @@ namespace VLab
             }
             if (!config.ContainsKey(VLCFG.ExHideParams))
             {
-                config[VLCFG.ExHideParams] = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath" };
+                config[VLCFG.ExHideParams] = new List<string>{
+                    "Cond", "CondTest", "EnvParam", "Param", "Log",
+                    "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam" };
             }
             else
             {
