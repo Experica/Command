@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Assets\CompilerService.cs" />
     <Compile Include="Assets\Condition.cs" />
+    <Compile Include="Assets\Coordinate.cs" />
     <Compile Include="Assets\DynamicShowroom.cs" />
     <Compile Include="Assets\ENCamera.cs" />
     <Compile Include="Assets\ENGratingQuad.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Assets\VLAnalysisManager.cs" />
     <Compile Include="Assets\VLApplicationManager.cs" />
     <Compile Include="Assets\VLCOM.cs" />
+    <Compile Include="Assets\VLControlManager.cs" />
     <Compile Include="Assets\VLExtention.cs" />
     <Compile Include="Assets\VLMsgPack.cs" />
     <Compile Include="Assets\VLNetManager.cs" />

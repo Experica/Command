@@ -1,24 +1,28 @@
 ID: RFGrating48Deg
 Name: RFGrating48Deg
 Designer: Alex
-Experimenter: Alex
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Experimenter: Andrzej
+Log: 
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
-Subject_Weight: 300
+Subject_Age: 0
+Subject_Size: (0, 0, 0)
+Subject_Weight: 3
+Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 34
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (59, -44, -1E+03)
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (0, 0, 0, 1)
-  MarkOffColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 90
@@ -27,6 +31,7 @@ EnvParam:
   Size@ENQuad@Quad: (2, 2, 1)
   Color@ENQuad@Quad: (0, 0, 0, 0)
   MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
@@ -34,48 +39,60 @@ EnvParam:
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 15
+  Ori@ENGratingQuad@GratingQuad: 292.5
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 12
   Size@ENGratingQuad@GratingQuad: (12, 12, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskRadius@ENGratingQuad@GratingQuad: 0
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (1.14, 18.9, 0)
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 0
-  ImageDir@ENImageQuad@ImageQuad: SampleImage
+  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
+  IsCacheImage@ENImageQuad@ImageQuad: false
   Ori@ENImageQuad@ImageQuad: 90
   OriOffset@ENImageQuad@ImageQuad: 0
   Diameter@ENImageQuad@ImageQuad: 2
   Size@ENImageQuad@ImageQuad: (2, 2, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
+  MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (6, 18, 0)
 CondPath: Condition\PositionOffset48Deg6DegStep.yaml
+Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
+DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 12
 BlockRepeat: 1
 BlockParam: []
+Input: None
 PreICI: 50
 CondDur: 300
 SufICI: 50
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 4
@@ -110,8 +127,10 @@ EnvInheritParam:
 - TemporalFreq@ENGratingQuad@GratingQuad
 - Ori@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
-Latency: 183
-TimerDriftSpeed: 3.0599999999999998E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
+CondTest: 
 CondTestShowLevel: SHORT

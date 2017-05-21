@@ -1,5 +1,5 @@
-ID: OriOffsetBar
-Name: OriOffsetBar
+ID: BO
+Name: BO
 Designer: Alex
 Experimenter: Andrzej
 Log: 
@@ -13,7 +13,7 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam: {}
-CondPath: Condition\OrientationOffset7.5DegStep.yaml
+CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V2Site5
@@ -21,9 +21,9 @@ RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
+BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
-BlockRepeat: 0
+BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 150
@@ -44,32 +44,33 @@ NotifyParam:
 - CondRepeat
 ExInheritParam:
 - Subject_ID
-- Subject_Name
 - Subject_Species
-- Subject_Gender
 - Subject_Age
 - Subject_Size
 - Subject_Weight
 - RecordSession
 - RecordSite
 - DataDir
+- Subject_Name
+- Subject_Gender
 - Experimenter
 - Latency
 - TimerDriftSpeed
 - Delay
 EnvInheritParam:
-- ScreenHalfHeight@ENCamera@OrthoCamera
-- ScreenToEye@ENCamera@OrthoCamera
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
 - Marker@Showroom@ShowroomManager
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
-CondTestShowLevel: NONE
+CondTestShowLevel: FULL

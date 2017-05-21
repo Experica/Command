@@ -1,85 +1,86 @@
 ID: Diameter
 Name: Diameter
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
+Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 300
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 1
-  Size@ENQuad@Quad: (1, 1, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
+  Diameter@ENQuad@Quad: 0.5
+  Size@ENQuad@Quad: (0.5, 0.5, 1)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
-  Sigma@ENQuad@Quad: 0
-  Visible@ENQuad@Quad: true
+  Sigma@ENQuad@Quad: 0.150000006
+  Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 2
+  TemporalFreq@ENGratingQuad@GratingQuad: 10
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 45
+  Ori@ENGratingQuad@GratingQuad: 67.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 1
-  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 6
+  Size@ENGratingQuad@GratingQuad: (6, 6, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (-25.5, 10.4, 0)
+  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 1
-  Size@ENImageQuad@ImageQuad: (1, 1, 1)
+  Diameter@ENImageQuad@ImageQuad: 0.5
+  Size@ENImageQuad@ImageQuad: (0.5, 0.5, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
   MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 0
-  Visible@ENImageQuad@ImageQuad: true
+  Sigma@ENImageQuad@ImageQuad: 0.150000006
+  Visible@ENImageQuad@ImageQuad: false
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: Condition\Diameter.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 8
+CondRepeat: 16
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -126,6 +127,7 @@ EnvInheritParam:
 - Ori@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
 - Marker@Showroom@ShowroomManager
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

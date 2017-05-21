@@ -29,7 +29,7 @@ Signal3Bit: 5
 NotifyLatency: 200
 ExLatencyError: 20
 OnlineSignalLatency: 50
-MarkPulseWidth: 20
+MarkPulseWidth: 21
 ParallelPortSquareWaveHighDur: 5
 ParallelPortSquareWaveLowDur: 20
 ExHideParams:

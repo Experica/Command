@@ -44,6 +44,7 @@ namespace VLab
         public VLNetManager netmanager;
         public ExperimentManager exmanager;
         public VLAnalysisManager alsmanager;
+        public VLControlManager ctrlmanager;
         public ControlPanel controlpanel;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;

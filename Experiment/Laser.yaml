@@ -1,27 +1,28 @@
 ID: Laser
 Name: Laser
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
+Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 300
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -73,8 +74,8 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -122,9 +123,10 @@ EnvInheritParam:
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
+- ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: !!ListOfFloat '[0.25, 0.55, 0.75]'
-  LaserFreq: !!ListOfFloat '[10]'
+  LaserPower: !!ListOfFloat '[0.145, 0.285]'
+  LaserFreq: !!ListOfFloat '[40]'
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

@@ -1,27 +1,28 @@
 ID: RFGrating4Deg
 Name: RFGrating4Deg
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
+Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 300
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (40.6, -30.3, -1E+03)
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -34,28 +35,28 @@ EnvParam:
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 1.5, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 7
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 292.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 1
-  Size@ENGratingQuad@GratingQuad: (1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 3
+  Size@ENGratingQuad@GratingQuad: (3, 3, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
-  MaskRadius@ENGratingQuad@GratingQuad: 0
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (2, -2, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 1.5, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
@@ -69,12 +70,12 @@ EnvParam:
   Sigma@ENImageQuad@ImageQuad: 0.150000006
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, 1.5, 0)
 CondPath: Condition\PositionOffset4Deg0.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -114,10 +115,22 @@ ExInheritParam:
 - TimerDriftSpeed
 - Latency
 - Delay
-EnvInheritParam: []
+EnvInheritParam:
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
+- SpatialFreq@ENGratingQuad@GratingQuad
+- TemporalFreq@ENGratingQuad@GratingQuad
+- Ori@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
-Latency: 21
-TimerDriftSpeed: 3.2199999999999997E-05
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
-CondTestShowLevel: NONE
+CondTestShowLevel: SHORT

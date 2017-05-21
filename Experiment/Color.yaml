@@ -1,5 +1,5 @@
-ID: Contrast
-Name: Contrast
+ID: Color
+Name: Color
 Designer: Alex
 Experimenter: Andrzej
 Log: 
@@ -14,7 +14,7 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.7, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -22,8 +22,8 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
-  Show@Showroom@ShowroomManager: GratingQuad
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
@@ -38,18 +38,18 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 2
-  TemporalFreq@ENGratingQuad@GratingQuad: 10
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 67.5
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 6
-  Size@ENGratingQuad@GratingQuad: (6, 6, 1)
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0
@@ -71,7 +71,7 @@ EnvParam:
   Visible@ENImageQuad@ImageQuad: true
   Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
-CondPath: Condition\Contrast.yaml
+CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V2Site5
@@ -102,15 +102,15 @@ NotifyParam:
 - CondRepeat
 ExInheritParam:
 - Subject_ID
-- Subject_Name
 - Subject_Species
-- Subject_Gender
 - Subject_Age
 - Subject_Size
 - Subject_Weight
 - RecordSession
 - RecordSite
 - DataDir
+- Subject_Name
+- Subject_Gender
 - Experimenter
 - Latency
 - TimerDriftSpeed
@@ -118,16 +118,13 @@ ExInheritParam:
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
 - Marker@Showroom@ShowroomManager
-- SpatialFreq@ENGratingQuad@GratingQuad
-- TemporalFreq@ENGratingQuad@GratingQuad
-- Ori@ENGratingQuad@GratingQuad
-- Diameter@ENGratingQuad@GratingQuad
-- Position@ENGratingQuad@GratingQuad
-- MarkOnColor@ENMarker@Marker
-- MarkOffColor@ENMarker@Marker
+- Ori@ENQuad@Quad
+- Position@ENQuad@Quad
 - ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22

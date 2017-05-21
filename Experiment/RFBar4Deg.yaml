@@ -1,30 +1,31 @@
 ID: RFBar4Deg
 Name: RFBar4Deg
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
+Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 300
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.6, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 180
+  Ori@ENQuad@Quad: 292.5
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 0
   Size@ENQuad@Quad: (2, 1, 1)
@@ -33,7 +34,7 @@ EnvParam:
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (2.41, 0.372, 0)
+  Position@ENQuad@Quad: (0, 0, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -73,8 +74,8 @@ EnvParam:
 CondPath: Condition\PositionOffset4Deg0.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -124,6 +125,7 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

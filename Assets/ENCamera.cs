@@ -34,6 +34,8 @@ namespace VLab
         public float ScreenHalfHeight = 15;
         [SyncVar(hook = "onscreentoeye")]
         public float ScreenToEye = 57;
+        [SyncVar(hook ="onscreenaspect")]
+        public float ScreenAspect = 4.0f / 3.0f;
 
         public new Camera camera;
 #if VLAB
@@ -89,6 +91,19 @@ namespace VLab
                 camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(ScreenHalfHeight, ste);
             }
             ScreenToEye = ste;
+        }
+
+        void onscreenaspect(float apr)
+        {
+            OnScreenAspect(apr);
+        }
+        public virtual void OnScreenAspect(float apr)
+        {
+            if(camera!=null)
+            {
+                camera.aspect = apr;
+            }
+            ScreenAspect = apr;
         }
 
 #if VLAB

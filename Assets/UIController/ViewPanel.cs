@@ -34,6 +34,8 @@ namespace VLab
         public VLUIController uicontroller;
         public RenderTexture rendertexture;
         public GameObject viewportcontent;
+        public Coordinate grid;
+        public InputField gridcenter;
         public Action OnViewUpdated;
 
         float aspectratio = 4.0f / 3.0f;
@@ -50,13 +52,20 @@ namespace VLab
                     {
                         OnViewUpdated();
                     }
+                    uicontroller.exmanager.el.envmanager.ForcePushParams();
                 }
             }
         }
 
+        private void Start()
+        {
+            gridcenter.text = grid.Center.Convert<string>();
+        }
+
         public void UpdateView(PointerEventData eventData = null)
         {
-            var maincamera = uicontroller.exmanager.el.envmanager.maincamera;
+            var envmanager = uicontroller.exmanager.el.envmanager;
+            var maincamera = envmanager.maincamera;
             if (maincamera != null)
             {
                 // Get Render Size
@@ -86,12 +95,31 @@ namespace VLab
                 rendertexture.anisoLevel = (int)uicontroller.appmanager.config[VLCFG.AnisotropicFilterLevel];
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;
+                // Set Camera Aspect
+                envmanager.SetParam("ScreenAspect", aspectratio, true);
             }
         }
 
         public void OnEndResize(PointerEventData eventData)
         {
             UpdateView(eventData);
+        }
+
+        public void OnToggleGrid(bool ison)
+        {
+            if(ison)
+            {
+                grid.gameObject.SetActive( true);
+            }
+            else
+            {
+                grid.gameObject.SetActive( false);
+            }
+        }
+
+        public void OnGridCenter(string p)
+        {
+            grid.Center = p.Convert<Vector3>();
         }
 
     }

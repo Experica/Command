@@ -1,27 +1,28 @@
 ID: LaserImage
 Name: LaserImage
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
-Subject_ID: LZR1701
-Subject_Name: LZR1701
-Subject_Species: Long Evans Rat
+Subject_ID: C1701
+Subject_Name: C1701
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 5
+Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 300
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerSize@ENMarker@Marker: 1
+  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -56,30 +57,30 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 365
+  Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: vanhateren_3000_32×32_0.5_0.5
   IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 20
-  Size@ENImageQuad@ImageQuad: (20, 20, 1)
+  Diameter@ENImageQuad@ImageQuad: 12
+  Size@ENImageQuad@ImageQuad: (12, 12, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: DiskFade
   MaskRadius@ENImageQuad@ImageQuad: 0.449999988
   Sigma@ENImageQuad@ImageQuad: 25
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: (-25.5, 10.4, 0)
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserTrialImageLogic
-RecordSession: LGN1
-RecordSite: 4000
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 5
+CondRepeat: 6
 BlockRepeat: 1
 BlockParam:
 - LaserPower
@@ -128,9 +129,10 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - Position@ENImageQuad@ImageQuad
 - Diameter@ENImageQuad@ImageQuad
+- ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: !!ListOfFloat '[0.25, 0.55, 0.75]'
-  LaserFreq: !!ListOfFloat '[10]'
+  LaserPower: !!ListOfFloat '[0.145, 0.285]'
+  LaserFreq: !!ListOfFloat '[40]'
   NumOfImage: !!Float 3000
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

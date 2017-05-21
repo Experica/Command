@@ -108,20 +108,30 @@ namespace VLab
             // they will spawn nothing.
             if ((pt == VLPeerType.VLabAnalysis)&& (uicontroller.alsmanager==null))
             {
-                SpwanVLAnalysisManager();
+                SpwanVLAnalysis(netMsg.conn);
             }
         }
 
-        public void SpwanVLAnalysisManager()
+        public void SpwanVLAnalysis(NetworkConnection conn)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
-            var als = go.GetComponent<VLAnalysisManager>();
+            GameObject goa = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
+            var als = goa.GetComponent<VLAnalysisManager>();
             als.uicontroller = uicontroller;
             uicontroller.alsmanager = als;
-            go.name = "VLAnalysisManager";
-            go.transform.SetParent(transform, false);
+            goa.name = "VLAnalysisManager";
+            goa.transform.SetParent(transform, false);
 
-            NetworkServer.Spawn(go);
+            NetworkServer.Spawn(goa);
+
+            GameObject goc = Instantiate(Resources.Load<GameObject>("VLControlManager"));
+            var ctrl = goc.GetComponent<VLControlManager>();
+            ctrl.uicontroller = uicontroller;
+            uicontroller.ctrlmanager = ctrl;
+            goc.name = "VLControlManager";
+            goc.transform.SetParent(transform, false);
+
+            //NetworkServer.Spawn(goc);
+            NetworkServer.SpawnWithClientAuthority(goc, conn);
         }
 
         void AspectRatioHandler(NetworkMessage netMsg)

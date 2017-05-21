@@ -87,8 +87,7 @@ namespace VLab
         public void ParseSceneObjectNet(NetworkBehaviour nb, string nbname)
         {
             var nbtype = nb.GetType();
-            var fs = nbtype.GetFields();
-            foreach (var f in fs)
+            foreach (var f in nbtype.GetFields())
             {
                 if (f.IsDefined(typeof(SyncVarAttribute), true))
                 {

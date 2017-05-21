@@ -1,5 +1,5 @@
-ID: OriOffsetBar
-Name: OriOffsetBar
+ID: MapOri8Slave
+Name: MapOri8Slave
 Designer: Alex
 Experimenter: Andrzej
 Log: 
@@ -13,7 +13,7 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam: {}
-CondPath: Condition\OrientationOffset7.5DegStep.yaml
+CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V2Site5
@@ -21,17 +21,17 @@ RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
+BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
-BlockRepeat: 0
+BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 150
 CondDur: 500
 SufICI: 150
-PreITI: 0
+PreITI: 200
 TrialDur: 0
-SufITI: 0
+SufITI: 200
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -58,18 +58,21 @@ ExInheritParam:
 - TimerDriftSpeed
 - Delay
 EnvInheritParam:
+- MarkerSize@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
-- MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
-- Ori@ENQuad@Quad
-- Position@ENQuad@Quad
+- SpatialFreq@ENGratingQuad@GratingQuad
+- TemporalFreq@ENGratingQuad@GratingQuad
+- Diameter@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
-CondTestShowLevel: NONE
+CondTestShowLevel: FULL
