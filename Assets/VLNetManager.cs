@@ -108,30 +108,32 @@ namespace VLab
             // they will spawn nothing.
             if ((pt == VLPeerType.VLabAnalysis)&& (uicontroller.alsmanager==null))
             {
-                SpwanVLAnalysis(netMsg.conn);
+                SpwanVLAnalysisManager();
             }
         }
 
-        public void SpwanVLAnalysis(NetworkConnection conn)
+        public void SpwanVLAnalysisManager()
         {
-            GameObject goa = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
-            var als = goa.GetComponent<VLAnalysisManager>();
+            GameObject go = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
+            var als = go.GetComponent<VLAnalysisManager>();
             als.uicontroller = uicontroller;
             uicontroller.alsmanager = als;
-            goa.name = "VLAnalysisManager";
-            goa.transform.SetParent(transform, false);
+            go.name = "VLAnalysisManager";
+            go.transform.SetParent(transform, false);
 
-            NetworkServer.Spawn(goa);
+            NetworkServer.Spawn(go);
+        }
 
-            GameObject goc = Instantiate(Resources.Load<GameObject>("VLControlManager"));
-            var ctrl = goc.GetComponent<VLControlManager>();
+        public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+        {
+            GameObject go = Instantiate(Resources.Load<GameObject>("VLControlManager"));
+            var ctrl = go.GetComponent<VLControlManager>();
             ctrl.uicontroller = uicontroller;
             uicontroller.ctrlmanager = ctrl;
-            goc.name = "VLControlManager";
-            goc.transform.SetParent(transform, false);
+            go.name = "VLControlManager";
+            go.transform.SetParent(transform, false);
 
-            //NetworkServer.Spawn(goc);
-            NetworkServer.SpawnWithClientAuthority(goc, conn);
+            NetworkServer.AddPlayerForConnection(conn, go, playerControllerId);
         }
 
         void AspectRatioHandler(NetworkMessage netMsg)

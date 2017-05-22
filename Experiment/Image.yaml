@@ -57,7 +57,7 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 1
+  Image@ENImageQuad@ImageQuad: 483
   ImageSet@ENImageQuad@ImageQuad: vanhateren_3000_32×32_0.5_0.5
   IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0

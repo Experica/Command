@@ -71,6 +71,7 @@ public class RippleImageLogic : ExperimentLogic
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
+        envmanager.Invoke("RpcPreLoadImage",new object[] { condmanager.cond["Image"].Select(i => (string)i).ToArray() });
         recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
         /* 
         Ripple recorder set path through UDP network and Trellis receive
