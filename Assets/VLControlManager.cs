@@ -16,6 +16,7 @@ namespace VLab
             Debug.Log("Control back");
         }
 
+#if VLAB
         public override bool OnCheckObserver(NetworkConnection conn)
         {
             var b = uicontroller.netmanager.IsConnectionPeerType(conn, VLPeerType.VLabAnalysis);
@@ -35,5 +36,7 @@ namespace VLab
             }
             return false;
         }
+#endif
+
     }
 }

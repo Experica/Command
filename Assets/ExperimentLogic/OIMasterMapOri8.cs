@@ -20,53 +20,57 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
+using System.Collections.Generic;
 
-public class OITTLCTLogic : ExperimentLogic
+public class OIMasterMapOri8 : ExperimentLogic
 {
-    ParallelPort pport = new ParallelPort(0xC010);
-    bool isreverse = false;
+    ParallelPort pport;
+    double reverseontime;
+    bool isreverse;
+
+    public override void OnStart()
+    {
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
+    }
 
     public override void Logic()
     {
         switch (CondState)
         {
-            case CONDSTATE.NONE:
-                envmanager.SetActiveParam("visible", false);
+            case CONDSTATE.NONE: 
+               SetEnvActiveParam("Drifting", false);
+                SetEnvActiveParam("Visible", true);
                 CondState = CONDSTATE.PREICI;
-                envmanager.SetActiveParam("isdrifting", false);
-                envmanager.SetActiveParam("visible", true);
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    envmanager.SetActiveParam("isdrifting", true);
+                    SetEnvActiveParam("Drifting", true);
                     CondState = CONDSTATE.COND;
-                    pport.SetBit(bit: 0, value: true);
+                    reverseontime = CondOnTime;
+                    isreverse = envmanager.GetActiveParam("ReverseTime").Convert<bool>();
                 }
                 break;
             case CONDSTATE.COND:
-                if (!isreverse && CondHold >= ex.CondDur)
+                if(CondHold>=ex.CondDur)
                 {
-                    envmanager.SetActiveParam("isreversetime", true);
-                    //var curori = (float)envmanager.GetParam("ori");
-                    //envmanager.ActiveSyncSetParam("ori", curori + 180);
-                    isreverse = true;
-                }
-                if (isreverse && CondHold >= 2 * ex.CondDur)
-                {
-                    envmanager.SetActiveParam("visible", false);
-                    isreverse = false;
-                    envmanager.SetActiveParam("isreversetime", false);
+                    SetEnvActiveParam("Visible", false);
+                    SetEnvActiveParam("ReverseTime", false);
                     CondState = CONDSTATE.SUFICI;
-                    pport.SetBit(bit: 0, value: false);
+                }
+                if(timer.ElapsedMillisecond-reverseontime>=2000)
+                {
+                    isreverse = !isreverse;
+                    SetEnvActiveParam("ReverseTime", isreverse);
+                    reverseontime = timer.ElapsedMillisecond;
                 }
                 break;
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
+                    envmanager.SetActiveParam("Drifting", false);
+                    envmanager.SetActiveParam("Visible", true);
                     CondState = CONDSTATE.PREICI;
-                    envmanager.SetActiveParam("isdrifting", false);
-                    envmanager.SetActiveParam("visible", true);
                 }
                 break;
         }

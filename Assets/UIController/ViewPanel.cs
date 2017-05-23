@@ -34,35 +34,45 @@ namespace VLab
         public VLUIController uicontroller;
         public RenderTexture rendertexture;
         public GameObject viewportcontent;
-        public Coordinate grid;
-        public InputField gridcenter;
+        public CartesianGrid grid;
+        public InputField gridcenterinput;
         public Action OnViewUpdated;
 
-        float aspectratio = 4.0f / 3.0f;
-        public float AspectRatio
+        void Start()
         {
-            get { return aspectratio; }
-            set
+            SetGridCenter(new Vector3(0, 0, 50));
+        }
+
+        void SetGridCenter(Vector3 c, bool notifyui = true)
+        {
+            grid.Center = c;
+            if (notifyui)
             {
-                if(aspectratio!=value)
-                {
-                    aspectratio = value;
-                    UpdateView();
-                    if(OnViewUpdated!=null)
-                    {
-                        OnViewUpdated();
-                    }
-                    uicontroller.exmanager.el.envmanager.ForcePushParams();
-                }
+                gridcenterinput.text = c.Convert<string>();
             }
         }
 
-        private void Start()
+        void UpdateGridSize(bool isupdatetick = true)
         {
-            gridcenter.text = grid.Center.Convert<string>();
+            var maincamera = uicontroller.exmanager.el.envmanager.maincamera;
+            grid.Size = new Vector3
+                    (maincamera.aspect * maincamera.orthographicSize + Mathf.Abs(grid.Center.x),
+                    maincamera.orthographicSize + Mathf.Abs(grid.Center.y), 1);
+            if (isupdatetick)
+            {
+                grid.UpdateTick(grid.TickInterval);
+                grid.TickSize = grid.Size;
+            }
         }
 
-        public void UpdateView(PointerEventData eventData = null)
+        void UpdateGridLineWidth()
+        {
+            var maincamera = uicontroller.exmanager.el.envmanager.maincamera;
+            grid.UpdateAxisLineWidth(maincamera.orthographicSize);
+            grid.UpdateTickLineWidth(maincamera.orthographicSize);
+        }
+
+        public void UpdateViewport()
         {
             var envmanager = uicontroller.exmanager.el.envmanager;
             var maincamera = envmanager.maincamera;
@@ -71,15 +81,15 @@ namespace VLab
                 // Get Render Size
                 var vpcsize = (viewportcontent.transform as RectTransform).rect.size;
                 float width, height;
-                if (vpcsize.x / vpcsize.y >= aspectratio)
+                if (vpcsize.x / vpcsize.y >= maincamera.aspect)
                 {
-                    width = vpcsize.y * aspectratio;
+                    width = vpcsize.y * maincamera.aspect;
                     height = vpcsize.y;
                 }
                 else
                 {
                     width = vpcsize.x;
-                    height = vpcsize.x / aspectratio;
+                    height = vpcsize.x / maincamera.aspect;
                 }
                 // Set Render Size and Target
                 var ri = viewportcontent.GetComponentInChildren<RawImage>();
@@ -95,31 +105,33 @@ namespace VLab
                 rendertexture.anisoLevel = (int)uicontroller.appmanager.config[VLCFG.AnisotropicFilterLevel];
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;
-                // Set Camera Aspect
-                envmanager.SetParam("ScreenAspect", aspectratio, true);
+
+                UpdateGridSize();
+                UpdateGridLineWidth();
             }
         }
 
         public void OnEndResize(PointerEventData eventData)
         {
-            UpdateView(eventData);
+            UpdateViewport();
         }
 
         public void OnToggleGrid(bool ison)
         {
-            if(ison)
+            if (ison)
             {
-                grid.gameObject.SetActive( true);
+                grid.gameObject.SetActive(true);
             }
             else
             {
-                grid.gameObject.SetActive( false);
+                grid.gameObject.SetActive(false);
             }
         }
 
         public void OnGridCenter(string p)
         {
             grid.Center = p.Convert<Vector3>();
+            UpdateGridSize();
         }
 
     }

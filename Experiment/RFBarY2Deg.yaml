@@ -1,7 +1,7 @@
 ID: RFBarY2Deg
 Name: RFBarY2Deg
 Designer: Alex
-Experimenter: Alex
+Experimenter: Andrzej
 Log: 
 Subject_ID: C1701
 Subject_Name: C1701
@@ -13,18 +13,19 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 40
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (35.8, -19.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (20.7, -15.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 50
+  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 157.5
+  Ori@ENQuad@Quad: 292.5
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 0
   Size@ENQuad@Quad: (2, 0.5, 1)
@@ -33,7 +34,7 @@ EnvParam:
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (-11.8, 13.5, 0)
+  Position@ENQuad@Quad: (1.5, -3.28, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -56,7 +57,7 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 0
+  Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
   Ori@ENImageQuad@ImageQuad: 0
@@ -73,8 +74,8 @@ EnvParam:
 CondPath: Condition\PositionYOffset2Deg0.25DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V2Site1
-RecordSite: 3000Ch21
+RecordSession: V2Site5
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -124,6 +125,7 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

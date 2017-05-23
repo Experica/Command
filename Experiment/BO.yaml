@@ -68,6 +68,7 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 - ScreenAspect@ENCamera@OrthoCamera
+- MarkerPosition@ENMarker@Marker
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

@@ -14,10 +14,11 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -38,14 +39,14 @@ EnvParam:
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 112.5
+  Ori@ENGratingQuad@GratingQuad: 222.25145
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 4
   Size@ENGratingQuad@GratingQuad: (4, 4, 1)
@@ -54,7 +55,7 @@ EnvParam:
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (-7.43, 0.28, 0)
+  Position@ENGratingQuad@GratingQuad: (2.09, -2.84, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 3, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
@@ -74,7 +75,7 @@ CondPath: Condition\PositionOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V2Site5
-RecordSite: 3200Ch6
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

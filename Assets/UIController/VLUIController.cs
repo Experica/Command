@@ -88,14 +88,14 @@ namespace VLab
 
         public void OnAspectRatioMessage(float ratio)
         {
-            viewpanel.AspectRatio = ratio;
+            exmanager.el.envmanager.SetParam("ScreenAspect", ratio, true);
         }
 
         public void OnServerSceneChanged(string sceneName)
         {
             exmanager.OnServerSceneChanged(sceneName);
             envpanel.UpdateEnv(exmanager.el.envmanager);
-            viewpanel.UpdateView();
+            viewpanel.UpdateViewport();
         }
 
         public void OnNotifyCondTest(CONDTESTPARAM name, List<object> value)

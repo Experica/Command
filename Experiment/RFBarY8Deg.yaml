@@ -13,19 +13,19 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 292.5
+  Ori@ENQuad@Quad: 222.25145
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: (2, 2, 1)
@@ -34,7 +34,7 @@ EnvParam:
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (2.09, -2.84, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1

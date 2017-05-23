@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using System;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
@@ -34,9 +35,10 @@ namespace VLab
         public float ScreenHalfHeight = 15;
         [SyncVar(hook = "onscreentoeye")]
         public float ScreenToEye = 57;
-        [SyncVar(hook ="onscreenaspect")]
+        [SyncVar(hook = "onscreenaspect")]
         public float ScreenAspect = 4.0f / 3.0f;
 
+        public Action CameraChange;
         public new Camera camera;
 #if VLAB
         VLNetManager netmanager;
@@ -51,6 +53,7 @@ namespace VLab
             camera = gameObject.GetComponent<Camera>();
 #if VLAB
             netmanager = FindObjectOfType<VLNetManager>();
+            CameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
         }
 
@@ -65,6 +68,7 @@ namespace VLab
                 camera.backgroundColor = c;
             }
             BGColor = c;
+            if (CameraChange != null) CameraChange();
         }
 
         void onscreenhalfheight(float shh)
@@ -78,6 +82,7 @@ namespace VLab
                 camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(shh, ScreenToEye);
             }
             ScreenHalfHeight = shh;
+            if (CameraChange != null) CameraChange();
         }
 
         void onscreentoeye(float ste)
@@ -91,6 +96,7 @@ namespace VLab
                 camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(ScreenHalfHeight, ste);
             }
             ScreenToEye = ste;
+            if (CameraChange != null) CameraChange();
         }
 
         void onscreenaspect(float apr)
@@ -99,11 +105,12 @@ namespace VLab
         }
         public virtual void OnScreenAspect(float apr)
         {
-            if(camera!=null)
+            if (camera != null)
             {
                 camera.aspect = apr;
             }
             ScreenAspect = apr;
+            if (CameraChange != null) CameraChange();
         }
 
 #if VLAB

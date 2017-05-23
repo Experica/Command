@@ -64,11 +64,6 @@ EnvInheritParam:
 - MarkerCorner@ENMarker@Marker
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
-- Marker@Showroom@ShowroomManager
-- SpatialFreq@ENGratingQuad@GratingQuad
-- TemporalFreq@ENGratingQuad@GratingQuad
-- Diameter@ENGratingQuad@GratingQuad
-- Position@ENGratingQuad@GratingQuad
 - ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22

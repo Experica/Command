@@ -111,9 +111,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CartesianGrid.cs" />
     <Compile Include="Assets\CompilerService.cs" />
     <Compile Include="Assets\Condition.cs" />
-    <Compile Include="Assets\Coordinate.cs" />
     <Compile Include="Assets\DynamicShowroom.cs" />
     <Compile Include="Assets\ENCamera.cs" />
     <Compile Include="Assets\ENGratingQuad.cs" />
@@ -125,7 +125,7 @@
     <Compile Include="Assets\Experiment.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\ConditionTestLogic.cs" />
-    <Compile Include="Assets\ExperimentLogic\OITTLCTLogic.cs" />
+    <Compile Include="Assets\ExperimentLogic\OIMasterMapOri8.cs" />
     <Compile Include="Assets\ExperimentLogic\ParallelPortPinSignal.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleImageLogic.cs" />

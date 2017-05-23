@@ -13,28 +13,28 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.7, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (27.7, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
-  Show@Showroom@ShowroomManager: None
+  Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
+  Ori@ENQuad@Quad: 47.4023056
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
+  Diameter@ENQuad@Quad: 6.41787195
+  Size@ENQuad@Quad: (6.42, 6.42, 1)
   Color@ENQuad@Quad: (1, 1, 1, 1)
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: (-15.1, 5.13, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -44,32 +44,32 @@ EnvParam:
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 47.4023056
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
+  Diameter@ENGratingQuad@GratingQuad: 6.41787195
+  Size@ENGratingQuad@GratingQuad: (6.42, 6.42, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
-  MaskRadius@ENGratingQuad@GratingQuad: 0
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (-15.1, 5.13, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad: false
-  Ori@ENImageQuad@ImageQuad: 0
+  Ori@ENImageQuad@ImageQuad: 47.4023056
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Diameter@ENImageQuad@ImageQuad: 6.41787195
+  Size@ENImageQuad@ImageQuad: (6.42, 6.42, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: None
   MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0.150000006
   Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  Position@ENImageQuad@ImageQuad: (-15.1, 5.13, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 Cond: 

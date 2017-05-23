@@ -55,7 +55,7 @@ namespace VLab
         [SyncVar(hook = "onmarkoffcolor")]
         public Color MarkOffColor = Color.black;
 
-        public new Camera camera;
+        public ENCamera encamera;
         public new Renderer renderer;
 #if VLAB
         VLNetManager netmanager;
@@ -68,21 +68,22 @@ namespace VLab
         public virtual void OnAwake()
         {
             renderer = gameObject.GetComponent<Renderer>();
+            encamera = FindObjectOfType<ENCamera>();
+            encamera.CameraChange += UpdatePosition;
 #if VLAB
             netmanager = FindObjectOfType<VLNetManager>();
-            netmanager.uicontroller.viewpanel.OnViewUpdated += UpdatePosition;
 #endif
         }
 
         void Start()
         {
-            OnMarkerPosition(CornerPosition(MarkerCorner));
+            UpdatePosition();
         }
 
         Vector3 CornerPosition(Corner c)
         {
-            var hh = camera.orthographicSize;
-            var hw = hh * camera.aspect;
+            var hh = encamera.camera.orthographicSize;
+            var hw = hh * encamera.camera.aspect;
             var m = 0.0f;
             switch (c)
             {
@@ -112,7 +113,7 @@ namespace VLab
         {
             MarkerSize = s;
             transform.localScale = new Vector3(s, s, 1);
-            OnMarkerPosition(CornerPosition(MarkerCorner));
+            UpdatePosition();
         }
 
         void onmarkerposition(Vector3 p)
@@ -131,8 +132,8 @@ namespace VLab
         }
         public virtual void OnMarkerCorner(Corner c)
         {
-            OnMarkerPosition(CornerPosition(c));
             MarkerCorner = c;
+            UpdatePosition();
         }
 
         void onmark(OnOff oo)

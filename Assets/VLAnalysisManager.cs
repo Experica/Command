@@ -67,6 +67,7 @@ namespace VLab
         {
         }
 
+#if VLAB
         /// <summary>
         /// whenever a client connected, server will try to spwan this network object to the client.
         /// but we want this object only talk to VLabAnalysis clients, save time and bandwidth, so when a new
@@ -102,5 +103,7 @@ namespace VLab
             }
             return false;
         }
+#endif
+
     }
 }

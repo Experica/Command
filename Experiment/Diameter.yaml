@@ -13,16 +13,16 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (20.7, -15.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 50
+  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -38,15 +38,15 @@ EnvParam:
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 2
-  TemporalFreq@ENGratingQuad@GratingQuad: 10
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 67.5
+  Ori@ENGratingQuad@GratingQuad: 222.25145
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 6
   Size@ENGratingQuad@GratingQuad: (6, 6, 1)
@@ -55,7 +55,7 @@ EnvParam:
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (1.5, -3.28, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet

@@ -57,19 +57,19 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: true
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 483
+  Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: vanhateren_3000_32×32_0.5_0.5
   IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Diameter@ENImageQuad@ImageQuad: 2.794451
+  Size@ENImageQuad@ImageQuad: (2.79, 2.79, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: DiskFade
   MaskRadius@ENImageQuad@ImageQuad: 0.449999988
   Sigma@ENImageQuad@ImageQuad: 25
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  Position@ENImageQuad@ImageQuad: (1.5, -3.28, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 Cond: 

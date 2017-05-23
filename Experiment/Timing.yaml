@@ -13,16 +13,16 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (25.2, -13.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0

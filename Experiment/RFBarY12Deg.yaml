@@ -14,17 +14,18 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   Show@Showroom@ShowroomManager: Quad
   Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 292.5
+  Ori@ENQuad@Quad: 222.25145
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 0
   Size@ENQuad@Quad: (12, 1, 1)
@@ -33,7 +34,7 @@ EnvParam:
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: false
-  Position@ENQuad@Quad: (-1.12, 0.776, 0)
+  Position@ENQuad@Quad: (2.09, -2.84, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -74,7 +75,7 @@ CondPath: Condition\PositionYOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V2Site5
-RecordSite: 3200Ch23
+RecordSite: 3200Ch22
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
