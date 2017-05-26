@@ -104,7 +104,7 @@ public class RippleLaserLogic : ExperimentLogic
         timer.Stop();
     }
 
-    public override void SamplePushCondition(bool isautosampleblock = true)
+    public override void SamplePushCondition(bool isautosampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
     {
         condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock);
         power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();

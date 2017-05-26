@@ -314,14 +314,14 @@ namespace VLab
             }
         }
 
-        public virtual void SamplePushCondition(bool isautosampleblock = true)
+        public virtual void SamplePushCondition(bool istrysampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock), envmanager);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, istrysampleblock, manualblockidx, manualcondidx), envmanager);
         }
 
-        public virtual void SamplePushBlock()
+        public virtual void SamplePushBlock(int manualblockidx = 0)
         {
-            condmanager.PushBlock(condmanager.SampleBlockSpace(), envmanager);
+            condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager);
         }
 
         public virtual string DataPath()

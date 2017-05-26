@@ -295,6 +295,7 @@ namespace VLab
 
     public enum SampleMethod
     {
+        Manual,
         Ascending,
         Descending,
         UniformWithReplacement,

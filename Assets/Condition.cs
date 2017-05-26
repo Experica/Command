@@ -49,7 +49,7 @@ namespace VLab
         public int blockidx = -1;
         public int condidx = -1;
         public int condsampleidx = -1;
-        public int blocksampleidx = -1; 
+        public int blocksampleidx = -1;
         public int nsampleignore = 0;
 
         public Dictionary<string, List<object>> ReadCondition(string path)
@@ -93,7 +93,7 @@ namespace VLab
             {
                 var vbp = cond.Keys.Intersect(blockparams).ToList();
                 blockcond = new Dictionary<string, List<object>>();
-                Dictionary<string, List<object>>  blockcondfull = null; int bcn = 0;
+                Dictionary<string, List<object>> blockcondfull = null; int bcn = 0;
                 if (vbp.Count > 0)
                 {
                     var bpfl = new Dictionary<string, List<object>>();
@@ -118,13 +118,13 @@ namespace VLab
                     {
                         blockcond[bp] = new List<object>();
                     }
-                    for (var bci = 0; bci <bcn; bci++)
+                    for (var bci = 0; bci < bcn; bci++)
                     {
                         var l = Enumerable.Repeat(true, ncond).ToList();
                         foreach (var f in blockcondfull.Keys)
                         {
                             var fl = blockcondfull[f][bci];
-                            l = cond[f].Select((v, i) => Equals(v,fl)&l[i] ).ToList();
+                            l = cond[f].Select((v, i) => Equals(v, fl) & l[i]).ToList();
                         }
                         var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
                         if (space.Count > 0)
@@ -134,7 +134,7 @@ namespace VLab
                             foreach (var bp in blockcondfull.Keys)
                             {
 
-                                blockcond[bp].Add(blockcondfull[bp][ bci]);
+                                blockcond[bp].Add(blockcondfull[bp][bci]);
                             }
                         }
                     }
@@ -149,7 +149,7 @@ namespace VLab
             }
         }
 
-        public List<int> PrepareSampleSpace(List<int> space,SampleMethod samplemethod)
+        public List<int> PrepareSampleSpace(List<int> space, SampleMethod samplemethod)
         {
             switch (samplemethod)
             {
@@ -178,7 +178,7 @@ namespace VLab
             }
         }
 
-        public int SampleBlockSpace()
+        public int SampleBlockSpace(int manualblockidx = 0)
         {
             if (ncond > 0)
             {
@@ -191,9 +191,11 @@ namespace VLab
                         {
                             blocksampleidx -= blocksamplespace.Count;
                         }
+                        blockidx = blocksamplespace[blocksampleidx];
                         break;
                     case SampleMethod.UniformWithReplacement:
                         blocksampleidx = rng.Next(blocksamplespace.Count);
+                        blockidx = blocksamplespace[blocksampleidx];
                         break;
                     case SampleMethod.UniformWithoutReplacement:
                         blocksampleidx++;
@@ -202,16 +204,19 @@ namespace VLab
                             blocksamplespace = PrepareSampleSpace(blocksamplespace.Count, blocksamplemethod);
                             blocksampleidx -= blocksamplespace.Count;
                         }
+                        blockidx = blocksamplespace[blocksampleidx];
+                        break;
+                    case SampleMethod.Manual:
+                        blockidx = manualblockidx;
                         break;
                 }
-                blockidx = blocksamplespace[blocksampleidx];
                 blockrepeat[blockidx] += 1;
                 ResetCondSampleSpace(blockidx);
             }
             return blockidx;
         }
 
-        public int SampleCondSpace()
+        public int SampleCondSpace(int manualcondidx = 0)
         {
             if (ncond > 0)
             {
@@ -222,11 +227,13 @@ namespace VLab
                         condsampleidx += scendingstep;
                         if (condsampleidx > condsamplespaces[blockidx].Count - 1)
                         {
-                            condsampleidx =0;
-                        } 
+                            condsampleidx = 0;
+                        }
+                        condidx = condsamplespaces[blockidx][condsampleidx];
                         break;
                     case SampleMethod.UniformWithReplacement:
                         condsampleidx = rng.Next(condsamplespaces[blockidx].Count);
+                        condidx = condsamplespaces[blockidx][condsampleidx];
                         break;
                     case SampleMethod.UniformWithoutReplacement:
                         condsampleidx++;
@@ -235,21 +242,24 @@ namespace VLab
                             condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx], condsamplemethod);
                             condsampleidx = 0;
                         }
+                        condidx = condsamplespaces[blockidx][condsampleidx];
+                        break;
+                    case SampleMethod.Manual:
+                        condidx = manualcondidx;
                         break;
                 }
-                condidx = condsamplespaces[blockidx][condsampleidx];
                 condsamplespacerepeat[blockidx][condidx] += 1;
                 condrepeat[condidx] += 1;
             }
             return condidx;
         }
 
-        public int CondRepeatInBlock(int condrepeat,int blockrepeat)
+        public int CondRepeatInBlock(int condrepeat, int blockrepeat)
         {
             return (int)Math.Ceiling((decimal)(Math.Max(0, condrepeat) / Math.Max(1, blockrepeat)));
         }
 
-        public int SampleCondition(int condrepeat, int blockrepeat,bool isautosampleblock=true)
+        public int SampleCondition(int condrepeat, int blockrepeat, bool istrysampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
         {
             if (ncond > 0)
             {
@@ -257,16 +267,16 @@ namespace VLab
                 {
                     if (blockidx < 0)
                     {
-                        SampleBlockSpace();
+                        SampleBlockSpace(manualblockidx);
                     }
-                    if (isautosampleblock)
+                    if (istrysampleblock)
                     {
-                        if (IsCondRepeatInBlock(condrepeat,blockrepeat))
+                        if (IsCondRepeatInBlock(condrepeat, blockrepeat))
                         {
-                            SampleBlockSpace();
+                            SampleBlockSpace(manualblockidx);
                         }
                     }
-                    SampleCondSpace();
+                    SampleCondSpace(manualcondidx);
                 }
                 else
                 {
@@ -287,7 +297,7 @@ namespace VLab
             }
         }
 
-        public void PushBlock(int blockidx,EnvironmentManager envmanager,List<string> except = null,bool notifyui=true)
+        public void PushBlock(int blockidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
             if (blockidx < 0) return;
             if (blockcond == null) return;
@@ -298,22 +308,22 @@ namespace VLab
             }
         }
 
-        public bool IsCondRepeatInBlock(int condrepeat,int blockrepeat)
+        public bool IsCondRepeatInBlock(int condrepeat, int blockrepeat)
         {
-            return IsCondSampleSpaceRepeat(CondRepeatInBlock(condrepeat, blockrepeat),blockidx);
+            return IsCondSampleSpaceRepeat(CondRepeatInBlock(condrepeat, blockrepeat), blockidx);
         }
 
         public bool IsCondSampleSpaceRepeat(int n, int blockidx)
         {
-            foreach(var c in condsamplespaces[blockidx])
+            foreach (var c in condsamplespaces[blockidx])
             {
-                if(!condsamplespacerepeat[blockidx].ContainsKey(c))
+                if (!condsamplespacerepeat[blockidx].ContainsKey(c))
                 {
                     return false;
                 }
                 else
                 {
-                    if(condsamplespacerepeat[blockidx][c]<n)
+                    if (condsamplespacerepeat[blockidx][c] < n)
                     {
                         return false;
                     }
@@ -324,15 +334,15 @@ namespace VLab
 
         public bool IsCondRepeat(int n)
         {
-            for(var i=0;i<ncond;i++)
+            for (var i = 0; i < ncond; i++)
             {
-                if(!condrepeat.ContainsKey(i))
+                if (!condrepeat.ContainsKey(i))
                 {
                     return false;
                 }
                 else
                 {
-                    if(condrepeat[i]<n)
+                    if (condrepeat[i] < n)
                     {
                         return false;
                     }
@@ -374,7 +384,7 @@ namespace VLab
         public void ResetCondRepeat()
         {
             condrepeat = new Dictionary<int, int>();
-            for(var i=0;i<ncond;i++)
+            for (var i = 0; i < ncond; i++)
             {
                 condrepeat[i] = 0;
             }
@@ -383,7 +393,7 @@ namespace VLab
         public void ResetBlockRepeat()
         {
             blockrepeat = new Dictionary<int, int>();
-            foreach(var i in blocksamplespace)
+            foreach (var i in blocksamplespace)
             {
                 blockrepeat[i] = 0;
             }

@@ -125,7 +125,7 @@
     <Compile Include="Assets\Experiment.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\ConditionTestLogic.cs" />
-    <Compile Include="Assets\ExperimentLogic\OIMasterMapOri8.cs" />
+    <Compile Include="Assets\ExperimentLogic\OIMasterMap.cs" />
     <Compile Include="Assets\ExperimentLogic\ParallelPortPinSignal.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleCTLogic.cs" />
     <Compile Include="Assets\ExperimentLogic\RippleImageLogic.cs" />

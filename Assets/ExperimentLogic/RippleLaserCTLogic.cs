@@ -28,7 +28,7 @@ public class RippleLaserCTLogic : ExperimentLogic
 {
     ParallelPort pport;
     ParallelPortSquareWave ppsw;
-    int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
+    int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
     int startbit, stopbit, condbit, signalbit;
 
     Omicron luxx473;
@@ -149,7 +149,7 @@ public class RippleLaserCTLogic : ExperimentLogic
         timer.Stop();
     }
 
-    public override void SamplePushCondition(bool isautosampleblock = true)
+    public override void SamplePushCondition(bool isautosampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
     {
         condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock),
             envmanager, condpushexcept);

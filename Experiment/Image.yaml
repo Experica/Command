@@ -13,16 +13,16 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (18.7, -13.7, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Show@Showroom@ShowroomManager: ImageQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -62,14 +62,14 @@ EnvParam:
   IsCacheImage@ENImageQuad@ImageQuad: true
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2.794451
-  Size@ENImageQuad@ImageQuad: (2.79, 2.79, 1)
+  Diameter@ENImageQuad@ImageQuad: 6.41787195
+  Size@ENImageQuad@ImageQuad: (6.42, 6.42, 1)
   Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
   MaskType@ENImageQuad@ImageQuad: DiskFade
   MaskRadius@ENImageQuad@ImageQuad: 0.449999988
   Sigma@ENImageQuad@ImageQuad: 25
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: (1.5, -3.28, 0)
+  Position@ENImageQuad@ImageQuad: (-15.1, 5.13, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 Cond: 

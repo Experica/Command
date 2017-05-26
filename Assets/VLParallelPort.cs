@@ -72,46 +72,73 @@ namespace VLab
         }
     }
 
+    public enum ParallelPortDataMode
+    {
+        Input,
+        Output
+    }
+
     public class ParallelPort : Inpout
     {
-        public int address;
+        public int dataaddress;
+        public int statusaddress { get { return dataaddress + 1; } }
+        public int controladdress { get { return dataaddress + 2; } }
+        private ParallelPortDataMode datamode;
+        public ParallelPortDataMode DataMode
+        {
+            get { return datamode; }
+            set
+            {
+                lock (lockobj)
+                {
+
+                    Out8((ushort)controladdress, (byte)(value == ParallelPortDataMode.Input ? 0x01 << 5 : 0x00));
+                }
+                datamode = value;
+            }
+        }
         private int valuecache;
         private object lockobj = new object();
 
-        public ParallelPort(int address = 0xC010)
+        public ParallelPort(int dataaddress = 0xC010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
         {
-            this.address = address;
+            this.dataaddress = dataaddress;
+            DataMode = datamode;
         }
 
-        public int Inp()
+        public byte Inp()
         {
-            lock (lockobj)
+            if (DataMode == ParallelPortDataMode.Output)
             {
-                return Inp16((ushort)address);
+                DataMode = ParallelPortDataMode.Input;
             }
-        }
-
-        public byte InpByte()
-        {
             lock (lockobj)
             {
-                return Inp8((ushort)address);
+                return Inp8((ushort)dataaddress);
             }
         }
 
         public void Out(int data)
         {
+            if (DataMode == ParallelPortDataMode.Input)
+            {
+                DataMode = ParallelPortDataMode.Output;
+            }
             lock (lockobj)
             {
-                Out16((ushort)address, (ushort)data);
+                Out16((ushort)dataaddress, (ushort)data);
             }
         }
 
-        public void OutByte(byte data)
+        public void Out(byte data)
         {
+            if (DataMode == ParallelPortDataMode.Input)
+            {
+                DataMode = ParallelPortDataMode.Output;
+            }
             lock (lockobj)
             {
-                Out8((ushort)address, data);
+                Out8((ushort)dataaddress, data);
             }
         }
 
@@ -132,7 +159,7 @@ namespace VLab
                 var bs = bits.Distinct().ToArray();
                 if (bs.Count() == values.Length)
                 {
-                    lock(lockobj)
+                    lock (lockobj)
                     {
                         for (var i = 0; i < bs.Count(); i++)
                         {

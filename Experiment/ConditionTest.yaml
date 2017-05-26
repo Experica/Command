@@ -3,8 +3,8 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: Andrzej
 Log: 
-Subject_ID: C1701
-Subject_Name: C1701
+Subject_ID: C1702
+Subject_Name: C1702
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -13,16 +13,16 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (27.7, -21.1, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 47.4023056
@@ -34,7 +34,7 @@ EnvParam:
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (-15.1, 5.13, 0)
+  Position@ENQuad@Quad: (12.5, -5.96, 0)
   PositionOffset@ENQuad@Quad: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
@@ -55,7 +55,7 @@ EnvParam:
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (-15.1, 5.13, 0)
+  Position@ENGratingQuad@GratingQuad: (12.5, -5.96, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
@@ -69,13 +69,13 @@ EnvParam:
   MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0.150000006
   Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (-15.1, 5.13, 0)
+  Position@ENImageQuad@ImageQuad: (12.5, -5.96, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
-RecordSession: V2Site5
-RecordSite: 3200Ch22
+RecordSession: ''
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
