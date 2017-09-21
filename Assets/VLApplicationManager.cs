@@ -49,18 +49,18 @@ namespace VLab
         ParallelPort1,
         ParallelPort2,
         ParallelPort3,
-        StartBit,
-        StopBit,
-        ConditionBit,
-        Signal1Bit,
-        Signal2Bit,
-        Signal3Bit,
-        COMPort1,
-        COMPort2,
-        COMPort3,
+        StartCh,
+        StopCh,
+        ConditionCh,
+        SignalCh1,
+        SignalCh2,
+        SignalCh3,
+        SerialPort1,
+        SerialPort2,
+        SerialPort3,
         MarkPulseWidth,
-        ParallelPortSquareWaveHighDur,
-        ParallelPortSquareWaveLowDur
+        WaveHighDur,
+        WaveLowDur
     }
 
     public class VLApplicationManager : MonoBehaviour
@@ -237,65 +237,65 @@ namespace VLab
             {
                 config[VLCFG.ParallelPort3] = config[VLCFG.ParallelPort3].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.StartBit))
+            if (!config.ContainsKey(VLCFG.StartCh))
             {
-                config[VLCFG.StartBit] = 0;
+                config[VLCFG.StartCh] = 0;
             }
             else
             {
-                config[VLCFG.StartBit] = config[VLCFG.StartBit].Convert<int>();
+                config[VLCFG.StartCh] = config[VLCFG.StartCh].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.StopBit))
+            if (!config.ContainsKey(VLCFG.StopCh))
             {
-                config[VLCFG.StopBit] = 1;
-            }
-            else
-            {
-                config[VLCFG.StopBit] = config[VLCFG.StopBit].Convert<int>();
-            }
-            if (!config.ContainsKey(VLCFG.ConditionBit))
-            {
-                config[VLCFG.ConditionBit] = 2;
+                config[VLCFG.StopCh] = 1;
             }
             else
             {
-                config[VLCFG.ConditionBit] = config[VLCFG.ConditionBit].Convert<int>();
+                config[VLCFG.StopCh] = config[VLCFG.StopCh].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.Signal1Bit))
+            if (!config.ContainsKey(VLCFG.ConditionCh))
             {
-                config[VLCFG.Signal1Bit] = 3;
-            }
-            else
-            {
-                config[VLCFG.Signal1Bit] = config[VLCFG.Signal1Bit].Convert<int>();
-            }
-            if (!config.ContainsKey(VLCFG.Signal2Bit))
-            {
-                config[VLCFG.Signal2Bit] = 4;
+                config[VLCFG.ConditionCh] = 2;
             }
             else
             {
-                config[VLCFG.Signal2Bit] = config[VLCFG.Signal2Bit].Convert<int>();
+                config[VLCFG.ConditionCh] = config[VLCFG.ConditionCh].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.Signal3Bit))
+            if (!config.ContainsKey(VLCFG.SignalCh1))
             {
-                config[VLCFG.Signal3Bit] = 5;
+                config[VLCFG.SignalCh1] = 3;
             }
             else
             {
-                config[VLCFG.Signal3Bit] = config[VLCFG.Signal3Bit].Convert<int>();
+                config[VLCFG.SignalCh1] = config[VLCFG.SignalCh1].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.COMPort1))
+            if (!config.ContainsKey(VLCFG.SignalCh2))
             {
-                config[VLCFG.COMPort1] = "COM1";
+                config[VLCFG.SignalCh2] = 4;
             }
-            if (!config.ContainsKey(VLCFG.COMPort2))
+            else
             {
-                config[VLCFG.COMPort2] = "COM2";
+                config[VLCFG.SignalCh2] = config[VLCFG.SignalCh2].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.COMPort3))
+            if (!config.ContainsKey(VLCFG.SignalCh3))
             {
-                config[VLCFG.COMPort3] = "COM3";
+                config[VLCFG.SignalCh3] = 5;
+            }
+            else
+            {
+                config[VLCFG.SignalCh3] = config[VLCFG.SignalCh3].Convert<int>();
+            }
+            if (!config.ContainsKey(VLCFG.SerialPort1))
+            {
+                config[VLCFG.SerialPort1] = "COM1";
+            }
+            if (!config.ContainsKey(VLCFG.SerialPort2))
+            {
+                config[VLCFG.SerialPort2] = "COM2";
+            }
+            if (!config.ContainsKey(VLCFG.SerialPort3))
+            {
+                config[VLCFG.SerialPort3] = "COM3";
             }
             if (!config.ContainsKey(VLCFG.MarkPulseWidth))
             {
@@ -305,21 +305,21 @@ namespace VLab
             {
                 config[VLCFG.MarkPulseWidth] = config[VLCFG.MarkPulseWidth].Convert<int>();
             }
-            if (!config.ContainsKey(VLCFG.ParallelPortSquareWaveHighDur))
+            if (!config.ContainsKey(VLCFG.WaveHighDur))
             {
-                config[VLCFG.ParallelPortSquareWaveHighDur] = 5f;
+                config[VLCFG.WaveHighDur] = 5f;
             }
             else
             {
-                config[VLCFG.ParallelPortSquareWaveHighDur] = config[VLCFG.ParallelPortSquareWaveHighDur].Convert<float>();
+                config[VLCFG.WaveHighDur] = config[VLCFG.WaveHighDur].Convert<float>();
             }
-            if (!config.ContainsKey(VLCFG.ParallelPortSquareWaveLowDur))
+            if (!config.ContainsKey(VLCFG.WaveLowDur))
             {
-                config[VLCFG.ParallelPortSquareWaveLowDur] = 20f;
+                config[VLCFG.WaveLowDur] = 20f;
             }
             else
             {
-                config[VLCFG.ParallelPortSquareWaveLowDur] = config[VLCFG.ParallelPortSquareWaveLowDur].Convert<float>();
+                config[VLCFG.WaveLowDur] = config[VLCFG.WaveLowDur].Convert<float>();
             }
 
 

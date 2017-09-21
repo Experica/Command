@@ -67,7 +67,7 @@ public class ConditionTestLogic : ExperimentLogic
                             if (ex.PreICI == 0 && ex.SufICI == 0)
                             {
                                 // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                                // marker params will take effect on screen.
+                                // marker on/off will take effect on screen.
                                 SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
                             }
                             else // ICI Mode

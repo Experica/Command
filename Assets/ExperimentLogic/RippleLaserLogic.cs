@@ -26,10 +26,10 @@ using System.Linq;
 
 public class RippleLaserLogic : ExperimentLogic
 {
-    ParallelPort pport;
-    ParallelPortSquareWave ppsw;
+    ParallelPort pport1, pport2;
+    ParallelPortWave ppw;
     int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
-    int startbit, stopbit, condbit, signalbit;
+    int startch, stopch, condch, signalch1, signalch2;
 
     Omicron luxx473;
     Cobolt mambo594;
@@ -38,13 +38,15 @@ public class RippleLaserLogic : ExperimentLogic
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(VLRecordSystem.Ripple);
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        ppsw = new ParallelPortSquareWave(pport);
-        startbit = (int)config[VLCFG.StartBit];
-        stopbit = (int)config[VLCFG.StopBit];
-        condbit = (int)config[VLCFG.ConditionBit];
-        signalbit = (int)config[VLCFG.Signal1Bit];
+        recordmanager = new RecordManager(RecordSystem.Ripple);
+        pport1 = new ParallelPort((int)config[VLCFG.ParallelPort1]);
+        pport2 = new ParallelPort((int)config[VLCFG.ParallelPort2]);
+        ppw = new ParallelPortWave(pport2);
+        startch = (int)config[VLCFG.StartCh];
+        stopch = (int)config[VLCFG.StopCh];
+        condch = (int)config[VLCFG.ConditionCh];
+        signalch1 = (int)config[VLCFG.SignalCh1];
+        signalch2 = (int)config[VLCFG.SignalCh2];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -78,29 +80,30 @@ public class RippleLaserLogic : ExperimentLogic
 
     protected override void StartExperiment()
     {
-        luxx473 = new Omicron((string)config[VLCFG.COMPort1]);
-        mambo594 = new Cobolt((string)config[VLCFG.COMPort2]);
+        luxx473 = new Omicron((string)config[VLCFG.SerialPort1]);
+        mambo594 = new Cobolt((string)config[VLCFG.SerialPort2]);
         luxx473.LaserOn();
-        timer.Countdown(3000);
+        timer.Timeout(3000);
 
         base.StartExperiment();
-        recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
-        timer.Countdown(notifylatency);
-        pport.BitPulse(bit: startbit, duration_ms: 5);
+        recordmanager.recorder.RecordPath = ex.GetDataPath("");
+        timer.Timeout(notifylatency);
+        pport1.BitPulse(bit: startch, duration_ms: 5);
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
-        ppsw.Stop(signalbit);
-        pport.SetBit(bit: condbit, value: false);
+        ppw.Stop(signalch1);
+        ppw.Stop(signalch2);
+        pport1.SetBit(bit: condch, value: false);
         base.StopExperiment();
 
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: stopbit, duration_ms: 5);
+        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
+        pport1.BitPulse(bit: stopch, duration_ms: 5);
         timer.Stop();
     }
 
@@ -126,20 +129,23 @@ public class RippleLaserLogic : ExperimentLogic
                     CondState = CONDSTATE.COND;
                     if (power > 0)
                     {
-                        ppsw.bitlatency_ms[signalbit] = ex.Latency;
-                        ppsw.SetBitFreq(signalbit, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
-                        ppsw.Start(signalbit);
+                        ppw.bitlatency_ms[signalch1] = ex.Latency;
+                        ppw.SetBitFreq(signalch1, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
+                        ppw.Start(signalch1);
+                        ppw.bitlatency_ms[signalch2] = ex.Latency;
+                        ppw.SetBitFreq(signalch2, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
+                        ppw.Start(signalch2);
                     }
                     // None ICI Mode
                     if (ex.PreICI == 0 && ex.SufICI == 0)
                     {
                         // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                        // marker params will take effect on screen.
-                        pport.ThreadBitPulse(bit: condbit, duration_ms: markpulsewidth);
+                        // marker on/off will take effect on screen.
+                        pport1.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
                     }
                     else // ICI Mode
                     {
-                        pport.SetBit(bit: condbit, value: true);
+                        pport1.SetBit(bit: condch, value: true);
                     }
                 }
                 break;
@@ -149,7 +155,8 @@ public class RippleLaserLogic : ExperimentLogic
                     CondState = CONDSTATE.SUFICI;
                     if (power > 0)
                     {
-                        ppsw.Stop(signalbit);
+                        ppw.Stop(signalch1);
+                        ppw.Stop(signalch2);
                     }
                     // None ICI Mode
                     if (ex.PreICI == 0 && ex.SufICI == 0)
@@ -157,7 +164,7 @@ public class RippleLaserLogic : ExperimentLogic
                     }
                     else // ICI Mode
                     {
-                        pport.SetBit(bit: condbit, value: false);
+                        pport1.SetBit(bit: condch, value: false);
                     }
                 }
                 break;

@@ -27,7 +27,7 @@ using System.Linq;
 public class RippleLaserTrialCTLogic : ExperimentLogic
 {
     ParallelPort pport;
-    ParallelPortSquareWave ppsw;
+    ParallelPortWave ppsw;
     int notifylatency, exlatencyerror, onlinesignallatency,markpulsewidth;
     int startbit, stopbit, condbit, signalbit;
 
@@ -40,13 +40,13 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        recordmanager = new RecordManager(RecordSystem.Ripple);
         pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        ppsw = new ParallelPortSquareWave(pport);
-        startbit = (int)config[VLCFG.StartBit];
-        stopbit = (int)config[VLCFG.StopBit];
-        condbit = (int)config[VLCFG.ConditionBit];
-        signalbit = (int)config[VLCFG.Signal1Bit];
+        ppsw = new ParallelPortWave(pport);
+        startbit = (int)config[VLCFG.StartCh];
+        stopbit = (int)config[VLCFG.StopCh];
+        condbit = (int)config[VLCFG.ConditionCh];
+        signalbit = (int)config[VLCFG.SignalCh1];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -124,14 +124,14 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
 
     protected override void StartExperiment()
     {
-        luxx473 = new Omicron((string)config[VLCFG.COMPort1]);
-        mambo594 = new Cobolt((string)config[VLCFG.COMPort2]);
+        luxx473 = new Omicron((string)config[VLCFG.SerialPort1]);
+        mambo594 = new Cobolt((string)config[VLCFG.SerialPort2]);
         luxx473.LaserOn();
-        timer.Countdown(3000);
+        timer.Timeout(3000);
 
         base.StartExperiment();
-        recordmanager.recorder.SetRecordPath(ex.GetDataPath(""));
-        timer.Countdown(notifylatency);
+        recordmanager.recorder.RecordPath=ex.GetDataPath("");
+        timer.Timeout(notifylatency);
         pport.BitPulse(bit: startbit, duration_ms: 5);
         timer.Restart();
     }
@@ -146,7 +146,7 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
         pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }

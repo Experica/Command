@@ -225,7 +225,8 @@ namespace VLab
         {
             if (string.IsNullOrEmpty(DataPath))
             {
-                var filename = Subject_ID + "_" + RecordSession + "_" + RecordSite + "_" + ID + "_";
+                var sessionsite = string.Join("_", VLExtention.ValidStrings(RecordSession, RecordSite));
+                var filename = string.Join("_", VLExtention.ValidStrings(Subject_ID, RecordSession, RecordSite, ID));
                 if (string.IsNullOrEmpty(DataDir))
                 {
                     DataDir = Directory.GetCurrentDirectory();
@@ -242,7 +243,7 @@ namespace VLab
                 {
                     Directory.CreateDirectory(subjectdir);
                 }
-                var sessionsitedir = Path.Combine(subjectdir, RecordSession + "_" + RecordSite);
+                var sessionsitedir = Path.Combine(subjectdir, sessionsite);
                 if (!Directory.Exists(sessionsitedir))
                 {
                     Directory.CreateDirectory(sessionsitedir);
@@ -250,7 +251,7 @@ namespace VLab
                 var fs = Directory.GetFiles(sessionsitedir, filename + "*" + searchext, SearchOption.TopDirectoryOnly);
                 if (fs.Length == 0)
                 {
-                    filename = filename + "1" + ext;
+                    filename = filename + "_1" + ext;
                 }
                 else
                 {
@@ -261,7 +262,7 @@ namespace VLab
                         var e = f.LastIndexOf('.') - 1;
                         ns.Add(int.Parse(f.Substring(s, e - s + 1)));
                     }
-                    filename = filename + (ns.Max() + 1).ToString() + ext;
+                    filename = filename + "_" + (ns.Max() + 1).ToString() + ext;
                 }
                 DataPath = Path.Combine(sessionsitedir, filename);
             }

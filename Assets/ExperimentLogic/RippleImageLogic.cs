@@ -32,11 +32,11 @@ public class RippleImageLogic : ExperimentLogic
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        recordmanager = new RecordManager(RecordSystem.Ripple);
         pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        startbit = (int)config[VLCFG.StartBit];
-        stopbit = (int)config[VLCFG.StopBit];
-        condbit = (int)config[VLCFG.ConditionBit];
+        startbit = (int)config[VLCFG.StartCh];
+        stopbit = (int)config[VLCFG.StopCh];
+        condbit = (int)config[VLCFG.ConditionCh];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -72,7 +72,7 @@ public class RippleImageLogic : ExperimentLogic
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
         envmanager.Invoke("RpcPreLoadImage",new object[] { condmanager.cond["Image"].Select(i => (string)i).ToArray() });
-        recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
+        recordmanager.recorder.RecordPath=ex.GetDataPath(ext: "");
         /* 
         Ripple recorder set path through UDP network and Trellis receive
         message and change file path, all of which need time to complete.
@@ -83,7 +83,7 @@ public class RippleImageLogic : ExperimentLogic
         otherwise the delayed action may clear up the start TTL pluse which is
         needed to mark the start time of VLab.
         */
-        timer.Countdown(notifylatency);
+        timer.Timeout(notifylatency);
         pport.BitPulse(bit: startbit, duration_ms: 5);
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
@@ -103,7 +103,7 @@ public class RippleImageLogic : ExperimentLogic
             SetEnvActiveParam("Diameter", diameter);
         }
         // Tail period to make sure lagged effect data is recorded before stop recording
-        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
         pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }
@@ -128,7 +128,7 @@ public class RippleImageLogic : ExperimentLogic
                         // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                         // marker params will take effect on screen.
                         SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
-                        pport.ThreadBitPulse(bit: condbit, duration_ms: markpulsewidth);
+                        pport.ConcurrentBitPulse(bit: condbit, duration_ms: markpulsewidth);
                     }
                     else // ICI Mode
                     {

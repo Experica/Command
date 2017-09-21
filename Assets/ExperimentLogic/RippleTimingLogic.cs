@@ -29,11 +29,11 @@ public class RippleTimingLogic : ExperimentLogic
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(VLRecordSystem.Ripple);
+        recordmanager = new RecordManager(RecordSystem.Ripple);
         pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        startbit = (int)config[VLCFG.StartBit];
-        stopbit = (int)config[VLCFG.StopBit];
-        condbit = (int)config[VLCFG.ConditionBit];
+        startbit = (int)config[VLCFG.StartCh];
+        stopbit = (int)config[VLCFG.StopCh];
+        condbit = (int)config[VLCFG.ConditionCh];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -42,8 +42,8 @@ public class RippleTimingLogic : ExperimentLogic
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        recordmanager.recorder.SetRecordPath(ex.GetDataPath(ext: ""));
-        timer.Countdown(notifylatency);
+        recordmanager.recorder.RecordPath=ex.GetDataPath(ext: "");
+        timer.Timeout(notifylatency);
         pport.BitPulse(bit: startbit, duration_ms: 5);
         timer.Restart();
     }
@@ -54,7 +54,7 @@ public class RippleTimingLogic : ExperimentLogic
         pport.SetBit(bit: condbit, value: false);
 
         base.StopExperiment();
-        timer.Countdown(ex.Latency + exlatencyerror + onlinesignallatency);
+        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
         pport.BitPulse(bit: stopbit, duration_ms: 5);
         timer.Stop();
     }

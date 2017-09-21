@@ -57,20 +57,21 @@ namespace VLab
             maincamera = null;
             foreach (var go in scene.GetRootGameObjects())
             {
-                sceneobj[go.name] = go;
                 ParseSceneObject(go);
             }
         }
 
-        public void ParseSceneObject(GameObject go)
+        public void ParseSceneObject(GameObject go,string parent=null)
         {
+            var goname =string.IsNullOrEmpty(parent) ? go.name : go.name + "$" + parent;
+            sceneobj[goname] = go;
             if (go.tag == "MainCamera")
             {
                 maincamera = go.GetComponent<Camera>();
             }
             foreach (var nb in go.GetComponents<NetworkBehaviour>())
             {
-                var nbname = nb.GetType().Name + "@" + go.name;
+                var nbname = nb.GetType().Name + "@" + goname;
                 sceneobj_net[nbname] = nb;
                 ParseSceneObjectNet(nb, nbname);
                 if (nb.isActiveAndEnabled)
@@ -80,7 +81,7 @@ namespace VLab
             }
             for (var i = 0; i < go.transform.childCount; i++)
             {
-                ParseSceneObject(go.transform.GetChild(i).gameObject);
+                ParseSceneObject(go.transform.GetChild(i).gameObject,goname);
             }
         }
 

@@ -19,7 +19,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.IO;
@@ -31,19 +30,20 @@ using System.Runtime.InteropServices;
 
 namespace VLab
 {
-    public class COM : IDisposable
+    public class SerialPort : IDisposable
     {
-        bool disposed=false;
-        public SerialPort serialport;
+        bool disposed = false;
+        public System.IO.Ports.SerialPort serialport;
         public string receiveddata = "";
         SerialDataReceivedEventHandler DataReceivedEventHandler;
         SerialErrorReceivedEventHandler ErrorReceivedEventHandler;
         SerialPinChangedEventHandler PinChangedEventHandler;
 
-        public COM(string portname = "COM1", int baudrate = 9600, Parity parity = Parity.None, int databits = 8, StopBits stopbits = StopBits.One,
-            Handshake handshake = Handshake.None, int readtimeout = SerialPort.InfiniteTimeout, int writetimeout = SerialPort.InfiniteTimeout, string newline = "\n", bool isevent = false)
+        public SerialPort(string portname = "COM1", int baudrate = 9600, Parity parity = Parity.None, int databits = 8, StopBits stopbits = StopBits.One,
+            Handshake handshake = Handshake.None, int readtimeout = System.IO.Ports.SerialPort.InfiniteTimeout,
+            int writetimeout = System.IO.Ports.SerialPort.InfiniteTimeout, string newline = "\n", bool isevent = false)
         {
-            serialport = new SerialPort(portname, baudrate, parity, databits, stopbits);
+            serialport = new System.IO.Ports.SerialPort(portname, baudrate, parity, databits, stopbits);
             serialport.Handshake = handshake;
             serialport.ReadTimeout = readtimeout;
             serialport.WriteTimeout = writetimeout;
@@ -60,7 +60,7 @@ namespace VLab
             }
         }
 
-        ~COM()
+        ~SerialPort()
         {
             Dispose(false);
         }
@@ -87,7 +87,7 @@ namespace VLab
         public bool IsPortExist()
         {
             var hr = false;
-            foreach (var n in SerialPort.GetPortNames())
+            foreach (var n in System.IO.Ports.SerialPort.GetPortNames())
             {
                 if (serialport.PortName == n)
                 {
@@ -97,7 +97,7 @@ namespace VLab
             }
             if (!hr)
             {
-                Debug.Log(serialport.PortName + " does not exist.");
+                //Debug.Log(serialport.PortName + " does not exist.");
             }
             return hr;
         }
@@ -106,25 +106,27 @@ namespace VLab
         {
             if (IsPortExist())
             {
-                if (!serialport.IsOpen)
-                {
-                    serialport.Open();
-                }
+                serialport.Open();
             }
         }
 
         public void Close()
         {
-            if (serialport.IsOpen)
-            {
-                serialport.Close();
-            }
+            serialport.Close();
+        }
+
+        public void DiscardInBuffer()
+        {
+            serialport.DiscardInBuffer();
+        }
+
+        public void DiscardOutBuffer()
+        {
+            serialport.DiscardOutBuffer();
         }
 
         public string Read()
         {
-            var nb = serialport.BytesToRead;
-            byte[] databyte = new byte[nb];
             string data = "";
             if (!serialport.IsOpen)
             {
@@ -132,11 +134,16 @@ namespace VLab
             }
             if (serialport.IsOpen)
             {
-                serialport.Read(databyte, 0, nb);
-                serialport.DiscardInBuffer();
-                data = serialport.Encoding.GetString(databyte);
+                var nb = serialport.BytesToRead;
+                if (nb > 0)
+                {
+                    byte[] databyte = new byte[nb];
+                    serialport.Read(databyte, 0, nb);
+                    data = serialport.Encoding.GetString(databyte);
+                }
             }
-            return data;
+            receiveddata += data;
+            return receiveddata;
         }
 
         public string ReadLine()
@@ -200,19 +207,19 @@ namespace VLab
             switch (e.EventType)
             {
                 case SerialError.Frame:
-                    Debug.Log("Frame Error.");
+                    //Debug.Log("Frame Error.");
                     break;
                 case SerialError.Overrun:
-                    Debug.Log("Buffer Overrun.");
+                   // Debug.Log("Buffer Overrun.");
                     break;
                 case SerialError.RXOver:
-                    Debug.Log("Input Overflow.");
+                   // Debug.Log("Input Overflow.");
                     break;
                 case SerialError.RXParity:
-                    Debug.Log("Input Parity Error.");
+                  //  Debug.Log("Input Parity Error.");
                     break;
                 case SerialError.TXFull:
-                    Debug.Log("Output Full.");
+                  //  Debug.Log("Output Full.");
                     break;
             }
         }
@@ -222,5 +229,4 @@ namespace VLab
 
         }
     }
-
 }

@@ -383,7 +383,7 @@ namespace VLab
             }
         }
 
-        public void OnServerSceneChanged(string scenename)
+        public void PrepareEnv(string scenename)
         {
             el.envmanager.AddScene(scenename);
             el.envmanager.SetParams(el.ex.EnvParam);

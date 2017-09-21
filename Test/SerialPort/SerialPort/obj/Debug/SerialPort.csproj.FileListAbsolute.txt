@@ -1,0 +1,1 @@
+C:\Users\lyonlab\VLab\Test\SerialPort\SerialPort\bin\Debug\SerialPort.exe.config

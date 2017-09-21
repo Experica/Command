@@ -3,8 +3,8 @@ Name: RFGrating2Deg
 Designer: Alex
 Experimenter: Andrzej
 Log: 
-Subject_ID: C1701
-Subject_Name: C1701
+Subject_ID: C1702
+Subject_Name: C1702
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -74,8 +74,8 @@ EnvParam:
 CondPath: Condition\PositionOffset2Deg0.25DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V2Site5
-RecordSite: 3200Ch22
+RecordSession: ''
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

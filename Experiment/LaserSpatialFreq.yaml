@@ -3,8 +3,8 @@ Name: LaserSpatialFreq
 Designer: Alex
 Experimenter: Andrzej
 Log: 
-Subject_ID: C1701
-Subject_Name: C1701
+Subject_ID: C1702
+Subject_Name: C1702
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -24,7 +24,7 @@ EnvParam:
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
   Show@Showroom@ShowroomManager: GratingQuad
-  Marker@Showroom@ShowroomManager: false
+  Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
@@ -39,23 +39,23 @@ EnvParam:
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 2
-  TemporalFreq@ENGratingQuad@GratingQuad: 10
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
   MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 47.4023056
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 90
-  Size@ENGratingQuad@GratingQuad: (90, 90, 1)
+  Diameter@ENGratingQuad@GratingQuad: 12
+  Size@ENGratingQuad@GratingQuad: (12, 12, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Position@ENGratingQuad@GratingQuad: (12.5, -5.96, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
@@ -74,8 +74,8 @@ EnvParam:
 CondPath: Condition\SpatialFreq.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V2Site5
-RecordSite: 3200Ch22
+RecordSession: ''
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

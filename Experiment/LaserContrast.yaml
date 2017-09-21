@@ -3,8 +3,8 @@ Name: LaserContrast
 Designer: Alex
 Experimenter: Andrzej
 Log: 
-Subject_ID: C1701
-Subject_Name: C1701
+Subject_ID: C1702
+Subject_Name: C1702
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -13,16 +13,16 @@ Subject_Weight: 3
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (20.7, -15.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 50
-  ScreenAspect@ENCamera@OrthoCamera: 1.29999995
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: true
   Ori@ENQuad@Quad: 0
@@ -46,16 +46,16 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 222.25145
+  Ori@ENGratingQuad@GratingQuad: 67.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 6
-  Size@ENGratingQuad@GratingQuad: (6, 6, 1)
+  Diameter@ENGratingQuad@GratingQuad: 6.41787195
+  Size@ENGratingQuad@GratingQuad: (6.42, 6.42, 1)
   Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (1.5, -3.28, 0)
+  Position@ENGratingQuad@GratingQuad: (12.5, -5.96, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
@@ -74,8 +74,8 @@ EnvParam:
 CondPath: Condition\Contrast.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V2Site5
-RecordSite: 3200Ch22
+RecordSession: ''
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

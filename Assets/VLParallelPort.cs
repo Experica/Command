@@ -32,42 +32,68 @@ using System.Runtime.InteropServices;
 
 namespace VLab
 {
-    public class Inpout
+    public static class Inpout
     {
         [DllImport("inpoutx64.dll", EntryPoint = "IsInpOutDriverOpen")]
-        public static extern int IsInpOutDriverOpen();
+        static extern int IsInpOutDriverOpen();
         [DllImport("inpoutx64.dll", EntryPoint = "Out32")]
-        public static extern void Out8(ushort PortAddress, byte Data);
+        static extern void Out8(ushort PortAddress, byte Data);
         [DllImport("inpoutx64.dll", EntryPoint = "Inp32")]
-        public static extern byte Inp8(ushort PortAddress);
+        static extern byte Inp8(ushort PortAddress);
 
         [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUshort")]
-        public static extern void Out16(ushort PortAddress, ushort Data);
+        static extern void Out16(ushort PortAddress, ushort Data);
         [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUshort")]
-        public static extern ushort Inp16(ushort PortAddress);
+        static extern ushort Inp16(ushort PortAddress);
 
         [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUlong")]
-        public static extern void Out64(ulong PortAddress, ulong Data);
+        static extern void Out64(ulong PortAddress, ulong Data);
         [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUlong")]
-        public static extern ulong Inp64(ulong PortAddress);
+        static extern ulong Inp64(ulong PortAddress);
 
         [DllImport("inpoutx64.dll", EntryPoint = "GetPhysLong")]
-        public static extern int GetPhysLong(ref byte PortAddress, ref uint Data);
+        static extern int GetPhysLong(ref byte PortAddress, ref uint Data);
         [DllImport("inpoutx64.dll", EntryPoint = "SetPhysLong")]
-        public static extern int SetPhysLong(ref byte PortAddress, uint Data);
+        static extern int SetPhysLong(ref byte PortAddress, uint Data);
 
-        public Inpout()
+        static object lockobject;
+        static Inpout()
         {
+            lockobject = new object();
             try
             {
                 if (IsInpOutDriverOpen() == 0)
                 {
-                    Debug.Log("Unable to open Inpoutx64 driver.");
+                    Debug.Log("Unable to open parallel port driver: Inpoutx64");
                 }
             }
             catch (Exception ex)
             {
                 Debug.Log(ex.ToString());
+            }
+        }
+
+        public static void Output8(ushort PortAddress, byte Data)
+        {
+            lock (lockobject)
+            {
+                Out8(PortAddress, Data);
+            }
+        }
+
+        public static void Output16(ushort PortAddress, ushort Data)
+        {
+            lock (lockobject)
+            {
+                Out16(PortAddress, Data);
+            }
+        }
+
+        public static byte Input8(ushort PortAddress)
+        {
+            lock (lockobject)
+            {
+                return Inp8(PortAddress);
             }
         }
     }
@@ -78,29 +104,29 @@ namespace VLab
         Output
     }
 
-    public class ParallelPort : Inpout
+    public class ParallelPort
     {
-        public int dataaddress;
-        public int statusaddress { get { return dataaddress + 1; } }
-        public int controladdress { get { return dataaddress + 2; } }
-        private ParallelPortDataMode datamode;
+        int dataaddress;
+        public int DataAddress { get { lock (lockobj) { return dataaddress; } } set { lock (lockobj) { dataaddress = value; } } }
+        public int StatusAddress { get { return DataAddress + 1; } }
+        public int ControlAddress { get { return DataAddress + 2; } }
+        ParallelPortDataMode datamode;
         public ParallelPortDataMode DataMode
         {
-            get { return datamode; }
+            get { lock (lockobj) { return datamode; } }
             set
             {
                 lock (lockobj)
                 {
-
-                    Out8((ushort)controladdress, (byte)(value == ParallelPortDataMode.Input ? 0x01 << 5 : 0x00));
+                    Inpout.Output8((ushort)ControlAddress, (byte)(value == ParallelPortDataMode.Input ? 0x01 << 5 : 0x00));
+                    datamode = value;
                 }
-                datamode = value;
             }
         }
-        private int valuecache;
-        private object lockobj = new object();
+        int valuecache;
+        object lockobj = new object();
 
-        public ParallelPort(int dataaddress = 0xC010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
+        public ParallelPort(int dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
         {
             this.dataaddress = dataaddress;
             DataMode = datamode;
@@ -108,45 +134,45 @@ namespace VLab
 
         public byte Inp()
         {
-            if (DataMode == ParallelPortDataMode.Output)
-            {
-                DataMode = ParallelPortDataMode.Input;
-            }
             lock (lockobj)
             {
-                return Inp8((ushort)dataaddress);
+                if (DataMode == ParallelPortDataMode.Output)
+                {
+                    DataMode = ParallelPortDataMode.Input;
+                }
+                return Inpout.Input8((ushort)dataaddress);
             }
         }
 
         public void Out(int data)
         {
-            if (DataMode == ParallelPortDataMode.Input)
-            {
-                DataMode = ParallelPortDataMode.Output;
-            }
             lock (lockobj)
             {
-                Out16((ushort)dataaddress, (ushort)data);
+                if (DataMode == ParallelPortDataMode.Input)
+                {
+                    DataMode = ParallelPortDataMode.Output;
+                }
+                Inpout.Output16((ushort)dataaddress, (ushort)data);
             }
         }
 
         public void Out(byte data)
         {
-            if (DataMode == ParallelPortDataMode.Input)
-            {
-                DataMode = ParallelPortDataMode.Output;
-            }
             lock (lockobj)
             {
-                Out8((ushort)dataaddress, data);
+                if (DataMode == ParallelPortDataMode.Input)
+                {
+                    DataMode = ParallelPortDataMode.Output;
+                }
+                Inpout.Output8((ushort)dataaddress, data);
             }
         }
 
         public void SetBit(int bit = 0, bool value = true)
         {
-            var t = value ? (1 << bit) : ~(1 << bit);
             lock (lockobj)
             {
+                var t = value ? (1 << bit) : ~(1 << bit);
                 valuecache = value ? valuecache | t : valuecache & t;
                 Out(valuecache);
             }
@@ -154,12 +180,12 @@ namespace VLab
 
         public void SetBits(int[] bits, bool[] values)
         {
-            if (bits != null && values != null)
+            lock (lockobj)
             {
-                var bs = bits.Distinct().ToArray();
-                if (bs.Count() == values.Length)
+                if (bits != null && values != null)
                 {
-                    lock (lockobj)
+                    var bs = bits.Distinct().ToArray();
+                    if (bs.Count() == values.Length)
                     {
                         for (var i = 0; i < bs.Count(); i++)
                         {
@@ -174,34 +200,43 @@ namespace VLab
 
         public bool GetBit(int bit = 0)
         {
-            var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
-            return t[15 - bit] == '1' ? true : false;
+            lock (lockobj)
+            {
+                var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
+                return t[15 - bit] == '1' ? true : false;
+            }
         }
 
         public bool[] GetBits(int[] bits)
         {
-            var vs = new List<bool>();
-            if (bits != null)
+            lock (lockobj)
             {
-                var bs = bits.Distinct().ToArray();
-                if (bs.Count() != 0)
+                var vs = new List<bool>();
+                if (bits != null)
                 {
-                    var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
-                    foreach (var b in bs)
+                    var bs = bits.Distinct().ToArray();
+                    if (bs.Count() != 0)
                     {
-                        vs.Add(t[15 - b] == '1' ? true : false);
+                        var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
+                        foreach (var b in bs)
+                        {
+                            vs.Add(t[15 - b] == '1' ? true : false);
+                        }
                     }
                 }
+                return vs.ToArray();
             }
-            return vs.ToArray();
         }
 
         public void BitPulse(int bit = 0, double duration_ms = 1)
         {
-            var timer = new VLTimer();
-            SetBit(bit);
-            timer.Countdown(duration_ms);
-            SetBit(bit, false);
+            lock (lockobj)
+            {
+                var timer = new VLTimer();
+                SetBit(bit);
+                timer.Timeout(duration_ms);
+                SetBit(bit, false);
+            }
         }
 
         void _BitPulse(object p)
@@ -210,37 +245,46 @@ namespace VLab
             BitPulse((int)param[0], (double)param[1]);
         }
 
-        public void ThreadBitPulse(int bit = 0, double duration_ms = 1)
+        public void ConcurrentBitPulse(int bit = 0, double duration_ms = 1)
         {
-            var t = new Thread(new ParameterizedThreadStart(_BitPulse));
-            t.Start(new List<object>() { bit, duration_ms });
+            lock (lockobj)
+            {
+                var t = new Thread(new ParameterizedThreadStart(_BitPulse));
+                t.Start(new List<object>() { bit, duration_ms });
+            }
         }
 
         public void BitsPulse(int[] bits, double[] durations_ms)
         {
-            if (bits != null && durations_ms != null)
+            lock (lockobj)
             {
-                var bs = bits.Distinct().ToArray();
-                if (bs.Count() == durations_ms.Length)
+                if (bits != null && durations_ms != null)
                 {
-                    for (var i = 0; i < bs.Count(); i++)
+                    var bs = bits.Distinct().ToArray();
+                    if (bs.Count() == durations_ms.Length)
                     {
-                        BitPulse(bs[i], durations_ms[i]);
+                        for (var i = 0; i < bs.Count(); i++)
+                        {
+                            BitPulse(bs[i], durations_ms[i]);
+                        }
                     }
                 }
             }
         }
 
-        public void ThreadBitsPulse(int[] bits, double[] durations_ms)
+        public void ConcurrentBitsPulse(int[] bits, double[] durations_ms)
         {
-            if (bits != null && durations_ms != null)
+            lock (lockobj)
             {
-                var bs = bits.Distinct().ToArray();
-                if (bs.Count() == durations_ms.Length)
+                if (bits != null && durations_ms != null)
                 {
-                    for (var i = 0; i < bs.Count(); i++)
+                    var bs = bits.Distinct().ToArray();
+                    if (bs.Count() == durations_ms.Length)
                     {
-                        ThreadBitPulse(bs[i], durations_ms[i]);
+                        for (var i = 0; i < bs.Count(); i++)
+                        {
+                            ConcurrentBitPulse(bs[i], durations_ms[i]);
+                        }
                     }
                 }
             }
@@ -248,16 +292,12 @@ namespace VLab
     }
 
     /// <summary>
-    /// Square wave can be reliably delivered upon 10kHz
+    /// wave can be reliably delivered upon 10kHz
     /// </summary>
-    public class ParallelPortSquareWave
+    public class ParallelPortWave
     {
-        ParallelPort pport;
-        public ParallelPort PPort
-        {
-            get { lock (lockobj) { return pport; } }
-            set { lock (lockobj) { pport = value; } }
-        }
+        public ParallelPort PPort;
+
         ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
         ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
         ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
@@ -266,11 +306,10 @@ namespace VLab
         public ConcurrentDictionary<int, double> bithighdur_ms = new ConcurrentDictionary<int, double>();
         public ConcurrentDictionary<int, double> bitlowdur_ms = new ConcurrentDictionary<int, double>();
         ConcurrentDictionary<int, double> _bitfreq = new ConcurrentDictionary<int, double>();
-        object lockobj = new object();
 
-        public ParallelPortSquareWave(ParallelPort pp)
+        public ParallelPortWave(ParallelPort pp)
         {
-            pport = pp;
+            PPort = pp;
         }
 
         public void SetBitFreq(int bit, double freq)
@@ -296,7 +335,7 @@ namespace VLab
                 {
                     if (!bitthread.ContainsKey(b))
                     {
-                        bitthread[b] = new Thread(_BitSquareWave);
+                        bitthread[b] = new Thread(_BitWave);
                         bitthreadevent[b] = new ManualResetEvent(false);
                     }
                     bitthreadbreak[b] = false;
@@ -326,23 +365,20 @@ namespace VLab
             }
         }
 
-        public void BitSquareWave(int bit)
+        void BitWave(int bit)
         {
             var timer = new VLTimer(); bool isbreakstarted;
-            double start, breakstart = 0; double highdur, lowdur, latency;
+            double start, breakstart = 0;
         Break:
             bitthreadevent[bit].WaitOne();
             isbreakstarted = false;
-            highdur = bithighdur_ms[bit];
-            lowdur = bitlowdur_ms[bit];
-            latency = bitlatency_ms[bit];
             timer.Restart();
-            timer.Countdown(latency);
+            timer.Timeout(bitlatency_ms[bit]);
             while (true)
             {
                 PPort.SetBit(bit);
                 start = timer.ElapsedMillisecond;
-                while ((timer.ElapsedMillisecond - start) < highdur)
+                while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
                 {
                     if (bitthreadbreak[bit])
                     {
@@ -351,7 +387,7 @@ namespace VLab
                             breakstart = timer.ElapsedMillisecond;
                             isbreakstarted = true;
                         }
-                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= latency)
+                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
                         {
                             PPort.SetBit(bit, false);
                             goto Break;
@@ -361,7 +397,7 @@ namespace VLab
 
                 PPort.SetBit(bit, false);
                 start = timer.ElapsedMillisecond;
-                while ((timer.ElapsedMillisecond - start) < lowdur)
+                while ((timer.ElapsedMillisecond - start) < bitlowdur_ms[bit])
                 {
                     if (bitthreadbreak[bit])
                     {
@@ -370,7 +406,7 @@ namespace VLab
                             breakstart = timer.ElapsedMillisecond;
                             isbreakstarted = true;
                         }
-                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= latency)
+                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
                         {
                             goto Break;
                         }
@@ -379,9 +415,9 @@ namespace VLab
             }
         }
 
-        void _BitSquareWave(object p)
+        void _BitWave(object p)
         {
-            BitSquareWave((int)p);
+            BitWave((int)p);
         }
     }
 }

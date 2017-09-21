@@ -20,38 +20,37 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
+using System;
 
 public class ParallelPortPinSignal : ExperimentLogic
 {
     ParallelPort pport;
-    ParallelPortSquareWave ppsw;
+    ParallelPortWave ppw;
 
     public override void OnStart()
     {
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        ppsw = new ParallelPortSquareWave(pport);
+        pport = new ParallelPort((int)config[VLCFG.ParallelPort2]);
+        ppw = new ParallelPortWave(pport);
     }
 
     public override void PrepareCondition(bool isforceprepare = true)
     {
-        ppsw.bitlatency_ms[0] = 0;
-        ppsw.bitlatency_ms[2] = 0;
-        ppsw.bitlatency_ms[3] = 0;
-        ppsw.SetBitFreq(0, 1);
-        ppsw.SetBitFreq(2, 2);
-        ppsw.SetBitFreq(3, 4);
+        for (var i = 0; i < 8; i++)
+        {
+            ppw.bitlatency_ms[i] = 0;
+            ppw.SetBitFreq(i, Math.Pow(2, i));
+        }
     }
 
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        ppsw.Start(0, 1, 2, 3);
+        ppw.Start(0, 1, 2, 3, 4, 5, 6, 7);
     }
 
     protected override void StopExperiment()
     {
-        ppsw.Stop(0, 1, 2, 3);
+        ppw.Stop(0, 1, 2, 3, 4, 5, 6, 7);
         base.StopExperiment();
-        timer.Stop();
     }
 }

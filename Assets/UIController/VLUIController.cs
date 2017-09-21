@@ -93,7 +93,7 @@ namespace VLab
 
         public void OnServerSceneChanged(string sceneName)
         {
-            exmanager.OnServerSceneChanged(sceneName);
+            exmanager.PrepareEnv(sceneName);
             envpanel.UpdateEnv(exmanager.el.envmanager);
             viewpanel.UpdateViewport();
         }
