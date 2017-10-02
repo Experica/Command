@@ -1,81 +1,47 @@
 ID: LaserImage
 Name: LaserImage
 Designer: Alex
-Experimenter: Andrzej
+Experimenter: Alex
 Log: 
-Subject_ID: C1701
-Subject_Name: C1701
+Subject_ID: C1702
+Subject_Name: C1702
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: Showroom
+EnvPath: MarkerImage
 EnvParam:
-  MarkerSize@ENMarker@Marker: 1
-  MarkerPosition@ENMarker@Marker: (54.3, -30.3, -1E+03)
+  Image@ENImageQuad@ImageQuad: 1
+  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
+  IsCacheImage@ENImageQuad@ImageQuad: false
+  Ori@ENImageQuad@ImageQuad: 0
+  OriOffset@ENImageQuad@ImageQuad: 0
+  Diameter@ENImageQuad@ImageQuad: 2
+  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Color@ENImageQuad@ImageQuad: (1, 1, 1, 1)
+  MaskType@ENImageQuad@ImageQuad: None
+  MaskRadius@ENImageQuad@ImageQuad: 0.5
+  Sigma@ENImageQuad@ImageQuad: 0.150000006
+  Visible@ENImageQuad@ImageQuad: true
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (28.6, -21.2, 0)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0.5, 0.5, 0.5, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Show@Showroom@ShowroomManager: ImageQuad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
-  MaskType@ENQuad@Quad: None
-  MaskRadius@ENQuad@Quad: 0
-  Sigma@ENQuad@Quad: 0
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0
-  TemporalFreq@ENGratingQuad@GratingQuad: 0
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaxColor@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
-  ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
-  OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: (2, 2, 1)
-  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: None
-  MaskRadius@ENGratingQuad@GratingQuad: 0
-  Sigma@ENGratingQuad@GratingQuad: 0
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 1
-  ImageSet@ENImageQuad@ImageQuad: vanhateren_3000_32×32_0.5_0.5
-  IsCacheImage@ENImageQuad@ImageQuad: true
-  Ori@ENImageQuad@ImageQuad: 0
-  OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 12
-  Size@ENImageQuad@ImageQuad: (12, 12, 1)
-  Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
-  MaskType@ENImageQuad@ImageQuad: DiskFade
-  MaskRadius@ENImageQuad@ImageQuad: 0.449999988
-  Sigma@ENImageQuad@ImageQuad: 25
-  Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserTrialImageLogic
-RecordSession: V2Site5
-RecordSite: 3200Ch22
+RecordSession: ''
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -87,17 +53,17 @@ BlockParam:
 - LaserFreq
 Input: None
 PreICI: 0
-CondDur: 45
+CondDur: 46
 SufICI: 0
 PreITI: 500
 TrialDur: 1000
-SufITI: 500
+SufITI: 1000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 8
+NotifyPerCondTest: 10
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -130,10 +96,13 @@ EnvInheritParam:
 - Position@ENImageQuad@ImageQuad
 - Diameter@ENImageQuad@ImageQuad
 - ScreenAspect@ENCamera@OrthoCamera
+- Diameter@ENImageQuad@ImageQuad$ShowroomManager
+- Position@ENImageQuad@ImageQuad$ShowroomManager
 Param:
-  LaserPower: !!ListOfFloat '[0.145, 0.285]'
-  LaserFreq: !!ListOfFloat '[40]'
+  LaserPower: !!ListOfFloat '[0.205, 0.505]'
+  LaserFreq: !!ListOfFloat '[10]'
   NumOfImage: !!Float 3000
+  ITIFactor: !!Float 3
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

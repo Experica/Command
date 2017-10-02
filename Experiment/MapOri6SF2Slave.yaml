@@ -1,5 +1,5 @@
-ID: Timing
-Name: Timing
+ID: MapOri6SF2Slave
+Name: MapOri6SF2Slave
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -11,40 +11,38 @@ Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: ShowGrating
 EnvParam: {}
-CondPath: Condition\Mark.yaml
+CondPath: Condition\Ori6SF2.yaml
 Cond: 
-ExLogicPath: RippleTimingLogic
+ExLogicPath: OIMasterMap
 RecordSession: ''
 RecordSite: ''
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
-BlockSampling: Ascending
-CondRepeat: 600
+CondSampling: Manual
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 100
-CondDur: 300
-SufICI: 100
+PreICI: 0
+CondDur: 0
+SufICI: 0
 PreITI: 0
 TrialDur: 0
 SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: COND
+PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 2
+NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - CONDSTATE
 - CondRepeat
 ExInheritParam:
-- DataDir
-- Experimenter
 - Subject_ID
 - Subject_Name
 - Subject_Species
@@ -54,21 +52,23 @@ ExInheritParam:
 - Subject_Weight
 - RecordSession
 - RecordSite
-- TimerDriftSpeed
+- DataDir
+- Experimenter
 - Latency
+- TimerDriftSpeed
 - Delay
 EnvInheritParam:
+- MarkerSize@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
-- MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
-- Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
-Param: {}
+Param:
+  ReverseDur: !!Float 3500
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
-CondTestShowLevel: SHORT
+CondTestShowLevel: FULL

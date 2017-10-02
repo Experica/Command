@@ -11,66 +11,39 @@ Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: Showroom
+EnvPath: MarkerGrating
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
+  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Ori@ENGratingQuad@GratingQuad: 22.7021523
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 16.2830658
+  Size@ENGratingQuad@GratingQuad: (16.3, 16.3, 1)
+  Color@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: (12.1, 1.17, 0)
+  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Show@Showroom@ShowroomManager: GratingQuad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad$ShowroomManager: 96.2348404
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 10.6005144
-  Size@ENQuad@Quad$ShowroomManager: (10.6, 10.6, 1)
-  Color@ENQuad@Quad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad$ShowroomManager: None
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  Visible@ENQuad@Quad$ShowroomManager: true
-  Position@ENQuad@Quad$ShowroomManager: (4.87, 4.43, 0)
-  PositionOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 2
-  SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  MinColor@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
-  GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Sinusoidal
-  ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 96.2348404
-  OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 10.6005144
-  Size@ENGratingQuad@GratingQuad$ShowroomManager: (10.6, 10.6, 1)
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad$ShowroomManager: Disk
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
-  Position@ENGratingQuad@GratingQuad$ShowroomManager: (4.87, 4.43, 0)
-  PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad$ShowroomManager: 1
-  ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 96.2348404
-  OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
-  Diameter@ENImageQuad@ImageQuad$ShowroomManager: 10.6005144
-  Size@ENImageQuad@ImageQuad$ShowroomManager: (10.6, 10.6, 1)
-  Color@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0, 0)
-  MaskType@ENImageQuad@ImageQuad$ShowroomManager: None
-  MaskRadius@ENImageQuad@ImageQuad$ShowroomManager: 0.5
-  Sigma@ENImageQuad@ImageQuad$ShowroomManager: 0.150000006
-  Visible@ENImageQuad@ImageQuad$ShowroomManager: true
-  Position@ENImageQuad@ImageQuad$ShowroomManager: (4.87, 4.43, 0)
-  PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
@@ -85,7 +58,7 @@ BlockRepeat: 0
 BlockParam: []
 Input: Joystick
 PreICI: 100
-CondDur: 500
+CondDur: 300
 SufICI: 100
 PreITI: 0
 TrialDur: 0

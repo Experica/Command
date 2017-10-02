@@ -46,6 +46,7 @@ namespace VLab
 #if VLAB
             uicontroller = FindObjectOfType<VLUIController>();
 #endif
+            marker = GameObject.Find("Marker");
             foreach (var n in typeof(EnvironmentObject).GetValue().Except(new List<string> { "None" }))
             {
                 var t = transform.FindChild(n);

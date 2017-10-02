@@ -23,7 +23,6 @@ using VLab;
 using System.Collections.Generic;
 using System.Linq;
 
-
 public class RippleLaserLogic : ExperimentLogic
 {
     ParallelPort pport1, pport2;
@@ -34,7 +33,6 @@ public class RippleLaserLogic : ExperimentLogic
     Omicron luxx473;
     Cobolt mambo594;
     float power;
-    int ICIFactor = 5;
 
     public override void OnStart()
     {
@@ -66,7 +64,7 @@ public class RippleLaserLogic : ExperimentLogic
             };
             cond = cond.OrthoCondOfFactorLevel();
             cond["LaserPower"].Add(0f);
-            cond["LaserFreq"].Add(0.1f);
+            cond["LaserFreq"].Add(0f);
 
             condmanager.TrimCondition(cond);
         }
@@ -131,9 +129,9 @@ public class RippleLaserLogic : ExperimentLogic
                     {
                         ppw.bitlatency_ms[signalch1] = ex.Latency;
                         ppw.SetBitFreq(signalch1, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
-                        ppw.Start(signalch1);
                         ppw.bitlatency_ms[signalch2] = ex.Latency;
                         ppw.SetBitFreq(signalch2, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
+                        ppw.Start(signalch1);
                         ppw.Start(signalch2);
                     }
                     // None ICI Mode
@@ -169,7 +167,11 @@ public class RippleLaserLogic : ExperimentLogic
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI * (1 + power * ICIFactor))
+                if (ex.SufICI == 0)
+                {
+                    CondState = CONDSTATE.PREICI;
+                }
+                if (SufICIHold >= ex.SufICI + power * ex.CondDur * (float)ex.GetParam("ICIFactor"))
                 {
                     CondState = CONDSTATE.PREICI;
                 }

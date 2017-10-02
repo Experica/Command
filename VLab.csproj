@@ -114,13 +114,14 @@
     <Compile Include="Assets\CartesianGrid.cs" />
     <Compile Include="Assets\CompilerService.cs" />
     <Compile Include="Assets\Condition.cs" />
-    <Compile Include="Assets\DynamicShowroom.cs" />
-    <Compile Include="Assets\ENCamera.cs" />
-    <Compile Include="Assets\ENGratingQuad.cs" />
-    <Compile Include="Assets\ENImageQuad.cs" />
-    <Compile Include="Assets\ENMarker.cs" />
-    <Compile Include="Assets\ENQuad.cs" />
-    <Compile Include="Assets\EnvNet.cs" />
+    <Compile Include="Assets\Environment\DynamicShowroom.cs" />
+    <Compile Include="Assets\Environment\ENCamera.cs" />
+    <Compile Include="Assets\Environment\ENGratingQuad.cs" />
+    <Compile Include="Assets\Environment\ENImageQuad.cs" />
+    <Compile Include="Assets\Environment\ENMarker.cs" />
+    <Compile Include="Assets\Environment\ENQuad.cs" />
+    <Compile Include="Assets\Environment\EnvNet.cs" />
+    <Compile Include="Assets\Environment\Showroom.cs" />
     <Compile Include="Assets\EnvironmentManager.cs" />
     <Compile Include="Assets\Experiment.cs" />
     <Compile Include="Assets\ExperimentLogic.cs" />
@@ -141,7 +142,6 @@
     <Compile Include="Assets\Resources\UI\ParamPrefab.cs" />
     <Compile Include="Assets\Resources\UI\Resize.cs" />
     <Compile Include="Assets\Resources\UI\ResizeViewPanel.cs" />
-    <Compile Include="Assets\Showroom.cs" />
     <Compile Include="Assets\UIController\ConditionPanel.cs" />
     <Compile Include="Assets\UIController\ConditionTestPanel.cs" />
     <Compile Include="Assets\UIController\ConsolePanel.cs" />
@@ -177,9 +177,9 @@
     <None Include="Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\System.Threading.xml" />
     <None Include="Assets\Plugins\TaskParallelLibrary.1.0.2856.0\Net35\redist.txt" />
     <None Include="Assets\Plugins\YamlDotNet\YamlDotNet.xml" />
-    <None Include="Assets\Resources\color.shader" />
-    <None Include="Assets\Resources\grating.shader" />
-    <None Include="Assets\Resources\image.shader" />
+    <None Include="Assets\Resources\maskcolor.shader" />
+    <None Include="Assets\Resources\maskgrating.shader" />
+    <None Include="Assets\Resources\maskimage.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -39,9 +39,9 @@ namespace VLab
         [SyncVar(hook ="oncontrast")]
         public float Contrast=1f;
         [SyncVar(hook = "onspatialfreq")]
-        public float SpatialFreq=0.1f;
+        public float SpatialFreq=1f;
         [SyncVar(hook = "ontemporalfreq")]
-        public float TemporalFreq=2f;
+        public float TemporalFreq=1f;
         [SyncVar(hook = "onspatialphase")]
         public float SpatialPhase=0;
         [SyncVar(hook = "onmincolor")]

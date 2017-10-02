@@ -1,25 +1,18 @@
-﻿Shader "Unlit/grating"
+﻿Shader "VLAB/maskcolor"
 {
 	Properties
 	{
-		minc("MinColor",Color) = (0,0,0,1)
-		maxc("MaxColor",Color) = (1,1,1,1)
-		cdist("ColorDistance",Color)=(1,1,1,0)
-		sf("SpatialFreq", Float) = 1
-		tf("TemporalFreq", Float) = 1
-		t("Time", Float) = 0
-		phase("SpatialPhase", Float) = 0
+		col("Color", Color) = (1,1,1,1)
 		maskradius("MaskRadius",Float) = 0.5
 		sigma("Sigma", Float) = 0.15
 		sizex("SizeX",Float) = 2
 		sizey("SizeY", Float) = 2
-		gratingtype("GratingType",Int) = 0
 		masktype("MaskType",Int) = 0
 	}
 
 	SubShader
 	{
-		Tags{ "RenderType" = "Transparent" "Queue" = "Transparent"}
+		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha
 		LOD 300
 
@@ -30,19 +23,12 @@
 			#pragma fragment frag
 			#include "UnityCG.cginc"
 
-			fixed4 minc;
-	        fixed4 maxc;
-			fixed4 cdist;
-			float sf;
-			float tf;
-			float t;
-			float phase;
+			fixed4 col;
 			float maskradius;
 			float sigma;
-			float sizex;
+	        float sizex;
 			float sizey;
-			int gratingtype;
-			int masktype;
+	        int masktype;
 			static const float pi = 3.141592653589793238462;
 			static const float pi2 = 6.283185307179586476924;
 
@@ -81,40 +67,8 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				fixed4 c;
-			    float y = frac((i.uv.y*sizey - t*tf / sf + phase / sf)*sf);
-				if (gratingtype == 0)
-				{
-					if (y< 0.5)
-					{
-						c = maxc;
-					}
-					else
-					{
-						c = minc;
-					}
-				}
-				else if (gratingtype == 1)
-				{
-					c = cdist*(sin(y*pi2) + 1) / 2 + minc;
-				}
-				else if (gratingtype == 2)
-				{
-					if (y < 0.25)
-					{
-						c=cdist*(y * 2 + 0.5) + minc;
-					}
-					else if (y < 0.75)
-					{
-						c=cdist*(1 - (y - 0.25) * 2) + minc;
-					}
-					else
-					{
-						c=cdist*((y - 0.75) * 2) + minc;
-					}
-				}
-
-				if(masktype==0)
+				fixed4 c = col;
+			    if(masktype==0)
 				{ }
 				else if (masktype == 1)
 				{
@@ -126,7 +80,7 @@
 				else if (masktype == 2)
 				{
 					float d = pow(i.uv.x, 2) + pow(i.uv.y, 2);
-					c.a = c.a*exp(-d / (2 * pow(sigma, 2)));
+					c.a= c.a*exp(-d / (2 * pow(sigma, 2)));
 				}
 				else if (masktype == 3)
 				{
@@ -139,7 +93,7 @@
 
 				return c;
 			}
-			
+
 			ENDCG
 		}
 	}

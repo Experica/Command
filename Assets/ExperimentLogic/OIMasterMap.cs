@@ -20,7 +20,6 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -94,10 +93,10 @@ public class OIMasterMap : ExperimentLogic
 
     public override void Logic()
     {
+        ParseOIMessage(ref start, ref condidx, ref go);
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                ParseOIMessage(ref start, ref condidx, ref go);
                 if (start)
                 {
                     CondState = CONDSTATE.PREICI;
@@ -106,7 +105,6 @@ public class OIMasterMap : ExperimentLogic
                 }
                 break;
             case CONDSTATE.PREICI:
-                ParseOIMessage(ref start, ref condidx, ref go);
                 if (go)
                 {
                     CondState = CONDSTATE.COND;
@@ -116,7 +114,6 @@ public class OIMasterMap : ExperimentLogic
                 }
                 break;
             case CONDSTATE.COND:
-                ParseOIMessage(ref start, ref condidx, ref go);
                 if (go)
                 {
                     var now = timer.ElapsedMillisecond;

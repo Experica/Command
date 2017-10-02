@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Image
-  m_Shader: {fileID: 4800000, guid: 44e1f4a388d51d34e8e771a7333ef8a4, type: 3}
+  m_Name: MaskGrating
+  m_Shader: {fileID: 4800000, guid: fdeb6ae0b1c87a34999d8ed37d308e89, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -69,12 +69,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: img
-      second:
-        m_Texture: {fileID: 2800000, guid: c1c3311398bcf6a44b16033463c6f428, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -125,8 +119,20 @@ Material:
         name: _ZWrite
       second: 1
     - first:
+        name: gratingtype
+      second: 0
+    - first:
+        name: maskradius
+      second: 0.5
+    - first:
         name: masktype
       second: 0
+    - first:
+        name: phase
+      second: 0
+    - first:
+        name: sf
+      second: 1
     - first:
         name: sigma
       second: 0.15
@@ -136,6 +142,12 @@ Material:
     - first:
         name: sizey
       second: 2
+    - first:
+        name: t
+      second: 0
+    - first:
+        name: tf
+      second: 1
     m_Colors:
     - first:
         name: _Color
@@ -144,8 +156,11 @@ Material:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
-        name: col
+        name: cdist
+      second: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: maxc
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
-        name: img
-      second: {r: 1, g: 1, b: 1, a: 1}
+        name: minc
+      second: {r: 0, g: 0, b: 0, a: 1}

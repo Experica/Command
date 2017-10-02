@@ -11,21 +11,11 @@ Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: Showroom
+EnvPath: ShowGrating
 EnvParam:
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   Show@Showroom@ShowroomManager: GratingQuad
   Marker@Showroom@ShowroomManager: false
-  Ori@ENQuad@Quad$ShowroomManager: 135
+  Ori@ENQuad@Quad$ShowroomManager: 90
   OriOffset@ENQuad@Quad$ShowroomManager: 0
   Diameter@ENQuad@Quad$ShowroomManager: 2
   Size@ENQuad@Quad$ShowroomManager: (2, 2, 1)
@@ -38,7 +28,7 @@ EnvParam:
   PositionOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
   Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
   Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.100000001
+  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
   TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 3
   SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
   MinColor@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 1)
@@ -46,21 +36,21 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
   GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Square
   ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 135
+  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 90
   OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
   Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 90
   Size@ENGratingQuad@GratingQuad$ShowroomManager: (90, 90, 1)
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 0)
+  Color@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
   MaskType@ENGratingQuad@GratingQuad$ShowroomManager: None
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0
+  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
+  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0.150000006
   Visible@ENGratingQuad@GratingQuad$ShowroomManager: false
   Position@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
   Image@ENImageQuad@ImageQuad$ShowroomManager: 1
   ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 135
+  Ori@ENImageQuad@ImageQuad$ShowroomManager: 90
   OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
   Diameter@ENImageQuad@ImageQuad$ShowroomManager: 2
   Size@ENImageQuad@ImageQuad$ShowroomManager: (2, 2, 1)
@@ -71,6 +61,16 @@ EnvParam:
   Visible@ENImageQuad@ImageQuad$ShowroomManager: true
   Position@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
 CondPath: Condition\Ori4SF2.yaml
 Cond: 
 ExLogicPath: OIMasterMap

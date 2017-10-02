@@ -1,7 +1,7 @@
 ID: LaserContrast
 Name: LaserContrast
 Designer: Alex
-Experimenter: Andrzej
+Experimenter: Alex
 Log: 
 Subject_ID: C1702
 Subject_Name: C1702
@@ -11,66 +11,8 @@ Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: Showroom
-EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  Show@Showroom@ShowroomManager: GratingQuad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (0, 0, 0, 0)
-  MaskType@ENQuad@Quad: None
-  MaskRadius@ENQuad@Quad: 0.5
-  Sigma@ENQuad@Quad: 0
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 0.5
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 67.5
-  OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 6.41787195
-  Size@ENGratingQuad@GratingQuad: (6.42, 6.42, 1)
-  Color@ENGratingQuad@GratingQuad: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad: Disk
-  MaskRadius@ENGratingQuad@GratingQuad: 0.5
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (12.5, -5.96, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad: 1
-  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad: false
-  Ori@ENImageQuad@ImageQuad: 0
-  OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
-  Color@ENImageQuad@ImageQuad: (0, 0, 0, 0)
-  MaskType@ENImageQuad@ImageQuad: None
-  MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 0
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+EnvPath: MarkerGrating
+EnvParam: {}
 CondPath: Condition\Contrast.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
@@ -86,7 +28,7 @@ BlockParam: []
 Input: None
 PreICI: 500
 CondDur: 500
-SufICI: 500
+SufICI: 1000
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -132,8 +74,9 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: !!ListOfFloat '[0.145, 0.285]'
-  LaserFreq: !!ListOfFloat '[40]'
+  LaserPower: !!ListOfFloat '[0.205, 0.505]'
+  LaserFreq: !!ListOfFloat '[10]'
+  ICIFactor: !!Float 3
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

@@ -23,29 +23,29 @@ using VLab;
 using System.Collections.Generic;
 using System.Linq;
 
-
 public class RippleLaserCTLogic : ExperimentLogic
 {
-    ParallelPort pport;
-    ParallelPortWave ppsw;
+    ParallelPort pport1, pport2;
+    ParallelPortWave ppw;
     int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
-    int startbit, stopbit, condbit, signalbit;
+    int startch, stopch, condch, signalch1, signalch2;
 
     Omicron luxx473;
     Cobolt mambo594;
     float power;
-    int ICIFactor = 5;
     List<string> condpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
 
     public override void OnStart()
     {
         recordmanager = new RecordManager(RecordSystem.Ripple);
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        ppsw = new ParallelPortWave(pport);
-        startbit = (int)config[VLCFG.StartCh];
-        stopbit = (int)config[VLCFG.StopCh];
-        condbit = (int)config[VLCFG.ConditionCh];
-        signalbit = (int)config[VLCFG.SignalCh1];
+        pport1 = new ParallelPort((int)config[VLCFG.ParallelPort1]);
+        pport2 = new ParallelPort((int)config[VLCFG.ParallelPort2]);
+        ppw = new ParallelPortWave(pport2);
+        startch = (int)config[VLCFG.StartCh];
+        stopch = (int)config[VLCFG.StopCh];
+        condch = (int)config[VLCFG.ConditionCh];
+        signalch1 = (int)config[VLCFG.SignalCh1];
+        signalch2 = (int)config[VLCFG.SignalCh2];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -66,7 +66,7 @@ public class RippleLaserCTLogic : ExperimentLogic
             };
             lcond = lcond.OrthoCondOfFactorLevel();
             lcond["LaserPower"].Add(0f);
-            lcond["LaserFreq"].Add(0.1f);
+            lcond["LaserFreq"].Add(0f);
 
             // get base conditions
             var bcond = condmanager.ReadCondition(ex.CondPath);
@@ -128,9 +128,9 @@ public class RippleLaserCTLogic : ExperimentLogic
         timer.Timeout(3000);
 
         base.StartExperiment();
-        recordmanager.recorder.RecordPath=ex.GetDataPath("");
+        recordmanager.recorder.RecordPath = ex.GetDataPath("");
         timer.Timeout(notifylatency);
-        pport.BitPulse(bit: startbit, duration_ms: 5);
+        pport1.BitPulse(bit: startch, duration_ms: 5);
         timer.Restart();
     }
 
@@ -138,14 +138,16 @@ public class RippleLaserCTLogic : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        ppsw.Stop(signalbit);
+        ppw.Stop(signalch1);
+        ppw.Stop(signalch2);
+        pport1.SetBit(bit: condch, value: false);
         base.StopExperiment();
 
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
         timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: stopbit, duration_ms: 5);
+        pport1.BitPulse(bit: stopch, duration_ms: 5);
         timer.Stop();
     }
 
@@ -178,16 +180,21 @@ public class RippleLaserCTLogic : ExperimentLogic
                         // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
                         // marker params will take effect on screen.
                         SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
+                        pport1.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
                     }
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Mark", OnOff.On);
+                        pport1.SetBit(bit: condch, value: true);
                     }
                     if (power > 0)
                     {
-                        ppsw.bitlatency_ms[signalbit] = ex.Latency;
-                        ppsw.SetBitFreq(signalbit, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
-                        ppsw.Start(signalbit);
+                        ppw.bitlatency_ms[signalch1] = ex.Latency;
+                        ppw.SetBitFreq(signalch1, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
+                        ppw.bitlatency_ms[signalch2] = ex.Latency;
+                        ppw.SetBitFreq(signalch2, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
+                        ppw.Start(signalch1);
+                        ppw.Start(signalch2);
                     }
                 }
                 break;
@@ -203,15 +210,21 @@ public class RippleLaserCTLogic : ExperimentLogic
                     {
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
+                        pport1.SetBit(bit: condch, value: false);
                     }
                     if (power > 0)
                     {
-                        ppsw.Stop(signalbit);
+                        ppw.Stop(signalch1);
+                        ppw.Stop(signalch2);
                     }
                 }
                 break;
             case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI * (1 + power * ICIFactor))
+                if (ex.SufICI == 0)
+                {
+                    CondState = CONDSTATE.PREICI;
+                }
+                if (SufICIHold >= ex.SufICI + power * ex.CondDur * (float)ex.GetParam("ICIFactor"))
                 {
                     CondState = CONDSTATE.PREICI;
                 }

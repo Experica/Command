@@ -1,10 +1,10 @@
-﻿Shader "Unlit/image"
+﻿Shader "VLAB/maskimage"
 {
 	Properties
 	{
 		img("Image", 2D) = "white" {}
 		maskradius("MaskRadius",Float) = 0.5
-		sigma("Sigma", Float) = 0.15
+		sigma("Sigma", Float) = 25
 		sizex("SizeX",Float) = 2
 		sizey("SizeY", Float) = 2
 		masktype("MaskType",Int) = 0

@@ -25,15 +25,15 @@ public class RippleTimingLogic : ExperimentLogic
 {
     ParallelPort pport;
     int notifylatency, exlatencyerror, onlinesignallatency;
-    int startbit, stopbit, condbit;
+    int startch, stopch, condch;
 
     public override void OnStart()
     {
         recordmanager = new RecordManager(RecordSystem.Ripple);
         pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        startbit = (int)config[VLCFG.StartCh];
-        stopbit = (int)config[VLCFG.StopCh];
-        condbit = (int)config[VLCFG.ConditionCh];
+        startch = (int)config[VLCFG.StartCh];
+        stopch = (int)config[VLCFG.StopCh];
+        condch = (int)config[VLCFG.ConditionCh];
         notifylatency = (int)config[VLCFG.NotifyLatency];
         exlatencyerror = (int)config[VLCFG.ExLatencyError];
         onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
@@ -42,20 +42,20 @@ public class RippleTimingLogic : ExperimentLogic
     protected override void StartExperiment()
     {
         base.StartExperiment();
-        recordmanager.recorder.RecordPath=ex.GetDataPath(ext: "");
+        recordmanager.recorder.RecordPath = ex.GetDataPath(ext: "");
         timer.Timeout(notifylatency);
-        pport.BitPulse(bit: startbit, duration_ms: 5);
+        pport.BitPulse(bit: startch, duration_ms: 5);
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: condbit, value: false);
+        pport.SetBit(bit: condch, value: false);
 
         base.StopExperiment();
         timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: stopbit, duration_ms: 5);
+        pport.BitPulse(bit: stopch, duration_ms: 5);
         timer.Stop();
     }
 
@@ -71,14 +71,14 @@ public class RippleTimingLogic : ExperimentLogic
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    pport.SetBit(bit: condbit, value: true);
+                    pport.SetBit(bit: condch, value: true);
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
                     CondState = CONDSTATE.SUFICI;
-                    pport.SetBit(bit: condbit, value: false);
+                    pport.SetBit(bit: condch, value: false);
                 }
                 break;
             case CONDSTATE.SUFICI:

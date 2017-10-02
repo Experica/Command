@@ -10,6 +10,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Welcomeback.unity
   - enabled: 1
-    path: Assets/Showroom.unity
+    path: Assets/Environment/Showroom.unity
   - enabled: 1
-    path: Assets/DynamicShowroom.unity
+    path: Assets/Environment/DynamicShowroom.unity
+  - enabled: 1
+    path: Assets/Environment/ShowGrating.unity
+  - enabled: 1
+    path: Assets/Environment/ShowImage.unity
+  - enabled: 1
+    path: Assets/Environment/ShowBar.unity
