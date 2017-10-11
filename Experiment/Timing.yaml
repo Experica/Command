@@ -3,17 +3,17 @@ Name: Timing
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1703
+Subject_Name: C1703
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: MarkerBar
 EnvParam: {}
-CondPath: Condition\Mark.yaml
+CondPath: Condition\Condition1.yaml
 Cond: 
 ExLogicPath: RippleTimingLogic
 RecordSession: ''
@@ -22,7 +22,7 @@ DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 600
+CondRepeat: 1200
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -35,7 +35,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: COND
+PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
@@ -66,7 +66,10 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
-Param: {}
+Param:
+  MaxRippleStartLatency: !!Float 1000
+  MaxVLabLatency: !!Float 1000
+  MarkPulseWidth: !!Float 21
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

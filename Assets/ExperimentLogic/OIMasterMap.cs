@@ -35,6 +35,13 @@ public class OIMasterMap : ExperimentLogic
         recordmanager = new RecordManager(RecordSystem.Ripple);
     }
 
+    protected override void StartExperiment()
+    {
+        base.StartExperiment();
+        SetEnvActiveParam("Visible", false);
+        SetEnvActiveParam("ReverseTime", false);
+    }
+
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Visible", false);

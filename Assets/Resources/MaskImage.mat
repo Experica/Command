@@ -131,6 +131,12 @@ Material:
         name: masktype
       second: 0
     - first:
+        name: ori
+      second: 0
+    - first:
+        name: orioffset
+      second: 0
+    - first:
         name: sigma
       second: 25
     - first:

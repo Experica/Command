@@ -24,8 +24,8 @@ using VLab;
 public class RippleTimingLogic : ExperimentLogic
 {
     ParallelPort pport;
-    int notifylatency, exlatencyerror, onlinesignallatency;
     int startch, stopch, condch;
+    float markpulsewidth;
 
     public override void OnStart()
     {
@@ -34,16 +34,15 @@ public class RippleTimingLogic : ExperimentLogic
         startch = (int)config[VLCFG.StartCh];
         stopch = (int)config[VLCFG.StopCh];
         condch = (int)config[VLCFG.ConditionCh];
-        notifylatency = (int)config[VLCFG.NotifyLatency];
-        exlatencyerror = (int)config[VLCFG.ExLatencyError];
-        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
     }
 
     protected override void StartExperiment()
     {
         base.StartExperiment();
+        SetEnvActiveParam("Mark", OnOff.Off);
+        pport.SetBit(bit: condch, value: false);
         recordmanager.recorder.RecordPath = ex.GetDataPath(ext: "");
-        timer.Timeout(notifylatency);
+        timer.Timeout((float)ex.GetParam("MaxRippleStartLatency"));
         pport.BitPulse(bit: startch, duration_ms: 5);
         timer.Restart();
     }
@@ -52,9 +51,8 @@ public class RippleTimingLogic : ExperimentLogic
     {
         SetEnvActiveParam("Mark", OnOff.Off);
         pport.SetBit(bit: condch, value: false);
-
         base.StopExperiment();
-        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
+        timer.Timeout((float)ex.GetParam("MaxVLabLatency"));
         pport.BitPulse(bit: stopch, duration_ms: 5);
         timer.Stop();
     }
@@ -64,21 +62,38 @@ public class RippleTimingLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                SetEnvActiveParam("Mark", OnOff.Off);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
-                    pport.SetBit(bit: condch, value: true);
+                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                    {
+                        // The mark pulse width should be > 2 frames(60Hz==16.7ms) to make sure mark takes effect on screen.
+                        markpulsewidth = (float)ex.GetParam("MarkPulseWidth");
+                        SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
+                        pport.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
+                    }
+                    else // ICI Mode
+                    {
+                        SetEnvActiveParam("Mark", OnOff.On);
+                        pport.SetBit(bit: condch, value: true);
+                    }
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
                     CondState = CONDSTATE.SUFICI;
-                    pport.SetBit(bit: condch, value: false);
+                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                    {
+                    }
+                    else // ICI Mode
+                    {
+                        SetEnvActiveParam("Mark", OnOff.Off);
+                        pport.SetBit(bit: condch, value: false);
+                    }
                 }
                 break;
             case CONDSTATE.SUFICI:

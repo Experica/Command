@@ -3,15 +3,15 @@ Name: MapOri6SF2Slave
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1703
+Subject_Name: C1703
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: ShowGrating
+EnvPath: Grating
 EnvParam: {}
 CondPath: Condition\Ori6SF2.yaml
 Cond: 
@@ -22,7 +22,7 @@ DataDir: X:\
 DataPath: 
 CondSampling: Manual
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 100
+CondRepeat: 1000
 BlockRepeat: 1
 BlockParam: []
 Input: None

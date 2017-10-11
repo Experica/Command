@@ -9,30 +9,30 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 3
+Subject_Weight: 3.5999999
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
   Image@ENImageQuad@ImageQuad: 1
-  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad: false
-  Ori@ENImageQuad@ImageQuad: 0
+  ImageSet@ENImageQuad@ImageQuad: vanhateren_3000_32×32_0.5_0.5
+  IsCacheImage@ENImageQuad@ImageQuad: true
+  Ori@ENImageQuad@ImageQuad: 157.5
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 2
-  Size@ENImageQuad@ImageQuad: (2, 2, 1)
+  Diameter@ENImageQuad@ImageQuad: 30
+  Size@ENImageQuad@ImageQuad: (30, 30, 1)
   Color@ENImageQuad@ImageQuad: (1, 1, 1, 1)
-  MaskType@ENImageQuad@ImageQuad: None
-  MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 0.150000006
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
+  MaskType@ENImageQuad@ImageQuad: DiskFade
+  MaskRadius@ENImageQuad@ImageQuad: 0.449999988
+  Sigma@ENImageQuad@ImageQuad: 25
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: (9.63, 9.78, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (28.6, -21.2, 0)
+  MarkerPosition@ENMarker@Marker: (38.5, -21.2, 0)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
@@ -40,13 +40,13 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserTrialImageLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V2Site2V2Site1
+RecordSite: D3569Ch23D3100Ch31
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 6
+CondRepeat: 5
 BlockRepeat: 1
 BlockParam:
 - LaserPower
@@ -99,8 +99,8 @@ EnvInheritParam:
 - Diameter@ENImageQuad@ImageQuad$ShowroomManager
 - Position@ENImageQuad@ImageQuad$ShowroomManager
 Param:
-  LaserPower: !!ListOfFloat '[0.205, 0.505]'
-  LaserFreq: !!ListOfFloat '[10]'
+  LaserPower: !!ListOfFloat '[0.5, 1]'
+  LaserFreq: !!ListOfFloat '[40]'
   NumOfImage: !!Float 3000
   ITIFactor: !!Float 3
 Latency: 22

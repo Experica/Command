@@ -9,7 +9,7 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: (0, 0, 0)
-Subject_Weight: 3
+Subject_Weight: 3.5999999
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
@@ -35,7 +35,7 @@ EnvParam:
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  Visible@ENGratingQuad@GratingQuad: true
+  Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: (0, 0, 0)
   PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   MarkerSize@ENMarker@Marker: 2
@@ -47,13 +47,13 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V2Site2V2Site1
+RecordSite: D3569Ch23D3100Ch31
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 20
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -98,8 +98,8 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: !!ListOfFloat '[0.205, 0.505]'
-  LaserFreq: !!ListOfFloat '[10]'
+  LaserPower: !!ListOfFloat '[0.5, 1]'
+  LaserFreq: !!ListOfFloat '[40]'
   ICIFactor: !!Float 3
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

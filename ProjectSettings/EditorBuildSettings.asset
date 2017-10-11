@@ -13,9 +13,17 @@ EditorBuildSettings:
     path: Assets/Environment/Showroom.unity
   - enabled: 1
     path: Assets/Environment/DynamicShowroom.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Environment/ShowGrating.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Environment/ShowImage.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Environment/ShowBar.unity
+  - enabled: 1
+    path: Assets/Environment/MarkerBar.unity
+  - enabled: 1
+    path: Assets/Environment/MarkerGrating.unity
+  - enabled: 1
+    path: Assets/Environment/MarkerImage.unity
+  - enabled: 1
+    path: Assets/Environment/Grating.unity

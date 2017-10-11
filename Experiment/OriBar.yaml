@@ -3,8 +3,8 @@ Name: OriBar
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1703
+Subject_Name: C1703
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -12,30 +12,7 @@ Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: ShowBar
-EnvParam:
-  Show@Showroom@ShowroomManager: Quad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad$ShowroomManager: 45
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 25
-  Size@ENQuad@Quad$ShowroomManager: (32, 2, 1)
-  Color@ENQuad@Quad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad$ShowroomManager: Disk
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  Visible@ENQuad@Quad$ShowroomManager: true
-  Position@ENQuad@Quad$ShowroomManager: (20, 0, 0)
-  PositionOffset@ENQuad@Quad$ShowroomManager: (20, 0, 0)
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+EnvParam: {}
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic

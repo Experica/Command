@@ -46,6 +46,18 @@ namespace VLab
             }
         }
 
+        public override void OnOri(float o)
+        {
+            renderer.material.SetFloat("ori", o);
+            Ori = o;
+        }
+
+        public override void OnOriOffset(float ooffset)
+        {
+            renderer.material.SetFloat("orioffset", ooffset);
+            OriOffset = ooffset;
+        }
+
         void onimage(string i)
         {
             OnImage(i);

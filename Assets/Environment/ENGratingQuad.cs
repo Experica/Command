@@ -55,6 +55,18 @@ namespace VLab
         [SyncVar(hook ="onisreversetime")]
         public bool ReverseTime = false;
 
+        public override void OnOri(float o)
+        {
+            renderer.material.SetFloat("ori", o);
+            Ori = o;
+        }
+
+        public override void OnOriOffset(float ooffset)
+        {
+            renderer.material.SetFloat("orioffset", ooffset);
+            OriOffset = ooffset;
+        }
+
         public override void OnVisible(bool v)
         {
             if (v)
