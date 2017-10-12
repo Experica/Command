@@ -122,7 +122,7 @@ namespace VLab
         }
         public virtual void OnMarkerPosition(Vector3 p)
         {
-            transform.position = p;
+            transform.localPosition = p;
             MarkerPosition = p;
         }
 

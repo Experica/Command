@@ -49,7 +49,6 @@
 			int masktype;
 			static const float pi = 3.141592653589793238462;
 			static const float pi2 = 6.283185307179586476924;
-			float rsizey,cosv,sinv;
 
 			inline float erf(const float x)
 			{
@@ -81,21 +80,16 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv - 0.5;
-
-				sincos(radians(ori+orioffset), sinv, cosv);
-				//o.uv = mul(v.uv-0.5, float2x2(c, -s, s, c));
-				//rsizey = sizey*c;
 				return o;
 			}
 
 			fixed4 frag(v2f i) : SV_Target
 			{
 				fixed4 c;
-			sincos(radians(ori + orioffset), sinv, cosv);
-			float gd = cosv*i.uv.y*sizey - sinv*i.uv.x*sizex;
-			    float y = frac((gd + phase / sf)*sf);
-				//float y = frac((gd - t*tf / sf + phase / sf)*sf);
-				//float y = frac((i.uv.y*sizey - t*tf / sf + phase / sf)*sf);
+			    float sinv, cosv;
+				sincos(radians(ori + orioffset), sinv, cosv);
+				float p = cosv*i.uv.y*sizey - sinv*i.uv.x*sizex;
+				float y = frac((p - t*tf / sf + phase / sf)*sf);
 				if (gratingtype == 0)
 				{
 					if (y< 0.5)

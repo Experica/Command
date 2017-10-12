@@ -152,11 +152,20 @@ namespace VLab
                 var orioffset = el.envmanager.GetActiveParam("OriOffset");
                 var p = el.envmanager.GetActiveParam("Position");
                 var poffset = el.envmanager.GetActiveParam("PositionOffset");
-                if(ori!=null && orioffset!=null && p!=null && poffset!=null)
+                var oripoffset = el.envmanager.GetActiveParam("OriPositionOffset");
+                if(ori!=null && orioffset!=null && p!=null && poffset!=null && oripoffset!=null)
                 {
-                    var cp = ((Vector3)poffset).RotateZCCW((float)ori + (float)orioffset)+(Vector3)p;
+                    Vector3 newp;
+                    if ((bool)orioffset)
+                    {
+                        newp = ((Vector3)poffset).RotateZCCW((float)ori + (float)orioffset) + (Vector3)p;
+                    }
+                    else
+                    {
+                        newp = (Vector3)poffset + (Vector3)p;
+                    }
                     el.envmanager.SetActiveParam("PositionOffset", new Vector3(), true);
-                    el.envmanager.SetActiveParam("Position", cp, true);
+                    el.envmanager.SetActiveParam("Position", newp, true);
                 }
             }
         }

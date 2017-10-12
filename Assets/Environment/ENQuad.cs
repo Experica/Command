@@ -48,9 +48,11 @@ namespace VLab
         [SyncVar(hook = "onmasktype")]
         public MaskType MaskType;
         [SyncVar(hook = "onmaskradius")]
-        public float MaskRadius=0.5f;
+        public float MaskRadius = 0.5f;
         [SyncVar(hook = "onsigma")]
-        public float Sigma=0.15f;
+        public float Sigma = 0.15f;
+        [SyncVar(hook = "onoripositionoffset")]
+        public bool OriPositionOffset = false;
 
         public VLTimer t = new VLTimer();
 
@@ -60,8 +62,11 @@ namespace VLab
         }
         public virtual void OnOri(float o)
         {
-            transform.eulerAngles = new Vector3(0, 0, o + OriOffset);
-            transform.position = Position + PositionOffset.RotateZCCW(OriOffset + o);
+            transform.localEulerAngles = new Vector3(0, 0, o + OriOffset);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(OriOffset + o);
+            }
             Ori = o;
         }
 
@@ -71,21 +76,38 @@ namespace VLab
         }
         public virtual void OnOriOffset(float ooffset)
         {
-            transform.eulerAngles = new Vector3(0, 0, ooffset + Ori);
-            transform.position = Position + PositionOffset.RotateZCCW(Ori + ooffset);
+            transform.localEulerAngles = new Vector3(0, 0, ooffset + Ori);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + ooffset);
+            }
             OriOffset = ooffset;
         }
 
         public override void OnPosition(Vector3 p)
         {
-            transform.position = p + PositionOffset.RotateZCCW(Ori + OriOffset);
-            Position = p;
+            if (OriPositionOffset)
+            {
+                transform.localPosition = p + PositionOffset.RotateZCCW(Ori + OriOffset);
+                Position = p;
+            }
+            else
+            {
+                base.OnPosition(p);
+            }
         }
 
         public override void OnPositionOffset(Vector3 poffset)
         {
-            transform.position = Position + poffset.RotateZCCW(Ori + OriOffset);
-            PositionOffset = poffset;
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + poffset.RotateZCCW(Ori + OriOffset);
+                PositionOffset = poffset;
+            }
+            else
+            {
+                base.OnPositionOffset(poffset);
+            }
         }
 
         void onsize(Vector3 s)
@@ -151,6 +173,23 @@ namespace VLab
         {
             renderer.material.SetFloat("sigma", s);
             Sigma = s;
+        }
+
+        void onoripositionoffset(bool opo)
+        {
+            OnOriPositionOffset(opo);
+        }
+        public virtual void OnOriPositionOffset(bool opo)
+        {
+            if (opo)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + OriOffset);
+            }
+            else
+            {
+                transform.localPosition = Position + PositionOffset;
+            }
+            OriPositionOffset = opo;
         }
     }
 }

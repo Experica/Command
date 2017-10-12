@@ -12,7 +12,31 @@ Subject_Size: (0, 0, 0)
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerBar
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: (22.6, -13.7, -1E+03)
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
+  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: (2, 2, 1)
+  Color@ENQuad@Quad: (1, 1, 1, 1)
+  MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
+  Sigma@ENQuad@Quad: 0.150000006
+  OriPositionOffset@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: (0, 0, 0)
+  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  Rotation@ENQuad@Quad: (0, 0, 0)
+  RotationOffset@ENQuad@Quad: (0, 0, 0)
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic

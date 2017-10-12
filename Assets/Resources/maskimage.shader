@@ -66,16 +66,16 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv - 0.5;
-
-				float s, c;
-				sincos(radians(ori + orioffset), s, c);
-				o.uv = mul(v.uv - 0.5, float2x2(c, -s, s, c));
 				return o;
 			}
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				fixed4 c = tex2D(img,i.uv+0.5);
+				float sinv, cosv;
+				sincos(radians(ori + orioffset), sinv, cosv);
+				float2 ruv = mul(i.uv, float2x2(cosv, -sinv, sinv, cosv));
+				fixed4 c = tex2D(img, ruv + 0.5);
+
 			    if(masktype==0)
 				{ }
 				else if (masktype == 1)
