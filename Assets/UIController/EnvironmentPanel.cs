@@ -53,7 +53,7 @@ namespace VLab
         {
             var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowInactiveEnvParam];
             var isshowfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullName];
-            foreach (var fullname in em.net_syncvar.Keys)
+            foreach (var fullname in em.net_syncvar.Keys.ToArray())
             {
                 string paramname, nb;
                 fullname.FirstAtSplit(out paramname, out nb);

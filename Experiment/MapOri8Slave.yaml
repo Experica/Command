@@ -40,7 +40,7 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
 CondPath: Condition\Ori8.yaml
 Cond: 
 ExLogicPath: OIMasterMap
