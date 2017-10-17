@@ -23,7 +23,7 @@ EnvParam:
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 67.5
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 90
   Size@ENGratingQuad@GratingQuad: (90, 90, 1)
@@ -39,8 +39,8 @@ EnvParam:
   RotationOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
   BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
 CondPath: Condition\Ori8.yaml
 Cond: 
 ExLogicPath: OIMasterMap
