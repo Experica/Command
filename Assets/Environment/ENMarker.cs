@@ -45,7 +45,7 @@ namespace VLab
         [SyncVar(hook = "onmarkersize")]
         public float MarkerSize = 2;
         [SyncVar(hook = "onmarkerposition")]
-        public Vector3 MarkerPosition = new Vector3();
+        public Vector3 MarkerPosition = Vector3.zero;
         [SyncVar(hook = "onmarkercorner")]
         public Corner MarkerCorner = Corner.BottomRight;
         [SyncVar(hook = "onmark")]
@@ -80,23 +80,22 @@ namespace VLab
             UpdatePosition();
         }
 
-        Vector3 CornerPosition(Corner c)
+        Vector3 CornerPosition(Corner c, float m = 0)
         {
             var hh = encamera.camera.orthographicSize;
             var hw = hh * encamera.camera.aspect;
-            var m = 0.0f;
             switch (c)
             {
                 case Corner.TopLeft:
-                    return new Vector3(-(hw - MarkerSize / 2.0f - m), hh - MarkerSize / 2.0f - m, transform.position.z);
+                    return new Vector3(-(hw - MarkerSize / 2.0f - m), hh - MarkerSize / 2.0f - m, transform.localPosition.z);
                 case Corner.TopRight:
-                    return new Vector3(hw - MarkerSize / 2.0f - m, hh - MarkerSize / 2.0f - m, transform.position.z);
+                    return new Vector3(hw - MarkerSize / 2.0f - m, hh - MarkerSize / 2.0f - m, transform.localPosition.z);
                 case Corner.BottomRight:
-                    return new Vector3(hw - MarkerSize / 2.0f - m, -(hh - MarkerSize / 2.0f - m), transform.position.z);
+                    return new Vector3(hw - MarkerSize / 2.0f - m, -(hh - MarkerSize / 2.0f - m), transform.localPosition.z);
                 case Corner.BottomLeft:
-                    return new Vector3(-(hw - MarkerSize / 2.0f - m), -(hh - MarkerSize / 2.0f - m), transform.position.z);
+                    return new Vector3(-(hw - MarkerSize / 2.0f - m), -(hh - MarkerSize / 2.0f - m), transform.localPosition.z);
                 default:
-                    return new Vector3(0, 0, transform.position.z);
+                    return new Vector3(0, 0, transform.localPosition.z);
             }
         }
 
@@ -111,8 +110,8 @@ namespace VLab
         }
         public virtual void OnMarkerSize(float s)
         {
-            MarkerSize = s;
             transform.localScale = new Vector3(s, s, 1);
+            MarkerSize = s;
             UpdatePosition();
         }
 

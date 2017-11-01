@@ -33,7 +33,7 @@ public class ParallelPortPinSignal : ExperimentLogic
         ppw = new ParallelPortWave(pport);
     }
 
-    public override void PrepareCondition(bool isforceprepare = true)
+    public override void PrepareCondition(bool regenerateconditon=true)
     {
         for (var i = 0; i < 8; i++)
         {

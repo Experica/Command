@@ -53,80 +53,54 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition(bool isforceprepare = true)
+    public override void GenerateFinalCondition()
     {
-        bool isshowcond = true;
-        if (isforceprepare == false && condmanager.cond != null)
-        { }
-        else
-        {
-            // get laser conditions
-            var lcond = new Dictionary<string, List<object>>()
+        // get laser conditions
+        var lcond = new Dictionary<string, List<object>>()
             {
                 {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
                 {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
             };
-            lcond = lcond.OrthoCondOfFactorLevel();
-            lcond["LaserPower"].Add(0f);
-            lcond["LaserFreq"].Add(0f);
+        lcond = lcond.OrthoCondOfFactorLevel();
+        lcond["LaserPower"].Add(0f);
+        lcond["LaserFreq"].Add(0f);
 
-            // get base conditions
-            var bcond = condmanager.ReadCondition(ex.CondPath);
-            if (bcond == null)
-            {
-                var ni = (float)ex.GetParam("NumOfImage");
-                bcond = new Dictionary<string, List<object>>();
-                bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
-                isshowcond = false;
-            }
-            if (bcond != null)
-            {
-                bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
-                if (bcond.ContainsKey("factorlevel") && bcond["factorlevel"].Count == 0)
-                {
-                    bcond = bcond.OrthoCondOfFactorLevel();
-                }
-                condmanager.TrimCondition(bcond);
-            }
+        // get base conditions
+        var ni = (float)ex.GetParam("NumOfImage");
+        var bcond = new Dictionary<string, List<object>>();
+        bcond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
 
-            // get final conditions
-            var fcond = new Dictionary<string, List<object>>()
+        // get final conditions
+        var fcond = new Dictionary<string, List<object>>()
         {
             {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
             {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
         };
-            fcond = fcond.OrthoCondOfFactorLevel();
+        fcond = fcond.OrthoCondOfFactorLevel();
+        foreach (var bf in bcond.Keys)
+        {
+            fcond[bf] = new List<object>();
+        }
+        foreach (var lf in lcond.Keys)
+        {
+            fcond[lf] = new List<object>();
+        }
+        for (var i = 0; i < fcond["l"].Count; i++)
+        {
+            var bci = (int)fcond["b"][i];
+            var lci = (int)fcond["l"][i];
             foreach (var bf in bcond.Keys)
             {
-                fcond[bf] = new List<object>();
+                fcond[bf].Add(bcond[bf][bci]);
             }
             foreach (var lf in lcond.Keys)
             {
-                fcond[lf] = new List<object>();
+                fcond[lf].Add(lcond[lf][lci]);
             }
-            for (var i = 0; i < fcond["l"].Count; i++)
-            {
-                var bci = (int)fcond["b"][i];
-                var lci = (int)fcond["l"][i];
-                foreach (var bf in bcond.Keys)
-                {
-                    fcond[bf].Add(bcond[bf][bci]);
-                }
-                foreach (var lf in lcond.Keys)
-                {
-                    fcond[lf].Add(lcond[lf][lci]);
-                }
-            }
-            fcond.Remove("b"); fcond.Remove("l");
+        }
+        fcond.Remove("b"); fcond.Remove("l");
 
-            condmanager.TrimCondition(fcond);
-        }
-        if (condmanager.ncond > 0)
-        {
-            ex.Cond = condmanager.cond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-            OnConditionPrepared(isshowcond);
-        }
+        condmanager.FinalizeCondition(fcond);
     }
 
     protected override void StartExperiment()
@@ -172,9 +146,10 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
         timer.Stop();
     }
 
-    public override void SamplePushCondition(bool isautosampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
-        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, false),
+        // Block sampling defered into trial logic
+        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, false),
             envmanager, condpushexcept);
     }
 
@@ -188,7 +163,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                 {
                     condmanager.SampleBlockSpace();
                     var imageidx = condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
-                    envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
+                    envmanager.InvokeActiveRPC("RpcPreLoadImage", new object[] { imageidx });
                 }
                 power = condmanager.blockcond["LaserPower"][condmanager.blockidx].Convert<float>();
                 luxx473.PowerRatio = power;
@@ -279,7 +254,7 @@ public class RippleLaserTrialImageLogic : ExperimentLogic
                                 }
                                 condmanager.SampleBlockSpace();
                                 var imageidx = condmanager.CurrentCondSampleSpace.Select(i => condmanager.cond["Image"][i].ToString()).ToArray();
-                                envmanager.Invoke("RpcPreLoadImage", new object[] { imageidx });
+                                envmanager.InvokeActiveRPC("RpcPreLoadImage", new object[] { imageidx });
                             }
                             else
                             {

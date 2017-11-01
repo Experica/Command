@@ -160,7 +160,7 @@ namespace VLab
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.config = appmanager.config;
             el.ex = ex;
-            uicontroller.condpanel.forceprepare.isOn = el.isforcepreparecond;
+            uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
             AddEL(el);
         }
 
@@ -385,7 +385,7 @@ namespace VLab
 
         public void PrepareEnv(string scenename)
         {
-            el.envmanager.AddScene(scenename);
+            el.envmanager.ParseScene(scenename);
             el.envmanager.SetParams(el.ex.EnvParam);
             InheritEnv();
         }

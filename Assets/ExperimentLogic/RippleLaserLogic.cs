@@ -51,29 +51,18 @@ public class RippleLaserLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition(bool isforceprepare = true)
+    public override void GenerateFinalCondition()
     {
-        if (isforceprepare == false && condmanager.cond != null)
-        { }
-        else
-        {
-            var cond = new Dictionary<string, List<object>>()
+        var cond = new Dictionary<string, List<object>>()
             {
                 {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
                 {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
             };
-            cond = cond.OrthoCondOfFactorLevel();
-            cond["LaserPower"].Add(0f);
-            cond["LaserFreq"].Add(0f);
+        cond = cond.OrthoCondOfFactorLevel();
+        cond["LaserPower"].Add(0f);
+        cond["LaserFreq"].Add(0f);
 
-            condmanager.TrimCondition(cond);
-        }
-        if (condmanager.ncond > 0)
-        {
-            ex.Cond = condmanager.cond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-            OnConditionPrepared(true);
-        }
+        condmanager.FinalizeCondition(cond);
     }
 
     protected override void StartExperiment()
@@ -105,9 +94,9 @@ public class RippleLaserLogic : ExperimentLogic
         timer.Stop();
     }
 
-    public override void SamplePushCondition(bool isautosampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
-        condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, isautosampleblock);
+        condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock);
         power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();
         luxx473.PowerRatio = power;
         mambo594.PowerRatio = power;

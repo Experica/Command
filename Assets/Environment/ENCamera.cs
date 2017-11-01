@@ -68,7 +68,6 @@ namespace VLab
                 camera.backgroundColor = c;
             }
             BGColor = c;
-            if (CameraChange != null) CameraChange();
         }
 
         void onscreenhalfheight(float shh)

@@ -35,6 +35,10 @@ namespace VLab
 
     public class ENQuad : EnvNet
     {
+        [SyncVar(hook = "onrotation")]
+        public Vector3 Rotation = Vector3.zero;
+        [SyncVar(hook = "onrotationoffset")]
+        public Vector3 RotationOffset = Vector3.zero;
         [SyncVar(hook = "onori")]
         public float Ori = 0;
         [SyncVar(hook = "onorioffset")]
@@ -54,7 +58,27 @@ namespace VLab
         [SyncVar(hook = "onoripositionoffset")]
         public bool OriPositionOffset = false;
 
-        public VLTimer t = new VLTimer();
+        public VLTimer timer = new VLTimer();
+
+        void onrotation(Vector3 r)
+        {
+            OnRotation(r);
+        }
+        public virtual void OnRotation(Vector3 r)
+        {
+            transform.localEulerAngles = r + RotationOffset;
+            Rotation = r;
+        }
+
+        void onrotationoffset(Vector3 roffset)
+        {
+            OnRotationOffset(roffset);
+        }
+        public virtual void OnRotationOffset(Vector3 roffset)
+        {
+            transform.localEulerAngles = Rotation + roffset;
+            RotationOffset = roffset;
+        }
 
         void onori(float o)
         {
@@ -128,10 +152,7 @@ namespace VLab
         }
         public virtual void OnDiameter(float d)
         {
-            Size = new Vector3(d, d, Size.z);
-            transform.localScale = Size;
-            renderer.material.SetFloat("sizex", d);
-            renderer.material.SetFloat("sizey", d);
+            OnSize(new Vector3(d, d, Size.z));
             Diameter = d;
         }
 

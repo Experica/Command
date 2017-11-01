@@ -33,19 +33,18 @@ namespace VLab
         public Dictionary<VLCFG, object> config;
         public Experiment ex = new Experiment();
         public VLTimer timer = new VLTimer();
-
-        public Action OnBeginStartExperiment, OnEndStartExperiment,
-            OnBeginStopExperiment, OnEndStopExperiment,
-            OnBeginPauseExperiment, OnEndPauseExperiment,
-            OnBeginResumeExperiment, OnEndResumeExpeirment;
-        public Action<bool> OnConditionPrepared;
-
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
         public CondTestManager condtestmanager = new CondTestManager();
         public RecordManager recordmanager = new RecordManager();
 
-        public bool islogicactive = false, isforcepreparecond = true;
+        public Action OnBeginStartExperiment, OnEndStartExperiment,
+            OnBeginStopExperiment, OnEndStopExperiment,
+            OnBeginPauseExperiment, OnEndPauseExperiment,
+            OnBeginResumeExperiment, OnEndResumeExpeirment,
+            OnConditionPrepared;
+
+        public bool islogicactive = false, regeneratecond = true;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
             TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
         public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
@@ -58,7 +57,7 @@ namespace VLab
         public double BlockHold { get { return timer.ElapsedMillisecond - BlockOnTime; } }
         public double SufIBIHold { get { return timer.ElapsedMillisecond - SufIBIOnTime; } }
 
-        private CONDSTATE condstate = CONDSTATE.NONE;
+        CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState
         {
             get { return condstate; }
@@ -66,8 +65,8 @@ namespace VLab
             {
                 if (value != condstate)
                 {
-                    condstate = value;
                     OnEnterCondState(value);
+                    condstate = value;
                 }
             }
         }
@@ -137,7 +136,7 @@ namespace VLab
             }
         }
 
-        private TRIALSTATE trialstate = TRIALSTATE.NONE;
+        TRIALSTATE trialstate = TRIALSTATE.NONE;
         public TRIALSTATE TrialState
         {
             get { return trialstate; }
@@ -145,8 +144,8 @@ namespace VLab
             {
                 if (value != trialstate)
                 {
-                    trialstate = value;
                     OnEnterTrialState(value);
+                    trialstate = value;
                 }
             }
         }
@@ -216,16 +215,16 @@ namespace VLab
             }
         }
 
-        private BLOCKSTATE blockstate = BLOCKSTATE.NONE;
-        public virtual BLOCKSTATE BlockState
+        BLOCKSTATE blockstate = BLOCKSTATE.NONE;
+        public BLOCKSTATE BlockState
         {
             get { return blockstate; }
             set
             {
                 if (value != blockstate)
                 {
-                    blockstate = value;
                     OnEnterBlockState(value);
+                    blockstate = value;
                 }
             }
         }
@@ -257,66 +256,65 @@ namespace VLab
             }
         }
 
-        private EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.NONE;
-        public virtual EXPERIMENTSTATE ExperimentState
+        EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.NONE;
+        public EXPERIMENTSTATE ExperimentState
         {
             get { return experimentstate; }
             set
             {
-                switch (experimentstate)
+                if (value != experimentstate)
                 {
-                    // Previous State
-                    case EXPERIMENTSTATE.NONE:
-                        switch (value)
-                        {
-                            // Enter State
-                            case EXPERIMENTSTATE.EXPERIMENT:
-                                break;
-                        }
-                        break;
-                    // Previous State
-                    case EXPERIMENTSTATE.EXPERIMENT:
-                        switch (value)
-                        {
-                            // Enter State
-                            case EXPERIMENTSTATE.NONE:
-                                break;
-                        }
-                        break;
+                    OnEnterExperimentState(value);
+                    experimentstate = value;
                 }
-                experimentstate = value;
+            }
+        }
+        public virtual void OnEnterExperimentState(EXPERIMENTSTATE value)
+        {
+            switch (experimentstate)
+            {
+                // Previous State
+                case EXPERIMENTSTATE.NONE:
+                    switch (value)
+                    {
+                        // Enter State
+                        case EXPERIMENTSTATE.EXPERIMENT:
+                            break;
+                    }
+                    break;
+                // Previous State
+                case EXPERIMENTSTATE.EXPERIMENT:
+                    switch (value)
+                    {
+                        // Enter State
+                        case EXPERIMENTSTATE.NONE:
+                            break;
+                    }
+                    break;
             }
         }
 
-        public virtual void PrepareCondition(bool isforceprepare = true)
+        public virtual void GenerateFinalCondition()
         {
-            if (isforceprepare == false && condmanager.cond != null)
+            condmanager.GenerateFinalCondition(ex.CondPath, ex.Param);
+        }
+
+        public virtual void PrepareCondition(bool regenerateconditon = true)
+        {
+            if (regenerateconditon == false && condmanager.cond != null)
             { }
             else
             {
-                var cond = condmanager.ReadCondition(ex.CondPath);
-                if (cond != null)
-                {
-                    cond = cond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
-
-                    if (cond.ContainsKey("factorlevel") && cond["factorlevel"].Count == 0)
-                    {
-                        cond = cond.OrthoCondOfFactorLevel();
-                    }
-                    condmanager.TrimCondition(cond);
-                }
+                GenerateFinalCondition();
             }
-            if (condmanager.ncond > 0)
-            {
-                ex.Cond = condmanager.cond;
-                condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-                OnConditionPrepared(true);
-            }
+            ex.Cond = condmanager.cond;
+            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            if (OnConditionPrepared != null) OnConditionPrepared();
         }
 
-        public virtual void SamplePushCondition(bool istrysampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+        public virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, istrysampleblock, manualblockidx, manualcondidx), envmanager);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager);
         }
 
         public virtual void SamplePushBlock(int manualblockidx = 0)
@@ -342,38 +340,37 @@ namespace VLab
             }
         }
 
-        public virtual object GetEnvActiveParam(string name)
+        public object GetEnvActiveParam(string name)
         {
             return envmanager.GetActiveParam(name);
         }
 
-        public virtual void SetEnvActiveParam(string name, object value, bool notifyui = true)
+        public void SetEnvActiveParam(string name, object value, bool notifyui = true)
         {
             envmanager.SetActiveParam(name, value, notifyui);
         }
 
-        public virtual void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = false)
+        public void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = true)
         {
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(waittime_ms, name, value, notifyui));
         }
 
-        IEnumerator WaitSetEnvActiveParam_Coroutine(float waittime_ms, string name, object value, bool notifyui = false)
+        IEnumerator WaitSetEnvActiveParam_Coroutine(float waittime_ms, string name, object value, bool notifyui = true)
         {
-            waittime_ms /= 1000;
-            var start = Time.realtimeSinceStartup;
-            while (Time.realtimeSinceStartup - start < waittime_ms)
+            var settime = Time.realtimeSinceStartup + waittime_ms / 1000;
+            while (Time.realtimeSinceStartup < settime)
             {
                 yield return null;
             }
             envmanager.SetActiveParam(name, value, notifyui);
         }
 
-        public virtual void SetEnvActiveParamTwice(string name, object value1, float interval_ms, object value2, bool notifyui = false)
+        public void SetEnvActiveParamTwice(string name, object value1, float interval_ms, object value2, bool notifyui = false)
         {
             SetEnvActiveParamTwice(name, value1, interval_ms, name, value2, notifyui);
         }
 
-        public virtual void SetEnvActiveParamTwice(string name1, object value1, float interval_ms, string name2, object value2, bool notifyui = false)
+        public void SetEnvActiveParamTwice(string name1, object value1, float interval_ms, string name2, object value2, bool notifyui = true)
         {
             envmanager.SetActiveParam(name1, value1, notifyui);
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
@@ -398,15 +395,14 @@ namespace VLab
         protected virtual void PauseExperiment()
         {
             islogicactive = false;
+            timer.Stop();
             Time.timeScale = 0;
-            CondState = CONDSTATE.NONE;
-            TrialState = TRIALSTATE.NONE;
-            BlockState = BLOCKSTATE.NONE;
         }
 
         protected virtual void ResumeExperiment()
         {
             Time.timeScale = 1;
+            timer.Start();
             islogicactive = true;
         }
 
@@ -433,7 +429,7 @@ namespace VLab
             TrialState = TRIALSTATE.NONE;
             BlockState = BLOCKSTATE.NONE;
             condtestmanager.Clear();
-            PrepareCondition(isforcepreparecond);
+            PrepareCondition(regeneratecond);
             timer.Restart();
             islogicactive = true;
         }
@@ -441,11 +437,8 @@ namespace VLab
         protected virtual void StopExperiment()
         {
             islogicactive = false;
-            // Nofity any condtest left
-            if (ex.NotifyPerCondTest > 0 && condtestmanager.condtestidx > 0)
-            {
-                condtestmanager.NotifyCondTestAndEnd(condtestmanager.notifyidx, ex.NotifyParam, timer.ElapsedMillisecond);
-            }
+            // Push Notification for any condtest left
+            condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
             timer.Stop();
             ExperimentState = EXPERIMENTSTATE.NONE;
         }
@@ -464,7 +457,6 @@ namespace VLab
         }
         public virtual void OnStart()
         {
-
         }
 
         void Update()
@@ -473,7 +465,7 @@ namespace VLab
         }
         public virtual void OnUpdate()
         {
-            if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.activenet.Count > 0)
+            if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.active_networkbehaviour.Count > 0)
             {
                 var jx = Input.GetAxis("JX");
                 var jy = Input.GetAxis("JY");
@@ -483,14 +475,14 @@ namespace VLab
                 var jrb = Input.GetAxis("JRB");
                 if (jx != 0 || jy != 0)
                 {
-                    if (envmanager.maincamera != null)
+                    if (envmanager.maincamera_scene != null)
                     {
                         var po = envmanager.GetParam("Position");
                         if (po != null)
                         {
                             var p = (Vector3)po;
-                            var hh = envmanager.maincamera.orthographicSize;
-                            var hw = hh * envmanager.maincamera.aspect;
+                            var hh = envmanager.maincamera_scene.orthographicSize;
+                            var hw = hh * envmanager.maincamera_scene.aspect;
                             envmanager.SetParam("Position", new Vector3(
                             Mathf.Clamp(p.x + Mathf.Pow(jx, 3), -hw, hw),
                             Mathf.Clamp(p.y + Mathf.Pow(jy, 3), -hh, hh),

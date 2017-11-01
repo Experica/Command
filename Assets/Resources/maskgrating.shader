@@ -7,8 +7,8 @@
 		minc("MinColor",Color) = (0,0,0,1)
 		maxc("MaxColor",Color) = (1,1,1,1)
 		cdist("ColorDistance",Color) = (1,1,1,0)
-		sf("SpatialFreq", Float) = 1
-		tf("TemporalFreq", Float) = 1
+		sf("SpatialFreq", Float) = 0.2
+		tf("TemporalFreq", Float) = 2
 		t("Time", Float) = 0
 		phase("SpatialPhase", Float) = 0
 		maskradius("MaskRadius",Float) = 0.5

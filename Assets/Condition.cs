@@ -32,27 +32,27 @@ namespace VLab
     public class ConditionManager
     {
         public Dictionary<string, List<object>> cond;
-        public Dictionary<string, List<object>> blockcond;
-        public int nfactor;
-        public int ncond;
-        public Dictionary<int, Dictionary<int, int>> condsamplespacerepeat;
-        public Dictionary<int, int> blockrepeat;
-        public Dictionary<int, int> condrepeat;
+        public int ncond = 0;
+
+        public Dictionary<string, List<object>> blockcond = new Dictionary<string, List<object>>();
+        public List<List<int>> condsamplespaces = new List<List<int>>();
+        public List<int> blocksamplespace = new List<int>();
+        public Dictionary<int, Dictionary<int, int>> condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
+        public Dictionary<int, int> blockrepeat = new Dictionary<int, int>();
+        public Dictionary<int, int> condrepeat = new Dictionary<int, int>();
 
         public System.Random rng = new MersenneTwister();
         public SampleMethod condsamplemethod = SampleMethod.Ascending;
         public SampleMethod blocksamplemethod = SampleMethod.Ascending;
-        public List<int> blocksamplespace;
-        public List<List<int>> condsamplespaces;
-        public int scendingstep = 1;
 
+        public int scendingstep = 1;
         public int blockidx = -1;
         public int condidx = -1;
         public int condsampleidx = -1;
         public int blocksampleidx = -1;
         public int nsampleignore = 0;
 
-        public Dictionary<string, List<object>> ReadCondition(string path)
+        public Dictionary<string, List<object>> ReadConditionFile(string path)
         {
             if (!File.Exists(path))
             {
@@ -61,10 +61,22 @@ namespace VLab
             return Yaml.ReadYaml<Dictionary<string, List<object>>>(path);
         }
 
-        public void TrimCondition(Dictionary<string, List<object>> cond)
+        public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond, Dictionary<string, Param> exparam)
         {
-            this.cond = cond;
-            nfactor = cond.Keys.Count;
+            if (cond != null && exparam != null)
+            {
+                cond = cond.ResolveConditionReference(exparam).FactorLevelOfDesign();
+                if (cond.ContainsKey("orthofactorlevel") && cond["orthofactorlevel"].Count == 0)
+                {
+                    cond = cond.OrthoCondOfFactorLevel();
+                }
+            }
+            return cond;
+        }
+
+        public void FinalizeCondition(Dictionary<string, List<object>> cond)
+        {
+            var nfactor = cond.Keys.Count;
             if (nfactor > 0)
             {
                 var fvn = new int[nfactor];
@@ -82,70 +94,91 @@ namespace VLab
                     }
                 }
                 ncond = minfvn;
+                this.cond = cond;
             }
+            else
+            {
+                ncond = 0;
+                this.cond = null;
+            }
+        }
+
+        public Dictionary<string, List<object>> GenerateFinalCondition(string path, Dictionary<string, Param> exparam)
+        {
+            FinalizeCondition(ProcessCondition(ReadConditionFile(path), exparam));
+            return cond;
         }
 
         public void UpdateSampleSpace(SampleMethod condsamplemethod, List<string> blockparams, SampleMethod blocksamplemethod)
         {
             this.condsamplemethod = condsamplemethod;
             this.blocksamplemethod = blocksamplemethod;
-            if (ncond > 0)
-            {
-                var vbp = cond.Keys.Intersect(blockparams).ToList();
-                blockcond = new Dictionary<string, List<object>>();
-                Dictionary<string, List<object>> blockcondfull = null; int bcn = 0;
-                if (vbp.Count > 0)
-                {
-                    var bpfl = new Dictionary<string, List<object>>();
-                    foreach (var p in vbp)
-                    {
-                        bpfl[p] = cond[p].Distinct().ToList();
-                    }
-                    blockcondfull = bpfl.OrthoCondOfFactorLevel();
-                    bcn = blockcondfull.Values.First().Count;
-                }
-                condsamplespaces = new List<List<int>>();
-                condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
-                if (bcn < 2)
-                {
-                    condsamplespaces.Add(PrepareSampleSpace(ncond, condsamplemethod));
-                    ResetCondSampleSpace(0);
-                    blocksamplespace = new List<int> { 0 };
-                }
-                else
-                {
-                    foreach (var bp in blockcondfull.Keys)
-                    {
-                        blockcond[bp] = new List<object>();
-                    }
-                    for (var bci = 0; bci < bcn; bci++)
-                    {
-                        var l = Enumerable.Repeat(true, ncond).ToList();
-                        foreach (var f in blockcondfull.Keys)
-                        {
-                            var fl = blockcondfull[f][bci];
-                            l = cond[f].Select((v, i) => Equals(v, fl) & l[i]).ToList();
-                        }
-                        var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
-                        if (space.Count > 0)
-                        {
-                            condsamplespaces.Add(PrepareSampleSpace(space, condsamplemethod));
-                            ResetCondSampleSpace(condsamplespaces.Count - 1);
-                            foreach (var bp in blockcondfull.Keys)
-                            {
+            blockcond.Clear();
+            condsamplespaces.Clear();
+            blocksamplespace.Clear();
+            condsamplespacerepeat.Clear();
+            condrepeat.Clear();
+            blockrepeat.Clear();
+            blocksampleidx = -1;
+            condsampleidx = -1;
+            blockidx = -1;
+            condidx = -1;
 
-                                blockcond[bp].Add(blockcondfull[bp][bci]);
-                            }
+            if (ncond <= 0) return;
+
+            var vbp = cond.Keys.Intersect(blockparams).ToList();
+            Dictionary<string, List<object>> blockorthofactorlevel = null; int bn = 0;
+            if (vbp.Count > 0)
+            {
+                var bpfl = new Dictionary<string, List<object>>();
+                foreach (var p in vbp)
+                {
+                    bpfl[p] = cond[p].Distinct().ToList();
+                }
+                blockorthofactorlevel = bpfl.OrthoCondOfFactorLevel();
+                bn = blockorthofactorlevel.Values.First().Count;
+            }
+            if (bn < 2)
+            {
+                condsamplespaces.Add(PrepareSampleSpace(ncond, condsamplemethod));
+                ResetCondSampleSpace(0);
+                blocksamplespace.Add(0);
+            }
+            else
+            {
+                foreach (var bp in blockorthofactorlevel.Keys)
+                {
+                    blockcond[bp] = new List<object>();
+                }
+                for (var bi = 0; bi < bn; bi++)
+                {
+                    var l = Enumerable.Repeat(true, ncond).ToList();
+                    foreach (var f in blockorthofactorlevel.Keys)
+                    {
+                        var fl = blockorthofactorlevel[f][bi];
+                        l = cond[f].Select((v, i) => Equals(v, fl) & l[i]).ToList();
+                    }
+                    var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
+                    if (space.Count > 0)
+                    {
+                        condsamplespaces.Add(PrepareSampleSpace(space, condsamplemethod));
+                        ResetCondSampleSpace(condsamplespaces.Count - 1);
+                        foreach (var bp in blockorthofactorlevel.Keys)
+                        {
+
+                            blockcond[bp].Add(blockorthofactorlevel[bp][bi]);
                         }
                     }
-                    blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
                 }
-                ResetBlockRepeat();
-                ResetCondRepeat();
-                blocksampleidx = -1;
-                condsampleidx = -1;
-                blockidx = -1;
-                condidx = -1;
+                blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
+            }
+            foreach (var i in blocksamplespace)
+            {
+                blockrepeat[i] = 0;
+            }
+            for (var i = 0; i < ncond; i++)
+            {
+                condrepeat[i] = 0;
             }
         }
 
@@ -189,7 +222,7 @@ namespace VLab
                         blocksampleidx += scendingstep;
                         if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            blocksampleidx -= blocksamplespace.Count;
+                            blocksampleidx = 0;
                         }
                         blockidx = blocksamplespace[blocksampleidx];
                         break;
@@ -202,7 +235,7 @@ namespace VLab
                         if (blocksampleidx > blocksamplespace.Count - 1)
                         {
                             blocksamplespace = PrepareSampleSpace(blocksamplespace.Count, blocksamplemethod);
-                            blocksampleidx -= blocksamplespace.Count;
+                            blocksampleidx = 0;
                         }
                         blockidx = blocksamplespace[blocksampleidx];
                         break;
@@ -254,12 +287,7 @@ namespace VLab
             return condidx;
         }
 
-        public int CondRepeatInBlock(int condrepeat, int blockrepeat)
-        {
-            return (int)Math.Ceiling((decimal)(Math.Max(0, condrepeat) / Math.Max(1, blockrepeat)));
-        }
-
-        public int SampleCondition(int condrepeat, int blockrepeat, bool istrysampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+        public int SampleCondition(int condrepeat, int blockrepeat, int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
             if (ncond > 0)
             {
@@ -289,7 +317,7 @@ namespace VLab
         public void PushCondition(int condidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
             if (condidx < 0) return;
-            if (cond == null) return;
+            if (ncond <= 0) return;
             var factors = except == null ? cond.Keys : cond.Keys.Except(except);
             foreach (var k in factors)
             {
@@ -300,12 +328,17 @@ namespace VLab
         public void PushBlock(int blockidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
         {
             if (blockidx < 0) return;
-            if (blockcond == null) return;
+            if (blockcond.Count == 0 || blockcond.Values.First().Count == 0) return;
             var factors = except == null ? blockcond.Keys : blockcond.Keys.Except(except);
             foreach (var k in factors)
             {
                 envmanager.SetParam(k, blockcond[k][blockidx], notifyui);
             }
+        }
+
+        public int CondRepeatInBlock(int condrepeat, int blockrepeat)
+        {
+            return (int)Math.Ceiling((decimal)(Math.Max(0, condrepeat) / Math.Max(1, blockrepeat)));
         }
 
         public bool IsCondRepeatInBlock(int condrepeat, int blockrepeat)
@@ -379,24 +412,6 @@ namespace VLab
             }
             condsamplespacerepeat[blockidx] = samplespacerepeat;
             condsampleidx = -1;
-        }
-
-        public void ResetCondRepeat()
-        {
-            condrepeat = new Dictionary<int, int>();
-            for (var i = 0; i < ncond; i++)
-            {
-                condrepeat[i] = 0;
-            }
-        }
-
-        public void ResetBlockRepeat()
-        {
-            blockrepeat = new Dictionary<int, int>();
-            foreach (var i in blocksamplespace)
-            {
-                blockrepeat[i] = 0;
-            }
         }
 
         public List<int> CurrentCondSampleSpace
@@ -487,25 +502,48 @@ namespace VLab
     public class CondTestManager
     {
         public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
-        public Dictionary<CONDTESTPARAM, List<object>> trialtest = new Dictionary<CONDTESTPARAM, List<object>>();
-        public int condtestidx = -1;
         public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
         public Action<double> OnNotifyCondTestEnd;
         public Action OnStartCondTest, OnClearCondTest;
-        public int notifyidx = 0;
+
+        int notifyidx = 0;
+        public int NotifyIndex { get { return notifyidx; } }
+        int condtestidx = -1;
+        public int CondTestIndex { get { return condtestidx; } }
 
 
-        public virtual void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0)
+        public void Clear()
+        {
+            condtest.Clear();
+            condtestidx = -1;
+            notifyidx = 0;
+            if (OnClearCondTest != null) OnClearCondTest();
+        }
+
+        public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
             condtestidx++;
+            PushCondTest(starttime, notifyparam, notifypercondtest, pushall, notifyui);
+        }
+
+        public void PushCondTest(double endtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
+        {
             if (condtestidx > 0)
             {
-                OnStartCondTest();
+                if (notifyui && OnStartCondTest != null) OnStartCondTest();
                 if (notifypercondtest > 0)
                 {
-                    if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
+                    if (!pushall)
                     {
-                        NotifyCondTestAndEnd(notifyidx, notifyparam, starttime);
+                        if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
+                        {
+                            NotifyCondTestAndEnd(notifyidx, notifyparam, endtime);
+                            notifyidx = condtestidx;
+                        }
+                    }
+                    else
+                    {
+                        NotifyCondTestAndEnd(notifyidx, notifyparam, endtime);
                         notifyidx = condtestidx;
                     }
                 }
@@ -530,14 +568,6 @@ namespace VLab
         {
             NotifyCondTest(startidx, notifyparam);
             OnNotifyCondTestEnd(endtime);
-        }
-
-        public void Clear()
-        {
-            condtest.Clear();
-            condtestidx = -1;
-            notifyidx = 0;
-            OnClearCondTest();
         }
 
         public void AddToCondTest(CONDTESTPARAM paramname, object paramvalue)

@@ -34,6 +34,7 @@ namespace VLab
             blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;
         public Toggle forceprepare;
+        public int maxcondshow = 500;
 
         public void OnConditionPanel(bool ison)
         {
@@ -42,7 +43,7 @@ namespace VLab
                 var el = uicontroller.exmanager.el;
                 if (el != null)
                 {
-                    el.PrepareCondition(el.isforcepreparecond);
+                    el.PrepareCondition(el.regeneratecond);
                 }
             }
             else
@@ -56,16 +57,16 @@ namespace VLab
             var el = uicontroller.exmanager.el;
             if (el != null)
             {
-                el.isforcepreparecond = isforceprepare;
+                el.regeneratecond = isforceprepare;
             }
         }
 
-        public void RefreshCondition(bool isfullrefresh = true)
+        public void RefreshCondition()
         {
             if (panel.enabled)
             {
                 DestroyConditionUI();
-                if (isfullrefresh) CreateConditionUI();
+                CreateConditionUI();
             }
         }
 
@@ -77,6 +78,7 @@ namespace VLab
             if (fn > 0)
             {
                 var rn = cond.First().Value.Count;
+                if (rn > maxcondshow) return;
                 grid.constraintCount = rn;
                 AddCondIndex(rn);
 

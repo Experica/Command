@@ -92,7 +92,7 @@ public class OIMasterMap : ExperimentLogic
         }
     }
 
-    public override void SamplePushCondition(bool istrysampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
         // Manually sample and push condition index received from OI message
         base.SamplePushCondition(manualcondidx: condidx);

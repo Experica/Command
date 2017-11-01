@@ -153,6 +153,7 @@ namespace VLab
             if (alsmanager != null)
             {
                 var stream = new MemoryStream();
+                exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
                 VLMsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
                 alsmanager.RpcNotifyExperiment(stream.ToArray());
             }

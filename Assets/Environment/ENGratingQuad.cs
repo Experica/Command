@@ -34,44 +34,62 @@ namespace VLab
 
     public class ENGratingQuad : ENQuad
     {
-        [SyncVar(hook ="onluminance")]
-        public float Luminance=0.5f;
-        [SyncVar(hook ="oncontrast")]
-        public float Contrast=1f;
+        [SyncVar(hook = "onluminance")]
+        public float Luminance = 0.5f;
+        [SyncVar(hook = "oncontrast")]
+        public float Contrast = 1f;
         [SyncVar(hook = "onspatialfreq")]
-        public float SpatialFreq=1f;
+        public float SpatialFreq = 0.2f;
         [SyncVar(hook = "ontemporalfreq")]
-        public float TemporalFreq=1f;
+        public float TemporalFreq = 2f;
         [SyncVar(hook = "onspatialphase")]
-        public float SpatialPhase=0;
+        public float SpatialPhase = 0;
         [SyncVar(hook = "onmincolor")]
-        public Color MinColor=Color.black;
+        public Color MinColor = Color.black;
         [SyncVar(hook = "onmaxcolor")]
-        public Color MaxColor=Color.white;
+        public Color MaxColor = Color.white;
         [SyncVar(hook = "onisdrifting")]
         public bool Drifting = true;
-        [SyncVar(hook ="ongratingtype")]
+        [SyncVar(hook = "ongratingtype")]
         public GratingType GratingType = GratingType.Square;
-        [SyncVar(hook ="onisreversetime")]
+        [SyncVar(hook = "onisreversetime")]
         public bool ReverseTime = false;
+
+        double reversetime;
+
+        public override void OnAwake()
+        {
+            base.OnAwake();
+            reversetime = 0;
+            timer.Start();
+        }
 
         public override void OnOri(float o)
         {
             renderer.material.SetFloat("ori", o);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(OriOffset + o);
+            }
             Ori = o;
         }
 
         public override void OnOriOffset(float ooffset)
         {
             renderer.material.SetFloat("orioffset", ooffset);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + ooffset);
+            }
             OriOffset = ooffset;
         }
 
         public override void OnVisible(bool v)
         {
-            if (v)
+            if (!Visible && v)
             {
-                t.Restart();
+                reversetime = 0;
+                timer.Restart();
             }
             base.OnVisible(v);
         }
@@ -83,7 +101,7 @@ namespace VLab
         public virtual void OnLuminance(float l)
         {
             Color minc, maxc;
-            VLExtention.GetColorScale(l, Contrast).GetColor(MinColor,MaxColor,out minc,out maxc);
+            VLExtention.GetColorScale(l, Contrast).GetColor(MinColor, MaxColor, out minc, out maxc);
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);
@@ -98,7 +116,7 @@ namespace VLab
         public virtual void OnContrast(float ct)
         {
             Color minc, maxc;
-            VLExtention.GetColorScale(Luminance, ct).GetColor(MinColor,MaxColor,out minc,out maxc);
+            VLExtention.GetColorScale(Luminance, ct).GetColor(MinColor, MaxColor, out minc, out maxc);
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);
@@ -177,21 +195,22 @@ namespace VLab
             GratingType = t;
         }
 
-        double reversetime;
         void onisreversetime(bool r)
         {
             OnIsReverseTime(r);
         }
         public virtual void OnIsReverseTime(bool r)
         {
-            reversetime = t.ElapsedSecond;
-            ReverseTime = r; 
+            reversetime = ReverseTime ? reversetime - timer.ElapsedSecond : reversetime + timer.ElapsedSecond;
+            timer.Restart();
+            ReverseTime = r;
         }
+
         void LateUpdate()
         {
             if (Drifting)
             {
-                renderer.material.SetFloat("t", (float)(ReverseTime?2*reversetime-t.ElapsedSecond: t.ElapsedSecond));
+                renderer.material.SetFloat("t", (float)(ReverseTime ? reversetime - timer.ElapsedSecond : reversetime + timer.ElapsedSecond));
             }
         }
     }

@@ -53,15 +53,15 @@ namespace VLab
         {
             var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowInactiveEnvParam];
             var isshowfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullName];
-            foreach (var fullname in em.net_syncvar.Keys.ToArray())
+            foreach (var fullname in em.syncvar_nb_so.Keys.ToArray())
             {
                 string paramname, nb;
                 fullname.FirstAtSplit(out paramname, out nb);
                 var showname = isshowfullname ? fullname : paramname;
-                var T = em.net_syncvar[fullname].Type;
+                var T = em.syncvar_nb_so[fullname].Type;
                 if (!isshowinactive)
                 {
-                    if (em.activenet.Contains(nb))
+                    if (em.active_networkbehaviour.Contains(nb))
                     {
                         AddParamUI(fullname, showname, paramname, T, em.GetParam(fullname),
                             uicontroller.exmanager.el.ex.EnvInheritParam.Contains(fullname),

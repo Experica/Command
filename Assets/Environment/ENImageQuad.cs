@@ -27,34 +27,43 @@ namespace VLab
 {
     public class ENImageQuad : ENQuad
     {
-        [SyncVar(hook ="onimage")]
-        public string Image="1";
-        [SyncVar(hook ="onimageset")]
+        [SyncVar(hook = "onimage")]
+        public string Image = "1";
+        [SyncVar(hook = "onimageset")]
         public string ImageSet = "ExampleImageSet";
         [SyncVar]
-        public bool IsCacheImage = false;
-        private Dictionary<string, Texture2D> imagecache=new Dictionary<string, Texture2D>();
+        public bool IsCacheImage = true;
+
+        Dictionary<string, Texture2D> imagecache = new Dictionary<string, Texture2D>();
 
         [ClientRpc]
         void RpcPreLoadImage(string[] iidx)
         {
             imagecache.Clear();
-            Resources.UnloadUnusedAssets();
             foreach (var i in iidx)
             {
-                imagecache[i]= Resources.Load<Texture2D>(ImageSet + "/" + i);
+                imagecache[i] = Resources.Load<Texture2D>(ImageSet + "/" + i);
             }
+            Resources.UnloadUnusedAssets();
         }
 
         public override void OnOri(float o)
         {
             renderer.material.SetFloat("ori", o);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(OriOffset + o);
+            }
             Ori = o;
         }
 
         public override void OnOriOffset(float ooffset)
         {
             renderer.material.SetFloat("orioffset", ooffset);
+            if (OriPositionOffset)
+            {
+                transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + ooffset);
+            }
             OriOffset = ooffset;
         }
 
@@ -64,7 +73,6 @@ namespace VLab
         }
         public virtual void OnImage(string i)
         {
-            Image = i;
             if (imagecache.ContainsKey(i))
             {
                 renderer.material.SetTexture("img", imagecache[i]);
@@ -78,6 +86,7 @@ namespace VLab
                     imagecache[i] = img;
                 }
             }
+            Image = i;
         }
 
         void onimageset(string iset)
@@ -87,10 +96,7 @@ namespace VLab
         public virtual void OnImageSet(string iset)
         {
             ImageSet = iset;
-            if (IsCacheImage)
-            {
-                imagecache.Clear();
-            }
+            imagecache.Clear();
             OnImage("1");
         }
     }

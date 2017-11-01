@@ -39,13 +39,9 @@ namespace VLab
         [SyncVar(hook = "onvisible")]
         public bool Visible = true;
         [SyncVar(hook = "onposition")]
-        public Vector3 Position = new Vector3();
+        public Vector3 Position = Vector3.zero;
         [SyncVar(hook = "onpositionoffset")]
-        public Vector3 PositionOffset = new Vector3();
-        [SyncVar(hook = "onrotation")]
-        public Vector3 Rotation = new Vector3();
-        [SyncVar(hook = "onrotationoffset")]
-        public Vector3 RotationOffset = new Vector3();
+        public Vector3 PositionOffset = Vector3.zero;
 
         public new Renderer renderer;
 #if VLAB
@@ -95,26 +91,6 @@ namespace VLab
         {
             transform.localPosition = Position + poffset;
             PositionOffset = poffset;
-        }
-
-        void onrotation(Vector3 r)
-        {
-            OnRotation(r);
-        }
-        public virtual void OnRotation(Vector3 r)
-        {
-            transform.localEulerAngles = r + RotationOffset;
-            Rotation = r;
-        }
-
-        void onrotationoffset(Vector3 roffset)
-        {
-            OnRotationOffset(roffset);
-        }
-        public virtual void OnRotationOffset(Vector3 roffset)
-        {
-            transform.localEulerAngles = Rotation + roffset;
-            RotationOffset = roffset;
         }
 
 #if VLAB

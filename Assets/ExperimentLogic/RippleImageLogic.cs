@@ -43,23 +43,12 @@ public class RippleImageLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition(bool isforceprepare = true)
+    public override void GenerateFinalCondition()
     {
-        if (isforceprepare == false && condmanager.cond != null)
-        { }
-        else
-        {
-            var ni = (float)ex.GetParam("NumOfImage");
-            var cond = new Dictionary<string, List<object>>();
-            cond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
-            condmanager.TrimCondition(cond);
-        }
-        if (condmanager.ncond > 0)
-        {
-            ex.Cond = condmanager.cond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-            OnConditionPrepared(false);
-        }
+        var ni = (float)ex.GetParam("NumOfImage");
+        var cond = new Dictionary<string, List<object>>();
+        cond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
+        condmanager.FinalizeCondition(cond);
     }
 
     protected override void StartExperiment()
@@ -72,7 +61,7 @@ public class RippleImageLogic : ExperimentLogic
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
-        envmanager.Invoke("RpcPreLoadImage", new object[] { condmanager.cond["Image"].Select(i => (string)i).ToArray() });
+        envmanager.InvokeActiveRPC("RpcPreLoadImage", new object[] { condmanager.cond["Image"].Select(i => (string)i).ToArray() });
         recordmanager.recorder.RecordPath = ex.GetDataPath(ext: "");
         timer.Timeout(notifylatency);
         pport.BitPulse(bit: startch, duration_ms: 5);

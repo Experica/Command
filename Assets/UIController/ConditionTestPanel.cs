@@ -82,14 +82,14 @@ namespace VLab
             switch (showlevel)
             {
                 case CONDTESTSHOWLEVEL.FULL:
-                    cti.text = cti.text + (ctm.condtestidx - 1).ToString() + "\n";
+                    cti.text = cti.text + (ctm.CondTestIndex - 1).ToString() + "\n";
                     ci.text = ci.text + ctm.condtest[CONDTESTPARAM.CondIndex].Last().ToString() + "\n";
                     cr.text = cr.text + ctm.condtest[CONDTESTPARAM.CondRepeat].Last().ToString() + "\n";
                     
-                    UpdateViewRect(ctm.condtestidx);
+                    UpdateViewRect(ctm.CondTestIndex);
                     return;
                 case CONDTESTSHOWLEVEL.SHORT:
-                    cti.text = (ctm.condtestidx - 1).ToString();
+                    cti.text = (ctm.CondTestIndex - 1).ToString();
                     ci.text = ctm.condtest[CONDTESTPARAM.CondIndex].Last().ToString();
                     cr.text = ctm.condtest[CONDTESTPARAM.CondRepeat].Last().ToString();
                     return;

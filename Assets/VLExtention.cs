@@ -71,6 +71,13 @@ namespace VLab
     {
         static Type TString, TFloat, TBool, TVector3, TColor, TListOfString, TListOfFloat, TListOfBool, TParam;
 
+        static HashSet<Type> NumericTypes = new HashSet<Type>
+        {
+            typeof(byte),typeof(sbyte),typeof(short),typeof(ushort),
+            typeof(int),typeof(uint),typeof(long),typeof(ulong),
+            typeof(float),typeof(double),typeof(decimal)
+        };
+
         static VLExtention()
         {
             TString = typeof(string);
@@ -82,6 +89,11 @@ namespace VLab
             TListOfFloat = typeof(List<float>);
             TListOfBool = typeof(List<bool>);
             TParam = typeof(Param);
+        }
+
+        public static bool IsNumeric(this Type type)
+        {
+            return NumericTypes.Contains(Nullable.GetUnderlyingType(type) ?? type);
         }
 
         public static T Convert<T>(this object value)

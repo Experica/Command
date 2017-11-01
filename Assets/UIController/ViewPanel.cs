@@ -54,7 +54,7 @@ namespace VLab
 
         void UpdateGridSize(bool isupdatetick = true)
         {
-            var maincamera = uicontroller.exmanager.el.envmanager.maincamera;
+            var maincamera = uicontroller.exmanager.el.envmanager.maincamera_scene;
             grid.Size = new Vector3
                     (maincamera.aspect * maincamera.orthographicSize + Mathf.Abs(grid.Center.x),
                     maincamera.orthographicSize + Mathf.Abs(grid.Center.y), 1);
@@ -67,7 +67,7 @@ namespace VLab
 
         void UpdateGridLineWidth()
         {
-            var maincamera = uicontroller.exmanager.el.envmanager.maincamera;
+            var maincamera = uicontroller.exmanager.el.envmanager.maincamera_scene;
             grid.UpdateAxisLineWidth(maincamera.orthographicSize);
             grid.UpdateTickLineWidth(maincamera.orthographicSize);
         }
@@ -75,7 +75,7 @@ namespace VLab
         public void UpdateViewport()
         {
             var envmanager = uicontroller.exmanager.el.envmanager;
-            var maincamera = envmanager.maincamera;
+            var maincamera = envmanager.maincamera_scene;
             if (maincamera != null)
             {
                 // Get Render Size

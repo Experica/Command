@@ -53,73 +53,52 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
-    public override void PrepareCondition(bool isforceprepare = true)
+    public override void GenerateFinalCondition()
     {
-        bool isshowcond = true;
-        if (isforceprepare == false && condmanager.cond != null)
-        { }
-        else
-        {
-            // get laser conditions
-            var lcond = new Dictionary<string, List<object>>()
+        // get laser conditions
+        var lcond = new Dictionary<string, List<object>>()
             {
                 {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
                 {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
             };
-            lcond = lcond.OrthoCondOfFactorLevel();
-            lcond["LaserPower"].Add(0f);
-            lcond["LaserFreq"].Add(0f);
+        lcond = lcond.OrthoCondOfFactorLevel();
+        lcond["LaserPower"].Add(0f);
+        lcond["LaserFreq"].Add(0f);
 
-            // get base conditions
-            var bcond = condmanager.ReadCondition(ex.CondPath);
-            if (bcond != null)
-            {
-                bcond = bcond.ResolveConditionReference(ex.Param).FactorLevelOfDesign();
-                if (bcond.ContainsKey("factorlevel") && bcond["factorlevel"].Count == 0)
-                {
-                    bcond = bcond.OrthoCondOfFactorLevel();
-                }
-                condmanager.TrimCondition(bcond);
-            }
+        // get base conditions
+        var bcond = condmanager.GenerateFinalCondition(ex.CondPath, ex.Param);
 
-            // get final conditions
-            var fcond = new Dictionary<string, List<object>>()
+        // get final conditions
+        var fcond = new Dictionary<string, List<object>>()
         {
             {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
             {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
         };
-            fcond = fcond.OrthoCondOfFactorLevel();
+        fcond = fcond.OrthoCondOfFactorLevel();
+        foreach (var bf in bcond.Keys)
+        {
+            fcond[bf] = new List<object>();
+        }
+        foreach (var lf in lcond.Keys)
+        {
+            fcond[lf] = new List<object>();
+        }
+        for (var i = 0; i < fcond["l"].Count; i++)
+        {
+            var bci = (int)fcond["b"][i];
+            var lci = (int)fcond["l"][i];
             foreach (var bf in bcond.Keys)
             {
-                fcond[bf] = new List<object>();
+                fcond[bf].Add(bcond[bf][bci]);
             }
             foreach (var lf in lcond.Keys)
             {
-                fcond[lf] = new List<object>();
+                fcond[lf].Add(lcond[lf][lci]);
             }
-            for (var i = 0; i < fcond["l"].Count; i++)
-            {
-                var bci = (int)fcond["b"][i];
-                var lci = (int)fcond["l"][i];
-                foreach (var bf in bcond.Keys)
-                {
-                    fcond[bf].Add(bcond[bf][bci]);
-                }
-                foreach (var lf in lcond.Keys)
-                {
-                    fcond[lf].Add(lcond[lf][lci]);
-                }
-            }
-            fcond.Remove("b"); fcond.Remove("l");
+        }
+        fcond.Remove("b"); fcond.Remove("l");
 
-            condmanager.TrimCondition(fcond);
-        }
-        if (condmanager.ncond > 0)
-        {
-            ex.Cond = condmanager.cond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-            OnConditionPrepared(isshowcond);
-        }
+        condmanager.FinalizeCondition(fcond);
     }
 
     protected override void StartExperiment()
@@ -153,9 +132,10 @@ public class RippleLaserTrialCTLogic : ExperimentLogic
         timer.Stop();
     }
 
-    public override void SamplePushCondition(bool isautosampleblock = true, int manualblockidx = 0, int manualcondidx = 0)
+    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
-        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, false),
+        // Block sampling defered into trial logic
+        condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, false),
             envmanager, condpushexcept);
     }
 
