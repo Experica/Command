@@ -80,7 +80,7 @@
 				{ }
 				else if (masktype == 1)
 				{
-					if (sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2)) >= maskradius)
+					if (sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2)) > maskradius)
 					{
 						c.a = 0;
 					}
@@ -93,7 +93,7 @@
 				else if (masktype == 3)
 				{
 					float d = sqrt(pow(i.uv.x, 2) + pow(i.uv.y, 2)) - maskradius;
-					if (d >= 0)
+					if (d > 0)
 					{
 						c.a = c.a*erfc(sigma*d);
 					}

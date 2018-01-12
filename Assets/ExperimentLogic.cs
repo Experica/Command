@@ -333,7 +333,7 @@ namespace VLab
             if (ct.Count > 0)
             {
                 ex.CondTest = ct;
-                ex.EnvParam = envmanager.GetParams();
+                ex.EnvParam = envmanager.GetActiveParams();
 
                 Yaml.WriteYaml(DataPath(), ex, false);
                 ex.DataPath = null;
