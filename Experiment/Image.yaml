@@ -20,26 +20,26 @@ EnvParam:
   RotationOffset@ENImageQuad@ImageQuad: (0, 0, 0)
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 20
-  Size@ENImageQuad@ImageQuad: (20, 20, 1)
+  Diameter@ENImageQuad@ImageQuad: 5
+  Size@ENImageQuad@ImageQuad: (5, 5, 1)
   Color@ENImageQuad@ImageQuad: (1, 1, 1, 1)
   MaskType@ENImageQuad@ImageQuad: None
   MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 25
   OriPositionOffset@ENImageQuad@ImageQuad: false
   Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (10, 0, 0)
+  Position@ENImageQuad@ImageQuad: (0, 0, 0)
   PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: (22.6, -13.7, 0)
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
   MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
 CondPath: ''
 Cond: 
 ExLogicPath: RippleImageLogic
