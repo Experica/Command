@@ -1,6 +1,6 @@
 ﻿/*
 NewExParamPanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -29,21 +29,9 @@ namespace VLab
     public class NewExParamPanel : MonoBehaviour
     {
         public VLUIController uicontroller;
-        public Text namecheck, valuecheck;
+        public Text namecheck;
         public Button confirm, cancel;
-        public Dropdown typedropdown;
-        string pname; Param param; bool isvalidname, isvalidvalue;
-
-        void Start()
-        {
-            UpdateType();
-        }
-
-        public void UpdateType()
-        {
-            typedropdown.ClearOptions();
-            typedropdown.AddOptions(typeof(ParamType).GetValue());
-        }
+        string pname; object param; bool isvalidname, isvalue;
 
         public void OnNewExParamName(string name)
         {
@@ -58,7 +46,7 @@ namespace VLab
                 pname = name;
                 isvalidname = true;
             }
-            if (isvalidname && isvalidvalue)
+            if (isvalidname && isvalue)
             {
                 confirm.interactable = true;
             }
@@ -70,19 +58,9 @@ namespace VLab
 
         public void OnNewExParamValue(string value)
         {
-            var type = typedropdown.captionText.text.Convert<ParamType>();
-            try
-            {
-                param = new Param(type, value.Convert(type));
-                valuecheck.text = "";
-                isvalidvalue = true;
-            }
-            catch (Exception ex)
-            {
-                valuecheck.text = "Invalid Value Format";
-                isvalidvalue = false;
-            }
-            if (isvalidname && isvalidvalue)
+            param = value;
+            isvalue = true;
+            if (isvalidname && isvalue)
             {
                 confirm.interactable = true;
             }

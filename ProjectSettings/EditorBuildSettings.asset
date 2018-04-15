@@ -7,23 +7,29 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Welcome.unity
+    guid: 59d3a86ca0186ee4d82c5383dba137aa
   - enabled: 1
     path: Assets/Welcomeback.unity
+    guid: 99d61bf686617074f9f26bd6f313846a
   - enabled: 1
     path: Assets/Environment/Showroom.unity
+    guid: 0f82f7db04c8f5f4fb2b9466a19b2952
   - enabled: 1
     path: Assets/Environment/DynamicShowroom.unity
-  - enabled: 0
-    path: Assets/Environment/ShowGrating.unity
-  - enabled: 0
-    path: Assets/Environment/ShowImage.unity
-  - enabled: 0
-    path: Assets/Environment/ShowBar.unity
+    guid: e2b066d5ee3be2c4e99e83f19bd6bf42
   - enabled: 1
     path: Assets/Environment/MarkerBar.unity
+    guid: 5a5b6206aecbd48438fb1df8683922c3
   - enabled: 1
     path: Assets/Environment/MarkerGrating.unity
+    guid: b8daedbbdd0bb234ba1366bb1cc3fb39
   - enabled: 1
     path: Assets/Environment/MarkerImage.unity
+    guid: 4c0004b8d9f7c1b4593c4a8453c052c6
   - enabled: 1
     path: Assets/Environment/Grating.unity
+    guid: b415f7a600ca7314c9dfd208f1067244
+  - enabled: 1
+    path: Assets/Environment/Marker.unity
+    guid: 141c239c13eed7349ba7b385e23ebe59
+  m_configObjects: {}

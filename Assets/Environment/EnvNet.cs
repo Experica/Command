@@ -1,6 +1,6 @@
 ﻿/*
 EnvNet.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -25,14 +25,6 @@ using System.Collections.Generic;
 
 namespace VLab
 {
-    public enum EnvironmentObject
-    {
-        None,
-        Quad,
-        GratingQuad,
-        ImageQuad
-    }
-
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class EnvNet : NetworkBehaviour
     {
@@ -43,7 +35,7 @@ namespace VLab
         [SyncVar(hook = "onpositionoffset")]
         public Vector3 PositionOffset = Vector3.zero;
 
-        public new Renderer renderer;
+        public Renderer renderer;
 #if VLAB
         VLNetManager netmanager;
 #endif

@@ -1,23 +1,47 @@
 ID: BO
 Name: BO
 Designer: Alex
-Experimenter: Alex
+Experimenter: Leo
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
-Subject_Species: Domestic Cat
+Subject_ID: LSR1801
+Subject_Name: LSR1801
+Subject_Species: Rat
 Subject_Gender: Female
-Subject_Age: 0
-Subject_Size: (0, 0, 0)
-Subject_Weight: 3
+Subject_Age: 1
+Subject_Size: 0 0 0
+Subject_Weight: 400
 Subject_Log: 
 EnvPath: MarkerBar
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 25
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 94.42 -52.67 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Rotation@ENQuad@Quad: 0 0 0
+  RotationOffset@ENQuad@Quad: 0 0 0
+  Ori@ENQuad@Quad: 328.72818
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: 2 2 1
+  Color@ENQuad@Quad: 1 1 1 1
+  MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
+  Sigma@ENQuad@Quad: 0.150000006
+  OriPositionOffset@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: 16.7 9.1 0
+  PositionOffset@ENQuad@Quad: 0 0 0
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: LPSite4_V1Site4
+RecordSite: LP_7500_V1_1170
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -70,7 +94,7 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 - MarkerPosition@ENMarker@Marker
 Param: {}
-Latency: 22
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 

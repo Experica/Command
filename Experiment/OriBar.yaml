@@ -1,23 +1,23 @@
 ID: OriBar
 Name: OriBar
 Designer: Alex
-Experimenter: Alex
+Experimenter: Leo
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
-Subject_Species: Domestic Cat
+Subject_ID: LSR1801
+Subject_Name: LSR1801
+Subject_Species: Rat
 Subject_Gender: Female
-Subject_Age: 0
-Subject_Size: (0, 0, 0)
-Subject_Weight: 3
+Subject_Age: 1
+Subject_Size: 0 0 0
+Subject_Weight: 400
 Subject_Log: 
 EnvPath: ShowBar
 EnvParam: {}
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: LPSite2_V1Site2
+RecordSite: LP_4500_V1_240
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -68,7 +68,7 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 Param: {}
-Latency: 22
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 

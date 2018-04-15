@@ -1,6 +1,6 @@
 ﻿/*
 ENImageQuad.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -43,6 +43,17 @@ namespace VLab
             foreach (var i in iidx)
             {
                 imagecache[i] = Resources.Load<Texture2D>(ImageSet + "/" + i);
+            }
+            Resources.UnloadUnusedAssets();
+        }
+
+        [ClientRpc]
+        void RpcPreLoadImageset(int startidx,int endidx)
+        {
+            imagecache.Clear();
+            for (var i=startidx; i<=endidx; i++)
+            {
+                imagecache[i.ToString()] = Resources.Load<Texture2D>(ImageSet + "/" + i);
             }
             Resources.UnloadUnusedAssets();
         }

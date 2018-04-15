@@ -3,42 +3,45 @@ Name: Color
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  ScreenAspect@ENCamera@OrthoCamera: 1.68548381
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
+  MarkerPosition@ENMarker@Marker: 36.2 -21.07 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  Ori@ENQuad@Quad: 0
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Rotation@ENQuad@Quad: 0 0 0
+  RotationOffset@ENQuad@Quad: 0 0 0
+  Ori@ENQuad@Quad: 15
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (2, 2, 1)
-  Color@ENQuad@Quad: (1, 1, 1, 1)
+  Size@ENQuad@Quad: 2 2 1
+  Color@ENQuad@Quad: 1 1 1 1
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
+  OriPositionOffset@ENQuad@Quad: false
   Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 0, 0)
+  Position@ENQuad@Quad: 7.05 2.903 0
+  PositionOffset@ENQuad@Quad: 0 0 0
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -91,7 +94,7 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 - MarkerPosition@ENMarker@Marker
 Param: {}
-Latency: 22
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 

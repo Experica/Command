@@ -1,6 +1,6 @@
 ﻿/*
 ExperimentLogic.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -30,13 +30,13 @@ namespace VLab
 {
     public class ExperimentLogic : MonoBehaviour
     {
-        public Dictionary<VLCFG, object> config;
+        public VLCFG config;
         public Experiment ex = new Experiment();
         public VLTimer timer = new VLTimer();
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
         public CondTestManager condtestmanager = new CondTestManager();
-        public RecordManager recordmanager = new RecordManager();
+        public IRecorder recorder = new VLabRecorder();
 
         public Action OnBeginStartExperiment, OnEndStartExperiment,
             OnBeginStopExperiment, OnEndStopExperiment,
@@ -70,7 +70,7 @@ namespace VLab
                 }
             }
         }
-        public virtual void OnEnterCondState(CONDSTATE value)
+        protected virtual void OnEnterCondState(CONDSTATE value)
         {
             switch (value)
             {
@@ -99,6 +99,11 @@ namespace VLab
                         {
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            if (condmanager.nblock > 1)
+                            {
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                            }
                         }
                     }
                     break;
@@ -123,6 +128,11 @@ namespace VLab
                         {
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            if (condmanager.nblock > 1)
+                            {
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                            }
                         }
                     }
                     break;
@@ -149,7 +159,7 @@ namespace VLab
                 }
             }
         }
-        public virtual void OnEnterTrialState(TRIALSTATE value)
+        protected virtual void OnEnterTrialState(TRIALSTATE value)
         {
             switch (value)
             {
@@ -178,6 +188,11 @@ namespace VLab
                         {
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            if (condmanager.nblock > 1)
+                            {
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                            }
                         }
                     }
                     break;
@@ -191,7 +206,7 @@ namespace VLab
                     {
                         if (condmanager.IsCondRepeat(ex.CondRepeat))
                         {
-                            StopExperiment();
+                            StartStopExperiment(false);
                             return;
                         }
                         else
@@ -202,6 +217,11 @@ namespace VLab
                         {
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
                             condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            if (condmanager.nblock > 1)
+                            {
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                            }
                         }
                     }
                     break;
@@ -228,7 +248,7 @@ namespace VLab
                 }
             }
         }
-        public virtual void OnEnterBlockState(BLOCKSTATE value)
+        protected virtual void OnEnterBlockState(BLOCKSTATE value)
         {
             switch (value)
             {
@@ -256,60 +276,22 @@ namespace VLab
             }
         }
 
-        EXPERIMENTSTATE experimentstate = EXPERIMENTSTATE.NONE;
-        public EXPERIMENTSTATE ExperimentState
-        {
-            get { return experimentstate; }
-            set
-            {
-                if (value != experimentstate)
-                {
-                    OnEnterExperimentState(value);
-                    experimentstate = value;
-                }
-            }
-        }
-        public virtual void OnEnterExperimentState(EXPERIMENTSTATE value)
-        {
-            switch (experimentstate)
-            {
-                // Previous State
-                case EXPERIMENTSTATE.NONE:
-                    switch (value)
-                    {
-                        // Enter State
-                        case EXPERIMENTSTATE.EXPERIMENT:
-                            break;
-                    }
-                    break;
-                // Previous State
-                case EXPERIMENTSTATE.EXPERIMENT:
-                    switch (value)
-                    {
-                        // Enter State
-                        case EXPERIMENTSTATE.NONE:
-                            break;
-                    }
-                    break;
-            }
-        }
-
         public virtual void GenerateFinalCondition()
         {
-            condmanager.GenerateFinalCondition(ex.CondPath, ex.Param);
+            condmanager.GenerateFinalCondition(ex.CondPath);
         }
 
         public virtual void PrepareCondition(bool regenerateconditon = true)
         {
-            if (regenerateconditon == false && condmanager.cond != null)
+            if (regenerateconditon == false && condmanager.finalcond != null)
             { }
             else
             {
                 GenerateFinalCondition();
             }
-            ex.Cond = condmanager.cond;
+            ex.Cond = condmanager.finalcond;
             condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
-            if (OnConditionPrepared != null) OnConditionPrepared();
+            OnConditionPrepared?.Invoke();
         }
 
         public virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
@@ -322,9 +304,10 @@ namespace VLab
             condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager);
         }
 
-        public virtual string DataPath()
+        public virtual string DataPath(DataFormat dataFormat)
         {
-            return ex.GetDataPath();
+            var extension = dataFormat.ToString().ToLower();
+            return ex.GetDataPath(ext: extension, searchext: extension);
         }
 
         public virtual void SaveData()
@@ -335,7 +318,15 @@ namespace VLab
                 ex.CondTest = ct;
                 ex.EnvParam = envmanager.GetActiveParams();
 
-                Yaml.WriteYaml(DataPath(), ex, false);
+                switch (config.SaveDataFormat)
+                {
+                    case DataFormat.VLAB:
+                        DataPath(DataFormat.VLAB).Save(ex);
+                        break;
+                    default:
+                        DataPath(DataFormat.YAML).WriteYamlFile(ex);
+                        break;
+                }
                 ex.DataPath = null;
             }
         }
@@ -424,11 +415,11 @@ namespace VLab
 
         protected virtual void StartExperiment()
         {
-            ExperimentState = EXPERIMENTSTATE.EXPERIMENT;
-            CondState = CONDSTATE.NONE;
-            TrialState = TRIALSTATE.NONE;
-            BlockState = BLOCKSTATE.NONE;
+            condstate = CONDSTATE.NONE;
+            trialstate = TRIALSTATE.NONE;
+            blockstate = BLOCKSTATE.NONE;
             condtestmanager.Clear();
+
             PrepareCondition(regeneratecond);
             timer.Restart();
             islogicactive = true;
@@ -436,11 +427,10 @@ namespace VLab
 
         protected virtual void StopExperiment()
         {
-            islogicactive = false;
             // Push Notification for any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
             timer.Stop();
-            ExperimentState = EXPERIMENTSTATE.NONE;
+            islogicactive = false;
         }
 
         void Awake()
@@ -462,73 +452,105 @@ namespace VLab
         void Update()
         {
             OnUpdate();
+            if (islogicactive)
+            {
+                Logic();
+            }
         }
+
         public virtual void OnUpdate()
         {
             if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.active_networkbehaviour.Count > 0)
             {
+                var jxa = Input.GetAxis("JXA");
+                var jya = Input.GetAxis("JYA");
+                var jza = Input.GetAxis("JZA");
+                var jxra = Input.GetAxis("JXRA");
+                var jyra = Input.GetAxis("JYRA");
+                var jlb = Input.GetAxis("JLB");
+                var jrb = Input.GetAxis("JRB");
+                var ja = Input.GetAxis("JA");
+                var jb = Input.GetAxis("JB");
                 var jx = Input.GetAxis("JX");
                 var jy = Input.GetAxis("JY");
-                var jz = Input.GetAxis("JZ");
-                var jxr = Input.GetAxis("JXR");
-                var jyr = Input.GetAxis("JYR");
-                var jrb = Input.GetAxis("JRB");
-                if (jx != 0 || jy != 0)
+                var jxh = Input.GetAxis("JXH");
+                var jyh = Input.GetAxis("JYH");
+                if (jxa != 0 || jya != 0)
                 {
                     if (envmanager.maincamera_scene != null)
                     {
-                        var po = envmanager.GetParam("Position");
+                        var po = envmanager.GetActiveParam("Position");
                         if (po != null)
                         {
+                            var so = envmanager.GetActiveParam("Size");
                             var p = (Vector3)po;
-                            var hh = envmanager.maincamera_scene.orthographicSize;
-                            var hw = hh * envmanager.maincamera_scene.aspect;
-                            envmanager.SetParam("Position", new Vector3(
-                            Mathf.Clamp(p.x + Mathf.Pow(jx, 3), -hw, hw),
-                            Mathf.Clamp(p.y + Mathf.Pow(jy, 3), -hh, hh),
+                            var s = so == null ? Vector3.zero : (Vector3)so;
+                            var hh = envmanager.maincamera_scene.orthographicSize + s.y / 2;
+                            var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
+                            envmanager.SetActiveParam("Position", new Vector3(
+                            Mathf.Clamp(p.x + Mathf.Pow(jxa * hw / 35, 3), -hw, hw),
+                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 35, 3), -hh, hh),
                             p.z), true);
                         }
                     }
                 }
-                if (jz != 0)
+                if (jza != 0)
                 {
-                    var oo = envmanager.GetParam("Ori");
-                    if (oo != null)
+                    if (ja > 0.5)
                     {
-                        var no = ((float)oo + Mathf.Pow(jz, 3) * 4) % 360f;
-                        envmanager.SetParam("Ori", no < 0 ? 360f - no : no, true);
+                        var v = jza > 0 ? true : false;
+                        envmanager.SetActiveParam("Visible", v, true);
                     }
-                }
-                if (jxr != 0 || jyr != 0)
-                {
-                    var so = envmanager.GetParam("Size");
-                    var dio = envmanager.GetParam("Diameter");
-
-                    if (jrb > 0.5)
+                    else if (jb > 0.5)
                     {
-                        if (dio != null)
+                        var sfo = envmanager.GetActiveParam("SpatialFreq");
+                        if (sfo != null)
                         {
-                            var d = (float)dio;
-                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxr, 3)), true);
+                            envmanager.SetActiveParam("SpatialFreq", Mathf.Clamp((float)sfo + jza / 200, 0.001f, 20f), true);
+                        }
+                    }
+                    else if (jx > 0.5)
+                    {
+                        var tfo = envmanager.GetActiveParam("TemporalFreq");
+                        if (tfo != null)
+                        {
+                            envmanager.SetActiveParam("TemporalFreq", Mathf.Clamp((float)tfo + jza / 10, 0.001f, 20f), true);
                         }
                     }
                     else
                     {
+                        var oo = envmanager.GetActiveParam("Ori");
+                        if (oo != null)
+                        {
+                            var o = ((float)oo + Mathf.Pow(jza, 3) * 4) % 360f;
+                            envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o, true);
+                        }
+                    }
+                }
+                if (jxra != 0 || jyra != 0)
+                {
+                    if (jrb > 0.5)
+                    {
+                        var dio = envmanager.GetActiveParam("Diameter");
+                        if (dio != null)
+                        {
+                            var d = (float)dio;
+                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 3)), true);
+                        }
+                    }
+                    else
+                    {
+                        var so = envmanager.GetActiveParam("Size");
                         if (so != null)
                         {
                             var s = (Vector3)so;
                             envmanager.SetParam("Size", new Vector3(
-                                Mathf.Max(0, s.x + Mathf.Pow(jxr, 3)),
-                                Mathf.Max(0, s.y + Mathf.Pow(jyr, 3)),
+                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 3)),
+                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 3)),
                                 s.z), true);
                         }
                     }
                 }
-            }
-
-            if (islogicactive)
-            {
-                Logic();
             }
         }
 

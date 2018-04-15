@@ -1,6 +1,6 @@
 ﻿/*
 RippleImageLogic.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -26,33 +26,28 @@ using System.Linq;
 public class RippleImageLogic : ExperimentLogic
 {
     ParallelPort pport;
-    int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
-    int startch, stopch, condch;
     float diameter;
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(RecordSystem.Ripple);
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        startch = (int)config[VLCFG.StartCh];
-        stopch = (int)config[VLCFG.StopCh];
-        condch = (int)config[VLCFG.ConditionCh];
-        notifylatency = (int)config[VLCFG.NotifyLatency];
-        exlatencyerror = (int)config[VLCFG.ExLatencyError];
-        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
-        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
+        pport = new ParallelPort(dataaddress: config.ParallelPort1);
+        recorder = new RippleRecorder();
     }
 
     public override void GenerateFinalCondition()
     {
-        var ni = (float)ex.GetParam("NumOfImage");
-        var cond = new Dictionary<string, List<object>>();
-        cond["Image"] = Enumerable.Range(1, (int)ni).Select(i => (object)i.ToString()).ToList();
+        var cond = new Dictionary<string, List<object>>
+        {
+            ["Image"] = Enumerable.Range(1, ex.GetParam("NumOfImage").Convert<int>()).Select(i => (object)i.ToString()).ToList()
+        };
         condmanager.FinalizeCondition(cond);
     }
 
     protected override void StartExperiment()
     {
+        SetEnvActiveParam("Visible", false);
+        SetEnvActiveParam("Mark", OnOff.Off);
+        pport.SetBit(bit: config.ConditionCh, value: false);
         base.StartExperiment();
         var mt = (MaskType)GetEnvActiveParam("MaskType");
         if (mt == MaskType.DiskFade || mt == MaskType.Disk)
@@ -61,10 +56,10 @@ public class RippleImageLogic : ExperimentLogic
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
-        envmanager.InvokeActiveRPC("RpcPreLoadImage", new object[] { condmanager.cond["Image"].Select(i => (string)i).ToArray() });
-        recordmanager.recorder.RecordPath = ex.GetDataPath(ext: "");
-        timer.Timeout(notifylatency);
-        pport.BitPulse(bit: startch, duration_ms: 5);
+        envmanager.InvokeActiveRPC("RpcPreLoadImageset", new object[] { 1, ex.GetParam("NumOfImage").Convert<int>() });
+        recorder.RecordPath = ex.GetDataPath();
+        timer.Timeout(config.NotifyLatency + ex.GetParam("PreLoadImageLatency").Convert<int>());
+        pport.BitPulse(bit: config.StartCh, duration_ms: 5);
         timer.Restart();
     }
 
@@ -72,15 +67,15 @@ public class RippleImageLogic : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: condch, value: false);
+        pport.SetBit(bit: config.ConditionCh, value: false);
         base.StopExperiment();
         var mt = (MaskType)GetEnvActiveParam("MaskType");
         if (mt == MaskType.DiskFade || mt == MaskType.Disk)
         {
             SetEnvActiveParam("Diameter", diameter);
         }
-        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport.BitPulse(bit: stopch, duration_ms: 5);
+        timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
+        pport.BitPulse(bit: config.StopCh, duration_ms: 5);
         timer.Stop();
     }
 
@@ -98,18 +93,16 @@ public class RippleImageLogic : ExperimentLogic
                 {
                     CondState = CONDSTATE.COND;
                     SetEnvActiveParam("Visible", true);
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
+                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
                     {
-                        // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                        // marker params will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
-                        pport.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
+                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
+                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
+                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
                     }
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Mark", OnOff.On);
-                        pport.SetBit(bit: condch, value: true);
+                        pport.SetBit(bit: config.ConditionCh, value: true);
                     }
                 }
                 break;
@@ -117,15 +110,14 @@ public class RippleImageLogic : ExperimentLogic
                 if (CondHold >= ex.CondDur)
                 {
                     CondState = CONDSTATE.SUFICI;
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
+                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
                     {
                     }
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
-                        pport.SetBit(bit: condch, value: false);
+                        pport.SetBit(bit: config.ConditionCh, value: false);
                     }
                 }
                 break;

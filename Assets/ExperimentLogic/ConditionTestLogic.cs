@@ -1,6 +1,6 @@
 ﻿/*
 ConditionTestLogic.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -23,13 +23,6 @@ using VLab;
 
 public class ConditionTestLogic : ExperimentLogic
 {
-    int markpulsewidth;
-
-    public override void OnStart()
-    {
-        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
-    }
-
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Visible", true);
@@ -39,78 +32,103 @@ public class ConditionTestLogic : ExperimentLogic
 
     public override void Logic()
     {
-        switch (TrialState)
+        switch (BlockState)
         {
-            case TRIALSTATE.NONE:
-                TrialState = TRIALSTATE.PREITI;
+            case BLOCKSTATE.NONE:
+                BlockState = BLOCKSTATE.PREIBI;
                 break;
-            case TRIALSTATE.PREITI:
-                if (PreITIHold >= ex.PreITI)
+            case BLOCKSTATE.PREIBI:
+                if (PreIBIHold >= ex.PreIBI)
                 {
-                    TrialState = TRIALSTATE.TRIAL;
+                    BlockState = BLOCKSTATE.BLOCK;
                 }
                 break;
-            case TRIALSTATE.TRIAL:
-                switch (CondState)
+            case BLOCKSTATE.BLOCK:
+                switch (TrialState)
                 {
-                    case CONDSTATE.NONE:
-                        SetEnvActiveParam("Visible", false);
-                        SetEnvActiveParam("Mark", OnOff.Off);
-                        CondState = CONDSTATE.PREICI;
+                    case TRIALSTATE.NONE:
+                        TrialState = TRIALSTATE.PREITI;
                         break;
-                    case CONDSTATE.PREICI:
-                        if (PreICIHold >= ex.PreICI)
+                    case TRIALSTATE.PREITI:
+                        if (PreITIHold >= ex.PreITI)
                         {
-                            CondState = CONDSTATE.COND;
-                            SetEnvActiveParam("Visible", true);
-                            // None ICI Mode
-                            if (ex.PreICI == 0 && ex.SufICI == 0)
-                            {
-                                // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                                // marker on/off will take effect on screen.
-                                SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
-                            }
-                            else // ICI Mode
-                            {
-                                SetEnvActiveParam("Mark", OnOff.On);
-                            }
+                            TrialState = TRIALSTATE.TRIAL;
                         }
                         break;
-                    case CONDSTATE.COND:
-                        if (CondHold >= ex.CondDur)
+                    case TRIALSTATE.TRIAL:
+                        switch (CondState)
                         {
-                            CondState = CONDSTATE.SUFICI;
-                            // None ICI Mode
-                            if (ex.PreICI == 0 && ex.SufICI == 0)
-                            {
-                            }
-                            else // ICI Mode
-                            {
+                            case CONDSTATE.NONE:
                                 SetEnvActiveParam("Visible", false);
                                 SetEnvActiveParam("Mark", OnOff.Off);
-                            }
+                                CondState = CONDSTATE.PREICI;
+                                break;
+                            case CONDSTATE.PREICI:
+                                if (PreICIHold >= ex.PreICI)
+                                {
+                                    CondState = CONDSTATE.COND;
+                                    SetEnvActiveParam("Visible", true);
+                                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                                    {
+                                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
+                                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
+                                    }
+                                    else // ICI Mode
+                                    {
+                                        SetEnvActiveParam("Mark", OnOff.On);
+                                    }
+                                }
+                                break;
+                            case CONDSTATE.COND:
+                                if (CondHold >= ex.CondDur)
+                                {
+                                    CondState = CONDSTATE.SUFICI;
+                                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                                    {
+                                    }
+                                    else // ICI Mode
+                                    {
+                                        SetEnvActiveParam("Visible", false);
+                                        SetEnvActiveParam("Mark", OnOff.Off);
+                                    }
+                                }
+                                break;
+                            case CONDSTATE.SUFICI:
+                                if (SufICIHold >= ex.SufICI)
+                                {
+                                    if (TrialHold >= ex.TrialDur)
+                                    {
+                                        CondState = CONDSTATE.NONE;
+                                        TrialState = TRIALSTATE.SUFITI;
+                                    }
+                                    else
+                                    {
+                                        CondState = CONDSTATE.PREICI;
+                                    }
+                                }
+                                break;
                         }
                         break;
-                    case CONDSTATE.SUFICI:
-                        if (SufICIHold >= ex.SufICI)
+                    case TRIALSTATE.SUFITI:
+                        if (SufITIHold >= ex.SufITI)
                         {
-                            if (TrialHold >= ex.TrialDur)
+                            if (BlockHold >= ex.BlockDur)
                             {
-                                CondState = CONDSTATE.NONE;
-                                TrialState = TRIALSTATE.SUFITI;
+                                TrialState = TRIALSTATE.NONE;
+                                BlockState = BLOCKSTATE.SUFIBI;
                             }
                             else
                             {
-                                CondState = CONDSTATE.PREICI;
+                                TrialState = TRIALSTATE.PREITI;
                             }
                         }
                         break;
                 }
                 break;
-            case TRIALSTATE.SUFITI:
-                if (SufITIHold >= ex.SufITI)
+            case BLOCKSTATE.SUFIBI:
+                if (SufIBIHold >= ex.SufIBI)
                 {
-                    TrialState = TRIALSTATE.PREITI;
+                    BlockState = BLOCKSTATE.PREIBI;
                 }
                 break;
         }

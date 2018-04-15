@@ -1,6 +1,6 @@
 ﻿/*
 ParallelPortPinSignal.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -29,11 +29,11 @@ public class ParallelPortPinSignal : ExperimentLogic
 
     public override void OnStart()
     {
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort2]);
+        pport = new ParallelPort(config.ParallelPort2);
         ppw = new ParallelPortWave(pport);
     }
 
-    public override void PrepareCondition(bool regenerateconditon=true)
+    public override void PrepareCondition(bool regenerateconditon = true)
     {
         for (var i = 0; i < 8; i++)
         {

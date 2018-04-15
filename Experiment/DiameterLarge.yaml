@@ -1,0 +1,82 @@
+ID: DiameterLarge
+Name: DiameterLarge
+Designer: Alex
+Experimenter: Alex
+Log: 
+Subject_ID: C1801
+Subject_Name: C1801
+Subject_Species: Domestic Cat
+Subject_Gender: Female
+Subject_Age: 0
+Subject_Size: 0 0 0
+Subject_Weight: 3
+Subject_Log: 
+EnvPath: MarkerGrating
+EnvParam: {}
+CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\DiameterLarge.yaml
+Cond: 
+ExLogicPath: RippleCTLogic
+RecordSession: V1
+RecordSite: 345
+DataDir: X:\
+DataPath: 
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 8
+BlockRepeat: 1
+BlockParam: []
+Input: None
+PreICI: 150
+CondDur: 500
+SufICI: 350
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+- Latency
+- TimerDriftSpeed
+- Delay
+EnvInheritParam:
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- SpatialFreq@ENGratingQuad@GratingQuad
+- TemporalFreq@ENGratingQuad@GratingQuad
+- Ori@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
+- Marker@Showroom@ShowroomManager
+- ScreenAspect@ENCamera@OrthoCamera
+- SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager
+- TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager
+- Ori@ENGratingQuad@GratingQuad$ShowroomManager
+- Position@ENGratingQuad@GratingQuad$ShowroomManager
+Param: {}
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
+Delay: 30
+CondTest: 
+CondTestShowLevel: FULL

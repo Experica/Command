@@ -1,6 +1,6 @@
 ﻿/*
 ExperimentManager.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -46,7 +46,7 @@ namespace VLab
 
         public void GetExFiles()
         {
-            var exfiledir = (string)appmanager.config[VLCFG.ExDir];
+            var exfiledir = appmanager.config.ExDir;
             if (Directory.Exists(exfiledir))
             {
                 exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.AllDirectories).ToList();
@@ -54,6 +54,15 @@ namespace VLab
                 foreach (var f in exfiles)
                 {
                     exids.Add(Path.GetFileNameWithoutExtension(f));
+                }
+                var firsttestid = appmanager.config.FirstTestID;
+                if (exids.Contains(firsttestid))
+                {
+                    var i = exids.IndexOf(firsttestid);
+                    exids.RemoveAt(i);
+                    exfiles.RemoveAt(i);
+                    exids.Insert(0, firsttestid);
+                    exfiles.Insert(0, Path.Combine(exfiledir, firsttestid + ".yaml"));
                 }
             }
             else
@@ -64,7 +73,7 @@ namespace VLab
 
         public Experiment LoadEx(string exfilepath)
         {
-            var ex = Yaml.ReadYaml<Experiment>(exfilepath);
+            var ex = exfilepath.ReadYamlFile<Experiment>();
             if (string.IsNullOrEmpty(ex.ID))
             {
                 ex.ID = Path.GetFileNameWithoutExtension(exfilepath);
@@ -78,46 +87,18 @@ namespace VLab
             {
                 ex.Name = ex.ID;
             }
-            if (ex.Subject_ID == null)
-            {
-                ex.Subject_ID = "";
-            }
             if (string.IsNullOrEmpty(ex.Subject_Name))
             {
                 ex.Subject_Name = ex.Subject_ID;
             }
-            if (ex.Experimenter == null)
-            {
-                ex.Experimenter = "";
-            }
             if (string.IsNullOrEmpty(ex.DataDir))
             {
-                var datadir = (string)appmanager.config[VLCFG.DataDir];
+                var datadir = appmanager.config.DataDir;
                 if (!Directory.Exists(datadir))
                 {
                     Directory.CreateDirectory(datadir);
                 }
                 ex.DataDir = datadir;
-            }
-            if (ex.Param == null)
-            {
-                ex.Param = new Dictionary<string, Param>();
-            }
-            if (ex.BlockParam == null)
-            {
-                ex.BlockParam = new List<string>();
-            }
-            if (ex.EnvParam == null)
-            {
-                ex.EnvParam = new Dictionary<string, object>();
-            }
-            if (ex.ExInheritParam == null)
-            {
-                ex.ExInheritParam = new List<string>();
-            }
-            if (ex.EnvInheritParam == null)
-            {
-                ex.EnvInheritParam = new List<string>();
             }
             if (ex.CondTest != null)
             {
@@ -125,7 +106,7 @@ namespace VLab
             }
             if (ex.NotifyParam == null)
             {
-                ex.NotifyParam = (List<CONDTESTPARAM>)appmanager.config[VLCFG.NotifyParams];
+                ex.NotifyParam = appmanager.config.NotifyParams;
             }
             return ex;
         }
@@ -143,8 +124,9 @@ namespace VLab
             {
                 if (File.Exists(elname))
                 {
-                    var assembly = CompilerService.Compile(elname);
-                    eltype = assembly.GetExportedTypes()[0];
+                    // need to add runtime compiler service
+                    //var assembly = CompilerService.Compile(elname);
+                    //eltype = assembly.GetExportedTypes()[0];
                 }
                 else
                 {
@@ -153,7 +135,7 @@ namespace VLab
             }
             if (eltype == null)
             {
-                var elpath = (string)appmanager.config[VLCFG.ExLogic];
+                var elpath = appmanager.config.ExLogic;
                 eltype = Type.GetType(elpath);
                 ex.ExLogicPath = elpath;
             }
@@ -172,29 +154,19 @@ namespace VLab
             }
             else
             {
-                if (exids.Contains(id))
+                if (!exids.Contains(id) && exids.Contains(idcopyfrom))
                 {
-                    return false;
-                }
-                else
-                {
-                    if (exids.Contains(idcopyfrom))
-                    {
-                        var ex = Yaml.ReadYaml<Experiment>(exfiles[exids.IndexOf(idcopyfrom)]);
-                        ex.ID = id;
-                        ex.Name = id;
-                        LoadEL(ValidateExperiment(ex));
+                    var ex = exfiles[exids.IndexOf(idcopyfrom)].ReadYamlFile<Experiment>();
+                    ex.ID = id;
+                    ex.Name = id;
+                    LoadEL(ValidateExperiment(ex));
 
-                        exids.Add(id);
-                        exfiles.Add(Path.Combine((string)appmanager.config[VLCFG.ExDir], id + ".yaml"));
-                        SaveEx(id);
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    exids.Add(id);
+                    exfiles.Add(Path.Combine(appmanager.config.ExDir, id + ".yaml"));
+                    SaveEx(id);
+                    return true;
                 }
+                return false;
             }
         }
 
@@ -206,13 +178,14 @@ namespace VLab
             }
             else
             {
-                var ex = new Experiment();
-                ex.ID = id;
-                ex.Name = id;
+                var ex = new Experiment
+                {
+                    ID = id
+                };
                 LoadEL(ValidateExperiment(ex));
 
                 exids.Add(id);
-                exfiles.Add(Path.Combine((string)appmanager.config[VLCFG.ExDir], id + ".yaml"));
+                exfiles.Add(Path.Combine(appmanager.config.ExDir, id + ".yaml"));
                 SaveEx(id);
                 return true;
             }
@@ -226,7 +199,7 @@ namespace VLab
                 if (i >= 0)
                 {
                     var ex = elhistory[i].ex;
-                    // Exclude data, only save experiment parameters
+                    // Exclude data, only save experiment definition
                     var datapath = ex.DataPath;
                     var condtest = ex.CondTest;
                     var cond = ex.Cond;
@@ -236,7 +209,7 @@ namespace VLab
                     ex.EnvParam = elhistory[i].envmanager.GetParams();
                     try
                     {
-                        Yaml.WriteYaml(exfiles[exids.IndexOf(id)], ex);
+                        exfiles[exids.IndexOf(id)].WriteYamlFile(ex);
                     }
                     finally
                     {
@@ -367,7 +340,7 @@ namespace VLab
             {
                 if (Experiment.Properties.ContainsKey(name))
                 {
-                    elhistory.Last().ex.SetValue(name, elhistory[hn - 2].ex.GetValue(name));
+                    elhistory.Last().ex.SetProperty(name, elhistory[hn - 2].ex.GetProperty(name));
                 }
                 else
                 {
@@ -390,7 +363,7 @@ namespace VLab
             InheritEnv();
         }
 
-        public void InheritEnv(string forobjname = null)
+        public void InheritEnv(string toobject = null)
         {
             string paramname, fullname;
             var eip = elhistory.Last().ex.EnvInheritParam;
@@ -398,13 +371,13 @@ namespace VLab
             {
                 if (ip.IsEnvParamFullName(out paramname, out fullname))
                 {
-                    if (String.IsNullOrEmpty(forobjname))
+                    if (String.IsNullOrEmpty(toobject))
                     {
                         InheritEnvParam(fullname);
                     }
                     else
                     {
-                        if (fullname.LastAtSplitTail() == forobjname)
+                        if (fullname.LastAtSplitTail() == toobject)
                         {
                             InheritEnvParam(fullname);
                         }
@@ -421,7 +394,7 @@ namespace VLab
         public void InheritEnvParam(string fullname)
         {
             string paramname = fullname.FirstAtSplitHead();
-            string objname = fullname.LastAtSplitTail();
+            string objectname = fullname.LastAtSplitTail();
 
             var hn = elhistory.Count;
             if (hn > 1)
@@ -433,15 +406,15 @@ namespace VLab
                     if (hp.ContainsKey("Show@Showroom@ShowroomManager"))
                     {
                         var showobj = hp["Show@Showroom@ShowroomManager"].ToString();
-                        if (showobj == objname && hp.ContainsKey(fullname))
+                        if (showobj == objectname && hp.ContainsKey(fullname))
                         {
                             v = hp[fullname];
                         }
                         else
                         {
-                            if (uicontroller.appmanager.IsCrossEnvInheritTarget(objname))
+                            if (uicontroller.appmanager.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
                             {
-                                if (uicontroller.appmanager.IsFollowCrossEnvInheritRule(objname, showobj, paramname))
+                                if (uicontroller.appmanager.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
                                 {
                                     foreach (var hpk in hp.Keys.ToArray())
                                     {
@@ -462,6 +435,19 @@ namespace VLab
                     else if (hp.ContainsKey(fullname))
                     {
                         v = hp[fullname];
+                    }
+                    else if (uicontroller.appmanager.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
+                    {
+                        foreach (var hpn in hp.Keys.ToArray())
+                        {
+                            string paramfrom = hpn.FirstAtSplitHead();
+                            string objectfrom = hpn.LastAtSplitTail();
+                            if (paramname == paramfrom && uicontroller.appmanager.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
+                            {
+                                v = hp[hpn];
+                                break;
+                            }
+                        }
                     }
 
                     if (v != null)

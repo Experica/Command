@@ -1,6 +1,6 @@
 ﻿/*
 ViewPanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -101,8 +101,8 @@ namespace VLab
                 }
                 rendertexture = new RenderTexture((int)width, (int)height, 24);
                 rendertexture.autoGenerateMips = false;
-                rendertexture.antiAliasing = (int)uicontroller.appmanager.config[VLCFG.AntiAliasing];
-                rendertexture.anisoLevel = (int)uicontroller.appmanager.config[VLCFG.AnisotropicFilterLevel];
+                rendertexture.antiAliasing = uicontroller.appmanager.config.AntiAliasing;
+                rendertexture.anisoLevel = uicontroller.appmanager.config.AnisotropicFilterLevel;
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;
 

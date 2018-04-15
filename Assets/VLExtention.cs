@@ -1,6 +1,6 @@
 ﻿/*
 VLExtention.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -31,45 +31,18 @@ namespace VLab
     {
         CondIndex,
         CondRepeat,
+        BlockIndex,
+        BlockRepeat,
         CONDSTATE,
         TRIALSTATE,
         BLOCKSTATE,
         TASKSTATE
     }
 
-    public enum ParamType
-    {
-        String,
-        Float,
-        Bool,
-        Vector3,
-        Color,
-        ListOfString,
-        ListOfFloat,
-        ListOfBool
-    }
-
-    public class Param
-    {
-        ParamType t;
-        public ParamType Type { get { return t; } set { t = value; } }
-        object v;
-        public object Value
-        {
-            get { return v; }
-            set { v = value.Convert(t); }
-        }
-
-        public Param(ParamType type, object value)
-        {
-            t = type;
-            v = value;
-        }
-    }
-
     public static class VLExtention
     {
-        static Type TString, TFloat, TBool, TVector3, TColor, TListOfString, TListOfFloat, TListOfBool, TParam;
+        static Type TObject, TString, TBool, TInt, TFloat, TVector2, TVector3, TVector4, TColor, TListT;
+        static readonly object apilock = new object();
 
         static HashSet<Type> NumericTypes = new HashSet<Type>
         {
@@ -80,15 +53,16 @@ namespace VLab
 
         static VLExtention()
         {
+            TObject = typeof(object);
             TString = typeof(string);
-            TFloat = typeof(float);
             TBool = typeof(bool);
+            TInt = typeof(int);
+            TFloat = typeof(float);
+            TVector2 = typeof(Vector2);
             TVector3 = typeof(Vector3);
+            TVector4 = typeof(Vector4);
             TColor = typeof(Color);
-            TListOfString = typeof(List<string>);
-            TListOfFloat = typeof(List<float>);
-            TListOfBool = typeof(List<bool>);
-            TParam = typeof(Param);
+            TListT = typeof(List<>);
         }
 
         public static bool IsNumeric(this Type type)
@@ -96,208 +70,192 @@ namespace VLab
             return NumericTypes.Contains(Nullable.GetUnderlyingType(type) ?? type);
         }
 
+        public static IList<T> AsList<T>(this object o) => o as IList<T>;
+        public static IList AsList(this object o) => o as IList;
+
         public static T Convert<T>(this object value)
         {
             return (T)Convert(value, typeof(T));
         }
 
-        public static object Convert(this object value, ParamType paramtype)
-        {
-            switch (paramtype)
-            {
-                case ParamType.Float:
-                    return value.Convert<float>();
-                case ParamType.Bool:
-                    return value.Convert<bool>();
-                case ParamType.Vector3:
-                    return value.Convert<Vector3>();
-                case ParamType.Color:
-                    return value.Convert<Color>();
-                case ParamType.ListOfString:
-                    return value.Convert<List<string>>();
-                case ParamType.ListOfFloat:
-                    return value.Convert<List<float>>();
-                case ParamType.ListOfBool:
-                    return value.Convert<List<bool>>();
-                default:
-                    return value.Convert<string>();
-            }
-        }
-
-        public static bool IsList(this ParamType type)
-        {
-            switch (type)
-            {
-                case ParamType.ListOfBool:
-                case ParamType.ListOfFloat:
-                case ParamType.ListOfString:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
         public static object Convert(this object value, Type CT)
         {
-            Type VT = value.GetType();
-            if (VT == CT)
+            lock (apilock)
             {
-                return value;
-            }
-            else if (VT == TListOfString)
-            {
-                var v = (List<string>)value;
-                if (CT == TString)
+                Type VT = value.GetType();
+                if (VT == CT)
                 {
-                    return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i + ", " + j) + "]";
+                    return value;
                 }
-            }
-            else if (VT == TListOfFloat)
-            {
-                var v = (List<float>)value;
-                if (CT == TString)
+                else if (VT == TFloat)
                 {
-                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString("G3")).Aggregate((i, j) => i + ", " + j) + "]";
-                }
-            }
-            else if (VT == TListOfBool)
-            {
-                var v = (List<bool>)value;
-                if (CT == TString)
-                {
-                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
-                }
-            }
-            else if (VT == typeof(List<CONDTESTPARAM>))
-            {
-                var v = (List<CONDTESTPARAM>)value;
-                if (CT == typeof(string))
-                {
-                    return v.Count == 0 ? "[]" : "[" + v.Select(i => i.ToString()).Aggregate((i, j) => i + ", " + j) + "]";
-                }
-            }
-            else if (VT == typeof(List<object>))
-            {
-                var v = (List<object>)value;
-                var vn = v.Count;
-                if (CT == typeof(Vector3))
-                {
-                    float x = 0, y = 0, z = 0;
-                    if (vn > 0)
+                    var v = (float)value;
+                    if (CT == TString)
                     {
-                        x = v[0].Convert<float>();
+                        return v.ToString("G4");
                     }
-                    if (vn > 1)
+                }
+                else if (VT.IsGenericType && VT.GetGenericTypeDefinition() == TListT)
+                {
+                    if (CT.IsGenericType && CT.GetGenericTypeDefinition() == TListT)
                     {
-                        y = v[1].Convert<float>();
+                        var CTT = CT.GetGenericArguments()[0];
+                        var v = Activator.CreateInstance(CT).AsList();
+                        foreach (var i in value.AsList())
+                        {
+                            v.Add(i.Convert(CTT));
+                        }
+                        return v;
                     }
-                    if (vn > 2)
+                    else if (CT == TVector3)
                     {
-                        z = v[2].Convert<float>();
+                        var v = value.AsList();
+                        var vn = v.Count;
+                        float x = 0, y = 0, z = 0;
+                        if (vn > 0)
+                        {
+                            x = v[0].Convert<float>();
+                        }
+                        if (vn > 1)
+                        {
+                            y = v[1].Convert<float>();
+                        }
+                        if (vn > 2)
+                        {
+                            z = v[2].Convert<float>();
+                        }
+                        return new Vector3(x, y, z);
                     }
-                    return new Vector3(x, y, z);
-                }
-                else if (CT == typeof(Color))
-                {
-                    float r = 0, g = 0, b = 0, a = 1;
-                    if (vn > 0)
+                    else if (CT == TColor)
                     {
-                        r = v[0].Convert<float>();
+                        var v = value.AsList();
+                        var vn = v.Count;
+                        float r = 0, g = 0, b = 0, a = 1;
+                        if (vn > 0)
+                        {
+                            r = v[0].Convert<float>();
+                        }
+                        if (vn > 1)
+                        {
+                            g = v[1].Convert<float>();
+                        }
+                        if (vn > 2)
+                        {
+                            b = v[2].Convert<float>();
+                        }
+                        if (vn > 3)
+                        {
+                            a = v[3].Convert<float>();
+                        }
+                        return new Color(r, g, b, a);
                     }
-                    if (vn > 1)
+                    else if (CT == TString)
                     {
-                        g = v[1].Convert<float>();
+                        var v = value.AsList();
+                        var vn = v.Count;
+                        if (vn == 0) return "[]";
+
+                        var vs = new string[vn];
+                        for (var i = 0; i < vn; i++)
+                        {
+                            vs[i] = v[i].Convert<string>();
+                        }
+                        return "[" + string.Join(", ", vs) + "]";
                     }
-                    if (vn > 2)
+                }
+                else if (VT == TVector2)
+                {
+                    var v = (Vector2)value;
+                    if (CT == TString)
                     {
-                        b = v[2].Convert<float>();
+                        return v.x.ToString("G4") + " " + v.y.ToString("G4");
                     }
-                    if (vn > 3)
+                }
+                else if (VT == TVector3)
+                {
+                    var v = (Vector3)value;
+                    if (CT == TString)
                     {
-                        a = v[3].Convert<float>();
+                        return String.Join(" ", Enumerable.Range(0, 3).Select(i => v[i].ToString("G4")));
                     }
-                    return new Color(r, g, b, a);
                 }
-                else if (CT == typeof(string))
+                else if (VT == TVector4)
                 {
-                    return v.Count == 0 ? "[]" : "[" + v.Aggregate((i, j) => i.Convert<string>() + ", " + j.Convert<string>()) + "]";
+                    var v = (Vector4)value;
+                    if (CT == TString)
+                    {
+                        return String.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                    }
                 }
+                else if (VT == TColor)
+                {
+                    var v = (Color)value;
+                    if (CT == TString)
+                    {
+                        return String.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                    }
+                }
+                else if (VT == TString)
+                {
+                    var vstr = (string)value;
+                    if (CT == TBool)
+                    {
+                        return bool.Parse(vstr);
+                    }
+                    else if (CT == TInt)
+                    {
+                        return int.Parse(vstr);
+                    }
+                    else if (CT == TFloat)
+                    {
+                        return float.Parse(vstr);
+                    }
+                    else if (CT == TVector2)
+                    {
+                        var vs = vstr.Split(' ');
+                        return new Vector2(float.Parse(vs[0]), float.Parse(vs[1]));
+                    }
+                    else if (CT == TVector3)
+                    {
+                        var vs = vstr.Split(' ');
+                        return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
+                    }
+                    else if (CT == TVector4)
+                    {
+                        var vs = vstr.Split(' ');
+                        return new Vector4(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
+                    }
+                    else if (CT == TColor)
+                    {
+                        var vs = vstr.Split(' ');
+                        return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
+                    }
+                    else if (CT.IsEnum && Enum.IsDefined(CT, vstr))
+                    {
+                        return Enum.Parse(CT, vstr);
+                    }
+                    else if (CT.IsGenericType && CT.GetGenericTypeDefinition() == TListT)
+                    {
+                        var CTT = CT.GetGenericArguments()[0];
+                        var v = Activator.CreateInstance(CT).AsList();
+                        var si = vstr.IndexOf('[') + 1; var ei = vstr.LastIndexOf(']');
+                        var vs = vstr.Substring(si, ei - si).Split(',').Select(i => i.Trim()).ToList();
+                        foreach (var i in vs)
+                        {
+                            v.Add(i.Convert(CTT));
+                        }
+                        return v;
+                    }
+                }
+                else
+                {
+                    if (CT == TString)
+                    {
+                        return value.ToString();
+                    }
+                }
+                return System.Convert.ChangeType(value, CT);
             }
-            else if (VT == TVector3)
-            {
-                var v = (Vector3)value;
-                if (CT == TString)
-                {
-                    return v.ToString("G3");
-                }
-            }
-            else if (VT == TColor)
-            {
-                var v = (Color)value;
-                if (CT == TString)
-                {
-                    return v.ToString("G3").Substring(4);
-                }
-            }
-            else if (VT == TParam)
-            {
-                var v = (Param)value;
-                if (CT == TString)
-                {
-                    return v.Value.Convert<string>();
-                }
-            }
-            else if (VT == TString)
-            {
-                var v = (string)value;
-                if (CT == TFloat)
-                {
-                    return float.Parse(v);
-                }
-                else if (CT == TBool)
-                {
-                    return bool.Parse(v);
-                }
-                else if (CT == TVector3)
-                {
-                    var si = v.IndexOf('(') + 1; var ei = v.LastIndexOf(')');
-                    var vs = v.Substring(si, ei - si).Split(',');
-                    return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
-                }
-                else if (CT == TColor)
-                {
-                    var si = v.IndexOf('(') + 1; var ei = v.LastIndexOf(')');
-                    var vs = v.Substring(si, ei - si).Split(',');
-                    return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
-                }
-                else if (CT.IsEnum && Enum.IsDefined(CT, v))
-                {
-                    return Enum.Parse(CT, v);
-                }
-                else if (CT == TListOfString)
-                {
-                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
-                    return v.Substring(si, ei - si).Split(',').Select(i => i.Trim()).ToList();
-                }
-                else if (CT == TListOfFloat)
-                {
-                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
-                    return v.Substring(si, ei - si).Split(',').Select(i => float.Parse(i.Trim())).ToList();
-                }
-                else if (CT == TListOfBool)
-                {
-                    var si = v.IndexOf('[') + 1; var ei = v.LastIndexOf(']');
-                    return v.Substring(si, ei - si).Split(',').Select(i => bool.Parse(i.Trim())).ToList();
-                }
-            }
-            else
-            {
-                if (CT == TString)
-                {
-                    return value.ToString();
-                }
-            }
-            return System.Convert.ChangeType(value, CT);
         }
 
         public static List<int> Permutation(this System.Random rng, int maxexclusive)
@@ -321,67 +279,67 @@ namespace VLab
             return rng.Permutation(seq.Count).Select(i => seq[i]).ToList();
         }
 
-        public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
-        {
-            return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
-        }
+        //public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
+        //{
+        //    return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
+        //}
 
-        /// <summary>
-        /// Replace all factor values with known reference in experiment parameters
-        /// </summary>
-        /// <param name="cond"></param>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
-        {
-            foreach (var f in cond.Keys.ToList())
-            {
-                if (f.Count() > 1 && f.First() == '$')
-                {
-                    var rf = f.Substring(1);
-                    if (param.ContainsKey(rf) && param[rf] != null && param[rf].Type.IsList())
-                    {
-                        var fl = cond[f]; fl.Clear();
-                        foreach (var i in (IEnumerable)param[rf].Value)
-                        {
-                            fl.Add(i);
-                        }
-                        cond.Remove(f);
-                        cond[rf] = fl;
-                    }
-                }
-            }
-            return cond;
-        }
+        ///// <summary>
+        ///// Replace all factor values with known reference in experiment parameters
+        ///// </summary>
+        ///// <param name="cond"></param>
+        ///// <param name="param"></param>
+        ///// <returns></returns>
+        //public static Dictionary<string, List<object>> ResolveCondFactorReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
+        //{
+        //    foreach (var f in cond.Keys.ToList())
+        //    {
+        //        if (f.Count() > 1 && f.First() == '$')
+        //        {
+        //            var rf = f.Substring(1);
+        //            if (param.ContainsKey(rf) && param[rf] != null && param[rf].Type.IsList())
+        //            {
+        //                var fl = cond[f]; fl.Clear();
+        //                foreach (var i in (IEnumerable)param[rf].Value)
+        //                {
+        //                    fl.Add(i);
+        //                }
+        //                cond.Remove(f);
+        //                cond[rf] = fl;
+        //            }
+        //        }
+        //    }
+        //    return cond;
+        //}
 
-        /// <summary>
-        /// Replace factor values with known reference in experiment parameter
-        /// </summary>
-        /// <param name="cond"></param>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
-        {
-            foreach (var f in cond.Keys)
-            {
-                for (var i = 0; i < cond[f].Count; i++)
-                {
-                    if (cond[f][i].GetType() == typeof(string))
-                    {
-                        var v = (string)cond[f][i];
-                        if (v.Count() > 1 && v.First() == '$')
-                        {
-                            var r = v.Substring(1);
-                            if (param.ContainsKey(r) && param[r] != null)
-                            {
-                                cond[f][i] = param[r].Value;
-                            }
-                        }
-                    }
-                }
-            }
-            return cond;
-        }
+        ///// <summary>
+        ///// Replace factor values with known reference in experiment parameter
+        ///// </summary>
+        ///// <param name="cond"></param>
+        ///// <param name="param"></param>
+        ///// <returns></returns>
+        //public static Dictionary<string, List<object>> ResolveCondLevelReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
+        //{
+        //    foreach (var f in cond.Keys)
+        //    {
+        //        for (var i = 0; i < cond[f].Count; i++)
+        //        {
+        //            if (cond[f][i].GetType() == typeof(string))
+        //            {
+        //                var v = (string)cond[f][i];
+        //                if (v.Count() > 1 && v.First() == '$')
+        //                {
+        //                    var r = v.Substring(1);
+        //                    if (param.ContainsKey(r) && param[r] != null)
+        //                    {
+        //                        cond[f][i] = param[r].Value;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return cond;
+        //}
 
 #if VLAB
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
@@ -478,6 +436,49 @@ namespace VLab
             {
                 return fsls;
             }
+        }
+
+        public static Type GetFactorValueType(this string factorname)
+        {
+            switch (factorname)
+            {
+                case "Luminance":
+                case "Contrast":
+                case "Diameter":
+                case "SpatialFreq":
+                case "SpatialPhase":
+                case "TemporalFreq":
+                case "Ori":
+                case "OriOffset":
+                case "Ori_Final":
+                    return typeof(float);
+                case "Rotation":
+                case "RotationOffset":
+                case "Rotation_Final":
+                case "Position":
+                case "PositionOffset":
+                case "Position_Final":
+                    return typeof(Vector3);
+                case "Color":
+                case "BGColor":
+                    return typeof(Color);
+                default:
+                    return null;
+            }
+        }
+
+        public static Dictionary<string, IList> FinalizeFactorValues(this Dictionary<string, List<object>> cond)
+        {
+            if (cond == null) return null;
+            var final = new Dictionary<string, IList>();
+            foreach (var f in cond.Keys.ToArray())
+            {
+                var fvt = f.GetFactorValueType() ?? cond[f][0].GetType();
+                var fvs = Activator.CreateInstance(typeof(List<>).MakeGenericType(fvt)).AsList();
+                cond[f].ForEach(i => fvs.Add(i.Convert(fvt)));
+                final[f] = fvs;
+            }
+            return final;
         }
 
         public static bool FirstAtSplit(this string name, out string head, out string tail)
@@ -656,6 +657,56 @@ namespace VLab
                 }
             }
             return r.ToArray();
+        }
+
+        public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(this Dictionary<string, Dictionary<string, List<string>>> rule)
+        {
+            if (!rule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
+            {
+                var gratingquadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" },
+                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" }
+                };
+                rule[EnvironmentObject.GratingQuad.ToString()] = gratingquadinheritfrom;
+            }
+            if (!rule.ContainsKey(EnvironmentObject.Quad.ToString()))
+            {
+                var quadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" },
+                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" }
+                };
+                rule[EnvironmentObject.Quad.ToString()] = quadinheritfrom;
+            }
+            if (!rule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
+            {
+                var imagequadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Position", "Diameter" },
+                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Position" }
+                };
+                rule[EnvironmentObject.ImageQuad.ToString()] = imagequadinheritfrom;
+            }
+            return rule;
+        }
+
+        public static bool IsFollowEnvCrossInheritRule(this Dictionary<string, Dictionary<string, List<string>>> rule, string to, string from, string param)
+        {
+            if (rule.ContainsKey(to))
+            {
+                var fp = rule[to];
+                if (fp.ContainsKey(from) && fp[from].Contains(param))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsEnvCrossInheritTo(this Dictionary<string, Dictionary<string, List<string>>> rule, string to)
+        {
+            return rule.ContainsKey(to);
         }
 
     }

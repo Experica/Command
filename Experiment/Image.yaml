@@ -3,57 +3,57 @@ Name: Image
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.78225815
   Image@ENImageQuad@ImageQuad: 1
-  ImageSet@ENImageQuad@ImageQuad: ExampleImageSet
+  ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
-  Rotation@ENImageQuad@ImageQuad: (0, 0, 0)
-  RotationOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  Rotation@ENImageQuad@ImageQuad: 0 0 0
+  RotationOffset@ENImageQuad@ImageQuad: 0 0 0
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 5
-  Size@ENImageQuad@ImageQuad: (5, 5, 1)
-  Color@ENImageQuad@ImageQuad: (1, 1, 1, 1)
+  Diameter@ENImageQuad@ImageQuad: 12.4361439
+  Size@ENImageQuad@ImageQuad: 12.44 12.44 1
+  Color@ENImageQuad@ImageQuad: 1 1 1 1
   MaskType@ENImageQuad@ImageQuad: None
   MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 25
+  Sigma@ENImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ENImageQuad@ImageQuad: false
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad: (0, 0, 0)
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: 5.167 2.607 0
+  PositionOffset@ENImageQuad@ImageQuad: 0 0 0
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (22.6, -13.7, 0)
+  MarkerPosition@ENMarker@Marker: 38.33 -21.07 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: ''
 Cond: 
 ExLogicPath: RippleImageLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 6
+CondRepeat: 1
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: Joystick
+Input: None
 PreICI: 0
 CondDur: 46
 SufICI: 0
@@ -65,7 +65,7 @@ BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 10
+NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -93,13 +93,14 @@ EnvInheritParam:
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
 - Marker@Showroom@ShowroomManager
-- Position@ENImageQuad@ImageQuad
-- Diameter@ENImageQuad@ImageQuad
 - ScreenAspect@ENCamera@OrthoCamera
 - Diameter@ENImageQuad@ImageQuad$ShowroomManager
 - Position@ENImageQuad@ImageQuad$ShowroomManager
+- Position@ENImageQuad@ImageQuad
+- Diameter@ENImageQuad@ImageQuad
 Param:
-  NumOfImage: !!Float 3000
+  NumOfImage: 24000
+  PreLoadImageLatency: 4000
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

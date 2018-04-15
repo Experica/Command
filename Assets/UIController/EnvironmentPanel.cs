@@ -1,6 +1,6 @@
 ﻿/*
 EnvironmentPanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -51,8 +51,8 @@ namespace VLab
 
         public void AddEnvUI(EnvironmentManager em)
         {
-            var isshowinactive = (bool)uicontroller.appmanager.config[VLCFG.IsShowInactiveEnvParam];
-            var isshowfullname = (bool)uicontroller.appmanager.config[VLCFG.IsShowEnvParamFullName];
+            var isshowinactive = uicontroller.appmanager.config.IsShowInactiveEnvParam;
+            var isshowfullname = uicontroller.appmanager.config.IsShowEnvParamFullName;
             foreach (var fullname in em.syncvar_nb_so.Keys.ToArray())
             {
                 string paramname, nb;

@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010702276182}
-  - 222: {fileID: 222000011845532164}
-  - 114: {fileID: 114000012297150746}
-  - 114: {fileID: 114000010859336898}
+  - component: {fileID: 224000010702276182}
+  - component: {fileID: 222000011845532164}
+  - component: {fileID: 114000012297150746}
+  - component: {fileID: 114000010859336898}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -34,11 +34,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000013551102384}
-  - 222: {fileID: 222000013499458188}
-  - 114: {fileID: 114000012576677780}
+  - component: {fileID: 224000013551102384}
+  - component: {fileID: 222000013499458188}
+  - component: {fileID: 114000012576677780}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -51,11 +51,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010834417330}
-  - 222: {fileID: 222000014170729686}
-  - 114: {fileID: 114000011472913020}
+  - component: {fileID: 224000010834417330}
+  - component: {fileID: 222000014170729686}
+  - component: {fileID: 114000011472913020}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 

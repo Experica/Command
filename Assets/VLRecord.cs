@@ -1,6 +1,6 @@
 ﻿/*
 VLRecord.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -26,12 +26,13 @@ using MathWorks.MATLAB.NET.Arrays;
 using MathWorks.MATLAB.NET.Utility;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace VLab
 {
     public enum RecordSystem
     {
-        VLABRecord,
+        VLabRecord,
         Ripple,
         Plexon,
         TDT
@@ -39,31 +40,35 @@ namespace VLab
 
     public enum RecordStatus
     {
-        recording,
-        stopped,
-        paused
+        Recording,
+        Stopped,
+        Paused
     }
 
     public interface IRecorder : IDisposable
     {
         string RecordPath { set; }
         RecordStatus RecordStatus { get; set; }
-        bool din(out List<double>[] dt, out List<int>[] dv);
+        bool DigitalInput(out List<double>[] dt, out List<int>[] dv);
     }
 
     public class RippleRecorder : IRecorder
     {
-        bool disposed = false;
-        int tickfreq, timeunitpersec;
+        int disposecount = 0;
+        readonly int tickfreq, timeunitpersec;
         XippmexDotNet xippmexdotnet = new XippmexDotNet();
 
-        public RippleRecorder(int tickfreqency = 30000, int timeunitpersecond = 1000, bool isdinbitchange = true)
+        public RippleRecorder(int tickfreqency = 30000, int timeunitpersecond = 1000, bool isdinbitchange = true, string recordpath = null)
         {
             tickfreq = tickfreqency;
             timeunitpersec = timeunitpersecond;
             if (isdinbitchange)
             {
                 xippmexdotnet.diginbitchange(new MWNumericArray(1, true));
+            }
+            if (!string.IsNullOrEmpty(recordpath))
+            {
+                RecordPath = recordpath;
             }
         }
 
@@ -80,16 +85,15 @@ namespace VLab
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed) return;
-            if (disposing)
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
             {
+                return;
             }
             xippmexdotnet.xippmex("close");
             xippmexdotnet.Dispose();
-            disposed = true;
         }
 
-        public bool din(out List<double>[] dt, out List<int>[] dv)
+        public bool DigitalInput(out List<double>[] dt, out List<int>[] dv)
         {
             bool isdin = false;
             var d = xippmexdotnet.digin(2);
@@ -155,7 +159,7 @@ namespace VLab
                 {
                     Debug.Log(ex.Message);
                 }
-                return RecordStatus.stopped;
+                return RecordStatus.Stopped;
             }
             set
             {
@@ -176,13 +180,13 @@ namespace VLab
 
     }
 
-    public class VLABRecorder : IRecorder
+    public class VLabRecorder : IRecorder
     {
-        bool disposed = false;
+        int disposecount = 0;
         public string RecordPath { set { } }
         public RecordStatus RecordStatus { get; set; }
 
-        ~VLABRecorder()
+        ~VLabRecorder()
         {
             Dispose(false);
         }
@@ -195,35 +199,15 @@ namespace VLab
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed) return;
-            if (disposing)
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
             {
+                return;
             }
-            disposed = true;
         }
 
-        public bool din(out List<double>[] dt, out List<int>[] dv)
+        public bool DigitalInput(out List<double>[] dt, out List<int>[] dv)
         {
             throw new NotImplementedException();
         }
-    }
-
-    public class RecordManager
-    {
-        public IRecorder recorder;
-
-        public RecordManager(RecordSystem recordsystem = RecordSystem.VLABRecord)
-        {
-            switch (recordsystem)
-            {
-                case RecordSystem.Ripple:
-                    recorder = new RippleRecorder();
-                    break;
-                default:
-                    recorder = new VLABRecorder();
-                    break;
-            }
-        }
-
     }
 }

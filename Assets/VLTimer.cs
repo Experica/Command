@@ -1,6 +1,6 @@
 ﻿/*
 VLTimer.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -35,12 +35,6 @@ namespace VLab
         {
 
             get { return Elapsed.TotalMilliseconds; }
-        }
-
-        public void Restart()
-        {
-            Reset();
-            Start();
         }
 
         public void Timeout(double timeout_ms)

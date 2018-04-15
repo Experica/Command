@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011843284622}
-  - 222: {fileID: 222000010247177140}
-  - 114: {fileID: 114000010492336344}
-  - 114: {fileID: 114000013351718266}
+  - component: {fileID: 224000011843284622}
+  - component: {fileID: 222000010247177140}
+  - component: {fileID: 114000010492336344}
+  - component: {fileID: 114000013351718266}
   m_Layer: 5
   m_Name: TitleBar
   m_TagString: Untagged
@@ -34,11 +34,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011945333020}
-  - 222: {fileID: 222000010249801400}
-  - 114: {fileID: 114000013712699432}
+  - component: {fileID: 224000011945333020}
+  - component: {fileID: 222000010249801400}
+  - component: {fileID: 114000013712699432}
   m_Layer: 5
   m_Name: ToolBar
   m_TagString: Untagged
@@ -51,9 +51,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000013131949608}
+  - component: {fileID: 224000013131949608}
   m_Layer: 5
   m_Name: Tools
   m_TagString: Untagged

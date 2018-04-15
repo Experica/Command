@@ -1,6 +1,6 @@
 ﻿/*
 ConditionTestPanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -34,7 +34,7 @@ namespace VLab
         public GameObject ctcontent, ctheadcontent, blueheadertextprefab, redheadertextprefab,
             yellowheadertextprefab, greenheadertextprefab, textprefab;
         GridLayoutGroup grid; float ctcontentheight, textheight;
-        Text cti, ci, cr,bi,br;
+        Text cti, ci, cr, bi, br;
 
         void Start()
         {
@@ -72,7 +72,7 @@ namespace VLab
             cr = AddText("");
             bi = AddText("");
             br = AddText("");
-            textheight = cti.fontSize+3;
+            textheight = cti.fontSize + 3;
         }
 
         public void StartCondTest()
@@ -85,13 +85,23 @@ namespace VLab
                     cti.text = cti.text + (ctm.CondTestIndex - 1).ToString() + "\n";
                     ci.text = ci.text + ctm.condtest[CONDTESTPARAM.CondIndex].Last().ToString() + "\n";
                     cr.text = cr.text + ctm.condtest[CONDTESTPARAM.CondRepeat].Last().ToString() + "\n";
-                    
+                    if (uicontroller.exmanager.el.condmanager.nblock > 1)
+                    {
+                        bi.text = bi.text + ctm.condtest[CONDTESTPARAM.BlockIndex].Last().ToString() + "\n";
+                        br.text = br.text + ctm.condtest[CONDTESTPARAM.BlockRepeat].Last().ToString() + "\n";
+                    }
+
                     UpdateViewRect(ctm.CondTestIndex);
                     return;
                 case CONDTESTSHOWLEVEL.SHORT:
                     cti.text = (ctm.CondTestIndex - 1).ToString();
                     ci.text = ctm.condtest[CONDTESTPARAM.CondIndex].Last().ToString();
                     cr.text = ctm.condtest[CONDTESTPARAM.CondRepeat].Last().ToString();
+                    if (uicontroller.exmanager.el.condmanager.nblock > 1)
+                    {
+                        bi.text = ctm.condtest[CONDTESTPARAM.BlockIndex].Last().ToString();
+                        br.text = ctm.condtest[CONDTESTPARAM.BlockRepeat].Last().ToString();
+                    }
                     return;
             }
         }

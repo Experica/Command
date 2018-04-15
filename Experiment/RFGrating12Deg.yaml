@@ -3,88 +3,55 @@ Name: RFGrating12Deg
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: Showroom
+EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.2, -21.1, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Show@Showroom@ShowroomManager: GratingQuad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad$ShowroomManager: 0
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 2
-  Size@ENQuad@Quad$ShowroomManager: (2, 2, 1)
-  Color@ENQuad@Quad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad$ShowroomManager: Disk
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENQuad@Quad$ShowroomManager: false
-  Visible@ENQuad@Quad$ShowroomManager: false
-  Position@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENQuad@Quad$ShowroomManager: (4.5, 6, 0)
-  Rotation@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 2
-  SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  MinColor@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
-  GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Sinusoidal
-  ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 45
-  OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 10
-  Size@ENGratingQuad@GratingQuad$ShowroomManager: (10, 10, 1)
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENGratingQuad@GratingQuad$ShowroomManager: Disk
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
-  Position@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: (10, 0, 0)
-  Rotation@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad$ShowroomManager: 1
-  ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 0
-  OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
-  Diameter@ENImageQuad@ImageQuad$ShowroomManager: 2
-  Size@ENImageQuad@ImageQuad$ShowroomManager: (2, 2, 1)
-  Color@ENImageQuad@ImageQuad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENImageQuad@ImageQuad$ShowroomManager: Disk
-  MaskRadius@ENImageQuad@ImageQuad$ShowroomManager: 0.5
-  Sigma@ENImageQuad@ImageQuad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENImageQuad@ImageQuad$ShowroomManager: false
-  Visible@ENImageQuad@ImageQuad$ShowroomManager: false
-  Position@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: (4.5, 6, 0)
-  Rotation@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
+  ScreenAspect@ENCamera@OrthoCamera: 1.68276978
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 36.14 -21.07 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.5
+  TemporalFreq@ENGratingQuad@GratingQuad: 2.03688335
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
+  Ori@ENGratingQuad@GratingQuad: 135
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 4
+  Size@ENGratingQuad@GratingQuad: 4 4 1
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
+  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@ENGratingQuad@GratingQuad: false
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: 8.449 2.34 0
+  PositionOffset@ENGratingQuad@GratingQuad: 1.5 4.5 0
 CondPath: Condition\PositionOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -93,9 +60,9 @@ CondRepeat: 12
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 50
+PreICI: 100
 CondDur: 300
-SufICI: 50
+SufICI: 100
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -136,6 +103,7 @@ EnvInheritParam:
 - TemporalFreq@ENGratingQuad@GratingQuad
 - Ori@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

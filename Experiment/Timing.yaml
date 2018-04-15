@@ -3,21 +3,45 @@ Name: Timing
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerBar
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Rotation@ENQuad@Quad: 0 0 0
+  RotationOffset@ENQuad@Quad: 0 0 0
+  Ori@ENQuad@Quad: 0
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: 2 2 1
+  Color@ENQuad@Quad: 1 1 1 1
+  MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
+  Sigma@ENQuad@Quad: 0.150000006
+  OriPositionOffset@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
+  Position@ENQuad@Quad: 0 0 0
+  PositionOffset@ENQuad@Quad: 0 0 0
 CondPath: Condition\Condition1.yaml
 Cond: 
 ExLogicPath: RippleTimingLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
@@ -67,9 +91,9 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  MaxRippleStartLatency: !!Float 1000
-  MaxVLabLatency: !!Float 1000
-  MarkPulseWidth: !!Float 21
+  MaxRippleStartLatency: 1000
+  MaxVLabLatency: 1000
+  MarkPulseWidth: 21
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

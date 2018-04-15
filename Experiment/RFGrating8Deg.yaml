@@ -3,12 +3,12 @@ Name: RFGrating8Deg
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerGrating
@@ -16,8 +16,8 @@ EnvParam: {}
 CondPath: Condition\PositionOffset8Deg1DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -26,9 +26,9 @@ CondRepeat: 12
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 50
+PreICI: 100
 CondDur: 300
-SufICI: 50
+SufICI: 100
 PreITI: 0
 TrialDur: 0
 SufITI: 0

@@ -1,6 +1,6 @@
 ﻿/*
 VLUIController.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -39,8 +39,8 @@ namespace VLab
         public VLApplicationManager appmanager;
         public Toggle host, server, start, pause;
         public Dropdown exs;
-        public Button savedata;
-        public Text startstoptext, pauseresumetext;
+        public Button savedata, newex, saveex, deleteex;
+        public Text startstoptext, pauseresumetext, version;
         public VLNetManager netmanager;
         public ExperimentManager exmanager;
         public VLAnalysisManager alsmanager;
@@ -57,7 +57,7 @@ namespace VLab
         void Start()
         {
             UpdateExDropdown();
-            savedata.interactable = !(bool)appmanager.config[VLCFG.AutoSaveData];
+            savedata.interactable = !appmanager.config.AutoSaveData;
         }
 
         public void UpdateExDropdown()
@@ -73,11 +73,11 @@ namespace VLab
 
         public void OnExDropdownValueChange(int i)
         {
-            if ((bool)appmanager.config[VLCFG.IsSaveExOnQuit] && exmanager.el != null)
+            if (appmanager.config.IsSaveExOnQuit && exmanager.el != null)
             {
                 exmanager.SaveEx(exmanager.el.ex.ID);
             }
-            var idx = exmanager.exids.FindIndex(0, s => s == exs.captionText.text);
+            var idx = exmanager.exids.FindIndex(0, id => id == exs.captionText.text);
             if (idx >= 0)
             {
                 exmanager.LoadEL(exmanager.exfiles[idx]);
@@ -102,21 +102,28 @@ namespace VLab
         {
             if (alsmanager != null)
             {
-                var stream = new MemoryStream();
-                switch (name)
+                using (var stream = new MemoryStream())
                 {
-                    case CONDTESTPARAM.CondRepeat:
-                    case CONDTESTPARAM.CondIndex:
-                        VLMsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
-                        break;
-                    case CONDTESTPARAM.CONDSTATE:
-                        VLMsgPack.CONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
-                        break;
-                    default:
-                        VLMsgPack.ListObjectSerializer.Pack(stream, value, PackerCompatibilityOptions.None);
-                        break;
+                    switch (name)
+                    {
+                        case CONDTESTPARAM.BlockRepeat:
+                        case CONDTESTPARAM.BlockIndex:
+                        case CONDTESTPARAM.CondRepeat:
+                        case CONDTESTPARAM.CondIndex:
+                            VLMsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+                            break;
+                        case CONDTESTPARAM.TASKSTATE:
+                        case CONDTESTPARAM.BLOCKSTATE:
+                        case CONDTESTPARAM.TRIALSTATE:
+                        case CONDTESTPARAM.CONDSTATE:
+                            VLMsgPack.ListCONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+                            break;
+                    }
+                    if (stream.Length > 0)
+                    {
+                        alsmanager.RpcNotifyCondTest(name, stream.ToArray());
+                    }
                 }
-                alsmanager.RpcNotifyCondTest(name, stream.ToArray());
             }
         }
 
@@ -130,19 +137,22 @@ namespace VLab
 
         public void OnBeginStartExperiment()
         {
+            exs.interactable = false;
+            newex.interactable = false;
+            saveex.interactable = false;
+            deleteex.interactable = false;
             startstoptext.text = "Stop";
             pause.interactable = true;
-            consolepanel.LogError("Experiment Started.");
+            consolepanel.Log("Experiment Started.");
 
             // Get Highest Performance
             QualitySettings.vSyncCount = 0;
             QualitySettings.maxQueuedFrames = 0;
-            Time.fixedDeltaTime = (float)appmanager.config[VLCFG.FixedDeltaTime];
+            Time.fixedDeltaTime = appmanager.config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-                        
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
 
-            if (alsmanager != null)
+            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
             {
                 alsmanager.RpcNotifyStartExperiment();
             }
@@ -150,7 +160,7 @@ namespace VLab
 
         public void OnEndStartExperiment()
         {
-            if (alsmanager != null)
+            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
             {
                 var stream = new MemoryStream();
                 exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
@@ -173,6 +183,10 @@ namespace VLab
 
         public void OnBeginStopExperiment()
         {
+            exs.interactable = true;
+            newex.interactable = true;
+            saveex.interactable = true;
+            deleteex.interactable = true;
             if (pause.isOn)
             {
                 var eh = pause.onValueChanged;
@@ -189,7 +203,7 @@ namespace VLab
             }
             startstoptext.text = "Start";
             pause.interactable = false;
-            consolepanel.LogError("Experiment Stoped.");
+            consolepanel.Log("Experiment Stoped.");
 
             // Return Normal Performance
             QualitySettings.vSyncCount = 1;
@@ -201,11 +215,11 @@ namespace VLab
 
         public void OnEndStopExperiment()
         {
-            if (alsmanager != null)
+            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
             {
                 alsmanager.RpcNotifyStopExperiment();
             }
-            if ((bool)appmanager.config[VLCFG.AutoSaveData])
+            if (appmanager.config.AutoSaveData)
             {
                 exmanager.el.SaveData();
             }
@@ -399,6 +413,11 @@ namespace VLab
                     netmanager.ServerChangeScene(scene);
                 }
             }
+        }
+
+        public void UpdateSystemInformation()
+        {
+            version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
         }
     }
 }

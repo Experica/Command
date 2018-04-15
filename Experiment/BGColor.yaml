@@ -1,0 +1,87 @@
+ID: BGColor
+Name: BGColor
+Designer: Alex
+Experimenter: Leo
+Log: 
+Subject_ID: LSR1801
+Subject_Name: LSR1801
+Subject_Species: Rat
+Subject_Gender: Female
+Subject_Age: 1
+Subject_Size: 0 0 0
+Subject_Weight: 400
+Subject_Log: 
+EnvPath: Marker
+EnvParam:
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 94.42 -52.67 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  BGColor@ENCamera@OrthoCamera: 0 0 0 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 25
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
+Cond: 
+ExLogicPath: RippleCTLogic
+RecordSession: LPSite4_V1Site4
+RecordSite: LP_7500_V1_1170
+DataDir: X:\
+DataPath: 
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 8
+BlockRepeat: 1
+BlockParam: []
+Input: None
+PreICI: 150
+CondDur: 500
+SufICI: 150
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Species
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Gender
+- Experimenter
+- Latency
+- TimerDriftSpeed
+- Delay
+EnvInheritParam:
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- Marker@Showroom@ShowroomManager
+- Ori@ENQuad@Quad
+- Position@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
+- MarkerPosition@ENMarker@Marker
+Param: {}
+Latency: 182
+TimerDriftSpeed: 3.0199999999999999E-05
+Delay: 30
+CondTest: 
+CondTestShowLevel: FULL

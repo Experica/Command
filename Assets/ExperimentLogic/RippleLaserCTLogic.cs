@@ -1,6 +1,6 @@
 ﻿/*
 RippleLaserCTLogic.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -27,29 +27,17 @@ public class RippleLaserCTLogic : ExperimentLogic
 {
     ParallelPort pport1, pport2;
     ParallelPortWave ppw;
-    int notifylatency, exlatencyerror, onlinesignallatency, markpulsewidth;
-    int startch, stopch, condch, signalch1, signalch2;
-
     Omicron luxx473;
     Cobolt mambo594;
     float power;
-    List<string> condpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
+    List<string> factorpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(RecordSystem.Ripple);
-        pport1 = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        pport2 = new ParallelPort((int)config[VLCFG.ParallelPort2]);
+        recorder = new RippleRecorder();
+        pport1 = new ParallelPort(config.ParallelPort1);
+        pport2 = new ParallelPort(config.ParallelPort2);
         ppw = new ParallelPortWave(pport2);
-        startch = (int)config[VLCFG.StartCh];
-        stopch = (int)config[VLCFG.StopCh];
-        condch = (int)config[VLCFG.ConditionCh];
-        signalch1 = (int)config[VLCFG.SignalCh1];
-        signalch2 = (int)config[VLCFG.SignalCh2];
-        notifylatency = (int)config[VLCFG.NotifyLatency];
-        exlatencyerror = (int)config[VLCFG.ExLatencyError];
-        onlinesignallatency = (int)config[VLCFG.OnlineSignalLatency];
-        markpulsewidth = (int)config[VLCFG.MarkPulseWidth];
     }
 
     public override void GenerateFinalCondition()
@@ -57,17 +45,17 @@ public class RippleLaserCTLogic : ExperimentLogic
         // get laser conditions
         var lcond = new Dictionary<string, List<object>>()
             {
-                {"LaserPower", ((List<float>)ex.GetParam("LaserPower")).Where(i => i > 0).Select(i => (object)i).ToList()},
-                {"LaserFreq",((List<float>)ex.GetParam("LaserFreq")).Select(i=>(object)i).ToList() }
+                {"LaserPower", (ex.GetParam("LaserPower").Convert<List<float>>()).Where(i => i > 0).Select(i => (object)i).ToList()},
+                {"LaserFreq",(ex.GetParam("LaserFreq").Convert<List<float>>()).Where(i=>i>0).Select(i=>(object)i).ToList() }
             };
         lcond = lcond.OrthoCondOfFactorLevel();
-        lcond["LaserPower"].Add(0f);
-        lcond["LaserFreq"].Add(0f);
+        lcond["LaserPower"].Insert(0, 0f);
+        lcond["LaserFreq"].Insert(0, 0f);
 
         // get base conditions
-        var bcond = condmanager.GenerateFinalCondition(ex.CondPath, ex.Param);
+        var bcond = condmanager.GenerateFinalCondition(ex.CondPath);
 
-        // get final conditions
+        // combine laser and base conditions
         var fcond = new Dictionary<string, List<object>>()
         {
             {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
@@ -102,111 +90,136 @@ public class RippleLaserCTLogic : ExperimentLogic
 
     protected override void StartExperiment()
     {
-        luxx473 = new Omicron((string)config[VLCFG.SerialPort1]);
-        mambo594 = new Cobolt((string)config[VLCFG.SerialPort2]);
+        SetEnvActiveParam("Visible", false);
+        SetEnvActiveParam("Mark", OnOff.Off);
+        pport1.SetBit(bit: config.ConditionCh, value: false);
+        luxx473 = new Omicron(config.SerialPort1);
+        mambo594 = new Cobolt(config.SerialPort2);
         luxx473.LaserOn();
-        timer.Timeout(3000);
+        timer.Timeout(ex.GetParam("LaserOnLatency").Convert<int>());
 
         base.StartExperiment();
-        recordmanager.recorder.RecordPath = ex.GetDataPath("");
-        timer.Timeout(notifylatency);
-        pport1.BitPulse(bit: startch, duration_ms: 5);
+        recorder.RecordPath = ex.GetDataPath();
+        timer.Timeout(config.NotifyLatency);
+        pport1.BitPulse(bit: config.StartCh, duration_ms: 5);
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
+        ppw.Stop(config.SignalCh1, config.SignalCh2);
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        ppw.Stop(signalch1);
-        ppw.Stop(signalch2);
-        pport1.SetBit(bit: condch, value: false);
+        pport1.SetBit(bit: config.ConditionCh, value: false);
         base.StopExperiment();
 
         luxx473.LaserOff();
         luxx473.Dispose();
         mambo594.Dispose();
-        timer.Timeout(ex.Latency + exlatencyerror + onlinesignallatency);
-        pport1.BitPulse(bit: stopch, duration_ms: 5);
+        timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
+        pport1.BitPulse(bit: config.StopCh, duration_ms: 5);
         timer.Stop();
     }
 
     public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
         condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock),
-            envmanager, condpushexcept);
-        power = condmanager.cond["LaserPower"][condmanager.condidx].Convert<float>();
+            envmanager, factorpushexcept);
+        power = (float)condmanager.finalcond["LaserPower"][condmanager.condidx];
         luxx473.PowerRatio = power;
         mambo594.PowerRatio = power;
+        if (power > 0)
+        {
+            var freq = (float)condmanager.finalcond["LaserFreq"][condmanager.condidx];
+            ppw.bitlatency_ms[config.SignalCh1] = ex.Latency;
+            ppw.SetBitFreq(config.SignalCh1, freq);
+            ppw.bitlatency_ms[config.SignalCh2] = ex.Latency;
+            ppw.SetBitFreq(config.SignalCh2, freq);
+        }
     }
 
     public override void Logic()
     {
-        switch (CondState)
+        switch (BlockState)
         {
-            case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false);
-                SetEnvActiveParam("Mark", OnOff.Off);
-                CondState = CONDSTATE.PREICI;
+            case BLOCKSTATE.NONE:
+                BlockState = BLOCKSTATE.PREIBI;
                 break;
-            case CONDSTATE.PREICI:
-                if (PreICIHold >= ex.PreICI)
+            case BLOCKSTATE.PREIBI:
+                if (PreIBIHold >= ex.PreIBI)
                 {
-                    CondState = CONDSTATE.COND;
-                    SetEnvActiveParam("Visible", true);
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                        // The marker pulse width should be > 2 frame(60Hz==16.7ms) to make sure
-                        // marker params will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
-                        pport1.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Mark", OnOff.On);
-                        pport1.SetBit(bit: condch, value: true);
-                    }
-                    if (power > 0)
-                    {
-                        ppw.bitlatency_ms[signalch1] = ex.Latency;
-                        ppw.SetBitFreq(signalch1, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
-                        ppw.bitlatency_ms[signalch2] = ex.Latency;
-                        ppw.SetBitFreq(signalch2, condmanager.cond["LaserFreq"][condmanager.condidx].Convert<float>());
-                        ppw.Start(signalch1);
-                        ppw.Start(signalch2);
-                    }
+                    BlockState = BLOCKSTATE.BLOCK;
                 }
                 break;
-            case CONDSTATE.COND:
-                if (CondHold >= ex.CondDur)
+            case BLOCKSTATE.BLOCK:
+                switch (CondState)
                 {
-                    CondState = CONDSTATE.SUFICI;
-                    // None ICI Mode
-                    if (ex.PreICI == 0 && ex.SufICI == 0)
-                    {
-                    }
-                    else // ICI Mode
-                    {
+                    case CONDSTATE.NONE:
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("Mark", OnOff.Off);
-                        pport1.SetBit(bit: condch, value: false);
-                    }
-                    if (power > 0)
-                    {
-                        ppw.Stop(signalch1);
-                        ppw.Stop(signalch2);
-                    }
+                        CondState = CONDSTATE.PREICI;
+                        break;
+                    case CONDSTATE.PREICI:
+                        if (PreICIHold >= ex.PreICI)
+                        {
+                            CondState = CONDSTATE.COND;
+                            SetEnvActiveParam("Visible", true);
+                            if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                            {
+                                // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
+                                SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
+                                pport1.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Mark", OnOff.On);
+                                pport1.SetBit(bit: config.ConditionCh, value: true);
+                            }
+                            if (power > 0)
+                            {
+                                ppw.Start(config.SignalCh1, config.SignalCh2);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.COND:
+                        if (CondHold >= ex.CondDur)
+                        {
+                            CondState = CONDSTATE.SUFICI;
+                            if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                            {
+                            }
+                            else // ICI Mode
+                            {
+                                SetEnvActiveParam("Visible", false);
+                                SetEnvActiveParam("Mark", OnOff.Off);
+                                pport1.SetBit(bit: config.ConditionCh, value: false);
+                            }
+                            if (power > 0)
+                            {
+                                ppw.Stop(config.SignalCh1, config.SignalCh2);
+                            }
+                        }
+                        break;
+                    case CONDSTATE.SUFICI:
+                        if (SufICIHold >= ex.SufICI + power * ex.CondDur * ex.GetParam("ICIFactor").Convert<float>())
+                        {
+                            if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
+                            {
+                                CondState = CONDSTATE.NONE;
+                                BlockState = BLOCKSTATE.SUFIBI;
+                            }
+                            else
+                            {
+                                CondState = CONDSTATE.PREICI;
+                            }
+                        }
+                        break;
                 }
                 break;
-            case CONDSTATE.SUFICI:
-                if (ex.SufICI == 0)
+            case BLOCKSTATE.SUFIBI:
+                if (SufIBIHold >= ex.SufIBI)
                 {
-                    CondState = CONDSTATE.PREICI;
-                }
-                if (SufICIHold >= ex.SufICI + power * ex.CondDur * (float)ex.GetParam("ICIFactor"))
-                {
-                    CondState = CONDSTATE.PREICI;
+                    BlockState = BLOCKSTATE.PREIBI;
                 }
                 break;
         }

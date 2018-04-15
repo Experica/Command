@@ -3,63 +3,54 @@ Name: MapOri8Slave
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.68276978
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 3
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
-<<<<<<< HEAD
-  Rotation@ENGratingQuad@GratingQuad: (0, 0, 0)
-  RotationOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
   Ori@ENGratingQuad@GratingQuad: 0
-=======
-  Ori@ENGratingQuad@GratingQuad: 67.5
->>>>>>> 5ab628a9e468e036afb683078748007c8dea6f5d
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 90
-  Size@ENGratingQuad@GratingQuad: (90, 90, 1)
-  Color@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 190.3 112.7 0
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
-  Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-<<<<<<< HEAD
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.60000002
-=======
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
->>>>>>> 5ab628a9e468e036afb683078748007c8dea6f5d
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: 0 0 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Ori8.yaml
 Cond: 
 ExLogicPath: OIMasterMap
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: Manual
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1000
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -78,7 +69,6 @@ NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - CONDSTATE
-- CondRepeat
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -103,7 +93,8 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  ReverseDur: !!Float 3500
+  ReverseDur: 3500
+  SizeFullScreen: True
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

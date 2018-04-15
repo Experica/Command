@@ -1,6 +1,6 @@
 ﻿/*
 VLNetManager.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -31,14 +31,14 @@ namespace VLab
     {
         public VLUIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
-
+        public GameObject vlabanalysismanagerprefab, vlabcontrolmanagerprefab;
 
         public bool IsPeerTypeConnected(VLPeerType peertype, int[] excludeconns)
         {
-            foreach(var cid in peerinfo.Keys.Except(excludeconns))
+            foreach (var cid in peerinfo.Keys.Except(excludeconns))
             {
-                var pi = peerinfo[cid];var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
-                if(pi!=null&&pi.ContainsKey(strkey)&&(VLPeerType)pi[strkey]==peertype)
+                var pi = peerinfo[cid]; var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+                if (pi != null && pi.ContainsKey(strkey) && (VLPeerType)pi[strkey] == peertype)
                 {
                     return true;
                 }
@@ -49,9 +49,9 @@ namespace VLab
         public List<NetworkConnection> GetPeerTypeConnection(VLPeerType peertype)
         {
             var peertypeconnection = new List<NetworkConnection>();
-            foreach(var c in NetworkServer.connections)
+            foreach (var c in NetworkServer.connections)
             {
-                if(IsConnectionPeerType(c,peertype))
+                if (IsConnectionPeerType(c, peertype))
                 {
                     peertypeconnection.Add(c);
                 }
@@ -59,9 +59,9 @@ namespace VLab
             return peertypeconnection;
         }
 
-        public bool IsConnectionPeerType(NetworkConnection conn,VLPeerType peertype)
+        public bool IsConnectionPeerType(NetworkConnection conn, VLPeerType peertype)
         {
-            var cid = conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+            var cid = conn.connectionId; var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
             return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey(strkey) && (VLPeerType)peerinfo[cid][strkey] == peertype);
         }
 
@@ -94,7 +94,7 @@ namespace VLab
             {
                 Debug.Log("Receive PeerType Message: " + pt.ToString());
             }
-            var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
+            var connid = netMsg.conn.connectionId; var strkey = VLMsgType.MsgTypeToString(VLMsgType.PeerType);
             if (!peerinfo.ContainsKey(connid))
             {
                 peerinfo[connid] = new Dictionary<string, object>();
@@ -106,7 +106,7 @@ namespace VLab
             // so we need to create a new instance of VLabAnalysisManager and spwan to all clients,
             // this may include VLabEnvironment, but since they doesn't register for the VLabAnalysisManager prefab,
             // they will spawn nothing.
-            if ((pt == VLPeerType.VLabAnalysis)&& (uicontroller.alsmanager==null))
+            if ((pt == VLPeerType.VLabAnalysis) && (uicontroller.alsmanager == null))
             {
                 SpwanVLAnalysisManager();
             }
@@ -114,10 +114,10 @@ namespace VLab
 
         public void SpwanVLAnalysisManager()
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("VLAnalysisManager"));
-            var als = go.GetComponent<VLAnalysisManager>();
-            als.uicontroller = uicontroller;
-            uicontroller.alsmanager = als;
+            GameObject go = Instantiate(vlabanalysismanagerprefab);
+            var am = go.GetComponent<VLAnalysisManager>();
+            am.uicontroller = uicontroller;
+            uicontroller.alsmanager = am;
             go.name = "VLAnalysisManager";
             go.transform.SetParent(transform, false);
 
@@ -143,8 +143,8 @@ namespace VLab
             {
                 Debug.Log("Receive AspectRatio Message: " + r.ToString());
             }
-            var connid = netMsg.conn.connectionId;var strkey = VLMsgType.MsgTypeToString(VLMsgType.AspectRatio);
-            if(!peerinfo.ContainsKey(connid))
+            var connid = netMsg.conn.connectionId; var strkey = VLMsgType.MsgTypeToString(VLMsgType.AspectRatio);
+            if (!peerinfo.ContainsKey(connid))
             {
                 peerinfo[connid] = new Dictionary<string, object>();
             }

@@ -1,6 +1,6 @@
 ﻿/*
 ConsolePanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -76,8 +76,7 @@ namespace VLab
             
             var text = Instantiate(ChoosePrefab(logtype));
             text.GetComponent<Text>().text = v;
-            text.transform.SetParent(content.transform);
-            text.transform.localScale = new Vector3(1, 1, 1);
+            text.transform.SetParent(content.transform,false);
 
             if (entrycount > maxentry)
             {
@@ -113,7 +112,7 @@ namespace VLab
 
         void Awake()
         {
-            maxentry = (int)uicontroller.appmanager.config[VLCFG.MaxLogEntry];
+            maxentry = uicontroller.appmanager.config.MaxLogEntry;
         }
 
     }

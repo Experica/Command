@@ -1,6 +1,6 @@
 ﻿/*
 RippleTimingLogic.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -24,36 +24,32 @@ using VLab;
 public class RippleTimingLogic : ExperimentLogic
 {
     ParallelPort pport;
-    int startch, stopch, condch;
-    float markpulsewidth;
 
     public override void OnStart()
     {
-        recordmanager = new RecordManager(RecordSystem.Ripple);
-        pport = new ParallelPort((int)config[VLCFG.ParallelPort1]);
-        startch = (int)config[VLCFG.StartCh];
-        stopch = (int)config[VLCFG.StopCh];
-        condch = (int)config[VLCFG.ConditionCh];
+        recorder = new RippleRecorder();
+        pport = new ParallelPort(config.ParallelPort1);
     }
 
     protected override void StartExperiment()
     {
-        base.StartExperiment();
+        SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: condch, value: false);
-        recordmanager.recorder.RecordPath = ex.GetDataPath(ext: "");
-        timer.Timeout((float)ex.GetParam("MaxRippleStartLatency"));
-        pport.BitPulse(bit: startch, duration_ms: 5);
+        pport.SetBit(bit: config.ConditionCh, value: false);
+        base.StartExperiment();
+        recorder.RecordPath = ex.GetDataPath();
+        timer.Timeout(ex.GetParam("MaxRippleStartLatency").Convert<int>());
+        pport.BitPulse(bit: config.StartCh, duration_ms: 5);
         timer.Restart();
     }
 
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: condch, value: false);
+        pport.SetBit(bit: config.ConditionCh, value: false);
         base.StopExperiment();
-        timer.Timeout((float)ex.GetParam("MaxVLabLatency"));
-        pport.BitPulse(bit: stopch, duration_ms: 5);
+        timer.Timeout(ex.GetParam("MaxVLabLatency").Convert<int>());
+        pport.BitPulse(bit: config.StopCh, duration_ms: 5);
         timer.Stop();
     }
 
@@ -70,15 +66,14 @@ public class RippleTimingLogic : ExperimentLogic
                     CondState = CONDSTATE.COND;
                     if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
                     {
-                        // The mark pulse width should be > 2 frames(60Hz==16.7ms) to make sure mark takes effect on screen.
-                        markpulsewidth = (float)ex.GetParam("MarkPulseWidth");
-                        SetEnvActiveParamTwice("Mark", OnOff.On, markpulsewidth, OnOff.Off);
-                        pport.ConcurrentBitPulse(bit: condch, duration_ms: markpulsewidth);
+                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
+                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
+                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
                     }
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Mark", OnOff.On);
-                        pport.SetBit(bit: condch, value: true);
+                        pport.SetBit(bit: config.ConditionCh, value: true);
                     }
                 }
                 break;
@@ -92,7 +87,7 @@ public class RippleTimingLogic : ExperimentLogic
                     else // ICI Mode
                     {
                         SetEnvActiveParam("Mark", OnOff.Off);
-                        pport.SetBit(bit: condch, value: false);
+                        pport.SetBit(bit: config.ConditionCh, value: false);
                     }
                 }
                 break;

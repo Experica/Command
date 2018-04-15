@@ -1,6 +1,6 @@
 ﻿/*
 Experiment.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
@@ -84,36 +85,38 @@ namespace VLab
     /// </summary>
     public class Experiment
     {
-        public string ID { get; set; }
-        public string Name { get; set; }
-        public string Designer { get; set; }
-        public string Experimenter { get; set; }
-        public string Log { get; set; }
+        public string ID { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Designer { get; set; } = "";
+        public string Experimenter { get; set; } = "";
+        public string Log { get; set; } = "";
 
-        public string Subject_ID { get; set; }
-        public string Subject_Name { get; set; }
-        public string Subject_Species { get; set; }
+        public string Subject_ID { get; set; } = "";
+        public string Subject_Name { get; set; } = "";
+        public string Subject_Species { get; set; } = "";
         public Gender Subject_Gender { get; set; }
         public float Subject_Age { get; set; }
         public Vector3 Subject_Size { get; set; }
         public float Subject_Weight { get; set; }
-        public string Subject_Log { get; set; }
+        public string Subject_Log { get; set; } = "";
 
-        public string EnvPath { get; set; }
-        public Dictionary<string, object> EnvParam { get; set; }
-        public string CondPath { get; set; }
-        public Dictionary<string, List<object>> Cond { get; set; }
-        public string ExLogicPath { get; set; }
+        public string EnvPath { get; set; } = "";
+        [MessagePackRuntimeCollectionItemType]
+        public Dictionary<string, object> EnvParam { get; set; } = new Dictionary<string, object>();
+        public string CondPath { get; set; } = "";
+        [MessagePackRuntimeCollectionItemType]
+        public Dictionary<string, IList> Cond { get; set; }
+        public string ExLogicPath { get; set; } = "";
 
-        public string RecordSession { get; set; }
-        public string RecordSite { get; set; }
-        public string DataDir { get; set; }
-        public string DataPath { get; set; }
+        public string RecordSession { get; set; } = "";
+        public string RecordSite { get; set; } = "";
+        public string DataDir { get; set; } = "";
+        public string DataPath { get; set; } = "";
         public SampleMethod CondSampling { get; set; }
         public SampleMethod BlockSampling { get; set; }
         public int CondRepeat { get; set; }
         public int BlockRepeat { get; set; }
-        public List<string> BlockParam { get; set; }
+        public List<string> BlockParam { get; set; } = new List<string>();
         public InputMethod Input { get; set; }
 
         public double PreICI { get; set; }
@@ -130,15 +133,18 @@ namespace VLab
         public CONDTESTATSTATE CondTestAtState { get; set; }
         public int NotifyPerCondTest { get; set; }
         public List<CONDTESTPARAM> NotifyParam { get; set; }
-        public List<string> ExInheritParam { get; set; }
-        public List<string> EnvInheritParam { get; set; }
-        public Dictionary<string, Param> Param { get; set; }
+        public List<string> ExInheritParam { get; set; } = new List<string>();
+        public List<string> EnvInheritParam { get; set; } = new List<string>();
+        [MessagePackRuntimeCollectionItemType]
+        public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public double Latency { get; set; }
         public double TimerDriftSpeed { get; set; }
         public double Delay { get; set; }
-        public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
-        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
 
+        [MessagePackIgnore]
+        public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
+        [MessagePackIgnore]
+        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
         [MessagePackIgnore]
         public static readonly Dictionary<string, PropertyAccess> Properties;
         [MessagePackIgnore]
@@ -158,14 +164,14 @@ namespace VLab
 
         public bool SetParam(string name, object value, bool notifyui = false)
         {
-            if (!SetValue(name, value, notifyui))
+            if (!SetProperty(name, value, notifyui))
             {
                 if (Param.ContainsKey(name))
                 {
-                    Param[name].Value = value;
+                    Param[name] = value;
                     if (notifyui && OnNotifyUI != null)
                     {
-                        OnNotifyUI(name, Param[name].Value);
+                        OnNotifyUI(name, Param[name]);
                     }
                     return true;
                 }
@@ -174,16 +180,16 @@ namespace VLab
             return true;
         }
 
-        public bool SetValue(string name, object value, bool notifyui = false)
+        public bool SetProperty(string name, object value, bool notifyui = false)
         {
             if (Properties.ContainsKey(name))
             {
-                return SetValue(this, Properties[name], value, notifyui);
+                return SetProperty(this, Properties[name], value, notifyui);
             }
             return false;
         }
 
-        public bool SetValue(Experiment ex, PropertyAccess p, object value, bool notifyui = false)
+        public bool SetProperty(Experiment ex, PropertyAccess p, object value, bool notifyui = false)
         {
             object v = value.Convert(p.Type);
             p.Setter(ex, v);
@@ -196,37 +202,37 @@ namespace VLab
 
         public object GetParam(string name)
         {
-            var v = GetValue(name);
+            var v = GetProperty(name);
             if (v == null)
             {
                 if (Param.ContainsKey(name))
                 {
-                    v = Param[name].Value;
+                    v = Param[name];
                 }
             }
             return v;
         }
 
-        public object GetValue(string name)
+        public object GetProperty(string name)
         {
             if (Properties.ContainsKey(name))
             {
-                return GetValue(this, Properties[name]);
+                return GetProperty(this, Properties[name]);
             }
             return null;
         }
 
-        public object GetValue(Experiment ex, PropertyAccess p)
+        public object GetProperty(Experiment ex, PropertyAccess p)
         {
             return p.Getter(ex);
         }
 
-        public virtual string GetDataPath(string ext = ".yaml", string searchext = ".yaml")
+        public virtual string GetDataPath(string ext = "", string searchext = "yaml")
         {
             if (string.IsNullOrEmpty(DataPath))
             {
-                var sessionsite = string.Join("_", VLExtention.ValidStrings(RecordSession, RecordSite));
-                var filename = string.Join("_", VLExtention.ValidStrings(Subject_ID, RecordSession, RecordSite, ID));
+                var sessionsite = string.Join("_", new[] { RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                var filename = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
                 if (string.IsNullOrEmpty(DataDir))
                 {
                     DataDir = Directory.GetCurrentDirectory();
@@ -248,10 +254,10 @@ namespace VLab
                 {
                     Directory.CreateDirectory(sessionsitedir);
                 }
-                var fs = Directory.GetFiles(sessionsitedir, filename + "*" + searchext, SearchOption.TopDirectoryOnly);
+                var fs = Directory.GetFiles(sessionsitedir, $"{filename}*.{ searchext}", SearchOption.TopDirectoryOnly);
                 if (fs.Length == 0)
                 {
-                    filename = filename + "_1" + ext;
+                    filename = filename + "_1" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
                 }
                 else
                 {
@@ -262,7 +268,7 @@ namespace VLab
                         var e = f.LastIndexOf('.') - 1;
                         ns.Add(int.Parse(f.Substring(s, e - s + 1)));
                     }
-                    filename = filename + "_" + (ns.Max() + 1).ToString() + ext;
+                    filename = $"{filename}_{ns.Max() + 1}" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
                 }
                 DataPath = Path.Combine(sessionsitedir, filename);
             }
@@ -273,13 +279,12 @@ namespace VLab
                 {
                     Directory.CreateDirectory(ddir);
                 }
-                var fname = Path.GetFileNameWithoutExtension(DataPath) + ext;
+                var fname = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
                 DataPath = Path.Combine(ddir, fname);
             }
             return DataPath;
         }
     }
-
 
     public enum Gender
     {
@@ -327,14 +332,6 @@ namespace VLab
         SUFIBI
     }
 
-    public enum EXPERIMENTSTATE
-    {
-        NONE = 3001,
-        PREIEI,
-        EXPERIMENT,
-        SUFIEI
-    }
-
     public enum TASKSTATE
     {
         NONE = 4001,
@@ -370,6 +367,12 @@ namespace VLab
         NONE,
         SHORT,
         FULL
+    }
+
+    public enum DataFormat
+    {
+        YAML,
+        VLAB
     }
 
 }

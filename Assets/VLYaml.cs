@@ -1,6 +1,6 @@
 ﻿/*
 VLYaml.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -20,27 +20,25 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Text;
-using System.Linq;
-using System.Threading;
-using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
-using System.Runtime.InteropServices;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 
 namespace VLab
 {
-    public class VLabYamlConverter : IYamlTypeConverter
+    public class YamlVLabConverter : IYamlTypeConverter
     {
-        public bool istag = true;
+        Type TVector2 = typeof(Vector2);
+        Type TVector3 = typeof(Vector3);
+        Type TVector4 = typeof(Vector4);
+        Type TColor = typeof(Color);
 
         public bool Accepts(Type type)
         {
-            if (type == typeof(Param) || type == typeof(Vector3) || type == typeof(Color))
+            if (type == TVector2 || type == TVector3 || type == TVector4 || type == TColor)
             {
                 return true;
             }
@@ -49,84 +47,47 @@ namespace VLab
 
         public object ReadYaml(IParser parser, Type type)
         {
-            object o;
-            var e = (Scalar)parser.Current;
-            if (type == typeof(Param))
-            {
-                var t = e.Tag.Substring(e.Tag.LastIndexOf(':') + 1).Convert<ParamType>();
-                var v = e.Value.Convert(t);
-                o = new Param(t, v);
-            }
-            else
-            {
-                o = e.Value.Convert(type);
-            }
+            var o = ((Scalar)parser.Current).Value.Convert(type);
             parser.MoveNext();
             return o;
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            Scalar e;
-            if (type == typeof(Param))
-            {
-                var v = (Param)value;
-                if (istag)
-                {
-                    e = new Scalar(null, "tag:yaml.org,2002:" + v.Type.ToString(), v.Value.Convert<string>(), ScalarStyle.Plain, false, false);
-                }
-                else
-                {
-                    e = new Scalar(v.Value.Convert<string>());
-                }
-            }
-            else
-            {
-                e = new Scalar(value.Convert<string>());
-            }
-            emitter.Emit(e);
+            emitter.Emit(new Scalar(value.Convert<string>()));
         }
     }
 
-    public static class Yaml
+    public static class VLYaml
     {
-        static Serializer serializer = new Serializer(SerializationOptions.DisableAliases | SerializationOptions.EmitDefaults);
-        static Deserializer deserializer = new Deserializer(ignoreUnmatched: true);
-        static VLabYamlConverter vlabyamlconverter = new VLabYamlConverter();
+        static Serializer serializer;
+        static Deserializer deserializer;
 
-        static Yaml()
+        static VLYaml()
         {
-            serializer.RegisterTypeConverter(vlabyamlconverter);
-            deserializer.RegisterTypeConverter(vlabyamlconverter);
+            var yamlvlabconverter = new YamlVLabConverter();
+            serializer = new SerializerBuilder().DisableAliases().EmitDefaults().WithTypeConverter(yamlvlabconverter).Build();
+            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().WithTypeConverter(yamlvlabconverter).Build();
         }
 
-        public static void WriteYaml<T>(string path, T data, bool isvlabtag = true)
+        public static void WriteYamlFile<T>(this string path, T data)
         {
-            File.WriteAllText(path, Serialize(data, isvlabtag));
+            File.WriteAllText(path, SerializeYaml(data));
         }
 
-        public static string Serialize<T>(T data, bool isvlabtag = true)
+        public static string SerializeYaml<T>(this T data)
         {
-            var s = new StringBuilder();
-            var old = vlabyamlconverter.istag;
-            vlabyamlconverter.istag = isvlabtag;
-            serializer.Serialize(new StringWriter(s), data);
-            vlabyamlconverter.istag = old;
-            return s.ToString();
+            return serializer.Serialize(data);
         }
 
-        public static T ReadYaml<T>(string path)
+        public static T ReadYamlFile<T>(this string path)
         {
-            using (var s = new StringReader(File.ReadAllText(path)))
-            {
-                return deserializer.Deserialize<T>(s);
-            }
+            return deserializer.Deserialize<T>(File.ReadAllText(path));
         }
 
-        public static T Deserialize<T>(string data)
+        public static T DeserializeYaml<T>(this string data)
         {
-            return deserializer.Deserialize<T>(new StringReader(data));
+            return deserializer.Deserialize<T>(data);
         }
     }
-
 }

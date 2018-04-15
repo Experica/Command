@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000013383713752}
-  - 222: {fileID: 222000011295720080}
-  - 114: {fileID: 114000011801346180}
-  - 114: {fileID: 114000010398819452}
+  - component: {fileID: 224000013383713752}
+  - component: {fileID: 222000011295720080}
+  - component: {fileID: 114000011801346180}
+  - component: {fileID: 114000010398819452}
   m_Layer: 5
   m_Name: Cancel
   m_TagString: Untagged
@@ -34,12 +34,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011206344738}
-  - 222: {fileID: 222000014129180228}
-  - 114: {fileID: 114000012632522552}
-  - 114: {fileID: 114000014145103148}
+  - component: {fileID: 224000011206344738}
+  - component: {fileID: 222000014129180228}
+  - component: {fileID: 114000012632522552}
+  - component: {fileID: 114000014145103148}
   m_Layer: 5
   m_Name: NewExperimentPanel
   m_TagString: Untagged
@@ -52,11 +52,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000013965702562}
-  - 222: {fileID: 222000010396094534}
-  - 114: {fileID: 114000013241605388}
+  - component: {fileID: 224000013965702562}
+  - component: {fileID: 222000010396094534}
+  - component: {fileID: 114000013241605388}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -69,12 +69,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000014079252364}
-  - 222: {fileID: 222000010915684010}
-  - 114: {fileID: 114000011316912996}
-  - 114: {fileID: 114000010488171716}
+  - component: {fileID: 224000014079252364}
+  - component: {fileID: 222000010915684010}
+  - component: {fileID: 114000011316912996}
+  - component: {fileID: 114000010488171716}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -87,11 +87,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010100681978}
-  - 222: {fileID: 222000013758477828}
-  - 114: {fileID: 114000010144410376}
+  - component: {fileID: 224000010100681978}
+  - component: {fileID: 222000013758477828}
+  - component: {fileID: 114000010144410376}
   m_Layer: 5
   m_Name: NameCheck
   m_TagString: Untagged
@@ -104,11 +104,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000014112742658}
-  - 222: {fileID: 222000010805626516}
-  - 114: {fileID: 114000010205861030}
+  - component: {fileID: 224000014112742658}
+  - component: {fileID: 222000010805626516}
+  - component: {fileID: 114000010205861030}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -121,12 +121,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010895937662}
-  - 222: {fileID: 222000011752791754}
-  - 114: {fileID: 114000010270986840}
-  - 114: {fileID: 114000012685698758}
+  - component: {fileID: 224000010895937662}
+  - component: {fileID: 222000011752791754}
+  - component: {fileID: 114000010270986840}
+  - component: {fileID: 114000012685698758}
   m_Layer: 5
   m_Name: NewName
   m_TagString: Untagged
@@ -139,12 +139,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010516712338}
-  - 114: {fileID: 114000013352586796}
-  - 222: {fileID: 222000010989724310}
-  - 114: {fileID: 114000010430862260}
+  - component: {fileID: 224000010516712338}
+  - component: {fileID: 114000013352586796}
+  - component: {fileID: 222000010989724310}
+  - component: {fileID: 114000010430862260}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -157,12 +157,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000013733652500}
-  - 222: {fileID: 222000011253034096}
-  - 114: {fileID: 114000011546475038}
-  - 114: {fileID: 114000014214020982}
+  - component: {fileID: 224000013733652500}
+  - component: {fileID: 222000011253034096}
+  - component: {fileID: 114000011546475038}
+  - component: {fileID: 114000014214020982}
   m_Layer: 5
   m_Name: CopyEx
   m_TagString: Untagged
@@ -175,11 +175,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011938544016}
-  - 222: {fileID: 222000012169761502}
-  - 114: {fileID: 114000010863036540}
+  - component: {fileID: 224000011938544016}
+  - component: {fileID: 222000012169761502}
+  - component: {fileID: 114000010863036540}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -192,11 +192,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010903732892}
-  - 222: {fileID: 222000010138349204}
-  - 114: {fileID: 114000010966120560}
+  - component: {fileID: 224000010903732892}
+  - component: {fileID: 222000010138349204}
+  - component: {fileID: 114000010966120560}
   m_Layer: 5
   m_Name: Item Background
   m_TagString: Untagged
@@ -209,9 +209,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010854418906}
+  - component: {fileID: 224000010854418906}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -224,11 +224,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010007650820}
-  - 222: {fileID: 222000011092861636}
-  - 114: {fileID: 114000010611285204}
+  - component: {fileID: 224000010007650820}
+  - component: {fileID: 222000011092861636}
+  - component: {fileID: 114000010611285204}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -241,10 +241,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000012239818842}
-  - 114: {fileID: 114000010356329286}
+  - component: {fileID: 224000012239818842}
+  - component: {fileID: 114000010356329286}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -257,11 +257,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011569737332}
-  - 222: {fileID: 222000013523412746}
-  - 114: {fileID: 114000011544192528}
+  - component: {fileID: 224000011569737332}
+  - component: {fileID: 222000013523412746}
+  - component: {fileID: 114000011544192528}
   m_Layer: 5
   m_Name: Item Checkmark
   m_TagString: Untagged
@@ -274,12 +274,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000012667635124}
-  - 222: {fileID: 222000010655268216}
-  - 114: {fileID: 114000010479328548}
-  - 114: {fileID: 114000014098136206}
+  - component: {fileID: 224000012667635124}
+  - component: {fileID: 222000010655268216}
+  - component: {fileID: 114000010479328548}
+  - component: {fileID: 114000014098136206}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -292,12 +292,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011619149486}
-  - 222: {fileID: 222000013620596088}
-  - 114: {fileID: 114000010344022448}
-  - 114: {fileID: 114000014172935264}
+  - component: {fileID: 224000011619149486}
+  - component: {fileID: 222000013620596088}
+  - component: {fileID: 114000010344022448}
+  - component: {fileID: 114000014172935264}
   m_Layer: 5
   m_Name: Confirm
   m_TagString: Untagged
@@ -310,11 +310,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000012461698902}
-  - 222: {fileID: 222000011403234270}
-  - 114: {fileID: 114000013713217304}
+  - component: {fileID: 224000012461698902}
+  - component: {fileID: 222000011403234270}
+  - component: {fileID: 114000013713217304}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -327,11 +327,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000012185914200}
-  - 222: {fileID: 222000010308844500}
-  - 114: {fileID: 114000014001493386}
+  - component: {fileID: 224000012185914200}
+  - component: {fileID: 222000010308844500}
+  - component: {fileID: 114000014001493386}
   m_Layer: 5
   m_Name: Item Label
   m_TagString: Untagged
@@ -344,11 +344,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011601275386}
-  - 222: {fileID: 222000012089816432}
-  - 114: {fileID: 114000011005679748}
+  - component: {fileID: 224000011601275386}
+  - component: {fileID: 222000012089816432}
+  - component: {fileID: 114000011005679748}
   m_Layer: 5
   m_Name: NewExperimentName
   m_TagString: Untagged
@@ -361,11 +361,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011603464496}
-  - 222: {fileID: 222000012952772632}
-  - 114: {fileID: 114000010024698410}
+  - component: {fileID: 224000011603464496}
+  - component: {fileID: 222000012952772632}
+  - component: {fileID: 114000010024698410}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -378,11 +378,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000012870491634}
-  - 222: {fileID: 222000011878928722}
-  - 114: {fileID: 114000012783608524}
+  - component: {fileID: 224000012870491634}
+  - component: {fileID: 222000011878928722}
+  - component: {fileID: 114000012783608524}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -395,9 +395,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000011732816928}
+  - component: {fileID: 224000011732816928}
   m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
@@ -410,11 +410,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 224000010318729844}
-  - 222: {fileID: 222000010034501282}
-  - 114: {fileID: 114000011950377116}
+  - component: {fileID: 224000010318729844}
+  - component: {fileID: 222000010034501282}
+  - component: {fileID: 114000011950377116}
   m_Layer: 5
   m_Name: CopyFrom
   m_TagString: Untagged
@@ -1196,7 +1196,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 

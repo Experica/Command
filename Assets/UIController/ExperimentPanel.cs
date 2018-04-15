@@ -1,6 +1,6 @@
 ﻿/*
 ExperimentPanel.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -64,7 +64,7 @@ namespace VLab
                 if (IsShowParam(p))
                 {
                     var pa = Experiment.Properties[p];
-                    AddParamUI(p, pa.Type, ex.GetValue(p), ex.ExInheritParam.Contains(p),
+                    AddParamUI(p, pa.Type, ex.GetProperty(p), ex.ExInheritParam.Contains(p),
                         p.GetPrefab(pa.Type), content.transform);
                 }
             }
@@ -79,7 +79,7 @@ namespace VLab
                 if (IsShowParam(p))
                 {
                     inherittoggle[p].isOn = ex.ExInheritParam.Contains(p);
-                    var v = ex.GetValue(p);
+                    var v = ex.GetProperty(p);
                     if (dropdown.ContainsKey(p))
                     {
                         dropdown[p].value = dropdown[p].options.Select(i => i.text).ToList().IndexOf(v.Convert<string>());
@@ -96,7 +96,7 @@ namespace VLab
 
         bool IsShowParam(string name)
         {
-            var exhideparam = (List<string>)uicontroller.appmanager.config[VLCFG.ExHideParams];
+            var exhideparam = uicontroller.appmanager.config.ExHideParams;
             return exhideparam.Contains(name) ? false : true;
         }
 
@@ -122,7 +122,7 @@ namespace VLab
             exparamtoggle.Clear();
             foreach (var p in ex.Param.Keys)
             {
-                AddExParamUI(p, ex.Param[p].Value, ex.ExInheritParam.Contains(p));
+                AddExParamUI(p, ex.Param[p], ex.ExInheritParam.Contains(p));
             }
         }
 
@@ -225,7 +225,7 @@ namespace VLab
             statusbarcanvasgroup.interactable = true;
         }
 
-        public void NewExParam(string name, Param value)
+        public void NewExParam(string name, object value)
         {
             uicontroller.exmanager.el.ex.Param[name] = value;
             AddExParamUI(name, value, false);

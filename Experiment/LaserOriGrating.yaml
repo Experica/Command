@@ -3,70 +3,74 @@ Name: LaserOriGrating
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
-Subject_Weight: 3.5999999
+Subject_Size: 0 0 0
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.76520276
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 25.03 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 7
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
-  Ori@ENGratingQuad@GratingQuad: 90
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
+  Ori@ENGratingQuad@GratingQuad: 315
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 30
-  Size@ENGratingQuad@GratingQuad: (30, 30, 1)
-  Color@ENGratingQuad@GratingQuad: (1, 1, 1, 1)
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 2 2 1
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: (23.5, 6.15, 0)
-  PositionOffset@ENGratingQuad@GratingQuad: (0, 0, 0)
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (38.5, -21.2, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
+  Position@ENGratingQuad@GratingQuad: 0 0 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V2Site2V2Site1
-RecordSite: D3569Ch23D3100Ch31
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: UniformWithoutReplacement
+BlockSampling: Ascending
 CondRepeat: 10
 BlockRepeat: 1
 BlockParam:
-- ''
+- LaserPower
+- LaserFreq
 Input: None
 PreICI: 500
 CondDur: 500
-SufICI: 1000
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
 PreIBI: 0
 BlockDur: 0
-SufIBI: 0
+SufIBI: 10000
 PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
@@ -91,6 +95,7 @@ ExInheritParam:
 - TimerDriftSpeed
 - LaserPower
 - LaserFreq
+- LaserOnLatency
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -109,9 +114,10 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 - Diameter@ENGratingQuad@GratingQuad
 Param:
-  LaserPower: !!ListOfFloat '[0.5, 1]'
-  LaserFreq: !!ListOfFloat '[40]'
-  ICIFactor: !!Float 3
+  LaserPower: '[0.128, 0.249, 0.503]'
+  LaserFreq: '[0.1, 40]'
+  ICIFactor: 2
+  LaserOnLatency: 3000
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

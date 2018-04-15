@@ -1,6 +1,6 @@
 ﻿/*
 Condition.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -31,10 +32,12 @@ namespace VLab
 {
     public class ConditionManager
     {
-        public Dictionary<string, List<object>> cond;
+        public Dictionary<string, List<object>> cond = new Dictionary<string, List<object>>();
+        public Dictionary<string, IList> finalcond = new Dictionary<string, IList>();
         public int ncond = 0;
+        public int nblock = 0;
 
-        public Dictionary<string, List<object>> blockcond = new Dictionary<string, List<object>>();
+        public Dictionary<string, IList> finalblockcond = new Dictionary<string, IList>();
         public List<List<int>> condsamplespaces = new List<List<int>>();
         public List<int> blocksamplespace = new List<int>();
         public Dictionary<int, Dictionary<int, int>> condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
@@ -58,14 +61,14 @@ namespace VLab
             {
                 return null;
             }
-            return Yaml.ReadYaml<Dictionary<string, List<object>>>(path);
+            return path.ReadYamlFile<Dictionary<string, List<object>>>();
         }
 
-        public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond, Dictionary<string, Param> exparam)
+        public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond)
         {
-            if (cond != null && exparam != null)
+            if (cond != null)
             {
-                cond = cond.ResolveConditionReference(exparam).FactorLevelOfDesign();
+                cond = cond.FactorLevelOfDesign();
                 if (cond.ContainsKey("orthofactorlevel") && cond["orthofactorlevel"].Count == 0)
                 {
                     cond = cond.OrthoCondOfFactorLevel();
@@ -76,58 +79,71 @@ namespace VLab
 
         public void FinalizeCondition(Dictionary<string, List<object>> cond)
         {
-            var nfactor = cond.Keys.Count;
-            if (nfactor > 0)
+            if (cond == null)
             {
-                var fvn = new int[nfactor];
-                for (var i = 0; i < nfactor; i++)
-                {
-                    fvn[i] = cond.Values.ElementAt(i).Count;
-                }
-                var minfvn = fvn.Min();
-                var maxfvn = fvn.Max();
-                if (minfvn != maxfvn)
-                {
-                    foreach (var k in cond.Keys)
-                    {
-                        cond[k] = cond[k].GetRange(0, minfvn);
-                    }
-                }
-                ncond = minfvn;
-                this.cond = cond;
+                ncond = 0;
+                this.cond = new Dictionary<string, List<object>>();
+                finalcond = new Dictionary<string, IList>();
             }
             else
             {
-                ncond = 0;
-                this.cond = null;
+                var nfactor = cond.Keys.Count;
+                if (nfactor > 0)
+                {
+                    var fvn = new int[nfactor];
+                    for (var i = 0; i < nfactor; i++)
+                    {
+                        fvn[i] = cond.Values.ElementAt(i).Count;
+                    }
+                    var minfvn = fvn.Min();
+                    var maxfvn = fvn.Max();
+                    if (minfvn != maxfvn)
+                    {
+                        foreach (var k in cond.Keys)
+                        {
+                            cond[k] = cond[k].GetRange(0, minfvn);
+                        }
+                    }
+                    ncond = minfvn;
+                    this.cond = cond;
+                    finalcond = cond.FinalizeFactorValues();
+                }
+                else
+                {
+                    ncond = 0;
+                    this.cond = new Dictionary<string, List<object>>();
+                    finalcond = new Dictionary<string, IList>();
+                }
             }
         }
 
-        public Dictionary<string, List<object>> GenerateFinalCondition(string path, Dictionary<string, Param> exparam)
+        public Dictionary<string, IList> GenerateFinalCondition(string path)
         {
-            FinalizeCondition(ProcessCondition(ReadConditionFile(path), exparam));
-            return cond;
+            FinalizeCondition(ProcessCondition(ReadConditionFile(path)));
+            return finalcond;
         }
 
         public void UpdateSampleSpace(SampleMethod condsamplemethod, List<string> blockparams, SampleMethod blocksamplemethod)
         {
             this.condsamplemethod = condsamplemethod;
             this.blocksamplemethod = blocksamplemethod;
-            blockcond.Clear();
-            condsamplespaces.Clear();
+            finalblockcond.Clear();
             blocksamplespace.Clear();
+            condsamplespaces.Clear();
+            blockrepeat.Clear();
             condsamplespacerepeat.Clear();
             condrepeat.Clear();
-            blockrepeat.Clear();
             blocksampleidx = -1;
             condsampleidx = -1;
             blockidx = -1;
             condidx = -1;
+            nblock = 0;
 
             if (ncond <= 0) return;
 
             var vbp = cond.Keys.Intersect(blockparams).ToList();
-            Dictionary<string, List<object>> blockorthofactorlevel = null; int bn = 0;
+            Dictionary<string, List<object>> blockorthofactorlevel = null, blockcond = new Dictionary<string, List<object>>();
+            int bn = 0;
             if (vbp.Count > 0)
             {
                 var bpfl = new Dictionary<string, List<object>>();
@@ -140,9 +156,9 @@ namespace VLab
             }
             if (bn < 2)
             {
+                blocksamplespace.Add(0);
                 condsamplespaces.Add(PrepareSampleSpace(ncond, condsamplemethod));
                 ResetCondSampleSpace(0);
-                blocksamplespace.Add(0);
             }
             else
             {
@@ -170,6 +186,7 @@ namespace VLab
                         }
                     }
                 }
+                finalblockcond = blockcond.FinalizeFactorValues();
                 blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
             }
             foreach (var i in blocksamplespace)
@@ -180,6 +197,7 @@ namespace VLab
             {
                 condrepeat[i] = 0;
             }
+            nblock = blocksamplespace.Count;
         }
 
         public List<int> PrepareSampleSpace(List<int> space, SampleMethod samplemethod)
@@ -234,7 +252,7 @@ namespace VLab
                         blocksampleidx++;
                         if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            blocksamplespace = PrepareSampleSpace(blocksamplespace.Count, blocksamplemethod);
+                            blocksamplespace = PrepareSampleSpace(blocksamplespace, blocksamplemethod);
                             blocksampleidx = 0;
                         }
                         blockidx = blocksamplespace[blocksampleidx];
@@ -314,25 +332,23 @@ namespace VLab
             return condidx;
         }
 
-        public void PushCondition(int condidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
+        public void PushCondition(int condidx, EnvironmentManager envmanager, List<string> excludefactors = null, bool notifyui = true)
         {
-            if (condidx < 0) return;
-            if (ncond <= 0) return;
-            var factors = except == null ? cond.Keys : cond.Keys.Except(except);
+            if (ncond <= 0 || condidx < 0) return;
+            var factors = excludefactors == null ? finalcond.Keys : finalcond.Keys.Except(excludefactors);
             foreach (var k in factors)
             {
-                envmanager.SetParam(k, cond[k][condidx], notifyui);
+                envmanager.SetParam(k, finalcond[k][condidx], notifyui);
             }
         }
 
-        public void PushBlock(int blockidx, EnvironmentManager envmanager, List<string> except = null, bool notifyui = true)
+        public void PushBlock(int blockidx, EnvironmentManager envmanager, List<string> excludefactors = null, bool notifyui = true)
         {
-            if (blockidx < 0) return;
-            if (blockcond.Count == 0 || blockcond.Values.First().Count == 0) return;
-            var factors = except == null ? blockcond.Keys : blockcond.Keys.Except(except);
+            if (blockidx < 0 || finalblockcond.Count == 0 || finalblockcond.Values.First().Count == 0) return;
+            var factors = excludefactors == null ? finalblockcond.Keys : finalblockcond.Keys.Except(excludefactors);
             foreach (var k in factors)
             {
-                envmanager.SetParam(k, blockcond[k][blockidx], notifyui);
+                envmanager.SetParam(k, finalblockcond[k][blockidx], notifyui);
             }
         }
 
@@ -350,16 +366,9 @@ namespace VLab
         {
             foreach (var c in condsamplespaces[blockidx])
             {
-                if (!condsamplespacerepeat[blockidx].ContainsKey(c))
+                if (!condsamplespacerepeat[blockidx].ContainsKey(c) || condsamplespacerepeat[blockidx][c] < n)
                 {
                     return false;
-                }
-                else
-                {
-                    if (condsamplespacerepeat[blockidx][c] < n)
-                    {
-                        return false;
-                    }
                 }
             }
             return true;
@@ -369,16 +378,9 @@ namespace VLab
         {
             for (var i = 0; i < ncond; i++)
             {
-                if (!condrepeat.ContainsKey(i))
+                if (!condrepeat.ContainsKey(i) || condrepeat[i] < n)
                 {
                     return false;
-                }
-                else
-                {
-                    if (condrepeat[i] < n)
-                    {
-                        return false;
-                    }
                 }
             }
             return true;
@@ -388,16 +390,9 @@ namespace VLab
         {
             for (var i = 0; i < condsamplespaces.Count; i++)
             {
-                if (!blockrepeat.ContainsKey(i))
+                if (!blockrepeat.ContainsKey(i) || blockrepeat[i] < n)
                 {
                     return false;
-                }
-                else
-                {
-                    if (blockrepeat[i] < n)
-                    {
-                        return false;
-                    }
                 }
             }
             return true;
@@ -511,13 +506,12 @@ namespace VLab
         int condtestidx = -1;
         public int CondTestIndex { get { return condtestidx; } }
 
-
         public void Clear()
         {
             condtest.Clear();
             condtestidx = -1;
             notifyidx = 0;
-            if (OnClearCondTest != null) OnClearCondTest();
+            OnClearCondTest?.Invoke();
         }
 
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
@@ -531,7 +525,7 @@ namespace VLab
             if (condtestidx > 0)
             {
                 if (notifyui && OnStartCondTest != null) OnStartCondTest();
-                if (notifypercondtest > 0)
+                if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
                 {
                     if (!pushall)
                     {
@@ -550,7 +544,7 @@ namespace VLab
             }
         }
 
-        public void NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
+        void NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
         {
             if (startidx < condtestidx)
             {
@@ -564,7 +558,7 @@ namespace VLab
             }
         }
 
-        public void NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
+        void NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
         {
             NotifyCondTest(startidx, notifyparam);
             OnNotifyCondTestEnd(endtime);
@@ -572,6 +566,7 @@ namespace VLab
 
         public void AddToCondTest(CONDTESTPARAM paramname, object paramvalue)
         {
+            if (condtestidx < 0) return;
             if (condtest.ContainsKey(paramname))
             {
                 var vs = condtest[paramname];
@@ -595,7 +590,7 @@ namespace VLab
 
         public void AddEventToCondTest(CONDTESTPARAM paramname, string eventname, double timestamp)
         {
-            if (condtestidx == -1) return;
+            if (condtestidx < 0) return;
             if (condtest.ContainsKey(paramname))
             {
                 var vs = condtest[paramname];
@@ -605,17 +600,16 @@ namespace VLab
                 }
                 if (vs.Count < (condtestidx + 1))
                 {
-                    var es = new List<Dictionary<string, double>>();
-                    var e = new Dictionary<string, double>();
-                    e[eventname] = timestamp;
-                    es.Add(e);
+                    var es = new List<Dictionary<string, double>>()
+                    {
+                        new Dictionary<string, double>(){ [eventname]= timestamp  }
+                    };
                     vs.Add(es);
                 }
                 else
                 {
                     var es = (List<Dictionary<string, double>>)vs[condtestidx];
-                    var e = new Dictionary<string, double>();
-                    e[eventname] = timestamp;
+                    var e = new Dictionary<string, double>() { [eventname] = timestamp };
                     es.Add(e);
                 }
             }
@@ -626,10 +620,10 @@ namespace VLab
                 {
                     vs.Add(null);
                 }
-                var es = new List<Dictionary<string, double>>();
-                var e = new Dictionary<string, double>();
-                e[eventname] = timestamp;
-                es.Add(e);
+                var es = new List<Dictionary<string, double>>()
+                {
+                    new Dictionary<string, double>(){ [eventname]= timestamp  }
+                };
                 vs.Add(es);
                 condtest[paramname] = vs;
             }

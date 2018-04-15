@@ -1,6 +1,6 @@
 ﻿/*
 VLMsgPack.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -29,29 +29,30 @@ namespace VLab
     public static class VLMsgPack
     {
         public static MessagePackSerializer<Experiment> ExSerializer;
-        public static MessagePackSerializer<List<object>> ListObjectSerializer;
         public static MessagePackSerializer<List<int>> ListIntSerializer;
-        public static MessagePackSerializer<List<List<Dictionary<string, double>>>> CONDSTATESerializer;
+        public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListCONDSTATESerializer;
 
         static VLMsgPack()
         {
-            ExSerializer = GetDefaultSerializer<Experiment>();
-            ListObjectSerializer = GetDefaultSerializer<List<object>>();
-            ListIntSerializer = GetDefaultSerializer<List<int>>();
-            CONDSTATESerializer = GetDefaultSerializer<List<List<Dictionary<string, double>>>>();
-        }
-
-        public static MessagePackSerializer<T> GetDefaultSerializer<T>()
-        {
-            return SerializationContext.Default.GetSerializer<T>();
+            ExSerializer = MessagePackSerializer.Get<Experiment>();
+            ListIntSerializer = MessagePackSerializer.Get<List<int>>();
+            ListCONDSTATESerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
         }
 
         public static object MsgPackObjectToObject(this object o)
         {
-            var mpo = (MessagePackObject)o;
-            if (mpo.IsArray)
+            if (o.GetType() == typeof(MessagePackObject))
             {
-                return mpo.AsList().Select(i => i.ToObject()).ToArray();
+                return MsgPackObjectToObject((MessagePackObject)o);
+            }
+            return o;
+        }
+
+        public static object MsgPackObjectToObject(this MessagePackObject mpo)
+        {
+            if (mpo.IsArray || mpo.IsList)
+            {
+                return mpo.AsList().Select(i => i.MsgPackObjectToObject()).ToList();
             }
             else
             {

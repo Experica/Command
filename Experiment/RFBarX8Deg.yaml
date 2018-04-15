@@ -3,89 +3,55 @@ Name: RFBarX8Deg
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1702
-Subject_Name: C1702
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
-EnvPath: ShowBar
+EnvPath: MarkerBar
 EnvParam:
-  Show@Showroom@ShowroomManager: Quad
-  Marker@Showroom@ShowroomManager: true
-  Image@ENImageQuad@ImageQuad$ShowroomManager: 1
-  ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 0
-  OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
-  Diameter@ENImageQuad@ImageQuad$ShowroomManager: 2
-  Size@ENImageQuad@ImageQuad$ShowroomManager: (2, 2, 1)
-  Color@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0, 0)
-  MaskType@ENImageQuad@ImageQuad$ShowroomManager: None
-  MaskRadius@ENImageQuad@ImageQuad$ShowroomManager: 0.5
-  Sigma@ENImageQuad@ImageQuad$ShowroomManager: 0.150000006
-  Visible@ENImageQuad@ImageQuad$ShowroomManager: true
-  Position@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 2
-  SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  MinColor@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
-  GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Square
-  ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 2
-  Size@ENGratingQuad@GratingQuad$ShowroomManager: (2, 2, 1)
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 0)
-  MaskType@ENGratingQuad@GratingQuad$ShowroomManager: None
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0.150000006
-  Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
-  Position@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  Ori@ENQuad@Quad$ShowroomManager: 0
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 2
-  Size@ENQuad@Quad$ShowroomManager: (2, 2, 1)
-  Color@ENQuad@Quad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad$ShowroomManager: None
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  Visible@ENQuad@Quad$ShowroomManager: true
-  Position@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.68276978
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (20.7, -15.7, -1E+03)
+  MarkerPosition@ENMarker@Marker: 36.14 -21.07 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Rotation@ENQuad@Quad: 0 0 0
+  RotationOffset@ENQuad@Quad: 0 0 0
+  Ori@ENQuad@Quad: 135
+  OriOffset@ENQuad@Quad: 0
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: 3 0.5 1
+  Color@ENQuad@Quad: 1 1 1 1
+  MaskType@ENQuad@Quad: None
+  MaskRadius@ENQuad@Quad: 0.5
+  Sigma@ENQuad@Quad: 0.150000006
+  OriPositionOffset@ENQuad@Quad: true
+  Visible@ENQuad@Quad: false
+  Position@ENQuad@Quad: 8.449 2.34 0
+  PositionOffset@ENQuad@Quad: -2 0 0
 CondPath: Condition\PositionXOffset4Deg0.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
-CondRepeat: 30
-BlockRepeat: 0
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 50
+BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 0
-CondDur: 50
+CondDur: 46
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -95,7 +61,7 @@ BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 8
+NotifyPerCondTest: 10
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -131,4 +97,4 @@ Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
-CondTestShowLevel: NONE
+CondTestShowLevel: SHORT

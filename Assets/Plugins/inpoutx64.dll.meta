@@ -1,19 +1,46 @@
 fileFormatVersion: 2
 guid: 48345d3931a97574ca8dc19e0c41420e
-timeCreated: 1458927521
-licenseType: Free
 PluginImporter:
-  serializedVersion: 1
+  externalObjects: {}
+  serializedVersion: 2
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
   isOverridable: 0
   platformData:
-    Android:
+  - first:
+      '': Any
+    second:
+      enabled: 0
+      settings:
+        Exclude Editor: 0
+        Exclude Linux: 0
+        Exclude Linux64: 0
+        Exclude LinuxUniversal: 0
+        Exclude OSXUniversal: 0
+        Exclude Win: 1
+        Exclude Win64: 0
+  - first:
+      '': OSXIntel
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+  - first:
+      '': OSXIntel64
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+  - first:
+      Android: Android
+    second:
       enabled: 0
       settings:
         CPU: AnyCPU
-    Any:
+  - first:
+      Any: 
+    second:
       enabled: 1
       settings:
         Exclude Editor: 0
@@ -23,47 +50,67 @@ PluginImporter:
         Exclude OSXIntel: 0
         Exclude OSXIntel64: 0
         Exclude OSXUniversal: 0
-        Exclude Win: 0
+        Exclude Win: 1
         Exclude Win64: 0
-    Editor:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-        DefaultValueInitialized: true
-        OS: AnyOS
-    Linux:
-      enabled: 1
-      settings:
-        CPU: x86
-    Linux64:
+  - first:
+      Editor: Editor
+    second:
       enabled: 1
       settings:
         CPU: x86_64
-    LinuxUniversal:
+        DefaultValueInitialized: true
+        OS: Windows
+  - first:
+      Facebook: Win
+    second:
+      enabled: 0
+      settings:
+        CPU: None
+  - first:
+      Facebook: Win64
+    second:
       enabled: 1
       settings:
         CPU: AnyCPU
-    OSXIntel:
+  - first:
+      Standalone: Linux
+    second:
+      enabled: 1
+      settings:
+        CPU: x86
+  - first:
+      Standalone: Linux64
+    second:
+      enabled: 1
+      settings:
+        CPU: x86_64
+  - first:
+      Standalone: LinuxUniversal
+    second:
       enabled: 1
       settings:
         CPU: AnyCPU
-    OSXIntel64:
+  - first:
+      Standalone: OSXUniversal
+    second:
       enabled: 1
       settings:
         CPU: AnyCPU
-    OSXUniversal:
+  - first:
+      Standalone: Win
+    second:
+      enabled: 0
+      settings:
+        CPU: None
+  - first:
+      Standalone: Win64
+    second:
       enabled: 1
       settings:
         CPU: AnyCPU
-    Win:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    Win64:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    WindowsStoreApps:
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
       enabled: 0
       settings:
         CPU: AnyCPU
@@ -71,7 +118,9 @@ PluginImporter:
         PlaceholderPath: 
         SDK: AnySDK
         ScriptingBackend: AnyScriptingBackend
-    iOS:
+  - first:
+      iPhone: iOS
+    second:
       enabled: 0
       settings:
         CompileFlags: 

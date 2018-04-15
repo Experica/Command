@@ -1,0 +1,13 @@
+{
+    "name": "Tests",
+    "references": [
+        "VLab"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

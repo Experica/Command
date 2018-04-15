@@ -1,6 +1,6 @@
 ﻿/*
 ENCamera.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -39,11 +39,10 @@ namespace VLab
         public float ScreenAspect = 4.0f / 3.0f;
 
         public Action CameraChange;
-        public new Camera camera;
+        public Camera camera;
 #if VLAB
         VLNetManager netmanager;
 #endif
-
         void Awake()
         {
             OnAwake();
@@ -53,6 +52,16 @@ namespace VLab
             camera = gameObject.GetComponent<Camera>();
 #if VLAB
             netmanager = FindObjectOfType<VLNetManager>();
+#endif
+        }
+
+        void Start()
+        {
+            OnStart();
+        }
+        public virtual void OnStart()
+        {
+#if VLAB
             CameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
         }

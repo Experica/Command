@@ -1,6 +1,6 @@
 ﻿/*
 ENMarker.cs is part of the VLAB project.
-Copyright (c) 2017 Li Alex Zhang and Contributors
+Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"),
@@ -25,20 +25,6 @@ using System.Collections.Generic;
 
 namespace VLab
 {
-    public enum OnOff
-    {
-        On,
-        Off
-    }
-
-    public enum Corner
-    {
-        TopLeft,
-        TopRight,
-        BottomRight,
-        BottomLeft
-    }
-
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class ENMarker : NetworkBehaviour
     {
@@ -56,7 +42,7 @@ namespace VLab
         public Color MarkOffColor = Color.black;
 
         public ENCamera encamera;
-        public new Renderer renderer;
+        public Renderer renderer;
 #if VLAB
         VLNetManager netmanager;
 #endif
@@ -68,15 +54,11 @@ namespace VLab
         public virtual void OnAwake()
         {
             renderer = gameObject.GetComponent<Renderer>();
-            encamera = FindObjectOfType<ENCamera>();
-            encamera.CameraChange += UpdatePosition;
 #if VLAB
             netmanager = FindObjectOfType<VLNetManager>();
 #endif
-        }
-
-        void Start()
-        {
+            encamera = FindObjectOfType<ENCamera>();
+            encamera.CameraChange += UpdatePosition;
             UpdatePosition();
         }
 

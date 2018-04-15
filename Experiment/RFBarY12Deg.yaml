@@ -3,55 +3,55 @@ Name: RFBarY12Deg
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
+Subject_Size: 0 0 0
 Subject_Weight: 3
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.76520276
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (34.3, -21.1, -1E+03)
+  MarkerPosition@ENMarker@Marker: 25.03 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
-  Ori@ENQuad@Quad: 45
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Rotation@ENQuad@Quad: 0 0 0
+  RotationOffset@ENQuad@Quad: 0 0 0
+  Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: (12, 2, 1)
-  Color@ENQuad@Quad: (1, 1, 1, 1)
+  Size@ENQuad@Quad: 12 2 1
+  Color@ENQuad@Quad: 1 1 1 1
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   OriPositionOffset@ENQuad@Quad: true
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: (0, 0, 0)
-  PositionOffset@ENQuad@Quad: (0, 10, 0)
-  Rotation@ENQuad@Quad: (0, 0, 0)
-  RotationOffset@ENQuad@Quad: (0, 0, 0)
+  Visible@ENQuad@Quad: false
+  Position@ENQuad@Quad: 0 0 0
+  PositionOffset@ENQuad@Quad: 0 -1.5 0
 CondPath: Condition\PositionYOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: ''
-RecordSite: ''
+RecordSession: V1
+RecordSite: 345
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
-CondRepeat: 100
-BlockRepeat: 0
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 50
+BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 0
-CondDur: 50
+CondDur: 46
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -61,7 +61,7 @@ BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 8
+NotifyPerCondTest: 10
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -91,6 +91,7 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - Position@ENQuad@Quad
 - Ori@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
 Param: {}
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05

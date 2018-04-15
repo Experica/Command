@@ -3,84 +3,20 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1703
-Subject_Name: C1703
+Subject_ID: C1801
+Subject_Name: C1801
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
-Subject_Size: (0, 0, 0)
-Subject_Weight: 0
+Subject_Size: 0 0 0
+Subject_Weight: 2.77999997
 Subject_Log: 
-EnvPath: Showroom
-EnvParam:
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: (18.7, -13.7, -1E+03)
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: (1, 1, 1, 1)
-  MarkOffColor@ENMarker@Marker: (0, 0, 0, 1)
-  BGColor@ENCamera@OrthoCamera: (0.5, 0.5, 0.5, 1)
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
-  Show@Showroom@ShowroomManager: GratingQuad
-  Marker@Showroom@ShowroomManager: true
-  Ori@ENQuad@Quad$ShowroomManager: 0
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 2
-  Size@ENQuad@Quad$ShowroomManager: (2, 2, 1)
-  Color@ENQuad@Quad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENQuad@Quad$ShowroomManager: None
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  Visible@ENQuad@Quad$ShowroomManager: true
-  Position@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  Rotation@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENQuad@Quad$ShowroomManager: (0, 0, 0)
-  Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  MinColor@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0, 1)
-  MaxColor@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
-  GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Square
-  ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 20
-  Size@ENGratingQuad@GratingQuad$ShowroomManager: (20, 20, 1)
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENGratingQuad@GratingQuad$ShowroomManager: None
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0.150000006
-  Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
-  Position@ENGratingQuad@GratingQuad$ShowroomManager: (10, 0, 0)
-  PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  Rotation@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENGratingQuad@GratingQuad$ShowroomManager: (0, 0, 0)
-  Image@ENImageQuad@ImageQuad$ShowroomManager: 1
-  ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 0
-  OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
-  Diameter@ENImageQuad@ImageQuad$ShowroomManager: 30
-  Size@ENImageQuad@ImageQuad$ShowroomManager: (30, 30, 1)
-  Color@ENImageQuad@ImageQuad$ShowroomManager: (1, 1, 1, 1)
-  MaskType@ENImageQuad@ImageQuad$ShowroomManager: None
-  MaskRadius@ENImageQuad@ImageQuad$ShowroomManager: 0.5
-  Sigma@ENImageQuad@ImageQuad$ShowroomManager: 0.150000006
-  Visible@ENImageQuad@ImageQuad$ShowroomManager: true
-  Position@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  Rotation@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
-  RotationOffset@ENImageQuad@ImageQuad$ShowroomManager: (0, 0, 0)
+EnvPath: MarkerGrating
+EnvParam: {}
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
-RecordSession: ''
+RecordSession: E0
 RecordSite: ''
 DataDir: X:\
 DataPath: 
@@ -92,7 +28,7 @@ BlockParam: []
 Input: Joystick
 PreICI: 100
 CondDur: 300
-SufICI: 100
+SufICI: 200
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -105,7 +41,6 @@ NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - CONDSTATE
-- CondRepeat
 ExInheritParam: []
 EnvInheritParam: []
 Param: {}
