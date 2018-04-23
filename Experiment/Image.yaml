@@ -9,33 +9,33 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 2.70000005
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.78225815
-  Image@ENImageQuad@ImageQuad: 1
-  ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  Image@ENImageQuad@ImageQuad: 20961
+  ImageSet@ENImageQuad@ImageQuad: Imageset_B_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
   Rotation@ENImageQuad@ImageQuad: 0 0 0
   RotationOffset@ENImageQuad@ImageQuad: 0 0 0
   Ori@ENImageQuad@ImageQuad: 0
   OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 12.4361439
-  Size@ENImageQuad@ImageQuad: 12.44 12.44 1
+  Diameter@ENImageQuad@ImageQuad: 12
+  Size@ENImageQuad@ImageQuad: 12 12 1
   Color@ENImageQuad@ImageQuad: 1 1 1 1
   MaskType@ENImageQuad@ImageQuad: None
   MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0.150000006
-  OriPositionOffset@ENImageQuad@ImageQuad: false
+  OriPositionOffset@ENImageQuad@ImageQuad: true
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: 5.167 2.607 0
+  Position@ENImageQuad@ImageQuad: -2 -4 0
   PositionOffset@ENImageQuad@ImageQuad: 0 0 0
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 38.33 -21.07 -1000
+  MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -43,8 +43,8 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleImageLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V2Site4bCh6
+RecordSite: V1Site3a
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -55,7 +55,7 @@ BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 46
+CondDur: 50
 SufICI: 0
 PreITI: 0
 TrialDur: 0

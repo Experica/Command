@@ -224,6 +224,12 @@ namespace VLab
                 exmanager.el.SaveData();
             }
 
+            if (exmanager.el.ex.SendMail)
+            {
+                var subject = "Experiment Stopped";
+                var body = $"{exmanager.el.ex.ID} finished in {exmanager.el.timer.Elapsed.ToString("g")}";
+                exmanager.el.ex.Experimenter.GetAddresses(appmanager.config).Mail(subject, body);
+            }
             // Return Normal GC
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
             GC.Collect();

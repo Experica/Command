@@ -29,7 +29,6 @@ public class OIMasterMap : ExperimentLogic
     int condidx;
     bool start, go;
     double reversetime;
-    bool reverse;
 
     public override void OnStart()
     {
@@ -40,8 +39,8 @@ public class OIMasterMap : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("ReverseTime", false);
-        var sfs = ex.GetParam("SizeFullScreen");
-        if (sfs != null && sfs.Convert<bool>())
+        var fss = ex.GetParam("FullScreenSize");
+        if (fss != null && fss.Convert<bool>())
         {
             var hh = envmanager.maincamera_scene.orthographicSize;
             var hw = hh * envmanager.maincamera_scene.aspect;
@@ -64,9 +63,9 @@ public class OIMasterMap : ExperimentLogic
     /// start from 1 and map to VLab condidx 0.
     /// </summary>
     /// <param name="start"></param>
-    /// <param name="condidx"></param>
     /// <param name="go"></param>
-    void ParseOIMessage(ref bool start, ref int condidx, ref bool go)
+    /// <param name="condidx"></param>
+    void ParseOIMessage(ref bool start, ref bool go, ref int condidx)
     {
         List<double>[] dt; List<int>[] dv;
         var isdin = recorder.DigitalInput(out dt, out dv);
@@ -94,8 +93,8 @@ public class OIMasterMap : ExperimentLogic
             // Any condidx out of condition design is treated as blank
             if (condidx >= condmanager.ncond)
             {
-                go = false;
                 start = false;
+                go = false;
                 condidx = -1;
             }
         }
@@ -103,13 +102,13 @@ public class OIMasterMap : ExperimentLogic
 
     public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
-        // Manually sample and push condition index received from OI Message
+        // Manually sample and push condition index parsed from OI Message
         base.SamplePushCondition(manualcondidx: condidx);
     }
 
     public override void Logic()
     {
-        ParseOIMessage(ref start, ref condidx, ref go);
+        ParseOIMessage(ref start, ref go, ref condidx);
         switch (CondState)
         {
             case CONDSTATE.NONE:
@@ -126,7 +125,6 @@ public class OIMasterMap : ExperimentLogic
                     CondState = CONDSTATE.COND;
                     SetEnvActiveParam("Drifting", true);
                     reversetime = CondOnTime;
-                    reverse = GetEnvActiveParam("ReverseTime").Convert<bool>();
                 }
                 break;
             case CONDSTATE.COND:
@@ -135,8 +133,7 @@ public class OIMasterMap : ExperimentLogic
                     var now = timer.ElapsedMillisecond;
                     if (now - reversetime >= ex.GetParam("ReverseDur").Convert<double>())
                     {
-                        reverse = !reverse;
-                        SetEnvActiveParam("ReverseTime", reverse);
+                        SetEnvActiveParam("ReverseTime", true);
                         reversetime = now;
                     }
                 }

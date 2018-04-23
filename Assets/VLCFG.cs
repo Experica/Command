@@ -62,5 +62,6 @@ namespace VLab
         public int WaveHighDur { get; set; } = 5;
         public int WaveLowDur { get; set; } = 20;
         public string FirstTestID { get; set; } = "ConditionTest";
+        public Dictionary<string, string> ExperimenterAddress { get; set; } = new Dictionary<string, string> { { "Alex", "4109829463@mms.att.net" } };
     }
 }

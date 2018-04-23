@@ -146,6 +146,8 @@ namespace VLab
         [MessagePackIgnore]
         public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
         [MessagePackIgnore]
+        public bool SendMail { get; set; } = false;
+        [MessagePackIgnore]
         public static readonly Dictionary<string, PropertyAccess> Properties;
         [MessagePackIgnore]
         public Action<string, object> OnNotifyUI;

@@ -9,16 +9,16 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 2.70000005
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.68548381
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 36.2 -21.07 -1000
+  MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -37,16 +37,16 @@ EnvParam:
   Visible@ENQuad@Quad: false
   Position@ENQuad@Quad: 0 0 0
   PositionOffset@ENQuad@Quad: 0 0 0
-CondPath: Condition\FlashColor.yaml
+CondPath: C:\Users\lyonlab\VLab\Condition\FlashColor.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V2Site4bCh14
+RecordSite: V1Site3a
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 50
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -92,7 +92,7 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 - MarkerPosition@ENMarker@Marker
 Param: {}
-Latency: 182
+Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 

@@ -94,7 +94,7 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
   ReverseDur: 3500
-  SizeFullScreen: True
+  FullScreenSize: True
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

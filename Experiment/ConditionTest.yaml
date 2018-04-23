@@ -9,14 +9,14 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 2.77999997
+Subject_Weight: 2.70000005
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam: {}
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
-RecordSession: E0
+RecordSession: test
 RecordSite: ''
 DataDir: X:\
 DataPath: 
@@ -49,3 +49,4 @@ TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
 CondTestShowLevel: NONE
+SendMail: false

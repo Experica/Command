@@ -9,16 +9,16 @@ Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 2.70000005
 Subject_Log: 
 EnvPath: Marker
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
   ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.78225815
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 38.33 -21.07 -1000
+  MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -26,13 +26,13 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V2Site4bCh22
+RecordSite: V1Site3a
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 30
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -78,7 +78,7 @@ EnvInheritParam:
 - Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: '[0.128, 0.249, 0.503]'
+  LaserPower: '[0.275, 0.55, 0.83]'
   LaserFreq: '[0.1, 40]'
   ICIFactor: 3
   LaserOnLatency: 3000

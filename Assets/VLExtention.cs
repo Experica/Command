@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 
 namespace VLab
 {
@@ -707,6 +709,26 @@ namespace VLab
         public static bool IsEnvCrossInheritTo(this Dictionary<string, Dictionary<string, List<string>>> rule, string to)
         {
             return rule.ContainsKey(to);
+        }
+
+        public static void Mail(this string to, string subject, string body)
+        {
+            if (string.IsNullOrEmpty(to)) return;
+            var smtp = new SmtpClient() { Host = "smtp.gmail.com", Port = 587, EnableSsl = true, Credentials = new NetworkCredential("vlabsys@gmail.com", "VLab$y$tem") };
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            smtp.Send("vlabsys@gmail.com", to, subject, body);
+        }
+
+        public static string GetAddresses(this string experimenter, VLCFG config)
+        {
+            string addresses = null;
+            if (string.IsNullOrEmpty(experimenter)) return addresses;
+            var al = experimenter.Split(',', ';').Where(i => config.ExperimenterAddress.ContainsKey(i)).Select(i => config.ExperimenterAddress[i]).ToArray();
+            if (al != null && al.Length > 0)
+            {
+                addresses = String.Join(",", al);
+            }
+            return addresses;
         }
 
     }
