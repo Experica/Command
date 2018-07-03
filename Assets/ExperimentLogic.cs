@@ -371,15 +371,15 @@ namespace VLab
         {
             if (ispause)
             {
-                OnBeginPauseExperiment();
+                OnBeginPauseExperiment?.Invoke();
                 PauseExperiment();
-                OnEndPauseExperiment();
+                OnEndPauseExperiment?.Invoke();
             }
             else
             {
-                OnBeginResumeExperiment();
+                OnBeginResumeExperiment?.Invoke();
                 ResumeExperiment();
-                OnEndResumeExpeirment();
+                OnEndResumeExpeirment?.Invoke();
             }
         }
 
@@ -401,15 +401,15 @@ namespace VLab
         {
             if (isstart)
             {
-                OnBeginStartExperiment();
+                OnBeginStartExperiment?.Invoke();
                 StartExperiment();
-                OnEndStartExperiment();
+                OnEndStartExperiment?.Invoke();
             }
             else
             {
-                OnBeginStopExperiment();
+                OnBeginStopExperiment?.Invoke();
                 StopExperiment();
-                OnEndStopExperiment();
+                OnEndStopExperiment?.Invoke();
             }
         }
 

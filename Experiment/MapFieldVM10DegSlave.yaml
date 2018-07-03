@@ -1,18 +1,22 @@
-ID: MapFieldH15D5DSSlave
-Name: MapFieldH15D5DSSlave
+ID: MapFieldVM10DegSlave
+Name: MapFieldVM10DegSlave
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
+Subject_ID: C1802
+Subject_Name: C1802
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 2.77999997
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
@@ -20,28 +24,24 @@ EnvParam:
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
-  Drifting@ENGratingQuad@GratingQuad: false
+  Drifting@ENGratingQuad@GratingQuad: true
   GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 157.5
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: 5 110 1
+  Size@ENGratingQuad@GratingQuad: 1 50 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: -15 0 0
-  PositionOffset@ENGratingQuad@GratingQuad: 7.5 0 0
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-CondPath: Condition\Ori8PositionXOffset15Deg5DegStep.yaml
+  Position@ENGratingQuad@GratingQuad: 0 0 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+CondPath: Condition\Ori2PositionXOffset10Deg.yaml
 Cond: 
 ExLogicPath: OIMasterMap
 RecordSession: E0
@@ -54,9 +54,9 @@ CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 0
+PreICI: 500
 CondDur: 0
-SufICI: 0
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -93,9 +93,11 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  ReverseDur: 3500
+  ReverseDur: 1000
+  FullScreenSize: False
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30
 CondTest: 
 CondTestShowLevel: FULL
+SendMail: true

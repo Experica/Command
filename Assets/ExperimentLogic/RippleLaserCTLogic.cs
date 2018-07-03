@@ -27,8 +27,7 @@ public class RippleLaserCTLogic : ExperimentLogic
 {
     ParallelPort pport1, pport2;
     ParallelPortWave ppw;
-    Omicron luxx473;
-    Cobolt mambo594;
+    ILaser laser;
     float power;
     List<string> factorpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
 
@@ -93,9 +92,8 @@ public class RippleLaserCTLogic : ExperimentLogic
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("Mark", OnOff.Off);
         pport1.SetBit(bit: config.ConditionCh, value: false);
-        luxx473 = new Omicron(config.SerialPort1);
-        mambo594 = new Cobolt(config.SerialPort2);
-        luxx473.LaserOn();
+        laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
+        laser.LaserOn();
         timer.Timeout(ex.GetParam("LaserOnLatency").Convert<int>());
 
         base.StartExperiment();
@@ -113,9 +111,8 @@ public class RippleLaserCTLogic : ExperimentLogic
         pport1.SetBit(bit: config.ConditionCh, value: false);
         base.StopExperiment();
 
-        luxx473.LaserOff();
-        luxx473.Dispose();
-        mambo594.Dispose();
+        laser.LaserOff();
+        laser.Dispose();
         timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
         pport1.BitPulse(bit: config.StopCh, duration_ms: 5);
         timer.Stop();
@@ -126,15 +123,12 @@ public class RippleLaserCTLogic : ExperimentLogic
         condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock),
             envmanager, factorpushexcept);
         power = (float)condmanager.finalcond["LaserPower"][condmanager.condidx];
-        luxx473.PowerRatio = power;
-        mambo594.PowerRatio = power;
+        laser.PowerRatio = power;
         if (power > 0)
         {
             var freq = (float)condmanager.finalcond["LaserFreq"][condmanager.condidx];
-            ppw.bitlatency_ms[config.SignalCh1] = ex.Latency;
-            ppw.SetBitFreq(config.SignalCh1, freq);
-            ppw.bitlatency_ms[config.SignalCh2] = ex.Latency;
-            ppw.SetBitFreq(config.SignalCh2, freq);
+            ppw.SetBitWave(config.SignalCh1, freq,ex.Latency);
+            ppw.SetBitWave(config.SignalCh2, freq,ex.Latency);
         }
     }
 

@@ -3,8 +3,8 @@ Name: OriSFPhase
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
+Subject_ID: C1802
+Subject_Name: C1802
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -16,13 +16,7 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.76520276
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.03 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  ScreenAspect@ENCamera@OrthoCamera: 1.66666663
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.699999988
@@ -37,8 +31,8 @@ EnvParam:
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
   Ori@ENGratingQuad@GratingQuad: 15
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: 2 2 1
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: 20 20 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
@@ -47,11 +41,17 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 23.57 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\OriSFPhase.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: E0
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -59,7 +59,7 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 15
 BlockRepeat: 1
 BlockParam:
-- ''
+- Ori
 Input: None
 PreICI: 0
 CondDur: 46

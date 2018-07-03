@@ -561,7 +561,7 @@ namespace VLab
         void NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
         {
             NotifyCondTest(startidx, notifyparam);
-            OnNotifyCondTestEnd(endtime);
+            OnNotifyCondTestEnd?.Invoke(endtime);
         }
 
         public void AddToCondTest(CONDTESTPARAM paramname, object paramvalue)

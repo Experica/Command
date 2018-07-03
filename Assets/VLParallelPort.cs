@@ -29,6 +29,8 @@ using System.Linq;
 using System.Threading;
 using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
+using MathNet.Numerics.Random;
+using MathNet.Numerics.Distributions;
 
 namespace VLab
 {
@@ -106,10 +108,10 @@ namespace VLab
 
     public class ParallelPort
     {
-        int dataaddress;
-        public int DataAddress { get { lock (lockobj) { return dataaddress; } } set { lock (lockobj) { dataaddress = value; } } }
-        public int StatusAddress { get { return DataAddress + 1; } }
-        public int ControlAddress { get { return DataAddress + 2; } }
+        uint dataaddress;
+        public uint DataAddress { get { lock (lockobj) { return dataaddress; } } set { lock (lockobj) { dataaddress = value; } } }
+        public uint StatusAddress { get { return DataAddress + 1; } }
+        public uint ControlAddress { get { return DataAddress + 2; } }
         ParallelPortDataMode datamode;
         public ParallelPortDataMode DataMode
         {
@@ -123,10 +125,10 @@ namespace VLab
                 }
             }
         }
-        int valuecache;
+        uint valuecache;
         object lockobj = new object();
 
-        public ParallelPort(int dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
+        public ParallelPort(uint dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
         {
             this.dataaddress = dataaddress;
             DataMode = datamode;
@@ -144,7 +146,7 @@ namespace VLab
             }
         }
 
-        public void Out(int data)
+        public void Out(uint data)
         {
             lock (lockobj)
             {
@@ -168,17 +170,17 @@ namespace VLab
             }
         }
 
-        public void SetBit(int bit = 0, bool value = true)
+        public void SetBit(uint bit = 0, bool value = true)
         {
             lock (lockobj)
             {
-                var t = value ? (1 << bit) : ~(1 << bit);
+                var t = value ? (1u << (int)bit) : ~(1u << (int)bit);
                 valuecache = value ? valuecache | t : valuecache & t;
                 Out(valuecache);
             }
         }
 
-        public void SetBits(int[] bits, bool[] values)
+        public void SetBits(uint[] bits, bool[] values)
         {
             lock (lockobj)
             {
@@ -189,7 +191,7 @@ namespace VLab
                     {
                         for (var i = 0; i < bs.Count(); i++)
                         {
-                            var t = values[i] ? (1 << bs[i]) : ~(1 << bs[i]);
+                            var t = values[i] ? (1u << (int)bs[i]) : ~(1u << (int)bs[i]);
                             valuecache = values[i] ? valuecache | t : valuecache & t;
                         }
                         Out(valuecache);
@@ -198,16 +200,16 @@ namespace VLab
             }
         }
 
-        public bool GetBit(int bit = 0)
+        public bool GetBit(uint bit = 0)
         {
             lock (lockobj)
             {
                 var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
-                return t[15 - bit] == '1' ? true : false;
+                return t[15 - (int)bit] == '1' ? true : false;
             }
         }
 
-        public bool[] GetBits(int[] bits)
+        public bool[] GetBits(uint[] bits)
         {
             lock (lockobj)
             {
@@ -220,7 +222,7 @@ namespace VLab
                         var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
                         foreach (var b in bs)
                         {
-                            vs.Add(t[15 - b] == '1' ? true : false);
+                            vs.Add(t[15 - (int)b] == '1' ? true : false);
                         }
                     }
                 }
@@ -228,7 +230,7 @@ namespace VLab
             }
         }
 
-        public void BitPulse(int bit = 0, double duration_ms = 1)
+        public void BitPulse(uint bit = 0, double duration_ms = 1)
         {
             lock (lockobj)
             {
@@ -242,10 +244,10 @@ namespace VLab
         void _BitPulse(object p)
         {
             var param = (List<object>)p;
-            BitPulse((int)param[0], (double)param[1]);
+            BitPulse((uint)param[0], (double)param[1]);
         }
 
-        public void ConcurrentBitPulse(int bit = 0, double duration_ms = 1)
+        public void ConcurrentBitPulse(uint bit = 0, double duration_ms = 1)
         {
             lock (lockobj)
             {
@@ -254,7 +256,7 @@ namespace VLab
             }
         }
 
-        public void BitsPulse(int[] bits, double[] durations_ms)
+        public void BitsPulse(uint[] bits, double[] durations_ms)
         {
             lock (lockobj)
             {
@@ -272,7 +274,7 @@ namespace VLab
             }
         }
 
-        public void ConcurrentBitsPulse(int[] bits, double[] durations_ms)
+        public void ConcurrentBitsPulse(uint[] bits, double[] durations_ms)
         {
             lock (lockobj)
             {
@@ -291,41 +293,73 @@ namespace VLab
         }
     }
 
+    public enum BitWave
+    {
+        HighLow,
+        PoissonSpike
+    }
+
     /// <summary>
     /// wave can be reliably delivered upon 10kHz
     /// </summary>
     public class ParallelPortWave
     {
-        public ParallelPort PPort;
+        ParallelPort pport;
+        float lowcutofffreq, highcutofffreq;
+        System.Random rng = new MersenneTwister(true);
 
-        ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
-        ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
-        ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
+        ConcurrentDictionary<uint, Thread> bitthread = new ConcurrentDictionary<uint, Thread>();
+        ConcurrentDictionary<uint, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<uint, ManualResetEvent>();
+        ConcurrentDictionary<uint, bool> bitthreadbreak = new ConcurrentDictionary<uint, bool>();
 
-        public ConcurrentDictionary<int, double> bitlatency_ms = new ConcurrentDictionary<int, double>();
-        public ConcurrentDictionary<int, double> bithighdur_ms = new ConcurrentDictionary<int, double>();
-        public ConcurrentDictionary<int, double> bitlowdur_ms = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> _bitfreq = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<uint, BitWave> bitwave = new ConcurrentDictionary<uint, BitWave>();
+        ConcurrentDictionary<uint, double> bitlatency_ms = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bitphase = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bithighdur_ms = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bitlowdur_ms = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bitspikerate = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bitspikewidth_ms = new ConcurrentDictionary<uint, double>();
+        ConcurrentDictionary<uint, double> bitrefreshperiod_ms = new ConcurrentDictionary<uint, double>();
 
-        public ParallelPortWave(ParallelPort pp)
+
+        public ParallelPortWave(ParallelPort pp, float lowcutofffreq = 0.00001f, float highcutofffreq = 10000f)
         {
-            PPort = pp;
+            pport = pp;
+            this.lowcutofffreq = lowcutofffreq;
+            this.highcutofffreq = highcutofffreq;
         }
 
-        public void SetBitFreq(int bit, double freq)
+        public void SetBitWave(uint bit, double highdur_ms, double lowdur_ms, double latency_ms = 0, double phase = 0)
         {
-            _bitfreq[bit] = freq;
-            var halfcycle = (1 / Math.Max(0.001, freq)) * 1000 / 2;
+
+            bitlatency_ms[bit] = latency_ms;
+            bitphase[bit] = phase;
+            bithighdur_ms[bit] = highdur_ms;
+            bitlowdur_ms[bit] = lowdur_ms;
+            bitwave[bit] = BitWave.HighLow;
+        }
+
+        public void SetBitWave(uint bit, float freq, double latency_ms = 0, double phase = 0)
+        {
+            bitlatency_ms[bit] = latency_ms;
+            bitphase[bit] = phase;
+            var halfcycle = (1.0 / Mathf.Clamp(freq, lowcutofffreq, highcutofffreq)) * 1000.0 / 2.0;
             bithighdur_ms[bit] = halfcycle;
             bitlowdur_ms[bit] = halfcycle;
+            bitwave[bit] = BitWave.HighLow;
         }
 
-        public double GetBitFreq(int bit)
+        public void SetBitWave(uint bit, double rate_sps, double spikewidth_ms = 2, double refreshperiod_ms = 2, double latency_ms = 0, double phase = 0)
         {
-            return _bitfreq[bit];
+            bitlatency_ms[bit] = latency_ms;
+            bitphase[bit] = phase;
+            bitspikerate[bit] = rate_sps / 1000;
+            bitspikewidth_ms[bit] = spikewidth_ms;
+            bitrefreshperiod_ms[bit] = refreshperiod_ms;
+            bitwave[bit] = BitWave.PoissonSpike;
         }
 
-        public void Start(params int[] bs)
+        public void Start(params uint[] bs)
         {
             var vbs = bitlatency_ms.Keys.Intersect(bs).ToArray();
             var vbn = vbs.Length;
@@ -351,7 +385,7 @@ namespace VLab
             }
         }
 
-        public void Stop(params int[] bs)
+        public void Stop(params uint[] bs)
         {
             var vbs = bitthread.Keys.Intersect(bs).ToArray();
             var vbn = vbs.Length;
@@ -365,59 +399,114 @@ namespace VLab
             }
         }
 
-        void BitWave(int bit)
+        public void StopAll()
+        {
+            Stop(bitthread.Keys.ToArray());
+        }
+
+        void ThreadBitWave(uint bit)
         {
             var timer = new VLTimer(); bool isbreakstarted;
             double start, breakstart = 0;
-        Break:
+            Break:
             bitthreadevent[bit].WaitOne();
             isbreakstarted = false;
             timer.Restart();
-            timer.Timeout(bitlatency_ms[bit]);
-            while (true)
+            switch (bitwave[bit])
             {
-                PPort.SetBit(bit);
-                start = timer.ElapsedMillisecond;
-                while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
-                {
-                    if (bitthreadbreak[bit])
+                case BitWave.HighLow:
+                    timer.Timeout(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
+                    while (true)
                     {
-                        if (!isbreakstarted)
+                        pport.SetBit(bit);
+                        start = timer.ElapsedMillisecond;
+                        while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
                         {
-                            breakstart = timer.ElapsedMillisecond;
-                            isbreakstarted = true;
+                            if (bitthreadbreak[bit])
+                            {
+                                if (!isbreakstarted)
+                                {
+                                    breakstart = timer.ElapsedMillisecond;
+                                    isbreakstarted = true;
+                                }
+                                if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
+                                {
+                                    pport.SetBit(bit, false);
+                                    goto Break;
+                                }
+                            }
                         }
-                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                        {
-                            PPort.SetBit(bit, false);
-                            goto Break;
-                        }
-                    }
-                }
 
-                PPort.SetBit(bit, false);
-                start = timer.ElapsedMillisecond;
-                while ((timer.ElapsedMillisecond - start) < bitlowdur_ms[bit])
-                {
-                    if (bitthreadbreak[bit])
-                    {
-                        if (!isbreakstarted)
+                        pport.SetBit(bit, false);
+                        start = timer.ElapsedMillisecond;
+                        while ((timer.ElapsedMillisecond - start) < bitlowdur_ms[bit])
                         {
-                            breakstart = timer.ElapsedMillisecond;
-                            isbreakstarted = true;
-                        }
-                        if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                        {
-                            goto Break;
+                            if (bitthreadbreak[bit])
+                            {
+                                if (!isbreakstarted)
+                                {
+                                    breakstart = timer.ElapsedMillisecond;
+                                    isbreakstarted = true;
+                                }
+                                if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
+                                {
+                                    goto Break;
+                                }
+                            }
                         }
                     }
-                }
+                case BitWave.PoissonSpike:
+                    timer.Timeout(bitlatency_ms[bit] + bitphase[bit] / bitspikerate[bit]);
+                    var isid = new Exponential(bitspikerate[bit], rng);
+                    while (true)
+                    {
+                        var i = isid.Sample();
+                        if (i > bitrefreshperiod_ms[bit])
+                        {
+                            start = timer.ElapsedMillisecond;
+                            while ((timer.ElapsedMillisecond - start) < i)
+                            {
+                                if (bitthreadbreak[bit])
+                                {
+                                    if (!isbreakstarted)
+                                    {
+                                        breakstart = timer.ElapsedMillisecond;
+                                        isbreakstarted = true;
+                                    }
+                                    if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
+                                    {
+                                        goto Break;
+                                    }
+                                }
+                            }
+
+                            pport.SetBit(bit);
+                            start = timer.ElapsedMillisecond;
+                            while ((timer.ElapsedMillisecond - start) < bitspikewidth_ms[bit])
+                            {
+                                if (bitthreadbreak[bit])
+                                {
+                                    if (!isbreakstarted)
+                                    {
+                                        breakstart = timer.ElapsedMillisecond;
+                                        isbreakstarted = true;
+                                    }
+                                    if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
+                                    {
+                                        pport.SetBit(bit, false);
+                                        goto Break;
+                                    }
+                                }
+                            }
+                            pport.SetBit(bit, false);
+                        }
+                    }
             }
         }
 
         void _BitWave(object p)
         {
-            BitWave((int)p);
+            ThreadBitWave((uint)p);
         }
     }
 }

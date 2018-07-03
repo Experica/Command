@@ -3,8 +3,8 @@ Name: RFBarX12Deg
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
+Subject_ID: C1802
+Subject_Name: C1802
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
@@ -16,16 +16,16 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.78225815
+  ScreenAspect@ENCamera@OrthoCamera: 1.66666663
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.28 -13.74 -1000
+  MarkerPosition@ENMarker@Marker: 23.57 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Rotation@ENQuad@Quad: 0 0 0
   RotationOffset@ENQuad@Quad: 0 0 0
-  Ori@ENQuad@Quad: 112.5
+  Ori@ENQuad@Quad: 45
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: 2 2 1
@@ -40,8 +40,8 @@ EnvParam:
 CondPath: Condition\PositionXOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: E0
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

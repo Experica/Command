@@ -27,7 +27,23 @@ using System.Linq;
 
 namespace VLab
 {
-    public class Omicron : IDisposable
+    public enum Laser
+    {
+        Omicron,
+        Cobolt
+    }
+
+    public interface ILaser : IDisposable
+    {
+        Laser Type { get; }
+        void PowerOn();
+        void PowerOff();
+        void LaserOn();
+        void LaserOff();
+        float? PowerRatio { get; set; }
+    }
+
+    public class Omicron : ILaser
     {
         bool disposed = false;
         SerialPort sp;
@@ -102,6 +118,8 @@ namespace VLab
             }
         }
 
+        public Laser Type { get { return Laser.Omicron; } }
+
         /// <summary>
         /// Turn on laser in 30-150ms
         /// </summary>
@@ -158,7 +176,7 @@ namespace VLab
         }
     }
 
-    public class Cobolt : IDisposable
+    public class Cobolt : ILaser
     {
         bool disposed = false;
         SerialPort sp;
@@ -243,6 +261,8 @@ namespace VLab
             }
         }
 
+        public Laser Type { get { return Laser.Cobolt; } }
+
         public float Power
         {
             set
@@ -274,12 +294,22 @@ namespace VLab
 
         public void LaserOn()
         {
-            var r = cmdresp("l1", timeout, false);
+            sp.WriteLine("l1");
+            //var r = cmdresp("l1", timeout, false);
         }
 
         public void LaserOff()
         {
-            var r = cmdresp("l0", timeout, false);
+            sp.WriteLine("l0");
+            //var r = cmdresp("l0", timeout, false);
+        }
+
+        public void PowerOn()
+        {
+        }
+
+        public void PowerOff()
+        {
         }
 
         public float? PowerRatio

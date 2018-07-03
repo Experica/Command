@@ -114,16 +114,19 @@ public class OIMasterMap : ExperimentLogic
             case CONDSTATE.NONE:
                 if (start)
                 {
-                    CondState = CONDSTATE.PREICI;
                     SetEnvActiveParam("Drifting", false);
-                    SetEnvActiveParam("Visible", true);
+                    if (go)
+                    {
+                        CondState = CONDSTATE.PREICI;
+                    }
                 }
                 break;
             case CONDSTATE.PREICI:
-                if (go)
+                if (go && PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
                     SetEnvActiveParam("Drifting", true);
+                    SetEnvActiveParam("Visible", true);
                     reversetime = CondOnTime;
                 }
                 break;
@@ -133,7 +136,7 @@ public class OIMasterMap : ExperimentLogic
                     var now = timer.ElapsedMillisecond;
                     if (now - reversetime >= ex.GetParam("ReverseDur").Convert<double>())
                     {
-                        SetEnvActiveParam("ReverseTime", true);
+                        SetEnvActiveParam("ReverseTime", !GetEnvActiveParam("ReverseTime").Convert<bool>());
                         reversetime = now;
                     }
                 }

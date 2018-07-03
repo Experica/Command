@@ -1,5 +1,5 @@
-ID: MapOri8Slave
-Name: MapOri8Slave
+ID: MapFieldHM10DegSlave
+Name: MapFieldHM10DegSlave
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -29,10 +29,10 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 45
+  Ori@ENGratingQuad@GratingQuad: 90
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 41.28 30.96 1
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 60 1 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
@@ -40,8 +40,8 @@ EnvParam:
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
-  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori8.yaml
+  PositionOffset@ENGratingQuad@GratingQuad: 0 -6 0
+CondPath: Condition\Ori2PositionYOffset10Deg.yaml
 Cond: 
 ExLogicPath: OIMasterMap
 RecordSession: E0
@@ -94,7 +94,7 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
   ReverseDur: 1000
-  FullScreenSize: True
+  FullScreenSize: False
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 30

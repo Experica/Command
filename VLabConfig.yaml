@@ -7,7 +7,6 @@ ExLogic: ConditionTestLogic
 EnvCrossInheritRulePath: EnvCrossInheritRule.yaml
 NotifyParams:
 - CondIndex
-- CondRepeat
 - CONDSTATE
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
@@ -34,18 +33,14 @@ ParallelPort3: 53264
 StartCh: 2
 StopCh: 3
 ConditionCh: 0
-SignalCh1: 1
-SignalCh2: 4
-SignalCh3: 5
+SignalCh1: 0
+SignalCh2: 1
+SignalCh3: 2
 OICh: 0
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
-MarkPulseWidth: 24
-WaveHighDur: 5
-WaveLowDur: 20
+MarkPulseWidth: 21
 FirstTestID: ConditionTest
 ExperimenterAddress:
   Alex: 4109829463@mms.att.net
-  Leo: 2033004292@mms.att.net
-  Andrzej: andrzejfoik@gmail.com

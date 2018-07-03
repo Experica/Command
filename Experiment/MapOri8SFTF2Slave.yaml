@@ -1,28 +1,22 @@
-ID: Laser
-Name: Laser
+ID: MapOri8SFTF2Slave
+Name: MapOri8SFTF2Slave
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Alex
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
-Subject_Species: Long Evans Rat
+Subject_ID: C1802
+Subject_Name: C1802
+Subject_Species: Domestic Cat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 3
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: Grating
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
@@ -31,39 +25,38 @@ EnvParam:
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 135
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 41.28 30.96 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
-CondPath: ''
+CondPath: Condition\Ori8SFTF2.yaml
 Cond: 
-ExLogicPath: RippleLaserLogic
-RecordSession: V1
-RecordSite: 1000
+ExLogicPath: OIMasterMap
+RecordSession: E0
+RecordSite: ''
 DataDir: X:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Manual
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 30
-BlockRepeat: 0
-BlockParam:
-- ''
+CondRepeat: 100
+BlockRepeat: 1
+BlockParam: []
 Input: None
 PreICI: 500
-CondDur: 1000
-SufICI: 3000
+CondDur: 0
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -72,7 +65,7 @@ BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 2
+NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - CONDSTATE
@@ -89,35 +82,22 @@ ExInheritParam:
 - DataDir
 - Experimenter
 - Latency
-- Delay
 - TimerDriftSpeed
+- Delay
 EnvInheritParam:
+- MarkerSize@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
-- MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
 - MarkOnColor@ENMarker@Marker
 - MarkOffColor@ENMarker@Marker
-- Marker@Showroom@ShowroomManager
 - ScreenAspect@ENCamera@OrthoCamera
-- SpatialFreq@ENGratingQuad@GratingQuad
-- TemporalFreq@ENGratingQuad@GratingQuad
-- Ori@ENGratingQuad@GratingQuad
-- Diameter@ENGratingQuad@GratingQuad
-- Position@ENGratingQuad@GratingQuad
 Param:
-  LaserPower: '[0.275, 0.53]'
-  LaserFreq: '[0 5000 0 0, 0 5 20 0, 0 50 2 2]'
-  ICIFactor: 2
-  LaserOnLatency: 3000
-  Laser: ''
-  WithVisible: True
-  Laser2: mambo594
-  LaserPower2: '[0.3, 0.5]'
-  LaserFreq2: '[0 40 0 0, 0 5 25 0]'
-Latency: 180
+  ReverseDur: 1000
+  FullScreenSize: True
+Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 20
+Delay: 30
 CondTest: 
 CondTestShowLevel: FULL
-SendMail: false
+SendMail: true

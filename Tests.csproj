@@ -705,6 +705,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Tests\VLConvertTests.cs" />
     <Compile Include="Assets\Tests\VLYamlTests.cs" />
   </ItemGroup>
   <ItemGroup>

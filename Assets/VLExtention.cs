@@ -84,12 +84,17 @@ namespace VLab
         {
             lock (apilock)
             {
+                if (value == null)
+                {
+                    return null;
+                }
                 Type VT = value.GetType();
                 if (VT == CT)
                 {
                     return value;
                 }
-                else if (VT == TFloat)
+
+                if (VT == TFloat)
                 {
                     var v = (float)value;
                     if (CT == TString)
@@ -731,5 +736,16 @@ namespace VLab
             return addresses;
         }
 
+        public static ILaser GetLaser(this string lasername, VLCFG config)
+        {
+            switch (lasername)
+            {
+                case "luxx473":
+                    return new Omicron(config.SerialPort1);
+                case "mambo594":
+                    return new Cobolt(config.SerialPort2);
+            }
+            return null;
+        }
     }
 }

@@ -160,10 +160,8 @@ public class RippleLaserImageLogic : ExperimentLogic
                     if (power > 0)
                     {
                         var freq = condmanager.finalblockcond["LaserFreq"][condmanager.blockidx].Convert<float>();
-                        ppw.bitlatency_ms[config.SignalCh1] = ex.Latency;
-                        ppw.SetBitFreq(config.SignalCh1, freq);
-                        ppw.bitlatency_ms[config.SignalCh2] = ex.Latency;
-                        ppw.SetBitFreq(config.SignalCh2, freq);
+                        ppw.SetBitWave(config.SignalCh1, freq,ex.Latency);
+                        ppw.SetBitWave(config.SignalCh2, freq,ex.Latency);
                     }
                 }
                 break;

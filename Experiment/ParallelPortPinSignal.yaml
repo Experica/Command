@@ -1,0 +1,62 @@
+ID: ParallelPortPinSignal
+Name: ParallelPortPinSignal
+Designer: Alex
+Experimenter: Alex
+Log: 
+Subject_ID: C1802
+Subject_Name: C1802
+Subject_Species: Domestic Cat
+Subject_Gender: Female
+Subject_Age: 0
+Subject_Size: 0 0 0
+Subject_Weight: 3
+Subject_Log: 
+EnvPath: Marker
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: Off
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+CondPath: ''
+Cond: 
+ExLogicPath: ParallelPortPinSignal
+RecordSession: ''
+RecordSite: ''
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 0
+BlockRepeat: 0
+BlockParam: []
+Input: None
+PreICI: 100
+CondDur: 300
+SufICI: 100
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- CONDSTATE
+ExInheritParam: []
+EnvInheritParam: []
+Param: {}
+Latency: 22
+TimerDriftSpeed: 3.0199999999999999E-05
+Delay: 30
+CondTest: 
+CondTestShowLevel: NONE
+SendMail: false

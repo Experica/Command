@@ -21,6 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
 using System;
+using UnityEngine;
 
 public class ParallelPortPinSignal : ExperimentLogic
 {
@@ -35,11 +36,14 @@ public class ParallelPortPinSignal : ExperimentLogic
 
     public override void PrepareCondition(bool regenerateconditon = true)
     {
-        for (var i = 0; i < 8; i++)
+        for (uint i = 0; i < 8; i++)
         {
-            ppw.bitlatency_ms[i] = 0;
-            ppw.SetBitFreq(i, Math.Pow(2, i));
+            // Square Wave
+            ppw.SetBitWave(i, Mathf.Pow(2, i));
         }
+        // Poisson Spike Train
+        ppw.SetBitWave(0, 50, 2, 2, 0, 0);
+        ppw.SetBitWave(1, 100, 2, 2, 0, 0);
     }
 
     protected override void StartExperiment()

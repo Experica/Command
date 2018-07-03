@@ -1,15 +1,15 @@
-ID: MapOri8SF3Slave
-Name: MapOri8SF3Slave
+ID: MapOri4SFTF2Slave
+Name: MapOri4SFTF2Slave
 Designer: Alex
-Experimenter: Alex,Andrzej
+Experimenter: Alex
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
+Subject_ID: C1802
+Subject_Name: C1802
 Subject_Species: Domestic Cat
 Subject_Gender: Female
 Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 2.70000005
+Subject_Weight: 3
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
@@ -19,8 +19,8 @@ EnvParam:
   ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@ENGratingQuad@GratingQuad: 3
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
@@ -29,7 +29,7 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 135
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 2
   Size@ENGratingQuad@GratingQuad: 41.28 30.96 1
@@ -41,10 +41,10 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori8SF3.yaml
+CondPath: Condition\Ori4SFTF2.yaml
 Cond: 
 ExLogicPath: OIMasterMap
-RecordSession: test
+RecordSession: E0
 RecordSite: ''
 DataDir: X:\
 DataPath: 
@@ -54,9 +54,9 @@ CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 0
+PreICI: 500
 CondDur: 0
-SufICI: 0
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -93,7 +93,7 @@ EnvInheritParam:
 - MarkOffColor@ENMarker@Marker
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  ReverseDur: 3500
+  ReverseDur: 1000
   FullScreenSize: True
 Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
