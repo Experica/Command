@@ -23,10 +23,24 @@ using VLab;
 
 public class ConditionTestLogic : ExperimentLogic
 {
+    ParallelPort pport;
+
+    public override void OnStart()
+    {
+        pport = new ParallelPort(dataaddress: config.ParallelPort1);
+    }
+
+    protected override void StartExperiment()
+    {
+        pport.SetBit(bit: config.ConditionCh, value: false);
+        base.StartExperiment();
+    }
+
     protected override void StopExperiment()
     {
         SetEnvActiveParam("Visible", true);
         SetEnvActiveParam("Mark", OnOff.Off);
+        pport.SetBit(bit: config.ConditionCh, value: false);
         base.StopExperiment();
     }
 
@@ -72,10 +86,12 @@ public class ConditionTestLogic : ExperimentLogic
                                     {
                                         // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
                                         SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
+                                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
                                     }
                                     else // ICI Mode
                                     {
                                         SetEnvActiveParam("Mark", OnOff.On);
+                                        pport.SetBit(bit: config.ConditionCh, value: true);
                                     }
                                 }
                                 break;
@@ -90,6 +106,7 @@ public class ConditionTestLogic : ExperimentLogic
                                     {
                                         SetEnvActiveParam("Visible", false);
                                         SetEnvActiveParam("Mark", OnOff.Off);
+                                        pport.SetBit(bit: config.ConditionCh, value: false);
                                     }
                                 }
                                 break;

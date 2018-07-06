@@ -35,7 +35,7 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 47.8055611
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 20
   Size@ENGratingQuad@GratingQuad: 20 20 1
@@ -45,18 +45,18 @@ EnvParam:
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 0 0 0
+  Position@ENGratingQuad@GratingQuad: 6.49 -2.694 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserLogic
-RecordSession: V1
+RecordSession: V1a
 RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 30
+CondRepeat: 10
 BlockRepeat: 0
 BlockParam:
 - ''
@@ -107,15 +107,15 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 Param:
   LaserPower: '[0.275, 0.53]'
-  LaserFreq: '[0 5000 0 0, 0 5 20 0, 0 50 2 2]'
+  LaserFreq: '[0 50 0 0, 0 5 20 0, 0 50 2 2]'
   ICIFactor: 2
   LaserOnLatency: 3000
-  Laser: ''
+  Laser: luxx473
   WithVisible: True
-  Laser2: mambo594
-  LaserPower2: '[0.3, 0.5]'
-  LaserFreq2: '[0 40 0 0, 0 5 25 0]'
-Latency: 180
+  Laser2: ''
+  LaserPower2: '[0.3]'
+  LaserFreq2: '[0 5 45 0, 0 25 25 0, 0 20 5 5]'
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 20
 CondTest: 

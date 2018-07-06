@@ -25,32 +25,32 @@ EnvParam:
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 1
-  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 5
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
+  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 47.8055611
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: 2 2 1
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: 20 20 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: None
+  MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: true
-  Position@ENGratingQuad@GratingQuad: 0 0 0
+  Position@ENGratingQuad@GratingQuad: 6.49 -2.694 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
-RecordSession: V1
+RecordSession: V1a
 RecordSite: 1000
 DataDir: X:\
 DataPath: 
@@ -60,9 +60,9 @@ CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
 Input: Joystick
-PreICI: 100
-CondDur: 300
-SufICI: 100
+PreICI: 0
+CondDur: 46
+SufICI: 0
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -78,7 +78,7 @@ NotifyParam:
 ExInheritParam: []
 EnvInheritParam: []
 Param: {}
-Latency: 180
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
 Delay: 20
 CondTest: 

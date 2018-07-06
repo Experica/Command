@@ -1,23 +1,19 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1802
-Subject_Name: C1802
-Subject_Species: Domestic Cat
+Subject_ID: LZR1801
+Subject_Name: LZR1801
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.66666663
-  Image@ENImageQuad@ImageQuad: 1
+  Image@ENImageQuad@ImageQuad: 8180
   ImageSet@ENImageQuad@ImageQuad: Imageset_B_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
   Rotation@ENImageQuad@ImageQuad: 0 0 0
@@ -31,11 +27,15 @@ EnvParam:
   MaskRadius@ENImageQuad@ImageQuad: 0.5
   Sigma@ENImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ENImageQuad@ImageQuad: true
-  Visible@ENImageQuad@ImageQuad: true
-  Position@ENImageQuad@ImageQuad: 0 0 0
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: 6.49 -2.694 0
   PositionOffset@ENImageQuad@ImageQuad: 0 0 0
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 23.57 -13.74 -1000
+  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: Off
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -43,8 +43,8 @@ EnvParam:
 CondPath: ''
 Cond: 
 ExLogicPath: RippleImageLogic
-RecordSession: E0
-RecordSite: ''
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -101,8 +101,9 @@ EnvInheritParam:
 Param:
   NumOfImage: 24000
   PreLoadImageLatency: 4000
-Latency: 22
+Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+Delay: 20
 CondTest: 
 CondTestShowLevel: SHORT
+SendMail: false
