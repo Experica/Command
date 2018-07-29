@@ -20,7 +20,6 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
-using System;
 using UnityEngine;
 
 public class ParallelPortPinSignal : ExperimentLogic
@@ -28,7 +27,7 @@ public class ParallelPortPinSignal : ExperimentLogic
     ParallelPort pport;
     ParallelPortWave ppw;
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         pport = new ParallelPort(config.ParallelPort2);
         ppw = new ParallelPortWave(pport);
@@ -44,17 +43,12 @@ public class ParallelPortPinSignal : ExperimentLogic
         // Poisson Spike Train
         ppw.SetBitWave(0, 50, 2, 2, 0, 0);
         ppw.SetBitWave(1, 100, 2, 2, 0, 0);
-    }
 
-    protected override void StartExperiment()
-    {
-        base.StartExperiment();
         ppw.Start(0, 1, 2, 3, 4, 5, 6, 7);
     }
 
-    protected override void StopExperiment()
+    protected override void OnStopExperiment()
     {
         ppw.Stop(0, 1, 2, 3, 4, 5, 6, 7);
-        base.StopExperiment();
     }
 }

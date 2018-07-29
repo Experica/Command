@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "VLAB/maskgrating"
+﻿Shader "VLAB/maskgrating"
 {
 	Properties
 	{
@@ -21,7 +19,7 @@ Shader "VLAB/maskgrating"
 		masktype("MaskType",Int) = 0
 	}
 
-		SubShader
+	SubShader
 	{
 		Tags{ "RenderType" = "Transparent" "Queue" = "Transparent"}
 		Blend SrcAlpha OneMinusSrcAlpha

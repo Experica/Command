@@ -41,12 +41,6 @@ namespace VLab
         DiskFade
     }
 
-    public enum OnOff
-    {
-        On,
-        Off
-    }
-
     public enum Corner
     {
         TopLeft,

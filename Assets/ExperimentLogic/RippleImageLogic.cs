@@ -23,18 +23,11 @@ using VLab;
 using System.Collections.Generic;
 using System.Linq;
 
-public class RippleImageLogic : ExperimentLogic
+public class RippleImageLogic : RippleCTLogic
 {
-    ParallelPort pport;
     float diameter;
 
-    public override void OnStart()
-    {
-        pport = new ParallelPort(dataaddress: config.ParallelPort1);
-        recorder = new RippleRecorder();
-    }
-
-    public override void GenerateFinalCondition()
+    protected override void GenerateFinalCondition()
     {
         var cond = new Dictionary<string, List<object>>
         {
@@ -43,12 +36,9 @@ public class RippleImageLogic : ExperimentLogic
         condmanager.FinalizeCondition(cond);
     }
 
-    protected override void StartExperiment()
+    protected override void OnStartExperiment()
     {
-        SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StartExperiment();
+        base.OnStartExperiment();
         var mt = (MaskType)GetEnvActiveParam("MaskType");
         if (mt == MaskType.DiskFade || mt == MaskType.Disk)
         {
@@ -56,77 +46,24 @@ public class RippleImageLogic : ExperimentLogic
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
+    }
+
+    protected override void StartExperimentTimeSync()
+    {
         envmanager.InvokeActiveRPC("RpcPreLoadImageset", new object[] { 1, ex.GetParam("NumOfImage").Convert<int>() });
         recorder.RecordPath = ex.GetDataPath();
         timer.Timeout(config.NotifyLatency + ex.GetParam("PreLoadImageLatency").Convert<int>());
-        pport.BitPulse(bit: config.StartCh, duration_ms: 5);
+        pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
         timer.Restart();
     }
 
-    protected override void StopExperiment()
+    protected override void OnExperimentStopped()
     {
-        SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StopExperiment();
+        base.OnExperimentStopped();
         var mt = (MaskType)GetEnvActiveParam("MaskType");
         if (mt == MaskType.DiskFade || mt == MaskType.Disk)
         {
             SetEnvActiveParam("Diameter", diameter);
-        }
-        timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
-        pport.BitPulse(bit: config.StopCh, duration_ms: 5);
-        timer.Stop();
-    }
-
-    public override void Logic()
-    {
-        switch (CondState)
-        {
-            case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false);
-                SetEnvActiveParam("Mark", OnOff.Off);
-                CondState = CONDSTATE.PREICI;
-                break;
-            case CONDSTATE.PREICI:
-                if (PreICIHold >= ex.PreICI)
-                {
-                    CondState = CONDSTATE.COND;
-                    SetEnvActiveParam("Visible", true);
-                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                    {
-                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
-                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Mark", OnOff.On);
-                        pport.SetBit(bit: config.ConditionCh, value: true);
-                    }
-                }
-                break;
-            case CONDSTATE.COND:
-                if (CondHold >= ex.CondDur)
-                {
-                    CondState = CONDSTATE.SUFICI;
-                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                    {
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Visible", false);
-                        SetEnvActiveParam("Mark", OnOff.Off);
-                        pport.SetBit(bit: config.ConditionCh, value: false);
-                    }
-                }
-                break;
-            case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI)
-                {
-                    CondState = CONDSTATE.PREICI;
-                }
-                break;
         }
     }
 }

@@ -20,25 +20,17 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using VLab;
-using System.Collections.Generic;
-using System.Linq;
 
-public class RippleCTLogic : ExperimentLogic
+public class RippleCTLogic : ConditionTestLogic
 {
-    ParallelPort pport;
-
-    public override void OnStart()
+    protected override void OnStart()
     {
         pport = new ParallelPort(dataaddress: config.ParallelPort1);
         recorder = new RippleRecorder();
     }
 
-    protected override void StartExperiment()
+    protected override void StartExperimentTimeSync()
     {
-        SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StartExperiment();
         recorder.RecordPath = ex.GetDataPath();
         /* 
         Ripple recorder set path through network and Trellis receive
@@ -46,12 +38,12 @@ public class RippleCTLogic : ExperimentLogic
         Trigger record TTL before file path change completion will
         not successfully start recording.
 
-        VLab online analysis also need time to clear signal buffer,
+        VLabAnalysis also need time to clear signal buffer,
         otherwise the delayed action may clear the start TTL pluse which is
         needed to mark the start time of VLab.
         */
         timer.Timeout(config.NotifyLatency);
-        pport.BitPulse(bit: config.StartCh, duration_ms: 5);
+        pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
         in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
@@ -59,57 +51,37 @@ public class RippleCTLogic : ExperimentLogic
         timer.Restart();
     }
 
-    protected override void StopExperiment()
+    protected override void StopExperimentTimeSync()
     {
-        SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StopExperiment();
         // Tail period to make sure lagged effect data is recorded before stop recording
-        timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
-        pport.BitPulse(bit: config.StopCh, duration_ms: 5);
+        timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+        pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
         timer.Stop();
     }
 
-    public override void Logic()
+    protected override void Logic()
     {
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                SetEnvActiveParam("Visible", false);
-                SetEnvActiveParam("Mark", OnOff.Off);
                 CondState = CONDSTATE.PREICI;
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     CondState = CONDSTATE.COND;
+                    SyncEvent(CONDSTATE.COND.ToString());
                     SetEnvActiveParam("Visible", true);
-                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                    {
-                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
-                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
-                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
-                    }
-                    else // ICI Mode
-                    {
-                        SetEnvActiveParam("Mark", OnOff.On);
-                        pport.SetBit(bit: config.ConditionCh, value: true);
-                    }
                 }
                 break;
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
                     CondState = CONDSTATE.SUFICI;
-                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                    if (ex.PreICI != 0 || ex.SufICI != 0)
                     {
-                    }
-                    else // ICI Mode
-                    {
+                        SyncEvent(CONDSTATE.SUFICI.ToString());
                         SetEnvActiveParam("Visible", false);
-                        SetEnvActiveParam("Mark", OnOff.Off);
-                        pport.SetBit(bit: config.ConditionCh, value: false);
                     }
                 }
                 break;

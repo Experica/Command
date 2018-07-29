@@ -23,28 +23,57 @@ using VLab;
 
 public class ConditionTestLogic : ExperimentLogic
 {
-    ParallelPort pport;
+    protected ParallelPort pport;
+    protected bool syncvalue;
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         pport = new ParallelPort(dataaddress: config.ParallelPort1);
     }
 
-    protected override void StartExperiment()
+    protected override void OnStartExperiment()
     {
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StartExperiment();
+        SetEnvActiveParam("Visible", false);
+        SyncEvent();
     }
 
-    protected override void StopExperiment()
+    protected override void OnExperimentStopped()
     {
-        SetEnvActiveParam("Visible", true);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport.SetBit(bit: config.ConditionCh, value: false);
-        base.StopExperiment();
+        SetEnvActiveParam("Visible", false);
+        SyncEvent();
     }
 
-    public override void Logic()
+    protected virtual void SyncEvent(string e = "")
+    {
+        var esp = ex.EventSyncProtocol;
+        if (esp.SyncMethods == null || esp.SyncMethods.Count == 0) return;
+        bool addtosynclist = false;
+        bool syncreset = string.IsNullOrEmpty(e) ? true : false;
+
+        if (esp.nSyncChannel == 1 && esp.nSyncpEvent == 1)
+        {
+            syncvalue = syncreset ? false : !syncvalue;
+            addtosynclist = syncreset ? false : true;
+            for (var i = 0; i < esp.SyncMethods.Count; i++)
+            {
+                switch (esp.SyncMethods[i])
+                {
+                    case SyncMethod.Display:
+                        SetEnvActiveParam("Mark", syncvalue);
+                        break;
+                    case SyncMethod.ParallelPort:
+                        pport.SetBit(bit: config.EventSyncCh, value: syncvalue);
+                        break;
+                }
+            }
+        }
+        if (addtosynclist)
+        {
+            condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
+        }
+    }
+
+    protected override void Logic()
     {
         switch (BlockState)
         {
@@ -73,40 +102,26 @@ public class ConditionTestLogic : ExperimentLogic
                         switch (CondState)
                         {
                             case CONDSTATE.NONE:
-                                SetEnvActiveParam("Visible", false);
-                                SetEnvActiveParam("Mark", OnOff.Off);
                                 CondState = CONDSTATE.PREICI;
                                 break;
                             case CONDSTATE.PREICI:
                                 if (PreICIHold >= ex.PreICI)
                                 {
+                                    // State transition: PREICI -> COND
                                     CondState = CONDSTATE.COND;
+                                    SyncEvent(CONDSTATE.COND.ToString());
                                     SetEnvActiveParam("Visible", true);
-                                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                                    {
-                                        // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
-                                        SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
-                                        pport.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
-                                    }
-                                    else // ICI Mode
-                                    {
-                                        SetEnvActiveParam("Mark", OnOff.On);
-                                        pport.SetBit(bit: config.ConditionCh, value: true);
-                                    }
                                 }
                                 break;
                             case CONDSTATE.COND:
                                 if (CondHold >= ex.CondDur)
                                 {
+                                    // State transition: COND -> SUFICI
                                     CondState = CONDSTATE.SUFICI;
-                                    if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
+                                    if (ex.PreICI != 0 || ex.SufICI != 0)
                                     {
-                                    }
-                                    else // ICI Mode
-                                    {
+                                        SyncEvent(CONDSTATE.SUFICI.ToString());
                                         SetEnvActiveParam("Visible", false);
-                                        SetEnvActiveParam("Mark", OnOff.Off);
-                                        pport.SetBit(bit: config.ConditionCh, value: false);
                                     }
                                 }
                                 break;

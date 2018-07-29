@@ -82,7 +82,7 @@ namespace VLab
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.CONDSTATE, value.ToString(), PreICIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreICIOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREICI)
                     {
@@ -97,12 +97,12 @@ namespace VLab
                         }
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                             if (condmanager.nblock > 1)
                             {
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
                             }
                         }
                     }
@@ -111,7 +111,7 @@ namespace VLab
                     CondOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.CONDSTATE, value.ToString(), CondOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), CondOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                     {
@@ -126,12 +126,12 @@ namespace VLab
                         }
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                             if (condmanager.nblock > 1)
                             {
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
                             }
                         }
                     }
@@ -140,7 +140,7 @@ namespace VLab
                     SufICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.CONDSTATE, value.ToString(), SufICIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufICIOnTime);
                     }
                     break;
             }
@@ -171,7 +171,7 @@ namespace VLab
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.TRIALSTATE, value.ToString(), PreITIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreITIOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREITI)
                     {
@@ -186,12 +186,12 @@ namespace VLab
                         }
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                             if (condmanager.nblock > 1)
                             {
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
                             }
                         }
                     }
@@ -200,7 +200,7 @@ namespace VLab
                     TrialOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.TRIALSTATE, value.ToString(), TrialOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), TrialOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.TRIAL)
                     {
@@ -215,12 +215,12 @@ namespace VLab
                         }
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.AddToCondTest(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
                             if (condmanager.nblock > 1)
                             {
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.AddToCondTest(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
                             }
                         }
                     }
@@ -229,7 +229,7 @@ namespace VLab
                     SufITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.TRIALSTATE, value.ToString(), SufITIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufITIOnTime);
                     }
                     break;
             }
@@ -256,27 +256,27 @@ namespace VLab
                     PreIBIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.BLOCKSTATE, value.ToString(), PreIBIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreIBIOnTime);
                     }
                     break;
                 case BLOCKSTATE.BLOCK:
                     BlockOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.BLOCKSTATE, value.ToString(), BlockOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), BlockOnTime);
                     }
                     break;
                 case BLOCKSTATE.SUFIBI:
                     SufIBIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddEventToCondTest(CONDTESTPARAM.BLOCKSTATE, value.ToString(), SufIBIOnTime);
+                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufIBIOnTime);
                     }
                     break;
             }
         }
 
-        public virtual void GenerateFinalCondition()
+        protected virtual void GenerateFinalCondition()
         {
             condmanager.GenerateFinalCondition(ex.CondPath);
         }
@@ -294,7 +294,7 @@ namespace VLab
             OnConditionPrepared?.Invoke();
         }
 
-        public virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
+        protected virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
             condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager);
         }
@@ -415,29 +415,65 @@ namespace VLab
 
         protected virtual void StartExperiment()
         {
+            OnStartExperiment();
+
             condstate = CONDSTATE.NONE;
             trialstate = TRIALSTATE.NONE;
             blockstate = BLOCKSTATE.NONE;
             condtestmanager.Clear();
 
             PrepareCondition(regeneratecond);
-            timer.Restart();
+
+            StartExperimentTimeSync();
             islogicactive = true;
+
+            OnExperimentStarted();
+        }
+
+        protected virtual void OnStartExperiment()
+        {
+        }
+
+        protected virtual void StartExperimentTimeSync()
+        {
+            timer.Restart();
+        }
+
+        protected virtual void OnExperimentStarted()
+        {
         }
 
         protected virtual void StopExperiment()
         {
-            // Push Notification for any condtest left
+            OnStopExperiment();
+
+            // Push notification for any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
-            timer.Stop();
+
+            StopExperimentTimeSync();
             islogicactive = false;
+
+            OnExperimentStopped();
+        }
+
+        protected virtual void OnStopExperiment()
+        {
+        }
+
+        protected virtual void OnExperimentStopped()
+        {
+        }
+
+        protected virtual void StopExperimentTimeSync()
+        {
+            timer.Stop();
         }
 
         void Awake()
         {
             OnAwake();
         }
-        public virtual void OnAwake()
+        protected virtual void OnAwake()
         {
         }
 
@@ -445,7 +481,7 @@ namespace VLab
         {
             OnStart();
         }
-        public virtual void OnStart()
+        protected virtual void OnStart()
         {
         }
 
@@ -458,7 +494,7 @@ namespace VLab
             }
         }
 
-        public virtual void OnUpdate()
+        protected virtual void OnUpdate()
         {
             if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.active_networkbehaviour.Count > 0)
             {
@@ -554,7 +590,7 @@ namespace VLab
             }
         }
 
-        public virtual void Logic()
+        protected virtual void Logic()
         {
         }
 

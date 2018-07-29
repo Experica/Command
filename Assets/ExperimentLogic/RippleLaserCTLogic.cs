@@ -31,7 +31,7 @@ public class RippleLaserCTLogic : ExperimentLogic
     float power;
     List<string> factorpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         recorder = new RippleRecorder();
         pport1 = new ParallelPort(config.ParallelPort1);
@@ -39,7 +39,7 @@ public class RippleLaserCTLogic : ExperimentLogic
         ppw = new ParallelPortWave(pport2);
     }
 
-    public override void GenerateFinalCondition()
+    protected override void GenerateFinalCondition()
     {
         // get laser conditions
         var lcond = new Dictionary<string, List<object>>()
@@ -90,8 +90,8 @@ public class RippleLaserCTLogic : ExperimentLogic
     protected override void StartExperiment()
     {
         SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport1.SetBit(bit: config.ConditionCh, value: false);
+        SetEnvActiveParam("Mark", false);
+        pport1.SetBit(bit: config.EventSyncCh, value: false);
         laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
         laser.LaserOn();
         timer.Timeout(ex.GetParam("LaserOnLatency").Convert<int>());
@@ -99,7 +99,7 @@ public class RippleLaserCTLogic : ExperimentLogic
         base.StartExperiment();
         recorder.RecordPath = ex.GetDataPath();
         timer.Timeout(config.NotifyLatency);
-        pport1.BitPulse(bit: config.StartCh, duration_ms: 5);
+        pport1.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
         timer.Restart();
     }
 
@@ -107,18 +107,18 @@ public class RippleLaserCTLogic : ExperimentLogic
     {
         ppw.Stop(config.SignalCh1, config.SignalCh2);
         SetEnvActiveParam("Visible", false);
-        SetEnvActiveParam("Mark", OnOff.Off);
-        pport1.SetBit(bit: config.ConditionCh, value: false);
+        SetEnvActiveParam("Mark", false);
+        pport1.SetBit(bit: config.EventSyncCh, value: false);
         base.StopExperiment();
 
         laser.LaserOff();
         laser.Dispose();
-        timer.Timeout(ex.Latency + config.ExLatencyError + config.OnlineSignalLatency);
-        pport1.BitPulse(bit: config.StopCh, duration_ms: 5);
+        timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+        pport1.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
         timer.Stop();
     }
 
-    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
+    protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
         condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock),
             envmanager, factorpushexcept);
@@ -127,12 +127,12 @@ public class RippleLaserCTLogic : ExperimentLogic
         if (power > 0)
         {
             var freq = (float)condmanager.finalcond["LaserFreq"][condmanager.condidx];
-            ppw.SetBitWave(config.SignalCh1, freq,ex.Latency);
-            ppw.SetBitWave(config.SignalCh2, freq,ex.Latency);
+            ppw.SetBitWave(config.SignalCh1, freq,ex.DisplayLatency);
+            ppw.SetBitWave(config.SignalCh2, freq,ex.DisplayLatency);
         }
     }
 
-    public override void Logic()
+    protected override void Logic()
     {
         switch (BlockState)
         {
@@ -150,7 +150,7 @@ public class RippleLaserCTLogic : ExperimentLogic
                 {
                     case CONDSTATE.NONE:
                         SetEnvActiveParam("Visible", false);
-                        SetEnvActiveParam("Mark", OnOff.Off);
+                        SetEnvActiveParam("Mark", false);
                         CondState = CONDSTATE.PREICI;
                         break;
                     case CONDSTATE.PREICI:
@@ -161,13 +161,13 @@ public class RippleLaserCTLogic : ExperimentLogic
                             if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
                             {
                                 // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
-                                SetEnvActiveParamTwice("Mark", OnOff.On, config.MarkPulseWidth, OnOff.Off);
-                                pport1.ConcurrentBitPulse(bit: config.ConditionCh, duration_ms: config.MarkPulseWidth);
+                                SetEnvActiveParamTwice("Mark", true, config.MarkPulseWidth, false);
+                                pport1.ConcurrentBitPulse(bit: config.EventSyncCh, duration_ms: config.MarkPulseWidth);
                             }
                             else // ICI Mode
                             {
-                                SetEnvActiveParam("Mark", OnOff.On);
-                                pport1.SetBit(bit: config.ConditionCh, value: true);
+                                SetEnvActiveParam("Mark", true);
+                                pport1.SetBit(bit: config.EventSyncCh, value: true);
                             }
                             if (power > 0)
                             {
@@ -185,8 +185,8 @@ public class RippleLaserCTLogic : ExperimentLogic
                             else // ICI Mode
                             {
                                 SetEnvActiveParam("Visible", false);
-                                SetEnvActiveParam("Mark", OnOff.Off);
-                                pport1.SetBit(bit: config.ConditionCh, value: false);
+                                SetEnvActiveParam("Mark", false);
+                                pport1.SetBit(bit: config.EventSyncCh, value: false);
                             }
                             if (power > 0)
                             {

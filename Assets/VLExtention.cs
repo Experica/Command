@@ -35,6 +35,8 @@ namespace VLab
         CondRepeat,
         BlockIndex,
         BlockRepeat,
+        Event,
+        SyncEvent,
         CONDSTATE,
         TRIALSTATE,
         BLOCKSTATE,

@@ -137,9 +137,11 @@ namespace VLab
         public List<string> EnvInheritParam { get; set; } = new List<string>();
         [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
-        public double Latency { get; set; }
         public double TimerDriftSpeed { get; set; }
-        public double Delay { get; set; }
+        public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
+        public double DisplayLatency { get; set; }
+        public double ResponseDelay { get; set; }
+        public string Version { get; set; } = "0.3";
 
         [MessagePackIgnore]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
@@ -310,6 +312,19 @@ namespace VLab
         UniformWithoutReplacement
     }
 
+    public class EventSyncProtocol
+    {
+        public List<SyncMethod> SyncMethods { get; set; } = new List<SyncMethod>() { SyncMethod.ParallelPort, SyncMethod.Display };
+        public uint nSyncChannel { get; set; } = 1;
+        public uint nSyncpEvent { get; set; } = 1;
+    }
+
+    public enum SyncMethod
+    {
+        ParallelPort,
+        Display
+    }
+
     public enum CONDSTATE
     {
         NONE = 1,
@@ -320,7 +335,7 @@ namespace VLab
 
     public enum TRIALSTATE
     {
-        NONE = 1001,
+        NONE = 101,
         PREITI,
         TRIAL,
         SUFITI
@@ -328,7 +343,7 @@ namespace VLab
 
     public enum BLOCKSTATE
     {
-        NONE = 2001,
+        NONE = 201,
         PREIBI,
         BLOCK,
         SUFIBI
@@ -336,7 +351,7 @@ namespace VLab
 
     public enum TASKSTATE
     {
-        NONE = 4001,
+        NONE = 301,
         FIXTARGET_ON,
         FIX_ACQUIRED,
         TARGET_ON,

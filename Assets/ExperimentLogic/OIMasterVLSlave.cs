@@ -24,18 +24,18 @@ using VLab;
 using System.Collections.Generic;
 using System.Linq;
 
-public class OIMasterMap : ExperimentLogic
+public class OIMasterVLSlave : ExperimentLogic
 {
     int condidx;
     bool start, go;
     double reversetime;
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         recorder = new RippleRecorder();
     }
 
-    protected override void StartExperiment()
+    protected override void OnStartExperiment()
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("ReverseTime", false);
@@ -46,14 +46,12 @@ public class OIMasterMap : ExperimentLogic
             var hw = hh * envmanager.maincamera_scene.aspect;
             SetEnvActiveParam("Size", new Vector3(2.1f * hw, 2.1f * hh, 1));
         }
-        base.StartExperiment();
     }
 
-    protected override void StopExperiment()
+    protected override void OnExperimentStopped()
     {
         SetEnvActiveParam("Visible", false);
         SetEnvActiveParam("ReverseTime", false);
-        base.StopExperiment();
     }
 
     /// <summary>
@@ -69,9 +67,9 @@ public class OIMasterMap : ExperimentLogic
     {
         List<double>[] dt; List<int>[] dv;
         var isdin = recorder.DigitalInput(out dt, out dv);
-        if (isdin && dt[config.OICh] != null)
+        if (isdin && dt[config.OIMessageCh] != null)
         {
-            int msg = dv[config.OICh].Last();
+            int msg = dv[config.OIMessageCh].Last();
             if (msg > 127)
             {
                 go = true;
@@ -100,13 +98,13 @@ public class OIMasterMap : ExperimentLogic
         }
     }
 
-    public override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
+    protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
     {
         // Manually sample and push condition index parsed from OI Message
         base.SamplePushCondition(manualcondidx: condidx);
     }
 
-    public override void Logic()
+    protected override void Logic()
     {
         ParseOIMessage(ref start, ref go, ref condidx);
         switch (CondState)
@@ -124,9 +122,9 @@ public class OIMasterMap : ExperimentLogic
             case CONDSTATE.PREICI:
                 if (go && PreICIHold >= ex.PreICI)
                 {
-                    CondState = CONDSTATE.COND;
                     SetEnvActiveParam("Drifting", true);
                     SetEnvActiveParam("Visible", true);
+                    CondState = CONDSTATE.COND;
                     reversetime = CondOnTime;
                 }
                 break;
@@ -142,9 +140,9 @@ public class OIMasterMap : ExperimentLogic
                 }
                 else
                 {
-                    CondState = CONDSTATE.SUFICI;
                     SetEnvActiveParam("Visible", false);
                     SetEnvActiveParam("ReverseTime", false);
+                    CondState = CONDSTATE.SUFICI;
                 }
                 break;
             case CONDSTATE.SUFICI:

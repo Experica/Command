@@ -564,7 +564,7 @@ namespace VLab
             OnNotifyCondTestEnd?.Invoke(endtime);
         }
 
-        public void AddToCondTest(CONDTESTPARAM paramname, object paramvalue)
+        public void Add(CONDTESTPARAM paramname, object paramvalue)
         {
             if (condtestidx < 0) return;
             if (condtest.ContainsKey(paramname))
@@ -588,7 +588,7 @@ namespace VLab
             }
         }
 
-        public void AddEventToCondTest(CONDTESTPARAM paramname, string eventname, double timestamp)
+        public void AddInList<T>(CONDTESTPARAM paramname, T listvalue)
         {
             if (condtestidx < 0) return;
             if (condtest.ContainsKey(paramname))
@@ -600,17 +600,12 @@ namespace VLab
                 }
                 if (vs.Count < (condtestidx + 1))
                 {
-                    var es = new List<Dictionary<string, double>>()
-                    {
-                        new Dictionary<string, double>(){ [eventname]= timestamp  }
-                    };
-                    vs.Add(es);
+                    vs.Add(new List<T>() { listvalue });
                 }
                 else
                 {
-                    var es = (List<Dictionary<string, double>>)vs[condtestidx];
-                    var e = new Dictionary<string, double>() { [eventname] = timestamp };
-                    es.Add(e);
+                    var lvs = (List<T>)vs[condtestidx];
+                    lvs.Add(listvalue);
                 }
             }
             else
@@ -620,11 +615,39 @@ namespace VLab
                 {
                     vs.Add(null);
                 }
-                var es = new List<Dictionary<string, double>>()
+                vs.Add(new List<T>() { listvalue });
+                condtest[paramname] = vs;
+            }
+        }
+
+        public void AddInList<TKey, TValue>(CONDTESTPARAM paramname, TKey listkey, TValue listvalue)
+        {
+            if (condtestidx < 0) return;
+            if (condtest.ContainsKey(paramname))
+            {
+                var vs = condtest[paramname];
+                for (var i = vs.Count; i < condtestidx; i++)
                 {
-                    new Dictionary<string, double>(){ [eventname]= timestamp  }
-                };
-                vs.Add(es);
+                    vs.Add(null);
+                }
+                if (vs.Count < (condtestidx + 1))
+                {
+                    vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
+                }
+                else
+                {
+                    var lvs = (List<Dictionary<TKey, TValue>>)vs[condtestidx];
+                    lvs.Add(new Dictionary<TKey, TValue>() { [listkey] = listvalue });
+                }
+            }
+            else
+            {
+                var vs = new List<object>();
+                for (var i = 0; i < condtestidx; i++)
+                {
+                    vs.Add(null);
+                }
+                vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
                 condtest[paramname] = vs;
             }
         }

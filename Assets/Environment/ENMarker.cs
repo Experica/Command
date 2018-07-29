@@ -35,7 +35,7 @@ namespace VLab
         [SyncVar(hook = "onmarkercorner")]
         public Corner MarkerCorner = Corner.BottomRight;
         [SyncVar(hook = "onmark")]
-        public OnOff Mark = OnOff.Off;
+        public bool Mark = false;
         [SyncVar(hook = "onmarkoncolor")]
         public Color MarkOnColor = Color.white;
         [SyncVar(hook = "onmarkoffcolor")]
@@ -117,13 +117,13 @@ namespace VLab
             UpdatePosition();
         }
 
-        void onmark(OnOff oo)
+        void onmark(bool m)
         {
-            OnMark(oo);
+            OnMark(m);
         }
-        public virtual void OnMark(OnOff oo)
+        public virtual void OnMark(bool m)
         {
-            if (oo == OnOff.On)
+            if (m)
             {
                 renderer.material.SetColor("col", MarkOnColor);
             }
@@ -131,7 +131,7 @@ namespace VLab
             {
                 renderer.material.SetColor("col", MarkOffColor);
             }
-            Mark = oo;
+            Mark = m;
         }
 
         void onmarkoncolor(Color c)
