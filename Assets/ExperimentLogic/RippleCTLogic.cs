@@ -31,19 +31,22 @@ public class RippleCTLogic : ConditionTestLogic
 
     protected override void StartExperimentTimeSync()
     {
-        recorder.RecordPath = ex.GetDataPath();
-        /* 
-        Ripple recorder set path through network and Trellis receive
-        message and change file path, all of which need time to complete.
-        Trigger record TTL before file path change completion will
-        not successfully start recording.
+        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        {
+            recorder.RecordPath = ex.GetDataPath();
+            /* 
+            Ripple recorder set path through network and Trellis receive
+            message and change file path, all of which need time to complete.
+            Trigger record TTL before file path change completion will
+            not successfully start recording.
 
-        VLabAnalysis also need time to clear signal buffer,
-        otherwise the delayed action may clear the start TTL pluse which is
-        needed to mark the start time of VLab.
-        */
-        timer.Timeout(config.NotifyLatency);
-        pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+            VLabAnalysis also need time to clear signal buffer,
+            otherwise the delayed action may clear the start TTL pluse which is
+            needed to mark the start time of VLab.
+            */
+            timer.Timeout(config.NotifyLatency);
+            pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+        }
         /*
         Immediately after the TTL falling edge triggering ripple recording, we reset timer
         in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
@@ -55,7 +58,10 @@ public class RippleCTLogic : ConditionTestLogic
     {
         // Tail period to make sure lagged effect data is recorded before stop recording
         timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
-        pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        {
+            pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+        }
         timer.Stop();
     }
 

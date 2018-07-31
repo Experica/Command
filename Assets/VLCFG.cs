@@ -41,7 +41,7 @@ namespace VLab
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;
         public int MaxLogEntry { get; set; } = 999;
-        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam" };
+        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol" };
         public int NotifyLatency { get; set; } = 200;
         public uint MaxDisplayLatencyError { get; set; } = 20;
         public int OnlineSignalLatency { get; set; } = 50;

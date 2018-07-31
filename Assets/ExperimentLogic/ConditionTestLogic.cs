@@ -67,7 +67,7 @@ public class ConditionTestLogic : ExperimentLogic
                 }
             }
         }
-        if (addtosynclist)
+        if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
         {
             condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
         }

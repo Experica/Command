@@ -11,33 +11,34 @@ Subject_Age: 12
 Subject_Size: 0 0 0
 Subject_Weight: 408
 Subject_Log: 
-EnvPath: MarkerImage
+EnvPath: MarkerImageArray
 EnvParam:
-  Image@ENImageQuad@ImageQuad: 8180
-  ImageSet@ENImageQuad@ImageQuad: Imageset_B_24000_32_32_0.5_0.35_Check
-  IsCacheImage@ENImageQuad@ImageQuad: true
-  Rotation@ENImageQuad@ImageQuad: 0 0 0
-  RotationOffset@ENImageQuad@ImageQuad: 0 0 0
-  Ori@ENImageQuad@ImageQuad: 0
-  OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 20
-  Size@ENImageQuad@ImageQuad: 20 20 1
-  Color@ENImageQuad@ImageQuad: 1 1 1 1
-  MaskType@ENImageQuad@ImageQuad: DiskFade
-  MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 0.150000006
-  OriPositionOffset@ENImageQuad@ImageQuad: true
-  Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: 6.49 -2.694 0
-  PositionOffset@ENImageQuad@ImageQuad: 0 0 0
+  StartIndex@ENImageArrayQuad@ImageArrayQuad: 1
+  NumOfImage@ENImageArrayQuad@ImageArrayQuad: 10
+  ImageSet@ENImageArrayQuad@ImageArrayQuad: ExampleImageSet
+  Image@ENImageArrayQuad@ImageArrayQuad: 10
+  Rotation@ENImageArrayQuad@ImageArrayQuad: 0 0 0
+  RotationOffset@ENImageArrayQuad@ImageArrayQuad: 0 0 0
+  Ori@ENImageArrayQuad@ImageArrayQuad: 0
+  OriOffset@ENImageArrayQuad@ImageArrayQuad: 0
+  Diameter@ENImageArrayQuad@ImageArrayQuad: 20
+  Size@ENImageArrayQuad@ImageArrayQuad: 20 20 1
+  Color@ENImageArrayQuad@ImageArrayQuad: 1 1 1 1
+  MaskType@ENImageArrayQuad@ImageArrayQuad: None
+  MaskRadius@ENImageArrayQuad@ImageArrayQuad: 0.5
+  Sigma@ENImageArrayQuad@ImageArrayQuad: 0.150000006
+  OriPositionOffset@ENImageArrayQuad@ImageArrayQuad: false
+  Visible@ENImageArrayQuad@ImageArrayQuad: false
+  Position@ENImageArrayQuad@ImageArrayQuad: 0 0 0
+  PositionOffset@ENImageArrayQuad@ImageArrayQuad: 0 0 0
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: false
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: ''
@@ -63,7 +64,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -98,12 +99,16 @@ EnvInheritParam:
 - Position@ENImageQuad@ImageQuad$ShowroomManager
 - Position@ENImageQuad@ImageQuad
 - Diameter@ENImageQuad@ImageQuad
-Param:
-  NumOfImage: 24000
-  PreLoadImageLatency: 4000
-Latency: 182
+Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 20
+EventSyncProtocol:
+  SyncMethods:
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 0
+ResponseDelay: 0
+Version: 0.3
 CondTest: 
 CondTestShowLevel: SHORT
 SendMail: false

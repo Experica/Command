@@ -20,32 +20,32 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 5
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 47.8055611
+  Ori@ENGratingQuad@GratingQuad: 0
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 2 2 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 6.49 -2.694 0
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
@@ -115,9 +115,16 @@ Param:
   Laser2: ''
   LaserPower2: '[0.3]'
   LaserFreq2: '[0 5 45 0, 0 25 25 0, 0 20 5 5]'
-Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 20
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 0
+ResponseDelay: 0
+Version: 0.3
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

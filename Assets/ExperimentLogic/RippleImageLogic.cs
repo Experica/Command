@@ -31,7 +31,7 @@ public class RippleImageLogic : RippleCTLogic
     {
         var cond = new Dictionary<string, List<object>>
         {
-            ["Image"] = Enumerable.Range(1, ex.GetParam("NumOfImage").Convert<int>()).Select(i => (object)i.ToString()).ToList()
+            ["Image"] = Enumerable.Range((int)GetEnvActiveParam("StartIndex"), (int)GetEnvActiveParam("NumOfImage")).Select(i => (object)i).ToList()
         };
         condmanager.FinalizeCondition(cond);
     }
@@ -46,15 +46,6 @@ public class RippleImageLogic : RippleCTLogic
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
             SetEnvActiveParam("Diameter", diameter / mrr);
         }
-    }
-
-    protected override void StartExperimentTimeSync()
-    {
-        envmanager.InvokeActiveRPC("RpcPreLoadImageset", new object[] { 1, ex.GetParam("NumOfImage").Convert<int>() });
-        recorder.RecordPath = ex.GetDataPath();
-        timer.Timeout(config.NotifyLatency + ex.GetParam("PreLoadImageLatency").Convert<int>());
-        pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
-        timer.Restart();
     }
 
     protected override void OnExperimentStopped()

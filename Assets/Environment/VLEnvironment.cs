@@ -30,7 +30,8 @@ namespace VLab
         None,
         Quad,
         GratingQuad,
-        ImageQuad
+        ImageQuad,
+        ImageArrayQuad
     }
 
     public enum MaskType

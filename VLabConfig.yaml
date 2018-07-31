@@ -24,6 +24,8 @@ ExHideParams:
 - DataPath
 - ExInheritParam
 - EnvInheritParam
+- Version
+- EventSyncProtocol
 NotifyLatency: 200
 MaxDisplayLatencyError: 20
 OnlineSignalLatency: 50
