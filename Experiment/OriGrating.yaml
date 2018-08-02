@@ -3,8 +3,8 @@ Name: OriGrating
 Designer: Alex
 Experimenter: Alex, Leo
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
+Subject_ID: LZR1803
+Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 12
@@ -14,38 +14,38 @@ Subject_Log:
 EnvPath: MarkerGrating
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: false
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 5
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.12883918
+  TemporalFreq@ENGratingQuad@GratingQuad: 1.04316831
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 225
+  Ori@ENGratingQuad@GratingQuad: 22.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 18.2422066
+  Size@ENGratingQuad@GratingQuad: 18.24 18.24 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 6.49 -2.694 0
+  Position@ENGratingQuad@GratingQuad: 3.357 -2.18 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
@@ -90,6 +90,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
@@ -108,9 +110,16 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad$ShowroomManager
 - Diameter@ENGratingQuad@GratingQuad$ShowroomManager
 Param: {}
-Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 20
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

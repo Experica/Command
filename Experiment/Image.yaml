@@ -3,34 +3,36 @@ Name: Image
 Designer: Alex
 Experimenter: Alex, Leo
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
+Subject_ID: LZR1803
+Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 12
 Subject_Size: 0 0 0
 Subject_Weight: 408
 Subject_Log: 
-EnvPath: MarkerImageArray
+EnvPath: MarkerImage
 EnvParam:
-  StartIndex@ENImageArrayQuad@ImageArrayQuad: 1
-  NumOfImage@ENImageArrayQuad@ImageArrayQuad: 10
-  ImageSet@ENImageArrayQuad@ImageArrayQuad: ExampleImageSet
-  Image@ENImageArrayQuad@ImageArrayQuad: 10
-  Rotation@ENImageArrayQuad@ImageArrayQuad: 0 0 0
-  RotationOffset@ENImageArrayQuad@ImageArrayQuad: 0 0 0
-  Ori@ENImageArrayQuad@ImageArrayQuad: 0
-  OriOffset@ENImageArrayQuad@ImageArrayQuad: 0
-  Diameter@ENImageArrayQuad@ImageArrayQuad: 20
-  Size@ENImageArrayQuad@ImageArrayQuad: 20 20 1
-  Color@ENImageArrayQuad@ImageArrayQuad: 1 1 1 1
-  MaskType@ENImageArrayQuad@ImageArrayQuad: None
-  MaskRadius@ENImageArrayQuad@ImageArrayQuad: 0.5
-  Sigma@ENImageArrayQuad@ImageArrayQuad: 0.150000006
-  OriPositionOffset@ENImageArrayQuad@ImageArrayQuad: false
-  Visible@ENImageArrayQuad@ImageArrayQuad: false
-  Position@ENImageArrayQuad@ImageArrayQuad: 0 0 0
-  PositionOffset@ENImageArrayQuad@ImageArrayQuad: 0 0 0
+  StartIndex@ENImageQuad@ImageQuad: 1
+  NumOfImage@ENImageQuad@ImageQuad: 24000
+  Image@ENImageQuad@ImageQuad: 7910
+  ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
+  IsCacheImage@ENImageQuad@ImageQuad: true
+  IsPreLoadImageset@ENImageQuad@ImageQuad: true
+  Rotation@ENImageQuad@ImageQuad: 0 0 0
+  RotationOffset@ENImageQuad@ImageQuad: 0 0 0
+  Ori@ENImageQuad@ImageQuad: 0
+  OriOffset@ENImageQuad@ImageQuad: 0
+  Diameter@ENImageQuad@ImageQuad: 18.2422066
+  Size@ENImageQuad@ImageQuad: 18.24 18.24 1
+  Color@ENImageQuad@ImageQuad: 1 1 1 1
+  MaskType@ENImageQuad@ImageQuad: None
+  MaskRadius@ENImageQuad@ImageQuad: 0.5
+  Sigma@ENImageQuad@ImageQuad: 0.150000006
+  OriPositionOffset@ENImageQuad@ImageQuad: false
+  Visible@ENImageQuad@ImageQuad: false
+  Position@ENImageQuad@ImageQuad: 3.357 -2.18 0
+  PositionOffset@ENImageQuad@ImageQuad: 0 0 0
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
@@ -64,7 +66,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: COND
+PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -108,7 +110,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 DisplayLatency: 0
 ResponseDelay: 0
-Version: 0.3
+Version: 1
 CondTest: 
 CondTestShowLevel: SHORT
 SendMail: false

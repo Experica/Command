@@ -141,7 +141,7 @@ namespace VLab
         public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
         public double DisplayLatency { get; set; }
         public double ResponseDelay { get; set; }
-        public string Version { get; set; } = "0.3";
+        public uint Version { get; set; } = 1;
 
         [MessagePackIgnore]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }

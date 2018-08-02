@@ -750,6 +750,21 @@ namespace VLab
             return null;
         }
 
+        public static Dictionary<string, Texture2D> LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10)
+        {
+            if (string.IsNullOrEmpty(imgsetdir)) return null;
+            var imgs = new Dictionary<string, Texture2D>();
+            for (var i = startidx; i < numofimg + startidx; i++)
+            {
+                var img = Resources.Load<Texture2D>(imgsetdir + "/" + i);
+                if (img != null)
+                {
+                    imgs[i.ToString()] = img;
+                }
+            }
+            return imgs;
+        }
+
         public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10, bool forcereload = false)
         {
             if (string.IsNullOrEmpty(imgsetdir)) return null;
@@ -759,14 +774,14 @@ namespace VLab
                 imgarray = Resources.Load<Texture2DArray>(imgsetdir + ".asset");
                 if (imgarray != null) return imgarray;
             }
-            var img = Resources.Load<Texture2D>(imgsetdir + "/" + startidx.ToString());
+            var img = Resources.Load<Texture2D>(imgsetdir + "/" + startidx);
             if (img == null) return null;
 
             imgarray = new Texture2DArray(img.width, img.height, numofimg + startidx, img.format, false);
             imgarray.SetPixels(img.GetPixels(), startidx);
             for (var i = startidx + 1; i < numofimg + startidx; i++)
             {
-                img = Resources.Load<Texture2D>(imgsetdir + "/" + i.ToString());
+                img = Resources.Load<Texture2D>(imgsetdir + "/" + i);
                 if (img != null)
                 {
                     imgarray.SetPixels(img.GetPixels(), i);

@@ -72,7 +72,7 @@ namespace VLab
         }
         public virtual void OnImageSet(string iset)
         {
-            var imgs = iset.LoadImageSet(StartIndex, NumOfImage);
+            var imgs = iset.LoadImageSet(StartIndex, NumOfImage, false);
             if (imgs != null)
             {
                 renderer.material.SetTexture("imgs", imgs);

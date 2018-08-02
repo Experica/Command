@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using VLab;
 
-namespace VLab
+#if UNITY_EDITOR
+namespace VLabEditor
 {
     public class CreateTexture2DArray
     {
@@ -28,3 +30,4 @@ namespace VLab
         }
     }
 }
+#endif

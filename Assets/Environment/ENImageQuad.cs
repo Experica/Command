@@ -27,12 +27,18 @@ namespace VLab
 {
     public class ENImageQuad : ENQuad
     {
+        [SyncVar(hook = "onstartindex")]
+        public int StartIndex = 1;
+        [SyncVar(hook = "onnumofimage")]
+        public int NumOfImage = 10;
         [SyncVar(hook = "onimage")]
         public string Image = "1";
         [SyncVar(hook = "onimageset")]
         public string ImageSet = "ExampleImageSet";
         [SyncVar]
         public bool IsCacheImage = true;
+        [SyncVar(hook = "onispreloadimageset")]
+        public bool IsPreLoadImageset = true;
 
         Dictionary<string, Texture2D> imagecache = new Dictionary<string, Texture2D>();
 
@@ -48,14 +54,13 @@ namespace VLab
         }
 
         [ClientRpc]
-        void RpcPreLoadImageset(int startidx,int endidx)
+        void RpcPreLoadImageset(int startidx, int numofimg)
         {
-            imagecache.Clear();
-            for (var i=startidx; i<=endidx; i++)
+            var imgs = ImageSet.LoadImageSet(startidx, numofimg);
+            if (imgs != null)
             {
-                imagecache[i.ToString()] = Resources.Load<Texture2D>(ImageSet + "/" + i);
+                imagecache = imgs;
             }
-            Resources.UnloadUnusedAssets();
         }
 
         public override void OnOri(float o)
@@ -78,6 +83,39 @@ namespace VLab
             OriOffset = ooffset;
         }
 
+        void onstartindex(int i)
+        {
+            OnStartIndex(i);
+        }
+        public virtual void OnStartIndex(int i)
+        {
+            StartIndex = i;
+            OnImageSet(ImageSet);
+        }
+
+        void onnumofimage(int n)
+        {
+            OnNumOfImage(n);
+        }
+        public virtual void OnNumOfImage(int n)
+        {
+            NumOfImage = n;
+            OnImageSet(ImageSet);
+        }
+
+        void onispreloadimageset(bool b)
+        {
+            OnIsPreLoadImageset(b);
+        }
+        public virtual void OnIsPreLoadImageset(bool b)
+        {
+            if (b)
+            {
+                OnImageSet(ImageSet);
+            }
+            IsPreLoadImageset = b;
+        }
+
         void onimage(string i)
         {
             OnImage(i);
@@ -87,17 +125,21 @@ namespace VLab
             if (imagecache.ContainsKey(i))
             {
                 renderer.material.SetTexture("img", imagecache[i]);
+                Image = i;
             }
             else
             {
                 var img = Resources.Load<Texture2D>(ImageSet + "/" + i);
-                renderer.material.SetTexture("img", img);
-                if (IsCacheImage)
+                if (img != null)
                 {
-                    imagecache[i] = img;
+                    renderer.material.SetTexture("img", img);
+                    if (IsCacheImage)
+                    {
+                        imagecache[i] = img;
+                    }
+                    Image = i;
                 }
             }
-            Image = i;
         }
 
         void onimageset(string iset)
@@ -108,6 +150,14 @@ namespace VLab
         {
             ImageSet = iset;
             imagecache.Clear();
+            if (IsPreLoadImageset)
+            {
+                var imgs = iset.LoadImageSet(StartIndex, NumOfImage);
+                if (imgs != null)
+                {
+                    imagecache = imgs;
+                }
+            }
             OnImage("1");
         }
     }

@@ -3,8 +3,8 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: Alex, Leo
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
+Subject_ID: LZR1803
+Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 12
@@ -26,8 +26,8 @@ CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
 Input: Joystick
-PreICI: 0
-CondDur: 46
+PreICI: 300
+CondDur: 300
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -51,9 +51,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 0
-ResponseDelay: 0
-Version: 0.3
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: NONE
 SendMail: false
