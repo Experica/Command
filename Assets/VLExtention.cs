@@ -390,6 +390,30 @@ namespace VLab
             }
             return conddesign;
         }
+
+        public static string GetAddresses(this string experimenter, VLCFG config)
+        {
+            string addresses = null;
+            if (string.IsNullOrEmpty(experimenter)) return addresses;
+            var al = experimenter.Split(',', ';').Where(i => config.ExperimenterAddress.ContainsKey(i)).Select(i => config.ExperimenterAddress[i]).ToArray();
+            if (al != null && al.Length > 0)
+            {
+                addresses = String.Join(",", al);
+            }
+            return addresses;
+        }
+
+        public static ILaser GetLaser(this string lasername, VLCFG config)
+        {
+            switch (lasername)
+            {
+                case "luxx473":
+                    return new Omicron(config.SerialPort1);
+                case "mambo594":
+                    return new Cobolt(config.SerialPort2);
+            }
+            return null;
+        }
 #endif
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
         {
@@ -724,30 +748,6 @@ namespace VLab
             var smtp = new SmtpClient() { Host = "smtp.gmail.com", Port = 587, EnableSsl = true, Credentials = new NetworkCredential("vlabsys@gmail.com", "VLab$y$tem") };
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             smtp.Send("vlabsys@gmail.com", to, subject, body);
-        }
-
-        public static string GetAddresses(this string experimenter, VLCFG config)
-        {
-            string addresses = null;
-            if (string.IsNullOrEmpty(experimenter)) return addresses;
-            var al = experimenter.Split(',', ';').Where(i => config.ExperimenterAddress.ContainsKey(i)).Select(i => config.ExperimenterAddress[i]).ToArray();
-            if (al != null && al.Length > 0)
-            {
-                addresses = String.Join(",", al);
-            }
-            return addresses;
-        }
-
-        public static ILaser GetLaser(this string lasername, VLCFG config)
-        {
-            switch (lasername)
-            {
-                case "luxx473":
-                    return new Omicron(config.SerialPort1);
-                case "mambo594":
-                    return new Cobolt(config.SerialPort2);
-            }
-            return null;
         }
 
         public static Dictionary<string, Texture2D> LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10)

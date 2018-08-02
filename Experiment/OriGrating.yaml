@@ -16,17 +16,11 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: false
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  ScreenAspect@ENCamera@OrthoCamera: 1.77172053
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.12883918
-  TemporalFreq@ENGratingQuad@GratingQuad: 1.04316831
+  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
@@ -35,18 +29,24 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 22.5
+  Ori@ENGratingQuad@GratingQuad: 67.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 18.2422066
-  Size@ENGratingQuad@GratingQuad: 18.24 18.24 1
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 2 2 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 3.357 -2.18 0
+  Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 25.12 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: false
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic

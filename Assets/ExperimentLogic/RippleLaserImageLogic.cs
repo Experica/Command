@@ -1,5 +1,5 @@
 ﻿/*
-RippleLaserTrialImageLogic.cs is part of the VLAB project.
+RippleLaserImageLogic.cs is part of the VLAB project.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
