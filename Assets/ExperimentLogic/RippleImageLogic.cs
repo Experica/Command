@@ -25,7 +25,8 @@ using System.Linq;
 
 public class RippleImageLogic : RippleCTLogic
 {
-    float diameter;
+    float diameterbeforeadjust;
+    bool isdiameteradjusted;
 
     protected override void GenerateFinalCondition()
     {
@@ -42,9 +43,10 @@ public class RippleImageLogic : RippleCTLogic
         var mt = (MaskType)GetEnvActiveParam("MaskType");
         if (mt == MaskType.DiskFade || mt == MaskType.Disk)
         {
-            diameter = (float)GetEnvActiveParam("Diameter");
+            isdiameteradjusted = true;
+            diameterbeforeadjust = (float)GetEnvActiveParam("Diameter");
             var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
-            SetEnvActiveParam("Diameter", diameter / mrr);
+            SetEnvActiveParam("Diameter", diameterbeforeadjust / mrr);
         }
     }
 
@@ -52,9 +54,9 @@ public class RippleImageLogic : RippleCTLogic
     {
         base.OnExperimentStopped();
         var mt = (MaskType)GetEnvActiveParam("MaskType");
-        if (mt == MaskType.DiskFade || mt == MaskType.Disk)
+        if ((mt == MaskType.DiskFade || mt == MaskType.Disk) && isdiameteradjusted)
         {
-            SetEnvActiveParam("Diameter", diameter);
+            SetEnvActiveParam("Diameter", diameterbeforeadjust);
         }
     }
 }

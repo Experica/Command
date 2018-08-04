@@ -15,7 +15,7 @@ EnvPath: MarkerImage
 EnvParam:
   StartIndex@ENImageQuad@ImageQuad: 1
   NumOfImage@ENImageQuad@ImageQuad: 24000
-  Image@ENImageQuad@ImageQuad: 17147
+  Image@ENImageQuad@ImageQuad: 6839
   ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
   IsPreLoadImageset@ENImageQuad@ImageQuad: true
@@ -26,19 +26,19 @@ EnvParam:
   Diameter@ENImageQuad@ImageQuad: 20
   Size@ENImageQuad@ImageQuad: 20 20 1
   Color@ENImageQuad@ImageQuad: 1 1 1 1
-  MaskType@ENImageQuad@ImageQuad: None
-  MaskRadius@ENImageQuad@ImageQuad: 0.5
-  Sigma@ENImageQuad@ImageQuad: 0.150000006
+  MaskType@ENImageQuad@ImageQuad: DiskFade
+  MaskRadius@ENImageQuad@ImageQuad: 0.449999988
+  Sigma@ENImageQuad@ImageQuad: 30
   OriPositionOffset@ENImageQuad@ImageQuad: false
   Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: 0 0 0
+  Position@ENImageQuad@ImageQuad: 8.137 0.9282 0
   PositionOffset@ENImageQuad@ImageQuad: 0 0 0
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77172053
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.12 -13.74 -1000
+  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: false
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -67,7 +67,7 @@ PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
-CondTestAtState: NONE
+CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
@@ -88,6 +88,8 @@ ExInheritParam:
 - Latency
 - Delay
 - TimerDriftSpeed
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -105,11 +107,12 @@ Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
+  - ParallelPort
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 0
-ResponseDelay: 0
+DisplayLatency: 182
+ResponseDelay: 20
 Version: 1
 CondTest: 
 CondTestShowLevel: SHORT
