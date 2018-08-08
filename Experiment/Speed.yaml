@@ -1,0 +1,128 @@
+ID: Speed
+Name: Speed
+Designer: Leo
+Experimenter: Alex, Leo
+Log: 
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 12
+Subject_Size: 0 0 0
+Subject_Weight: 408
+Subject_Log: 
+EnvPath: MarkerGrating
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.91111112
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 27.18 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: false
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 10
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
+  Ori@ENGratingQuad@GratingQuad: 34.7178612
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
+  MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@ENGratingQuad@GratingQuad: false
+  Visible@ENGratingQuad@GratingQuad: false
+  Position@ENGratingQuad@GratingQuad: 8.137 0.9282 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+CondPath: Condition\Speed.yaml
+Cond: 
+ExLogicPath: RippleSpeedCTLogic
+RecordSession: V1a
+RecordSite: 1000
+DataDir: X:\
+DataPath: 
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 8
+BlockRepeat: 1
+BlockParam: []
+Input: None
+PreICI: 150
+CondDur: 1000
+SufICI: 0
+PreITI: 250
+TrialDur: 3000
+SufITI: 250
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 2
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Experimenter
+- Latency
+- TimerDriftSpeed
+- Delay
+- SufICI
+- SendMail
+- ResponseDelay
+- DisplayLatency
+EnvInheritParam:
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- Marker@Showroom@ShowroomManager
+- SpatialFreq@ENGratingQuad@GratingQuad
+- Ori@ENGratingQuad@GratingQuad
+- Diameter@ENGratingQuad@GratingQuad
+- Position@ENGratingQuad@GratingQuad
+- ScreenAspect@ENCamera@OrthoCamera
+- SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager
+- Ori@ENGratingQuad@GratingQuad$ShowroomManager
+- Diameter@ENGratingQuad@GratingQuad$ShowroomManager
+- Position@ENGratingQuad@GratingQuad$ShowroomManager
+Param: {}
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
+CondTest: 
+CondTestShowLevel: FULL
+SendMail: false
