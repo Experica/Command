@@ -484,6 +484,7 @@ namespace VLab
                 case "Ori":
                 case "OriOffset":
                 case "Ori_Final":
+                case "Speed":
                     return typeof(float);
                 case "Rotation":
                 case "RotationOffset":
