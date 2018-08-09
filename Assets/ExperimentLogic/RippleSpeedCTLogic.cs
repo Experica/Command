@@ -29,18 +29,14 @@ public class RippleSpeedCTLogic : RippleCTLogic
 
     protected override void GenerateFinalCondition()
     {
-        // get base conditions
-        var bcond = condmanager.GenerateFinalCondition(ex.CondPath);
-        
+
         // convert speed to temporal frequency
         float sf = envmanager.GetParam("SpatialFreq").Convert<float>();
-        var tcond = new Dictionary<string, List<object>>()
-            {
-                {"Speed", bcond["Speed"].Convert<List<object>>() },
-                {"TemporalFreq", (bcond["Speed"].Convert<List<float>>()).Select(i => (object)(i * sf)).ToList()}
-            };
 
-        condmanager.FinalizeCondition(tcond);
+        // get base conditions
+        var bcond = condmanager.ProcessCondition(condmanager.ReadConditionFile(ex.CondPath));
+        bcond["TemporalFreq"] = bcond["Speed"].Convert<List<float>>().Select(i => (object)(i * sf)).ToList();
+        condmanager.FinalizeCondition(bcond);
     }
 
     protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
