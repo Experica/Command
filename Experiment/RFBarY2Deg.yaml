@@ -1,15 +1,15 @@
 ID: RFBarY2Deg
 Name: RFBarY2Deg
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
@@ -20,7 +20,7 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Rotation@ENQuad@Quad: 0 0 0
@@ -28,20 +28,20 @@ EnvParam:
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: 2 0.5 1
+  Size@ENQuad@Quad: 2 2 1
   Color@ENQuad@Quad: 1 1 1 1
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
-  OriPositionOffset@ENQuad@Quad: true
-  Visible@ENQuad@Quad: false
+  OriPositionOffset@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: 0 0 0
-  PositionOffset@ENQuad@Quad: 0 0.25 0
+  PositionOffset@ENQuad@Quad: 0 0 0
 CondPath: Condition\PositionYOffset2Deg0.25DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -81,6 +81,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- ResponseDelay
+- DisplayLatency
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -93,8 +95,16 @@ EnvInheritParam:
 - Position@ENQuad@Quad
 - ScreenAspect@ENCamera@OrthoCamera
 Param: {}
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: SHORT
+SendMail: false

@@ -1,22 +1,18 @@
 ID: OriOffsetBar
 Name: OriOffsetBar
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
   Rotation@ENQuad@Quad$ShowroomManager: 0 0 0
@@ -57,9 +53,12 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
   Position@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
+  StartIndex@ENImageQuad@ImageQuad$ShowroomManager: 1
+  NumOfImage@ENImageQuad@ImageQuad$ShowroomManager: 10
   Image@ENImageQuad@ImageQuad$ShowroomManager: 1
   ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
   IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
+  IsPreLoadImageset@ENImageQuad@ImageQuad$ShowroomManager: true
   Rotation@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
   RotationOffset@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
   Ori@ENImageQuad@ImageQuad$ShowroomManager: 0
@@ -77,14 +76,18 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 44.56 -21.07 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
 CondPath: Condition\OrientationOffset7.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -124,6 +127,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- ResponseDelay
+- DisplayLatency
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -135,8 +140,16 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 Param: {}
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: NONE
+SendMail: false

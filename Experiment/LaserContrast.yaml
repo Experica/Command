@@ -1,23 +1,57 @@
 ID: LaserContrast
 Name: LaserContrast
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerGrating
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
+  TemporalFreq@ENGratingQuad@GratingQuad: 7
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
+  Ori@ENGratingQuad@GratingQuad: 67.5
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 12
+  Size@ENGratingQuad@GratingQuad: 12 12 1
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
+  MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@ENGratingQuad@GratingQuad: false
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: 2 -2 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: true
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\Contrast.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -62,6 +96,8 @@ ExInheritParam:
 - LaserPower
 - LaserFreq
 - LaserOnLatency
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -77,12 +113,20 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: '[0.128, 0.249, 0.503]'
-  LaserFreq: '[0.1, 40]'
+  LaserPower: '[0.275, 0.83]'
+  LaserFreq: '[40]'
   ICIFactor: 2
   LaserOnLatency: 3000
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
+SendMail: false

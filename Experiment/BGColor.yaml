@@ -16,9 +16,9 @@ EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.57 -14 -1000
+  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -67,6 +67,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -87,8 +89,8 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 0
-ResponseDelay: 0
+DisplayLatency: 190
+ResponseDelay: 20
 Version: 1
 CondTest: 
 CondTestShowLevel: FULL

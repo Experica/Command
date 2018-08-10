@@ -1,15 +1,15 @@
 ID: RFBarX12Deg
 Name: RFBarX12Deg
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1802
-Subject_Name: C1802
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
@@ -20,12 +20,12 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 23.57 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Rotation@ENQuad@Quad: 0 0 0
   RotationOffset@ENQuad@Quad: 0 0 0
-  Ori@ENQuad@Quad: 45
+  Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
   Diameter@ENQuad@Quad: 2
   Size@ENQuad@Quad: 2 2 1
@@ -40,8 +40,8 @@ EnvParam:
 CondPath: Condition\PositionXOffset12Deg1.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: E0
-RecordSite: ''
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -81,6 +81,8 @@ ExInheritParam:
 - TimerDriftSpeed
 - Latency
 - Delay
+- ResponseDelay
+- DisplayLatency
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -93,8 +95,16 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 - ScreenHalfHeight@ENCamera@OrthoCamera
 Param: {}
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: SHORT
+SendMail: false

@@ -35,7 +35,7 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 270
+  Ori@ENGratingQuad@GratingQuad: 22.5
   OriOffset@ENGratingQuad@GratingQuad: 0
   Diameter@ENGratingQuad@GratingQuad: 20
   Size@ENGratingQuad@GratingQuad: 20 20 1
@@ -70,7 +70,7 @@ PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
-CondTestAtState: PREICI
+CondTestAtState: NONE
 NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
@@ -117,7 +117,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 182
+DisplayLatency: 190
 ResponseDelay: 20
 Version: 1
 CondTest: 

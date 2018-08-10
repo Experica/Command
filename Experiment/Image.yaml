@@ -15,7 +15,7 @@ EnvPath: MarkerImage
 EnvParam:
   StartIndex@ENImageQuad@ImageQuad: 1
   NumOfImage@ENImageQuad@ImageQuad: 24000
-  Image@ENImageQuad@ImageQuad: 6839
+  Image@ENImageQuad@ImageQuad: 14762
   ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
   IsPreLoadImageset@ENImageQuad@ImageQuad: true
@@ -58,7 +58,7 @@ BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 50
+CondDur: 40
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -111,7 +111,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 182
+DisplayLatency: 190
 ResponseDelay: 20
 Version: 1
 CondTest: 

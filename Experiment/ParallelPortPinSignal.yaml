@@ -20,7 +20,7 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: ''
@@ -54,9 +54,16 @@ NotifyParam:
 ExInheritParam: []
 EnvInheritParam: []
 Param: {}
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 0
+ResponseDelay: 0
+Version: 1
 CondTest: 
 CondTestShowLevel: NONE
 SendMail: false

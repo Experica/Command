@@ -1,15 +1,15 @@
 ID: LaserOriGrating
 Name: LaserOriGrating
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 2.70000005
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
@@ -44,14 +44,14 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V2Site4aCh19
-RecordSite: V1Site3a
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -96,6 +96,8 @@ ExInheritParam:
 - LaserPower
 - LaserFreq
 - LaserOnLatency
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -114,12 +116,20 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 - Diameter@ENGratingQuad@GratingQuad
 Param:
-  LaserPower: '[0.275, 0.83]'
-  LaserFreq: '[40]'
+  LaserPower: '[0.53]'
+  LaserFreq: '[0 10 0 0]'
   ICIFactor: 2
   LaserOnLatency: 3000
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
+SendMail: false

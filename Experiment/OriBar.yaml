@@ -1,23 +1,23 @@
 ID: OriBar
 Name: OriBar
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: LSR1801
-Subject_Name: LSR1801
-Subject_Species: Rat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 1
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 400
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: ShowBar
 EnvParam: {}
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: LPSite2_V1Site2
-RecordSite: LP_4500_V1_240
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -57,6 +57,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- ResponseDelay
+- DisplayLatency
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -68,8 +70,16 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 Param: {}
-Latency: 182
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
+SendMail: false

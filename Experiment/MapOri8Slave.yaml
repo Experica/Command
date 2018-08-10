@@ -1,22 +1,18 @@
 ID: MapOri8Slave
 Name: MapOri8Slave
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1802
-Subject_Name: C1802
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
@@ -41,11 +37,15 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
+  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
 CondPath: Condition\Ori8.yaml
 Cond: 
-ExLogicPath: OIMasterMap
-RecordSession: E0
-RecordSite: ''
+ExLogicPath: ConditionTestLogic
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: Manual
@@ -84,6 +84,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - ScreenHalfHeight@ENCamera@OrthoCamera
@@ -95,9 +97,16 @@ EnvInheritParam:
 Param:
   ReverseDur: 1000
   FullScreenSize: True
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: true

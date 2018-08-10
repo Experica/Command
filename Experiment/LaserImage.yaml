@@ -1,15 +1,15 @@
 ID: LaserImage
 Name: LaserImage
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 2.70000005
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
@@ -17,9 +17,12 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 15.1000004
   ScreenToEye@ENCamera@OrthoCamera: 37
   ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Image@ENImageQuad@ImageQuad: 11443
+  StartIndex@ENImageQuad@ImageQuad: 1
+  NumOfImage@ENImageQuad@ImageQuad: 10
+  Image@ENImageQuad@ImageQuad: 1
   ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
   IsCacheImage@ENImageQuad@ImageQuad: true
+  IsPreLoadImageset@ENImageQuad@ImageQuad: true
   Rotation@ENImageQuad@ImageQuad: 0 0 0
   RotationOffset@ENImageQuad@ImageQuad: 0 0 0
   Ori@ENImageQuad@ImageQuad: 0
@@ -37,14 +40,14 @@ EnvParam:
   MarkerSize@ENMarker@Marker: 2
   MarkerPosition@ENMarker@Marker: 38.47 -21.2 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: ''
 Cond: 
 ExLogicPath: RippleLaserImageLogic
-RecordSession: V2Site4bCh6
-RecordSite: V1Site3a
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -87,6 +90,8 @@ ExInheritParam:
 - Delay
 - TimerDriftSpeed
 - LaserOnLatency
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -107,8 +112,16 @@ Param:
   ITIFactor: 2
   PreLoadImageLatency: 4000
   LaserOnLatency: 3000
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: SHORT
+SendMail: false

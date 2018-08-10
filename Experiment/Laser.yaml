@@ -3,8 +3,8 @@ Name: Laser
 Designer: Alex
 Experimenter: Alex, Leo
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
+Subject_ID: LZR1803
+Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 12
@@ -14,18 +14,18 @@ Subject_Log:
 EnvPath: MarkerGrating
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
+  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
   TemporalFreq@ENGratingQuad@GratingQuad: 1
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
@@ -35,10 +35,10 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
+  Ori@ENGratingQuad@GratingQuad: 165
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 2
-  Size@ENGratingQuad@GratingQuad: 2 2 1
+  Diameter@ENGratingQuad@GratingQuad: 20
+  Size@ENGratingQuad@GratingQuad: 20 20 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
@@ -55,11 +55,11 @@ RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: UniformWithoutReplacement
+BlockSampling: Ascending
 CondRepeat: 10
-BlockRepeat: 0
+BlockRepeat: 2
 BlockParam:
-- ''
+- LaserPower
 Input: None
 PreICI: 500
 CondDur: 1000
@@ -91,6 +91,8 @@ ExInheritParam:
 - Latency
 - Delay
 - TimerDriftSpeed
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -107,7 +109,7 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 Param:
   LaserPower: '[0.275, 0.53]'
-  LaserFreq: '[0 50 0 0, 0 5 20 0, 0 50 2 2]'
+  LaserFreq: '[0 50 0 0]'
   ICIFactor: 2
   LaserOnLatency: 3000
   Laser: luxx473
@@ -115,6 +117,7 @@ Param:
   Laser2: ''
   LaserPower2: '[0.3]'
   LaserFreq2: '[0 5 45 0, 0 25 25 0, 0 20 5 5]'
+  AddZeroCond: True
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -122,9 +125,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 0
-ResponseDelay: 0
-Version: 0.3
+DisplayLatency: 190
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

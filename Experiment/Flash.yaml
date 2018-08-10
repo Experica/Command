@@ -3,8 +3,8 @@ Name: Flash
 Designer: Alex
 Experimenter: Alex, Leo
 Log: 
-Subject_ID: LZR1801
-Subject_Name: LZR1801
+Subject_ID: LZR1803
+Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 12
@@ -14,33 +14,33 @@ Subject_Log:
 EnvPath: MarkerBar
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 37
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
   ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 74.7 -41.58 -1000
+  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Rotation@ENQuad@Quad: 0 0 0
   RotationOffset@ENQuad@Quad: 0 0 0
   Ori@ENQuad@Quad: 0
   OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 120
-  Size@ENQuad@Quad: 250 120 1
+  Diameter@ENQuad@Quad: 2
+  Size@ENQuad@Quad: 2 2 1
   Color@ENQuad@Quad: 1 1 1 1
   MaskType@ENQuad@Quad: None
   MaskRadius@ENQuad@Quad: 0.5
   Sigma@ENQuad@Quad: 0.150000006
   OriPositionOffset@ENQuad@Quad: false
-  Visible@ENQuad@Quad: false
+  Visible@ENQuad@Quad: true
   Position@ENQuad@Quad: 0 0 0
   PositionOffset@ENQuad@Quad: 0 0 0
 CondPath: C:\Users\lyonlab\VLab\Condition\FlashColor.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1
+RecordSession: V1a
 RecordSite: 1000
 DataDir: X:\
 DataPath: 
@@ -81,6 +81,8 @@ ExInheritParam:
 - Latency
 - TimerDriftSpeed
 - Delay
+- DisplayLatency
+- ResponseDelay
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -92,9 +94,16 @@ EnvInheritParam:
 - ScreenAspect@ENCamera@OrthoCamera
 - MarkerPosition@ENMarker@Marker
 Param: {}
-Latency: 180
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 20
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 190
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

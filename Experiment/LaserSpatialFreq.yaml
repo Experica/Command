@@ -1,18 +1,22 @@
 ID: LaserSpatialFreq
 Name: LaserSpatialFreq
 Designer: Alex
-Experimenter: Alex
+Experimenter: Alex, Leo
 Log: 
-Subject_ID: C1801
-Subject_Name: C1801
-Subject_Species: Domestic Cat
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 0
+Subject_Age: 12
 Subject_Size: 0 0 0
-Subject_Weight: 3
+Subject_Weight: 408
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
   SpatialFreq@ENGratingQuad@GratingQuad: 0.0500000007
@@ -38,20 +42,16 @@ EnvParam:
   Position@ENGratingQuad@GratingQuad: 7.05 2.903 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 38.02 -21.07 -1000
+  MarkerPosition@ENMarker@Marker: 27.32 -14 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: Off
+  Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.76818955
 CondPath: Condition\SpatialFreq.yaml
 Cond: 
 ExLogicPath: RippleLaserCTLogic
-RecordSession: V1
-RecordSite: 345
+RecordSession: V1a
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -96,6 +96,8 @@ ExInheritParam:
 - LaserPower
 - LaserFreq
 - LaserOnLatency
+- ResponseDelay
+- DisplayLatency
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -110,12 +112,20 @@ EnvInheritParam:
 - Position@ENGratingQuad@GratingQuad
 - ScreenAspect@ENCamera@OrthoCamera
 Param:
-  LaserPower: '[0.128, 0.249, 0.503]'
-  LaserFreq: '[0.1, 40]'
+  LaserPower: '[0.53]'
+  LaserFreq: '[0 10 0 0]'
   ICIFactor: 2
   LaserOnLatency: 3000
-Latency: 22
 TimerDriftSpeed: 3.0199999999999999E-05
-Delay: 30
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 182
+ResponseDelay: 20
+Version: 1
 CondTest: 
 CondTestShowLevel: FULL
+SendMail: false
