@@ -24,7 +24,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class Resize : MonoBehaviour, IPointerDownHandler, IDragHandler,IEndDragHandler
     {

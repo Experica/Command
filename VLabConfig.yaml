@@ -1,5 +1,6 @@
 IsSaveExOnQuit: true
 AutoSaveData: true
+SaveConfigInData: true
 SaveDataFormat: YAML
 ExDir: Experiment
 DataDir: Data
@@ -32,13 +33,14 @@ OnlineSignalLatency: 50
 ParallelPort1: 45072
 ParallelPort2: 53264
 ParallelPort3: 53264
+EventSyncCh: 0
+EventMeasureCh: 1
 StartSyncCh: 2
 StopSyncCh: 3
-EventSyncCh: 0
+Bits16Ch: 0
 SignalCh1: 0
 SignalCh2: 1
 SignalCh3: 2
-OIMessageCh: 0
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5

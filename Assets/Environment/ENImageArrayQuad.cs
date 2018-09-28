@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-namespace VLab
+namespace IExSys
 {
     public class ENImageArrayQuad : ENQuad
     {

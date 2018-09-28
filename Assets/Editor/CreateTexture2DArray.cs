@@ -23,7 +23,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using VLab;
+using IExSys;
 
 #if UNITY_EDITOR
 namespace VLabEditor

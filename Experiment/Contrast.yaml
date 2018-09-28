@@ -7,26 +7,20 @@ Subject_ID: LZR1803
 Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 3
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 280
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: false
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 42
+  ScreenAspect@ENCamera@OrthoCamera: 1.778
   Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 0.5
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  Contrast@ENGratingQuad@GratingQuad: 0.899999976
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.0569189936
+  TemporalFreq@ENGratingQuad@GratingQuad: 2.64089632
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
@@ -35,23 +29,29 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 34.7178612
+  Ori@ENGratingQuad@GratingQuad: 90
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 112.421608
+  Size@ENGratingQuad@GratingQuad: 112.4 112.4 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 8.137 0.9282 0
+  Position@ENGratingQuad@GratingQuad: -0.0832 2.224 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 68.33 -37.99 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: false
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\Contrast.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
 RecordSession: V1a
-RecordSite: 1000
+RecordSite: 2000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -119,7 +119,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
 CondTest: 

@@ -24,19 +24,21 @@ using MsgPack;
 using MsgPack.Serialization;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
-    public static class VLMsgPack
+    public static class MsgPack
     {
         public static MessagePackSerializer<Experiment> ExSerializer;
         public static MessagePackSerializer<List<int>> ListIntSerializer;
-        public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListCONDSTATESerializer;
+        public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
+        public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListListEventSerializer;
 
-        static VLMsgPack()
+        static MsgPack()
         {
             ExSerializer = MessagePackSerializer.Get<Experiment>();
             ListIntSerializer = MessagePackSerializer.Get<List<int>>();
-            ListCONDSTATESerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
+            ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();
+            ListListEventSerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
         }
 
         public static object MsgPackObjectToObject(this object o)

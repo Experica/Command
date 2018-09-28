@@ -28,7 +28,7 @@ using System.Reflection;
 using System.Linq;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class EnvironmentPanel : MonoBehaviour
     {
@@ -51,8 +51,8 @@ namespace VLab
 
         public void AddEnvUI(EnvironmentManager em)
         {
-            var isshowinactive = uicontroller.appmanager.config.IsShowInactiveEnvParam;
-            var isshowfullname = uicontroller.appmanager.config.IsShowEnvParamFullName;
+            var isshowinactive = uicontroller.config.IsShowInactiveEnvParam;
+            var isshowfullname = uicontroller.config.IsShowEnvParamFullName;
             foreach (var fullname in em.syncvar_nb_so.Keys.ToArray())
             {
                 string paramname, nb;

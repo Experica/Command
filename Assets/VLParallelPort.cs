@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 using MathNet.Numerics.Random;
 using MathNet.Numerics.Distributions;
 
-namespace VLab
+namespace IExSys
 {
     public static class Inpout
     {

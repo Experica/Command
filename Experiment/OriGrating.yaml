@@ -7,51 +7,51 @@ Subject_ID: LZR1803
 Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 3
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 280
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: false
   MarkOnColor@ENMarker@Marker: 1 1 1 1
   MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
   SpatialPhase@ENGratingQuad@GratingQuad: 0
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
+  GratingType@ENGratingQuad@GratingQuad: Square
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 22.5
+  Ori@ENGratingQuad@GratingQuad: 337.5
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 2 2 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: Disk
+  MaskType@ENGratingQuad@GratingQuad: None
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
   Sigma@ENGratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@ENGratingQuad@GratingQuad: false
   Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 8.137 0.9282 0
+  Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: V1d
+RecordSite: 2720
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -63,18 +63,19 @@ Input: None
 PreICI: 150
 CondDur: 500
 SufICI: 350
-PreITI: 250
-TrialDur: 3000
-SufITI: 250
+PreITI: 0
+TrialDur: 0
+SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
-CondTestAtState: NONE
+CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
-- CONDSTATE
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -117,9 +118,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

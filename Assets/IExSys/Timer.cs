@@ -22,9 +22,9 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System.Diagnostics;
 using System;
 
-namespace VLab
+namespace IExSys
 {
-    public class VLTimer : Stopwatch
+    public class Timer : Stopwatch
     {
         public double ElapsedSecond
         {

@@ -26,7 +26,7 @@ using System.Linq;
 using System;
 using System.Text;
 
-namespace VLab
+namespace IExSys
 {
     public class ConditionTestPanel : MonoBehaviour
     {

@@ -29,7 +29,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public enum ParamUI
     {

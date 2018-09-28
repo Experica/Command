@@ -28,7 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace VLab
+namespace IExSys
 {
     public enum RecordSystem
     {
@@ -56,7 +56,7 @@ namespace VLab
     {
         int disposecount = 0;
         readonly int tickfreq, timeunitpersec;
-        XippmexDotNet xippmexdotnet = new XippmexDotNet();
+        XippmexDotnet xippmexdotnet = new XippmexDotnet();
 
         public RippleRecorder(int tickfreqency = 30000, int timeunitpersecond = 1000, bool isdinbitchange = true, string recordpath = null)
         {

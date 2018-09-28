@@ -29,7 +29,7 @@ using System;
 using Fasterflect;
 using MsgPack.Serialization;
 
-namespace VLab
+namespace IExSys
 {
     public class PropertyAccess
     {
@@ -142,6 +142,7 @@ namespace VLab
         public double DisplayLatency { get; set; }
         public double ResponseDelay { get; set; }
         public uint Version { get; set; } = 1;
+        public ComConfig Config { get; set; }
 
         [MessagePackIgnore]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }

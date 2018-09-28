@@ -23,7 +23,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VLab
+namespace IExSys
 {
     public static class VLAB
     {

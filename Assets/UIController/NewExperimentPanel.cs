@@ -24,7 +24,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public class NewExperimentPanel : MonoBehaviour
     {

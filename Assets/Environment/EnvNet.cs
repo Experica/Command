@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-namespace VLab
+namespace IExSys
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class EnvNet : NetworkBehaviour

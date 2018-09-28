@@ -7,17 +7,51 @@ Subject_ID: LZR1803
 Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 3
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 280
 Subject_Log: 
 EnvPath: MarkerGrating
-EnvParam: {}
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 15
+  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: false
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  Luminance@ENGratingQuad@GratingQuad: 0.5
+  Contrast@ENGratingQuad@GratingQuad: 1
+  SpatialFreq@ENGratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
+  Drifting@ENGratingQuad@GratingQuad: true
+  GratingType@ENGratingQuad@GratingQuad: Square
+  ReverseTime@ENGratingQuad@GratingQuad: false
+  Rotation@ENGratingQuad@GratingQuad: 0 0 0
+  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
+  Ori@ENGratingQuad@GratingQuad: 0
+  OriOffset@ENGratingQuad@GratingQuad: 0
+  Diameter@ENGratingQuad@GratingQuad: 2
+  Size@ENGratingQuad@GratingQuad: 2 2 1
+  Color@ENGratingQuad@GratingQuad: 1 1 1 1
+  MaskType@ENGratingQuad@GratingQuad: None
+  MaskRadius@ENGratingQuad@GratingQuad: 0.5
+  Sigma@ENGratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@ENGratingQuad@GratingQuad: false
+  Visible@ENGratingQuad@GratingQuad: true
+  Position@ENGratingQuad@GratingQuad: 0 0 0
+  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: V1d
+RecordSite: 2720
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
@@ -40,7 +74,8 @@ CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
-- CONDSTATE
+- Event
+- SyncEvent
 ExInheritParam: []
 EnvInheritParam: []
 Param: {}
@@ -51,9 +86,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: NONE
 SendMail: false

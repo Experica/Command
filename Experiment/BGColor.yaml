@@ -7,18 +7,18 @@ Subject_ID: LZR1803
 Subject_Name: LZR1803
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 3
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 280
 Subject_Log: 
 EnvPath: Marker
 EnvParam:
   BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 42
   ScreenAspect@ENCamera@OrthoCamera: 1.77777779
   MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
+  MarkerPosition@ENMarker@Marker: 68.32 -37.99 -1000
   MarkerCorner@ENMarker@Marker: BottomRight
   Mark@ENMarker@Marker: true
   MarkOnColor@ENMarker@Marker: 1 1 1 1
@@ -26,8 +26,8 @@ EnvParam:
 CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: V1d
+RecordSite: 2720
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -89,7 +89,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
 CondTest: 

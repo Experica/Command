@@ -20,7 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using VLab;
+using IExSys;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -67,9 +67,9 @@ public class OIMasterVLSlave : ExperimentLogic
     {
         List<double>[] dt; List<int>[] dv;
         var isdin = recorder.DigitalInput(out dt, out dv);
-        if (isdin && dt[config.OIMessageCh] != null)
+        if (isdin && dt[config.Bits16Ch] != null)
         {
-            int msg = dv[config.OIMessageCh].Last();
+            int msg = dv[config.Bits16Ch].Last();
             if (msg > 127)
             {
                 go = true;

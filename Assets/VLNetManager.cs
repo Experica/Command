@@ -25,7 +25,7 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public class VLNetManager : NetworkManager
     {

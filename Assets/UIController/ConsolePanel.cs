@@ -24,7 +24,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
-namespace VLab
+namespace IExSys
 {
     public enum VLLogType
     {
@@ -112,7 +112,7 @@ namespace VLab
 
         void Awake()
         {
-            maxentry = uicontroller.appmanager.config.MaxLogEntry;
+            maxentry = uicontroller.config.MaxLogEntry;
         }
 
     }

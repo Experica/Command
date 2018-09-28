@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace VLab
+namespace IExSys
 {
     public class ResizeViewPanel : Resize
     {

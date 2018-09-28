@@ -1,15 +1,10 @@
 {
-    "name": "Tests",
+    "name": "IExSys.Command",
     "references": [
-        "IExSys",
-        "IExSys.Command"
+        "IExSys"
     ],
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

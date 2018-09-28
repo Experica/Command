@@ -26,7 +26,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public class ExperimentLogic : MonoBehaviour
     {
@@ -316,6 +316,10 @@ namespace VLab
             if (ct.Count > 0)
             {
                 ex.CondTest = ct;
+                if (config.SaveConfigInData)
+                {
+                    ex.Config = config;
+                }
                 ex.EnvParam = envmanager.GetActiveParams();
 
                 switch (config.SaveDataFormat)
@@ -415,18 +419,15 @@ namespace VLab
 
         protected virtual void StartExperiment()
         {
-            OnStartExperiment();
-
             condstate = CONDSTATE.NONE;
             trialstate = TRIALSTATE.NONE;
             blockstate = BLOCKSTATE.NONE;
             condtestmanager.Clear();
 
+            OnStartExperiment();
             PrepareCondition(regeneratecond);
-
             StartExperimentTimeSync();
             islogicactive = true;
-
             OnExperimentStarted();
         }
 
@@ -445,14 +446,11 @@ namespace VLab
 
         protected virtual void StopExperiment()
         {
-            OnStopExperiment();
-
             // Push notification for any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
-
+            OnStopExperiment();
             StopExperimentTimeSync();
             islogicactive = false;
-
             OnExperimentStopped();
         }
 
@@ -460,13 +458,13 @@ namespace VLab
         {
         }
 
-        protected virtual void OnExperimentStopped()
-        {
-        }
-
         protected virtual void StopExperimentTimeSync()
         {
             timer.Stop();
+        }
+
+        protected virtual void OnExperimentStopped()
+        {
         }
 
         void Awake()

@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class SerialGPIO : IDisposable
     {

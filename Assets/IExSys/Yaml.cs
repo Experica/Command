@@ -27,7 +27,7 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 
-namespace VLab
+namespace IExSys
 {
     public class YamlVLabConverter : IYamlTypeConverter
     {
@@ -58,12 +58,12 @@ namespace VLab
         }
     }
 
-    public static class VLYaml
+    public static class Yaml
     {
         static Serializer serializer;
         static Deserializer deserializer;
 
-        static VLYaml()
+        static Yaml()
         {
             var yamlvlabconverter = new YamlVLabConverter();
             serializer = new SerializerBuilder().DisableAliases().EmitDefaults().WithTypeConverter(yamlvlabconverter).Build();

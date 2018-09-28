@@ -24,7 +24,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Showroom : NetworkBehaviour

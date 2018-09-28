@@ -28,7 +28,7 @@ using System.Linq;
 using MathNet.Numerics.Random;
 using MathNet.Numerics;
 
-namespace VLab
+namespace IExSys
 {
     public class ConditionManager
     {
@@ -497,11 +497,11 @@ namespace VLab
     public class CondTestManager
     {
         public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
-        public Action<CONDTESTPARAM, List<object>> OnNotifyCondTest;
-        public Action<double> OnNotifyCondTestEnd;
-        public Action OnStartCondTest, OnClearCondTest;
+        public Func<CONDTESTPARAM, List<object>, bool> OnNotifyCondTest;
+        public Func<double, bool> OnNotifyCondTestEnd;
+        public Action PushUICondTest, OnClearCondTest;
 
-        int notifyidx = 0;
+        int notifyidx = -1;
         public int NotifyIndex { get { return notifyidx; } }
         int condtestidx = -1;
         public int CondTestIndex { get { return condtestidx; } }
@@ -510,58 +510,66 @@ namespace VLab
         {
             condtest.Clear();
             condtestidx = -1;
-            notifyidx = 0;
+            notifyidx = -1;
             OnClearCondTest?.Invoke();
         }
 
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
-            condtestidx++;
             PushCondTest(starttime, notifyparam, notifypercondtest, pushall, notifyui);
+            condtestidx++;
         }
 
-        public void PushCondTest(double endtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
+        public void PushCondTest(double pushtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
-            if (condtestidx > 0)
+            if (condtestidx >= 0)
             {
-                if (notifyui && OnStartCondTest != null) OnStartCondTest();
+                if (notifyui && PushUICondTest != null) PushUICondTest();
                 if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
                 {
                     if (!pushall)
                     {
                         if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
                         {
-                            NotifyCondTestAndEnd(notifyidx, notifyparam, endtime);
-                            notifyidx = condtestidx;
+                            if (NotifyCondTestAndEnd(notifyidx + 1, notifyparam, pushtime))
+                            {
+                                notifyidx = condtestidx;
+                            }
                         }
                     }
                     else
                     {
-                        NotifyCondTestAndEnd(notifyidx, notifyparam, endtime);
-                        notifyidx = condtestidx;
+                        if (NotifyCondTestAndEnd(notifyidx + 1, notifyparam, pushtime))
+                        {
+                            notifyidx = condtestidx;
+                        }
                     }
                 }
             }
         }
 
-        void NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
+        bool NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
         {
-            if (startidx < condtestidx)
+            var hr = false;
+            if (startidx >= 0 && startidx <= condtestidx)
             {
+                var t = new List<bool>();
                 foreach (var p in notifyparam)
                 {
-                    if (condtest.ContainsKey(p))
+                    if (condtest.ContainsKey(p) && OnNotifyCondTest != null)
                     {
-                        OnNotifyCondTest(p, condtest[p].GetRange(startidx, condtestidx - startidx));
+                        // condtest should have rectangle shape
+                        t.Add(OnNotifyCondTest(p, condtest[p].GetRange(startidx, condtestidx - startidx + 1)));
                     }
                 }
+                hr = t.Count == 0 ? false : t.All(i => i);
             }
+            return hr;
         }
 
-        void NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double endtime)
+        bool NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double notifytime)
         {
-            NotifyCondTest(startidx, notifyparam);
-            OnNotifyCondTestEnd?.Invoke(endtime);
+            return NotifyCondTest(startidx, notifyparam) && OnNotifyCondTestEnd != null && OnNotifyCondTestEnd(notifytime);
         }
 
         public void Add(CONDTESTPARAM paramname, object paramvalue)

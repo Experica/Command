@@ -27,7 +27,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 
-namespace VLab
+namespace IExSys
 {
     public enum CONDTESTPARAM
     {
@@ -43,7 +43,7 @@ namespace VLab
         TASKSTATE
     }
 
-    public static class VLExtention
+    public static class Extension
     {
         static Type TObject, TString, TBool, TInt, TFloat, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
@@ -55,7 +55,7 @@ namespace VLab
             typeof(float),typeof(double),typeof(decimal)
         };
 
-        static VLExtention()
+        static Extension()
         {
             TObject = typeof(object);
             TString = typeof(string);
@@ -391,7 +391,7 @@ namespace VLab
             return conddesign;
         }
 
-        public static string GetAddresses(this string experimenter, VLCFG config)
+        public static string GetAddresses(this string experimenter, ComConfig config)
         {
             string addresses = null;
             if (string.IsNullOrEmpty(experimenter)) return addresses;
@@ -403,7 +403,7 @@ namespace VLab
             return addresses;
         }
 
-        public static ILaser GetLaser(this string lasername, VLCFG config)
+        public static ILaser GetLaser(this string lasername, ComConfig config)
         {
             switch (lasername)
             {

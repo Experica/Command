@@ -27,7 +27,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public class EnvironmentManager
     {

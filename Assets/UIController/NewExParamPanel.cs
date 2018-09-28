@@ -24,7 +24,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class NewExParamPanel : MonoBehaviour
     {

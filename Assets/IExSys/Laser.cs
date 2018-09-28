@@ -22,10 +22,11 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System.Collections;
 using System;
+using System.IO.Ports;
 using System.Threading;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public enum Laser
     {
@@ -47,7 +48,7 @@ namespace VLab
     {
         bool disposed = false;
         SerialPort sp;
-        VLTimer timer = new VLTimer();
+        Timer timer = new Timer();
         /// <summary>
         /// Watt
         /// </summary>
@@ -180,7 +181,7 @@ namespace VLab
     {
         bool disposed = false;
         SerialPort sp;
-        VLTimer timer = new VLTimer();
+        Timer timer = new Timer();
         /// <summary>
         /// Watt
         /// </summary>

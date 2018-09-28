@@ -32,11 +32,14 @@ using System.Runtime;
 using MsgPack;
 using MsgPack.Serialization;
 
-namespace VLab
+namespace IExSys
 {
     public class VLUIController : MonoBehaviour
     {
-        public VLApplicationManager appmanager;
+        public VLCFG config;
+        readonly string configpath = "VLabConfig.yaml";
+        public Dictionary<string, Dictionary<string, List<string>>> envcrossinheritrule;
+
         public Toggle host, server, start, pause;
         public Dropdown exs;
         public Button savedata, newex, saveex, deleteex;
@@ -54,10 +57,45 @@ namespace VLab
         public ConditionTestPanel ctpanel;
 
 
+        void Awake()
+        {
+            if (File.Exists(configpath))
+            {
+                config = configpath.ReadYamlFile<VLCFG>();
+            }
+            if (config == null)
+            {
+                config = new VLCFG();
+            }
+
+            var rulefile = config.EnvCrossInheritRulePath;
+            if (File.Exists(rulefile))
+            {
+                envcrossinheritrule = rulefile.ReadYamlFile<Dictionary<string, Dictionary<string, List<string>>>>();
+            }
+            if (envcrossinheritrule == null)
+            {
+                envcrossinheritrule = new Dictionary<string, Dictionary<string, List<string>>>();
+            }
+            envcrossinheritrule = envcrossinheritrule.ValidateEnvCrossInheritRule();
+        }
+
         void Start()
         {
+            version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
             UpdateExDropdown();
-            savedata.interactable = !appmanager.config.AutoSaveData;
+            savedata.interactable = !config.AutoSaveData;
+        }
+
+        void OnApplicationQuit()
+        {
+            ToggleHost(false);
+            if (config.IsSaveExOnQuit)
+            {
+                exmanager.SaveAllEx();
+            }
+            configpath.WriteYamlFile(config);
+            config.EnvCrossInheritRulePath.WriteYamlFile(envcrossinheritrule);
         }
 
         public void UpdateExDropdown()
@@ -73,7 +111,7 @@ namespace VLab
 
         public void OnExDropdownValueChange(int i)
         {
-            if (appmanager.config.IsSaveExOnQuit && exmanager.el != null)
+            if (config.IsSaveExOnQuit && exmanager.el != null)
             {
                 exmanager.SaveEx(exmanager.el.ex.ID);
             }
@@ -98,8 +136,9 @@ namespace VLab
             viewpanel.UpdateViewport();
         }
 
-        public void OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
+        public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
         {
+            var hr = false;
             if (alsmanager != null)
             {
                 using (var stream = new MemoryStream())
@@ -112,27 +151,35 @@ namespace VLab
                         case CONDTESTPARAM.CondIndex:
                             VLMsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
                             break;
+                        case CONDTESTPARAM.SyncEvent:
+                            VLMsgPack.ListListStringSerializer.Pack(stream, value.ConvertAll(i => (List<string>)i), PackerCompatibilityOptions.None);
+                            break;
+                        case CONDTESTPARAM.Event:
                         case CONDTESTPARAM.TASKSTATE:
                         case CONDTESTPARAM.BLOCKSTATE:
                         case CONDTESTPARAM.TRIALSTATE:
                         case CONDTESTPARAM.CONDSTATE:
-                            VLMsgPack.ListCONDSTATESerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+                            VLMsgPack.ListListEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
                             break;
                     }
                     if (stream.Length > 0)
                     {
                         alsmanager.RpcNotifyCondTest(name, stream.ToArray());
+                        hr = true;
                     }
                 }
             }
+            return hr;
         }
 
-        public void OnNotifyCondTestEnd(double time)
+        public bool OnNotifyCondTestEnd(double time)
         {
             if (alsmanager != null)
             {
                 alsmanager.RpcNotifyCondTestEnd(time);
+                return true;
             }
+            return false;
         }
 
         public void OnBeginStartExperiment()
@@ -148,24 +195,24 @@ namespace VLab
             // Get Highest Performance
             QualitySettings.vSyncCount = 0;
             QualitySettings.maxQueuedFrames = 0;
-            Time.fixedDeltaTime = appmanager.config.FixedDeltaTime;
+            Time.fixedDeltaTime = config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
 
-            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
-            {
-                alsmanager.RpcNotifyStartExperiment();
-            }
+            alsmanager?.RpcNotifyStartExperiment();
         }
 
         public void OnEndStartExperiment()
         {
-            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
+            if (alsmanager != null)
             {
-                var stream = new MemoryStream();
-                exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
-                VLMsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
-                alsmanager.RpcNotifyExperiment(stream.ToArray());
+                using (var stream = new MemoryStream())
+                {
+                    exmanager.el.ex.Config = config;
+                    exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
+                    VLMsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
+                    alsmanager.RpcNotifyExperiment(stream.ToArray());
+                }
             }
 
             // Get Lowest GC Intrusiveness
@@ -175,10 +222,7 @@ namespace VLab
 
         public void ToggleStartStopExperiment(bool isstart)
         {
-            if (exmanager.el != null)
-            {
-                exmanager.el.StartStopExperiment(isstart);
-            }
+            exmanager.el?.StartStopExperiment(isstart);
         }
 
         public void OnBeginStopExperiment()
@@ -215,11 +259,11 @@ namespace VLab
 
         public void OnEndStopExperiment()
         {
-            if (alsmanager != null && exmanager.el.ex.NotifyPerCondTest > 0)
+            if (alsmanager != null)
             {
                 alsmanager.RpcNotifyStopExperiment();
             }
-            if (appmanager.config.AutoSaveData)
+            if (config.AutoSaveData)
             {
                 exmanager.el.SaveData();
             }
@@ -228,7 +272,7 @@ namespace VLab
             {
                 var subject = "Experiment Stopped";
                 var body = $"{exmanager.el.ex.ID} finished in {exmanager.el.timer.Elapsed.ToString("g")}";
-                exmanager.el.ex.Experimenter.GetAddresses(appmanager.config).Mail(subject, body);
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
             // Return Normal GC
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
@@ -419,11 +463,6 @@ namespace VLab
                     netmanager.ServerChangeScene(scene);
                 }
             }
-        }
-
-        public void UpdateSystemInformation()
-        {
-            version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
         }
     }
 }

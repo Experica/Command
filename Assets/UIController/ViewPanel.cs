@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class ViewPanel : MonoBehaviour
     {
@@ -101,8 +101,8 @@ namespace VLab
                 }
                 rendertexture = new RenderTexture((int)width, (int)height, 24);
                 rendertexture.autoGenerateMips = false;
-                rendertexture.antiAliasing = uicontroller.appmanager.config.AntiAliasing;
-                rendertexture.anisoLevel = uicontroller.appmanager.config.AnisotropicFilterLevel;
+                rendertexture.antiAliasing = uicontroller.config.AntiAliasing;
+                rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;
 

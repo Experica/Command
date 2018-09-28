@@ -23,38 +23,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VLab
+namespace IExSys
 {
-    public class VLCFG
+    public class ComConfig
     {
         public bool IsSaveExOnQuit { get; set; } = true;
         public bool AutoSaveData { get; set; } = true;
+        public bool SaveConfigInData { get; set; } = true;
         public DataFormat SaveDataFormat { get; set; } = DataFormat.YAML;
         public string ExDir { get; set; } = "Experiment";
         public string DataDir { get; set; } = "Data";
         public string ExLogic { get; set; } = "ConditionTestLogic";
         public string EnvCrossInheritRulePath { get; set; } = "EnvCrossInheritRule.yaml";
-        public List<CONDTESTPARAM> NotifyParams { get; set; } = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.CONDSTATE };
+        public List<CONDTESTPARAM> NotifyParams { get; set; } = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.Event, CONDTESTPARAM.SyncEvent };
         public int AntiAliasing { get; set; } = 2;
         public int AnisotropicFilterLevel { get; set; } = 5;
         public float FixedDeltaTime { get; set; } = 1000000f;
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;
         public int MaxLogEntry { get; set; } = 999;
-        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol" };
+        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol" ,"Config"};
         public int NotifyLatency { get; set; } = 200;
         public uint MaxDisplayLatencyError { get; set; } = 20;
         public int OnlineSignalLatency { get; set; } = 50;
         public uint ParallelPort1 { get; set; } = 45072;
         public uint ParallelPort2 { get; set; } = 53264;
         public uint ParallelPort3 { get; set; } = 53264;
+        public uint EventSyncCh { get; set; } = 0;
+        public uint EventMeasureCh { get; set; } = 1;
         public uint StartSyncCh { get; set; } = 2;
         public uint StopSyncCh { get; set; } = 3;
-        public uint EventSyncCh { get; set; } = 0;
+        public uint Bits16Ch { get; set; } = 5;
         public uint SignalCh1 { get; set; } = 0;
         public uint SignalCh2 { get; set; } = 1;
         public uint SignalCh3 { get; set; } = 2;
-        public uint OIMessageCh { get; set; } = 0;
         public string SerialPort1 { get; set; } = "COM3";
         public string SerialPort2 { get; set; } = "COM4";
         public string SerialPort3 { get; set; } = "COM5";

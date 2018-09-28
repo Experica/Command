@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class DynamicShowroom : NetworkBehaviour

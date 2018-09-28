@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class ConditionPanel : MonoBehaviour
     {

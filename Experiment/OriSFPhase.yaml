@@ -17,17 +17,11 @@ EnvParam:
   ScreenHalfHeight@ENCamera@OrthoCamera: 15
   ScreenToEye@ENCamera@OrthoCamera: 57
   ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: false
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
   Luminance@ENGratingQuad@GratingQuad: 0.5
   Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@ENGratingQuad@GratingQuad: 1
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
+  SpatialFreq@ENGratingQuad@GratingQuad: 2
+  TemporalFreq@ENGratingQuad@GratingQuad: 2
+  SpatialPhase@ENGratingQuad@GratingQuad: 0.5
   MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
   MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
   Drifting@ENGratingQuad@GratingQuad: false
@@ -35,10 +29,10 @@ EnvParam:
   ReverseTime@ENGratingQuad@GratingQuad: false
   Rotation@ENGratingQuad@GratingQuad: 0 0 0
   RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 165
+  Ori@ENGratingQuad@GratingQuad: 90
   OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 20
-  Size@ENGratingQuad@GratingQuad: 20 20 1
+  Diameter@ENGratingQuad@GratingQuad: 10
+  Size@ENGratingQuad@GratingQuad: 10 10 1
   Color@ENGratingQuad@GratingQuad: 1 1 1 1
   MaskType@ENGratingQuad@GratingQuad: Disk
   MaskRadius@ENGratingQuad@GratingQuad: 0.5
@@ -47,6 +41,12 @@ EnvParam:
   Visible@ENGratingQuad@GratingQuad: false
   Position@ENGratingQuad@GratingQuad: 0 0 0
   PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: false
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
 CondPath: Condition\OriSFPhase.yaml
 Cond: 
 ExLogicPath: RippleCTLogic
@@ -115,7 +115,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
 CondTest: 

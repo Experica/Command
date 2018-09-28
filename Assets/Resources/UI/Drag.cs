@@ -24,7 +24,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-namespace VLab
+namespace IExSys
 {
     public class Drag : MonoBehaviour, IPointerDownHandler, IDragHandler
     {

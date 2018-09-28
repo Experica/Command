@@ -27,11 +27,10 @@ using System.Reflection;
 using System.IO;
 using System;
 
-namespace VLab
+namespace IExSys
 {
     public class ExperimentManager : MonoBehaviour
     {
-        public VLApplicationManager appmanager;
         public VLUIController uicontroller;
         public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
 
@@ -46,7 +45,7 @@ namespace VLab
 
         public void GetExFiles()
         {
-            var exfiledir = appmanager.config.ExDir;
+            var exfiledir = uicontroller.config.ExDir;
             if (Directory.Exists(exfiledir))
             {
                 exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.AllDirectories).ToList();
@@ -55,7 +54,7 @@ namespace VLab
                 {
                     exids.Add(Path.GetFileNameWithoutExtension(f));
                 }
-                var firsttestid = appmanager.config.FirstTestID;
+                var firsttestid = uicontroller.config.FirstTestID;
                 if (exids.Contains(firsttestid))
                 {
                     var i = exids.IndexOf(firsttestid);
@@ -93,7 +92,7 @@ namespace VLab
             }
             if (string.IsNullOrEmpty(ex.DataDir))
             {
-                var datadir = appmanager.config.DataDir;
+                var datadir = uicontroller.config.DataDir;
                 if (!Directory.Exists(datadir))
                 {
                     Directory.CreateDirectory(datadir);
@@ -106,7 +105,7 @@ namespace VLab
             }
             if (ex.NotifyParam == null)
             {
-                ex.NotifyParam = appmanager.config.NotifyParams;
+                ex.NotifyParam = uicontroller.config.NotifyParams;
             }
             return ex;
         }
@@ -135,12 +134,12 @@ namespace VLab
             }
             if (eltype == null)
             {
-                var elpath = appmanager.config.ExLogic;
+                var elpath = uicontroller.config.ExLogic;
                 eltype = Type.GetType(elpath);
                 ex.ExLogicPath = elpath;
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
-            el.config = appmanager.config;
+            el.config = uicontroller.config;
             el.ex = ex;
             uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
             AddEL(el);
@@ -162,7 +161,7 @@ namespace VLab
                     LoadEL(ValidateExperiment(ex));
 
                     exids.Add(id);
-                    exfiles.Add(Path.Combine(appmanager.config.ExDir, id + ".yaml"));
+                    exfiles.Add(Path.Combine(uicontroller.config.ExDir, id + ".yaml"));
                     SaveEx(id);
                     return true;
                 }
@@ -185,7 +184,7 @@ namespace VLab
                 LoadEL(ValidateExperiment(ex));
 
                 exids.Add(id);
-                exfiles.Add(Path.Combine(appmanager.config.ExDir, id + ".yaml"));
+                exfiles.Add(Path.Combine(uicontroller.config.ExDir, id + ".yaml"));
                 SaveEx(id);
                 return true;
             }
@@ -199,12 +198,14 @@ namespace VLab
                 if (i >= 0)
                 {
                     var ex = elhistory[i].ex;
-                    // Exclude data, only save experiment definition
+                    // Exclude data and config, only save experiment definition
                     var datapath = ex.DataPath;
                     var condtest = ex.CondTest;
+                    var config = ex.Config;
                     var cond = ex.Cond;
                     ex.DataPath = null;
                     ex.CondTest = null;
+                    ex.Config = null;
                     ex.Cond = null;
                     ex.EnvParam = elhistory[i].envmanager.GetParams();
                     try
@@ -215,6 +216,7 @@ namespace VLab
                     {
                         ex.DataPath = datapath;
                         ex.CondTest = condtest;
+                        ex.Config = config;
                         ex.Cond = cond;
                     }
                 }
@@ -294,7 +296,7 @@ namespace VLab
             el.OnConditionPrepared = uicontroller.condpanel.RefreshCondition;
             el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
-            el.condtestmanager.OnStartCondTest = uicontroller.ctpanel.StartCondTest;
+            el.condtestmanager.PushUICondTest = uicontroller.ctpanel.StartCondTest;
             el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
             el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
             el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
@@ -412,9 +414,9 @@ namespace VLab
                         }
                         else
                         {
-                            if (uicontroller.appmanager.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
+                            if (uicontroller.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
                             {
-                                if (uicontroller.appmanager.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
+                                if (uicontroller.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
                                 {
                                     foreach (var hpk in hp.Keys.ToArray())
                                     {
@@ -436,13 +438,13 @@ namespace VLab
                     {
                         v = hp[fullname];
                     }
-                    else if (uicontroller.appmanager.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
+                    else if (uicontroller.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
                     {
                         foreach (var hpn in hp.Keys.ToArray())
                         {
                             string paramfrom = hpn.FirstAtSplitHead();
                             string objectfrom = hpn.LastAtSplitTail();
-                            if (paramname == paramfrom && uicontroller.appmanager.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
+                            if (paramname == paramfrom && uicontroller.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
                             {
                                 v = hp[hpn];
                                 break;

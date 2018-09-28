@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-namespace VLab
+namespace IExSys
 {
     public class VLMsgType
     {
@@ -54,7 +54,7 @@ namespace VLab
         }
     }
 
-    public enum VLPeerType
+    public enum PeerType
     {
         VLab,
         VLabEnvironment,

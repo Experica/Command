@@ -29,7 +29,7 @@ using System.Linq;
 using System.Threading;
 using System.Runtime.InteropServices;
 
-namespace VLab
+namespace IExSys
 {
     public class SerialPort : IDisposable
     {

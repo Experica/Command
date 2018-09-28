@@ -28,7 +28,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 
-namespace VLab
+namespace IExSys
 {
     public class ExperimentPanel : MonoBehaviour
     {
@@ -96,7 +96,7 @@ namespace VLab
 
         bool IsShowParam(string name)
         {
-            var exhideparam = uicontroller.appmanager.config.ExHideParams;
+            var exhideparam = uicontroller.config.ExHideParams;
             return exhideparam.Contains(name) ? false : true;
         }
 

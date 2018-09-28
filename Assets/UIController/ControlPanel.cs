@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace VLab
+namespace IExSys
 {
     public class ControlPanel : MonoBehaviour
     {

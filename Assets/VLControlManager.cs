@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace VLab
+namespace IExSys
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class VLControlManager : NetworkBehaviour

@@ -25,7 +25,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.IO;
 
-namespace VLab
+namespace IExSys
 {
     public class FilePathInput : MonoBehaviour
     {

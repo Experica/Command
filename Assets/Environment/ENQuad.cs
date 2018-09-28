@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-namespace VLab
+namespace IExSys
 {
     public class ENQuad : EnvNet
     {
