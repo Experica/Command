@@ -1,5 +1,5 @@
 ﻿/*
-ConditionTestLogic.cs is part of the VLAB project.
+ConditionTestLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,150 +19,151 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using IExSys;
-
-public class ConditionTestLogic : ExperimentLogic
+namespace Experica
 {
-    protected ParallelPort pport;
-    protected bool syncvalue;
-
-    protected override void OnStart()
+    public class ConditionTestLogic : ExperimentLogic
     {
-        pport = new ParallelPort(dataaddress: config.ParallelPort1);
-    }
+        protected ParallelPort pport;
+        protected bool syncvalue;
 
-    protected override void OnStartExperiment()
-    {
-        SetEnvActiveParam("Visible", false);
-        SyncEvent();
-    }
-
-    protected override void OnExperimentStopped()
-    {
-        SetEnvActiveParam("Visible", false);
-        SyncEvent();
-    }
-
-    protected virtual void SyncEvent(string e = "")
-    {
-        var esp = ex.EventSyncProtocol;
-        if (esp.SyncMethods == null || esp.SyncMethods.Count == 0) return;
-        bool addtosynclist = false;
-        bool syncreset = string.IsNullOrEmpty(e) ? true : false;
-
-        if (esp.nSyncChannel == 1 && esp.nSyncpEvent == 1)
+        protected override void OnStart()
         {
-            syncvalue = syncreset ? false : !syncvalue;
-            addtosynclist = syncreset ? false : true;
-            for (var i = 0; i < esp.SyncMethods.Count; i++)
+            pport = new ParallelPort(dataaddress: config.ParallelPort1);
+        }
+
+        protected override void OnStartExperiment()
+        {
+            SetEnvActiveParam("Visible", false);
+            SyncEvent();
+        }
+
+        protected override void OnExperimentStopped()
+        {
+            SetEnvActiveParam("Visible", false);
+            SyncEvent();
+        }
+
+        protected virtual void SyncEvent(string e = "")
+        {
+            var esp = ex.EventSyncProtocol;
+            if (esp.SyncMethods == null || esp.SyncMethods.Count == 0) return;
+            bool addtosynclist = false;
+            bool syncreset = string.IsNullOrEmpty(e) ? true : false;
+
+            if (esp.nSyncChannel == 1 && esp.nSyncpEvent == 1)
             {
-                switch (esp.SyncMethods[i])
+                syncvalue = syncreset ? false : !syncvalue;
+                addtosynclist = syncreset ? false : true;
+                for (var i = 0; i < esp.SyncMethods.Count; i++)
                 {
-                    case SyncMethod.Display:
-                        SetEnvActiveParam("Mark", syncvalue);
-                        break;
-                    case SyncMethod.ParallelPort:
-                        pport.SetBit(bit: config.EventSyncCh, value: syncvalue);
-                        break;
+                    switch (esp.SyncMethods[i])
+                    {
+                        case SyncMethod.Display:
+                            SetEnvActiveParam("Mark", syncvalue);
+                            break;
+                        case SyncMethod.ParallelPort:
+                            pport.SetBit(bit: config.EventSyncCh, value: syncvalue);
+                            break;
+                    }
                 }
             }
+            if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
+            {
+                condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
+            }
         }
-        if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
-        {
-            condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
-        }
-    }
 
-    protected override void Logic()
-    {
-        switch (BlockState)
+        protected override void Logic()
         {
-            case BLOCKSTATE.NONE:
-                BlockState = BLOCKSTATE.PREIBI;
-                break;
-            case BLOCKSTATE.PREIBI:
-                if (PreIBIHold >= ex.PreIBI)
-                {
-                    BlockState = BLOCKSTATE.BLOCK;
-                }
-                break;
-            case BLOCKSTATE.BLOCK:
-                switch (TrialState)
-                {
-                    case TRIALSTATE.NONE:
-                        TrialState = TRIALSTATE.PREITI;
-                        break;
-                    case TRIALSTATE.PREITI:
-                        if (PreITIHold >= ex.PreITI)
-                        {
-                            TrialState = TRIALSTATE.TRIAL;
-                        }
-                        break;
-                    case TRIALSTATE.TRIAL:
-                        switch (CondState)
-                        {
-                            case CONDSTATE.NONE:
-                                CondState = CONDSTATE.PREICI;
-                                break;
-                            case CONDSTATE.PREICI:
-                                if (PreICIHold >= ex.PreICI)
-                                {
-                                    // State transition: PREICI -> COND
-                                    CondState = CONDSTATE.COND;
-                                    SyncEvent(CONDSTATE.COND.ToString());
-                                    SetEnvActiveParam("Visible", true);
-                                }
-                                break;
-                            case CONDSTATE.COND:
-                                if (CondHold >= ex.CondDur)
-                                {
-                                    // State transition: COND -> SUFICI
-                                    CondState = CONDSTATE.SUFICI;
-                                    if (ex.PreICI != 0 || ex.SufICI != 0)
-                                    {
-                                        SyncEvent(CONDSTATE.SUFICI.ToString());
-                                        SetEnvActiveParam("Visible", false);
-                                    }
-                                }
-                                break;
-                            case CONDSTATE.SUFICI:
-                                if (SufICIHold >= ex.SufICI)
-                                {
-                                    if (TrialHold >= ex.TrialDur)
-                                    {
-                                        CondState = CONDSTATE.NONE;
-                                        TrialState = TRIALSTATE.SUFITI;
-                                    }
-                                    else
-                                    {
-                                        CondState = CONDSTATE.PREICI;
-                                    }
-                                }
-                                break;
-                        }
-                        break;
-                    case TRIALSTATE.SUFITI:
-                        if (SufITIHold >= ex.SufITI)
-                        {
-                            if (BlockHold >= ex.BlockDur)
-                            {
-                                TrialState = TRIALSTATE.NONE;
-                                BlockState = BLOCKSTATE.SUFIBI;
-                            }
-                            else
-                            {
-                                TrialState = TRIALSTATE.PREITI;
-                            }
-                        }
-                        break;
-                }
-                break;
-            case BLOCKSTATE.SUFIBI:
-                if (SufIBIHold >= ex.SufIBI)
-                {
+            switch (BlockState)
+            {
+                case BLOCKSTATE.NONE:
                     BlockState = BLOCKSTATE.PREIBI;
-                }
-                break;
+                    break;
+                case BLOCKSTATE.PREIBI:
+                    if (PreIBIHold >= ex.PreIBI)
+                    {
+                        BlockState = BLOCKSTATE.BLOCK;
+                    }
+                    break;
+                case BLOCKSTATE.BLOCK:
+                    switch (TrialState)
+                    {
+                        case TRIALSTATE.NONE:
+                            TrialState = TRIALSTATE.PREITI;
+                            break;
+                        case TRIALSTATE.PREITI:
+                            if (PreITIHold >= ex.PreITI)
+                            {
+                                TrialState = TRIALSTATE.TRIAL;
+                            }
+                            break;
+                        case TRIALSTATE.TRIAL:
+                            switch (CondState)
+                            {
+                                case CONDSTATE.NONE:
+                                    CondState = CONDSTATE.PREICI;
+                                    break;
+                                case CONDSTATE.PREICI:
+                                    if (PreICIHold >= ex.PreICI)
+                                    {
+                                        // State transition: PREICI -> COND
+                                        CondState = CONDSTATE.COND;
+                                        SyncEvent(CONDSTATE.COND.ToString());
+                                        SetEnvActiveParam("Visible", true);
+                                    }
+                                    break;
+                                case CONDSTATE.COND:
+                                    if (CondHold >= ex.CondDur)
+                                    {
+                                        // State transition: COND -> SUFICI
+                                        CondState = CONDSTATE.SUFICI;
+                                        if (ex.PreICI != 0 || ex.SufICI != 0)
+                                        {
+                                            SyncEvent(CONDSTATE.SUFICI.ToString());
+                                            SetEnvActiveParam("Visible", false);
+                                        }
+                                    }
+                                    break;
+                                case CONDSTATE.SUFICI:
+                                    if (SufICIHold >= ex.SufICI)
+                                    {
+                                        if (TrialHold >= ex.TrialDur)
+                                        {
+                                            CondState = CONDSTATE.NONE;
+                                            TrialState = TRIALSTATE.SUFITI;
+                                        }
+                                        else
+                                        {
+                                            CondState = CONDSTATE.PREICI;
+                                        }
+                                    }
+                                    break;
+                            }
+                            break;
+                        case TRIALSTATE.SUFITI:
+                            if (SufITIHold >= ex.SufITI)
+                            {
+                                if (BlockHold >= ex.BlockDur)
+                                {
+                                    TrialState = TRIALSTATE.NONE;
+                                    BlockState = BLOCKSTATE.SUFIBI;
+                                }
+                                else
+                                {
+                                    TrialState = TRIALSTATE.PREITI;
+                                }
+                            }
+                            break;
+                    }
+                    break;
+                case BLOCKSTATE.SUFIBI:
+                    if (SufIBIHold >= ex.SufIBI)
+                    {
+                        BlockState = BLOCKSTATE.PREIBI;
+                    }
+                    break;
+            }
         }
     }
 }

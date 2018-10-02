@@ -1,5 +1,5 @@
 ﻿/*
-ExperimentManager.cs is part of the VLAB project.
+ExperimentManager.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -27,11 +27,11 @@ using System.Reflection;
 using System.IO;
 using System;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ExperimentManager : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
 
         public List<string> exfiles = new List<string>();

@@ -1,5 +1,5 @@
 ﻿/*
-RippleCTLogic.cs is part of the VLAB project.
+RippleCTLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,84 +19,85 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using IExSys;
-
-public class RippleCTLogic : ConditionTestLogic
+namespace Experica
 {
-    protected override void OnStart()
+    public class RippleCTLogic : ConditionTestLogic
     {
-        pport = new ParallelPort(dataaddress: config.ParallelPort1);
-        recorder = new RippleRecorder();
-    }
-
-    protected override void StartExperimentTimeSync()
-    {
-        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        protected override void OnStart()
         {
-            recorder.RecordPath = ex.GetDataPath();
-            /* 
-            Ripple recorder set path through network and Trellis receive
-            message and change file path, all of which need time to complete.
-            Trigger record TTL before file path change completion will
-            not successfully start recording.
+            pport = new ParallelPort(dataaddress: config.ParallelPort1);
+            recorder = new RippleRecorder();
+        }
 
-            VLabAnalysis also need time to clear signal buffer,
-            otherwise the delayed action may clear the start TTL pluse which is
-            needed to mark the start time of VLab.
+        protected override void StartExperimentTimeSync()
+        {
+            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+            {
+                recorder.RecordPath = ex.GetDataPath();
+                /* 
+                Ripple recorder set path through network and Trellis receive
+                message and change file path, all of which need time to complete.
+                Trigger record TTL before file path change completion will
+                not successfully start recording.
+
+                VLabAnalysis also need time to clear signal buffer,
+                otherwise the delayed action may clear the start TTL pluse which is
+                needed to mark the start time of VLab.
+                */
+                timer.Timeout(config.NotifyLatency);
+                pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+            }
+            /*
+            Immediately after the TTL falling edge triggering ripple recording, we reset timer
+            in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
             */
-            timer.Timeout(config.NotifyLatency);
-            pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+            timer.Restart();
         }
-        /*
-        Immediately after the TTL falling edge triggering ripple recording, we reset timer
-        in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
-        */
-        timer.Restart();
-    }
 
-    protected override void StopExperimentTimeSync()
-    {
-        // Tail period to make sure lagged effect data is recorded before stop recording
-        timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
-        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        protected override void StopExperimentTimeSync()
         {
-            pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+            // Tail period to make sure lagged effect data is recorded before stop recording
+            timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+            {
+                pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+            }
+            timer.Stop();
         }
-        timer.Stop();
-    }
 
-    protected override void Logic()
-    {
-        switch (CondState)
+        protected override void Logic()
         {
-            case CONDSTATE.NONE:
-                CondState = CONDSTATE.PREICI;
-                break;
-            case CONDSTATE.PREICI:
-                if (PreICIHold >= ex.PreICI)
-                {
-                    CondState = CONDSTATE.COND;
-                    SyncEvent(CONDSTATE.COND.ToString());
-                    SetEnvActiveParam("Visible", true);
-                }
-                break;
-            case CONDSTATE.COND:
-                if (CondHold >= ex.CondDur)
-                {
-                    CondState = CONDSTATE.SUFICI;
-                    if (ex.PreICI != 0 || ex.SufICI != 0)
-                    {
-                        SyncEvent(CONDSTATE.SUFICI.ToString());
-                        SetEnvActiveParam("Visible", false);
-                    }
-                }
-                break;
-            case CONDSTATE.SUFICI:
-                if (SufICIHold >= ex.SufICI)
-                {
+            switch (CondState)
+            {
+                case CONDSTATE.NONE:
                     CondState = CONDSTATE.PREICI;
-                }
-                break;
+                    break;
+                case CONDSTATE.PREICI:
+                    if (PreICIHold >= ex.PreICI)
+                    {
+                        CondState = CONDSTATE.COND;
+                        SyncEvent(CONDSTATE.COND.ToString());
+                        SetEnvActiveParam("Visible", true);
+                    }
+                    break;
+                case CONDSTATE.COND:
+                    if (CondHold >= ex.CondDur)
+                    {
+                        CondState = CONDSTATE.SUFICI;
+                        if (ex.PreICI != 0 || ex.SufICI != 0)
+                        {
+                            SyncEvent(CONDSTATE.SUFICI.ToString());
+                            SetEnvActiveParam("Visible", false);
+                        }
+                    }
+                    break;
+                case CONDSTATE.SUFICI:
+                    if (SufICIHold >= ex.SufICI)
+                    {
+                        CondState = CONDSTATE.PREICI;
+                    }
+                    break;
+            }
         }
     }
 }

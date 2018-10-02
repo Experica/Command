@@ -1,5 +1,5 @@
 ﻿/*
-EnvironmentPanel.cs is part of the VLAB project.
+EnvironmentPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -28,11 +28,11 @@ using System.Reflection;
 using System.Linq;
 using System;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class EnvironmentPanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public GameObject content;
 
         public Dictionary<string, Toggle> inherittoggle = new Dictionary<string, Toggle>();

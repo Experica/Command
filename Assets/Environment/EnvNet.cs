@@ -1,5 +1,5 @@
 ﻿/*
-EnvNet.cs is part of the VLAB project.
+EnvNet.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -20,10 +20,13 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+#if COMMAND
+using Experica.Command;
+#endif
 
-namespace IExSys
+namespace Experica
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class EnvNet : NetworkBehaviour
@@ -36,8 +39,8 @@ namespace IExSys
         public Vector3 PositionOffset = Vector3.zero;
 
         public Renderer renderer;
-#if VLAB
-        VLNetManager netmanager;
+#if COMMAND
+       NetManager netmanager;
 #endif
 
         void Awake()
@@ -47,8 +50,8 @@ namespace IExSys
         public virtual void OnAwake()
         {
             renderer = gameObject.GetComponent<Renderer>();
-#if VLAB
-            netmanager = FindObjectOfType<VLNetManager>();
+#if COMMAND
+            netmanager = FindObjectOfType<NetManager>();
 #endif
         }
 
@@ -85,15 +88,15 @@ namespace IExSys
             PositionOffset = poffset;
         }
 
-#if VLAB
+#if COMMAND
         public override bool OnCheckObserver(NetworkConnection conn)
         {
-            return netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+            return netmanager.IsConnectionPeerType(conn, PeerType.Environment);
         }
 
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var vcs = netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            var vcs = netmanager.GetPeerTypeConnection(PeerType.Environment);
             if (vcs.Count > 0)
             {
                 foreach (var c in vcs)

@@ -1,5 +1,5 @@
 ﻿/*
-ParamPrefab.cs is part of the VLAB project.
+ParamPrefab.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -29,7 +29,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace IExSys
+namespace Experica
 {
     public enum ParamUI
     {

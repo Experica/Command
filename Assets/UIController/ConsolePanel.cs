@@ -1,5 +1,5 @@
 ﻿/*
-ConsolePanel.cs is part of the VLAB project.
+ConsolePanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -24,9 +24,9 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
-namespace IExSys
+namespace Experica.Command
 {
-    public enum VLLogType
+    public enum LogType
     {
         Log,
         Warning,
@@ -35,7 +35,7 @@ namespace IExSys
 
     public class ConsolePanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public GameObject content, logprefab, warningprefab, errorprefab;
 
         int maxentry;
@@ -53,20 +53,20 @@ namespace IExSys
 
         public void LogError(object msg, bool istimestamp = true)
         {
-            Log(VLLogType.Error, msg, istimestamp);
+            Log(LogType.Error, msg, istimestamp);
         }
 
         public void LogWarn(object msg, bool istimestamp = true)
         {
-            Log(VLLogType.Warning, msg, istimestamp);
+            Log(LogType.Warning, msg, istimestamp);
         }
 
         public void Log(object msg, bool istimestamp = true)
         {
-            Log(VLLogType.Log, msg, istimestamp);
+            Log(LogType.Log, msg, istimestamp);
         }
 
-        public void Log(VLLogType logtype, object msg, bool istimestamp = true)
+        public void Log(LogType logtype, object msg, bool istimestamp = true)
         {
             var v = msg.Convert<string>();
             if (istimestamp)
@@ -97,13 +97,13 @@ namespace IExSys
             rt.sizeDelta = new Vector2(0, entrycount * (grid.cellSize.y + grid.spacing.y));
         }
 
-        GameObject ChoosePrefab(VLLogType logtype)
+        GameObject ChoosePrefab(LogType logtype)
         {
             switch(logtype)
             {
-                case VLLogType.Warning:
+                case LogType.Warning:
                     return warningprefab;
-                case VLLogType.Error:
+                case LogType.Error:
                     return errorprefab;
                 default:
                     return logprefab;

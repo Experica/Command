@@ -1,5 +1,5 @@
 ﻿/*
-ExperimentPanel.cs is part of the VLAB project.
+ExperimentPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -28,11 +28,11 @@ using System.Reflection;
 using System;
 using System.Linq;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ExperimentPanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public GameObject content, newexparampanelprefab;
         GameObject newexparampanel;
         public Canvas canvas;

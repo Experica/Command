@@ -1,5 +1,5 @@
 ﻿/*
-ConditionTestPanel.cs is part of the VLAB project.
+ConditionTestPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -26,11 +26,11 @@ using System.Linq;
 using System;
 using System.Text;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ConditionTestPanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public GameObject ctcontent, ctheadcontent, blueheadertextprefab, redheadertextprefab,
             yellowheadertextprefab, greenheadertextprefab, textprefab;
         GridLayoutGroup grid; float ctcontentheight, textheight;

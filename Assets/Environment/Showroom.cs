@@ -1,5 +1,5 @@
 ﻿/*
-Showroom.cs is part of the VLAB project.
+Showroom.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,8 +23,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Linq;
+#if COMMAND
+using Experica.Command;
+#endif
 
-namespace IExSys
+namespace Experica
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Showroom : NetworkBehaviour
@@ -37,14 +40,14 @@ namespace IExSys
         public GameObject marker;
         Dictionary<EnvironmentObject, GameObject> items = new Dictionary<EnvironmentObject, GameObject>();
 
-#if VLAB
-        VLUIController uicontroller;
+#if COMMAND
+        UIController uicontroller;
 #endif
 
         void Awake()
         {
-#if VLAB
-            uicontroller = FindObjectOfType<VLUIController>();
+#if COMMAND
+            uicontroller = FindObjectOfType<UIController>();
 #endif
             marker = GameObject.Find("Marker");
             foreach (var n in typeof(EnvironmentObject).GetValue().Except(new List<string> { "None" }))
@@ -65,7 +68,7 @@ namespace IExSys
         {
             marker.SetActive(ismarker);
             Marker = ismarker;
-#if VLAB
+#if COMMAND
             if (ismarker)
             {
                 NetworkServer.Spawn(marker);
@@ -94,7 +97,7 @@ namespace IExSys
                 }
             }
             Show = id;
-#if VLAB
+#if COMMAND
             uicontroller.exmanager.el.envmanager.UpdateScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
@@ -105,7 +108,7 @@ namespace IExSys
             if (items.ContainsKey(id))
             {
                 items[id].SetActive(isactive);
-#if VLAB
+#if COMMAND
                 if (isactive)
                 {
                     NetworkServer.Spawn(items[id]);
@@ -120,7 +123,7 @@ namespace IExSys
             foreach (var i in items.Values)
             {
                 i.SetActive(isactive);
-#if VLAB
+#if COMMAND
                 if (isactive)
                 {
                     NetworkServer.Spawn(i);
@@ -135,7 +138,7 @@ namespace IExSys
             foreach (var i in items.Keys.Except(new List<EnvironmentObject> { id }))
             {
                 items[i].SetActive(isactive);
-#if VLAB
+#if COMMAND
                 if (isactive)
                 {
                     NetworkServer.Spawn(items[i]);
@@ -152,7 +155,7 @@ namespace IExSys
             {
                 activestate = i != id ? isactive : !isactive;
                 items[i].SetActive(activestate);
-#if VLAB
+#if COMMAND
                 if (activestate)
                 {
                     NetworkServer.Spawn(items[i]);
@@ -162,15 +165,15 @@ namespace IExSys
             }
         }
 
-#if VLAB
+#if COMMAND
         public override bool OnCheckObserver(NetworkConnection conn)
         {
-            return uicontroller.netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+            return uicontroller.netmanager.IsConnectionPeerType(conn, PeerType.Environment);
         }
 
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var vcs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            var vcs = uicontroller.netmanager.GetPeerTypeConnection(PeerType.Environment);
             if (vcs.Count > 0)
             {
                 foreach (var c in vcs)

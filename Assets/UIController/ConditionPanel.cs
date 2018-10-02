@@ -1,5 +1,5 @@
 ﻿/*
-ConditionPanel.cs is part of the VLAB project.
+ConditionPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -25,11 +25,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ConditionPanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public GameObject condcontent, condheadcontent, inputprefab,
             blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;

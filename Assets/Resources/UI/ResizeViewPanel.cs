@@ -1,5 +1,5 @@
 ﻿/*
-ResizeViewPanel.cs is part of the VLAB project.
+ResizeViewPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,7 +23,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ResizeViewPanel : Resize
     {

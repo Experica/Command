@@ -1,5 +1,5 @@
 ﻿/*
-ViewPanel.cs is part of the VLAB project.
+ViewPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -27,14 +27,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 
-namespace IExSys
+namespace Experica.Command
 {
     public class ViewPanel : MonoBehaviour
     {
-        public VLUIController uicontroller;
+        public UIController uicontroller;
         public RenderTexture rendertexture;
         public GameObject viewportcontent;
-        public CartesianGrid grid;
+        public Grid grid;
         public InputField gridcenterinput;
         public Action OnViewUpdated;
 

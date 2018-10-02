@@ -1,5 +1,5 @@
 ﻿/*
-CreateTexture2DArray.cs is part of the VLAB project.
+CreateTexture2DArray.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,10 +23,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using IExSys;
 
 #if UNITY_EDITOR
-namespace VLabEditor
+namespace Experica.Editor
 {
     public class CreateTexture2DArray
     {

@@ -1,5 +1,5 @@
 ﻿/*
-FilePathInput.cs is part of the VLAB project.
+FilePathInput.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -25,7 +25,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.IO;
 
-namespace IExSys
+namespace Experica
 {
     public class FilePathInput : MonoBehaviour
     {

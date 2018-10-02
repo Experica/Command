@@ -1,5 +1,5 @@
 ﻿/*
-RippleImageLogic.cs is part of the VLAB project.
+RippleImageLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,44 +19,46 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using IExSys;
 using System.Collections.Generic;
 using System.Linq;
 
-public class RippleImageLogic : RippleCTLogic
+namespace Experica
 {
-    float diameterbeforeadjust;
-    bool isdiameteradjusted;
-
-    protected override void GenerateFinalCondition()
+    public class RippleImageLogic : RippleCTLogic
     {
-        var cond = new Dictionary<string, List<object>>
-        {
-            ["Image"] = Enumerable.Range((int)GetEnvActiveParam("StartIndex"), (int)GetEnvActiveParam("NumOfImage")).Select(i => (object)i).ToList()
-        };
-        condmanager.FinalizeCondition(cond);
-    }
+        float diameterbeforeadjust;
+        bool isdiameteradjusted;
 
-    protected override void OnStartExperiment()
-    {
-        base.OnStartExperiment();
-        var mt = (MaskType)GetEnvActiveParam("MaskType");
-        if (mt == MaskType.DiskFade || mt == MaskType.Disk)
+        protected override void GenerateFinalCondition()
         {
-            isdiameteradjusted = true;
-            diameterbeforeadjust = (float)GetEnvActiveParam("Diameter");
-            var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
-            SetEnvActiveParam("Diameter", diameterbeforeadjust / mrr);
+            var cond = new Dictionary<string, List<object>>
+            {
+                ["Image"] = Enumerable.Range((int)GetEnvActiveParam("StartIndex"), (int)GetEnvActiveParam("NumOfImage")).Select(i => (object)i).ToList()
+            };
+            condmanager.FinalizeCondition(cond);
         }
-    }
 
-    protected override void OnExperimentStopped()
-    {
-        base.OnExperimentStopped();
-        var mt = (MaskType)GetEnvActiveParam("MaskType");
-        if ((mt == MaskType.DiskFade || mt == MaskType.Disk) && isdiameteradjusted)
+        protected override void OnStartExperiment()
         {
-            SetEnvActiveParam("Diameter", diameterbeforeadjust);
+            base.OnStartExperiment();
+            var mt = (MaskType)GetEnvActiveParam("MaskType");
+            if (mt == MaskType.DiskFade || mt == MaskType.Disk)
+            {
+                isdiameteradjusted = true;
+                diameterbeforeadjust = (float)GetEnvActiveParam("Diameter");
+                var mrr = (float)GetEnvActiveParam("MaskRadius") / 0.5f;
+                SetEnvActiveParam("Diameter", diameterbeforeadjust / mrr);
+            }
+        }
+
+        protected override void OnExperimentStopped()
+        {
+            base.OnExperimentStopped();
+            var mt = (MaskType)GetEnvActiveParam("MaskType");
+            if ((mt == MaskType.DiskFade || mt == MaskType.Disk) && isdiameteradjusted)
+            {
+                SetEnvActiveParam("Diameter", diameterbeforeadjust);
+            }
         }
     }
 }

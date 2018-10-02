@@ -1,5 +1,5 @@
 ﻿/*
-DynamicShowroom.cs is part of the VLAB project.
+DynamicShowroom.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -24,8 +24,11 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+#if COMMAND
+using Experica.Command;
+#endif
 
-namespace IExSys
+namespace Experica
 {
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class DynamicShowroom : NetworkBehaviour
@@ -40,16 +43,16 @@ namespace IExSys
         Dictionary<NetworkHash128, EnvironmentObject> assetidtoid = new Dictionary<NetworkHash128, EnvironmentObject>();
         Dictionary<NetworkHash128, GameObject> prefabs = new Dictionary<NetworkHash128, GameObject>();
 
-#if VLAB
-        VLUIController uicontroller;
+#if COMMAND
+        UIController uicontroller;
 #endif
 
         void Awake()
         {
-#if VLAB
-            uicontroller = FindObjectOfType<VLUIController>();
+#if COMMAND
+            uicontroller = FindObjectOfType<UIController>();
 #endif
-#if VLABENVIRONMENT
+#if ENVIRONMENT
             RegisterSpawnHandler();
 #endif
         }
@@ -102,7 +105,7 @@ namespace IExSys
                 marker.SetActive(false);
             }
             Marker = ismarker;
-#if VLAB
+#if COMMAND
             uicontroller.exmanager.el.envmanager.UpdateScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
@@ -117,7 +120,7 @@ namespace IExSys
             if (id == EnvironmentObject.None)
             {
                 SetAllItemActive(false);
-#if VLAB
+#if COMMAND
                 uicontroller.exmanager.el.envmanager.UpdateScene();
 #endif
             }
@@ -126,13 +129,13 @@ namespace IExSys
                 if (items.ContainsKey(id))
                 {
                     SetAllItemActiveExceptOtherWise(id, false);
-#if VLAB
+#if COMMAND
                     uicontroller.exmanager.el.envmanager.UpdateScene();
 #endif
                 }
                 else
                 {
-#if VLAB
+#if COMMAND
                     var go = LoadItem(id);
                     uicontroller.exmanager.el.envmanager.UpdateScene();
                     uicontroller.exmanager.el.envmanager.SetParams(uicontroller.exmanager.el.ex.EnvParam, go.name);
@@ -143,7 +146,7 @@ namespace IExSys
                 }
             }
             Show = id;
-#if VLAB
+#if COMMAND
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
         }
@@ -201,15 +204,15 @@ namespace IExSys
             }
         }
 
-#if VLAB
+#if COMMAND
         public override bool OnCheckObserver(NetworkConnection conn)
         {
-            return uicontroller.netmanager.IsConnectionPeerType(conn, VLPeerType.VLabEnvironment);
+            return uicontroller.netmanager.IsConnectionPeerType(conn, PeerType.Environment);
         }
 
         public override bool OnRebuildObservers(HashSet<NetworkConnection> observers, bool initialize)
         {
-            var vcs = uicontroller.netmanager.GetPeerTypeConnection(VLPeerType.VLabEnvironment);
+            var vcs = uicontroller.netmanager.GetPeerTypeConnection(PeerType.Environment);
             if (vcs.Count > 0)
             {
                 foreach (var c in vcs)
