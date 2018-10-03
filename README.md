@@ -1,5 +1,4 @@
-# VLab
-___
+# Command
 
-VLab is the server for VLAB experiment system.
+Command is the server for Experica experiment system.
 
