@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024"
+   height="1024"
+   viewBox="0 0 270.93333 270.93333"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="Command_Logo.svg"
+   inkscape:export-filename="C:\Users\Alex\Command_Logo.png"
+   inkscape:export-xdpi="96.000008"
+   inkscape:export-ydpi="96.000008"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient6199"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#dd1331;stop-opacity:1;"
+         offset="0"
+         id="stop6197" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient6067"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#dd5832;stop-opacity:1;"
+         offset="0"
+         id="stop6065" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.48261719"
+     inkscape:cx="195.05606"
+     inkscape:cy="402.7401"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="10"
+     fit-margin-right="10"
+     fit-margin-left="10"
+     fit-margin-bottom="10"
+     units="px"
+     inkscape:pagecheckerboard="false"
+     showborder="true"
+     borderlayer="false"
+     inkscape:showpageshadow="true"
+     inkscape:window-width="2736"
+     inkscape:window-height="1699"
+     inkscape:window-x="-13"
+     inkscape:window-y="-13"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-82.52621,99.959475)">
+    <path
+       style="fill:#323232;fill-opacity:1;stroke:none;stroke-width:1.71876693;stroke-opacity:1"
+       d="M 203.85661,-97.255376 A 133.55049,133.55049 0 0 0 85.351427,21.339765 c 11.787971,-3.123091 24.681093,-6.363669 37.209993,-9.504914 a 98.445266,98.445266 0 0 1 71.76606,-71.783363 c 3.15054,-12.565933 6.39814,-25.493795 9.52913,-37.306864 z m 28.30368,0.121105 c 3.12308,11.787971 6.36367,24.68108 9.5049,37.209982 a 98.445266,98.445266 0 0 1 71.78336,71.766064 c 12.56594,3.150538 25.49381,6.398136 37.30688,9.529132 A 133.55049,133.55049 0 0 0 232.16029,-97.134271 Z M 85.230324,49.643435 A 133.55049,133.55049 0 0 0 203.82548,168.14862 C 200.70265,156.36167 197.46155,143.47 194.32056,130.94209 A 98.445266,98.445266 0 0 1 122.5372,59.172573 C 109.97126,56.022024 97.043393,52.774426 85.230324,49.643435 Z m 265.404006,0.03118 c -11.78797,3.12309 -24.68109,6.363671 -37.20999,9.504903 a 98.445266,98.445266 0 0 1 -71.76605,71.783372 c -3.15055,12.56594 -6.39816,25.4938 -9.52915,37.30687 A 133.55049,133.55049 0 0 0 350.63433,49.674615 Z"
+       id="path815"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     transform="translate(-82.52621,99.959475)">
+    <circle
+       style="fill:#dd1331;fill-opacity:1;stroke:none;stroke-width:7.2447629;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4550"
+       cx="217.99287"
+       cy="35.507191"
+       r="33.095032" />
+  </g>
+</svg>

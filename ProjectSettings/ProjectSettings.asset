@@ -119,6 +119,7 @@ PlayerSettings:
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
   xboxOneEnable7thCore: 0
+  isWsaHolographicRemotingEnabled: 0
   vrSettings:
     cardboard:
       depthFormat: 0
@@ -169,7 +170,7 @@ PlayerSettings:
   StripUnusedMeshComponents: 1
   VertexChannelCompressionMask: 196
   iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 8.0
+  iOSTargetOSVersionString: 9.0
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
   tvOSTargetOSVersionString: 9.0
@@ -255,12 +256,13 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   AndroidJvmMaxHeapSize: 4096
-  resolutionDialogBanner: {fileID: 2800000, guid: 6f1ef098004eadc41bd36ba826dd1671, type: 3}
+  resolutionDialogBanner: {fileID: 2800000, guid: 6f1ef098004eadc41bd36ba826dd1671,
+    type: 3}
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: c1c3311398bcf6a44b16033463c6f428, type: 3}
+      m_Icon: {fileID: 2800000, guid: b3f2de0d221d9e34f8e73a319406c246, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -461,6 +463,7 @@ PlayerSettings:
   switchAllowsVideoCapturing: 1
   switchAllowsRuntimeAddOnContentInstall: 0
   switchDataLossConfirmation: 0
+  switchUserAccountLockEnabled: 0
   switchSupportedNpadStyles: 3
   switchNativeFsCacheSize: 32
   switchIsHoldTypeHorizontal: 0
@@ -604,7 +607,8 @@ PlayerSettings:
   metroDefaultTileSize: 1
   metroTileForegroundText: 1
   metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
-  metroSplashScreenBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 1}
+  metroSplashScreenBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628,
+    a: 1}
   metroSplashScreenUseBackgroundColor: 1
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}

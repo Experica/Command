@@ -3,6 +3,7 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Mm]ono*/
+/[Ll]og*/
 
 /Assets/Resources/Imageset_*/
 /Command_Data/
