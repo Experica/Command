@@ -27,9 +27,10 @@ namespace Experica
 {
     public class OIMaster : ExperimentLogic
     {
-        int condidx;
-        bool start, go;
-        double reversetime;
+        protected int condidx;
+        protected bool start, go, issizeadjusted;
+        protected double reversetime;
+        protected Vector3 sizebeforeadjust;
 
         protected override void OnStart()
         {
@@ -43,6 +44,8 @@ namespace Experica
             var fss = ex.GetParam("FullScreenSize");
             if (fss != null && fss.Convert<bool>())
             {
+                issizeadjusted = true;
+                sizebeforeadjust = (Vector3)GetEnvActiveParam("Size");
                 var hh = envmanager.maincamera_scene.orthographicSize;
                 var hw = hh * envmanager.maincamera_scene.aspect;
                 SetEnvActiveParam("Size", new Vector3(2.1f * hw, 2.1f * hh, 1));
@@ -53,22 +56,27 @@ namespace Experica
         {
             SetEnvActiveParam("Visible", false);
             SetEnvActiveParam("ReverseTime", false);
+            if (issizeadjusted)
+            {
+                SetEnvActiveParam("Size", sizebeforeadjust);
+                issizeadjusted = false;
+            }
         }
 
         /// <summary>
         /// Optical Imaging VDAQ output a byte, of which bit 7 is the GO bit,
         /// and bit 0-6 can represent StimulusID:0-127. In order to send StimulusID
         /// before GO bit, we use ID:0 as blank stimulus, and all real stimulus
-        /// start from 1 and map to VLab condidx 0.
+        /// start from 1 and map to condidx 0.
         /// </summary>
         /// <param name="start"></param>
         /// <param name="go"></param>
         /// <param name="condidx"></param>
         void ParseOIMessage(ref bool start, ref bool go, ref int condidx)
         {
-            List<double>[] dt; List<int>[] dv;
-            var isdin = recorder.DigitalInput(out dt, out dv);
-            if (isdin && dt[config.Bits16Ch] != null)
+            Dictionary<int, List<double>> dt; Dictionary<int, List<int>> dv;
+            var isdin = recorder.ReadDigitalInput(out dt, out dv);
+            if (isdin && dt.ContainsKey(config.Bits16Ch) && dt[config.Bits16Ch] != null && dt[config.Bits16Ch].Count > 0)
             {
                 int msg = dv[config.Bits16Ch].Last();
                 if (msg > 127)
@@ -113,19 +121,16 @@ namespace Experica
                 case CONDSTATE.NONE:
                     if (start)
                     {
+                        CondState = CONDSTATE.PREICI;
                         SetEnvActiveParam("Drifting", false);
-                        if (go)
-                        {
-                            CondState = CONDSTATE.PREICI;
-                        }
+                        SetEnvActiveParam("Visible", true);
                     }
                     break;
                 case CONDSTATE.PREICI:
-                    if (go && PreICIHold >= ex.PreICI)
+                    if (go)
                     {
-                        SetEnvActiveParam("Drifting", true);
-                        SetEnvActiveParam("Visible", true);
                         CondState = CONDSTATE.COND;
+                        SetEnvActiveParam("Drifting", true);
                         reversetime = CondOnTime;
                     }
                     break;
@@ -141,9 +146,9 @@ namespace Experica
                     }
                     else
                     {
+                        CondState = CONDSTATE.SUFICI;
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("ReverseTime", false);
-                        CondState = CONDSTATE.SUFICI;
                     }
                     break;
                 case CONDSTATE.SUFICI:

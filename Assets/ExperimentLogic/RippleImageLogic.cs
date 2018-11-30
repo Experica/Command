@@ -26,8 +26,8 @@ namespace Experica
 {
     public class RippleImageLogic : RippleCTLogic
     {
-        float diameterbeforeadjust;
-        bool isdiameteradjusted;
+        protected float diameterbeforeadjust;
+        protected bool isdiameteradjusted;
 
         protected override void GenerateFinalCondition()
         {
@@ -54,10 +54,10 @@ namespace Experica
         protected override void OnExperimentStopped()
         {
             base.OnExperimentStopped();
-            var mt = (MaskType)GetEnvActiveParam("MaskType");
-            if ((mt == MaskType.DiskFade || mt == MaskType.Disk) && isdiameteradjusted)
+            if (isdiameteradjusted)
             {
                 SetEnvActiveParam("Diameter", diameterbeforeadjust);
+                isdiameteradjusted = false;
             }
         }
     }

@@ -64,6 +64,7 @@ PlayerSettings:
   preserveFramebufferAlpha: 0
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
+  androidRenderOutsideSafeArea: 0
   androidBlitType: 0
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
@@ -91,7 +92,7 @@ PlayerSettings:
   visibleInBackground: 1
   allowFullscreenSwitch: 1
   graphicsJobMode: 0
-  fullscreenMode: 0
+  fullscreenMode: 1
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0
@@ -148,7 +149,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.Company.ProductName
-    Standalone: unity.Experica.Command
+    Standalone: Experica.Command
     Tizen: com.Company.ProductName
     iOS: com.Company.ProductName
     tvOS: com.Company.ProductName
@@ -255,7 +256,6 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  AndroidJvmMaxHeapSize: 4096
   resolutionDialogBanner: {fileID: 2800000, guid: 6f1ef098004eadc41bd36ba826dd1671,
     type: 3}
   m_BuildTargetIcons:
@@ -578,7 +578,7 @@ PlayerSettings:
     iOS: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
-    Standalone: 1
+    Standalone: 0
   incrementalIl2cppBuild:
     iOS: 1
   allowUnsafeCode: 0
@@ -682,4 +682,4 @@ PlayerSettings:
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
-  legacyClampBlendShapeWeights: 1
+  legacyClampBlendShapeWeights: 0

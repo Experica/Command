@@ -58,26 +58,26 @@ namespace Experica
         [DllImport("inpoutx64.dll", EntryPoint = "SetPhysLong")]
         static extern int SetPhysLong(ref byte PortAddress, uint Data);
 
-        static object lockobject;
+        static readonly object apilock = new object();
+
         static Inpout()
         {
-            lockobject = new object();
             try
             {
-                if (IsInpOutDriverOpen() == 0)
+                lock (apilock)
                 {
-                    Debug.Log("Unable to open parallel port driver: Inpoutx64");
+                    if (IsInpOutDriverOpen() == 0)
+                    {
+                        Debug.Log("Unable to open parallel port driver: Inpoutx64.");
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.ToString());
-            }
+            catch (Exception e) { Debug.LogException(e); }
         }
 
         public static void Output8(ushort PortAddress, byte Data)
         {
-            lock (lockobject)
+            lock (apilock)
             {
                 Out8(PortAddress, Data);
             }
@@ -85,7 +85,7 @@ namespace Experica
 
         public static void Output16(ushort PortAddress, ushort Data)
         {
-            lock (lockobject)
+            lock (apilock)
             {
                 Out16(PortAddress, Data);
             }
@@ -93,7 +93,7 @@ namespace Experica
 
         public static byte Input8(ushort PortAddress)
         {
-            lock (lockobject)
+            lock (apilock)
             {
                 return Inp8(PortAddress);
             }
@@ -108,35 +108,35 @@ namespace Experica
 
     public class ParallelPort
     {
-        uint dataaddress;
-        public uint DataAddress { get { lock (lockobj) { return dataaddress; } } set { lock (lockobj) { dataaddress = value; } } }
-        public uint StatusAddress { get { return DataAddress + 1; } }
-        public uint ControlAddress { get { return DataAddress + 2; } }
+        int dataaddress;
+        public int DataAddress { get { lock (apilock) { return dataaddress; } } set { lock (apilock) { dataaddress = value; } } }
+        public int StatusAddress { get { lock (apilock) { return dataaddress + 1; } } }
+        public int ControlAddress { get { lock (apilock) { return dataaddress + 2; } } }
         ParallelPortDataMode datamode;
         public ParallelPortDataMode DataMode
         {
-            get { lock (lockobj) { return datamode; } }
+            get { lock (apilock) { return datamode; } }
             set
             {
-                lock (lockobj)
+                lock (apilock)
                 {
                     Inpout.Output8((ushort)ControlAddress, (byte)(value == ParallelPortDataMode.Input ? 0x01 << 5 : 0x00));
                     datamode = value;
                 }
             }
         }
-        uint valuecache;
-        object lockobj = new object();
+        int datavalue;
+        readonly object apilock = new object();
 
-        public ParallelPort(uint dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
+        public ParallelPort(int dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
         {
-            this.dataaddress = dataaddress;
+            DataAddress = dataaddress;
             DataMode = datamode;
         }
 
         public byte Inp()
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (DataMode == ParallelPortDataMode.Output)
                 {
@@ -146,9 +146,9 @@ namespace Experica
             }
         }
 
-        public void Out(uint data)
+        public void Out(int data)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (DataMode == ParallelPortDataMode.Input)
                 {
@@ -160,7 +160,7 @@ namespace Experica
 
         public void Out(byte data)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (DataMode == ParallelPortDataMode.Input)
                 {
@@ -170,59 +170,59 @@ namespace Experica
             }
         }
 
-        public void SetBit(uint bit = 0, bool value = true)
+        public void SetBit(int bit = 0, bool value = true)
         {
-            lock (lockobj)
+            lock (apilock)
             {
-                var t = value ? (1u << (int)bit) : ~(1u << (int)bit);
-                valuecache = value ? valuecache | t : valuecache & t;
-                Out(valuecache);
+                var v = value ? (0x01 << bit) : ~(0x01 << bit);
+                datavalue = value ? datavalue | v : datavalue & v;
+                Out(datavalue);
             }
         }
 
-        public void SetBits(uint[] bits, bool[] values)
+        public void SetBits(int[] bits, bool[] values)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (bits != null && values != null)
                 {
                     var bs = bits.Distinct().ToArray();
-                    if (bs.Count() == values.Length)
+                    if (bs.Length == values.Length)
                     {
-                        for (var i = 0; i < bs.Count(); i++)
+                        for (var i = 0; i < bs.Length; i++)
                         {
-                            var t = values[i] ? (1u << (int)bs[i]) : ~(1u << (int)bs[i]);
-                            valuecache = values[i] ? valuecache | t : valuecache & t;
+                            var v = values[i] ? (0x01 << bs[i]) : ~(0x01 << bs[i]);
+                            datavalue = values[i] ? datavalue | v : datavalue & v;
                         }
-                        Out(valuecache);
+                        Out(datavalue);
                     }
                 }
             }
         }
 
-        public bool GetBit(uint bit = 0)
+        public bool GetBit(int bit = 0)
         {
-            lock (lockobj)
+            lock (apilock)
             {
-                var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
-                return t[15 - (int)bit] == '1' ? true : false;
+                var v = Convert.ToString(Inp(), 2).PadLeft(16, '0');
+                return v[15 - bit] == '1' ? true : false;
             }
         }
 
-        public bool[] GetBits(uint[] bits)
+        public bool[] GetBits(int[] bits)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 var vs = new List<bool>();
                 if (bits != null)
                 {
                     var bs = bits.Distinct().ToArray();
-                    if (bs.Count() != 0)
+                    if (bs.Length > 0)
                     {
-                        var t = Convert.ToString(Inp(), 2).PadLeft(16, '0');
+                        var v = Convert.ToString(Inp(), 2).PadLeft(16, '0');
                         foreach (var b in bs)
                         {
-                            vs.Add(t[15 - (int)b] == '1' ? true : false);
+                            vs.Add(v[15 - b] == '1' ? true : false);
                         }
                     }
                 }
@@ -230,42 +230,39 @@ namespace Experica
             }
         }
 
-        public void BitPulse(uint bit = 0, double duration_ms = 1)
+        public void BitPulse(int bit = 0, double duration_ms = 1)
         {
-            lock (lockobj)
-            {
-                var timer = new Timer();
-                SetBit(bit);
-                timer.Timeout(duration_ms);
-                SetBit(bit, false);
-            }
+            var timer = new Timer();
+            SetBit(bit, true);
+            timer.Timeout(duration_ms);
+            SetBit(bit, false);
         }
 
         void _BitPulse(object p)
         {
             var param = (List<object>)p;
-            BitPulse((uint)param[0], (double)param[1]);
+            BitPulse((int)param[0], (double)param[1]);
         }
 
-        public void ConcurrentBitPulse(uint bit = 0, double duration_ms = 1)
+        public void ASyncBitPulse(int bit = 0, double duration_ms = 1)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 var t = new Thread(new ParameterizedThreadStart(_BitPulse));
                 t.Start(new List<object>() { bit, duration_ms });
             }
         }
 
-        public void BitsPulse(uint[] bits, double[] durations_ms)
+        public void BitsPulse(int[] bits, double[] durations_ms)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (bits != null && durations_ms != null)
                 {
                     var bs = bits.Distinct().ToArray();
-                    if (bs.Count() == durations_ms.Length)
+                    if (bs.Length == durations_ms.Length)
                     {
-                        for (var i = 0; i < bs.Count(); i++)
+                        for (var i = 0; i < bs.Length; i++)
                         {
                             BitPulse(bs[i], durations_ms[i]);
                         }
@@ -274,18 +271,18 @@ namespace Experica
             }
         }
 
-        public void ConcurrentBitsPulse(uint[] bits, double[] durations_ms)
+        public void ASyncBitsPulse(int[] bits, double[] durations_ms)
         {
-            lock (lockobj)
+            lock (apilock)
             {
                 if (bits != null && durations_ms != null)
                 {
                     var bs = bits.Distinct().ToArray();
-                    if (bs.Count() == durations_ms.Length)
+                    if (bs.Length == durations_ms.Length)
                     {
-                        for (var i = 0; i < bs.Count(); i++)
+                        for (var i = 0; i < bs.Length; i++)
                         {
-                            ConcurrentBitPulse(bs[i], durations_ms[i]);
+                            ASyncBitPulse(bs[i], durations_ms[i]);
                         }
                     }
                 }
@@ -300,27 +297,28 @@ namespace Experica
     }
 
     /// <summary>
-    /// wave can be reliably delivered upon 10kHz
+    /// Parallel Port wave can be reliably delivered upon 10kHz
     /// </summary>
     public class ParallelPortWave
     {
         ParallelPort pport;
-        float lowcutofffreq, highcutofffreq;
+        public ParallelPort ParallelPort { get { lock (apilock) { return pport; } } set { lock (apilock) { pport = value; } } }
+        readonly float lowcutofffreq, highcutofffreq;
         System.Random rng = new MersenneTwister(true);
+        readonly object apilock = new object();
 
-        ConcurrentDictionary<uint, Thread> bitthread = new ConcurrentDictionary<uint, Thread>();
-        ConcurrentDictionary<uint, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<uint, ManualResetEvent>();
-        ConcurrentDictionary<uint, bool> bitthreadbreak = new ConcurrentDictionary<uint, bool>();
+        ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
+        ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
+        ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
 
-        ConcurrentDictionary<uint, DigitalWave> bitwave = new ConcurrentDictionary<uint, DigitalWave>();
-        ConcurrentDictionary<uint, double> bitlatency_ms = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bitphase = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bithighdur_ms = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bitlowdur_ms = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bitspikerate = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bitspikewidth_ms = new ConcurrentDictionary<uint, double>();
-        ConcurrentDictionary<uint, double> bitrefreshperiod_ms = new ConcurrentDictionary<uint, double>();
-
+        ConcurrentDictionary<int, DigitalWave> bitwave = new ConcurrentDictionary<int, DigitalWave>();
+        ConcurrentDictionary<int, double> bitlatency_ms = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bitphase = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bithighdur_ms = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bitlowdur_ms = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bitspikerate = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bitspikewidth_ms = new ConcurrentDictionary<int, double>();
+        ConcurrentDictionary<int, double> bitrefreshperiod_ms = new ConcurrentDictionary<int, double>();
 
         public ParallelPortWave(ParallelPort pp, float lowcutofffreq = 0.00001f, float highcutofffreq = 10000f)
         {
@@ -329,72 +327,91 @@ namespace Experica
             this.highcutofffreq = highcutofffreq;
         }
 
-        public void SetBitWave(uint bit, double highdur_ms, double lowdur_ms, double latency_ms = 0, double phase = 0)
+        public void SetBitWave(int bit, double highdur_ms, double lowdur_ms, double latency_ms = 0, double phase = 0)
         {
-
-            bitlatency_ms[bit] = latency_ms;
-            bitphase[bit] = phase;
-            bithighdur_ms[bit] = highdur_ms;
-            bitlowdur_ms[bit] = lowdur_ms;
-            bitwave[bit] = DigitalWave.HighLow;
-        }
-
-        public void SetBitWave(uint bit, float freq, double latency_ms = 0, double phase = 0)
-        {
-            bitlatency_ms[bit] = latency_ms;
-            bitphase[bit] = phase;
-            var halfcycle = (1.0 / Mathf.Clamp(freq, lowcutofffreq, highcutofffreq)) * 1000.0 / 2.0;
-            bithighdur_ms[bit] = halfcycle;
-            bitlowdur_ms[bit] = halfcycle;
-            bitwave[bit] = DigitalWave.HighLow;
-        }
-
-        public void SetBitWave(uint bit, double rate_sps, double spikewidth_ms = 2, double refreshperiod_ms = 2, double latency_ms = 0, double phase = 0)
-        {
-            bitlatency_ms[bit] = latency_ms;
-            bitphase[bit] = phase;
-            bitspikerate[bit] = rate_sps / 1000;
-            bitspikewidth_ms[bit] = spikewidth_ms;
-            bitrefreshperiod_ms[bit] = refreshperiod_ms;
-            bitwave[bit] = DigitalWave.PoissonSpike;
-        }
-
-        public void Start(params uint[] bs)
-        {
-            var vbs = bitlatency_ms.Keys.Intersect(bs).ToArray();
-            var vbn = vbs.Length;
-            if (vbn > 0)
+            lock (apilock)
             {
-                foreach (var b in vbs)
+                bitlatency_ms[bit] = latency_ms;
+                bitphase[bit] = phase;
+                bithighdur_ms[bit] = highdur_ms;
+                bitlowdur_ms[bit] = lowdur_ms;
+                bitwave[bit] = DigitalWave.HighLow;
+            }
+        }
+
+        public void SetBitWave(int bit, float freq, double latency_ms = 0, double phase = 0)
+        {
+            lock (apilock)
+            {
+                bitlatency_ms[bit] = latency_ms;
+                bitphase[bit] = phase;
+                var halfcycle = (1.0 / Mathf.Clamp(freq, lowcutofffreq, highcutofffreq)) * 1000.0 / 2.0;
+                bithighdur_ms[bit] = halfcycle;
+                bitlowdur_ms[bit] = halfcycle;
+                bitwave[bit] = DigitalWave.HighLow;
+            }
+        }
+
+        public void SetBitWave(int bit, double rate_sps, double spikewidth_ms = 2, double refreshperiod_ms = 2, double latency_ms = 0, double phase = 0)
+        {
+            lock (apilock)
+            {
+                bitlatency_ms[bit] = latency_ms;
+                bitphase[bit] = phase;
+                bitspikerate[bit] = rate_sps / 1000;
+                bitspikewidth_ms[bit] = spikewidth_ms;
+                bitrefreshperiod_ms[bit] = refreshperiod_ms;
+                bitwave[bit] = DigitalWave.PoissonSpike;
+            }
+        }
+
+        public void Start(params int[] bs)
+        {
+            lock (apilock)
+            {
+                var vbs = bitwave.Keys.Intersect(bs).ToArray();
+                var vbn = vbs.Length;
+                if (vbn > 0)
                 {
-                    if (!bitthread.ContainsKey(b))
+                    foreach (var b in vbs)
                     {
-                        bitthread[b] = new Thread(_BitWave);
-                        bitthreadevent[b] = new ManualResetEvent(false);
+                        if (!bitthread.ContainsKey(b))
+                        {
+                            bitthread[b] = new Thread(_BitWave);
+                            bitthreadevent[b] = new ManualResetEvent(false);
+                        }
+                        if (!bitthread[b].IsAlive)
+                        {
+                            bitthread[b].Start(b);
+                        }
+                        bitthreadbreak[b] = false;
                     }
-                    bitthreadbreak[b] = false;
-                }
-                foreach (var b in vbs)
-                {
-                    if (!bitthread[b].IsAlive)
+                    foreach (var b in vbs)
                     {
-                        bitthread[b].Start(b);
+                        bitthreadevent[b].Set();
                     }
-                    bitthreadevent[b].Set();
                 }
             }
         }
 
-        public void Stop(params uint[] bs)
+        public void StartAll()
         {
-            var vbs = bitthread.Keys.Intersect(bs).ToArray();
-            var vbn = vbs.Length;
-            if (vbn > 0)
+            Start(bitwave.Keys.ToArray());
+        }
+
+        public void Stop(params int[] bs)
+        {
+            lock (apilock)
             {
-                foreach (var b in vbs)
+                var vbs = bitthread.Keys.Intersect(bs).ToArray();
+                var vbn = vbs.Length;
+                if (vbn > 0)
                 {
-                    bitthreadevent[b].Reset();
-                    bitthreadbreak[b] = true;
+                    foreach (var b in vbs)
+                    {
+                        bitthreadevent[b].Reset();
+                        bitthreadbreak[b] = true;
+                    }
                 }
             }
         }
@@ -404,10 +421,15 @@ namespace Experica
             Stop(bitthread.Keys.ToArray());
         }
 
-        void ThreadBitWave(uint bit)
+        void _BitWave(object p)
+        {
+            ThreadBitWave((int)p);
+        }
+
+        void ThreadBitWave(int bit)
         {
             var timer = new Timer(); bool isbreakstarted;
-            double start, breakstart = 0;
+            double start = 0; double breakstart = 0;
             Break:
             bitthreadevent[bit].WaitOne();
             isbreakstarted = false;
@@ -418,7 +440,7 @@ namespace Experica
                     timer.Timeout(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
                     while (true)
                     {
-                        pport.SetBit(bit);
+                        pport.SetBit(bit, true);
                         start = timer.ElapsedMillisecond;
                         while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
                         {
@@ -480,7 +502,7 @@ namespace Experica
                                 }
                             }
 
-                            pport.SetBit(bit);
+                            pport.SetBit(bit, true);
                             start = timer.ElapsedMillisecond;
                             while ((timer.ElapsedMillisecond - start) < bitspikewidth_ms[bit])
                             {
@@ -502,11 +524,6 @@ namespace Experica
                         }
                     }
             }
-        }
-
-        void _BitWave(object p)
-        {
-            ThreadBitWave((uint)p);
         }
     }
 }

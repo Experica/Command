@@ -42,26 +42,27 @@ namespace Experica
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;
         public int MaxLogEntry { get; set; } = 999;
-        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol" ,"Config"};
+        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol", "Config" };
+        public string FirstTestID { get; set; } = "ConditionTest";
+        public Dictionary<string, string> ExperimenterAddress { get; set; } = new Dictionary<string, string> { { "Alex", "4109829463@mms.att.net" } };
+
         public int NotifyLatency { get; set; } = 200;
-        public uint MaxDisplayLatencyError { get; set; } = 20;
+        public int MaxDisplayLatencyError { get; set; } = 20;
         public int OnlineSignalLatency { get; set; } = 50;
-        public uint ParallelPort1 { get; set; } = 45072;
-        public uint ParallelPort2 { get; set; } = 53264;
-        public uint ParallelPort3 { get; set; } = 53264;
-        public uint EventSyncCh { get; set; } = 0;
-        public uint EventMeasureCh { get; set; } = 1;
-        public uint StartSyncCh { get; set; } = 2;
-        public uint StopSyncCh { get; set; } = 3;
-        public uint Bits16Ch { get; set; } = 5;
-        public uint SignalCh1 { get; set; } = 0;
-        public uint SignalCh2 { get; set; } = 1;
-        public uint SignalCh3 { get; set; } = 2;
+
+        public int ParallelPort1 { get; set; } = 45072;
+        public int ParallelPort2 { get; set; } = 53264;
+        public int ParallelPort3 { get; set; } = 53264;
+        public int EventSyncCh { get; set; } = 0;
+        public int EventMeasureCh { get; set; } = 1;
+        public int StartSyncCh { get; set; } = 2;
+        public int StopSyncCh { get; set; } = 3;
+        public int Bits16Ch { get; set; } = 5;
+        public int SignalCh1 { get; set; } = 0;
+        public int SignalCh2 { get; set; } = 1;
+        public int SignalCh3 { get; set; } = 2;
         public string SerialPort1 { get; set; } = "COM3";
         public string SerialPort2 { get; set; } = "COM4";
         public string SerialPort3 { get; set; } = "COM5";
-        public uint MarkPulseWidth { get; set; } = 21;
-        public string FirstTestID { get; set; } = "ConditionTest";
-        public Dictionary<string, string> ExperimenterAddress { get; set; } = new Dictionary<string, string> { { "Alex", "4109829463@mms.att.net" } };
     }
 }

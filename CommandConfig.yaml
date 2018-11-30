@@ -8,7 +8,8 @@ ExLogic: Experica.ConditionTestLogic
 EnvCrossInheritRulePath: EnvCrossInheritRule.yaml
 NotifyParams:
 - CondIndex
-- CONDSTATE
+- Event
+- SyncEvent
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
 FixedDeltaTime: 1000000
@@ -27,6 +28,10 @@ ExHideParams:
 - EnvInheritParam
 - Version
 - EventSyncProtocol
+- Config
+FirstTestID: ConditionTest
+ExperimenterAddress:
+  Alex: 4109829463@mms.att.net
 NotifyLatency: 200
 MaxDisplayLatencyError: 20
 OnlineSignalLatency: 50
@@ -37,14 +42,10 @@ EventSyncCh: 0
 EventMeasureCh: 1
 StartSyncCh: 2
 StopSyncCh: 3
-Bits16Ch: 0
+Bits16Ch: 5
 SignalCh1: 0
 SignalCh2: 1
 SignalCh3: 2
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
-MarkPulseWidth: 21
-FirstTestID: ConditionTest
-ExperimenterAddress:
-  Alex: 4109829463@mms.att.net

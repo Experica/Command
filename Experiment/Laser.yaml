@@ -1,69 +1,69 @@
 ID: Laser
 Name: Laser
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 280
+Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 42
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.072700046
-  TemporalFreq@ENGratingQuad@GratingQuad: 2.08724117
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
-  Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Square
-  ReverseTime@ENGratingQuad@GratingQuad: false
-  Rotation@ENGratingQuad@GratingQuad: 0 0 0
-  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 36.2273598
-  OriOffset@ENGratingQuad@GratingQuad: 0
-  Diameter@ENGratingQuad@GratingQuad: 60.3490067
-  Size@ENGratingQuad@GratingQuad: 60.35 60.35 1
-  Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: None
-  MaskRadius@ENGratingQuad@GratingQuad: 0.5
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  OriPositionOffset@ENGratingQuad@GratingQuad: false
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: -7.01 22.66 0
-  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 68.32 -37.99 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: false
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Luminance@GratingQuad@GratingQuad: 0.5
+  Contrast@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.699999988
+  TemporalFreq@GratingQuad@GratingQuad: 4
+  SpatialPhase@GratingQuad@GratingQuad: 0
+  MinColor@GratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  Drifting@GratingQuad@GratingQuad: true
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@GratingQuad@GratingQuad: false
+  Rotation@GratingQuad@GratingQuad: 0 0 0
+  RotationOffset@GratingQuad@GratingQuad: 0 0 0
+  Ori@GratingQuad@GratingQuad: 135
+  OriOffset@GratingQuad@GratingQuad: 0
+  Diameter@GratingQuad@GratingQuad: 9
+  Size@GratingQuad@GratingQuad: 9 9 1
+  Color@GratingQuad@GratingQuad: 1 1 1 1
+  MaskType@GratingQuad@GratingQuad: Disk
+  MaskRadius@GratingQuad@GratingQuad: 0.5
+  Sigma@GratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@GratingQuad@GratingQuad: false
+  Visible@GratingQuad@GratingQuad: false
+  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: RippleLaserLogic
-RecordSession: V1d
-RecordSite: 2720
+ExLogicPath: Experica.RippleLaserLogic
+RecordSession: V1e
+RecordSite: 3660
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
-CondRepeat: 500
-BlockRepeat: 2
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 50
+BlockRepeat: 1
 BlockParam:
-- LaserPower
+- ''
 Input: None
 PreICI: 500
-CondDur: 1000
-SufICI: 3000
+CondDur: 500
+SufICI: 1500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -71,11 +71,12 @@ PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
-CondTestAtState: NONE
+CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
-- CONDSTATE
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -107,17 +108,29 @@ EnvInheritParam:
 - Ori@ENGratingQuad@GratingQuad
 - Diameter@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- SpatialFreq@GratingQuad@GratingQuad
+- TemporalFreq@GratingQuad@GratingQuad
+- Ori@GratingQuad@GratingQuad
+- Diameter@GratingQuad@GratingQuad
+- Position@GratingQuad@GratingQuad
+- MarkerSize@Marker@Marker
 Param:
-  LaserPower: '[0.275, 1]'
-  LaserFreq: '[0 5 0 0]'
+  LaserPower: '[.25, 0.55]'
+  LaserFreq: '[0.5 5 0 0]'
   ICIFactor: 2
   LaserOnLatency: 3000
-  Laser: ''
-  WithVisible: False
+  Laser: luxx473
+  WithVisible: True
   Laser2: mambo594
-  LaserPower2: '[0.45]'
+  LaserPower2: '[0.45, 1]'
   LaserFreq2: '[0 5 0 0]'
-  AddZeroCond: False
+  AddZeroCond: True
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -128,6 +141,7 @@ EventSyncProtocol:
 DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

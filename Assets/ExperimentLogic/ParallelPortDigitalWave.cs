@@ -19,14 +19,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
-
 namespace Experica
 {
     public class ParallelPortDigitalWave : ExperimentLogic
     {
-        ParallelPort pport;
-        ParallelPortWave ppw;
+        protected ParallelPort pport;
+        protected ParallelPortWave ppw;
 
         protected override void OnStart()
         {
@@ -36,21 +34,16 @@ namespace Experica
 
         public override void PrepareCondition(bool regenerateconditon = true)
         {
-            for (uint i = 0; i < 8; i++)
-            {
-                // Square Wave
-                ppw.SetBitWave(i, Mathf.Pow(2, i));
-            }
             // Poisson Spike Train
             ppw.SetBitWave(0, 50, 2, 2, 0, 0);
             ppw.SetBitWave(1, 100, 2, 2, 0, 0);
 
-            ppw.Start(0, 1, 2, 3, 4, 5, 6, 7);
+            ppw.StartAll();
         }
 
         protected override void OnStopExperiment()
         {
-            ppw.Stop(0, 1, 2, 3, 4, 5, 6, 7);
+            ppw.StopAll();
         }
     }
 }

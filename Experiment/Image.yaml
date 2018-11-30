@@ -1,53 +1,53 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  StartIndex@ENImageQuad@ImageQuad: 1
-  NumOfImage@ENImageQuad@ImageQuad: 24000
-  Image@ENImageQuad@ImageQuad: 14762
-  ImageSet@ENImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
-  IsCacheImage@ENImageQuad@ImageQuad: true
-  IsPreLoadImageset@ENImageQuad@ImageQuad: true
-  Rotation@ENImageQuad@ImageQuad: 0 0 0
-  RotationOffset@ENImageQuad@ImageQuad: 0 0 0
-  Ori@ENImageQuad@ImageQuad: 0
-  OriOffset@ENImageQuad@ImageQuad: 0
-  Diameter@ENImageQuad@ImageQuad: 20
-  Size@ENImageQuad@ImageQuad: 20 20 1
-  Color@ENImageQuad@ImageQuad: 1 1 1 1
-  MaskType@ENImageQuad@ImageQuad: DiskFade
-  MaskRadius@ENImageQuad@ImageQuad: 0.449999988
-  Sigma@ENImageQuad@ImageQuad: 30
-  OriPositionOffset@ENImageQuad@ImageQuad: false
-  Visible@ENImageQuad@ImageQuad: false
-  Position@ENImageQuad@ImageQuad: 8.137 0.9282 0
-  PositionOffset@ENImageQuad@ImageQuad: 0 0 0
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.21 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: false
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  StartIndex@ImageQuad@ImageQuad: 1
+  NumOfImage@ImageQuad@ImageQuad: 24000
+  Image@ImageQuad@ImageQuad: 12754
+  ImageSet@ImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
+  IsCacheImage@ImageQuad@ImageQuad: true
+  IsPreLoadImageset@ImageQuad@ImageQuad: true
+  Rotation@ImageQuad@ImageQuad: 0 0 0
+  RotationOffset@ImageQuad@ImageQuad: 0 0 0
+  Ori@ImageQuad@ImageQuad: 0
+  OriOffset@ImageQuad@ImageQuad: 0
+  Diameter@ImageQuad@ImageQuad: 11.7329826
+  Size@ImageQuad@ImageQuad: 11.73 11.73 1
+  Color@ImageQuad@ImageQuad: 1 1 1 1
+  MaskType@ImageQuad@ImageQuad: None
+  MaskRadius@ImageQuad@ImageQuad: 0.5
+  Sigma@ImageQuad@ImageQuad: 0.150000006
+  OriPositionOffset@ImageQuad@ImageQuad: false
+  Visible@ImageQuad@ImageQuad: false
+  Position@ImageQuad@ImageQuad: 3.359 1.346 0
+  PositionOffset@ImageQuad@ImageQuad: 0 0 0
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.85112774
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 26.29 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: ''
 Cond: 
-ExLogicPath: RippleImageLogic
-RecordSession: V1a
-RecordSite: 1000
+ExLogicPath: Experica.RippleImageLogic
+RecordSession: V1e
+RecordSite: 3660
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -71,8 +71,8 @@ CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
-- CONDSTATE
-- CondRepeat
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -103,6 +103,15 @@ EnvInheritParam:
 - Position@ENImageQuad@ImageQuad$ShowroomManager
 - Position@ENImageQuad@ImageQuad
 - Diameter@ENImageQuad@ImageQuad
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Diameter@ImageQuad@ImageQuad
+- Position@ImageQuad@ImageQuad
+- MarkerSize@Marker@Marker
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -111,9 +120,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 190
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: SHORT
-SendMail: false
+SendMail: true

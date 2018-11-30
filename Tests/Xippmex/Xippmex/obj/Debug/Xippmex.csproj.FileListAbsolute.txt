@@ -1,8 +1,0 @@
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\obj\Debug\Xippmex.csprojResolveAssemblyReference.cache
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\bin\Debug\Xippmex.exe.config
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\bin\Debug\Xippmex.exe
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\bin\Debug\Xippmex.pdb
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\bin\Debug\MWArray.dll
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\bin\Debug\Ripple.dll
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\obj\Debug\Xippmex.exe
-C:\Users\lyonlab\VLab\Test\Xippmex\Xippmex\obj\Debug\Xippmex.pdb

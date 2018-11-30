@@ -36,7 +36,8 @@ namespace Experica
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
         public ConditionTestManager condtestmanager = new ConditionTestManager();
-        public IRecorder recorder = new VLabRecorder();
+        public IRecorder recorder;
+        public List<string> pushexcludefactors;
 
         public Action OnBeginStartExperiment, OnEndStartExperiment,
             OnBeginStopExperiment, OnEndStopExperiment,
@@ -74,6 +75,12 @@ namespace Experica
         {
             switch (value)
             {
+                case CONDSTATE.NONE:
+                    if (condmanager.IsCondRepeat(ex.CondRepeat))
+                    {
+                        StartStopExperiment(false);
+                    }
+                    break;
                 case CONDSTATE.PREICI:
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
@@ -86,15 +93,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREICI)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
-                        {
-                            StartStopExperiment(false);
-                            return;
-                        }
-                        else
-                        {
-                            SamplePushCondition();
-                        }
+                        SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -115,15 +114,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
-                        {
-                            StartStopExperiment(false);
-                            return;
-                        }
-                        else
-                        {
-                            SamplePushCondition();
-                        }
+                        SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -163,6 +154,12 @@ namespace Experica
         {
             switch (value)
             {
+                case TRIALSTATE.NONE:
+                    if (condmanager.IsCondRepeat(ex.CondRepeat))
+                    {
+                        StartStopExperiment(false);
+                    }
+                    break;
                 case TRIALSTATE.PREITI:
                     PreITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREITI)
@@ -175,15 +172,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREITI)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
-                        {
-                            StartStopExperiment(false);
-                            return;
-                        }
-                        else
-                        {
-                            SamplePushCondition();
-                        }
+                        SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -204,15 +193,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.TRIAL)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
-                        {
-                            StartStopExperiment(false);
-                            return;
-                        }
-                        else
-                        {
-                            SamplePushCondition();
-                        }
+                        SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -252,6 +233,12 @@ namespace Experica
         {
             switch (value)
             {
+                case BLOCKSTATE.NONE:
+                    if (condmanager.IsCondRepeat(ex.CondRepeat))
+                    {
+                        StartStopExperiment(false);
+                    }
+                    break;
                 case BLOCKSTATE.PREIBI:
                     PreIBIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
@@ -296,12 +283,12 @@ namespace Experica
 
         protected virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager, pushexcludefactors);
         }
 
-        public virtual void SamplePushBlock(int manualblockidx = 0)
+        protected virtual void SamplePushBlock(int manualblockidx = 0)
         {
-            condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager);
+            condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager, pushexcludefactors);
         }
 
         public virtual string DataPath(DataFormat dataFormat)
@@ -446,7 +433,7 @@ namespace Experica
 
         protected virtual void StopExperiment()
         {
-            // Push notification for any condtest left
+            // Push any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
             OnStopExperiment();
             StopExperimentTimeSync();

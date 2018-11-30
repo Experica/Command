@@ -376,6 +376,7 @@ namespace Experica
 
         public bool IsCondRepeat(int n)
         {
+            if (ncond <= 0 || n <= 0) return false;
             for (var i = 0; i < ncond; i++)
             {
                 if (!condrepeat.ContainsKey(i) || condrepeat[i] < n)

@@ -1,47 +1,47 @@
 ID: RFBarY8Deg
 Name: RFBarY8Deg
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 57
-  ScreenAspect@ENCamera@OrthoCamera: 1.78225815
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 25.28 -13.74 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: true
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
-  Rotation@ENQuad@Quad: 0 0 0
-  RotationOffset@ENQuad@Quad: 0 0 0
-  Ori@ENQuad@Quad: 0
-  OriOffset@ENQuad@Quad: 0
-  Diameter@ENQuad@Quad: 2
-  Size@ENQuad@Quad: 2 2 1
-  Color@ENQuad@Quad: 1 1 1 1
-  MaskType@ENQuad@Quad: None
-  MaskRadius@ENQuad@Quad: 0.5
-  Sigma@ENQuad@Quad: 0.150000006
-  OriPositionOffset@ENQuad@Quad: false
-  Visible@ENQuad@Quad: true
-  Position@ENQuad@Quad: 0 0 0
-  PositionOffset@ENQuad@Quad: 0 0 0
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
+  Ori@Quad@Quad: 43.8535843
+  OriOffset@Quad@Quad: 0
+  Diameter@Quad@Quad: 2
+  Size@Quad@Quad: 10 1.5 1
+  Color@Quad@Quad: 1 1 1 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  Sigma@Quad@Quad: 0.150000006
+  OriPositionOffset@Quad@Quad: true
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 3.359 1.346 0
+  PositionOffset@Quad@Quad: 0 1.5 0
 CondPath: Condition\PositionYOffset4Deg0.5DegStep.yaml
 Cond: 
-ExLogicPath: RippleCTLogic
-RecordSession: V1a
-RecordSite: 1000
+ExLogicPath: Experica.RippleCTLogic
+RecordSession: V1e
+RecordSite: 3660
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -51,7 +51,7 @@ BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 0
-CondDur: 46
+CondDur: 40
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -64,8 +64,8 @@ CondTestAtState: PREICI
 NotifyPerCondTest: 10
 NotifyParam:
 - CondIndex
-- CONDSTATE
-- CondRepeat
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -94,6 +94,15 @@ EnvInheritParam:
 - Ori@ENQuad@Quad
 - Position@ENQuad@Quad
 - ScreenAspect@ENCamera@OrthoCamera
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Ori@Quad@Quad
+- Position@Quad@Quad
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -102,9 +111,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 182
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: SHORT
 SendMail: false

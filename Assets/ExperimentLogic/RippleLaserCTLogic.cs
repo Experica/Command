@@ -21,46 +21,100 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Experica
 {
-    public class RippleLaserCTLogic : ExperimentLogic
+    public class RippleLaserCTLogic : RippleLaserLogic
     {
-        ParallelPort pport1, pport2;
-        ParallelPortWave ppw;
-        ILaser laser;
-        float power;
-        List<string> factorpushexcept = new List<string>() { "LaserPower", "LaserFreq" };
-
-        protected override void OnStart()
-        {
-            recorder = new RippleRecorder();
-            pport1 = new ParallelPort(config.ParallelPort1);
-            pport2 = new ParallelPort(config.ParallelPort2);
-            ppw = new ParallelPortWave(pport2);
-        }
-
         protected override void GenerateFinalCondition()
         {
+            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
+
             // get laser conditions
-            var lcond = new Dictionary<string, List<object>>()
+            laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
+            switch (laser?.Type)
             {
-                {"LaserPower", (ex.GetParam("LaserPower").Convert<List<float>>()).Where(i => i > 0).Select(i => (object)i).ToList()},
-                {"LaserFreq",(ex.GetParam("LaserFreq").Convert<List<float>>()).Where(i=>i>0).Select(i=>(object)i).ToList() }
-            };
+                case Laser.Omicron:
+                    lasersignalch = config.SignalCh1;
+                    break;
+                case Laser.Cobolt:
+                    lasersignalch = config.SignalCh2;
+                    break;
+            }
+            laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(config);
+            switch (laser2?.Type)
+            {
+                case Laser.Omicron:
+                    laser2signalch = config.SignalCh1;
+                    break;
+                case Laser.Cobolt:
+                    laser2signalch = config.SignalCh2;
+                    break;
+            }
+
+            var p = ex.GetParam("LaserPower").Convert<List<float>>();
+            var f = ex.GetParam("LaserFreq").Convert<List<Vector4>>();
+            var p2 = ex.GetParam("LaserPower2").Convert<List<float>>();
+            var f2 = ex.GetParam("LaserFreq2").Convert<List<Vector4>>();
+            var lcond = new Dictionary<string, List<object>>();
+            if (lasersignalch != null)
+            {
+                if (p != null)
+                {
+                    lcond["LaserPower"] = p.Where(i => i > 0).Select(i => (object)i).ToList();
+                }
+                if (f != null)
+                {
+                    lcond["LaserFreq"] = f.Where(i => i != Vector4.zero).Select(i => (object)i).ToList();
+                }
+            }
+            if (laser2signalch != null)
+            {
+                if (p2 != null)
+                {
+                    lcond["LaserPower2"] = p2.Where(i => i > 0).Select(i => (object)i).ToList();
+                }
+                if (f2 != null)
+                {
+                    lcond["LaserFreq2"] = f2.Where(i => i != Vector4.zero).Select(i => (object)i).ToList();
+                }
+            }
             lcond = lcond.OrthoCondOfFactorLevel();
-            lcond["LaserPower"].Insert(0, 0f);
-            lcond["LaserFreq"].Insert(0, 0f);
+
+            var addzero = ex.GetParam("AddZeroCond").Convert<bool>();
+            if (lasersignalch != null)
+            {
+                if (p != null && addzero)
+                {
+                    lcond["LaserPower"].Insert(0, 0f);
+                }
+                if (f != null && addzero)
+                {
+                    lcond["LaserFreq"].Insert(0, Vector4.zero);
+                }
+            }
+            if (laser2signalch != null)
+            {
+                if (p2 != null && addzero)
+                {
+                    lcond["LaserPower2"].Insert(0, 0f);
+                }
+                if (f2 != null && addzero)
+                {
+                    lcond["LaserFreq2"].Insert(0, Vector4.zero);
+                }
+            }
 
             // get base conditions
             var bcond = condmanager.GenerateFinalCondition(ex.CondPath);
 
             // combine laser and base conditions
             var fcond = new Dictionary<string, List<object>>()
-        {
-            {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
-            {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
-        };
+            {
+                {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
+                {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
+            };
             fcond = fcond.OrthoCondOfFactorLevel();
             foreach (var bf in bcond.Keys)
             {
@@ -86,138 +140,6 @@ namespace Experica
             fcond.Remove("b"); fcond.Remove("l");
 
             condmanager.FinalizeCondition(fcond);
-        }
-
-        protected override void StartExperiment()
-        {
-            SetEnvActiveParam("Visible", false);
-            SetEnvActiveParam("Mark", false);
-            pport1.SetBit(bit: config.EventSyncCh, value: false);
-            laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
-            laser.LaserOn();
-            timer.Timeout(ex.GetParam("LaserOnLatency").Convert<int>());
-
-            base.StartExperiment();
-            recorder.RecordPath = ex.GetDataPath();
-            timer.Timeout(config.NotifyLatency);
-            pport1.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
-            timer.Restart();
-        }
-
-        protected override void StopExperiment()
-        {
-            ppw.Stop(config.SignalCh1, config.SignalCh2);
-            SetEnvActiveParam("Visible", false);
-            SetEnvActiveParam("Mark", false);
-            pport1.SetBit(bit: config.EventSyncCh, value: false);
-            base.StopExperiment();
-
-            laser.LaserOff();
-            laser.Dispose();
-            timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
-            pport1.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
-            timer.Stop();
-        }
-
-        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
-        {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock),
-                envmanager, factorpushexcept);
-            power = (float)condmanager.finalcond["LaserPower"][condmanager.condidx];
-            laser.PowerRatio = power;
-            if (power > 0)
-            {
-                var freq = (float)condmanager.finalcond["LaserFreq"][condmanager.condidx];
-                ppw.SetBitWave(config.SignalCh1, freq, ex.DisplayLatency);
-                ppw.SetBitWave(config.SignalCh2, freq, ex.DisplayLatency);
-            }
-        }
-
-        protected override void Logic()
-        {
-            switch (BlockState)
-            {
-                case BLOCKSTATE.NONE:
-                    BlockState = BLOCKSTATE.PREIBI;
-                    break;
-                case BLOCKSTATE.PREIBI:
-                    if (PreIBIHold >= ex.PreIBI)
-                    {
-                        BlockState = BLOCKSTATE.BLOCK;
-                    }
-                    break;
-                case BLOCKSTATE.BLOCK:
-                    switch (CondState)
-                    {
-                        case CONDSTATE.NONE:
-                            SetEnvActiveParam("Visible", false);
-                            SetEnvActiveParam("Mark", false);
-                            CondState = CONDSTATE.PREICI;
-                            break;
-                        case CONDSTATE.PREICI:
-                            if (PreICIHold >= ex.PreICI)
-                            {
-                                CondState = CONDSTATE.COND;
-                                SetEnvActiveParam("Visible", true);
-                                if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                                {
-                                    // The marker pulse width should be > 2 frames(60Hz==16.7ms) to make sure marker on_off will take effect on screen.
-                                    SetEnvActiveParamTwice("Mark", true, config.MarkPulseWidth, false);
-                                    pport1.ConcurrentBitPulse(bit: config.EventSyncCh, duration_ms: config.MarkPulseWidth);
-                                }
-                                else // ICI Mode
-                                {
-                                    SetEnvActiveParam("Mark", true);
-                                    pport1.SetBit(bit: config.EventSyncCh, value: true);
-                                }
-                                if (power > 0)
-                                {
-                                    ppw.Start(config.SignalCh1, config.SignalCh2);
-                                }
-                            }
-                            break;
-                        case CONDSTATE.COND:
-                            if (CondHold >= ex.CondDur)
-                            {
-                                CondState = CONDSTATE.SUFICI;
-                                if (ex.PreICI == 0 && ex.SufICI == 0) // None ICI Mode
-                                {
-                                }
-                                else // ICI Mode
-                                {
-                                    SetEnvActiveParam("Visible", false);
-                                    SetEnvActiveParam("Mark", false);
-                                    pport1.SetBit(bit: config.EventSyncCh, value: false);
-                                }
-                                if (power > 0)
-                                {
-                                    ppw.Stop(config.SignalCh1, config.SignalCh2);
-                                }
-                            }
-                            break;
-                        case CONDSTATE.SUFICI:
-                            if (SufICIHold >= ex.SufICI + power * ex.CondDur * ex.GetParam("ICIFactor").Convert<float>())
-                            {
-                                if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
-                                {
-                                    CondState = CONDSTATE.NONE;
-                                    BlockState = BLOCKSTATE.SUFIBI;
-                                }
-                                else
-                                {
-                                    CondState = CONDSTATE.PREICI;
-                                }
-                            }
-                            break;
-                    }
-                    break;
-                case BLOCKSTATE.SUFIBI:
-                    if (SufIBIHold >= ex.SufIBI)
-                    {
-                        BlockState = BLOCKSTATE.PREIBI;
-                    }
-                    break;
-            }
         }
     }
 }

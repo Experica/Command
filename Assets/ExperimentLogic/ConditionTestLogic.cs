@@ -128,14 +128,10 @@ namespace Experica
                                 case CONDSTATE.SUFICI:
                                     if (SufICIHold >= ex.SufICI)
                                     {
+                                        CondState = CONDSTATE.NONE;
                                         if (TrialHold >= ex.TrialDur)
                                         {
-                                            CondState = CONDSTATE.NONE;
                                             TrialState = TRIALSTATE.SUFITI;
-                                        }
-                                        else
-                                        {
-                                            CondState = CONDSTATE.PREICI;
                                         }
                                     }
                                     break;
@@ -144,14 +140,10 @@ namespace Experica
                         case TRIALSTATE.SUFITI:
                             if (SufITIHold >= ex.SufITI)
                             {
+                                TrialState = TRIALSTATE.NONE;
                                 if (BlockHold >= ex.BlockDur)
                                 {
-                                    TrialState = TRIALSTATE.NONE;
                                     BlockState = BLOCKSTATE.SUFIBI;
-                                }
-                                else
-                                {
-                                    TrialState = TRIALSTATE.PREITI;
                                 }
                             }
                             break;
@@ -160,7 +152,7 @@ namespace Experica
                 case BLOCKSTATE.SUFIBI:
                     if (SufIBIHold >= ex.SufIBI)
                     {
-                        BlockState = BLOCKSTATE.PREIBI;
+                        BlockState = BLOCKSTATE.NONE;
                     }
                     break;
             }

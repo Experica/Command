@@ -21,11 +21,17 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using System;
+using System.Reflection;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+#if COMMAND
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+#endif
 
 namespace Experica
 {
@@ -33,6 +39,8 @@ namespace Experica
     {
         CondIndex,
         CondRepeat,
+        TrialIndex,
+        TrialRepeat,
         BlockIndex,
         BlockRepeat,
         Event,
@@ -417,6 +425,30 @@ namespace Experica
                     return new Omicron(config.SerialPort1);
                 case "mambo594":
                     return new Cobolt(config.SerialPort2);
+            }
+            return null;
+        }
+
+        public static Assembly CompileFile(this string sourcepath)
+        {
+            return File.ReadAllText(sourcepath).Compile();
+        }
+
+        public static Assembly Compile(this string source)
+        {
+            var sourcetree = CSharpSyntaxTree.ParseText(source);
+            var compilation = CSharpCompilation.Create("sdfsdf")
+                .AddReferences()
+                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                                 .WithOptimizationLevel(OptimizationLevel.Release))
+                .AddSyntaxTrees(sourcetree);
+            using (var asm = new MemoryStream())
+            {
+                var emitresult = compilation.Emit(asm);
+                if (emitresult.Success)
+                {
+                    return Assembly.Load(asm.GetBuffer());
+                }
             }
             return null;
         }

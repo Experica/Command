@@ -179,6 +179,8 @@ namespace Experica.Command
                     {
                         case CONDTESTPARAM.BlockRepeat:
                         case CONDTESTPARAM.BlockIndex:
+                        case CONDTESTPARAM.TrialRepeat:
+                        case CONDTESTPARAM.TrialIndex:
                         case CONDTESTPARAM.CondRepeat:
                         case CONDTESTPARAM.CondIndex:
                             MsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
@@ -291,15 +293,11 @@ namespace Experica.Command
 
         public void OnEndStopExperiment()
         {
-            if (alsmanager != null)
-            {
-                alsmanager.RpcNotifyStopExperiment();
-            }
+            alsmanager?.RpcNotifyStopExperiment();
             if (config.AutoSaveData)
             {
                 exmanager.el.SaveData();
             }
-
             if (exmanager.el.ex.SendMail)
             {
                 var subject = "Experiment Stopped";

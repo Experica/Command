@@ -26,25 +26,15 @@ namespace Experica
 {
     public class RippleSpeedLogic : RippleCTLogic
     {
-        List<string> factorpushexcept = new List<string>() { "Speed" };
-
         protected override void GenerateFinalCondition()
         {
+            pushexcludefactors = new List<string>() { "Speed" };
+            float sf = GetEnvActiveParam("SpatialFreq").Convert<float>();
 
             // convert speed to temporal frequency
-            float sf = envmanager.GetParam("SpatialFreq").Convert<float>();
-
-            // get base conditions
             var bcond = condmanager.ProcessCondition(condmanager.ReadConditionFile(ex.CondPath));
             bcond["TemporalFreq"] = bcond["Speed"].Convert<List<float>>().Select(i => (object)(i * sf)).ToList();
             condmanager.FinalizeCondition(bcond);
-        }
-
-        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
-        {
-            // Block sample and push defered into logic
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, false),
-                envmanager, factorpushexcept);
         }
     }
 }

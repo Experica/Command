@@ -23,6 +23,8 @@ namespace Experica
 {
     public class RippleCTLogic : ConditionTestLogic
     {
+        protected bool isrippletriggered;
+
         protected override void OnStart()
         {
             pport = new ParallelPort(dataaddress: config.ParallelPort1);
@@ -33,6 +35,7 @@ namespace Experica
         {
             if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
             {
+                isrippletriggered = true;
                 recorder.RecordPath = ex.GetDataPath();
                 /* 
                 Ripple recorder set path through network and Trellis receive
@@ -40,25 +43,25 @@ namespace Experica
                 Trigger record TTL before file path change completion will
                 not successfully start recording.
 
-                VLabAnalysis also need time to clear signal buffer,
+                Analysis also need time to clear signal buffer,
                 otherwise the delayed action may clear the start TTL pluse which is
-                needed to mark the start time of VLab.
+                needed to mark the timer zero.
                 */
                 timer.Timeout(config.NotifyLatency);
                 pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
             }
             /*
-            Immediately after the TTL falling edge triggering ripple recording, we reset timer
-            in VLab, so we can align VLab time zero with the ripple time of the triggering TTL falling edge. 
+            Immediately after the TTL falling edge triggering ripple recording, we reset timer, 
+            so timer zero can be aligned with the triggering TTL falling edge.
             */
             timer.Restart();
         }
 
         protected override void StopExperimentTimeSync()
         {
-            // Tail period to make sure lagged effect data is recorded before stop recording
+            // Tail period to make sure lagged effect data is recorded before trigger recording stop
             timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
-            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+            if (isrippletriggered)
             {
                 pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
             }
@@ -94,7 +97,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        CondState = CONDSTATE.PREICI;
+                        CondState = CONDSTATE.NONE;
                     }
                     break;
             }

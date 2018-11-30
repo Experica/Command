@@ -117,24 +117,23 @@ namespace Experica.Command
 
         public void LoadEL(Experiment ex)
         {
-            var elname = ex.ExLogicPath;
+            var elpath = ex.ExLogicPath;
             Type eltype = null;
-            if (!string.IsNullOrEmpty(elname))
+            if (!string.IsNullOrEmpty(elpath))
             {
-                if (File.Exists(elname))
+                if (File.Exists(elpath))
                 {
-                    // need to add runtime compiler service
-                    //var assembly = CompilerService.Compile(elname);
-                    //eltype = assembly.GetExportedTypes()[0];
+                    var assembly = elpath.CompileFile();
+                    eltype = assembly.GetExportedTypes()[0];
                 }
                 else
                 {
-                    eltype = Type.GetType(elname);
+                    eltype = Type.GetType(elpath);
                 }
             }
             if (eltype == null)
             {
-                var elpath = uicontroller.config.ExLogic;
+                elpath = uicontroller.config.ExLogic;
                 eltype = Type.GetType(elpath);
                 ex.ExLogicPath = elpath;
             }
@@ -296,7 +295,7 @@ namespace Experica.Command
             el.OnConditionPrepared = uicontroller.condpanel.RefreshCondition;
             el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
-            el.condtestmanager.PushUICondTest = uicontroller.ctpanel.StartCondTest;
+            el.condtestmanager.PushUICondTest = uicontroller.ctpanel.PushCondTest;
             el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
             el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
             el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;

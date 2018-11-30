@@ -1,57 +1,57 @@
 ID: OriOffsetGrating
 Name: OriOffsetGrating
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 12
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 408
+Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 15
-  ScreenToEye@ENCamera@OrthoCamera: 37
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  Luminance@ENGratingQuad@GratingQuad: 0.5
-  Contrast@ENGratingQuad@GratingQuad: 1
-  SpatialFreq@ENGratingQuad@GratingQuad: 0.227059856
-  TemporalFreq@ENGratingQuad@GratingQuad: 1.63816237
-  SpatialPhase@ENGratingQuad@GratingQuad: 0
-  MinColor@ENGratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@ENGratingQuad@GratingQuad: 1 1 1 1
-  Drifting@ENGratingQuad@GratingQuad: true
-  GratingType@ENGratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@ENGratingQuad@GratingQuad: false
-  Rotation@ENGratingQuad@GratingQuad: 0 0 0
-  RotationOffset@ENGratingQuad@GratingQuad: 0 0 0
-  Ori@ENGratingQuad@GratingQuad: 0
-  OriOffset@ENGratingQuad@GratingQuad: -7.5
-  Diameter@ENGratingQuad@GratingQuad: 17.972271
-  Size@ENGratingQuad@GratingQuad: 17.97 17.97 1
-  Color@ENGratingQuad@GratingQuad: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad: Disk
-  MaskRadius@ENGratingQuad@GratingQuad: 0.5
-  Sigma@ENGratingQuad@GratingQuad: 0.150000006
-  OriPositionOffset@ENGratingQuad@GratingQuad: false
-  Visible@ENGratingQuad@GratingQuad: false
-  Position@ENGratingQuad@GratingQuad: 7.807 1.922 0
-  PositionOffset@ENGratingQuad@GratingQuad: 0 0 0
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 38.23 -21.07 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: true
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Luminance@GratingQuad@GratingQuad: 0.5
+  Contrast@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.294681937
+  TemporalFreq@GratingQuad@GratingQuad: 3
+  SpatialPhase@GratingQuad@GratingQuad: 0
+  MinColor@GratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  Drifting@GratingQuad@GratingQuad: true
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  ReverseTime@GratingQuad@GratingQuad: false
+  Rotation@GratingQuad@GratingQuad: 0 0 0
+  RotationOffset@GratingQuad@GratingQuad: 0 0 0
+  Ori@GratingQuad@GratingQuad: 247.5
+  OriOffset@GratingQuad@GratingQuad: 15
+  Diameter@GratingQuad@GratingQuad: 5
+  Size@GratingQuad@GratingQuad: 5 5 1
+  Color@GratingQuad@GratingQuad: 1 1 1 1
+  MaskType@GratingQuad@GratingQuad: Disk
+  MaskRadius@GratingQuad@GratingQuad: 0.5
+  Sigma@GratingQuad@GratingQuad: 0.150000006
+  OriPositionOffset@GratingQuad@GratingQuad: false
+  Visible@GratingQuad@GratingQuad: false
+  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OrientationOffset7.5DegStep.yaml
 Cond: 
-ExLogicPath: RippleCTLogic
-RecordSession: V1a
-RecordSite: 1000
+ExLogicPath: Experica.RippleCTLogic
+RecordSession: V1e
+RecordSite: 3660
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -74,7 +74,8 @@ CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
 - CondIndex
-- CONDSTATE
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Name
@@ -106,6 +107,18 @@ EnvInheritParam:
 - Diameter@ENGratingQuad@GratingQuad
 - Position@ENGratingQuad@GratingQuad
 - ScreenAspect@ENCamera@OrthoCamera
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- SpatialFreq@GratingQuad@GratingQuad
+- TemporalFreq@GratingQuad@GratingQuad
+- Position@GratingQuad@GratingQuad
+- Diameter@GratingQuad@GratingQuad
+- Ori@GratingQuad@GratingQuad
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -114,9 +127,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 182
+DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

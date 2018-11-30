@@ -37,8 +37,8 @@ namespace Experica
         public Func<double, bool> OnNotifyCondTestEnd;
         public Action PushUICondTest, OnClearCondTest;
 
-        int notifyidx = -1;
-        public int NotifyIndex { get { return notifyidx; } }
+        int notifiedidx = -1;
+        public int NotifiedIndex { get { return notifiedidx; } }
         int condtestidx = -1;
         public int CondTestIndex { get { return condtestidx; } }
 
@@ -46,7 +46,7 @@ namespace Experica
         {
             condtest.Clear();
             condtestidx = -1;
-            notifyidx = -1;
+            notifiedidx = -1;
             OnClearCondTest?.Invoke();
         }
 
@@ -65,19 +65,19 @@ namespace Experica
                 {
                     if (!pushall)
                     {
-                        if (((condtestidx - notifyidx) / notifypercondtest) >= 1)
+                        if (((condtestidx - notifiedidx) / notifypercondtest) >= 1)
                         {
-                            if (NotifyCondTestAndEnd(notifyidx + 1, notifyparam, pushtime))
+                            if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
                             {
-                                notifyidx = condtestidx;
+                                notifiedidx = condtestidx;
                             }
                         }
                     }
                     else
                     {
-                        if (NotifyCondTestAndEnd(notifyidx + 1, notifyparam, pushtime))
+                        if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
                         {
-                            notifyidx = condtestidx;
+                            notifiedidx = condtestidx;
                         }
                     }
                 }
@@ -87,15 +87,20 @@ namespace Experica
         bool NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
         {
             var hr = false;
-            if (startidx >= 0 && startidx <= condtestidx)
+            if (startidx >= 0 && startidx <= condtestidx && OnNotifyCondTest != null)
             {
                 var t = new List<bool>();
                 foreach (var p in notifyparam)
                 {
-                    if (condtest.ContainsKey(p) && OnNotifyCondTest != null)
+                    if (condtest.ContainsKey(p))
                     {
-                        // condtest should have rectangle shape
-                        t.Add(OnNotifyCondTest(p, condtest[p].GetRange(startidx, condtestidx - startidx + 1)));
+                        var vs = condtest[p];
+                        // notify condtest range should have rectangle shape
+                        for (var i = vs.Count; i <= condtestidx; i++)
+                        {
+                            vs.Add(null);
+                        }
+                        t.Add(OnNotifyCondTest(p, vs.GetRange(startidx, condtestidx - startidx + 1)));
                     }
                 }
                 hr = t.Count == 0 ? false : t.All(i => i);
