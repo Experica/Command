@@ -26,7 +26,7 @@ EnvParam:
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0.400000006
-  TemporalFreq@GratingQuad@GratingQuad: 1.37159133
+  TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
@@ -35,17 +35,17 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 247.5
+  Ori@GratingQuad@GratingQuad: 90
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 11.7329826
-  Size@GratingQuad@GratingQuad: 11.73 11.73 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   Color@GratingQuad@GratingQuad: 1 1 1 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\SpatialFreq.yaml
 Cond: 

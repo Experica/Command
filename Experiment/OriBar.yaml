@@ -1,23 +1,23 @@
 ID: OriBar
 Name: OriBar
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 280
+Subject_Weight: 250
 Subject_Log: 
 EnvPath: ShowBar
 EnvParam: {}
 CondPath: Condition\Orientation22.5DegStep.yaml
 Cond: 
-ExLogicPath: RippleCTLogic
-RecordSession: V1d
-RecordSite: 2720
+ExLogicPath: Experica.ConditionTestLogic
+RecordSession: V1e
+RecordSite: 3660
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

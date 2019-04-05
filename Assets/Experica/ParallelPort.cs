@@ -36,26 +36,26 @@ namespace Experica
 {
     public static class Inpout
     {
-        [DllImport("inpoutx64.dll", EntryPoint = "IsInpOutDriverOpen")]
+        [DllImport("inpoutx64", EntryPoint = "IsInpOutDriverOpen")]
         static extern int IsInpOutDriverOpen();
-        [DllImport("inpoutx64.dll", EntryPoint = "Out32")]
+        [DllImport("inpoutx64", EntryPoint = "Out32")]
         static extern void Out8(ushort PortAddress, byte Data);
-        [DllImport("inpoutx64.dll", EntryPoint = "Inp32")]
+        [DllImport("inpoutx64", EntryPoint = "Inp32")]
         static extern byte Inp8(ushort PortAddress);
 
-        [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUshort")]
+        [DllImport("inpoutx64", EntryPoint = "DlPortWritePortUshort")]
         static extern void Out16(ushort PortAddress, ushort Data);
-        [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUshort")]
+        [DllImport("inpoutx64", EntryPoint = "DlPortReadPortUshort")]
         static extern ushort Inp16(ushort PortAddress);
 
-        [DllImport("inpoutx64.dll", EntryPoint = "DlPortWritePortUlong")]
+        [DllImport("inpoutx64", EntryPoint = "DlPortWritePortUlong")]
         static extern void Out64(ulong PortAddress, ulong Data);
-        [DllImport("inpoutx64.dll", EntryPoint = "DlPortReadPortUlong")]
+        [DllImport("inpoutx64", EntryPoint = "DlPortReadPortUlong")]
         static extern ulong Inp64(ulong PortAddress);
 
-        [DllImport("inpoutx64.dll", EntryPoint = "GetPhysLong")]
+        [DllImport("inpoutx64", EntryPoint = "GetPhysLong")]
         static extern int GetPhysLong(ref byte PortAddress, ref uint Data);
-        [DllImport("inpoutx64.dll", EntryPoint = "SetPhysLong")]
+        [DllImport("inpoutx64", EntryPoint = "SetPhysLong")]
         static extern int SetPhysLong(ref byte PortAddress, uint Data);
 
         static readonly object apilock = new object();

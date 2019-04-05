@@ -16,9 +16,9 @@ EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  ScreenAspect@Camera@OrthoCamera: 1.66461527
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerPosition@Marker@Marker: 23.54 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -26,7 +26,7 @@ EnvParam:
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0.699999988
-  TemporalFreq@GratingQuad@GratingQuad: 20
+  TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0.25
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
@@ -37,15 +37,15 @@ EnvParam:
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 135
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 11.7329826
-  Size@GratingQuad@GratingQuad: 11.73 11.73 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   Color@GratingQuad@GratingQuad: 1 1 1 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
 Cond: 

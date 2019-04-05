@@ -62,7 +62,7 @@ namespace Experica
                             SetEnvActiveParam("Mark", syncvalue);
                             break;
                         case SyncMethod.ParallelPort:
-                            pport.SetBit(bit: config.EventSyncCh, value: syncvalue);
+                            pport?.SetBit(bit: config.EventSyncCh, value: syncvalue);
                             break;
                     }
                 }

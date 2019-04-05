@@ -16,36 +16,36 @@ EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.85112774
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 26.29 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.294681937
-  TemporalFreq@GratingQuad@GratingQuad: 1.37159133
+  SpatialFreq@GratingQuad@GratingQuad: 0.299161792
+  TemporalFreq@GratingQuad@GratingQuad: 3.23874545
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   Drifting@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@GratingQuad@GratingQuad: false
+  ReverseTime@GratingQuad@GratingQuad: true
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 43.8535843
+  Ori@GratingQuad@GratingQuad: 63.476223
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 11.7329826
-  Size@GratingQuad@GratingQuad: 11.73 11.73 1
+  Diameter@GratingQuad@GratingQuad: 11.9243307
+  Size@GratingQuad@GratingQuad: 11.92 11.92 1
   Color@GratingQuad@GratingQuad: 1 1 1 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  Visible@GratingQuad@GratingQuad: true
+  Position@GratingQuad@GratingQuad: 4.637 0.3817 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
@@ -61,7 +61,7 @@ BlockRepeat: 0
 BlockParam: []
 Input: Joystick
 PreICI: 150
-CondDur: 500
+CondDur: 1000
 SufICI: 150
 PreITI: 0
 TrialDur: 0

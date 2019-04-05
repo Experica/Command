@@ -13,9 +13,13 @@ Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   StartIndex@ImageQuad@ImageQuad: 1
   NumOfImage@ImageQuad@ImageQuad: 24000
-  Image@ImageQuad@ImageQuad: 12754
+  Image@ImageQuad@ImageQuad: 1243
   ImageSet@ImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
   IsCacheImage@ImageQuad@ImageQuad: true
   IsPreLoadImageset@ImageQuad@ImageQuad: true
@@ -23,22 +27,18 @@ EnvParam:
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 11.7329826
-  Size@ImageQuad@ImageQuad: 11.73 11.73 1
+  Diameter@ImageQuad@ImageQuad: 20
+  Size@ImageQuad@ImageQuad: 20 20 1
   Color@ImageQuad@ImageQuad: 1 1 1 1
   MaskType@ImageQuad@ImageQuad: None
   MaskRadius@ImageQuad@ImageQuad: 0.5
   Sigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  Visible@ImageQuad@ImageQuad: false
-  Position@ImageQuad@ImageQuad: 3.359 1.346 0
+  Visible@ImageQuad@ImageQuad: true
+  Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.85112774
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 26.29 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -112,7 +112,8 @@ EnvInheritParam:
 - Diameter@ImageQuad@ImageQuad
 - Position@ImageQuad@ImageQuad
 - MarkerSize@Marker@Marker
-Param: {}
+Param:
+  time: '[1, 4, 3]'
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
