@@ -1,7 +1,8 @@
 {
     "name": "Command",
     "references": [
-        "Experica"
+        "GUID:41c3f44a38643794aaa0e4850b0f06d7",
+        "GUID:a44f47cf3ada4435dbc516bad0bc86fe"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -10,5 +11,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }
