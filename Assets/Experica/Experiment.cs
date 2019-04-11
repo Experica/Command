@@ -139,6 +139,7 @@ namespace Experica
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public double TimerDriftSpeed { get; set; }
         public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
+        public DisplayType DisplayType { get; set; }
         public double DisplayLatency { get; set; }
         public double ResponseDelay { get; set; }
         public uint Version { get; set; } = 1;
@@ -296,6 +297,12 @@ namespace Experica
         Male,
         Female,
         Others
+    }
+
+    public enum DisplayType
+    {
+        CRT,
+        LCD
     }
 
     public enum InputMethod

@@ -48,6 +48,8 @@ SignalCh3: 2
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
+RecordHost: LocalHost
+RecordHostPort: 4142
 Param: {}
 EnvCrossInheritRule:
   GratingQuad:

@@ -70,6 +70,9 @@ namespace Experica
         public string SerialPort2 { get; set; } = "COM4";
         public string SerialPort3 { get; set; } = "COM5";
 
+        public string RecordHost { get; set; } = "LocalHost";
+        public int RecordHostPort { get; set; } = 4142;
+
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
     }

@@ -154,6 +154,11 @@ namespace Experica
             }
         }
 
+        public bool Connect(string host, int port)
+        {
+            return Connect();
+        }
+
         public string RecordPath
         {
             set

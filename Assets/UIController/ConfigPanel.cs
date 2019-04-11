@@ -52,9 +52,9 @@ namespace Experica.Command
                 uicontroller.SaveConfig();
             }
 
-            var configfilepath= Extension.OpenFile("Choose Config File ...");
-            var config=uicontroller.LoadConfig(configfilepath,false);
-            if(config!=null)
+            var configfilepath = Extension.OpenFile("Choose Config File ...");
+            var config = uicontroller.LoadConfig(configfilepath, false);
+            if (config != null)
             {
                 uicontroller.config = config;
                 uicontroller.configmanager.LastConfigFilePath = configfilepath;
