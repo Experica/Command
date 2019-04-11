@@ -38,17 +38,12 @@ namespace Experica.Command
         public List<string> exids = new List<string>();
         public ExperimentLogic el;
 
-        void Awake()
-        {
-            GetExFiles();
-        }
-
         public void GetExFiles()
         {
             var exfiledir = uicontroller.config.ExDir;
             if (Directory.Exists(exfiledir))
             {
-                exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.AllDirectories).ToList();
+                exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.TopDirectoryOnly).ToList();
                 exids.Clear();
                 foreach (var f in exfiles)
                 {

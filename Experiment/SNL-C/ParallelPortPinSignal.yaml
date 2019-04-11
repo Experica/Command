@@ -1,0 +1,92 @@
+ID: ParallelPortPinSignal
+Name: ParallelPortPinSignal
+Designer: Alex
+Experimenter: Leo
+Log: 
+Subject_ID: C1901
+Subject_Name: C1901
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 6
+Subject_Size: 0 0 0
+Subject_Weight: 250
+Subject_Log: 
+EnvPath: Marker
+EnvParam:
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: true
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+CondPath: ''
+Cond: 
+ExLogicPath: Experica.ParallelPortDigitalWave
+RecordSession: V1e
+RecordSite: 3660
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 0
+BlockRepeat: 0
+BlockParam: []
+Input: None
+PreICI: 0
+CondDur: 0
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+ExInheritParam:
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- DisplayLatency
+- ResponseDelay
+EnvInheritParam:
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+Param: {}
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 180
+ResponseDelay: 20
+Version: 1
+Config: 
+CondTest: 
+CondTestShowLevel: NONE
+SendMail: false

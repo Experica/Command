@@ -29,6 +29,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 #if COMMAND
+using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -453,6 +454,61 @@ namespace Experica
             return null;
         }
 
+        public static string OpenFile(string title = "Open File ...")
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = title,
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public static string SaveFile(string title = "Save File ...")
+        {
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = title,
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public static string ChooseDir(string title = "Choose Directory ...")
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = title;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedPath;
+            }
+            return null;
+        }
+
+        public static bool YesNoDialog(string msg = "Yes or No?")
+        {
+            if (MessageBox.Show(msg, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void WarningDialog(string msg = "This is a Warning.")
+        {
+            MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 #endif
 
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)

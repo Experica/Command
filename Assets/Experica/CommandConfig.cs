@@ -25,6 +25,12 @@ using UnityEngine;
 
 namespace Experica
 {
+    public class CommandConfigManager
+    {
+        public bool AutoLoadSaveLastConfig { get; set; } = true;
+        public string LastConfigFilePath { get; set; } = "";
+    }
+
     public class CommandConfig
     {
         public bool IsSaveExOnQuit { get; set; } = true;
@@ -34,7 +40,6 @@ namespace Experica
         public string ExDir { get; set; } = "Experiment";
         public string DataDir { get; set; } = "Data";
         public string ExLogic { get; set; } = "Experica.ConditionTestLogic";
-        public string EnvCrossInheritRulePath { get; set; } = "EnvCrossInheritRule.yaml";
         public List<CONDTESTPARAM> NotifyParams { get; set; } = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.Event, CONDTESTPARAM.SyncEvent };
         public int AntiAliasing { get; set; } = 2;
         public int AnisotropicFilterLevel { get; set; } = 5;
@@ -64,5 +69,8 @@ namespace Experica
         public string SerialPort1 { get; set; } = "COM3";
         public string SerialPort2 { get; set; } = "COM4";
         public string SerialPort3 { get; set; } = "COM5";
+
+        public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
     }
 }

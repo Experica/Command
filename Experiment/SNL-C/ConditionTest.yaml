@@ -1,0 +1,61 @@
+ID: ConditionTest
+Name: ConditionTest
+Designer: Alex
+Experimenter: Leo
+Log: 
+Subject_ID: C1901
+Subject_Name: C1901
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 6
+Subject_Size: 0 0 0
+Subject_Weight: 250
+Subject_Log: 
+EnvPath: MarkerGrating
+EnvParam: {}
+CondPath: ''
+Cond: 
+ExLogicPath: Experica.ConditionTestLogic
+RecordSession: V1e
+RecordSite: 3660
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 0
+BlockRepeat: 0
+BlockParam: []
+Input: Joystick
+PreICI: 150
+CondDur: 1000
+SufICI: 150
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+ExInheritParam: []
+EnvInheritParam: []
+Param: {}
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 180
+ResponseDelay: 20
+Version: 1
+Config: 
+CondTest: 
+CondTestShowLevel: NONE
+SendMail: false

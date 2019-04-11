@@ -167,7 +167,7 @@ namespace Experica.Command
         public override void OnServerReady(NetworkConnection conn)
         {
             base.OnServerReady(conn);
-            uicontroller.exmanager.el.envmanager.ForcePushParams();
+            uicontroller.exmanager.el?.envmanager.ForcePushParams();
         }
     }
 }

@@ -36,8 +36,9 @@ namespace Experica.Command
 {
     public class UIController : MonoBehaviour
     {
+        public CommandConfigManager configmanager;
         public CommandConfig config;
-        readonly string configpath = "CommandConfig.yaml";
+        readonly string configmanagerpath = "CommandConfigManager.yaml";
         public Dictionary<string, Dictionary<string, List<string>>> envcrossinheritrule;
 
         public Toggle host, server, start, pause;
@@ -59,25 +60,46 @@ namespace Experica.Command
 
         void Awake()
         {
-            if (File.Exists(configpath))
+            if (File.Exists(configmanagerpath))
             {
-                config = configpath.ReadYamlFile<CommandConfig>();
+                configmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
             }
-            if (config == null)
+            if (configmanager == null)
             {
-                config = new CommandConfig();
+                configmanager = new CommandConfigManager();
             }
 
-            var rulefile = config.EnvCrossInheritRulePath;
-            if (File.Exists(rulefile))
+            if (configmanager.AutoLoadSaveLastConfig)
             {
-                envcrossinheritrule = rulefile.ReadYamlFile<Dictionary<string, Dictionary<string, List<string>>>>();
+                config = LoadConfig(configmanager.LastConfigFilePath);
             }
-            if (envcrossinheritrule == null)
+        }
+
+        public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
+        {
+            CommandConfig cfg = null;
+            if (File.Exists(configfilepath))
             {
-                envcrossinheritrule = new Dictionary<string, Dictionary<string, List<string>>>();
+                cfg = configfilepath.ReadYamlFile<CommandConfig>();
             }
-            envcrossinheritrule = ValidateEnvCrossInheritRule(envcrossinheritrule);
+            if (cfg == null)
+            {
+                configmanager.LastConfigFilePath = null;
+                if (otherwisedefault)
+                {
+                    cfg = new CommandConfig();
+                }
+            }
+
+            if (cfg != null)
+            {
+                if (cfg.EnvCrossInheritRule == null)
+                {
+                    cfg.EnvCrossInheritRule = new Dictionary<string, Dictionary<string, List<string>>>();
+                }
+                cfg.EnvCrossInheritRule = ValidateEnvCrossInheritRule(cfg.EnvCrossInheritRule);
+            }
+            return cfg;
         }
 
         public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(Dictionary<string, Dictionary<string, List<string>>> rule)
@@ -115,19 +137,43 @@ namespace Experica.Command
         void Start()
         {
             version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
+            PushConfig();
+        }
+
+        public void PushConfig()
+        {
+            exmanager.GetExFiles();
             UpdateExDropdown();
             savedata.interactable = !config.AutoSaveData;
+            consolepanel.maxentry = config.MaxLogEntry;
         }
 
         void OnApplicationQuit()
         {
             ToggleHost(false);
+
+            if (configmanager.AutoLoadSaveLastConfig)
+            {
+                SaveConfig();
+            }
+            configmanagerpath.WriteYamlFile(configmanager);
+        }
+
+        public void SaveConfig()
+        {
             if (config.IsSaveExOnQuit)
             {
                 exmanager.SaveAllEx();
             }
-            configpath.WriteYamlFile(config);
-            config.EnvCrossInheritRulePath.WriteYamlFile(envcrossinheritrule);
+
+            if (string.IsNullOrEmpty(configmanager.LastConfigFilePath))
+            {
+                configmanager.LastConfigFilePath = Extension.SaveFile("Save Config File");
+            }
+            if (!string.IsNullOrEmpty(configmanager.LastConfigFilePath))
+            {
+                configmanager.LastConfigFilePath.WriteYamlFile(config);
+            }
         }
 
         public void UpdateExDropdown()

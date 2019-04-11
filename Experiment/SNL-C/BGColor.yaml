@@ -1,0 +1,97 @@
+ID: BGColor
+Name: BGColor
+Designer: Alex
+Experimenter: Alex, Leo
+Log: 
+Subject_ID: LZR1803
+Subject_Name: LZR1803
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 3
+Subject_Size: 0 0 0
+Subject_Weight: 280
+Subject_Log: 
+EnvPath: Marker
+EnvParam:
+  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@ENCamera@OrthoCamera: 34
+  ScreenToEye@ENCamera@OrthoCamera: 42
+  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
+  MarkerSize@ENMarker@Marker: 2
+  MarkerPosition@ENMarker@Marker: 68.32 -37.99 -1000
+  MarkerCorner@ENMarker@Marker: BottomRight
+  Mark@ENMarker@Marker: true
+  MarkOnColor@ENMarker@Marker: 1 1 1 1
+  MarkOffColor@ENMarker@Marker: 0 0 0 1
+CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
+Cond: 
+ExLogicPath: RippleCTLogic
+RecordSession: V1d
+RecordSite: 2720
+DataDir: X:\
+DataPath: 
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 8
+BlockRepeat: 1
+BlockParam: []
+Input: None
+PreICI: 150
+CondDur: 500
+SufICI: 150
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Species
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Gender
+- Experimenter
+- Latency
+- TimerDriftSpeed
+- Delay
+- DisplayLatency
+- ResponseDelay
+EnvInheritParam:
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- Marker@Showroom@ShowroomManager
+- Ori@ENQuad@Quad
+- Position@ENQuad@Quad
+- ScreenAspect@ENCamera@OrthoCamera
+- MarkerPosition@ENMarker@Marker
+Param: {}
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 180
+ResponseDelay: 20
+Version: 1
+CondTest: 
+CondTestShowLevel: FULL
+SendMail: false

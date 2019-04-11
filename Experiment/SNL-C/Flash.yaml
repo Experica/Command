@@ -1,0 +1,117 @@
+ID: Flash
+Name: Flash
+Designer: Alex
+Experimenter: Leo
+Log: 
+Subject_ID: LSR1803
+Subject_Name: LSR1803
+Subject_Species: Long Evans Rat
+Subject_Gender: Female
+Subject_Age: 6
+Subject_Size: 0 0 0
+Subject_Weight: 250
+Subject_Log: 
+EnvPath: MarkerBar
+EnvParam:
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 34
+  ScreenToEye@Camera@OrthoCamera: 37
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  MarkerSize@Marker@Marker: 5
+  MarkerPosition@Marker@Marker: 73.2 -40.08 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
+  Ori@Quad@Quad: 222.43512
+  OriOffset@Quad@Quad: 0
+  Diameter@Quad@Quad: 300
+  Size@Quad@Quad: 300 300 1
+  Color@Quad@Quad: 1 1 1 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  Sigma@Quad@Quad: 0.150000006
+  OriPositionOffset@Quad@Quad: false
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 0 0
+CondPath: Condition\FlashColor.yaml
+Cond: 
+ExLogicPath: Experica.RippleCTLogic
+RecordSession: V1e
+RecordSite: 3660
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 100
+BlockRepeat: 1
+BlockParam: []
+Input: None
+PreICI: 0
+CondDur: 1000
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+ExInheritParam:
+- Subject_ID
+- Subject_Species
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Gender
+- Experimenter
+- Latency
+- TimerDriftSpeed
+- Delay
+- DisplayLatency
+- ResponseDelay
+EnvInheritParam:
+- MarkerSize@ENMarker@Marker
+- MarkerCorner@ENMarker@Marker
+- MarkOnColor@ENMarker@Marker
+- MarkOffColor@ENMarker@Marker
+- ScreenHalfHeight@ENCamera@OrthoCamera
+- ScreenToEye@ENCamera@OrthoCamera
+- Marker@Showroom@ShowroomManager
+- ScreenAspect@ENCamera@OrthoCamera
+- MarkerPosition@ENMarker@Marker
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Ori@Quad@Quad
+Param: {}
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - ParallelPort
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+DisplayLatency: 180
+ResponseDelay: 20
+Version: 1
+Config: 
+CondTest: 
+CondTestShowLevel: FULL
+SendMail: false

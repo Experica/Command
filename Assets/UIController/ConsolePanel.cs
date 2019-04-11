@@ -38,7 +38,7 @@ namespace Experica.Command
         public UIController uicontroller;
         public GameObject content, logprefab, warningprefab, errorprefab;
 
-        int maxentry;
+        public int maxentry;
         int entrycount;
 
         public void Clear()
@@ -71,12 +71,12 @@ namespace Experica.Command
             var v = msg.Convert<string>();
             if (istimestamp)
             {
-                v = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + ":  " + v ;
+                v = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + ":  " + v;
             }
-            
+
             var text = Instantiate(ChoosePrefab(logtype));
             text.GetComponent<Text>().text = v;
-            text.transform.SetParent(content.transform,false);
+            text.transform.SetParent(content.transform, false);
 
             if (entrycount > maxentry)
             {
@@ -99,7 +99,7 @@ namespace Experica.Command
 
         GameObject ChoosePrefab(LogType logtype)
         {
-            switch(logtype)
+            switch (logtype)
             {
                 case LogType.Warning:
                     return warningprefab;
@@ -108,11 +108,6 @@ namespace Experica.Command
                 default:
                     return logprefab;
             }
-        }
-
-        void Awake()
-        {
-            maxentry = uicontroller.config.MaxLogEntry;
         }
 
     }
