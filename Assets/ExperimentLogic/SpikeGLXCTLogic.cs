@@ -44,15 +44,16 @@ namespace Experica
                 not successfully start recording.
 
                 Analysis also need time to clear signal buffer,
-                otherwise the delayed action may clear the start TTL pluse which is
+                otherwise the delayed action may clear the start TTL which is
                 needed to mark the timer zero.
                 */
                 timer.Timeout(config.NotifyLatency);
-                pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+                recorder.RecordStatus = RecordStatus.Recording;
+                //pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
             }
             /*
-            Immediately after the TTL falling edge triggering SpikeGLX recording, we reset timer, 
-            so timer zero can be aligned with the triggering TTL falling edge.
+            Immediately after the TTL triggering SpikeGLX recording, we reset timer, 
+            so timer zero can be aligned with the triggering TTL.
             */
             timer.Restart();
         }
@@ -63,7 +64,8 @@ namespace Experica
             timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
             if (isspikeglxtriggered)
             {
-                pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+                recorder.RecordStatus = RecordStatus.Stopped;
+                //pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
             }
             timer.Stop();
         }

@@ -18,9 +18,9 @@ EnvParam:
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.33333337
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 23.33 -14 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: true
+  Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
@@ -44,7 +44,7 @@ EnvParam:
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
@@ -52,7 +52,7 @@ Cond:
 ExLogicPath: Experica.ConditionTestLogic
 RecordSession: V1e
 RecordSite: 3660
-DataDir: X:\
+DataDir: C:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: Ascending

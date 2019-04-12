@@ -39,7 +39,6 @@ namespace Experica.Command
         public CommandConfigManager configmanager;
         public CommandConfig config;
         readonly string configmanagerpath = "CommandConfigManager.yaml";
-        public Dictionary<string, Dictionary<string, List<string>>> envcrossinheritrule;
 
         public Toggle host, server, start, pause;
         public Dropdown exs;

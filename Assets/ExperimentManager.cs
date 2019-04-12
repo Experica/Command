@@ -408,9 +408,9 @@ namespace Experica.Command
                         }
                         else
                         {
-                            if (uicontroller.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
+                            if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
                             {
-                                if (uicontroller.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
+                                if (uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
                                 {
                                     foreach (var hpk in hp.Keys.ToArray())
                                     {
@@ -432,13 +432,13 @@ namespace Experica.Command
                     {
                         v = hp[fullname];
                     }
-                    else if (uicontroller.envcrossinheritrule.IsEnvCrossInheritTo(objectname))
+                    else if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
                     {
                         foreach (var hpn in hp.Keys.ToArray())
                         {
                             string paramfrom = hpn.FirstAtSplitHead();
                             string objectfrom = hpn.LastAtSplitTail();
-                            if (paramname == paramfrom && uicontroller.envcrossinheritrule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
+                            if (paramname == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
                             {
                                 v = hp[hpn];
                                 break;
