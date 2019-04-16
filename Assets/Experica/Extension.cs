@@ -376,6 +376,11 @@ namespace Experica
                     var end = conddesign[f][2];
                     var n = conddesign[f][3];
                     var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
+                    var isortho = true;
+                    if (conddesign[f].Count > 5)
+                    {
+                        isortho = conddesign[f][5].Convert<bool>();
+                    }
 
                     object so, eo; int[] no;
                     if (start.GetType() == typeof(List<object>))
@@ -399,7 +404,7 @@ namespace Experica
                         no = new int[] { n.Convert<int>() };
                     }
 
-                    var fld = new FactorLevelDesign(f, so, eo, no, method);
+                    var fld = new FactorLevelDesign(f, so, eo, no, method, isortho);
                     conddesign[f] = fld.FactorLevel().Value;
                 }
             }
@@ -508,6 +513,15 @@ namespace Experica
         public static void WarningDialog(string msg = "This is a Warning.")
         {
             MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public static double DisplayLatency(this string displayid, Dictionary<string, Display> display)
+        {
+            if (!string.IsNullOrEmpty(displayid) && display != null && display.ContainsKey(displayid))
+            {
+                return display[displayid].Latency;
+            }
+            return double.NaN;
         }
 #endif
 

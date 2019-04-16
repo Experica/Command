@@ -45,6 +45,7 @@ namespace Experica
                 Debug.Log("Can't connect to SpikeGLX remote server, make sure remote server is started and the server IP and Port are correct.");
                 return;
             }
+            SetRecordingBeep(1046, 700, 880, 800);
             if (!string.IsNullOrEmpty(recordpath))
             {
                 RecordPath = recordpath;
@@ -76,6 +77,18 @@ namespace Experica
                     spikeglxdotnet.Dispose();
                 }
             }
+        }
+
+        void SetRecordingBeep(int onfreq, int ondur_ms, int offfreq, int offdur_ms)
+        {
+            try
+            {
+                lock (spikeglxlock)
+                {
+                    spikeglxdotnet.SetRecordingBeep(0, onfreq, ondur_ms, offfreq, offdur_ms);
+                }
+            }
+            catch (Exception e) { Debug.LogException(e); }
         }
 
         public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)

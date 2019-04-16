@@ -74,6 +74,7 @@ namespace Experica
         public int RecordHostPort { get; set; } = 4142;
 
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, Display> Display { get; set; } = new Dictionary<string, Display>();
         public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
     }
 }

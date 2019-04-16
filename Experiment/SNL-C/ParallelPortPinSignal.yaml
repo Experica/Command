@@ -28,7 +28,7 @@ Cond:
 ExLogicPath: Experica.ParallelPortDigitalWave
 RecordSession: V1e
 RecordSite: 3660
-DataDir: X:\
+DataDir: C:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: Ascending
@@ -83,6 +83,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
+DisplayType: CRT
 DisplayLatency: 180
 ResponseDelay: 20
 Version: 1

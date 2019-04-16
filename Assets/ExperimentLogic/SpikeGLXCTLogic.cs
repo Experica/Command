@@ -61,7 +61,7 @@ namespace Experica
         protected override void StopExperimentTimeSync()
         {
             // Tail period to make sure lagged effect data is recorded before trigger recording stop
-            timer.Timeout(ex.DisplayLatency + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
             if (isspikeglxtriggered)
             {
                 recorder.RecordStatus = RecordStatus.Stopped;

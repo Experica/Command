@@ -3,8 +3,8 @@ Name: Flash
 Designer: Alex
 Experimenter: Leo
 Log: 
-Subject_ID: LSR1803
-Subject_Name: LSR1803
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 6
@@ -14,18 +14,18 @@ Subject_Log:
 EnvPath: MarkerBar
 EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 34
-  ScreenToEye@Camera@OrthoCamera: 37
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   MarkerSize@Marker@Marker: 5
-  MarkerPosition@Marker@Marker: 73.2 -40.08 -1000
+  MarkerPosition@Marker@Marker: 17.16 -12.24 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 222.43512
+  Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 300
   Size@Quad@Quad: 300 300 1
@@ -42,7 +42,7 @@ Cond:
 ExLogicPath: Experica.RippleCTLogic
 RecordSession: V1e
 RecordSite: 3660
-DataDir: X:\
+DataDir: C:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
@@ -108,6 +108,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
+DisplayType: CRT
 DisplayLatency: 180
 ResponseDelay: 20
 Version: 1

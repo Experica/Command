@@ -42,5 +42,6 @@ namespace Experica
 
     public interface IRecorder : IRecord, ISignal
     {
+
     }
 }

@@ -66,6 +66,8 @@ namespace Experica
 
         string cmdresp(string cmd, double timeout)
         {
+            sp.DiscardInBuffer();
+            sp.receiveddata = "";
             sp.WriteLine(cmd);
             var hr = timer.Timeout(x =>
             {
@@ -76,10 +78,7 @@ namespace Experica
                     var ii = r.LastIndexOf("\r");
                     if (ii > i + cmd.Length)
                     {
-                        var resp = r.Substring(i + cmd.Length + 2, ii - (i + cmd.Length + 2));
-                        x.receiveddata = "";
-                        x.DiscardInBuffer();
-                        return resp;
+                        return r.Substring(i + cmd.Length + 2, ii - (i + cmd.Length + 2));
                     }
                 }
                 return null;
@@ -92,8 +91,6 @@ namespace Experica
             else
             {
                 Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
-                sp.receiveddata = "";
-                sp.DiscardInBuffer();
                 return null;
             }
         }

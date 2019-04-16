@@ -1,7 +1,7 @@
-ID: BGColor
-Name: BGColor
+ID: DisplayCalibration
+Name: DisplayCalibration
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex
 Log: 
 Subject_ID: C1901
 Subject_Name: C1901
@@ -11,24 +11,24 @@ Subject_Age: 6
 Subject_Size: 0 0 0
 Subject_Weight: 250
 Subject_Log: 
-EnvPath: Marker
+EnvPath: Bar
 EnvParam: {}
-CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
+CondPath: Condition\RGBColor.yaml
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
+ExLogicPath: Experica.DisplayCalibration
 RecordSession: V1e
 RecordSite: 3660
 DataDir: C:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: UniformWithoutReplacement
-CondRepeat: 8
-BlockRepeat: 1
+BlockSampling: Ascending
+CondRepeat: 3
+BlockRepeat: 0
 BlockParam: []
 Input: None
-PreICI: 150
-CondDur: 500
-SufICI: 150
+PreICI: 0
+CondDur: 300
+SufICI: 0
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -40,38 +40,37 @@ CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
-- CONDSTATE
-- CondRepeat
+- Event
+- SyncEvent
 ExInheritParam:
+- Experimenter
 - Subject_ID
+- Subject_Name
 - Subject_Species
+- Subject_Gender
 - Subject_Age
 - Subject_Size
 - Subject_Weight
 - RecordSession
 - RecordSite
 - DataDir
-- Subject_Name
-- Subject_Gender
-- Experimenter
-- Latency
 - TimerDriftSpeed
-- Delay
 - DisplayLatency
 - ResponseDelay
+- Display_ID
 EnvInheritParam:
-- MarkerSize@ENMarker@Marker
-- MarkerCorner@ENMarker@Marker
-- MarkOnColor@ENMarker@Marker
-- MarkOffColor@ENMarker@Marker
-- ScreenHalfHeight@ENCamera@OrthoCamera
-- ScreenToEye@ENCamera@OrthoCamera
-- Marker@Showroom@ShowroomManager
-- Ori@ENQuad@Quad
-- Position@ENQuad@Quad
-- ScreenAspect@ENCamera@OrthoCamera
-- MarkerPosition@ENMarker@Marker
-Param: {}
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+Param:
+  PRModel: PR701
+  COM: COM2
+  SaveMeasure: True
+  PlotMeasure: True
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -79,11 +78,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayType: CRT
-DisplayLatency: 180
+Display_ID: oldCRT
 ResponseDelay: 20
 Version: 1
 Config: 
 CondTest: 
-CondTestShowLevel: FULL
+CondTestShowLevel: NONE
 SendMail: false

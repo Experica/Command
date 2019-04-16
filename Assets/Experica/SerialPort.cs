@@ -44,11 +44,21 @@ namespace Experica
             Handshake handshake = Handshake.None, int readtimeout = System.IO.Ports.SerialPort.InfiniteTimeout,
             int writetimeout = System.IO.Ports.SerialPort.InfiniteTimeout, string newline = "\n", bool isevent = false)
         {
-            serialport = new System.IO.Ports.SerialPort(portname, baudrate, parity, databits, stopbits);
-            serialport.Handshake = handshake;
-            serialport.ReadTimeout = readtimeout;
-            serialport.WriteTimeout = writetimeout;
-            serialport.NewLine = newline;
+            serialport = new System.IO.Ports.SerialPort(portname, baudrate, parity, databits, stopbits)
+            {
+                Handshake = handshake,
+                ReadTimeout = readtimeout,
+                WriteTimeout = writetimeout,
+                NewLine = newline
+            };
+            if (handshake != Handshake.None)
+            {
+                serialport.DtrEnable = true;
+                if (handshake != Handshake.XOnXOff)
+                {
+                    serialport.RtsEnable = true;
+                }
+            }
 
             if (isevent)
             {
@@ -124,12 +134,26 @@ namespace Experica
 
         public void DiscardInBuffer()
         {
-            serialport.DiscardInBuffer();
+            if (!serialport.IsOpen)
+            {
+                Open();
+            }
+            if (serialport.IsOpen)
+            {
+                serialport.DiscardInBuffer();
+            }
         }
 
         public void DiscardOutBuffer()
         {
-            serialport.DiscardOutBuffer();
+            if (!serialport.IsOpen)
+            {
+                Open();
+            }
+            if (serialport.IsOpen)
+            {
+                serialport.DiscardOutBuffer();
+            }
         }
 
         public string Read()
@@ -147,6 +171,7 @@ namespace Experica
                     byte[] databyte = new byte[nb];
                     serialport.Read(databyte, 0, nb);
                     data = serialport.Encoding.GetString(databyte);
+                    serialport.DiscardInBuffer();
                 }
             }
             receiveddata += data;

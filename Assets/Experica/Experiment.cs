@@ -33,50 +33,44 @@ namespace Experica
 {
     public class PropertyAccess
     {
-        MemberGetter g;
-        public MemberGetter Getter { get { return g; } }
-        MemberSetter s;
-        public MemberSetter Setter { get { return s; } }
-        Type t;
-        public Type Type { get { return t; } }
-        string n;
-        public string Name { get { return n; } }
+        public MemberGetter Getter { get; }
+        public MemberSetter Setter { get; }
+        public Type Type { get; }
+        public string Name { get; }
 
         public PropertyAccess(Type t, string n, MemberGetter g, MemberSetter s)
         {
-            this.t = t;
-            this.n = n;
-            this.g = g;
-            this.s = s;
+            Type = t;
+            Name = n;
+            Getter = g;
+            Setter = s;
         }
 
-        public PropertyAccess(Type reflectedtype, string propertyname) :
-            this(reflectedtype.GetProperty(propertyname).PropertyType, propertyname,
-                reflectedtype.DelegateForGetPropertyValue(propertyname),
-                reflectedtype.DelegateForSetPropertyValue(propertyname))
+        public PropertyAccess(Type reflectedtype, string propertyname)
         {
+            Type = reflectedtype.GetProperty(propertyname).PropertyType;
+            Name = propertyname;
+            Getter = reflectedtype.DelegateForGetPropertyValue(propertyname);
+            Setter = reflectedtype.DelegateForSetPropertyValue(propertyname);
         }
     }
 
     public class MethodAccess
     {
-        MethodInvoker m;
-        public MethodInvoker Call { get { return m; } }
-
-        string n;
-        public string Name { get { return n; } }
+        public MethodInvoker Call { get; }
+        public string Name { get; }
 
         public MethodAccess(string n, MethodInvoker m)
         {
-            this.n = n;
-            this.m = m;
+            Name = n;
+            Call = m;
         }
 
         public MethodAccess(Type reflectedtype, string methodname)
         {
-            n = methodname;
+            Name = methodname;
             var minfo = reflectedtype.GetMethod(methodname);
-            m = reflectedtype.DelegateForCallMethod(methodname, minfo.GetParameters().Select(i => i.ParameterType).ToArray());
+            Call = reflectedtype.DelegateForCallMethod(methodname, minfo.GetParameters().Select(i => i.ParameterType).ToArray());
         }
     }
 
@@ -139,10 +133,9 @@ namespace Experica
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public double TimerDriftSpeed { get; set; }
         public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
-        public DisplayType DisplayType { get; set; }
-        public double DisplayLatency { get; set; }
+        public string Display_ID { get; set; } = "";
         public double ResponseDelay { get; set; }
-        public uint Version { get; set; } = 1;
+        public uint Version { get; set; } = 2;
         public CommandConfig Config { get; set; }
 
         [MessagePackIgnore]
@@ -302,7 +295,16 @@ namespace Experica
     public enum DisplayType
     {
         CRT,
-        LCD
+        LCD,
+        Projector
+    }
+
+    public class Display
+    {
+        public string ID { get; set; } = "";
+        public DisplayType Type { get; set; } = DisplayType.CRT;
+        public double Latency { get; set; } = 0;
+        public Dictionary<string, List<object>> Measurement { get; set; } = new Dictionary<string, List<object>>();
     }
 
     public enum InputMethod

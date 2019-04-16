@@ -29,7 +29,8 @@ namespace Experica
 {
     public enum FactorLevelDesignMethod
     {
-        Linear
+        Linear,
+        Logarithm
     }
 
     public class FactorLevelDesign
@@ -38,25 +39,23 @@ namespace Experica
         public object start, end;
         public int[] n;
         public FactorLevelDesignMethod method;
+        public bool isortho;
         Type T;
 
         public FactorLevelDesign(string factorname, object startvalue, object endvalue, int[] nvalue,
-            FactorLevelDesignMethod designmethod = FactorLevelDesignMethod.Linear)
+            FactorLevelDesignMethod designmethod = FactorLevelDesignMethod.Linear, bool isortho = true)
         {
             T = startvalue.GetType();
             if (T != endvalue.GetType())
             {
                 throw new ArgumentException("Type Inconsistency of startvalue and endvalue");
             }
-            if (nvalue == null)
-            {
-                throw new NullReferenceException();
-            }
             this.factorname = factorname;
             start = startvalue;
             end = endvalue;
-            n = nvalue;
+            n = nvalue ?? throw new NullReferenceException();
             method = designmethod;
+            this.isortho = isortho;
         }
 
         public KeyValuePair<string, List<object>> FactorLevel()
@@ -65,10 +64,10 @@ namespace Experica
             switch (method)
             {
                 case FactorLevelDesignMethod.Linear:
-                    if (T == typeof(float))
+                    if (T.IsNumeric())
                     {
-                        var s = (float)start;
-                        var e = (float)end;
+                        var s = start.Convert<float>();
+                        var e = end.Convert<float>();
                         if (e > s)
                         {
                             ls = Generate.LinearSpacedMap(n[0], s, e, i => (object)(float)i).ToList();
@@ -78,26 +77,131 @@ namespace Experica
                     {
                         var s = (Vector3)start;
                         var e = (Vector3)end;
-                        float[] xl = new float[] { 0 }, yl = new float[] { 0 }, zl = new float[] { 0 };
+                        float[] xl = new float[] { s.x }, yl = new float[] { s.y }, zl = new float[] { s.z };
+                        bool isx = false, isy = false, isz = false;
                         if (e.x > s.x)
                         {
+                            isx = true;
                             xl = Generate.LinearSpacedMap(n[0], s.x, e.x, i => (float)i);
                         }
                         if (e.y > s.y && n.Length > 1)
                         {
+                            isy = true;
                             yl = Generate.LinearSpacedMap(n[1], s.y, e.y, i => (float)i);
                         }
                         if (e.z > s.z && n.Length > 2)
                         {
+                            isz = true;
                             zl = Generate.LinearSpacedMap(n[2], s.z, e.z, i => (float)i);
                         }
-                        for (var xi = 0; xi < xl.Length; xi++)
+                        if (isortho)
                         {
-                            for (var yi = 0; yi < yl.Length; yi++)
+                            for (var xi = 0; xi < xl.Length; xi++)
+                            {
+                                for (var yi = 0; yi < yl.Length; yi++)
+                                {
+                                    for (var zi = 0; zi < zl.Length; zi++)
+                                    {
+                                        ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (isx)
+                            {
+                                for (var xi = 0; xi < xl.Length; xi++)
+                                {
+                                    ls.Add(new Vector3(xl[xi], yl[0], zl[0]));
+                                }
+                            }
+                            if (isy)
+                            {
+                                for (var yi = 0; yi < yl.Length; yi++)
+                                {
+                                    ls.Add(new Vector3(xl[0], yl[yi], zl[0]));
+                                }
+                            }
+                            if (isz)
                             {
                                 for (var zi = 0; zi < zl.Length; zi++)
                                 {
-                                    ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
+                                    ls.Add(new Vector3(xl[0], yl[0], zl[zi]));
+                                }
+                            }
+                        }
+                    }
+                    else if (T == typeof(Color))
+                    {
+                        var s = (Color)start;
+                        var e = (Color)end;
+                        float[] rl = new float[] { s.r }, gl = new float[] { s.g }, bl = new float[] { s.b }, al = new float[] { s.a };
+                        bool isr = false, isg = false, isb = false, isa = false;
+                        if (e.r > s.r)
+                        {
+                            isr = true;
+                            rl = Generate.LinearSpacedMap(n[0], s.r, e.r, i => (float)i);
+                        }
+                        if (e.g > s.g && n.Length > 1)
+                        {
+                            isg = true;
+                            gl = Generate.LinearSpacedMap(n[1], s.g, e.g, i => (float)i);
+                        }
+                        if (e.b > s.b && n.Length > 2)
+                        {
+                            isb = true;
+                            bl = Generate.LinearSpacedMap(n[2], s.b, e.b, i => (float)i);
+                        }
+                        if (e.a > s.a && n.Length > 3)
+                        {
+                            isa = true;
+                            al = Generate.LinearSpacedMap(n[3], s.a, e.a, i => (float)i);
+                        }
+                        if (isortho)
+                        {
+                            for (var ri = 0; ri < rl.Length; ri++)
+                            {
+                                for (var gi = 0; gi < gl.Length; gi++)
+                                {
+                                    for (var bi = 0; bi < bl.Length; bi++)
+                                    {
+                                        for (var ai = 0; ai < al.Length; ai++)
+                                        {
+                                            ls.Add(new Color(rl[ri], gl[gi], bl[bi], al[ai]));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (isr)
+                            {
+                                for (var ri = 0; ri < rl.Length; ri++)
+                                {
+                                    ls.Add(new Color(rl[ri], gl[0], bl[0], al[0]));
+                                }
+                            }
+                            if (isg)
+                            {
+                                for (var gi = 0; gi < gl.Length; gi++)
+                                {
+                                    ls.Add(new Color(rl[0], gl[gi], bl[0], al[0]));
+                                }
+                            }
+                            if (isb)
+                            {
+                                for (var bi = 0; bi < bl.Length; bi++)
+                                {
+                                    ls.Add(new Color(rl[0], gl[0], bl[bi], al[0]));
+                                }
+                            }
+                            if (isa)
+                            {
+                                for (var ai = 0; ai < al.Length; ai++)
+                                {
+                                    ls.Add(new Color(rl[0], gl[0], bl[0], al[ai]));
                                 }
                             }
                         }

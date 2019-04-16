@@ -76,10 +76,10 @@ namespace Experica
         public object Result;
         public double ElapsedMillisecond;
 
-        public TimeoutResult(object result, double time)
+        public TimeoutResult(object result, double time_ms)
         {
             Result = result;
-            ElapsedMillisecond = time;
+            ElapsedMillisecond = time_ms;
         }
     }
 }

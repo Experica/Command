@@ -86,6 +86,8 @@ namespace Experica
 
         string cmdresp(string cmd, double timeout)
         {
+            sp.DiscardInBuffer();
+            sp.receiveddata = "";
             sp.WriteLine("?" + cmd);
             var hr = timer.Timeout(x =>
             {
@@ -96,10 +98,7 @@ namespace Experica
                     var ii = r.LastIndexOf("\r");
                     if (ii > i)
                     {
-                        var resp = r.Substring(i + cmd.Length + 1, ii - (i + cmd.Length + 1));
-                        x.receiveddata = "";
-                        x.DiscardInBuffer();
-                        return resp;
+                        return r.Substring(i + cmd.Length + 1, ii - (i + cmd.Length + 1));
                     }
                 }
                 return null;
@@ -112,8 +111,6 @@ namespace Experica
             else
             {
                 Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
-                sp.receiveddata = "";
-                sp.DiscardInBuffer();
                 return null;
             }
         }
@@ -219,6 +216,8 @@ namespace Experica
 
         string cmdresp(string cmd, double timeout, bool isecho = true)
         {
+            sp.DiscardInBuffer();
+            sp.receiveddata = "";
             sp.WriteLine(cmd);
             var hr = timer.Timeout(x =>
             {
@@ -231,18 +230,12 @@ namespace Experica
                         var ii = r.LastIndexOf("\r");
                         if (ii > i)
                         {
-                            var resp = r.Substring(i + 2, ii - (i + 2));
-                            x.receiveddata = "";
-                            x.DiscardInBuffer();
-                            return resp;
+                            return r.Substring(i + 2, ii - (i + 2));
                         }
                     }
                     else
                     {
-                        var resp = r.Substring(0, i);
-                        x.receiveddata = "";
-                        x.DiscardInBuffer();
-                        return resp;
+                        return r.Substring(0, i);
                     }
                 }
                 return null;
@@ -255,8 +248,6 @@ namespace Experica
             else
             {
                 Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
-                sp.receiveddata = "";
-                sp.DiscardInBuffer();
                 return null;
             }
         }
