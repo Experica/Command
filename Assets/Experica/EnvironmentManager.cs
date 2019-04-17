@@ -29,10 +29,16 @@ using System.Linq;
 
 namespace Experica
 {
+    public interface IDisplayCorrection
+    {
+
+    }
+
     public class EnvironmentManager
     {
         public Scene scene;
         public UnityEngine.Camera maincamera_scene;
+        public IDisplayCorrection displaycorrection;
         
         public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
         public Dictionary<string, NetworkBehaviour> networkbehaviour_sceneobject = new Dictionary<string, NetworkBehaviour>();

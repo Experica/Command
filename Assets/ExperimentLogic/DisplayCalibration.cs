@@ -32,6 +32,8 @@ namespace Experica
         protected override void OnStart()
         {
             spectroradiometer = new PR(ex.GetParam("COM").Convert<string>(), ex.GetParam("PRModel").Convert<string>());
+            var c = new Color(0.3f, 0.4f, 0.6f);
+            print(c.gamma);
         }
 
         protected override void OnStartExperiment()
