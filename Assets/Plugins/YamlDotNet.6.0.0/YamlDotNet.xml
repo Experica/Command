@@ -34,7 +34,7 @@
         </member>
         <member name="T:YamlDotNet.Core.Constants">
             <summary>
-            Defines constants thar relate to the YAML specification.
+            Defines constants that relate to the YAML specification.
             </summary>
         </member>
         <member name="T:YamlDotNet.Core.Emitter">
@@ -972,7 +972,7 @@
         </member>
         <member name="M:YamlDotNet.Core.ILookAheadBuffer.Peek(System.Int32)">
             <summary>
-            Gets the character at thhe specified offset.
+            Gets the character at the specified offset.
             </summary>
         </member>
         <member name="M:YamlDotNet.Core.ILookAheadBuffer.Skip(System.Int32)">
@@ -1012,7 +1012,7 @@
         </member>
         <member name="T:YamlDotNet.Core.IParser">
             <summary>
-            Represents a YAML stream paser.
+            Represents a YAML stream parser.
             </summary>
         </member>
         <member name="P:YamlDotNet.Core.IParser.Current">
@@ -1087,7 +1087,7 @@
         </member>
         <member name="M:YamlDotNet.Core.LookAheadBuffer.Peek(System.Int32)">
             <summary>
-            Gets the character at thhe specified offset.
+            Gets the character at the specified offset.
             </summary>
         </member>
         <member name="M:YamlDotNet.Core.LookAheadBuffer.Cache(System.Int32)">
@@ -1406,7 +1406,7 @@
             <summary>
             Checks whether the current event is of the specified type.
             If the event is of the specified type, returns it and moves to the next event.
-            Otherwise retruns null.
+            Otherwise returns null.
             </summary>
             <typeparam name="T">Type of the <see cref="T:YamlDotNet.Core.Events.ParsingEvent"/>.</typeparam>
             <returns>Returns the current event if it is of type T; otherwise returns null.</returns>
@@ -2332,8 +2332,8 @@
             <summary>
             Initializes a new instance of the <see cref="T:YamlDotNet.Core.Version"/> class.
             </summary>
-            <param name="major">The the major version number.</param>
-            <param name="minor">The the minor version number.</param>
+            <param name="major">The major version number.</param>
+            <param name="minor">The minor version number.</param>
         </member>
         <member name="M:YamlDotNet.Core.Version.Equals(System.Object)">
             <summary>
@@ -3419,6 +3419,12 @@
             Common implementation of <see cref="T:YamlDotNet.Serialization.SerializerBuilder" /> and <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" />.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.IgnoreFields">
+            <summary>
+            Prevents serialization and deserialization of fields.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithNamingConvention(YamlDotNet.Serialization.INamingConvention)">
             <summary>
             Sets the <see cref="T:YamlDotNet.Serialization.INamingConvention" /> that will be used by the (de)serializer.
@@ -3431,7 +3437,7 @@
         </member>
         <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithAttributeOverride``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Attribute)">
             <summary>
-            Register an <see cref="T:System.Attribute"/> for for a given property.
+            Register an <see cref="T:System.Attribute"/> for a given property.
             </summary>
             <typeparam name="TClass"></typeparam>
             <param name="propertyAccessor">An expression in the form: x => x.SomeProperty</param>
@@ -3440,7 +3446,7 @@
         </member>
         <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithAttributeOverride(System.Type,System.String,System.Attribute)">
             <summary>
-            Register an <see cref="T:System.Attribute"/> for for a given property.
+            Register an <see cref="T:System.Attribute"/> for a given property.
             </summary>
         </member>
         <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithTypeConverter(YamlDotNet.Serialization.IYamlTypeConverter)">
@@ -3586,7 +3592,7 @@
             Initializes a new instance of <see cref="T:YamlDotNet.Serialization.Deserializer" /> using the default configuration.
             </summary>
             <remarks>
-            To customize the bahavior of the deserializer, use <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" />.
+            To customize the behavior of the deserializer, use <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" />.
             </remarks>
         </member>
         <member name="M:YamlDotNet.Serialization.Deserializer.#ctor(YamlDotNet.Serialization.IValueDeserializer)">
@@ -3598,7 +3604,7 @@
         <member name="M:YamlDotNet.Serialization.Deserializer.FromValueDeserializer(YamlDotNet.Serialization.IValueDeserializer)">
             <summary>
             Creates a new <see cref="T:YamlDotNet.Serialization.Deserializer" /> that uses the specified <see cref="T:YamlDotNet.Serialization.IValueDeserializer" />.
-            This method is available for advanced scenarios. The preferred way to customize the bahavior of the
+            This method is available for advanced scenarios. The preferred way to customize the behavior of the
             deserializer is to use <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" />.
             </summary>
         </member>
@@ -3714,7 +3720,7 @@
         <member name="M:YamlDotNet.Serialization.DeserializerBuilder.BuildValueDeserializer">
             <summary>
             Creates a new <see cref="T:YamlDotNet.Serialization.IValueDeserializer" /> that implements the current configuration.
-            This method is available for advanced scenarios. The preferred way to customize the bahavior of the
+            This method is available for advanced scenarios. The preferred way to customize the behavior of the
             deserializer is to use the <see cref="M:YamlDotNet.Serialization.DeserializerBuilder.Build" /> method.
             </summary>
         </member>
@@ -3735,7 +3741,7 @@
         </member>
         <member name="M:YamlDotNet.Serialization.EmissionPhaseObjectGraphVisitorArgs.GetPreProcessingPhaseObjectGraphVisitor``1">
             <summary>
-            Gets the visitor of type <typeparamref name="T" /> that was used during the pre-processig phase.
+            Gets the visitor of type <typeparamref name="T" /> that was used during the pre-processing phase.
             </summary>
             <typeparam name="T">The type of the visitor.s</typeparam>
             <returns></returns>
@@ -3749,6 +3755,14 @@
             Provided the base implementation for an IEventEmitter that is a
             decorator for another IEventEmitter.
             </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.IDeserializer.Deserialize(YamlDotNet.Core.IParser,System.Type)">
+            <summary>
+            Deserializes an object of the specified type.
+            </summary>
+            <param name="parser">The <see cref="T:YamlDotNet.Core.IParser" /> from where to deserialize the object.</param>
+            <param name="type">The static type of the object to deserialize.</param>
+            <returns>Returns the deserialized object.</returns>
         </member>
         <member name="T:YamlDotNet.Serialization.INamingConvention">
             <summary>
@@ -3920,6 +3934,42 @@
             Registers the component in place of the already registered component of type <typeparamref name="TRegistrationType" />.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.ISerializer.Serialize(System.IO.TextWriter,System.Object)">
+            <summary>
+            Serializes the specified object.
+            </summary>
+            <param name="writer">The <see cref="T:System.IO.TextWriter" /> where to serialize the object.</param>
+            <param name="graph">The object to serialize.</param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ISerializer.Serialize(System.Object)">
+            <summary>
+            Serializes the specified object into a string.
+            </summary>
+            <param name="graph">The object to serialize.</param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ISerializer.Serialize(System.IO.TextWriter,System.Object,System.Type)">
+            <summary>
+            Serializes the specified object.
+            </summary>
+            <param name="writer">The <see cref="T:System.IO.TextWriter" /> where to serialize the object.</param>
+            <param name="graph">The object to serialize.</param>
+            <param name="type">The static type of the object to serialize.</param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ISerializer.Serialize(YamlDotNet.Core.IEmitter,System.Object)">
+            <summary>
+            Serializes the specified object.
+            </summary>
+            <param name="emitter">The <see cref="T:YamlDotNet.Core.IEmitter" /> where to serialize the object.</param>
+            <param name="graph">The object to serialize.</param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ISerializer.Serialize(YamlDotNet.Core.IEmitter,System.Object,System.Type)">
+            <summary>
+            Serializes the specified object.
+            </summary>
+            <param name="emitter">The <see cref="T:YamlDotNet.Core.IEmitter" /> where to serialize the object.</param>
+            <param name="graph">The object to serialize.</param>
+            <param name="type">The static type of the object to serialize.</param>
+        </member>
         <member name="T:YamlDotNet.Serialization.ITypeInspector">
             <summary>
             Provides access to the properties of a type.
@@ -4083,6 +4133,16 @@
             the graph can be regenerated from the resulting document.
             </summary>
         </member>
+        <member name="T:YamlDotNet.Serialization.ObjectGraphTraversalStrategyFactory">
+            <summary>
+            A factory method for creating <see cref="T:YamlDotNet.Serialization.IObjectGraphTraversalStrategy"/> instances
+            </summary>
+            <param name="typeInspector">The type inspector to be used by the traversal strategy.</param>
+            <param name="typeResolver">The type resolver to be used by the traversal strategy.</param>
+            <param name="typeConverters">The type converters to be used by the traversal strategy.</param>
+            <param name="maximumRecursion">The maximum object depth to be supported by the traversal strategy.</param>
+            <returns></returns>
+        </member>
         <member name="T:YamlDotNet.Serialization.ObjectGraphVisitors.PreProcessingPhaseObjectGraphVisitorSkeleton">
             <summary>
             A base class that simplifies the correct implementation of <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.
@@ -4147,7 +4207,7 @@
         <member name="M:YamlDotNet.Serialization.Serializer.FromValueSerializer(YamlDotNet.Serialization.IValueSerializer)">
             <summary>
             Creates a new <see cref="T:YamlDotNet.Serialization.Serializer" /> that uses the specified <see cref="T:YamlDotNet.Serialization.IValueSerializer" />.
-            This method is available for advanced scenarios. The preferred way to customize the bahavior of the
+            This method is available for advanced scenarios. The preferred way to customize the behavior of the
             deserializer is to use <see cref="T:YamlDotNet.Serialization.SerializerBuilder" />.
             </summary>
         </member>
@@ -4193,6 +4253,11 @@
             This class is used to customize the behavior of <see cref="T:YamlDotNet.Serialization.Serializer" />. Use the relevant methods
             to apply customizations, then call <see cref="M:YamlDotNet.Serialization.SerializerBuilder.Build" /> to create an instance of the serializer
             with the desired customizations.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithMaximumRecursion(System.Int32)">
+            <summary>
+            Sets the maximum recursion that is allowed while traversing the object graph. The default value is 50.
             </summary>
         </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,``0})">
@@ -4311,6 +4376,13 @@
             Unregisters an existing <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> of type <param name="objectGraphVisitorType" />.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithObjectGraphTraversalStrategyFactory(YamlDotNet.Serialization.ObjectGraphTraversalStrategyFactory)">
+            <summary>
+            Registers an <see cref="T:YamlDotNet.Serialization.ObjectGraphTraversalStrategyFactory"/> to be used by the serializer
+            while traversing the object graph.
+            </summary>
+            <param name="objectGraphTraversalStrategyFactory">A function that instantiates the traversal strategy.</param>
+        </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithEmissionPhaseObjectGraphVisitor``1(System.Func{YamlDotNet.Serialization.EmissionPhaseObjectGraphVisitorArgs,``0})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
@@ -4352,7 +4424,7 @@
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.BuildValueSerializer">
             <summary>
             Creates a new <see cref="T:YamlDotNet.Serialization.IValueDeserializer" /> that implements the current configuration.
-            This method is available for advanced scenarios. The preferred way to customize the bahavior of the
+            This method is available for advanced scenarios. The preferred way to customize the behavior of the
             deserializer is to use the <see cref="M:YamlDotNet.Serialization.SerializerBuilder.Build" /> method.
             </summary>
         </member>
@@ -4412,6 +4484,11 @@
             Wraps another <see cref="T:YamlDotNet.Serialization.ITypeInspector"/> and applies caching.
             </summary>
         </member>
+        <member name="T:YamlDotNet.Serialization.TypeInspectors.CompositeTypeInspector">
+            <summary>
+            Aggregates the results from multiple <see cref="T:YamlDotNet.Serialization.ITypeInspector" /> into a single one.
+            </summary>
+        </member>
         <member name="T:YamlDotNet.Serialization.TypeInspectors.NamingConventionTypeInspector">
             <summary>
             Wraps another <see cref="T:YamlDotNet.Serialization.ITypeInspector"/> and applies a
@@ -4421,6 +4498,11 @@
         <member name="T:YamlDotNet.Serialization.TypeInspectors.ReadableAndWritablePropertiesTypeInspector">
             <summary>
             Returns the properties of a type that are both readable and writable.
+            </summary>
+        </member>
+        <member name="T:YamlDotNet.Serialization.TypeInspectors.ReadableFieldsTypeInspector">
+            <summary>
+            Returns the properties and fields of a type that are readable.
             </summary>
         </member>
         <member name="T:YamlDotNet.Serialization.TypeInspectors.ReadablePropertiesTypeInspector">
@@ -4468,7 +4550,7 @@
         <member name="T:YamlDotNet.Serialization.Utilities.SerializerState">
             <summary>
             A generic container that is preserved during the entire deserialization process.
-            Any disposable object added to this collecion will be disposed when this object is disposed.
+            Any disposable object added to this collection will be disposed when this object is disposed.
             </summary>
         </member>
         <member name="M:YamlDotNet.Serialization.Utilities.SerializerState.OnDeserialization">
@@ -4518,7 +4600,7 @@
             <summary>
             Registers a <see cref="T:System.ComponentModel.TypeConverter"/> dynamically.
             </summary>
-            <typeparam name="TConvertible">The type to which the coverter should be associated.</typeparam>
+            <typeparam name="TConvertible">The type to which the converter should be associated.</typeparam>
             <typeparam name="TConverter">The type of the converter.</typeparam>
         </member>
         <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType``1(System.Object)">

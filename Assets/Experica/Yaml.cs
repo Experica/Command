@@ -60,14 +60,14 @@ namespace Experica
 
     public static class Yaml
     {
-        static Serializer serializer;
-        static Deserializer deserializer;
+        static ISerializer serializer;
+        static IDeserializer deserializer;
 
         static Yaml()
         {
             var yamlvlabconverter = new YamlTypeConverter();
-            serializer = new SerializerBuilder().DisableAliases().EmitDefaults().WithTypeConverter(yamlvlabconverter).Build();
-            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().WithTypeConverter(yamlvlabconverter).Build();
+            serializer = new SerializerBuilder().DisableAliases().EmitDefaults().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
+            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
         }
 
         public static void WriteYamlFile<T>(this string path, T data)
