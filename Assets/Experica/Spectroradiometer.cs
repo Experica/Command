@@ -128,6 +128,7 @@ namespace Experica
         public void Close()
         {
             sp.WriteLine("Q");
+            sp.Close();
         }
 
         public bool Setup(string setupfields, double timeout_ms)

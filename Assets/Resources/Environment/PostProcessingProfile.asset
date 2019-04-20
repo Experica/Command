@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PostProcessingProfile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 836187516876050989}
---- !u!114 &836187516876050989
+  - {fileID: 2760988072672731896}
+--- !u!114 &2760988072672731896
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,10 +67,10 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 0
-    value: -23.1
+    value: 0
   tint:
     overrideState: 0
-    value: -30.9
+    value: 0
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -82,13 +82,13 @@ MonoBehaviour:
     value: 0
   brightness:
     overrideState: 0
-    value: -33.4
+    value: 0
   postExposure:
     overrideState: 0
     value: 0
   contrast:
     overrideState: 0
-    value: -8.5
+    value: 0
   mixerRedOutRedIn:
     overrideState: 0
     value: 100

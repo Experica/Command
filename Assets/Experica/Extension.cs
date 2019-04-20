@@ -30,6 +30,7 @@ using System.Net;
 using System.Net.Mail;
 #if COMMAND
 using System.Windows.Forms;
+using MathNet.Numerics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -303,6 +304,18 @@ namespace Experica
             return rng.Permutation(seq.Count).Select(i => seq[i]).ToList();
         }
 
+        public static void Scale01(this List<double> data)
+        {
+            if (data == null || data.Count < 2) return;
+            var min = data.Min();
+            var max = data.Max();
+            var range = max - min;
+            for (var i = 0; i < data.Count; i++)
+            {
+                data[i] = (data[i] - min) / range;
+            }
+        }
+
         //public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
         //{
         //    return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);
@@ -522,6 +535,88 @@ namespace Experica
                 return display[displayid].Latency;
             }
             return double.NaN;
+        }
+
+        public static double GammaFunc(double x, double gamma, double a = 1, double c = 0)
+        {
+            return a * Math.Pow(x, gamma) + c;
+        }
+
+        public static double InverseGammaFunc(double x, double gamma, double a = 1, double c = 0)
+        {
+            return a * Math.Pow(x, 1 / gamma) + c;
+        }
+
+        public static bool GammaFit(double[] x, double[] y, out double gamma, out double amp, out double cons)
+        {
+            gamma = 0; amp = 0; cons = 0;
+            try
+            {
+                var param = Fit.Curve(x, y, (g, a, c, i) => GammaFunc(i, g, a, c), 1, 1, 0);
+                gamma = param.Item1; amp = param.Item2; cons = param.Item3;
+                return true;
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+        public static void GetRGBMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
+        {
+            var colors = m["Color"].Convert<List<Color>>();
+            var intensities = m["Y"].Convert<List<float>>();
+
+            var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
+            var rys = new List<double>(); var gys = new List<double>(); var bys = new List<double>();
+            for (var j = 0; j < colors.Count; j++)
+            {
+                var c = colors[j]; var i = intensities[j];
+                if (c.g == 0 && c.b == 0)
+                {
+                    rs.Add(c.r);
+                    rys.Add(i);
+                }
+                else if (c.r == 0 && c.b == 0)
+                {
+                    gs.Add(c.g);
+                    gys.Add(i);
+                }
+                else if (c.r == 0 && c.g == 0)
+                {
+                    bs.Add(c.b);
+                    bys.Add(i);
+                }
+            }
+            if (issort)
+            {
+                Sorting.Sort(rs, rys); Sorting.Sort(gs, gys); Sorting.Sort(bs, bys);
+            }
+            if (isnormalize)
+            {
+                rys.Scale01(); gys.Scale01(); bys.Scale01();
+            }
+            x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
+            y = new Dictionary<string, double[]>() { { "R", rys.ToArray() }, { "G", gys.ToArray() }, { "B", bys.ToArray() } };
+        }
+
+        public static Texture2D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)
+        {
+            var xx = Generate.LinearSpaced(n, 0, 1);
+            var rcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, rgamma));
+            var gcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, ggamma));
+            var bcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, bgamma));
+            var clut = new Texture2D(n * n, n, TextureFormat.RGBA32, false, true);
+            for (var r = 0; r < n; r++)
+            {
+                for (var g = 0; g < n; g++)
+                {
+                    for (var b = 0; b < n; b++)
+                    {
+                        clut.SetPixel(n * b + r, g, new Color(rcys[r], gcys[g], bcys[b]));
+                    }
+                }
+            }
+            clut.Apply();
+            return clut;
         }
 #endif
 
@@ -869,5 +964,6 @@ namespace Experica
             imgarray.Apply();
             return imgarray;
         }
+
     }
 }

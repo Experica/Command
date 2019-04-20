@@ -12,7 +12,26 @@ Subject_Size: 0 0 0
 Subject_Weight: 250
 Subject_Log: 
 EnvPath: Bar
-EnvParam: {}
+EnvParam:
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.02699232
+  CLUT@Camera@OrthoCamera: true
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Diameter@Quad@Quad: 30
+  Size@Quad@Quad: 30 30 1
+  Color@Quad@Quad: 0 0 1 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  Sigma@Quad@Quad: 0.150000006
+  OriPositionOffset@Quad@Quad: false
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 0 0
 CondPath: Condition\RGBColor.yaml
 Cond: 
 ExLogicPath: Experica.DisplayCalibration
@@ -20,11 +39,12 @@ RecordSession: V1e
 RecordSite: 3660
 DataDir: C:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 3
+CondRepeat: 1
 BlockRepeat: 0
-BlockParam: []
+BlockParam:
+- ''
 Input: None
 PreICI: 0
 CondDur: 300
@@ -69,7 +89,6 @@ EnvInheritParam:
 Param:
   PRModel: PR701
   COM: COM2
-  SaveMeasure: True
   PlotMeasure: True
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -78,7 +97,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: oldCRT
+Display_ID: Trinitron
 ResponseDelay: 20
 Version: 1
 Config: 

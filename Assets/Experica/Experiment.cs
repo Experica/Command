@@ -305,6 +305,7 @@ namespace Experica
         public DisplayType Type { get; set; } = DisplayType.CRT;
         public double Latency { get; set; } = 0;
         public Dictionary<string, List<object>> Measurement { get; set; } = new Dictionary<string, List<object>>();
+        public Texture2D CLUT;
     }
 
     public enum InputMethod

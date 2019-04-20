@@ -126,6 +126,7 @@ MonoBehaviour:
   ScreenHalfHeight: 15
   ScreenToEye: 57
   ScreenAspect: 1.3333334
+  CLUT: 1
   camera: {fileID: 0}
 --- !u!114 &8030389999020217805
 MonoBehaviour:

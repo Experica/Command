@@ -2,7 +2,8 @@
     "name": "Command",
     "references": [
         "GUID:41c3f44a38643794aaa0e4850b0f06d7",
-        "GUID:a44f47cf3ada4435dbc516bad0bc86fe"
+        "GUID:a44f47cf3ada4435dbc516bad0bc86fe",
+        "GUID:d60799ab2a985554ea1a39cd38695018"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

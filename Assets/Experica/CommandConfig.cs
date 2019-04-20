@@ -72,6 +72,7 @@ namespace Experica
 
         public string RecordHost { get; set; } = "LocalHost";
         public int RecordHostPort { get; set; } = 4142;
+        public int CLUTSize { get; set; } = 16;
 
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public Dictionary<string, Display> Display { get; set; } = new Dictionary<string, Display>();

@@ -22,7 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,6 +38,7 @@ namespace Experica.Command
     {
         public CommandConfigManager configmanager;
         public CommandConfig config;
+        public PostProcessVolume postprocessvolume;
         readonly string configmanagerpath = "CommandConfigManager.yaml";
 
         public Toggle host, server, start, pause;
@@ -199,6 +200,55 @@ namespace Experica.Command
                 expanel.UpdateEx(exmanager.el.ex);
                 ChangeScene();
             }
+        }
+
+        public void ToggleColorGrading(bool ison)
+        {
+            ColorGrading colorgrading;
+            if (postprocessvolume.profile.TryGetSettings(out colorgrading))
+            {
+                colorgrading.enabled.value = ison;
+            }
+        }
+
+        public void SetCLUT(Texture2D clut)
+        {
+            ColorGrading colorgrading;
+            if (postprocessvolume.profile.TryGetSettings(out colorgrading))
+            {
+                colorgrading.ldrLut.value = clut;
+            }
+        }
+
+        public bool PrepareDisplayCLUT(string displayid, bool forceprepare = false)
+        {
+            if (!config.Display.ContainsKey(displayid)) { return false; }
+            var display = config.Display[displayid];
+            var m = display.Measurement;
+            if (m == null || m.Count == 0) { return false; }
+            if (display.CLUT == null || forceprepare)
+            {
+                Dictionary<string, double[]> x, y;
+                m.GetRGBMeasurement(out x, out y, false, false);
+                double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
+                Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
+                Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
+                Extension.GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
+                display.CLUT = Extension.GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, config.CLUTSize);
+            }
+            SetCLUT(display.CLUT);
+            return true;
+        }
+
+        public byte[] SerializeCLUT(out int width, out int height)
+        {
+            width = 0; height = 0;
+            var displayid = exmanager.el.ex.Display_ID;
+            if (!config.Display.ContainsKey(displayid) || config.Display[displayid].CLUT == null) { return null; }
+            var clut = config.Display[displayid].CLUT;
+            width = clut.width;
+            height = clut.height;
+            return clut.GetRawTextureData();
         }
 
         public void OnAspectRatioMessage(float ratio)

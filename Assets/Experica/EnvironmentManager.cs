@@ -29,17 +29,10 @@ using System.Linq;
 
 namespace Experica
 {
-    public interface IDisplayCorrection
-    {
-
-    }
-
     public class EnvironmentManager
     {
         public Scene scene;
         public UnityEngine.Camera maincamera_scene;
-        public IDisplayCorrection displaycorrection;
-        
         public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
         public Dictionary<string, NetworkBehaviour> networkbehaviour_sceneobject = new Dictionary<string, NetworkBehaviour>();
         public Dictionary<string, PropertyAccess> syncvar_nb_so = new Dictionary<string, PropertyAccess>();
@@ -68,9 +61,9 @@ namespace Experica
             }
         }
 
-        public void ParseSceneObject(GameObject go,string parent=null)
+        public void ParseSceneObject(GameObject go, string parent = null)
         {
-            var goname =string.IsNullOrEmpty(parent) ? go.name : go.name + "$" + parent;
+            var goname = string.IsNullOrEmpty(parent) ? go.name : go.name + "$" + parent;
             sceneobject[goname] = go;
             if (go.tag == "MainCamera")
             {
@@ -88,7 +81,7 @@ namespace Experica
             }
             for (var i = 0; i < go.transform.childCount; i++)
             {
-                ParseSceneObject(go.transform.GetChild(i).gameObject,goname);
+                ParseSceneObject(go.transform.GetChild(i).gameObject, goname);
             }
         }
 
@@ -102,9 +95,9 @@ namespace Experica
                     syncvar_nb_so[f.Name + "@" + nbname] = new PropertyAccess(nbtype, "Network" + f.Name);
                 }
             }
-            foreach(var m in nbtype.GetMethods())
+            foreach (var m in nbtype.GetMethods())
             {
-                if(m.Name.StartsWith("CallRpc"))
+                if (m.Name.StartsWith("CallRpc"))
                 {
                     clientrpc_nb_so[m.Name.Substring(4) + "@" + nbname] = new MethodAccess(nbtype, m.Name);
                 }
@@ -113,18 +106,18 @@ namespace Experica
 
         public void UpdateActiveNetworkBehaviour()
         {
-            foreach(var nbname in networkbehaviour_sceneobject.Keys)
+            foreach (var nbname in networkbehaviour_sceneobject.Keys)
             {
-                if(networkbehaviour_sceneobject[nbname].isActiveAndEnabled)
+                if (networkbehaviour_sceneobject[nbname].isActiveAndEnabled)
                 {
-                    if(!active_networkbehaviour.Contains(nbname))
+                    if (!active_networkbehaviour.Contains(nbname))
                     {
                         active_networkbehaviour.Add(nbname);
                     }
                 }
                 else
                 {
-                    if(active_networkbehaviour.Contains(nbname))
+                    if (active_networkbehaviour.Contains(nbname))
                     {
                         active_networkbehaviour.Remove(nbname);
                     }
@@ -167,17 +160,17 @@ namespace Experica
             {
                 if (clientrpc_nb_so.ContainsKey(name))
                 {
-                    r=InvokeRPC(networkbehaviour_sceneobject[name.Substring(atidx + 1)], clientrpc_nb_so[name], param, name, notifyui);
+                    r = InvokeRPC(networkbehaviour_sceneobject[name.Substring(atidx + 1)], clientrpc_nb_so[name], param, name, notifyui);
                 }
             }
-            else if(atidx<0&&name.Length>0)
+            else if (atidx < 0 && name.Length > 0)
             {
                 foreach (var nbname in networkbehaviour_sceneobject.Keys.ToList())
                 {
                     var fname = name + "@" + nbname;
                     if (clientrpc_nb_so.ContainsKey(fname))
                     {
-                        r=InvokeRPC(networkbehaviour_sceneobject[nbname], clientrpc_nb_so[fname], param, fname, notifyui);
+                        r = InvokeRPC(networkbehaviour_sceneobject[nbname], clientrpc_nb_so[fname], param, fname, notifyui);
                     }
                 }
             }
@@ -186,8 +179,8 @@ namespace Experica
 
         public object InvokeRPC(NetworkBehaviour nb, MethodAccess m, object[] param, string fullname = "", bool notifyui = false)
         {
-            object r = m.Call(nb, param);            
-            if (notifyui && OnNotifyUI != null&&!string.IsNullOrEmpty(fullname))
+            object r = m.Call(nb, param);
+            if (notifyui && OnNotifyUI != null && !string.IsNullOrEmpty(fullname))
             {
                 OnNotifyUI(fullname, r);
             }
@@ -221,7 +214,7 @@ namespace Experica
             {
                 if (active_networkbehaviour.Contains(nbn) && syncvar_nb_so.ContainsKey(name))
                 {
-                    SetParam(networkbehaviour_sceneobject[nbn], syncvar_nb_so[name],name, value , notifyui);
+                    SetParam(networkbehaviour_sceneobject[nbn], syncvar_nb_so[name], name, value, notifyui);
                 }
             }
             else
@@ -233,41 +226,41 @@ namespace Experica
                         var fname = pn + "@" + anbname;
                         if (syncvar_nb_so.ContainsKey(fname))
                         {
-                            SetParam(networkbehaviour_sceneobject[anbname], syncvar_nb_so[fname],fname ,value , notifyui);
+                            SetParam(networkbehaviour_sceneobject[anbname], syncvar_nb_so[fname], fname, value, notifyui);
                         }
                     }
                 }
             }
         }
 
-        public void SetParam(string name, object value,bool notifyui=false)
+        public void SetParam(string name, object value, bool notifyui = false)
         {
             var atidx = name.IndexOf('@');
             if (atidx > 0)
             {
                 if (syncvar_nb_so.ContainsKey(name))
                 {
-                    SetParam(networkbehaviour_sceneobject[name.Substring(atidx + 1)], syncvar_nb_so[name],name, value,notifyui);
+                    SetParam(networkbehaviour_sceneobject[name.Substring(atidx + 1)], syncvar_nb_so[name], name, value, notifyui);
                 }
             }
-            else if(atidx<0 && name.Length>0)
+            else if (atidx < 0 && name.Length > 0)
             {
                 foreach (var nbname in networkbehaviour_sceneobject.Keys.ToList())
                 {
                     var fname = name + "@" + nbname;
                     if (syncvar_nb_so.ContainsKey(fname))
                     {
-                        SetParam(networkbehaviour_sceneobject[nbname], syncvar_nb_so[fname],fname, value,notifyui);
+                        SetParam(networkbehaviour_sceneobject[nbname], syncvar_nb_so[fname], fname, value, notifyui);
                     }
                 }
             }
         }
 
-        public void SetParam(NetworkBehaviour nb, PropertyAccess p,string fullname, object value,bool notifyui=false)
+        public void SetParam(NetworkBehaviour nb, PropertyAccess p, string fullname, object value, bool notifyui = false)
         {
             object v = value.Convert(p.Type);
             p.Setter(nb, v);
-            if(notifyui && OnNotifyUI!=null)
+            if (notifyui && OnNotifyUI != null)
             {
                 OnNotifyUI(fullname, v);
             }
@@ -286,7 +279,7 @@ namespace Experica
             foreach (var nbname in networkbehaviour_sceneobject.Keys)
             {
                 var tail = nbname.FirstAtSplitTail();
-                if (tail!=null && tail == forsceneobjectname)
+                if (tail != null && tail == forsceneobjectname)
                 {
                     networkbehaviour_sceneobject[nbname].SetDirtyBit(uint.MaxValue);
                 }
@@ -303,7 +296,7 @@ namespace Experica
             return envparam;
         }
 
-        public Dictionary<string, object> GetActiveParams(bool withshortname=false)
+        public Dictionary<string, object> GetActiveParams(bool withshortname = false)
         {
             var envparam = new Dictionary<string, object>();
             foreach (var p in syncvar_nb_so.Keys)
@@ -311,12 +304,12 @@ namespace Experica
                 var v = GetActiveParam(p);
                 if (v != null) envparam[p] = v;
             }
-            if(withshortname)
+            if (withshortname)
             {
                 var shortnames = envparam.Keys.Select(i => i.FirstAtSplitHead());
                 if (shortnames.Distinct().Count() == envparam.Keys.Count)
                 {
-                    envparam=  envparam.ToDictionary(kv => kv.Key.FirstAtSplitHead(), kv => kv.Value);
+                    envparam = envparam.ToDictionary(kv => kv.Key.FirstAtSplitHead(), kv => kv.Value);
                 }
             }
             return envparam;
@@ -359,7 +352,7 @@ namespace Experica
                     return GetParam(networkbehaviour_sceneobject[name.Substring(atidx + 1)], syncvar_nb_so[name]);
                 }
             }
-            else if(atidx<0 && name.Length>0)
+            else if (atidx < 0 && name.Length > 0)
             {
                 foreach (var nbname in networkbehaviour_sceneobject.Keys)
                 {

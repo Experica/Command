@@ -26,6 +26,9 @@ using System.Collections.Generic;
 #if COMMAND
 using Experica.Command;
 #endif
+#if ENVIRONMENT
+using Experica.Environment;
+#endif
 
 namespace Experica
 {
@@ -40,12 +43,13 @@ namespace Experica
         public float ScreenToEye = 57;
         [SyncVar(hook = "onscreenaspect")]
         public float ScreenAspect = 4.0f / 3.0f;
+        [SyncVar(hook = "onclut")]
+        public bool CLUT = true;
 
         public Action CameraChange;
         public UnityEngine.Camera camera;
-#if COMMAND
         NetManager netmanager;
-#endif
+
         void Awake()
         {
             OnAwake();
@@ -53,9 +57,7 @@ namespace Experica
         public virtual void OnAwake()
         {
             camera = gameObject.GetComponent<UnityEngine.Camera>();
-#if COMMAND
             netmanager = FindObjectOfType<NetManager>();
-#endif
         }
 
         void Start()
@@ -122,6 +124,35 @@ namespace Experica
             }
             ScreenAspect = apr;
             CameraChange?.Invoke();
+        }
+
+        void onclut(bool cluton)
+        {
+            OnCLUT(cluton);
+        }
+        public virtual void OnCLUT(bool cluton)
+        {
+            netmanager.uicontroller.ToggleColorGrading(cluton);
+#if COMMAND
+            int width, height;
+            var data = netmanager.uicontroller.SerializeCLUT(out width, out height);
+            if (data != null)
+            {
+                RpcCLUT(data, width, height);
+            }
+#endif
+            CLUT = cluton;
+        }
+
+        [ClientRpc]
+        void RpcCLUT(byte[] clut, int width, int height)
+        {
+#if ENVIRONMENT
+            var tex = new Texture2D(width, height, TextureFormat.RGBA32, false,true);
+            tex.LoadRawTextureData(clut);
+            tex.Apply();
+            netmanager.uicontroller.SetCLUT(tex);
+#endif
         }
 
 #if COMMAND
