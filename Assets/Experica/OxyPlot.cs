@@ -49,7 +49,7 @@ namespace Experica
             }
         }
 
-        public virtual void Visualize(object data)
+        public virtual void Visualize(params object[] data)
         {
             if (!Visible)
             {
@@ -103,7 +103,11 @@ namespace Experica
 
         void Save_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var path = Extension.SaveFile("Save Figure ...");
+            if (!string.IsNullOrEmpty(path))
+            {
+                Save(path, Width, Height);
+            }
         }
 
         public void Visualize(double[] x, Dictionary<string, double[]> y, Dictionary<string, double[]> yse,
@@ -231,7 +235,7 @@ namespace Experica
             Model.InvalidatePlot(true);
         }
 
-        public void Save(string path, int width, int height, int dpi)
+        public void Save(string path, int width, int height, int dpi = 96)
         {
             using (var stream = File.Create(path + ".png"))
             {

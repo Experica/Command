@@ -29,6 +29,8 @@ using System.IO;
 using System.Threading;
 using System;
 using System.Runtime;
+using MathNet.Numerics;
+using MathNet.Numerics.Interpolation;
 using MsgPack;
 using MsgPack.Serialization;
 
@@ -229,13 +231,31 @@ namespace Experica.Command
             if (display.CLUT == null || forceprepare)
             {
                 Dictionary<string, double[]> x, y;
-                m.GetRGBMeasurement(out x, out y, false, false);
-                double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
-                Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
-                Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
-                Extension.GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
-                display.CLUT = Extension.GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, config.CLUTSize);
+                switch (display.FitType)
+                {
+                    case DisplayFitType.Gamma:
+                        m.GetRGBMeasurement(out x, out y, false, false);
+                        double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
+                        Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
+                        Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
+                        Extension.GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
+                        display.CLUT = Extension.GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, display.CLUTSize);
+                        break;
+                    case DisplayFitType.LinearSpline:
+                    case DisplayFitType.CubicSpline:
+                        m.GetRGBMeasurement(out x, out y, true, false);
+                        IInterpolation rii, gii, bii;
+                        Extension.SplineFit(y["R"], x["R"], out rii, display.FitType);
+                        Extension.SplineFit(y["G"], x["G"], out gii, display.FitType);
+                        Extension.SplineFit(y["B"], x["B"], out bii, display.FitType);
+                        if (rii != null && gii != null && bii != null)
+                        {
+                            display.CLUT = Extension.GenerateRGBSplineCLUT(rii, gii, bii, display.CLUTSize);
+                        }
+                        break;
+                }
             }
+            if (display.CLUT == null) { return false; }
             SetCLUT(display.CLUT);
             return true;
         }

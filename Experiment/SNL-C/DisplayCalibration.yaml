@@ -16,7 +16,7 @@ EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.02699232
+  ScreenAspect@Camera@OrthoCamera: 1.25
   CLUT@Camera@OrthoCamera: true
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
@@ -24,7 +24,7 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 30
   Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0 0 1 1
+  Color@Quad@Quad: 0.01695 0 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
@@ -39,7 +39,7 @@ RecordSession: V1e
 RecordSite: 3660
 DataDir: C:\
 DataPath: 
-CondSampling: Ascending
+CondSampling: UniformWithoutReplacement
 BlockSampling: Ascending
 CondRepeat: 1
 BlockRepeat: 0
@@ -78,6 +78,7 @@ ExInheritParam:
 - DisplayLatency
 - ResponseDelay
 - Display_ID
+- NotifyParam
 EnvInheritParam:
 - ScreenHalfHeight@Camera@OrthoCamera
 - ScreenToEye@Camera@OrthoCamera
@@ -90,6 +91,7 @@ Param:
   PRModel: PR701
   COM: COM2
   PlotMeasure: True
+  FitType: Gamma
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

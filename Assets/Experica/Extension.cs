@@ -31,6 +31,7 @@ using System.Net.Mail;
 #if COMMAND
 using System.Windows.Forms;
 using MathNet.Numerics;
+using MathNet.Numerics.Interpolation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -560,6 +561,26 @@ namespace Experica
             return false;
         }
 
+        public static bool SplineFit(double[] x, double[] y, out IInterpolation spline, DisplayFitType fittype = DisplayFitType.LinearSpline)
+        {
+            spline = null;
+            try
+            {
+                switch (fittype)
+                {
+                    case DisplayFitType.LinearSpline:
+                        spline = Interpolate.Linear(x, y);
+                        return true;
+                    case DisplayFitType.CubicSpline:
+                        spline = Interpolate.CubicSpline(x, y);
+                        return true;
+                }
+                return false;
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
         public static void GetRGBMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
         {
             var colors = m["Color"].Convert<List<Color>>();
@@ -575,12 +596,12 @@ namespace Experica
                     rs.Add(c.r);
                     rys.Add(i);
                 }
-                else if (c.r == 0 && c.b == 0)
+                if (c.r == 0 && c.b == 0)
                 {
                     gs.Add(c.g);
                     gys.Add(i);
                 }
-                else if (c.r == 0 && c.g == 0)
+                if (c.r == 0 && c.g == 0)
                 {
                     bs.Add(c.b);
                     bys.Add(i);
@@ -601,9 +622,9 @@ namespace Experica
         public static Texture2D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)
         {
             var xx = Generate.LinearSpaced(n, 0, 1);
-            var rcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, rgamma));
-            var gcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, ggamma));
-            var bcys = Generate.Map(xx, i => (float)InverseGammaFunc(i, bgamma));
+            var riy = Generate.Map(xx, i => (float)InverseGammaFunc(i, rgamma));
+            var giy = Generate.Map(xx, i => (float)InverseGammaFunc(i, ggamma));
+            var biy = Generate.Map(xx, i => (float)InverseGammaFunc(i, bgamma));
             var clut = new Texture2D(n * n, n, TextureFormat.RGBA32, false, true);
             for (var r = 0; r < n; r++)
             {
@@ -611,7 +632,28 @@ namespace Experica
                 {
                     for (var b = 0; b < n; b++)
                     {
-                        clut.SetPixel(n * b + r, g, new Color(rcys[r], gcys[g], bcys[b]));
+                        clut.SetPixel(n * b + r, g, new Color(riy[r], giy[g], biy[b]));
+                    }
+                }
+            }
+            clut.Apply();
+            return clut;
+        }
+
+        public static Texture2D GenerateRGBSplineCLUT(IInterpolation rii, IInterpolation gii, IInterpolation bii, int n)
+        {
+            var xx = Generate.LinearSpaced(n, 0, 1);
+            var riy = Generate.Map(xx, i => (float)rii.Interpolate(i));
+            var giy = Generate.Map(xx, i => (float)gii.Interpolate(i));
+            var biy = Generate.Map(xx, i => (float)bii.Interpolate(i));
+            var clut = new Texture2D(n * n, n, TextureFormat.RGBA32, false, true);
+            for (var r = 0; r < n; r++)
+            {
+                for (var g = 0; g < n; g++)
+                {
+                    for (var b = 0; b < n; b++)
+                    {
+                        clut.SetPixel(n * b + r, g, new Color(riy[r], giy[g], biy[b]));
                     }
                 }
             }
