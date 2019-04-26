@@ -33,8 +33,9 @@ namespace Experica
     public class DisplayCalibration : ExperimentLogic
     {
         protected ISpectroRadioMeter spectroradiometer;
-        Dictionary<string, List<object>> measurement = new Dictionary<string, List<object>>();
-        MeasurementPlot plot;
+        Dictionary<string, List<object>> imeasurement = new Dictionary<string, List<object>>();
+        Dictionary<string, List<object>> smeasurement = new Dictionary<string, List<object>>();
+        IntensityMeasurementPlot iplot; SpectralMeasurementPlot splot;
 
         protected override void OnStart()
         {
@@ -53,8 +54,10 @@ namespace Experica
             // Detector Exposure Time(1000ms), Capture Mode(0=Single Capture), Number of Measure to Average(1=No Average), 
             // Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
             spectroradiometer?.Setup("S,,,,1,1000,0,1,0,0,0,0", 1000);
-            plot?.Dispose();
-            plot = new MeasurementPlot();
+            iplot?.Dispose();
+            iplot = new IntensityMeasurementPlot();
+            splot?.Dispose();
+            splot = new SpectralMeasurementPlot();
         }
 
         protected override void OnStopExperiment()
@@ -69,18 +72,26 @@ namespace Experica
                 }
                 if (config.Display.ContainsKey(ex.Display_ID))
                 {
-                    config.Display[ex.Display_ID].Measurement = measurement;
+                    if (imeasurement.Count > 0)
+                    {
+                        config.Display[ex.Display_ID].IntensityMeasurement = imeasurement;
+                    }
+                    if (smeasurement.Count > 0)
+                    {
+                        config.Display[ex.Display_ID].SpectralMeasurement = smeasurement;
+                    }
                 }
                 else
                 {
-                    config.Display[ex.Display_ID] = new Display() { ID = ex.Display_ID, Measurement = measurement };
+                    config.Display[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
                 }
             }
         }
 
         void OnDestroy()
         {
-            plot?.Dispose();
+            iplot?.Dispose();
+            splot?.Dispose();
         }
 
         protected override void Logic()
@@ -100,30 +111,62 @@ namespace Experica
                 case CONDSTATE.COND:
                     if (CondHold >= ex.CondDur)
                     {
-                        // Measure Display Intensity Y, CIE x, y
-                        var m = spectroradiometer?.Measure("1", 6000);
-                        if (m != null)
+                        switch ((string)ex.GetParam("Measure"))
                         {
-                            foreach (var f in m.Keys)
-                            {
-                                if (measurement.ContainsKey(f))
+                            case "Intensity":
+                                // Measure Intensity Y, CIE x, y
+                                var m1 = spectroradiometer?.Measure("1", 7000) as Dictionary<string, double>;
+                                if (m1 != null)
                                 {
-                                    measurement[f].Add(m[f]);
+                                    foreach (var f in m1.Keys)
+                                    {
+                                        if (imeasurement.ContainsKey(f))
+                                        {
+                                            imeasurement[f].Add(m1[f]);
+                                        }
+                                        else
+                                        {
+                                            imeasurement[f] = new List<object>() { m1[f] };
+                                        }
+                                    }
+                                    var color = condmanager.finalcond["Color"][condmanager.condidx];
+                                    if (imeasurement.ContainsKey("Color"))
+                                    {
+                                        imeasurement["Color"].Add(color);
+                                    }
+                                    else
+                                    {
+                                        imeasurement["Color"] = new List<object>() { color };
+                                    }
                                 }
-                                else
+                                break;
+                            case "Spectral":
+                                // Measure Peak λ, Integrated Spectral, Integrated Photon, λs, λ Intensities
+                                var m5 = spectroradiometer?.Measure("5", 9000) as Dictionary<string, object>;
+                                if (m5 != null)
                                 {
-                                    measurement[f] = new List<object>() { m[f] };
+                                    foreach (var f in m5.Keys)
+                                    {
+                                        if (smeasurement.ContainsKey(f))
+                                        {
+                                            smeasurement[f].Add(m5[f]);
+                                        }
+                                        else
+                                        {
+                                            smeasurement[f] = new List<object>() { m5[f] };
+                                        }
+                                    }
+                                    var color = condmanager.finalcond["Color"][condmanager.condidx];
+                                    if (smeasurement.ContainsKey("Color"))
+                                    {
+                                        smeasurement["Color"].Add(color);
+                                    }
+                                    else
+                                    {
+                                        smeasurement["Color"] = new List<object>() { color };
+                                    }
                                 }
-                            }
-                            var color = condmanager.finalcond["Color"][condmanager.condidx];
-                            if (measurement.ContainsKey("Color"))
-                            {
-                                measurement["Color"].Add(color);
-                            }
-                            else
-                            {
-                                measurement["Color"] = new List<object>() { color };
-                            }
+                                break;
                         }
                         CondState = CONDSTATE.SUFICI;
                         if (ex.PreICI != 0 || ex.SufICI != 0)
@@ -138,7 +181,15 @@ namespace Experica
                         // Plot Measurement
                         if (ex.GetParam("PlotMeasure").Convert<bool>())
                         {
-                            plot.Visualize(measurement, ex.GetParam("FitType"));
+                            switch ((string)ex.GetParam("Measure"))
+                            {
+                                case "Intensity":
+                                    iplot.Visualize(imeasurement, ex.GetParam("FitType"));
+                                    break;
+                                case "Spectral":
+                                    splot.Visualize(smeasurement);
+                                    break;
+                            }
                         }
                         CondState = CONDSTATE.NONE;
                     }
@@ -147,13 +198,13 @@ namespace Experica
         }
     }
 
-    public class MeasurementPlot : OxyPlotForm
+    public class IntensityMeasurementPlot : OxyPlotForm
     {
-        public MeasurementPlot()
+        public IntensityMeasurementPlot()
         {
             Width = 400;
             Height = 400;
-            Text = "Display Measurement and Calibration";
+            Text = "Display Intensity and Calibration";
         }
 
         public override void Visualize(params object[] data)
@@ -167,7 +218,7 @@ namespace Experica
             switch (fittype)
             {
                 case DisplayFitType.Gamma:
-                    m.GetRGBMeasurement(out x, out y, false, false);
+                    m.GetRGBIntensityMeasurement(out x, out y, false, true);
                     double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
                     Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
                     Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
@@ -182,7 +233,7 @@ namespace Experica
                     break;
                 case DisplayFitType.LinearSpline:
                 case DisplayFitType.CubicSpline:
-                    m.GetRGBMeasurement(out x, out y, true, false);
+                    m.GetRGBIntensityMeasurement(out x, out y, true, true);
                     IInterpolation ri, gi, bi;
                     if (Extension.SplineFit(x["R"], y["R"], out ri, fittype))
                     {
@@ -228,6 +279,52 @@ namespace Experica
                 new Dictionary<string, double>() { { "RCorr", 1 }, { "GCorr", 1 }, { "BCorr", 1 } },
                 new Dictionary<string, LineStyle>() { { "RCorr", LineStyle.Dash }, { "GCorr", LineStyle.Dash }, { "BCorr", LineStyle.Dash } },
                 isclear: false);
+        }
+    }
+
+    public class SpectralMeasurementPlot : OxyPlotForm
+    {
+        public SpectralMeasurementPlot()
+        {
+            Width = 400;
+            Height = 400;
+            Text = "Display Spectral";
+        }
+
+        public override void Visualize(params object[] data)
+        {
+            var m = (Dictionary<string, List<object>>)data[0];
+            if (m.Count == 0) return;
+            Dictionary<string, double[]> x = null;
+            Dictionary<string, double[][]> yi = null;
+            Dictionary<string, double[][]> y = null;
+            m.GetRGBSpectralMeasurement(out x, out yi, out y);
+
+            plotview.Model.IsLegendVisible = false;
+            plotview.Clear();
+            foreach (var f in x.Keys)
+            {
+                OxyColor c = OxyColors.Black;
+                switch (f)
+                {
+                    case "R":
+                        c = OxyColors.Red;
+                        break;
+                    case "G":
+                        c = OxyColors.Green;
+                        break;
+                    case "B":
+                        c = OxyColors.Blue;
+                        break;
+                }
+                for (var i = 0; i < yi[f].Length; i++)
+                {
+                    var color = OxyColor.FromAColor((byte)(x[f][i] * 127.5 + 127.5), c);
+                    plotview.Visualize(yi[f][i], y[f][i], null, color, typeof(LineSeries), 1, LineStyle.Solid,
+                "", "Wavelength", "Intensity", isclear: false);
+                }
+
+            }
         }
     }
 }

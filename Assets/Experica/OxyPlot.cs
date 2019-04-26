@@ -1,4 +1,25 @@
-﻿using UnityEngine;
+﻿/*
+OxyPlot.cs is part of the Experica.
+Copyright (c) 2016 Li Alex Zhang and Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a 
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included 
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+using UnityEngine;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
@@ -82,13 +103,18 @@ namespace Experica
             Dock = DockStyle.Fill;
         }
 
+        public void Clear()
+        {
+            Model.Series.Clear();
+            ylo = double.NaN; yhi = double.NaN; xlo = double.NaN; xhi = double.NaN;
+        }
+
         public void Reset()
         {
             Visible = false;
             Parent.Visible = false;
             isupdated = false;
-            Model.Series.Clear();
-            ylo = double.NaN; yhi = double.NaN; xlo = double.NaN; xhi = double.NaN;
+            Clear();
 
             ContextMenuStrip.Items.Clear();
         }
@@ -110,11 +136,20 @@ namespace Experica
             }
         }
 
+        public void Visualize(double[] x, double[] y, double[] yse,
+            OxyColor color, Type seriestype, double linewidth, LineStyle linestyle,
+            string title = "", string xtitle = "", string ytitle = "", bool isclear = true, LegendPosition legendposition = LegendPosition.RightTop)
+        {
+            Visualize(new Dictionary<string, double[]>() { [""] = x }, new Dictionary<string, double[]>() { [""] = y }, yse != null ? new Dictionary<string, double[]>() { [""] = yse } : null,
+                new Dictionary<string, OxyColor>() { [""] = color }, new Dictionary<string, Type>() { [""] = seriestype }, new Dictionary<string, double> { [""] = linewidth },
+                new Dictionary<string, LineStyle> { [""] = linestyle }, title, xtitle, ytitle, isclear, legendposition);
+        }
+
         public void Visualize(double[] x, Dictionary<string, double[]> y, Dictionary<string, double[]> yse,
             Dictionary<string, OxyColor> color, Dictionary<string, Type> seriestype, Dictionary<string, double> linewidth, Dictionary<string, LineStyle> linestyle,
             string title = "", string xtitle = "", string ytitle = "", bool isclear = true, LegendPosition legendposition = LegendPosition.RightTop)
         {
-            Visualize(y.ToDictionary(i => i.Key, i => x), y, yse, color, seriestype, linewidth, linestyle, title, xtitle, ytitle, isclear);
+            Visualize(y.ToDictionary(i => i.Key, i => x), y, yse, color, seriestype, linewidth, linestyle, title, xtitle, ytitle, isclear, legendposition);
         }
 
         public void Visualize(Dictionary<string, double[]> x, Dictionary<string, double[]> y, Dictionary<string, double[]> yse,

@@ -62,7 +62,7 @@ namespace Experica
 
     public static class Extension
     {
-        static Type TObject, TString, TBool, TInt, TFloat, TVector2, TVector3, TVector4, TColor, TListT;
+        static Type TObject, TString, TBool, TInt, TFloat, TDouble, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
 
         static HashSet<Type> NumericTypes = new HashSet<Type>
@@ -79,6 +79,7 @@ namespace Experica
             TBool = typeof(bool);
             TInt = typeof(int);
             TFloat = typeof(float);
+            TDouble = typeof(double);
             TVector2 = typeof(Vector2);
             TVector3 = typeof(Vector3);
             TVector4 = typeof(Vector4);
@@ -235,6 +236,10 @@ namespace Experica
                     else if (CT == TFloat)
                     {
                         return float.Parse(vstr);
+                    }
+                    else if (CT == TDouble)
+                    {
+                        return double.Parse(vstr);
                     }
                     else if (CT == TVector2)
                     {
@@ -581,10 +586,10 @@ namespace Experica
             return false;
         }
 
-        public static void GetRGBMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
+        public static void GetRGBIntensityMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
         {
             var colors = m["Color"].Convert<List<Color>>();
-            var intensities = m["Y"].Convert<List<float>>();
+            var intensities = m["Y"].Convert<List<double>>();
 
             var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
             var rys = new List<double>(); var gys = new List<double>(); var bys = new List<double>();
@@ -617,6 +622,42 @@ namespace Experica
             }
             x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
             y = new Dictionary<string, double[]>() { { "R", rys.ToArray() }, { "G", gys.ToArray() }, { "B", bys.ToArray() } };
+        }
+
+        public static void GetRGBSpectralMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[][]> yi, out Dictionary<string, double[][]> y)
+        {
+            var colors = m["Color"].Convert<List<Color>>();
+            var wls = m["WL"].Convert<List<double[]>>();
+            var wlis = m["Spectral"].Convert<List<double[]>>();
+
+            var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
+            var rwls = new List<double[]>(); var gwls = new List<double[]>(); var bwls = new List<double[]>();
+            var rwlis = new List<double[]>(); var gwlis = new List<double[]>(); var bwlis = new List<double[]>();
+            for (var j = 0; j < colors.Count; j++)
+            {
+                var c = colors[j]; var wl = wls[j]; var wli = wlis[j];
+                if (c.g == 0 && c.b == 0)
+                {
+                    rs.Add(c.r);
+                    rwls.Add(wl);
+                    rwlis.Add(wli);
+                }
+                if (c.r == 0 && c.b == 0)
+                {
+                    gs.Add(c.g);
+                    gwls.Add(wl);
+                    gwlis.Add(wli);
+                }
+                if (c.r == 0 && c.g == 0)
+                {
+                    bs.Add(c.b);
+                    bwls.Add(wl);
+                    bwlis.Add(wli);
+                }
+            }
+            x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
+            yi = new Dictionary<string, double[][]> { { "R", rwls.ToArray() }, { "G", gwls.ToArray() }, { "B", bwls.ToArray() } };
+            y = new Dictionary<string, double[][]>() { { "R", rwlis.ToArray() }, { "G", gwlis.ToArray() }, { "B", bwlis.ToArray() } };
         }
 
         public static Texture2D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)

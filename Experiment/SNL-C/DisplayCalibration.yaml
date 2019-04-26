@@ -24,7 +24,7 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 30
   Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0.01695 0 0 1
+  Color@Quad@Quad: 0 0.8475 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
@@ -92,6 +92,7 @@ Param:
   COM: COM2
   PlotMeasure: True
   FitType: Gamma
+  Measure: Spectral
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

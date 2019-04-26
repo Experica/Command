@@ -48,7 +48,7 @@ namespace Experica
 
         public PropertyAccess(Type reflectedtype, string propertyname)
         {
-            var t = reflectedtype.GetProperty(propertyname);
+            //var t = reflectedtype.GetProperty(propertyname);
             Type = reflectedtype.GetProperty(propertyname).PropertyType;
             Name = propertyname;
             Getter = reflectedtype.DelegateForGetPropertyValue(propertyname);
@@ -307,7 +307,8 @@ namespace Experica
         public double Latency { get; set; } = 0;
         public int CLUTSize { get; set; } = 16;
         public DisplayFitType FitType { get; set; } = DisplayFitType.Gamma;
-        public Dictionary<string, List<object>> Measurement { get; set; } = new Dictionary<string, List<object>>();
+        public Dictionary<string, List<object>> IntensityMeasurement { get; set; } = new Dictionary<string, List<object>>();
+        public Dictionary<string, List<object>> SpectralMeasurement { get; set; } = new Dictionary<string, List<object>>();
         public Texture2D CLUT;
     }
 

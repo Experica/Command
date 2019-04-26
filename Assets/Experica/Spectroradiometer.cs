@@ -38,7 +38,7 @@ namespace Experica
         bool Connect(double timeout_ms);
         void Close();
         bool Setup(string setupfields, double timeout_ms);
-        Dictionary<string, float> Measure(string datareportformat, double timeout_ms);
+        IDictionary Measure(string datareportformat, double timeout_ms);
     }
 
     public class PR : ISpectroRadioMeter
@@ -88,23 +88,22 @@ namespace Experica
 
         public SpectroRadioMeter Type { get { return SpectroRadioMeter.PhotoResearch; } }
 
-        string cmdresp(string cmd, double timeout_ms)
+        string cmdresp(string cmd, double timeout_ms, bool iscmd = true)
         {
             if (sp == null) return null;
-            sp.DiscardInBuffer();
             sp.receiveddata = "";
-            sp.WriteLine(cmd);
+            if (iscmd)
+            {
+                sp.DiscardInBuffer();
+                sp.WriteLine(cmd);
+            }
             var hr = timer.Timeout(x =>
             {
                 var r = x.Read();
-                var i = r.LastIndexOf("\n");
+                var i = r.LastIndexOf("\r\n");
                 if (i > -1)
                 {
-                    var ii = r.LastIndexOf("\r");
-                    if (ii > -1 && ii < i)
-                    {
-                        return r.Substring(0, r.Length - 2);
-                    }
+                    return string.Join(",", r.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
                 }
                 return null;
             }, sp, timeout_ms);
@@ -115,7 +114,10 @@ namespace Experica
             }
             else
             {
-                Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
+                if (timeout_ms > 0)
+                {
+                    Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
+                }
                 return null;
             }
         }
@@ -136,28 +138,59 @@ namespace Experica
             return cmdresp(setupfields, timeout_ms) == "0000";
         }
 
-        public Dictionary<string, float> Measure(string datareportformat, double timeout_ms)
+        public IDictionary Measure(string datareportformat, double timeout_ms)
         {
-            var hr = cmdresp("M" + datareportformat, timeout_ms);
-            if (!string.IsNullOrEmpty(hr))
+            switch (datareportformat)
             {
-                switch (datareportformat)
-                {
-                    // ErrorCode, UnitCode, Intensity Y, CIE x, y
-                    case "1":
+                // ErrorCode, UnitCode, Intensity Y, CIE x, y
+                case "1":
+                    var hr = cmdresp("M" + datareportformat, timeout_ms); // need at least 6s at BaudRate:9600
+                    if (!string.IsNullOrEmpty(hr))
+                    {
                         var names = new[] { "Error", "Unit", "Y", "x", "y" };
                         var t = hr.Split(',');
                         if (t.Length == names.Length)
                         {
-                            var m = Enumerable.Range(0, t.Length).ToDictionary(i => names[i], i => t[i].Convert<float>());
+                            var m = Enumerable.Range(0, t.Length).ToDictionary(i => names[i], i => t[i].Convert<double>());
                             if (m["Error"] == 0)
                             {
                                 m.Remove("Error");
                                 return m;
                             }
                         }
-                        break;
-                }
+                    }
+                    break;
+                // ErrorCode, UnitCode, Peak λ, Integrated Spectral, Integrated Photon, λs, λ Intensities
+                case "5":
+                    cmdresp("M" + datareportformat, 0); // cmd and return, without reading response
+                    var timer = new Timer();
+                    timer.Timeout(timeout_ms); // need at least 8s at BaudRate:9600
+                    hr = cmdresp("", timeout_ms, false); // now the full response should be returned
+                    if (!string.IsNullOrEmpty(hr))
+                    {
+                        var d = hr.Split(',').Select(i => i.Convert<double>()).ToArray();
+                        if (d.Length > 0 && d[0] == 0)
+                        {
+                            var m = new Dictionary<string, object>
+                            {
+                                ["Unit"] = d[1],
+                                ["PeakWL"] = d[2],
+                                ["IntegratedSpectral"] = d[3],
+                                ["IntegratedPhoton"] = d[4]
+                            };
+                            var wl = new List<double>();
+                            var wli = new List<double>();
+                            for (var i = 5; i < d.Length; i = i + 2)
+                            {
+                                wl.Add(d[i]);
+                                wli.Add(d[i + 1]);
+                            }
+                            m["WL"] = wl.ToArray();
+                            m["Spectral"] = wli.ToArray();
+                            return m;
+                        }
+                    }
+                    break;
             }
             return null;
         }

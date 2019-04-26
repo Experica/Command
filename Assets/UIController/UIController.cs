@@ -226,7 +226,7 @@ namespace Experica.Command
         {
             if (!config.Display.ContainsKey(displayid)) { return false; }
             var display = config.Display[displayid];
-            var m = display.Measurement;
+            var m = display.IntensityMeasurement;
             if (m == null || m.Count == 0) { return false; }
             if (display.CLUT == null || forceprepare)
             {
@@ -234,7 +234,7 @@ namespace Experica.Command
                 switch (display.FitType)
                 {
                     case DisplayFitType.Gamma:
-                        m.GetRGBMeasurement(out x, out y, false, false);
+                        m.GetRGBIntensityMeasurement(out x, out y, false, true);
                         double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
                         Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
                         Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
@@ -243,7 +243,7 @@ namespace Experica.Command
                         break;
                     case DisplayFitType.LinearSpline:
                     case DisplayFitType.CubicSpline:
-                        m.GetRGBMeasurement(out x, out y, true, false);
+                        m.GetRGBIntensityMeasurement(out x, out y, true, true);
                         IInterpolation rii, gii, bii;
                         Extension.SplineFit(y["R"], x["R"], out rii, display.FitType);
                         Extension.SplineFit(y["G"], x["G"], out gii, display.FitType);
