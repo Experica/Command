@@ -59,6 +59,10 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
+        /* Awake() -----------------------------------------------------------------------------
+        Description: Awake is called when the script instance is being loaded see the following
+        URL for more information: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+        ----------------------------------------------------------------------------------------*/
 
         void Awake()
         {
