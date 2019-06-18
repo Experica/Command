@@ -41,7 +41,7 @@ namespace Experica.Command
         public CommandConfigManager configmanager;
         public CommandConfig config;
         public PostProcessVolume postprocessvolume;
-        readonly string configmanagerpath = "CommandConfigManager.yaml";
+        readonly string configmanagerpath = "CommandConfigManager.yaml";    // The file storing serialized CommandConfigManager object
 
         public Toggle host, server, start, pause;
         public Dropdown exs;
@@ -60,12 +60,15 @@ namespace Experica.Command
         public ConditionTestPanel ctpanel;
 
         /* Awake() -----------------------------------------------------------------------------
-        Description: Awake is called when the script instance is being loaded see the following
-        URL for more information: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
-        ----------------------------------------------------------------------------------------*/
+        Description: Awake is called when the script instance is being loaded. Awake is called only
+        a single time. See the following URL for more information: 
+        https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
 
+        Loads a configmanger object from the configmanager path, then loads the config object.
+        ----------------------------------------------------------------------------------------*/
         void Awake()
         {
+            // Check for CommandConfigManager.yaml existance
             if (File.Exists(configmanagerpath))
             {
                 configmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
@@ -75,15 +78,26 @@ namespace Experica.Command
                 configmanager = new CommandConfigManager();
             }
 
+            // Load the config file if there is a path in configmanager
             if (configmanager.AutoLoadSaveLastConfig)
             {
                 config = LoadConfig(configmanager.LastConfigFilePath);
             }
         }
 
+        /* LoadConfig() -----------------------------------------------------------------------------
+        Description: Loads in and returns a CommandConfig object from configfilepath. Creates A new
+        config object if it can't be loaded
+
+        Parameters:
+            configfilepath - The config file path to the CommandConfig object
+            otherwisedefault - create a new CommandConfig object to use instead.
+        ----------------------------------------------------------------------------------------*/
         public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
         {
             CommandConfig cfg = null;
+            
+            // Check if the file exists at the specified path, if so, load it.
             if (File.Exists(configfilepath))
             {
                 cfg = configfilepath.ReadYamlFile<CommandConfig>();
