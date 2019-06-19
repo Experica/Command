@@ -37,7 +37,8 @@ namespace Experica.Command
         {
             foreach (var cid in peerinfo.Keys.Except(excludeconns))
             {
-                var pi = peerinfo[cid]; var strkey = MsgType.MsgTypeToString(MsgType.PeerType);
+                var pi = peerinfo[cid];
+                var strkey = MsgType.MsgTypeToString(MsgType.PeerType);
                 if (pi != null && pi.ContainsKey(strkey) && (PeerType)pi[strkey] == peertype)
                 {
                     return true;
@@ -86,7 +87,7 @@ namespace Experica.Command
         /// <summary>
         /// Peertype message is the first message received whenever a new client is connected.
         /// </summary>
-        /// <param name="netMsg"></param>
+        /// <param name="netMsg">The NetworkMessage Recieved</param>
         void PeerTypeHandler(NetworkMessage netMsg)
         {
             var pt = (PeerType)netMsg.ReadMessage<IntegerMessage>().value;
@@ -152,22 +153,36 @@ namespace Experica.Command
             uicontroller.OnAspectRatioMessage(r);
         }
 
+        /// <summary>
+        /// Called on the server when a client disconnects. Removes the connections.
+        /// </summary>
+        /// <param name="conn">The connection to remove from the server</param>
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
             peerinfo.Remove(conn.connectionId);
         }
 
+        /// <summary>
+        /// Called on the server when a scene is completed loaded, when the scene load was 
+        /// initiated by the server with ServerChangeScene(). Signals UIController to 
+        /// update Scene.
+        /// </summary>
+        /// <param name="sceneName">Specific Scene to update</param>
         public override void OnServerSceneChanged(string sceneName)
         {
             base.OnServerSceneChanged(sceneName);
             uicontroller.OnServerSceneChanged(sceneName);
         }
 
+        /// <summary>
+        /// Called on the server when a client is ready.
+        /// </summary>
+        /// <param name="conn">The client connection that is ready.</param>
         public override void OnServerReady(NetworkConnection conn)
         {
-            base.OnServerReady(conn);
-            uicontroller.exmanager.el?.envmanager.ForcePushParams();
+            base.OnServerReady(conn);                                   // continue the network setup process
+            uicontroller.exmanager.el?.envmanager.ForcePushParams();     
         }
     }
 }

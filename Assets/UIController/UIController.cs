@@ -47,11 +47,15 @@ namespace Experica.Command
         public Dropdown exs;
         public Button savedata, newex, saveex, deleteex;
         public Text startstoptext, pauseresumetext, version;
+
+        // The managers for the panels on the Scene
         public NetManager netmanager;
         public ExperimentManager exmanager;
         public AnalysisManager alsmanager;
-        public ControlManager ctrlmanager;
-        public ControlPanel controlpanel;
+        public ControlManager ctrlmanager;                                  
+
+        // The Panels Physically created on the scene
+        public ControlPanel controlpanel;                                    
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
@@ -59,13 +63,12 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
-        /* Awake() -----------------------------------------------------------------------------
-        Description: Awake is called when the script instance is being loaded. Awake is called only
-        a single time. See the following URL for more information: 
-        https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
-
-        Loads a configmanger object from the configmanager path, then loads the config object.
-        ----------------------------------------------------------------------------------------*/
+        /// <summary>
+        /// Awake is called when the script instance is being loaded. Awake is called only
+        /// a single time.See the following URL for more information: 
+        /// https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
+        /// Loads a configmanger object from the configmanager path variable, then loads the config object.
+        /// </summary>
         void Awake()
         {
             // Check for CommandConfigManager.yaml existance
@@ -85,14 +88,13 @@ namespace Experica.Command
             }
         }
 
-        /* LoadConfig() -----------------------------------------------------------------------------
-        Description: Loads in and returns a CommandConfig object from configfilepath. Creates A new
-        config object if it can't be loaded
-
-        Parameters:
-            configfilepath - The config file path to the CommandConfig object
-            otherwisedefault - create a new CommandConfig object to use instead.
-        ----------------------------------------------------------------------------------------*/
+        /// <summary>
+        /// Loads in and returns a CommandConfig object from configfilepath. Creates A new
+        /// config object if it can't be loaded
+        /// </summary>
+        /// <param name="configfilepath">The config file path to the CommandConfig object</param>
+        /// <param name="otherwisedefault">create a new CommandConfig object to use instead.</param>
+        /// <returns>The loaded/deault CommandConfig object</returns>
         public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
         {
             CommandConfig cfg = null;
@@ -100,8 +102,11 @@ namespace Experica.Command
             // Check if the file exists at the specified path, if so, load it.
             if (File.Exists(configfilepath))
             {
+                // Deserialize the text using extension method.
                 cfg = configfilepath.ReadYamlFile<CommandConfig>();
             }
+            
+            // Use default config settings
             if (cfg == null)
             {
                 configmanager.LastConfigFilePath = null;
@@ -154,6 +159,12 @@ namespace Experica.Command
             return rule;
         }
 
+        /// <summary>
+        /// Sets the version number and starts the application.
+        /// Start is called on the frame when a script is enabled just before any of the
+        /// Update methods are called the first time.See the URL below for more information:
+        /// https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
+        /// </summary>
         void Start()
         {
             version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
@@ -162,6 +173,7 @@ namespace Experica.Command
 
         public void PushConfig()
         {
+            // Grab settings from Experiement Yaml files, and update the scene
             exmanager.GetExFiles();
             UpdateExDropdown();
             savedata.interactable = !config.AutoSaveData;
@@ -294,6 +306,11 @@ namespace Experica.Command
             exmanager.el.envmanager.SetParam("ScreenAspect", ratio, true);
         }
 
+        /// <summary>
+        /// Called on the server when a scene is completed loaded, when the scene load was 
+        /// initiated by the server with ServerChangeScene().
+        /// </summary>
+        /// <param name="sceneName">The scene that changed</param>
         public void OnServerSceneChanged(string sceneName)
         {
             exmanager.PrepareEnv(sceneName);
@@ -514,7 +531,13 @@ namespace Experica.Command
                 }
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fullname"></param>
+        /// <param name="paramname"></param>
+        /// <param name="isinherit"></param>
         public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
             var ip = exmanager.el.ex.EnvInheritParam;
@@ -544,16 +567,26 @@ namespace Experica.Command
             }
         }
 
+        /// <summary>
+        /// Function called for when the 'Save' button in the Control panel is pressed.
+        /// </summary>
         public void SaveEx()
         {
             exmanager.SaveEx(exs.captionText.text);
         }
 
+        /// <summary>
+        /// Script for when the 'X' button in the Control panel is clicked to delete an experiment
+        /// </summary>
         public void DeleteEx()
         {
+            // Delete the file
             var i = exmanager.DeleteEx(exs.captionText.text);
+
+            // If sucessfully deleted
             if (i >= 0)
             {
+                // Remove option from dropdown and update dropdown
                 exs.options.RemoveAt(i);
                 var exn = exs.options.Count;
                 if (exn > 0)
@@ -571,35 +604,54 @@ namespace Experica.Command
             }
         }
 
+        /// <summary>
+        /// This function is called when 'Host' button in Control Panel is pressed. Signals
+        /// to the network manager to start hosting.
+        /// </summary>
+        /// <param name="ison">True when the toggle is now down, else false</param>
         public void ToggleHost(bool ison)
         {
+            // Toggle is now down / on
             if (ison)
             {
+                // Start hosting. Host is both a server and client in one.
                 netmanager.StartHost();
                 ChangeScene();
             }
+            // Toggle is now unpressed / off
             else
             {
+                // When there was an experiment running, stop the experiment
                 if (start.isOn)
                 {
                     ToggleStartStopExperiment(false);
                     start.isOn = false;
                 }
+                // Quit hosting
                 netmanager.StopHost();
             }
+            // Turn server button active, and start button inactive
             server.interactable = !ison;
             start.interactable = ison;
         }
 
+        /// <summary>
+        /// This function is called when 'Server' button in Control Panel is pressed. Signals
+        /// to the network manager to start up a server.
+        /// </summary>
+        /// <param name="ison">True when the toggle is now down, else false</param>
         public void ToggleServer(bool ison)
         {
+            // Toggle is now down / on
             if (ison)
             {
                 netmanager.StartServer();
                 ChangeScene();
             }
+            // Toggle is now up / off
             else
             {
+                // Stop an experiment if there is one, and stop the server
                 if (start.isOn)
                 {
                     ToggleStartStopExperiment(false);
@@ -607,9 +659,11 @@ namespace Experica.Command
                 }
                 netmanager.StopServer();
             }
+            // host button is interactable, start button isn't
             host.interactable = !ison;
             start.interactable = ison;
         }
+
 
         public void ChangeScene()
         {
@@ -623,6 +677,7 @@ namespace Experica.Command
                 }
                 if (NetworkServer.active)
                 {
+                    // causes the server to switch scenes to the specified scene
                     netmanager.ServerChangeScene(scene);
                 }
             }
