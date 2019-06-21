@@ -12,42 +12,7 @@ Subject_Size: 0 0 0
 Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerGrating
-EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.25
-  CLUT@Camera@OrthoCamera: true
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 17.43 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: true
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1
-  TemporalFreq@GratingQuad@GratingQuad: 1
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  Drifting@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
-  ReverseTime@GratingQuad@GratingQuad: false
-  Rotation@GratingQuad@GratingQuad: 0 0 0
-  RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 0
-  OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 2
-  Size@GratingQuad@GratingQuad: 2 2 1
-  Color@GratingQuad@GratingQuad: 1 1 1 1
-  MaskType@GratingQuad@GratingQuad: None
-  MaskRadius@GratingQuad@GratingQuad: 0.5
-  Sigma@GratingQuad@GratingQuad: 0.150000006
-  OriPositionOffset@GratingQuad@GratingQuad: false
-  Visible@GratingQuad@GratingQuad: true
-  Position@GratingQuad@GratingQuad: 0 0 0
-  PositionOffset@GratingQuad@GratingQuad: 0 0 0
+EnvParam: {}
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.ConditionTestLogic
@@ -55,14 +20,14 @@ RecordSession: V1e
 RecordSite: 3660
 DataDir: C:\
 DataPath: 
-CondSampling: Ascending
+CondSampling: UniformWithoutReplacement
 BlockSampling: Ascending
 CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
 Input: Joystick
 PreICI: 150
-CondDur: 1000
+CondDur: 300
 SufICI: 150
 PreITI: 0
 TrialDur: 0
