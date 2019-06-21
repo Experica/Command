@@ -21,6 +21,9 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 namespace Experica
 {
+    /// <summary>
+    /// Basic PreICI-Cond-SufICI Logic with ParallelPort and ScreenMarker Event Sync
+    /// </summary>
     public class ConditionTestLogic : ExperimentLogic
     {
         protected ParallelPort pport;
@@ -43,6 +46,10 @@ namespace Experica
             SyncEvent();
         }
 
+        /// <summary>
+        /// Register and Sync Event with External Device through Experiment Sync Protocol
+        /// </summary>
+        /// <param name="e">Event Name, NullorEmpty will Reset Sync Line to low/false state</param>
         protected virtual void SyncEvent(string e = "")
         {
             var esp = ex.EventSyncProtocol;

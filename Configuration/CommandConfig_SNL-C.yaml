@@ -58,7 +58,8 @@ Display:
     Latency: 0
     CLUTSize: 20
     FitType: LinearSpline
-    Measurement: {}
+    IntensityMeasurement: {}
+    SpectralMeasurement: {}
 EnvCrossInheritRule:
   GratingQuad:
     Quad:

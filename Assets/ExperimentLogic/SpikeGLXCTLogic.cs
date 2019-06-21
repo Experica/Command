@@ -21,6 +21,9 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 namespace Experica
 {
+    /// <summary>
+    /// Condition Test with SpikeGLX Data Acquisition System
+    /// </summary>
     public class SpikeGLXCTLogic : ConditionTestLogic
     {
         protected bool isspikeglxtriggered;
@@ -53,19 +56,20 @@ namespace Experica
             }
             /*
             Immediately after the TTL triggering SpikeGLX recording, we reset timer, 
-            so timer zero can be aligned with the triggering TTL.
+            so that timer zero can be aligned with the triggering TTL.
             */
             timer.Restart();
         }
 
         protected override void StopExperimentTimeSync()
         {
-            // Tail period to make sure lagged effect data is recorded before trigger recording stop
+            // Tail period to make sure lagged effect data are recorded before trigger recording stop
             timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
             if (isspikeglxtriggered)
             {
                 recorder.RecordStatus = RecordStatus.Stopped;
                 //pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+                isspikeglxtriggered = false;
             }
             timer.Stop();
         }

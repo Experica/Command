@@ -1,7 +1,7 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex
 Log: 
 Subject_ID: C1901
 Subject_Name: C1901
@@ -13,11 +13,7 @@ Subject_Weight: 250
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  StartIndex@ImageQuad@ImageQuad: 1
+  StartIndex@ImageQuad@ImageQuad: 2
   NumOfImage@ImageQuad@ImageQuad: 24000
   Image@ImageQuad@ImageQuad: 1243
   ImageSet@ImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
@@ -37,6 +33,11 @@ EnvParam:
   Visible@ImageQuad@ImageQuad: true
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  CLUT@Camera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
@@ -48,7 +49,7 @@ Cond:
 ExLogicPath: Experica.RippleImageLogic
 RecordSession: V1e
 RecordSite: 3660
-DataDir: X:\
+DataDir: C:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
@@ -121,7 +122,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
+Display_ID: ''
 ResponseDelay: 20
 Version: 1
 Config: 
