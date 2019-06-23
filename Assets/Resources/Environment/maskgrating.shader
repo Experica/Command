@@ -4,9 +4,10 @@
 	{
 		ori("Orientation",Float) = 0
 		orioffset("OrientationOffset",Float) = 0
-		minc("MinColor",Color) = (0,0,0,1)
-		maxc("MaxColor",Color) = (1,1,1,1)
-		cdist("ColorDistance",Color) = (1,1,1,0)
+		// we use raw color vector to prevent unity doing any color conversion
+		minc("MinColor",Vector) = (0,0,0,1)
+		maxc("MaxColor",Vector) = (1,1,1,1)
+		cdist("ColorDistance",Vector) = (1,1,1,0)
 		sf("SpatialFreq", Float) = 0.2
 		tf("TemporalFreq", Float) = 2
 		t("Time", Float) = 0
@@ -34,9 +35,9 @@
 
 			float ori;
 	        float orioffset;
-			fixed4 minc;
-	        fixed4 maxc;
-			fixed4 cdist;
+			float4 minc;
+			float4 maxc;
+			float4 cdist;
 			float sf;
 			float tf;
 			float t;
@@ -83,9 +84,9 @@
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			float4 frag(v2f i) : SV_Target
 			{
-				fixed4 c;
+				float4 c;
 			    float sinv, cosv;
 				sincos(radians(ori + orioffset), sinv, cosv);
 				float p = cosv*i.uv.y*sizey - sinv*i.uv.x*sizex;
@@ -103,7 +104,7 @@
 				}
 				else if (gratingtype == 1)
 				{
-					c = cdist*(sin(y*pi2) + 1) / 2 + minc;
+					c = cdist*((sin(y* pi2) + 1) / 2) + minc;
 				}
 				else if (gratingtype == 2)
 				{

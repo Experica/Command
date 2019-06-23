@@ -73,12 +73,12 @@
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			float4 frag(v2f i) : SV_Target
 			{
 				float sinv, cosv;
 				sincos(radians(ori + orioffset), sinv, cosv);
 				i.uv.xy = mul(i.uv.xy, float2x2(cosv, -sinv, sinv, cosv)) + 0.5;
-				fixed4 c = UNITY_SAMPLE_TEX2DARRAY(imgs, i.uv);
+				float4 c = UNITY_SAMPLE_TEX2DARRAY(imgs, i.uv);
 
 			    if(masktype==0)
 				{ }

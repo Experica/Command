@@ -2,7 +2,8 @@
 {
 	Properties
 	{
-		col("Color", Color) = (1,1,1,1)
+		// we use raw color vector to prevent unity doing any color conversion
+		col("Color", Vector) = (1,1,1,1)
 		maskradius("MaskRadius",Float) = 0.5
 		sigma("Sigma", Float) = 0.15
 		sizex("SizeX",Float) = 2
@@ -23,7 +24,7 @@
 			#pragma fragment frag
 			#include "UnityCG.cginc"
 
-			fixed4 col;
+			float4 col;
 			float maskradius;
 			float sigma;
 	        float sizex;
@@ -65,9 +66,9 @@
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			float4 frag(v2f i) : SV_Target
 			{
-				fixed4 c = col;
+				float4 c = col;
 			    if(masktype==0)
 				{ }
 				else if (masktype == 1)
