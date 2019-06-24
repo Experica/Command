@@ -22,25 +22,35 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
 
 namespace Experica.Command
 {
-    public enum LogType
-    {
-        Log,
-        Warning,
-        Error
-    }
 
     public class ConsolePanel : MonoBehaviour
     {
         public UIController uicontroller;
-        public GameObject content, logprefab, warningprefab, errorprefab;
+        public GameObject content, logprefab, warningprefab, errorprefab ;
 
         public int maxentry;
         int entrycount;
 
+        /// <summary>
+        /// A log handler is added to the Unity application that calls ConsolePanel.Log() for every Debug message.
+        /// The handler is added whent the consolepanel is createdt
+        /// </summary>
+        void Awake()
+        {
+            // logMessageReceived is an event that is called when messages are logged, which a handler is added to.
+            Application.logMessageReceived += delegate(string logString, string stackTrace, LogType type)
+            {
+                Log(type, logString, true);
+            };
+        }
+
+        /// <summary>
+        /// Remove all the text prefab objects from the content box in the consolePanel. Basically,
+        /// Get rid of all the text. This is called when the Clear button is pressed.
+        /// </summary>
         public void Clear()
         {
             for (var i = 0; i < content.transform.childCount; i++)
@@ -51,33 +61,29 @@ namespace Experica.Command
             UpdateViewRect();
         }
 
-        public void LogError(object msg, bool istimestamp = true)
-        {
-            Log(LogType.Error, msg, istimestamp);
-        }
-
-        public void LogWarn(object msg, bool istimestamp = true)
-        {
-            Log(LogType.Warning, msg, istimestamp);
-        }
-
-        public void Log(object msg, bool istimestamp = true)
-        {
-            Log(LogType.Log, msg, istimestamp);
-        }
-
+        /// <summary>
+        /// Adds a text GameObject to the content GameObject in the Console Window.
+        /// </summary>
+        /// <param name="logtype">log, Warning, Error, Assert, or Exception</param>
+        /// <param name="msg">Text to be displayed</param>
+        /// <param name="istimestamp">True displays time, False doesn't</param>
         public void Log(LogType logtype, object msg, bool istimestamp = true)
         {
             var v = msg.Convert<string>();
+            v = v.Replace('\n', ' ');               // With wrapping text and newline characters, text is small. Replace with just a space
+
+            // Add time to text
             if (istimestamp)
             {
                 v = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + ":  " + v;
             }
 
+            // Add Text to GameObject
             var text = Instantiate(ChoosePrefab(logtype));
             text.GetComponent<Text>().text = v;
             text.transform.SetParent(content.transform, false);
 
+            // Delete 
             if (entrycount > maxentry)
             {
                 Destroy(content.transform.GetChild(0).gameObject);
@@ -104,6 +110,10 @@ namespace Experica.Command
                 case LogType.Warning:
                     return warningprefab;
                 case LogType.Error:
+                    return errorprefab;
+                case LogType.Assert:
+                    return warningprefab;
+                case LogType.Exception:
                     return errorprefab;
                 default:
                     return logprefab;

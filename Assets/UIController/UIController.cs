@@ -374,7 +374,7 @@ namespace Experica.Command
             deleteex.interactable = false;
             startstoptext.text = "Stop";
             pause.interactable = true;
-            consolepanel.Log("Experiment Started.");
+            UnityEngine.Debug.Log("Experiment Started.");
 
             // Get Highest Performance
             QualitySettings.vSyncCount = 0;
@@ -431,7 +431,7 @@ namespace Experica.Command
             }
             startstoptext.text = "Start";
             pause.interactable = false;
-            consolepanel.Log("Experiment Stoped.");
+            UnityEngine.Debug.Log("Experiment Stoped.");
 
             // Return Normal Performance
             QualitySettings.vSyncCount = 1;
@@ -470,7 +470,7 @@ namespace Experica.Command
         public void OnBeginPauseExperiment()
         {
             pauseresumetext.text = "Resume";
-            consolepanel.LogWarn("Experiment Paused.");
+            UnityEngine.Debug.LogWarning("Experiment Paused.");
         }
 
         public void OnEndPauseExperiment()
@@ -492,7 +492,7 @@ namespace Experica.Command
         public void OnBeginResumeExperiment()
         {
             pauseresumetext.text = "Pause";
-            consolepanel.LogWarn("Experiment Resumed.");
+            UnityEngine.Debug.LogWarning("Experiment Resumed.");
         }
 
         public void OnEndResumeExpeirment()
