@@ -69,12 +69,12 @@
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			float4 frag(v2f i) : SV_Target
 			{
 				float sinv, cosv;
 				sincos(radians(ori + orioffset), sinv, cosv);
 				float2 ruv = mul(i.uv, float2x2(cosv, -sinv, sinv, cosv));
-				fixed4 c = tex2D(img, ruv + 0.5);
+				float4 c = tex2D(img, ruv + 0.5);
 
 			    if(masktype==0)
 				{ }

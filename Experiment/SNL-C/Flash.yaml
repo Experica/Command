@@ -1,48 +1,24 @@
 ID: Flash
 Name: Flash
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
+Subject_ID: m1901
+Subject_Name: m1901
+Subject_Species: Mice
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: MarkerBar
-EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  MarkerSize@Marker@Marker: 5
-  MarkerPosition@Marker@Marker: 17.16 -12.24 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  Rotation@Quad@Quad: 0 0 0
-  RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 0
-  OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 300
-  Size@Quad@Quad: 300 300 1
-  Color@Quad@Quad: 1 1 1 1
-  MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0.5
-  Sigma@Quad@Quad: 0.150000006
-  OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
-  PositionOffset@Quad@Quad: 0 0 0
-CondPath: Condition\FlashColor.yaml
+EnvParam: {}
+CondPath: Condition\WhiteBlack.yaml
 Cond: 
-ExLogicPath: Experica.RippleCTLogic
-RecordSession: V1e
-RecordSite: 3660
-DataDir: C:\
+ExLogicPath: Experica.SpikeGLXCTLogic
+RecordSession: V1a
+RecordSite: 3000
+DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
@@ -83,6 +59,7 @@ ExInheritParam:
 - Delay
 - DisplayLatency
 - ResponseDelay
+- Display_ID
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -99,7 +76,8 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- Ori@Quad@Quad
+- CLUT@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -108,8 +86,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayType: CRT
-DisplayLatency: 180
+Display_ID: Trinitron
 ResponseDelay: 20
 Version: 1
 Config: 
