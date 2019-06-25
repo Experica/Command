@@ -1,0 +1,81 @@
+IsSaveExOnQuit: true
+AutoSaveData: true
+SaveConfigInData: true
+SaveDataFormat: YAML
+ExDir: Experiment\SNL-C
+DataDir: Data
+ExLogic: Experica.ConditionTestLogic
+NotifyParams:
+- CondIndex
+- Event
+- SyncEvent
+AntiAliasing: 2
+AnisotropicFilterLevel: 5
+FixedDeltaTime: 1000000
+IsShowInactiveEnvParam: false
+IsShowEnvParamFullName: false
+MaxLogEntry: 999
+ExHideParams:
+- Cond
+- CondTest
+- EnvParam
+- Param
+- Log
+- Subject_Log
+- DataPath
+- ExInheritParam
+- EnvInheritParam
+- Version
+- EventSyncProtocol
+- Config
+FirstTestID: ConditionTest
+ExperimenterAddress:
+  Alex: 4109829463@mms.att.net
+NotifyLatency: 200
+MaxDisplayLatencyError: 20
+OnlineSignalLatency: 50
+ParallelPort1: 45072
+ParallelPort2: 53264
+ParallelPort3: 53264
+EventSyncCh: 0
+EventMeasureCh: 1
+StartSyncCh: 2
+StopSyncCh: 3
+Bits16Ch: 5
+SignalCh1: 0
+SignalCh2: 1
+SignalCh3: 2
+SerialPort1: COM3
+SerialPort2: COM4
+SerialPort3: COM5
+RecordHost: LocalHost
+RecordHostPort: 4142
+Param: {}
+Display:
+  Trinitron:
+    ID: Trinitron
+    Type: CRT
+    Latency: 0
+    CLUTSize: 20
+    FitType: LinearSpline
+    IntensityMeasurement: {}
+    SpectralMeasurement: {}
+EnvCrossInheritRule:
+  GratingQuad:
+    Quad:
+    - Ori
+    - Position
+    ImageQuad:
+    - Position
+  Quad:
+    GratingQuad:
+    - Ori
+    - Position
+    ImageQuad:
+    - Position
+  ImageQuad:
+    GratingQuad:
+    - Position
+    - Diameter
+    Quad:
+    - Position

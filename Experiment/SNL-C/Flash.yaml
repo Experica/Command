@@ -12,7 +12,32 @@ Subject_Size: 0 0 0
 Subject_Weight: 100
 Subject_Log: 
 EnvPath: MarkerBar
-EnvParam: {}
+EnvParam:
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  CLUT@Camera@OrthoCamera: true
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Diameter@Quad@Quad: 20
+  Size@Quad@Quad: 20 20 1
+  Color@Quad@Quad: 0 0 0 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  Sigma@Quad@Quad: 0.150000006
+  OriPositionOffset@Quad@Quad: false
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 0 0
 CondPath: Condition\WhiteBlack.yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXCTLogic

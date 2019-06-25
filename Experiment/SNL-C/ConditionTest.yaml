@@ -16,10 +16,10 @@ EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   CLUT@Camera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 25.21 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,19 +29,19 @@ EnvParam:
   SpatialFreq@GratingQuad@GratingQuad: 0.100000001
   TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0.2 0.8 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6 0.2 1 1
-  Drifting@GratingQuad@GratingQuad: true
+  MinColor@GratingQuad@GratingQuad: 1 0 1 1
+  MaxColor@GratingQuad@GratingQuad: 0 0 1 1
+  Drifting@GratingQuad@GratingQuad: false
   GratingType@GratingQuad@GratingQuad: Sinusoidal
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 45
+  Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 30
-  Size@GratingQuad@GratingQuad: 30 30 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   Color@GratingQuad@GratingQuad: 1 1 1 1
-  MaskType@GratingQuad@GratingQuad: Disk
+  MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
