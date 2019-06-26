@@ -291,12 +291,20 @@ namespace Experica
             condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager, pushexcludefactors);
         }
 
+        /// <summary>
+        /// Returns the 
+        /// </summary>
+        /// <param name="dataFormat"></param>
+        /// <returns></returns>
         public virtual string DataPath(DataFormat dataFormat)
         {
-            var extension = dataFormat.ToString().ToLower();
-            return ex.GetDataPath(ext: extension, searchext: extension);
+            var extension = dataFormat.ToString().ToLower();                // String representation of dataFormat
+            return ex.GetDataPath(ext: extension, searchext: extension);    // 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual void SaveData()
         {
             var ct = condtestmanager.condtest;
@@ -309,13 +317,20 @@ namespace Experica
                 }
                 ex.EnvParam = envmanager.GetActiveParams();
 
+                // 
                 switch (config.SaveDataFormat)
                 {
+                    // Currently Not Implemented.
                     case DataFormat.EXPERICA:
-                        DataPath(DataFormat.EXPERICA).Save(ex);
+                        string serialzedData = Formatter.Instance.SerialzeDataToFormat(ex, DataFormat.EXPERICA);
+                        File.WriteAllText(DataPath(DataFormat.EXPERICA), serialzedData);
                         break;
+                    //case DataFormat.HDF5:
+                        //DataPath(DataFormat.YAML).WriteToFile(ex);
+                    // Save the Experiment, enviroment, and data as a YAML File.
                     default:
-                        DataPath(DataFormat.YAML).WriteYamlFile(ex);
+                        serialzedData = Formatter.Instance.SerialzeDataToFormat(ex, DataFormat.YAML);
+                        File.WriteAllText(DataPath(DataFormat.YAML), serialzedData);
                         break;
                 }
                 ex.DataPath = null;

@@ -1,5 +1,5 @@
 ﻿/*
-YamlTests.cs is part of the Experica.
+IFormat.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,34 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
-using UnityEngine.TestTools;
-using NUnit.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace Experica.Test
+namespace Experica
 {
-    public class YamlTests
+    public interface IFormat
     {
-        string yamlString = "Ori: [0, 45, 90, 135]\n" +
-             "SpatialPhase: [0, 0.25, 0.5, 0.75]";
-
-        [Test]
-        public void YamlReadWrite()
-        {
-            //var cond = Yaml.DeserializeYaml<Dictionary<string, List<object>>>(yamlString);
-        }
-
-        // A UnityTest behaves like a coroutine in PlayMode
-        // and allows you to yield null to skip a frame in EditMode
-        [UnityTest]
-        public IEnumerator NewTestScriptWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // yield to skip a frame
-            yield return null;
-        }
+        string Serialize<T>(T obj);
+        T Deserialize<T>(string data);
     }
 }

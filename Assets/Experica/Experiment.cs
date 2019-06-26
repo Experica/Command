@@ -227,6 +227,13 @@ namespace Experica
             return p.Getter(ex);
         }
 
+        /// <summary>
+        /// Searches the directory for the exact same experiment ran, if it has been ran before, appends or advances the ending
+        /// number to a datapath and returns it
+        /// </summary>
+        /// <param name="ext">The extension to append to end of datapath when creating a new path</param>
+        /// <param name="searchext">The extenstion to serach for in the directory</param>
+        /// <returns>A new DataPath corresponding to the experiment ran in order to save it.</returns>
         public virtual string GetDataPath(string ext = "", string searchext = "yaml")
         {
             if (string.IsNullOrEmpty(DataPath))

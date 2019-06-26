@@ -61,7 +61,8 @@ namespace Experica
             {
                 return null;
             }
-            return path.ReadYamlFile<Dictionary<string, List<object>>>();
+            string serializedData = File.ReadAllText(path);
+            return Formatter.Instance.DeserializeUsingFormat<Dictionary<string, List<object>>>(serializedData, DataFormat.YAML);
         }
 
         public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond)

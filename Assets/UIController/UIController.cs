@@ -63,6 +63,9 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
+        // Used for serialization and deserialization across all formats
+        public Formatter formatter;
+
         /// <summary>
         /// Awake is called when the script instance is being loaded. Awake is called only
         /// a single time.See the following URL for more information: 
@@ -71,10 +74,12 @@ namespace Experica.Command
         /// </summary>
         void Awake()
         {
+            formatter = Formatter.Instance;
             // Check for CommandConfigManager.yaml existance
             if (File.Exists(configmanagerpath))
             {
-                configmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
+                string serializedData = File.ReadAllText(configmanagerpath);
+                configmanager = formatter.DeserializeUsingFormat<CommandConfigManager>(serializedData, DataFormat.YAML);
             }
             if (configmanager == null)
             {
@@ -102,8 +107,9 @@ namespace Experica.Command
             // Check if the file exists at the specified path, if so, load it.
             if (File.Exists(configfilepath))
             {
-                // Deserialize the text using extension method.
-                cfg = configfilepath.ReadYamlFile<CommandConfig>();
+                // Deserialize the text
+                string serializedData = File.ReadAllText(configfilepath);
+                cfg = formatter.DeserializeUsingFormat<CommandConfig>(serializedData, DataFormat.YAML);
             }
             
             // Use default config settings
@@ -188,7 +194,8 @@ namespace Experica.Command
             {
                 SaveConfig();
             }
-            configmanagerpath.WriteYamlFile(configmanager);
+            string dataToWrite = formatter.SerialzeDataToFormat(configmanager, DataFormat.YAML);
+            File.WriteAllText(configmanagerpath, dataToWrite);
         }
 
         public void SaveConfig()
@@ -204,7 +211,8 @@ namespace Experica.Command
             }
             if (!string.IsNullOrEmpty(configmanager.LastConfigFilePath))
             {
-                configmanager.LastConfigFilePath.WriteYamlFile(config);
+                string serializedData = formatter.SerialzeDataToFormat(config, DataFormat.YAML);
+                File.WriteAllText(configmanager.LastConfigFilePath, serializedData);
             }
         }
 
@@ -459,6 +467,10 @@ namespace Experica.Command
             GC.Collect();
         }
 
+        /// <summary>
+        /// When the SaveData Button is pushed in the Control Panel the experiment manager saves
+        /// the YAML file.
+        /// </summary>
         public void SaveData()
         {
             if (exmanager.el != null)

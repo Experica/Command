@@ -38,6 +38,9 @@ namespace Experica.Command
         public List<string> exids = new List<string>();
         public ExperimentLogic el;
 
+        //Formatter for Serialization and Deserialization
+        Formatter formatter = Formatter.Instance;
+
         public void GetExFiles()
         {
             var exfiledir = uicontroller.config.ExDir;
@@ -67,7 +70,9 @@ namespace Experica.Command
 
         public Experiment LoadEx(string exfilepath)
         {
-            var ex = exfilepath.ReadYamlFile<Experiment>();
+            string serializedData = File.ReadAllText(exfilepath);
+            Experiment ex = formatter.DeserializeUsingFormat<Experiment>(serializedData, DataFormat.YAML);
+
             if (string.IsNullOrEmpty(ex.ID))
             {
                 ex.ID = Path.GetFileNameWithoutExtension(exfilepath);
@@ -149,7 +154,9 @@ namespace Experica.Command
             {
                 if (!exids.Contains(id) && exids.Contains(idcopyfrom))
                 {
-                    var ex = exfiles[exids.IndexOf(idcopyfrom)].ReadYamlFile<Experiment>();
+                    string serialzedData = File.ReadAllText(exfiles[exids.IndexOf(idcopyfrom)]);
+                    Experiment ex = formatter.DeserializeUsingFormat<Experiment>(serialzedData, DataFormat.YAML);
+
                     ex.ID = id;
                     ex.Name = id;
                     LoadEL(ValidateExperiment(ex));
@@ -204,7 +211,8 @@ namespace Experica.Command
                     ex.EnvParam = elhistory[i].envmanager.GetParams();
                     try
                     {
-                        exfiles[exids.IndexOf(id)].WriteYamlFile(ex);
+                        string serialzedData = formatter.SerialzeDataToFormat(ex, DataFormat.YAML);
+                        File.WriteAllText(exfiles[exids.IndexOf(id)], serialzedData);
                     }
                     finally
                     {
