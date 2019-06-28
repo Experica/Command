@@ -30,6 +30,19 @@ using MathNet.Numerics.Interpolation;
 
 namespace Experica
 {
+    /// <summary>
+    /// Present R,G,B colors and measure Spectral or Intensity, so that a color lookup table can
+    /// be constructed to linearize sRGB color, and Cone excitations can be calculated using 
+    /// Spectral and Cone Fundamentals.
+    /// 
+    /// Required experiment custom parameters:
+    /// 
+    /// PRModel: model name of the spectroradiometer from Photo Research, Inc. (e.g., PR701)
+    /// COM: COM port of the spectroradiometer. (e.g., COM2)
+    /// Measure: type of measurement, Spectral or Intensity.
+    /// PlotMeasure: if plot measurement. (Bool)
+    /// FitType: function used to fit the intensity measurement, Gamma, LinearSpline or CubicSpline.
+    /// </summary>
     public class DisplayCalibration : ExperimentLogic
     {
         protected ISpectroRadioMeter spectroradiometer;

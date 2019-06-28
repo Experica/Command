@@ -3,20 +3,20 @@ Name: DisplayCalibration
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
+Subject_ID: m1901
+Subject_Name: m1901
+Subject_Species: Mice
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: Bar
 EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.25
+  ScreenAspect@Camera@OrthoCamera: 1.33544314
   CLUT@Camera@OrthoCamera: true
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
@@ -24,7 +24,7 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 30
   Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0 0.8475 0 1
+  Color@Quad@Quad: 0 0.5424 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
@@ -35,14 +35,14 @@ EnvParam:
 CondPath: Condition\RGBColor.yaml
 Cond: 
 ExLogicPath: Experica.DisplayCalibration
-RecordSession: V1e
-RecordSite: 3660
-DataDir: C:\
+RecordSession: V1a
+RecordSite: 3000
+DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
-BlockSampling: Ascending
+BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
-BlockRepeat: 0
+BlockRepeat: 1
 BlockParam:
 - ''
 Input: None
@@ -87,6 +87,7 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
+- CLUT@Camera@OrthoCamera
 Param:
   PRModel: PR701
   COM: COM2
@@ -100,7 +101,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: Trinitron
+Display_ID: VX3276mhd
 ResponseDelay: 20
 Version: 1
 Config: 
