@@ -67,7 +67,19 @@ function dLMSDKLMatrix(bg;isnorm=true)
     DKLTodLMS = inv(dLMSToDKL)
     return dLMSToDKL,DKLTodLMS
 end
+"Converting Affine Matrix between LMS and DKL[L+M, L-M, S-(L+M)] Space"
+function LMSDKLMatrix(bg;isnorm=true)
+    dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg[1:3],isnorm=isnorm)
+    t = [1 0 0 -bg[1];
+         0 1 0 -bg[2];
+         0 0 1 -bg[3];
+         0 0 0 1]
+    LMSToDKL = vcat(hcat(dLMSToDKL,zeros(3)),[0 0 0 1])*t
+    DKLToLMS = inv(LMSToDKL)
+    return LMSToDKL,DKLToLMS
+end
 
+quarcolors(tricolors) = vcat(tricolors,ones(size(tricolors,2))')
 
 # Human Cone Fundamentals from http://www.cvrl.org/cones.htm
 # 2-deg fundamentals based on the Stiles & Burch 10-deg CMFs (adjusted to 2-deg), Stockman & Sharpe (2000), Linear Energy, 0.1nm
@@ -98,6 +110,7 @@ RGBToLMS,LMSToRGB = RGBLMSMatrix(RGBSpectral(config["Display"][displayname]["Spe
 ucr=0:0.01:1
 ucs=[[i,j,k] for i=ucr,j=ucr,k=ucr][:]
 ucm=hcat(ucs...)
+ucim=quarcolors(ucm)
 lms_rgb = RGBToLMS*ucm
 rgb_lms = LMSToRGB*ucm
 
@@ -211,24 +224,99 @@ Makie.save(joinpath(resultdir,"LMS To Cone Contrast$bg Space.png"),s)
 bg = [0.5,0.5,0.5]
 dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
 dkl_lms = dLMSToDKL*(ucm.-bg)
-lms_dkl = DKLTodLMS*ucm
+lms_dkl = DKLTodLMS*(ucm.-bg)
 
-s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
+s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
 Makie.scatter!(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
+s[Axis][:names,:axisnames]=("dL / L+M","dM / L-M","dS / S-(L+M)")
 s.center=false
 Makie.save("dLMS To DKL$bg Space.png",s)
 
-s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
-Makie.scatter!(lms_dkl[1,:],lms_dkl[2,:],lms_dkl[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
+record(s,"dLMS To DKL$bg Space.mp4",1:360/5,framerate=12) do i
+    rotate_cam!(s,5pi/180,0.0,0.0)
+end
+
+s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
+Makie.scatter!(lms_dkl[1,:],lms_dkl[2,:],lms_dkl[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
+s[Axis][:names,:axisnames]=("dL / L+M","dM / L-M","dS / S-(L+M)")
 s.center=false
 Makie.save("DKL$bg To dLMS Space.png",s)
+
+record(s,"DKL$bg To dLMS Space.mp4",1:360/5,framerate=12) do i
+    rotate_cam!(s,5pi/180,0.0,0.0)
+end
 
 bg = RGBToLMS*[0.5,0.5,0.5]
 dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
 dkl_lms = dLMSToDKL*(lms_rgb.-bg)
 
-s=Makie.scatter(lms_rgb[1,:].-bg[1],lms_rgb[2,:].-bg[2],lms_rgb[3,:].-bg[3],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
-Makie.scatter!(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
-s[Axis][:names,:axisnames]=("dL / (L+M)","dM / (L-M)","dS / (S-(L+M))")
+s=Makie.scatter(lms_rgb[1,:],lms_rgb[2,:],lms_rgb[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
+Makie.scatter!(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
+s[Axis][:names,:axisnames]=("L / L+M","M / L-M","S / S-(L+M)")
 s.center=false
-Makie.save(joinpath(resultdir,"dLMS To DKL$bg Space.png"),s)
+Makie.save(joinpath(resultdir,"LMS To DKL$bg Space.png"),s)
+
+record(s,joinpath(resultdir,"LMS To DKL$bg Space.mp4"),1:360/5,framerate=12) do i
+    rotate_cam!(s,5pi/180,0.0,0.0)
+end
+
+# DKL Isolating RGB Color through Gray [0.5, 0.5, 0.5]
+bg = [0.5,0.5,0.5]
+dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
+DKLIsoLMS = DKLTodLMS*[1 0 0;
+                       0 1 0;
+                       0 0 1]
+
+DKLIsoLMS .+= bg
+DKLIsoLMS./=maximum(abs.(DKLIsoLMS),dims=1)
+
+mr = -0.5:0.001:0.5
+Disos = hcat([collect(mr*DKLIsoLMS[i,1].+0.5) for i=1:3]...)'
+Disosc=[RGB(Disos[:,i]...) for i in 1:size(Disos,2)]
+Disosdkl=dLMSToDKL*(Disos.-bg)
+
+Kisos = hcat([collect(mr*DKLIsoLMS[i,2].+0.5) for i=1:3]...)'
+Kisosc=[RGB(Kisos[:,i]...) for i in 1:size(Kisos,2)]
+Kisosdkl=dLMSToDKL*(Kisos.-bg)
+
+Lisos = hcat([collect(mr*DKLIsoLMS[i,3].+0.5) for i=1:3]...)'
+Lisosc = [RGB(Lisos[:,i]...) for i in 1:size(Lisos,2)]
+Lisosdkl=dLMSToDKL*(Lisos.-bg)
+
+s=Makie.scatter(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
+#Makie.scatter!(DKLTodLMS[1,:],DKLTodLMS[2,:],DKLTodLMS[3,:],color=:black,markersize=0.1,transparency=true)
+#Makie.arrows!([0],[0],[0],DKLTodLMS[1:1,1],DKLTodLMS[2:2,1],DKLTodLMS[3:3,1])
+
+Makie.scatter!(Disosdkl[1,:],Disosdkl[2,:],Disosdkl[3,:],color=Disosc,markersize=0.01,transparency=true)
+Makie.scatter!(Kisosdkl[1,:],Kisosdkl[2,:],Kisosdkl[3,:],color=Kisosc,markersize=0.01,transparency=true)
+Makie.scatter!(Lisosdkl[1,:],Lisosdkl[2,:],Lisosdkl[3,:],color=Lisosc,markersize=0.01,transparency=true)
+s[Axis][:names,:axisnames]=("L","M","S")
+s.center=false
+Makie.save(joinpath(resultdir,"ConeIsolating_ThroughGray_LMSSpace.png"),s)
+
+
+
+bg = [0.5,0.5,0.5]
+LMSToDKL,DKLToLMS = LMSDKLMatrix(bg,isnorm=true)
+DKLIsoLMS = DKLToLMS./maximum(abs.(DKLToLMS),dims=1)
+
+dkl_lms = LMSToDKL*(ucim)
+lms_dkl = DKLToLMS*(ucim)
+
+mr = -0.5:0.001:0.5
+Disos = hcat([collect(mr*DKLIsoLMS[i,1].+0.5) for i=1:3]...)'
+Disosc=[RGB(Disos[:,i]...) for i in 1:size(Disos,2)]
+Disosdkl=LMSToDKL*(quarcolors(Disos))
+
+Kisos = hcat([collect(mr*DKLIsoLMS[i,2].+0.5) for i=1:3]...)'
+Kisosc=[RGB(Kisos[:,i]...) for i in 1:size(Kisos,2)]
+Kisosdkl=LMSToDKL*(quarcolors(Kisos))
+
+Lisos = hcat([collect(mr*DKLIsoLMS[i,3].+0.5) for i=1:3]...)'
+Lisosc = [RGB(Lisos[:,i]...) for i in 1:size(Lisos,2)]
+Lisosdkl=LMSToDKL*(quarcolors(Lisos))
+
+s=Makie.scatter(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
+Makie.scatter!(Disosdkl[1,:],Disosdkl[2,:],Disosdkl[3,:],color=Disosc,markersize=0.01,transparency=true)
+Makie.scatter!(Kisosdkl[1,:],Kisosdkl[2,:],Kisosdkl[3,:],color=Kisosc,markersize=0.01,transparency=true)
+Makie.scatter!(Lisosdkl[1,:],Lisosdkl[2,:],Lisosdkl[3,:],color=Lisosc,markersize=0.01,transparency=true)
