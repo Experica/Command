@@ -28,6 +28,7 @@ using System.Linq;
 using System;
 using Fasterflect;
 using MsgPack.Serialization;
+using Newtonsoft.Json;
 
 namespace Experica
 {
@@ -96,9 +97,11 @@ namespace Experica
         public string Subject_Log { get; set; } = "";
 
         public string EnvPath { get; set; } = "";
+        [JsonIgnore]    //  Json cannont serialize this property
         [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, object> EnvParam { get; set; } = new Dictionary<string, object>();
         public string CondPath { get; set; } = "";
+        [JsonIgnore]    //  Json cannont serialze this property
         [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, IList> Cond { get; set; }
         public string ExLogicPath { get; set; } = "";
@@ -130,6 +133,7 @@ namespace Experica
         public List<CONDTESTPARAM> NotifyParam { get; set; }
         public List<string> ExInheritParam { get; set; } = new List<string>();
         public List<string> EnvInheritParam { get; set; } = new List<string>();
+        [JsonIgnore] //  Json cannont serialize this property
         [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public double TimerDriftSpeed { get; set; }
@@ -139,14 +143,19 @@ namespace Experica
         public uint Version { get; set; } = 2;
         public CommandConfig Config { get; set; }
 
+        [JsonIgnore]
         [MessagePackIgnore]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
+        [JsonIgnore]
         [MessagePackIgnore]
         public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
+        [JsonIgnore]
         [MessagePackIgnore]
         public bool SendMail { get; set; } = false;
+        [JsonIgnore]
         [MessagePackIgnore]
         public static readonly Dictionary<string, PropertyAccess> Properties;
+        [JsonIgnore]
         [MessagePackIgnore]
         public Action<string, object> OnNotifyUI;
 

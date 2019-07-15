@@ -316,8 +316,6 @@ namespace Experica
                     ex.Config = config;
                 }
                 ex.EnvParam = envmanager.GetActiveParams();
-
-                // 
                 switch (config.SaveDataFormat)
                 {
                     // Currently Not Implemented.
@@ -325,8 +323,10 @@ namespace Experica
                         string serialzedData = Formatter.Instance.SerialzeDataToFormat(ex, DataFormat.EXPERICA);
                         File.WriteAllText(DataPath(DataFormat.EXPERICA), serialzedData);
                         break;
-                    //case DataFormat.HDF5:
-                        //DataPath(DataFormat.YAML).WriteToFile(ex);
+                    case DataFormat.JSON:
+                        serialzedData = Formatter.Instance.SerialzeDataToFormat(ex, DataFormat.JSON);
+                        File.WriteAllText(DataPath(DataFormat.JSON), serialzedData);
+                        break;
                     // Save the Experiment, enviroment, and data as a YAML File.
                     default:
                         serialzedData = Formatter.Instance.SerialzeDataToFormat(ex, DataFormat.YAML);

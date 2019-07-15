@@ -65,26 +65,23 @@ namespace Experica
             deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
         }
 
-        //public static void WriteYamlFile<T>(this string path, T data)
-        //{
-        //    File.WriteAllText(path, serializer.Serialize(data));
-        //}
-
-        //public static T ReadYamlFile<T>(string path)
-        //{
-        //    return deserializer.Deserialize<T>(File.ReadAllText(path));
-        //}
-
-        //public static T DeserializeYaml<T>(string data)
-        //{
-        //    return deserializer.Deserialize<T>(data);
-        //}
-
+        /// <summary>
+        /// Serializes a serializable object
+        /// </summary>
+        /// <typeparam name="T">The type of the object to serialize</typeparam>
+        /// <param name="obj">The object to serialize</param>
+        /// <returns>A string in YAML format forrepsonding to the object.</returns>
         public string Serialize<T>(T obj)
         {
             return serializer.Serialize(obj);
         }
 
+        /// <summary>
+        /// Deserialize the Yaml string
+        /// </summary>
+        /// <typeparam name="T">Type returned</typeparam>
+        /// <param name="data">The data to deserialize.</param>
+        /// <returns>Deserialized Object of type T</returns>
         public T Deserialize<T>(string data)
         {
             return deserializer.Deserialize<T>(data);

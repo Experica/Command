@@ -80,3 +80,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Assets/Experica/Serialization/JSONFormat.cs.meta
+*.meta

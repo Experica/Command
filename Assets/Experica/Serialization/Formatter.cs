@@ -24,20 +24,27 @@ using System.Collections.Generic;
 
 namespace Experica
 {
+    /// <summary>
+    /// The purpose of this class is to have a multion capable of formatting (serializing/deserializing) in
+    /// any format class that is derived from IFormat. This class will have a list of singleton objects
+    /// corresponding to each format possible. To add a type of format, simply create the class, have it
+    /// end in Format, and add the type to the enum DataType in Extension.cs
+    /// </summary>
     public sealed class Formatter
     {
-        // This can be static in a console/desktop application, just be wary of potential memory issues
         private Dictionary<DataFormat, IFormat> _formats = new Dictionary<DataFormat, IFormat>();
 
+        // With lazy instantiation, it is only created once referenced.
         private static readonly Lazy<Formatter> lazy = new Lazy<Formatter>(() => new Formatter());
 
+        // The singleton Instance of the Formatter, its thread safe.
         public static Formatter Instance { get { return lazy.Value; } }
 
         /// <summary>
-        /// Get the current active policy of the given type.
+        /// Gets the active singleton object for the corresponding data format
         /// </summary>
-        /// <param name="type">The type of policy to retrieve.</param>
-        /// <returns>The current active policy of the given type</returns>
+        /// <param name="type">The type of DataFormat to retrieve.</param>
+        /// <returns>The current active DataFormat of the given type</returns>
         private IFormat GetActiveFormat(DataFormat format)
         {
             if (!_formats.ContainsKey(format))
@@ -51,12 +58,26 @@ namespace Experica
             return _formats[format];
         }
 
+        /// <summary>
+        /// Serializes the object using a specific type of DataFormat
+        /// </summary>
+        /// <typeparam name="T">type of the object to serialize.</typeparam>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="format">The format to serialize the Object to.</param>
+        /// <returns></returns>
         public string SerialzeDataToFormat<T>(T obj, DataFormat format)
         {
             IFormat formatToUse = GetActiveFormat(format);
             return formatToUse.Serialize(obj);
         }
 
+        /// <summary>
+        /// Deserializes an object
+        /// </summary>
+        /// <typeparam name="T">Type to deserialize to</typeparam>
+        /// <param name="data">The data in the specific format to deserialize</param>
+        /// <param name="format">The format the the string is in to deserialize.</param>
+        /// <returns></returns>
         public T DeserializeUsingFormat<T>(string data, DataFormat format)
         {
             IFormat formatToUse = GetActiveFormat(format);

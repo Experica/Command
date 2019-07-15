@@ -57,7 +57,8 @@ namespace Experica
     public enum DataFormat
     {
         YAML,
-        EXPERICA
+        EXPERICA,
+        JSON
     }
 
     public static class Extension
