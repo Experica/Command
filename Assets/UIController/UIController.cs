@@ -141,6 +141,16 @@ namespace Experica.Command
             }
         }
 
+        public void OnLoadEx()
+        { 
+            string file = Extension.ChooseFile();
+            if(!string.IsNullOrEmpty(file))
+            {
+                var lex = exmanager.LoadEx(file);
+                exmanager.LoadEL(file,false);
+            }
+        }
+
         public void OnExDropdownValueChange(int i)
         {
             if (config.IsSaveExOnQuit && exmanager.el != null)

@@ -29,6 +29,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 #if COMMAND
+using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -453,6 +454,31 @@ namespace Experica
             return null;
         }
 
+        public static string ChooseFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Choose File";
+            dialog.InitialDirectory = Directory.GetCurrentDirectory();
+            dialog.Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public static string ChooseDir()
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = "Choose Directory";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedPath;
+            }
+            return null;
+        }
+
 #endif
 
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
@@ -799,5 +825,24 @@ namespace Experica
             imgarray.Apply();
             return imgarray;
         }
+
+        public static bool Intersects(this Rect r1, Rect r2, out Rect overlap)
+        {
+            overlap = new Rect();
+            if (r1.Overlaps(r2))
+            {
+                float xmax = Mathf.Min(r1.xMax, r2.xMax);
+                float xmin = Mathf.Max(r1.xMin, r2.xMin);
+                float ymax = Mathf.Min(r1.yMax, r2.yMax);
+                float ymin = Mathf.Max(r1.yMin, r2.yMin);
+                overlap.x = Mathf.Min(xmax, xmin);
+                overlap.y = Mathf.Min(ymax, ymin);
+                overlap.width = Mathf.Max(0.0f, xmax - xmin);
+                overlap.height = Mathf.Max(0.0f, ymax - ymin);
+                return true;
+            }
+            return false;
+        }
+
     }
 }

@@ -93,7 +93,7 @@ namespace Experica
                 camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(shh, ScreenToEye);
             }
             ScreenHalfHeight = shh;
-            if (CameraChange != null) CameraChange();
+            CameraChange?.Invoke();
         }
 
         void onscreentoeye(float ste)
@@ -125,6 +125,11 @@ namespace Experica
         }
 
 #if COMMAND
+        void OnPostRender()
+        {
+            netmanager.uicontroller.exmanager.el.framerecorder.Grab();
+        }
+
         public override bool OnCheckObserver(NetworkConnection conn)
         {
             return netmanager.IsConnectionPeerType(conn, PeerType.Environment);

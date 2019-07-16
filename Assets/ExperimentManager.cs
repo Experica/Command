@@ -36,7 +36,7 @@ namespace Experica.Command
 
         public List<string> exfiles = new List<string>();
         public List<string> exids = new List<string>();
-        public ExperimentLogic el;
+        public ExperimentLogic el,loadel;
 
         void Awake()
         {
@@ -99,10 +99,10 @@ namespace Experica.Command
                 }
                 ex.DataDir = datadir;
             }
-            if (ex.CondTest != null)
-            {
-                ex.CondTest = null;
-            }
+            //if (ex.CondTest != null)
+            //{
+            //    ex.CondTest = null;
+            //}
             if (ex.NotifyParam == null)
             {
                 ex.NotifyParam = uicontroller.config.NotifyParams;
@@ -110,12 +110,12 @@ namespace Experica.Command
             return ex;
         }
 
-        public void LoadEL(string exfilepath)
+        public void LoadEL(string exfilepath,bool isinhistory=true)
         {
-            LoadEL(LoadEx(exfilepath));
+            LoadEL(LoadEx(exfilepath),isinhistory);
         }
 
-        public void LoadEL(Experiment ex)
+        public void LoadEL(Experiment ex,bool inhistory=true)
         {
             var elpath = ex.ExLogicPath;
             Type eltype = null;
@@ -138,10 +138,17 @@ namespace Experica.Command
                 ex.ExLogicPath = elpath;
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
-            el.config = uicontroller.config;
+            if (ex.Config == null)
+            {
+                el.config = uicontroller.config;
+            }
+            else
+            {
+                el.config = ex.Config;
+            }
             el.ex = ex;
             uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
-            AddEL(el);
+                AddEL(el,inhistory);
         }
 
         public bool NewEx(string id, string idcopyfrom)
@@ -260,15 +267,23 @@ namespace Experica.Command
             }
         }
 
-        public void AddEL(ExperimentLogic el)
+        public void AddEL(ExperimentLogic el,bool inhistory=true)
         {
             if (elhistory.Count > 0)
             {
                 elhistory.Last().enabled = false;
             }
-            elhistory.Add(el);
-            InheritEx();
-            RemoveDuplicateEx();
+            if (inhistory)
+            {
+                elhistory.Add(el);
+                InheritEx();
+                RemoveDuplicateEx();
+            }
+            else
+            {
+                RemoveLoadedEx();
+                loadel = el;
+            }
             AddELCallback();
         }
 
@@ -279,6 +294,15 @@ namespace Experica.Command
             {
                 Destroy(elhistory[idx]);
                 elhistory.RemoveAt(idx);
+            }
+            RemoveLoadedEx();
+        }
+
+        void RemoveLoadedEx()
+        {
+            if(loadel!=null)
+            {
+                Destroy(loadel);
             }
         }
 

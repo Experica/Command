@@ -126,7 +126,7 @@ namespace Experica.Command
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("VLControlManager"));
+            GameObject go = Instantiate(vlabcontrolmanagerprefab);
             var ctrl = go.GetComponent<ControlManager>();
             ctrl.uicontroller = uicontroller;
             uicontroller.ctrlmanager = ctrl;

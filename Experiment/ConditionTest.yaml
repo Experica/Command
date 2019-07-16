@@ -7,51 +7,51 @@ Subject_ID: C1901
 Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 6
+Subject_Age: 7
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 300
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.85112774
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 26.29 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.294681937
-  TemporalFreq@GratingQuad@GratingQuad: 1.37159133
+  SpatialFreq@GratingQuad@GratingQuad: 1
+  TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   Drifting@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  GratingType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 43.8535843
+  Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 11.7329826
-  Size@GratingQuad@GratingQuad: 11.73 11.73 1
+  Diameter@GratingQuad@GratingQuad: 2
+  Size@GratingQuad@GratingQuad: 2 2 1
   Color@GratingQuad@GratingQuad: 1 1 1 1
-  MaskType@GratingQuad@GratingQuad: Disk
+  MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.ConditionTestLogic
-RecordSession: V1e
-RecordSite: 3660
+RecordSession: latencytest
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
@@ -86,7 +86,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
+DisplayLatency: 0
 ResponseDelay: 20
 Version: 1
 Config: 

@@ -21,9 +21,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Windows.Forms;
-using System.IO;
 
 namespace Experica
 {
@@ -33,25 +30,20 @@ namespace Experica
 
         public void OpenFile()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Choose File";
-            dialog.InitialDirectory = Directory.GetCurrentDirectory();
-            dialog.Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            var file = Extension.ChooseFile();
+            if (!string.IsNullOrEmpty(file))
             {
-                input.text = dialog.FileName;
+                input.text = file;
                 input.onEndEdit.Invoke(input.text);
             }
         }
 
         public void OpenDirectory()
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = true;
-            dialog.Description = "Choose Directory";
-            if(dialog.ShowDialog() == DialogResult.OK)
+            var dir = Extension.ChooseDir();
+            if (!string.IsNullOrEmpty(dir))
             {
-                input.text = dialog.SelectedPath;
+                input.text = dir;
                 input.onEndEdit.Invoke(input.text);
             }
         }

@@ -104,6 +104,7 @@ namespace Experica.Command
                 rendertexture.antiAliasing = uicontroller.config.AntiAliasing;
                 rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
                 maincamera.targetTexture = rendertexture;
+                uicontroller.exmanager.el.framerecorder.rendertexture = rendertexture;
                 ri.texture = rendertexture;
 
                 UpdateGridSize();

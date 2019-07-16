@@ -29,6 +29,7 @@ namespace Experica
     {
         public bool IsSaveExOnQuit { get; set; } = true;
         public bool AutoSaveData { get; set; } = true;
+        //public bool AutoSaveEnvironment { get; set; } = false;
         public bool SaveConfigInData { get; set; } = true;
         public DataFormat SaveDataFormat { get; set; } = DataFormat.YAML;
         public string ExDir { get; set; } = "Experiment";

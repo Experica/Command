@@ -3,50 +3,50 @@ Name: Flash
 Designer: Alex
 Experimenter: Leo
 Log: 
-Subject_ID: LSR1803
-Subject_Name: LSR1803
+Subject_ID: LSR1907
+Subject_Name: LSR1907
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 6
+Subject_Age: 7
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 300
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 34
-  ScreenToEye@Camera@OrthoCamera: 37
+  ScreenToEye@Camera@OrthoCamera: 42
   ScreenAspect@Camera@OrthoCamera: 1.77777779
-  MarkerSize@Marker@Marker: 5
-  MarkerPosition@Marker@Marker: 73.2 -40.08 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 222.43512
+  Ori@Quad@Quad: 222.820465
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 300
-  Size@Quad@Quad: 300 300 1
+  Diameter@Quad@Quad: 500
+  Size@Quad@Quad: 500 300 1
   Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
+  Position@Quad@Quad: -17.09 8.819 0
   PositionOffset@Quad@Quad: 0 0 0
+  MarkerSize@Marker@Marker: 5
+  MarkerPosition@Marker@Marker: 66.82 -36.49 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: Condition\FlashColor.yaml
 Cond: 
 ExLogicPath: Experica.RippleCTLogic
-RecordSession: V1e
-RecordSite: 3660
+RecordSession: V2d
+RecordSite: 2480
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 100
+CondRepeat: 50
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -100,6 +100,7 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
 - Ori@Quad@Quad
+- Position@Quad@Quad
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:

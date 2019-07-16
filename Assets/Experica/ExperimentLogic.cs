@@ -36,6 +36,7 @@ namespace Experica
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
         public ConditionTestManager condtestmanager = new ConditionTestManager();
+        public FrameRecorder framerecorder = new FrameRecorder();
         public IRecorder recorder;
         public List<string> pushexcludefactors;
 
@@ -126,12 +127,22 @@ namespace Experica
                             }
                         }
                     }
+                    if (framerecorder.EnvironmentRecordMode == EnvironmentRecordMode.Conditions)
+                    {
+                        framerecorder.FramePrefix = $"CondIndex-{condmanager.condidx}_";
+                        framerecorder.Reset();
+                        framerecorder.RecordStatus = RecordStatus.Recording;
+                    }
                     break;
                 case CONDSTATE.SUFICI:
                     SufICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
                         condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufICIOnTime);
+                    }
+                    if (framerecorder.EnvironmentRecordMode == EnvironmentRecordMode.Conditions)
+                    {
+                        framerecorder.RecordStatus = RecordStatus.Stopped;
                     }
                     break;
             }
@@ -358,6 +369,58 @@ namespace Experica
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
         }
 
+        public void SetROIToFirstSceneObject(List<string> except)
+        {
+            SetROIToSceneObject(envmanager.sceneobject.Keys.Except(except).First());
+        }
+
+        public void SetROIToSceneObject(string name)
+        {
+            if (envmanager.sceneobject.ContainsKey(name))
+            {
+                var ot = envmanager.sceneobject[name].transform;
+                framerecorder.ROI = GetValidFrameROI(ot.localPosition.x-ot.localScale.x/2, ot.localPosition.y-ot.localScale.y/2, ot.localScale.x, ot.localScale.y);
+                Debug.Log("FrameROI:");
+                Debug.Log(framerecorder.ROI);
+            }
+            else
+            {
+                framerecorder.ROI = framerecorder.RenderTextureRect;
+            }
+        }
+
+        public Rect GetValidFrameROI(float x, float y, float width, float height)
+        {
+            Debug.Log("WorldRect:");
+            Debug.Log(new Rect(x, y, width, height));
+            var roi = MapToFrameROI(x, y, width, height);
+            Debug.Log("mapROI:");
+            Debug.Log(roi);
+            var rtrect = framerecorder.RenderTextureRect;
+            Rect vroi;
+            if (roi.Intersects(rtrect, out vroi))
+            {
+                return vroi;
+            }
+            return rtrect;
+        }
+
+        public Rect MapToFrameROI(float x, float y, float width, float height)
+        {
+            var hh = envmanager.maincamera_scene.orthographicSize;
+            var hw = hh * envmanager.maincamera_scene.aspect;
+            var h = 2 * hh;
+            var w = 2 * hw;
+            x = (x + hw) / w;
+            y = (y + hh) / h;
+            width = width / w;
+            height = height / h;
+
+            var rth = framerecorder.rendertexture.height;
+            var rtw = framerecorder.rendertexture.width;
+            return new Rect(Mathf.RoundToInt(x * rtw), Mathf.RoundToInt(y * rth), Mathf.RoundToInt(width * rtw), Mathf.RoundToInt(height * rth));
+        }
+
         public virtual void PauseResumeExperiment(bool ispause)
         {
             if (ispause)
@@ -429,6 +492,26 @@ namespace Experica
 
         protected virtual void OnExperimentStarted()
         {
+            StartFrameRecord();
+        }
+
+        protected virtual void StartFrameRecord()
+        {
+            if (framerecorder.EnvironmentRecordMode != EnvironmentRecordMode.None)
+            {
+                framerecorder.RecordDir = DataPath(config.SaveDataFormat).Replace($".{config.SaveDataFormat.ToString().ToLower()}", $"_{framerecorder.RecordFrameRate}Hz");
+                framerecorder.FramePrefix = "";
+                //framerecorder.ROI = framerecorder.RenderTextureRect;
+                //framerecorder.ROI = GetValidFrameROI(-5, -6f, 10, 10);
+                //SetROIToSceneObject("GratingQuad");
+                SetROIToFirstSceneObject(envmanager.exceptobject);
+                framerecorder.Reset();
+
+                if (framerecorder.EnvironmentRecordMode == EnvironmentRecordMode.Environment)
+                {
+                    framerecorder.RecordStatus = RecordStatus.Recording;
+                }
+            }
         }
 
         protected virtual void StopExperiment()
@@ -452,6 +535,12 @@ namespace Experica
 
         protected virtual void OnExperimentStopped()
         {
+            StopFrameRecord();
+        }
+
+        protected virtual void StopFrameRecord()
+        {
+            framerecorder.RecordStatus = RecordStatus.Stopped;
         }
 
         void Awake()
@@ -476,6 +565,7 @@ namespace Experica
             if (islogicactive)
             {
                 Logic();
+                framerecorder.tick();
             }
         }
 

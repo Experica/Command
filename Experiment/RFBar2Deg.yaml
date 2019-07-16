@@ -3,29 +3,23 @@ Name: RFBar2Deg
 Designer: Alex
 Experimenter: Leo
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
+Subject_ID: LSR1904
+Subject_Name: LSR1904
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 300
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenHalfHeight@Camera@OrthoCamera: 34
+  ScreenToEye@Camera@OrthoCamera: 42
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 43.8535843
+  Ori@Quad@Quad: 90
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 2
   Size@Quad@Quad: 1 0.5 1
@@ -35,13 +29,19 @@ EnvParam:
   Sigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: true
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 3.359 1.346 0
+  Position@Quad@Quad: -10.3 0.3074 0
   PositionOffset@Quad@Quad: -0.75 1 0
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 68.32 -37.99 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: Condition\PositionOffset2Deg0.25DegStep.yaml
 Cond: 
 ExLogicPath: Experica.RippleCTLogic
-RecordSession: V1e
-RecordSite: 3660
+RecordSession: V1d
+RecordSite: 1520
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

@@ -1,93 +1,93 @@
 ID: OriOffsetBar
 Name: OriOffsetBar
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: LSR1907
+Subject_Name: LSR1907
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
+Subject_Age: 7
 Subject_Size: 0 0 0
-Subject_Weight: 280
+Subject_Weight: 300
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
   Show@Showroom@ShowroomManager: None
   Marker@Showroom@ShowroomManager: true
-  Rotation@ENQuad@Quad$ShowroomManager: 0 0 0
-  RotationOffset@ENQuad@Quad$ShowroomManager: 0 0 0
-  Ori@ENQuad@Quad$ShowroomManager: 0
-  OriOffset@ENQuad@Quad$ShowroomManager: 0
-  Diameter@ENQuad@Quad$ShowroomManager: 2
-  Size@ENQuad@Quad$ShowroomManager: 2 2 1
-  Color@ENQuad@Quad$ShowroomManager: 1 1 1 1
-  MaskType@ENQuad@Quad$ShowroomManager: None
-  MaskRadius@ENQuad@Quad$ShowroomManager: 0.5
-  Sigma@ENQuad@Quad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENQuad@Quad$ShowroomManager: false
-  Visible@ENQuad@Quad$ShowroomManager: true
-  Position@ENQuad@Quad$ShowroomManager: 0 0 0
-  PositionOffset@ENQuad@Quad$ShowroomManager: 0 0 0
-  Luminance@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Contrast@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager: 1
-  SpatialPhase@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  MinColor@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0 1
-  MaxColor@ENGratingQuad@GratingQuad$ShowroomManager: 1 1 1 1
-  Drifting@ENGratingQuad@GratingQuad$ShowroomManager: true
-  GratingType@ENGratingQuad@GratingQuad$ShowroomManager: Square
-  ReverseTime@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Rotation@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
-  RotationOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
-  Ori@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  OriOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0
-  Diameter@ENGratingQuad@GratingQuad$ShowroomManager: 2
-  Size@ENGratingQuad@GratingQuad$ShowroomManager: 2 2 1
-  Color@ENGratingQuad@GratingQuad$ShowroomManager: 1 1 1 1
-  MaskType@ENGratingQuad@GratingQuad$ShowroomManager: None
-  MaskRadius@ENGratingQuad@GratingQuad$ShowroomManager: 0.5
-  Sigma@ENGratingQuad@GratingQuad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: false
-  Visible@ENGratingQuad@GratingQuad$ShowroomManager: true
-  Position@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
-  PositionOffset@ENGratingQuad@GratingQuad$ShowroomManager: 0 0 0
-  StartIndex@ENImageQuad@ImageQuad$ShowroomManager: 1
-  NumOfImage@ENImageQuad@ImageQuad$ShowroomManager: 10
-  Image@ENImageQuad@ImageQuad$ShowroomManager: 1
-  ImageSet@ENImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
-  IsCacheImage@ENImageQuad@ImageQuad$ShowroomManager: false
-  IsPreLoadImageset@ENImageQuad@ImageQuad$ShowroomManager: true
-  Rotation@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
-  RotationOffset@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
-  Ori@ENImageQuad@ImageQuad$ShowroomManager: 0
-  OriOffset@ENImageQuad@ImageQuad$ShowroomManager: 0
-  Diameter@ENImageQuad@ImageQuad$ShowroomManager: 2
-  Size@ENImageQuad@ImageQuad$ShowroomManager: 2 2 1
-  Color@ENImageQuad@ImageQuad$ShowroomManager: 1 1 1 1
-  MaskType@ENImageQuad@ImageQuad$ShowroomManager: None
-  MaskRadius@ENImageQuad@ImageQuad$ShowroomManager: 0.5
-  Sigma@ENImageQuad@ImageQuad$ShowroomManager: 0.150000006
-  OriPositionOffset@ENImageQuad@ImageQuad$ShowroomManager: false
-  Visible@ENImageQuad@ImageQuad$ShowroomManager: true
-  Position@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
-  PositionOffset@ENImageQuad@ImageQuad$ShowroomManager: 0 0 0
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 44.56 -21.07 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: true
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 42
-  ScreenAspect@ENCamera@OrthoCamera: 1.33333337
+  Rotation@Quad@Quad$ShowroomManager: 0 0 0
+  RotationOffset@Quad@Quad$ShowroomManager: 0 0 0
+  Ori@Quad@Quad$ShowroomManager: 0
+  OriOffset@Quad@Quad$ShowroomManager: 0
+  Diameter@Quad@Quad$ShowroomManager: 2
+  Size@Quad@Quad$ShowroomManager: 2 2 1
+  Color@Quad@Quad$ShowroomManager: 1 1 1 1
+  MaskType@Quad@Quad$ShowroomManager: None
+  MaskRadius@Quad@Quad$ShowroomManager: 0.5
+  Sigma@Quad@Quad$ShowroomManager: 0.150000006
+  OriPositionOffset@Quad@Quad$ShowroomManager: false
+  Visible@Quad@Quad$ShowroomManager: true
+  Position@Quad@Quad$ShowroomManager: 0 0 0
+  PositionOffset@Quad@Quad$ShowroomManager: 0 0 0
+  Luminance@GratingQuad@GratingQuad$ShowroomManager: 0.5
+  Contrast@GratingQuad@GratingQuad$ShowroomManager: 1
+  SpatialFreq@GratingQuad@GratingQuad$ShowroomManager: 1
+  TemporalFreq@GratingQuad@GratingQuad$ShowroomManager: 1
+  SpatialPhase@GratingQuad@GratingQuad$ShowroomManager: 0
+  MinColor@GratingQuad@GratingQuad$ShowroomManager: 0 0 0 1
+  MaxColor@GratingQuad@GratingQuad$ShowroomManager: 1 1 1 1
+  Drifting@GratingQuad@GratingQuad$ShowroomManager: true
+  GratingType@GratingQuad@GratingQuad$ShowroomManager: Square
+  ReverseTime@GratingQuad@GratingQuad$ShowroomManager: false
+  Rotation@GratingQuad@GratingQuad$ShowroomManager: 0 0 0
+  RotationOffset@GratingQuad@GratingQuad$ShowroomManager: 0 0 0
+  Ori@GratingQuad@GratingQuad$ShowroomManager: 0
+  OriOffset@GratingQuad@GratingQuad$ShowroomManager: 0
+  Diameter@GratingQuad@GratingQuad$ShowroomManager: 2
+  Size@GratingQuad@GratingQuad$ShowroomManager: 2 2 1
+  Color@GratingQuad@GratingQuad$ShowroomManager: 1 1 1 1
+  MaskType@GratingQuad@GratingQuad$ShowroomManager: None
+  MaskRadius@GratingQuad@GratingQuad$ShowroomManager: 0.5
+  Sigma@GratingQuad@GratingQuad$ShowroomManager: 0.150000006
+  OriPositionOffset@GratingQuad@GratingQuad$ShowroomManager: false
+  Visible@GratingQuad@GratingQuad$ShowroomManager: true
+  Position@GratingQuad@GratingQuad$ShowroomManager: 0 0 0
+  PositionOffset@GratingQuad@GratingQuad$ShowroomManager: 0 0 0
+  StartIndex@ImageQuad@ImageQuad$ShowroomManager: 1
+  NumOfImage@ImageQuad@ImageQuad$ShowroomManager: 10
+  Image@ImageQuad@ImageQuad$ShowroomManager: 1
+  ImageSet@ImageQuad@ImageQuad$ShowroomManager: ExampleImageSet
+  IsCacheImage@ImageQuad@ImageQuad$ShowroomManager: false
+  IsPreLoadImageset@ImageQuad@ImageQuad$ShowroomManager: true
+  Rotation@ImageQuad@ImageQuad$ShowroomManager: 0 0 0
+  RotationOffset@ImageQuad@ImageQuad$ShowroomManager: 0 0 0
+  Ori@ImageQuad@ImageQuad$ShowroomManager: 0
+  OriOffset@ImageQuad@ImageQuad$ShowroomManager: 0
+  Diameter@ImageQuad@ImageQuad$ShowroomManager: 2
+  Size@ImageQuad@ImageQuad$ShowroomManager: 2 2 1
+  Color@ImageQuad@ImageQuad$ShowroomManager: 1 1 1 1
+  MaskType@ImageQuad@ImageQuad$ShowroomManager: None
+  MaskRadius@ImageQuad@ImageQuad$ShowroomManager: 0.5
+  Sigma@ImageQuad@ImageQuad$ShowroomManager: 0.150000006
+  OriPositionOffset@ImageQuad@ImageQuad$ShowroomManager: false
+  Visible@ImageQuad@ImageQuad$ShowroomManager: true
+  Position@ImageQuad@ImageQuad$ShowroomManager: 0 0 0
+  PositionOffset@ImageQuad@ImageQuad$ShowroomManager: 0 0 0
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: true
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: Condition\OrientationOffset7.5DegStep.yaml
 Cond: 
-ExLogicPath: RippleCTLogic
-RecordSession: V1d
-RecordSite: 2720
+ExLogicPath: Experica.ConditionTestLogic
+RecordSession: ChRa
+RecordSite: 2550
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -150,6 +150,7 @@ EventSyncProtocol:
 DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: NONE
 SendMail: false

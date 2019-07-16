@@ -16,17 +16,11 @@ EnvParam:
   BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.699999988
-  TemporalFreq@GratingQuad@GratingQuad: 4
+  SpatialFreq@GratingQuad@GratingQuad: 0.294681937
+  TemporalFreq@GratingQuad@GratingQuad: 1.37159133
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
@@ -35,7 +29,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 135
+  Ori@GratingQuad@GratingQuad: 43.8535843
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 11.7329826
   Size@GratingQuad@GratingQuad: 11.73 11.73 1
@@ -47,6 +41,12 @@ EnvParam:
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 3.359 1.346 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 25.21 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: Condition\Contrast.yaml
 Cond: 
 ExLogicPath: Experica.RippleCTLogic

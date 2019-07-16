@@ -1,33 +1,33 @@
 ID: BGColor
 Name: BGColor
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Leo
 Log: 
-Subject_ID: LZR1803
-Subject_Name: LZR1803
+Subject_ID: LSR1904
+Subject_Name: LSR1904
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
-Subject_Age: 3
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 280
+Subject_Weight: 300
 Subject_Log: 
 EnvPath: Marker
 EnvParam:
-  BGColor@ENCamera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@ENCamera@OrthoCamera: 34
-  ScreenToEye@ENCamera@OrthoCamera: 42
-  ScreenAspect@ENCamera@OrthoCamera: 1.77777779
-  MarkerSize@ENMarker@Marker: 2
-  MarkerPosition@ENMarker@Marker: 68.32 -37.99 -1000
-  MarkerCorner@ENMarker@Marker: BottomRight
-  Mark@ENMarker@Marker: true
-  MarkOnColor@ENMarker@Marker: 1 1 1 1
-  MarkOffColor@ENMarker@Marker: 0 0 0 1
+  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: true
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
 Cond: 
-ExLogicPath: RippleCTLogic
-RecordSession: V1d
-RecordSite: 2720
+ExLogicPath: Experica.ConditionTestLogic
+RecordSession: LPa
+RecordSite: 4000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -92,6 +92,7 @@ EventSyncProtocol:
 DisplayLatency: 180
 ResponseDelay: 20
 Version: 1
+Config: 
 CondTest: 
 CondTestShowLevel: FULL
 SendMail: false

@@ -34,6 +34,13 @@ namespace Experica
         Paused
     }
 
+    public enum EnvironmentRecordMode
+    {
+        None,
+        Environment,
+        Conditions
+    }
+
     public interface IRecord
     {
         string RecordPath { set; }
