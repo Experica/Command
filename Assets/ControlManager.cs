@@ -32,9 +32,10 @@ namespace Experica.Command
         public UIController uicontroller;
 
         [Command]
-        public void CmdRF()
+        public void CmdManualCTIndex(int idx)
         {
-            Debug.Log("Control back");
+            uicontroller.exmanager.el.manualcondidx = idx;
+            Debug.Log("Analysis set the idx to " + idx);
         }
 
 #if COMMAND

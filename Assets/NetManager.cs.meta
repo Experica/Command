@@ -3,7 +3,14 @@ guid: c15ee3f73aa9e6149b8c7a910cd24900
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_PlayerPrefab: {instanceID: 0}
+  - matchMaker: {instanceID: 0}
+  - uicontroller: {instanceID: 0}
+  - analysismanagerprefab: {fileID: 1000011399553222, guid: d069a29ff4100f2428a17e03ebbe436d,
+      type: 3}
+  - controlmanagerprefab: {fileID: 1624292419130474, guid: 02cbec5c01b822b40840baf0e6ae008a,
+      type: 3}
   executionOrder: -50
   icon: {instanceID: 0}
   userData: 

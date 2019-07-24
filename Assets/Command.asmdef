@@ -1,7 +1,8 @@
 {
     "name": "Command",
     "references": [
-        "Experica"
+        "Experica",
+        "com.unity.multiplayer-hlapi.Runtime"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -10,5 +11,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

@@ -31,7 +31,7 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
-        public GameObject vlabanalysismanagerprefab, vlabcontrolmanagerprefab;
+        public GameObject analysismanagerprefab, controlmanagerprefab;
 
         public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         {
@@ -100,25 +100,25 @@ namespace Experica.Command
                 peerinfo[connid] = new Dictionary<string, object>();
             }
             peerinfo[connid][strkey] = pt;
-            // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
-            // and server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
-            // newly conneted client. if not, then this is the first time a VLabAnalysis client connected,
-            // so we need to create a new instance of VLabAnalysisManager and spwan to all clients,
-            // this may include VLabEnvironment, but since they doesn't register for the VLabAnalysisManager prefab,
+            // if there is Analysis already connected, then AnalysisManager is already there
+            // and server will automatically spwan scene and network objects(including AnalysisManager) to 
+            // newly conneted client. if not, then this is the first time a Analysis client connected,
+            // so we need to create a new instance of AnalysisManager and spwan to all clients,
+            // this may include Environment, but since they doesn't register for the AnalysisManager prefab,
             // they will spawn nothing.
             if ((pt == PeerType.Analysis) && (uicontroller.alsmanager == null))
             {
-                SpwanVLAnalysisManager();
+                SpawnAnalysisManager();
             }
         }
 
-        public void SpwanVLAnalysisManager()
+        public void SpawnAnalysisManager()
         {
-            GameObject go = Instantiate(vlabanalysismanagerprefab);
+            GameObject go = Instantiate(analysismanagerprefab);
             var am = go.GetComponent<AnalysisManager>();
             am.uicontroller = uicontroller;
             uicontroller.alsmanager = am;
-            go.name = "VLAnalysisManager";
+            go.name = "AnalysisManager";
             go.transform.SetParent(transform, false);
 
             NetworkServer.Spawn(go);
@@ -126,11 +126,11 @@ namespace Experica.Command
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
         {
-            GameObject go = Instantiate(vlabcontrolmanagerprefab);
+            GameObject go = Instantiate(controlmanagerprefab);
             var ctrl = go.GetComponent<ControlManager>();
             ctrl.uicontroller = uicontroller;
             uicontroller.ctrlmanager = ctrl;
-            go.name = "VLControlManager";
+            go.name = "ControlManager";
             go.transform.SetParent(transform, false);
 
             NetworkServer.AddPlayerForConnection(conn, go, playerControllerId);

@@ -1,6 +1,8 @@
 {
     "name": "Experica",
-    "references": [],
+    "references": [
+        "GUID:a44f47cf3ada4435dbc516bad0bc86fe"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -8,5 +10,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

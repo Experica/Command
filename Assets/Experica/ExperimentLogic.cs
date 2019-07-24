@@ -47,6 +47,7 @@ namespace Experica
             OnConditionPrepared;
 
         public bool islogicactive = false, regeneratecond = true;
+        public int manualcondidx = 0;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
             TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
         public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
@@ -94,7 +95,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREICI)
                     {
-                        SamplePushCondition();
+                        SamplePushCondition(manualcondidx);
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -115,7 +116,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                     {
-                        SamplePushCondition();
+                        SamplePushCondition(manualcondidx);
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -183,7 +184,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREITI)
                     {
-                        SamplePushCondition();
+                        SamplePushCondition(manualcondidx);
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
@@ -204,7 +205,7 @@ namespace Experica
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.TRIAL)
                     {
-                        SamplePushCondition();
+                        SamplePushCondition(manualcondidx);
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
