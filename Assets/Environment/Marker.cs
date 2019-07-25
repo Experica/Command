@@ -31,17 +31,17 @@ namespace Experica
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Marker : NetworkBehaviour
     {
-        [SyncVar(hook = "onmarkersize")]
+        [SyncVar(hook = "OnMarkerSize")]
         public float MarkerSize = 2;
-        [SyncVar(hook = "onmarkerposition")]
+        [SyncVar(hook = "OnMarkerPosition")]
         public Vector3 MarkerPosition = Vector3.zero;
-        [SyncVar(hook = "onmarkercorner")]
+        [SyncVar(hook = "OnMarkerCorner")]
         public Corner MarkerCorner = Corner.BottomRight;
-        [SyncVar(hook = "onmark")]
+        [SyncVar(hook = "OnMark")]
         public bool Mark = false;
-        [SyncVar(hook = "onmarkoncolor")]
+        [SyncVar(hook = "OnMarkOnColor")]
         public Color MarkOnColor = Color.white;
-        [SyncVar(hook = "onmarkoffcolor")]
+        [SyncVar(hook = "OnMarkOffColor")]
         public Color MarkOffColor = Color.black;
 
         public Camera encamera;
@@ -51,10 +51,6 @@ namespace Experica
 #endif
 
         void Awake()
-        {
-            OnAwake();
-        }
-        public virtual void OnAwake()
         {
             renderer = gameObject.GetComponent<Renderer>();
 #if COMMAND
@@ -89,42 +85,26 @@ namespace Experica
             OnMarkerPosition(CornerPosition(MarkerCorner));
         }
 
-        void onmarkersize(float s)
-        {
-            OnMarkerSize(s);
-        }
-        public virtual void OnMarkerSize(float s)
+        void OnMarkerSize(float s)
         {
             transform.localScale = new Vector3(s, s, 1);
             MarkerSize = s;
             UpdatePosition();
         }
 
-        void onmarkerposition(Vector3 p)
-        {
-            OnMarkerPosition(p);
-        }
-        public virtual void OnMarkerPosition(Vector3 p)
+        void OnMarkerPosition(Vector3 p)
         {
             transform.localPosition = p;
             MarkerPosition = p;
         }
 
-        void onmarkercorner(Corner c)
-        {
-            OnMarkerCorner(c);
-        }
-        public virtual void OnMarkerCorner(Corner c)
+        void OnMarkerCorner(Corner c)
         {
             MarkerCorner = c;
             UpdatePosition();
         }
 
-        void onmark(bool m)
-        {
-            OnMark(m);
-        }
-        public virtual void OnMark(bool m)
+        void OnMark(bool m)
         {
             if (m)
             {
@@ -137,21 +117,13 @@ namespace Experica
             Mark = m;
         }
 
-        void onmarkoncolor(Color c)
-        {
-            OnMarkOnColor(c);
-        }
-        public virtual void OnMarkOnColor(Color c)
+        void OnMarkOnColor(Color c)
         {
             MarkOnColor = c;
             OnMark(Mark);
         }
 
-        void onmarkoffcolor(Color c)
-        {
-            OnMarkOffColor(c);
-        }
-        public virtual void OnMarkOffColor(Color c)
+        void OnMarkOffColor(Color c)
         {
             MarkOffColor = c;
             OnMark(Mark);

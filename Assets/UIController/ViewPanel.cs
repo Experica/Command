@@ -37,10 +37,26 @@ namespace Experica.Command
         public Grid grid;
         public InputField gridcenterinput;
         public Action OnViewUpdated;
+        RenderTextureDescriptor RenderTextureDescriptor;
 
         void Start()
         {
             SetGridCenter(new Vector3(0, 0, 50));
+            RenderTextureDescriptor = new RenderTextureDescriptor()
+            {
+                dimension = UnityEngine.Rendering.TextureDimension.Tex2D,
+                depthBufferBits = 32,
+                autoGenerateMips = false,
+                msaaSamples = uicontroller.config.AntiAliasing,
+                colorFormat = RenderTextureFormat.ARGBHalf,
+                sRGB = false,
+                volumeDepth = 1
+            };
+        }
+
+        void OnApplicationQuit()
+        {
+            rendertexture.Release();
         }
 
         void SetGridCenter(Vector3 c, bool notifyui = true)
@@ -97,11 +113,12 @@ namespace Experica.Command
                 rirt.sizeDelta = new Vector2(width, height);
                 if (ri.texture != null)
                 {
+                    rendertexture.Release();
                     Destroy(ri.texture);
                 }
-                rendertexture = new RenderTexture((int)width, (int)height, 24);
-                rendertexture.autoGenerateMips = false;
-                rendertexture.antiAliasing = uicontroller.config.AntiAliasing;
+                RenderTextureDescriptor.width = Math.Max(1, (int)width);
+                RenderTextureDescriptor.height = Math.Max(1, (int)height);
+                rendertexture = new RenderTexture(RenderTextureDescriptor);
                 rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;

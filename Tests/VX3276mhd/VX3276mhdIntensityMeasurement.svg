@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="392" height="373" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="78.3366,315.95 78.3366,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="94.34,315.95 94.34,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="110.3433,315.95 110.3433,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="142.3499,315.95 142.3499,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="158.3532,315.95 158.3532,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="174.3565,315.95 174.3565,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="206.3632,315.95 206.3632,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="222.3665,315.95 222.3665,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="238.3698,315.95 238.3698,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="270.3764,315.95 270.3764,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="286.3798,315.95 286.3798,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="302.3831,315.95 302.3831,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="334.3897,315.95 334.3897,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="350.393,315.95 350.393,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="366.3964,315.95 366.3964,319.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,283.6407 56.725,283.6407" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,254.5613 56.725,254.5613" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,225.4819 56.725,225.4819" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,196.4025 56.725,196.4025" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,138.2438 56.725,138.2438" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,109.1644 56.725,109.1644" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,80.085 56.725,80.085" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,51.0056 56.725,51.0056" style="fill:none;stroke:black;stroke-width:1" />
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(62.3333,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0</text>
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(126.3466,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0.2</text>
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(190.3599,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0.4</text>
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(254.3731,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0.6</text>
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(318.3864,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0.8</text>
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(382.3997,326.95)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">1</text>
+  <polyline points="62.3333,315.95 62.3333,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="126.3466,315.95 126.3466,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="190.3599,315.95 190.3599,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="254.3731,315.95 254.3731,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="318.3864,315.95 318.3864,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="382.3997,315.95 382.3997,322.95" style="fill:none;stroke:black;stroke-width:1" />
+  <text dominant-baseline="baseline" text-anchor="middle" transform="translate(222.3625,361)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">Color Component Value</text>
+  <text dominant-baseline="middle" text-anchor="end" transform="translate(49.725,312.7201)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0</text>
+  <text dominant-baseline="middle" text-anchor="end" transform="translate(49.725,167.3232)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">50</text>
+  <text dominant-baseline="middle" text-anchor="end" transform="translate(49.725,21.9262)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">100</text>
+  <polyline points="60.725,312.7201 53.725,312.7201" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,167.3232 53.725,167.3232" style="fill:none;stroke:black;stroke-width:1" />
+  <polyline points="60.725,21.9262 53.725,21.9262" style="fill:none;stroke:black;stroke-width:1" />
+  <text dominant-baseline="hanging" text-anchor="middle" transform="translate(12,161.975) rotate(-90)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">Intensity</text>
+  <ellipse cx="62.3333" cy="312.1609" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.092" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.3444" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="67.7582" cy="311.0434" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="73.183" cy="308.8641" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="78.6079" cy="307.0845" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="84.0327" cy="305.2845" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="89.4576" cy="303.5688" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="94.8824" cy="301.8444" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="100.3073" cy="299.928" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="105.7322" cy="298.1222" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="111.157" cy="296.1594" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="116.5819" cy="294.2169" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="122.0067" cy="292.2802" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="127.4316" cy="290.5063" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="132.8564" cy="288.5347" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="138.2813" cy="286.6998" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="143.7061" cy="284.8329" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="149.131" cy="283.0591" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="154.5558" cy="281.2271" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="159.9807" cy="279.6568" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="165.4055" cy="277.5922" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="170.8304" cy="275.6148" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="176.2552" cy="274.1026" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="181.6801" cy="272.0089" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="187.1049" cy="270.3223" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="192.5298" cy="268.2868" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="197.9547" cy="266.7746" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="203.3795" cy="265.059" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="208.8044" cy="263.4305" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="214.2292" cy="261.6858" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="219.6541" cy="259.9991" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="225.0789" cy="258.1962" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="230.5038" cy="256.3351" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="235.9286" cy="254.7358" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="241.3535" cy="252.8747" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="246.7783" cy="251.1299" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="252.2032" cy="249.4143" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="257.628" cy="247.7276" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="263.0529" cy="246.012" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="268.4778" cy="244.2672" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="273.9026" cy="242.6678" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="279.3275" cy="240.4287" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="284.7523" cy="238.8875" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="290.1772" cy="237.3463" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="295.602" cy="235.6015" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="301.0269" cy="233.8568" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="306.4517" cy="232.2283" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="311.8766" cy="230.3091" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="317.3014" cy="228.6516" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="322.7263" cy="227.0522" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="328.1511" cy="225.5692" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="333.576" cy="223.679" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="339.0008" cy="221.9052" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="344.4257" cy="219.9278" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="349.8505" cy="218.3866" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="355.2754" cy="216.6418" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="360.7003" cy="214.8098" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="366.1251" cy="213.2395" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="371.55" cy="211.6401" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="376.9748" cy="209.8372" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="382.3997" cy="208.2378" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.092" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.1609" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.3444" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="67.7582" cy="308.553" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="73.183" cy="303.0919" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="78.6079" cy="297.9419" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="84.0327" cy="291.8847" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="89.4576" cy="286.9994" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="94.8824" cy="281.9832" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="100.3073" cy="276.6616" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="105.7322" cy="271.3983" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="111.157" cy="265.9604" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="116.5819" cy="260.4935" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="122.0067" cy="254.6195" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="127.4316" cy="248.9199" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="132.8564" cy="243.4821" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="138.2813" cy="237.8988" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="143.7061" cy="232.3737" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="149.131" cy="227.0813" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="154.5558" cy="222.0215" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="159.9807" cy="216.6127" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="165.4055" cy="211.8146" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="170.8304" cy="206.4058" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="176.2552" cy="200.9389" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="181.6801" cy="196.577" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="187.1049" cy="191.0519" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="192.5298" cy="185.5559" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="197.9547" cy="180.0018" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="203.3795" cy="174.942" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="208.8044" cy="169.3006" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="214.2292" cy="164.5025" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="219.6541" cy="159.1518" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="225.0789" cy="153.9757" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="230.5038" cy="149.0904" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="235.9286" cy="144.3504" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="241.3535" cy="139.7268" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="246.7783" cy="134.8124" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="252.2032" cy="129.7526" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="257.628" cy="124.402" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="263.0529" cy="119.4294" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="268.4778" cy="114.3405" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="273.9026" cy="109.4843" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="279.3275" cy="103.901" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="284.7523" cy="98.8994" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="290.1772" cy="94.1594" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="295.602" cy="88.5762" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="301.0269" cy="84.0689" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="306.4517" cy="78.6892" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="311.8766" cy="73.8329" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="317.3014" cy="68.8894" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="322.7263" cy="64.2367" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="328.1511" cy="59.4386" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="333.576" cy="54.0299" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="339.0008" cy="49.2609" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="344.4257" cy="44.7245" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="349.8505" cy="40.0427" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="355.2754" cy="35.1283" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="360.7003" cy="29.5741" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="366.1251" cy="25.125" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="371.55" cy="20.4723" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="376.9748" cy="15.5288" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="382.3997" cy="10.5853" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.1609" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.092" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="62.3333" cy="312.3444" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="67.7582" cy="311.9515" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="73.183" cy="311.5441" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="78.6079" cy="311.0099" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="84.0327" cy="310.5147" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="89.4576" cy="310.2402" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="94.8824" cy="309.7191" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="100.3073" cy="309.2596" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="105.7322" cy="309.0473" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="111.157" cy="308.4919" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="116.5819" cy="308.1226" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="122.0067" cy="307.5294" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="127.4316" cy="307.2386" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="132.8564" cy="306.8402" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="138.2813" cy="306.2935" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="143.7061" cy="306.0376" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="149.131" cy="305.4299" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="154.5558" cy="305.0082" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="159.9807" cy="304.6767" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="165.4055" cy="304.2812" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="170.8304" cy="303.9846" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="176.2552" cy="303.4874" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="181.6801" cy="303.1878" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="187.1049" cy="302.6935" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="192.5298" cy="302.2777" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="197.9547" cy="301.8618" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="203.3795" cy="301.3849" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="208.8044" cy="300.8324" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="214.2292" cy="300.4718" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="219.6541" cy="300.1287" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="225.0789" cy="299.9251" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="230.5038" cy="299.0499" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="235.9286" cy="299.0644" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="241.3535" cy="298.4334" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="246.7783" cy="298.1513" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="252.2032" cy="297.6511" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="257.628" cy="297.2993" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="263.0529" cy="297.0928" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="268.4778" cy="296.4385" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="273.9026" cy="296.1739" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="279.3275" cy="295.5778" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="284.7523" cy="295.3684" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="290.1772" cy="294.7228" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="295.602" cy="294.5774" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="301.0269" cy="294.1413" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="306.4517" cy="293.519" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="311.8766" cy="293.4172" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="317.3014" cy="292.853" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="322.7263" cy="292.4721" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="328.1511" cy="292.3005" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="333.576" cy="291.6811" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="339.0008" cy="291.3642" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="344.4257" cy="290.9076" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="349.8505" cy="290.6168" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="355.2754" cy="290.3144" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="360.7003" cy="289.8375" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="366.1251" cy="289.6747" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="371.55" cy="289.1861" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="376.9748" cy="288.6976" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <ellipse cx="382.3997" cy="288.4417" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <polyline points="62.3333,312.8328 65.5663,311.5872 68.7993,310.402 72.0323,309.2385 75.2653,308.089 78.4983,306.9497 81.7313,305.8185 84.9643,304.694 88.1973,303.5752 91.4303,302.4614 94.6633,301.3519 97.8963,300.2464 101.1292,299.1444 104.3622,298.0456 107.5952,296.9499 110.8282,295.8569 114.0612,294.7665 117.2942,293.6785 120.5272,292.5928 123.7602,291.5092 126.9932,290.4277 130.2262,289.348 133.4592,288.2702 136.6922,287.1941 139.9252,286.1197 143.1582,285.0468 146.3912,283.9755 149.6241,282.9056 152.8571,281.8371 156.0901,280.77 159.3231,279.7042 162.5561,278.6396 165.7891,277.5763 169.0221,276.5141 172.2551,275.4531 175.4881,274.3931 178.7211,273.3343 181.9541,272.2765 185.1871,271.2197 188.4201,270.1639 191.6531,269.109 194.8861,268.0551 198.119,267.002 201.352,265.9499 204.585,264.8987 207.818,263.8482 211.051,262.7986 214.284,261.7499 217.517,260.7019 220.75,259.6546 223.983,258.6082 227.216,257.5625 230.449,256.5175 233.682,255.4732 236.915,254.4296 240.148,253.3867 243.381,252.3444 246.6139,251.3029 249.8469,250.2619 253.0799,249.2217 256.3129,248.182 259.5459,247.1429 262.7789,246.1045 266.0119,245.0666 269.2449,244.0293 272.4779,242.9926 275.7109,241.9565 278.9439,240.9209 282.1769,239.8859 285.4099,238.8514 288.6429,237.8174 291.8759,236.784 295.1088,235.7511 298.3418,234.7186 301.5748,233.6867 304.8078,232.6553 308.0408,231.6244 311.2738,230.5939 314.5068,229.5639 317.7398,228.5344 320.9728,227.5054 324.2058,226.4768 327.4388,225.4486 330.6718,224.4209 333.9048,223.3936 337.1378,222.3668 340.3708,221.3404 343.6037,220.3144 346.8367,219.2888 350.0697,218.2637 353.3027,217.2389 356.5357,216.2146 359.7687,215.1907 363.0017,214.1671 366.2347,213.1439 369.4677,212.1212 372.7007,211.0988 375.9337,210.0768 379.1667,209.0551 382.3997,208.0338" style="fill:none;stroke:rgb(255,0,0);stroke-width:1;stroke-linejoin:bevel" />
+  <polyline points="62.3333,314.4179 65.5663,310.7155 68.7993,307.216 72.0323,303.7891 75.2653,300.4086 78.4983,297.0622 81.7313,293.7426 84.9643,290.4453 88.1973,287.1669 91.4303,283.9048 94.6633,280.6573 97.8963,277.4228 101.1292,274.2001 104.3622,270.9882 107.5952,267.7861 110.8282,264.5932 114.0612,261.4088 117.2942,258.2324 120.5272,255.0635 123.7602,251.9016 126.9932,248.7464 130.2262,245.5975 133.4592,242.4546 136.6922,239.3174 139.9252,236.1857 143.1582,233.0593 146.3912,229.9378 149.6241,226.8211 152.8571,223.7091 156.0901,220.6015 159.3231,217.4982 162.5561,214.3991 165.7891,211.3039 169.0221,208.2126 172.2551,205.1251 175.4881,202.0412 178.7211,198.9609 181.9541,195.884 185.1871,192.8104 188.4201,189.74 191.6531,186.6728 194.8861,183.6087 198.119,180.5475 201.352,177.4893 204.585,174.434 207.818,171.3814 211.051,168.3315 214.284,165.2843 217.517,162.2397 220.75,159.1976 223.983,156.158 227.216,153.1209 230.449,150.0861 233.682,147.0537 236.915,144.0235 240.148,140.9956 243.381,137.97 246.6139,134.9464 249.8469,131.925 253.0799,128.9057 256.3129,125.8885 259.5459,122.8732 262.7789,119.86 266.0119,116.8487 269.2449,113.8393 272.4779,110.8317 275.7109,107.8261 278.9439,104.8222 282.1769,101.8202 285.4099,98.8199 288.6429,95.8214 291.8759,92.8246 295.1088,89.8294 298.3418,86.836 301.5748,83.8442 304.8078,80.854 308.0408,77.8654 311.2738,74.8783 314.5068,71.8929 317.7398,68.9089 320.9728,65.9265 324.2058,62.9456 327.4388,59.9661 330.6718,56.9881 333.9048,54.0116 337.1378,51.0364 340.3708,48.0627 343.6037,45.0903 346.8367,42.1193 350.0697,39.1497 353.3027,36.1814 356.5357,33.2144 359.7687,30.2488 363.0017,27.2844 366.2347,24.3213 369.4677,21.3595 372.7007,18.3989 375.9337,15.4395 379.1667,12.4814 382.3997,9.5245" style="fill:none;stroke:rgb(0,128,0);stroke-width:1;stroke-linejoin:bevel" />
+  <polyline points="62.3333,312.3691 65.5663,312.079 68.7993,311.8039 72.0323,311.5342 75.2653,311.268 78.4983,311.0043 81.7313,310.7426 84.9643,310.4826 88.1973,310.2239 91.4303,309.9665 94.6633,309.7102 97.8963,309.4548 101.1292,309.2004 104.3622,308.9467 107.5952,308.6937 110.8282,308.4415 114.0612,308.1899 117.2942,307.9388 120.5272,307.6884 123.7602,307.4384 126.9932,307.189 130.2262,306.94 133.4592,306.6915 136.6922,306.4434 139.9252,306.1957 143.1582,305.9484 146.3912,305.7015 149.6241,305.4549 152.8571,305.2087 156.0901,304.9628 159.3231,304.7172 162.5561,304.472 165.7891,304.227 169.0221,303.9824 172.2551,303.738 175.4881,303.4939 178.7211,303.25 181.9541,303.0064 185.1871,302.7631 188.4201,302.52 191.6531,302.2771 194.8861,302.0345 198.119,301.7921 201.352,301.5499 204.585,301.3079 207.818,301.0661 211.051,300.8245 214.284,300.5832 217.517,300.342 220.75,300.101 223.983,299.8602 227.216,299.6196 230.449,299.3791 233.682,299.1389 236.915,298.8988 240.148,298.6589 243.381,298.4191 246.6139,298.1795 249.8469,297.94 253.0799,297.7008 256.3129,297.4616 259.5459,297.2227 262.7789,296.9838 266.0119,296.7451 269.2449,296.5066 272.4779,296.2682 275.7109,296.0299 278.9439,295.7918 282.1769,295.5538 285.4099,295.316 288.6429,295.0782 291.8759,294.8406 295.1088,294.6032 298.3418,294.3658 301.5748,294.1286 304.8078,293.8915 308.0408,293.6545 311.2738,293.4176 314.5068,293.1809 317.7398,292.9442 320.9728,292.7077 324.2058,292.4713 327.4388,292.235 330.6718,291.9988 333.9048,291.7627 337.1378,291.5268 340.3708,291.2909 343.6037,291.0551 346.8367,290.8194 350.0697,290.5839 353.3027,290.3484 356.5357,290.1131 359.7687,289.8778 363.0017,289.6426 366.2347,289.4075 369.4677,289.1726 372.7007,288.9377 375.9337,288.7029 379.1667,288.4682 382.3997,288.2336" style="fill:none;stroke:rgb(0,0,255);stroke-width:1;stroke-linejoin:bevel" />
+  <polyline points="62.3333,312.8328 65.5663,311.9386 68.7993,310.9982 72.0323,310.0396 75.2653,309.069 78.4983,308.0894 81.7313,307.1025 84.9643,306.1095 88.1973,305.1113 91.4303,304.1084 94.6633,303.1015 97.8963,302.0908 101.1292,301.0768 104.3622,300.0596 107.5952,299.0396 110.8282,298.0169 114.0612,296.9917 117.2942,295.9641 120.5272,294.9343 123.7602,293.9024 126.9932,292.8685 130.2262,291.8328 133.4592,290.7951 136.6922,289.7558 139.9252,288.7148 143.1582,287.6722 146.3912,286.6281 149.6241,285.5825 152.8571,284.5355 156.0901,283.4871 159.3231,282.4373 162.5561,281.3863 165.7891,280.3341 169.0221,279.2806 172.2551,278.226 175.4881,277.1702 178.7211,276.1133 181.9541,275.0553 185.1871,273.9963 188.4201,272.9363 191.6531,271.8753 194.8861,270.8133 198.119,269.7503 201.352,268.6864 204.585,267.6216 207.818,266.5559 211.051,265.4894 214.284,264.4219 217.517,263.3537 220.75,262.2846 223.983,261.2148 227.216,260.1441 230.449,259.0727 233.682,258.0005 236.915,256.9276 240.148,255.854 243.381,254.7796 246.6139,253.7045 249.8469,252.6288 253.0799,251.5523 256.3129,250.4752 259.5459,249.3974 262.7789,248.319 266.0119,247.24 269.2449,246.1603 272.4779,245.08 275.7109,243.999 278.9439,242.9175 282.1769,241.8354 285.4099,240.7527 288.6429,239.6694 291.8759,238.5856 295.1088,237.5012 298.3418,236.4162 301.5748,235.3307 304.8078,234.2447 308.0408,233.1581 311.2738,232.071 314.5068,230.9834 317.7398,229.8953 320.9728,228.8066 324.2058,227.7175 327.4388,226.6279 330.6718,225.5378 333.9048,224.4472 337.1378,223.3561 340.3708,222.2646 343.6037,221.1725 346.8367,220.0801 350.0697,218.9871 353.3027,217.8938 356.5357,216.7999 359.7687,215.7057 363.0017,214.611 366.2347,213.5158 369.4677,212.4203 372.7007,211.3243 375.9337,210.2279 379.1667,209.1311 382.3997,208.0338" style="fill:none;stroke:rgb(255,0,0);stroke-width:1;stroke-linejoin:bevel;stroke-dasharray:4,1" />
+  <polyline points="62.3333,314.4179 65.5663,311.8757 68.7993,309.1843 72.0323,306.4335 75.2653,303.6434 78.4983,300.8237 81.7313,297.9802 84.9643,295.1168 88.1973,292.2362 91.4303,289.3405 94.6633,286.4313 97.8963,283.5099 101.1292,280.5774 104.3622,277.6347 107.5952,274.6824 110.8282,271.7214 114.0612,268.7521 117.2942,265.775 120.5272,262.7907 123.7602,259.7993 126.9932,256.8014 130.2262,253.7973 133.4592,250.7871 136.6922,247.7713 139.9252,244.7499 143.1582,241.7233 146.3912,238.6916 149.6241,235.6551 152.8571,232.6139 156.0901,229.5681 159.3231,226.5179 162.5561,223.4635 165.7891,220.405 169.0221,217.3424 172.2551,214.276 175.4881,211.2059 178.7211,208.132 181.9541,205.0546 185.1871,201.9738 188.4201,198.8895 191.6531,195.8019 194.8861,192.7112 198.119,189.6172 201.352,186.5202 204.585,183.4202 207.818,180.3172 211.051,177.2114 214.284,174.1027 217.517,170.9913 220.75,167.8771 223.983,164.7604 227.216,161.641 230.449,158.519 233.682,155.3946 236.915,152.2676 240.148,149.1383 243.381,146.0066 246.6139,142.8725 249.8469,139.7362 253.0799,136.5976 256.3129,133.4568 259.5459,130.3138 262.7789,127.1686 266.0119,124.0213 269.2449,120.872 272.4779,117.7205 275.7109,114.5671 278.9439,111.4117 282.1769,108.2542 285.4099,105.0949 288.6429,101.9336 291.8759,98.7705 295.1088,95.6055 298.3418,92.4387 301.5748,89.27 304.8078,86.0996 308.0408,82.9274 311.2738,79.7534 314.5068,76.5777 317.7398,73.4004 320.9728,70.2213 324.2058,67.0406 327.4388,63.8583 330.6718,60.6743 333.9048,57.4887 337.1378,54.3016 340.3708,51.1129 343.6037,47.9226 346.8367,44.7308 350.0697,41.5375 353.3027,38.3427 356.5357,35.1464 359.7687,31.9486 363.0017,28.7494 366.2347,25.5488 369.4677,22.3467 372.7007,19.1432 375.9337,15.9383 379.1667,12.7321 382.3997,9.5245" style="fill:none;stroke:rgb(0,128,0);stroke-width:1;stroke-linejoin:bevel;stroke-dasharray:4,1" />
+  <polyline points="62.3333,312.3691 65.5663,312.1656 68.7993,311.9509 72.0323,311.7317 75.2653,311.5095 78.4983,311.2852 81.7313,311.059 84.9643,310.8314 88.1973,310.6025 91.4303,310.3724 94.6633,310.1414 97.8963,309.9094 101.1292,309.6766 104.3622,309.443 107.5952,309.2087 110.8282,308.9738 114.0612,308.7382 117.2942,308.5021 120.5272,308.2654 123.7602,308.0282 126.9932,307.7905 130.2262,307.5524 133.4592,307.3137 136.6922,307.0747 139.9252,306.8353 143.1582,306.5954 146.3912,306.3552 149.6241,306.1146 152.8571,305.8737 156.0901,305.6324 159.3231,305.3908 162.5561,305.1489 165.7891,304.9067 169.0221,304.6642 172.2551,304.4214 175.4881,304.1783 178.7211,303.9349 181.9541,303.6913 185.1871,303.4474 188.4201,303.2032 191.6531,302.9588 194.8861,302.7142 198.119,302.4694 201.352,302.2243 204.585,301.9789 207.818,301.7334 211.051,301.4877 214.284,301.2417 217.517,300.9955 220.75,300.7492 223.983,300.5026 227.216,300.2558 230.449,300.0089 233.682,299.7617 236.915,299.5144 240.148,299.2669 243.381,299.0192 246.6139,298.7714 249.8469,298.5234 253.0799,298.2752 256.3129,298.0268 259.5459,297.7783 262.7789,297.5296 266.0119,297.2808 269.2449,297.0318 272.4779,296.7826 275.7109,296.5333 278.9439,296.2839 282.1769,296.0343 285.4099,295.7845 288.6429,295.5347 291.8759,295.2846 295.1088,295.0345 298.3418,294.7842 301.5748,294.5337 304.8078,294.2832 308.0408,294.0325 311.2738,293.7817 314.5068,293.5307 317.7398,293.2796 320.9728,293.0284 324.2058,292.7771 327.4388,292.5256 330.6718,292.2741 333.9048,292.0224 337.1378,291.7706 340.3708,291.5186 343.6037,291.2666 346.8367,291.0145 350.0697,290.7622 353.3027,290.5098 356.5357,290.2573 359.7687,290.0047 363.0017,289.752 366.2347,289.4992 369.4677,289.2463 372.7007,288.9933 375.9337,288.7401 379.1667,288.4869 382.3997,288.2336" style="fill:none;stroke:rgb(0,0,255);stroke-width:1;stroke-linejoin:bevel;stroke-dasharray:4,1" />
+  <polygon points="60.725,8 384,8 384,315.95 60.725,315.95" style="fill:none;stroke:black;stroke-width:1" />
+  <polygon points="68.725,16 137.8312,16 137.8312,185.225 68.725,185.225" style="fill:none;stroke:none;" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,24)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">R</text>
+  <ellipse cx="84.725" cy="32.5125" rx="2" ry="2" style="fill:rgb(255,0,0);stroke:none;" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,41.025)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">G</text>
+  <ellipse cx="84.725" cy="49.5375" rx="2" ry="2" style="fill:rgb(0,128,0);stroke:none;" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,58.05)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">B</text>
+  <ellipse cx="84.725" cy="66.5625" rx="2" ry="2" style="fill:rgb(0,0,255);stroke:none;" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,75.075)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">RFit</text>
+  <polyline points="76.725,83.5875 92.725,83.5875" style="fill:none;stroke:rgb(255,0,0);stroke-width:1" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,92.1)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">GFit</text>
+  <polyline points="76.725,100.6125 92.725,100.6125" style="fill:none;stroke:rgb(0,128,0);stroke-width:1" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,109.125)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">BFit</text>
+  <polyline points="76.725,117.6375 92.725,117.6375" style="fill:none;stroke:rgb(0,0,255);stroke-width:1" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,126.15)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">RCorr</text>
+  <polyline points="76.725,134.6625 92.725,134.6625" style="fill:none;stroke:rgb(255,0,0);stroke-width:1;stroke-dasharray:4,1" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,143.175)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">GCorr</text>
+  <polyline points="76.725,151.6875 92.725,151.6875" style="fill:none;stroke:rgb(0,128,0);stroke-width:1;stroke-dasharray:4,1" />
+  <text dominant-baseline="hanging" text-anchor="start" transform="translate(96.725,160.2)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">BCorr</text>
+  <polyline points="76.725,168.7125 92.725,168.7125" style="fill:none;stroke:rgb(0,0,255);stroke-width:1;stroke-dasharray:4,1" />
+</svg>
