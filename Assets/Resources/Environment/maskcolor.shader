@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		// we use raw color vector to prevent unity doing any color conversion
+		// Raw color vector to prevent any Unity conversion or gamma correction.
 		col("Color", Vector) = (1,1,1,1)
 		maskradius("MaskRadius",Float) = 0.5
 		sigma("Sigma", Float) = 0.15

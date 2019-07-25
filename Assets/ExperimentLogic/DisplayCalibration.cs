@@ -128,7 +128,7 @@ namespace Experica
                         {
                             case "Intensity":
                                 // Measure Intensity Y, CIE x, y
-                                var m1 = spectroradiometer?.Measure("1", 7000) as Dictionary<string, double>;
+                                var m1 = spectroradiometer?.Measure("1", 8000) as Dictionary<string, double>;
                                 if (m1 != null)
                                 {
                                     foreach (var f in m1.Keys)
@@ -155,7 +155,7 @@ namespace Experica
                                 break;
                             case "Spectral":
                                 // Measure Peak λ, Integrated Spectral, Integrated Photon, λs, λ Intensities
-                                var m5 = spectroradiometer?.Measure("5", 9000) as Dictionary<string, object>;
+                                var m5 = spectroradiometer?.Measure("5", 10000) as Dictionary<string, object>;
                                 if (m5 != null)
                                 {
                                     foreach (var f in m5.Keys)

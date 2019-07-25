@@ -21,6 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using System;
 using System.Linq;
@@ -97,6 +98,7 @@ namespace Experica
                 sp.DiscardInBuffer();
                 sp.WriteLine(cmd);
             }
+
             var hr = timer.Timeout(x =>
             {
                 var r = x.Read();
@@ -144,7 +146,19 @@ namespace Experica
             {
                 // ErrorCode, UnitCode, Intensity Y, CIE x, y
                 case "1":
-                    var hr = cmdresp("M" + datareportformat, timeout_ms); // need at least 6s at BaudRate:9600
+                    sp.receiveddata = "";
+                        sp.DiscardInBuffer();
+                        sp.WriteLine("M" + datareportformat);
+
+                    Thread.Sleep(timeout_ms.Convert<int>());
+
+
+                    var r = sp.Read();
+                    var hr =  string.Join(",", r.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
+                    
+
+
+                    //var hr = cmdresp("M" + datareportformat, timeout_ms); // need at least 6s at BaudRate:9600
                     if (!string.IsNullOrEmpty(hr))
                     {
                         var names = new[] { "Error", "Unit", "Y", "x", "y" };
@@ -163,7 +177,7 @@ namespace Experica
                 // ErrorCode, UnitCode, Peak λ, Integrated Spectral, Integrated Photon, λs, λ Intensities
                 case "5":
                     cmdresp("M" + datareportformat, 0); // cmd and return, without reading response
-                    var timer = new Timer();
+                     timer = new Timer();
                     timer.Timeout(timeout_ms); // need at least 8s at BaudRate:9600
                     hr = cmdresp("", timeout_ms, false); // now the full response should be returned
                     if (!string.IsNullOrEmpty(hr))

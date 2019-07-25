@@ -1,24 +1,36 @@
 ID: BGColor
 Name: BGColor
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
+Subject_ID: m1901
+Subject_Name: m1901
+Subject_Species: Mice
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: Marker
-EnvParam: {}
+EnvParam:
+  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenToEye@Camera@OrthoCamera: 57
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  CLUT@Camera@OrthoCamera: true
+  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
+  BGSize@BackGround@BackGround: 1 1 1
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.88 -14 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: true
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
 CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
 Cond: 
 ExLogicPath: Experica.ConditionTestLogic
-RecordSession: V1e
-RecordSite: 3660
-DataDir: C:\
+RecordSession: V1a
+RecordSite: 3000
+DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
@@ -79,8 +91,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayType: CRT
-DisplayLatency: 180
+Display_ID: ''
 ResponseDelay: 20
 Version: 1
 Config: 

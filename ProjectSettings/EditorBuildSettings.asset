@@ -30,12 +30,12 @@ EditorBuildSettings:
     path: Assets/Environment/MarkerImageArray.unity
     guid: 4497716acc5d06f459a84a2282f741e8
   - enabled: 1
-    path: Assets/Environment/Grating.unity
-    guid: b415f7a600ca7314c9dfd208f1067244
-  - enabled: 1
     path: Assets/Environment/Marker.unity
     guid: 141c239c13eed7349ba7b385e23ebe59
   - enabled: 1
     path: Assets/Environment/Bar.unity
     guid: 1e228b5ebd5228c40b5b4d4e8cab04d6
+  - enabled: 1
+    path: Assets/Environment/Grating.unity
+    guid: b415f7a600ca7314c9dfd208f1067244
   m_configObjects: {}

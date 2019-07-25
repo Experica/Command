@@ -52,10 +52,10 @@ namespace Experica.Command
         public NetManager netmanager;
         public ExperimentManager exmanager;
         public AnalysisManager alsmanager;
-        public ControlManager ctrlmanager;                                  
+        public ControlManager ctrlmanager;
 
         // The Panels Physically created on the scene
-        public ControlPanel controlpanel;                                    
+        public ControlPanel controlpanel;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
@@ -98,14 +98,14 @@ namespace Experica.Command
         public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
         {
             CommandConfig cfg = null;
-            
+
             // Check if the file exists at the specified path, if so, load it.
             if (File.Exists(configfilepath))
             {
                 // Deserialize the text using extension method.
                 cfg = configfilepath.ReadYamlFile<CommandConfig>();
             }
-            
+
             // Use default config settings
             if (cfg == null)
             {
@@ -531,7 +531,7 @@ namespace Experica.Command
                 }
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>

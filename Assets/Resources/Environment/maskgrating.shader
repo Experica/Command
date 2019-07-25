@@ -4,10 +4,11 @@
 	{
 		ori("Orientation",Float) = 0
 		orioffset("OrientationOffset",Float) = 0
-		// we use raw color vector to prevent unity doing any color conversion
+		// Raw color vector to prevent any Unity conversion or gamma correction.
 		minc("MinColor",Vector) = (0,0,0,1)
 		maxc("MaxColor",Vector) = (1,1,1,1)
-		cdist("ColorDistance",Vector) = (1,1,1,0)
+		// Color difference is in [-1,1], so here use Vector instead of Color, to prevent conversion and gamma correction
+		cdiff("ColorDifference",Vector) = (1,1,1,0)
 		sf("SpatialFreq", Float) = 0.2
 		tf("TemporalFreq", Float) = 2
 		t("Time", Float) = 0
@@ -37,7 +38,7 @@
 	        float orioffset;
 			float4 minc;
 			float4 maxc;
-			float4 cdist;
+			float4 cdiff;
 			float sf;
 			float tf;
 			float t;
@@ -104,21 +105,21 @@
 				}
 				else if (gratingtype == 1)
 				{
-					c = cdist*((sin(y* pi2) + 1) / 2) + minc;
+					c = cdiff*((sin(y* pi2) + 1) / 2) + minc;
 				}
 				else if (gratingtype == 2)
 				{
 					if (y < 0.25)
 					{
-						c=cdist*(y * 2 + 0.5) + minc;
+						c=cdiff*(y * 2 + 0.5) + minc;
 					}
 					else if (y < 0.75)
 					{
-						c=cdist*(1 - (y - 0.25) * 2) + minc;
+						c=cdiff*(1 - (y - 0.25) * 2) + minc;
 					}
 					else
 					{
-						c=cdist*((y - 0.75) * 2) + minc;
+						c=cdiff*((y - 0.75) * 2) + minc;
 					}
 				}
 

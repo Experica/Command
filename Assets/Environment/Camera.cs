@@ -35,8 +35,6 @@ namespace Experica
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Camera : NetworkBehaviour
     {
-        [SyncVar(hook = "onbgcolor")]
-        public Color BGColor = Color.gray;
         [SyncVar(hook = "onscreenhalfheight")]
         public float ScreenHalfHeight = 15;
         [SyncVar(hook = "onscreentoeye")]
@@ -69,19 +67,6 @@ namespace Experica
 #if COMMAND
             CameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
-        }
-
-        void onbgcolor(Color c)
-        {
-            OnBGColor(c);
-        }
-        public virtual void OnBGColor(Color c)
-        {
-            if (camera != null)
-            {
-                camera.backgroundColor = c;
-            }
-            BGColor = c;
         }
 
         void onscreenhalfheight(float shh)

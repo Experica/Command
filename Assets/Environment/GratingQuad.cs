@@ -21,7 +21,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
 
 namespace Experica
 {
@@ -98,7 +97,7 @@ namespace Experica
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);
-            renderer.material.SetColor("cdist", maxc - minc);
+            renderer.material.SetColor("cdiff", maxc - minc);
             Luminance = l;
         }
 
@@ -113,7 +112,7 @@ namespace Experica
 
             renderer.material.SetColor("minc", minc);
             renderer.material.SetColor("maxc", maxc);
-            renderer.material.SetColor("cdist", maxc - minc);
+            renderer.material.SetColor("cdiff", maxc - minc);
             Contrast = ct;
         }
 
@@ -154,7 +153,7 @@ namespace Experica
         public virtual void OnMinColor(Color c)
         {
             renderer.material.SetColor("minc", c);
-            renderer.material.SetColor("cdist", MaxColor - c);
+            renderer.material.SetColor("cdiff", MaxColor - c);
             MinColor = c;
         }
 
@@ -165,7 +164,7 @@ namespace Experica
         public virtual void OnMaxColor(Color c)
         {
             renderer.material.SetColor("maxc", c);
-            renderer.material.SetColor("cdist", c - MinColor);
+            renderer.material.SetColor("cdiff", c - MinColor);
             MaxColor = c;
         }
 
