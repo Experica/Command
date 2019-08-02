@@ -1,5 +1,5 @@
-using Dierckx,LinearAlgebra
 include("color_data.jl")
+using Dierckx,LinearAlgebra
 
 "Tristimulus values of digital color, based on spectral measurement and matching functions"
 function matchcolors(C,λ,I,cmf)
@@ -216,7 +216,14 @@ end
 function XYZ2xyY(m)
     xyz = divsum(trivectors(m))
     xyz[3,:]=m[2,:]
+    replace!(xyz,NaN=>0.0)
     return xyz
+end
+function xyY2XYZ(m)
+    s = m[3:3,:]./m[2:2,:]
+    XYZ = s.*vcat(m[1:2,:], 1 .- sum(m[1:2,:],dims=1))
+    replace!(XYZ,NaN=>0.0)
+    return XYZ
 end
 function desaturate2gamut!(vs)
     for i in 1:size(vs,2)
@@ -232,7 +239,7 @@ function desaturate2gamut!(vs)
     return vs
 end
 function cam16nonlinearcompression(x,Fl)
-    p = (Fl*abs(x)/100)^0.42
+    p = (Fl*abs(x)/100.0)^0.42
     sign(x)*400p/(27.13 + p) + 0.1
 end
 """
@@ -243,10 +250,10 @@ Yb: Background in test conditions
 La: Luminance of test adapting field (cd/m2)
 Surround: Surround condition {Average, Dim, Dark}, Nc and F are functions of c, and their values can be linearly interpolated
 """
-function cam16view(;W=[95.05,100,108.88],Surround=:Average,La=40,Yb=20)
+function cam16view(;W=100*WP_D65,Surround=:Average,La=40,Yb=20)
     F,c,Nc = cam16surround[cam16surround[:,1].==Surround,2:end]
-    k = 1/(5La + 1)
-    Fl = (0.2*k^4)*5La + (0.1*(1 - k^4)^2)*(5La)^(1/3)
+    k = 1.0/(5La + 1)
+    Fl = La*k^4 + 0.1*(1 - k^4)^2 * (5La)^(1/3)
 
     Yw = W[2]
     n = Yb/Yw
@@ -290,12 +297,11 @@ function XYZ2CAM16(XYZ;Fl,Nc,Ncb,Nbb,n,c,z,Da,Aw)
 
     #et = 0.25 .* (cos.(deg2rad.(h′) .+ 2) .+ 3.8)
     et = 0.25 .* (cos.(h .+ 2) .+ 3.8)
-
     t = (50000/13)*Nc*Ncb .* et .* sqrt.(a.^2 .+ b.^2) ./ ([1 1 21/20]*RGBa)
     A = Nbb.*([2 1 1/20]*RGBa .- 0.305)
 
     J = 100 .* (A./Aw).^(c*z)
-    Q = (4/c) .* sqrt.(J./100) .* (Aw + 4) .* Fl^0.25
+    Q = (4/c) .* sqrt.(J./100) .* (Aw + 4)*Fl^0.25
     C = t.^0.9 .* sqrt.(J./100) .* (1.64 - 0.29^n)^0.73
     M = (Fl^0.25).*C
     s = 100 .* sqrt.(M./Q)
@@ -307,8 +313,8 @@ CAM16 Uniform Color Space in polar[J′, M′, h] or cartesian[J′, a′, b′]
 Luo, M.R., Cui, G., and Li, C. (2006). Uniform colour spaces based on CIECAM02 colour appearance model. Color Research & Application 31, 320–330.
 """
 function CAM16UCS(J,M,h;c1=0.007,c2=0.0228,form=:cartesian)
-    J′ = J.*(1 + 100c1) ./ (1 .+ c1.*J)
-    M′ = (1/c2).*log.(1 .+ c2.*M)
+    J′ = (1 + 100c1).*J ./ (1 .+ c1.*J)
+    M′ = log.(1 .+ c2.*M) ./ c2
     a′ = M′.*cos.(h)
     b′ = M′.*sin.(h)
     return form == :cartesian ? vcat(J′,a′,b′) : vcat(J′,M′,h)

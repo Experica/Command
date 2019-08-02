@@ -36,6 +36,8 @@ foreach(i->savefig("Color Matching Functions_xyz(10deg)$i"),[".png",".svg"])
 
 
 
+# ASUS ROG Swift PG279Q IPS LCD
+displayname = "ROGPG279Q"
 # ViewSonic VX3276mhd IPS LCD
 displayname = "VX3276mhd"
 # Sony Trinitron CRT
@@ -99,12 +101,6 @@ s[Axis][:names,:axisnames]=("R / X","G / Y","B / Z")
 record(s,joinpath(resultdir,"Unit XYZ To RGB Space.mp4"),1:360/5,framerate=12) do i
     rotate_cam!(s,5pi/180,0.0,0.0)
 end
-
-xyY_rgb = XYZ2xyY(XYZ_rgb)
-
-s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-Makie.scatter!(xyY_rgb[1,:],xyY_rgb[2,:],xyY_rgb[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-
 
 # Transformation between LMS and Cone Contrast
 bg = [0.5,0.5,0.5]
@@ -332,7 +328,6 @@ record(s,joinpath(resultdir,"DKLIsoluminancePlane_RGBSpace.mp4"),1:360/5,framera
 end
 
 
-
 # rgb color matching chromaticity
 ploc = divsum(hcat([matchlambda(w,sbrgb10) for w in sbrgb_primary]...))
 wloc = divsum(hcat([matchlambda(w,sbrgb10) for w in 390:830]...))
@@ -367,6 +362,8 @@ xyzToRGB ./= xyzToRGB*xyz_white
 rgb_realxyz = desaturate2gamut!(xyzToRGB*realxyz)
 gamuttriangle = [xyz_rgb_primary xyz_rgb_primary[:,1:1]]
 
+s = Makie.scatter(realxyz[1,:],realxyz[2,:],realxyz[3,:],color=[RGBA(rgb_realxyz[:,i]...,1) for i in 1:size(rgb_realxyz,2)],markersize=0.005,transparency=true)
+
 s = Makie.scatter(realxy[1,:],realxy[2,:],color=[RGBA(rgb_realxyz[:,i]...,1) for i in 1:size(rgb_realxyz,2)],markersize=0.005,transparency=true,limits = FRect(0,0,0.8,0.8))
 Makie.lines!(wloc[1,:],wloc[2,:],color=:black,linewidth=4)
 Makie.scatter!(awloc[1,:],awloc[2,:],color=:black,markersize=0.01)
@@ -379,19 +376,24 @@ Makie.save(joinpath(resultdir,"RGB gamut in CIE xy chromaticity.png"),s)
 
 # CIECAM16 Uniform Color Space
 vc = cam16view(Surround=:Dark)
-cam = XYZ2CAM16(trivectors(100*XYZ_rgb);vc...)
+cam = XYZ2CAM16(100*trivectors(XYZ_rgb);vc...)
 camucs = CAM16UCS(cam.J,cam.M,cam.h,form=:cartesian)
-
-cami = CAM16UCSinv(camucs,form=:cartesian)
-t = CAM162XYZ(cami.J,cami.M,cami.h;vc...)
-
 
 s=Makie.scatter(camucs[1,:],camucs[2,:],camucs[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
 s.center=false
-s[Axis][:names,:axisnames]=("J","a","b")
-record(s,"Unit LMS To DKL$bg Space.mp4",1:360/5,framerate=12) do i
+s[Axis][:names,:axisnames]=("J′","a′","b′")
+record(s,"CAM16 Uniform Color Space.mp4",1:360/5,framerate=12) do i
     rotate_cam!(s,5pi/180,0.0,0.0)
 end
+
+
+
+s = Makie.scatter(camucs[1,:],camucs[2,:],camucs[3,:],color=[RGBA(rgb_realxyz[:,i]...,1) for i in 1:size(rgb_realxyz,2)],markersize=0.005,transparency=true)
+
+
+
+cami = CAM16UCSinv(camucs,form=:cartesian)
+t = CAM162XYZ(cami.J,cami.M,cami.h;vc...)
 
 s=Makie.lines(StatsMakie.histogram(nbins=200),cam02.J,colormap=:reds)
 
@@ -407,42 +409,17 @@ t.-trivectors(100*XYZ_rgb)
 sum(t.-trivectors(100*XYZ_rgb))
 
 
+xyz_rgb = divsum(trivectors(XYZ_rgb))
 
 
-s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-Makie.scatter!(XYZ_rgb[1,:],XYZ_rgb[2,:],XYZ_rgb[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
 
-
-s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-Makie.scatter!(xyz_rgb[1,:],xyz_rgb[2,:],xyz_rgb[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
+s = Makie.scatter(realxyz[1,:],realxyz[2,:],realxyz[3,:],color=[RGBA(rgb_realxyz[:,i]...,1) for i in 1:size(rgb_realxyz,2)],markersize=0.005,transparency=true)
 
 s.center=false
 s[Axis][:names,:axisnames]=("R / L","G / M","B / S")
 record(s,joinpath(resultdir,"Unit RGB To LMS Space.mp4"),1:360/5,framerate=12) do i
     rotate_cam!(s,5pi/180,0.0,0.0)
 end
-
-s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-Makie.scatter!(rgb_lms[1,:],rgb_lms[2,:],rgb_lms[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
-s.center=false
-s[Axis][:names,:axisnames]=("R / L","G / M","B / S")
-record(s,joinpath(resultdir,"Unit LMS To RGB Space.mp4"),1:360/5,framerate=12) do i
-    rotate_cam!(s,5pi/180,0.0,0.0)
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -520,94 +497,3 @@ s=Makie.scatter(maxc[1,:],maxc[2,:],maxc[3,:],color=[RGB(maxc[:,i]...) for i in 
 [RGB(minc[:,i]...) for i in 1:size(minc,2)]
 
 [RGB(maxc[:,i]...) for i in 1:size(maxc,2)]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Transformation between differential LMS and DKL Spaces
-bg = [0.5,0.5,0.5]
-dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
-dkl_lms = dLMSToDKL*(ucm.-bg)
-lms_dkl = DKLTodLMS*(ucm.-bg)
-
-s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
-Makie.scatter!(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
-s[Axis][:names,:axisnames]=("dL / L+M","dM / L-M","dS / S-(L+M)")
-s.center=false
-Makie.save("dLMS To DKL$bg Space.png",s)
-
-record(s,"dLMS To DKL$bg Space.mp4",1:360/5,framerate=12) do i
-    rotate_cam!(s,5pi/180,0.0,0.0)
-end
-
-s=Makie.scatter(ucm[1,:].-bg[1],ucm[2,:].-bg[2],ucm[3,:].-bg[3],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
-Makie.scatter!(lms_dkl[1,:],lms_dkl[2,:],lms_dkl[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
-s[Axis][:names,:axisnames]=("dL / L+M","dM / L-M","dS / S-(L+M)")
-s.center=false
-Makie.save("DKL$bg To dLMS Space.png",s)
-
-record(s,"DKL$bg To dLMS Space.mp4",1:360/5,framerate=12) do i
-    rotate_cam!(s,5pi/180,0.0,0.0)
-end
-
-bg = RGBToLMS*[0.5,0.5,0.5]
-dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
-dkl_lms = dLMSToDKL*(lms_rgb.-bg)
-
-s=Makie.scatter(lms_rgb[1,:],lms_rgb[2,:],lms_rgb[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
-Makie.scatter!(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,1) for i in ucs],markersize=0.01,transparency=true)
-s[Axis][:names,:axisnames]=("L / L+M","M / L-M","S / S-(L+M)")
-s.center=false
-Makie.save(joinpath(resultdir,"LMS To DKL$bg Space.png"),s)
-
-record(s,joinpath(resultdir,"LMS To DKL$bg Space.mp4"),1:360/5,framerate=12) do i
-    rotate_cam!(s,5pi/180,0.0,0.0)
-end
-
-# DKL Isolating RGB Color through Gray [0.5, 0.5, 0.5]
-bg = [0.5,0.5,0.5]
-dLMSToDKL,DKLTodLMS = dLMSDKLMatrix(bg,isnorm=true)
-DKLIsoLMS = DKLTodLMS*[1 0 0;
-                       0 1 0;
-                       0 0 1]
-
-#DKLIsoLMS .+= bg
-DKLIsoLMS./=maximum(abs.(DKLIsoLMS),dims=1)
-
-mr = -0.5:0.001:0.5
-Disos = hcat([collect(mr*DKLIsoLMS[i,1].+0.5) for i=1:3]...)'
-Disosc=[RGB(Disos[:,i]...) for i in 1:size(Disos,2)]
-Disosdkl=dLMSToDKL*(Disos.-bg)
-
-Kisos = hcat([collect(mr*DKLIsoLMS[i,2].+0.5) for i=1:3]...)'
-Kisosc=[RGB(Kisos[:,i]...) for i in 1:size(Kisos,2)]
-Kisosdkl=dLMSToDKL*(Kisos.-bg)
-
-Lisos = hcat([collect(mr*DKLIsoLMS[i,3].+0.5) for i=1:3]...)'
-Lisosc = [RGB(Lisos[:,i]...) for i in 1:size(Lisos,2)]
-Lisosdkl=dLMSToDKL*(Lisos.-bg)
-
-s=Makie.scatter(dkl_lms[1,:],dkl_lms[2,:],dkl_lms[3,:],color=[RGBA(i...,0.1) for i in ucs],markersize=0.01,transparency=true)
-#Makie.scatter!(DKLTodLMS[1,:],DKLTodLMS[2,:],DKLTodLMS[3,:],color=:black,markersize=0.1,transparency=true)
-#Makie.arrows!([0],[0],[0],DKLTodLMS[1:1,1],DKLTodLMS[2:2,1],DKLTodLMS[3:3,1])
-
-Makie.scatter!(Disosdkl[1,:],Disosdkl[2,:],Disosdkl[3,:],color=Disosc,markersize=0.01,transparency=true)
-Makie.scatter!(Kisosdkl[1,:],Kisosdkl[2,:],Kisosdkl[3,:],color=Kisosc,markersize=0.01,transparency=true)
-Makie.scatter!(Lisosdkl[1,:],Lisosdkl[2,:],Lisosdkl[3,:],color=Lisosc,markersize=0.01,transparency=true)
-s[Axis][:names,:axisnames]=("L","M","S")
-s.center=false
-Makie.save(joinpath(resultdir,"ConeIsolating_ThroughGray_LMSSpace.png"),s)
