@@ -1,6 +1,6 @@
 # Human color data from http://www.cvrl.org/
 
-# 2-deg cone fundamentals based on the Stiles & Burch 10-deg CMFs (adjusted to 2-deg), Stockman & Sharpe (2000), Linear Energy
+"2-deg cone fundamentals based on the Stiles & Burch 10-deg CMFs (adjusted to 2-deg), Stockman & Sharpe (2000), Linear Energy"
 const sscone2le =
    [390.0  4.15003360E-04  3.68349248E-04  9.54728799E-03;
     390.1  4.23071834E-04  3.75656271E-04  9.72488908E-03;
@@ -4403,7 +4403,7 @@ const sscone2le =
     829.8  9.85561425E-07  9.63906446E-08  0.0;
     829.9  9.79916173E-07  9.58643834E-08  0.0;
     830.0  9.74306403E-07  9.53411481E-08  0.0]
-# 10-deg cone fundamentals based on the Stiles & Burch 10-deg CMFs, Stockman & Sharpe (2000), Linear Energy
+"10-deg cone fundamentals based on the Stiles & Burch 10-deg CMFs, Stockman & Sharpe (2000), Linear Energy"
 const sscone10le =
   [390.0  4.07619067E-04  3.58227395E-04  6.14264795E-03;
    390.1  4.15826325E-04  3.65580739E-04  6.26169815E-03;
@@ -8806,8 +8806,8 @@ const sscone10le =
    829.8  8.83092365E-07  8.58246317E-08  0.0;
    829.9  8.78034051E-07  8.53560577E-08  0.0;
    830.0  8.73007530E-07  8.48901776E-08  0.0]
-# 2-deg CIE "physiologically-relevant" luminous efficiency functions consistent with the Stockman & Sharpe 2-deg cone fundamentals, Linear Energy
-v2le =
+"""2-deg CIE "physiologically-relevant" luminous efficiency functions consistent with the Stockman & Sharpe 2-deg cone fundamentals, Linear Energy"""
+const v2le =
   [390.0  4.14616E-04;
    390.1  4.22728E-04;
    390.2  4.30990E-04;
@@ -13209,8 +13209,8 @@ v2le =
    829.8  7.13516E-07;
    829.9  7.09438E-07;
    830.0  7.05386E-07]
-# 10-deg CIE "physiologically-relevant" luminous efficiency functions consistent with the Stockman & Sharpe 10-deg cone fundamentals, Linear Energy
-v10le =
+"""10-deg CIE "physiologically-relevant" luminous efficiency functions consistent with the Stockman & Sharpe 10-deg cone fundamentals, Linear Energy"""
+const v10le =
   [390.0  4.07678E-04;
    390.1  4.15936E-04;
    390.2  4.24353E-04;
@@ -17612,8 +17612,9 @@ v10le =
    829.8  6.41852E-07;
    829.9  6.38183E-07;
    830.0  6.34538E-07]
-# Stiles & Burch (1955) 2-deg rgb color matching functions
-const primary_rgb = [645.16,526.32,444.44]
+"Stiles & Burch (1955, 1959) color matching primaries"
+const sbrgb_primary = [645.16,526.32,444.44]
+"Stiles & Burch (1955) 2-deg rgb color matching functions"
 const sbrgb2 =
    [390.0  1.83970e-003  -4.53930e-004  1.21520e-002;
     395.0  4.61530e-003  -1.04640e-003  3.11100e-002;
@@ -17684,7 +17685,7 @@ const sbrgb2 =
     720.0  6.51770e-003  -5.76770e-005  6.10570e-006;
     725.0  4.53770e-003  -3.90030e-005  5.02770e-006;
     730.0  3.17420e-003  -2.65110e-005  4.12510e-006]
-# Stiles & Burch (1959) 10-deg rgb color matching functions
+"Stiles & Burch (1959) 10-deg rgb color matching functions"
 const sbrgb10 =
    [390.0  1.5000E-03  -4.0000E-04  6.2000E-03;
     395.0  3.8000E-03  -1.0000E-03  1.6100E-02;
@@ -17775,11 +17776,53 @@ const sbrgb10 =
     820.0  8.1800E-06  -1.0900E-08  1.5200E-10;
     825.0  6.0900E-06  -5.7000E-09  8.6400E-11;
     830.0  4.5500E-06  -2.7700E-09  4.4200E-11]
-# CIE (2012) 2-deg XYZ “physiologically-relevant” color matching function Matrix
+"CIE (2012) 2-deg XYZ “physiologically-relevant” color matching function Matrix"
 const LMSToXYZ2 =   [1.94735469  -1.41445123  0.36476327;
                      0.68990272   0.34832189  0.0;
                      0.0          0.0         1.93485343]
-# CIE (2012) 10-deg XYZ “physiologically-relevant” color matching function Matrix
+"CIE (2012) 10-deg XYZ “physiologically-relevant” color matching function Matrix"
 const LMSToXYZ10 =  [1.93986443  -1.34664359  0.43044935;
                      0.69283932   0.34967567  0.0;
                      0.0          0.0         2.14687945]
+"CAM16 Surround Parameters [Surround F c Nc]"
+const cam16surround = [:Average  1.0  0.69  1.0;
+                       :Dim      0.9  0.59  0.9;
+                       :Dark     0.8  0.525 0.8]
+"CIE 2016 Chromatic Adaptation Transformation"
+const cat16 = [0.401288 0.650173 -0.051461;
+              -0.250268 1.204414  0.045854;
+              -0.002079 0.048952  0.953127]
+"CIE 2016 Chromatic Adaptation Inverse Transformation"
+const cat16inv = [1.86206786 -1.01125463  0.14918677;
+                  0.38752654  0.62144744 -0.00897398;
+                 -0.01584150 -0.03412294  1.04996444]
+"CAM16 [h,e,H] for Unique Hue [Red Yellow Green Blue Red]"
+const cam16uniquehue = [20.14 90.00 164.25 237.53 380.14;
+                        0.8   0.7   1.0    1.2    0.8;
+                        0.0   100.0 200.0  300.0  400.0]
+
+
+
+const WP_A   = XYZ(1.09850, 1.00000, 0.35585)
+
+const WP_B   = XYZ(0.99072, 1.00000, 0.85223)
+
+const WP_C   = XYZ(0.98074, 1.00000, 1.18232)
+
+const WP_D50 = XYZ(0.96422, 1.00000, 0.82521)
+
+const WP_D55 = XYZ(0.95682, 1.00000, 0.92149)
+
+const WP_D65 = XYZ(0.95047, 1.00000, 1.08883)
+
+const WP_D75 = XYZ(0.94972, 1.00000, 1.22638)
+
+const WP_E   = XYZ(1.00000, 1.00000, 1.00000)
+
+const WP_F2  = XYZ(0.99186, 1.00000, 0.67393)
+
+const WP_F7  = XYZ(0.95041, 1.00000, 1.08747)
+
+const WP_F11 = XYZ(1.00962, 1.00000, 0.64350)
+
+const WP_DEFAULT = WP_D65

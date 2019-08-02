@@ -1,7 +1,7 @@
 using Plots,YAML,Makie,StatsMakie
-include("algorithm.jl")
+include("color_algorithm.jl")
 
-"Get RGB color spectral measured from a specific display"
+"Get digital RGB color spectral measured from a specific display"
 function RGBSpectral(measurement)
     C = map(i->parse.(Float64,split(i)),measurement["Color"])
     λ = measurement["WL"]
@@ -10,27 +10,27 @@ function RGBSpectral(measurement)
 end
 
 # plot cone fundamentals
-Plots.plot(linss2_10e[:,1],linss2_10e[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Sensitivity",label=["L" "M" "S"],title="Cone Fundamentals(2deg)")
+Plots.plot(sscone2le[:,1],sscone2le[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Sensitivity",label=["L" "M" "S"],title="Cone Fundamentals(2deg)")
 foreach(i->savefig("Cone Fundamentals(2deg)$i"),[".png",".svg"])
 
-Plots.plot(linss10e[:,1],linss10e[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Sensitivity",label=["L" "M" "S"],title="Cone Fundamentals(10deg)")
+Plots.plot(sscone10le[:,1],sscone10le[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Sensitivity",label=["L" "M" "S"],title="Cone Fundamentals(10deg)")
 foreach(i->savefig("Cone Fundamentals(10deg)$i"),[".png",".svg"])
 
 # plot rgb color matching funcionts
 Plots.plot(sbrgb2[:,1],sbrgb2[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Tristimulus Value",label=["r" "g" "b"],title="Color Matching Functions_rgb(2deg)")
-Plots.scatter!(primary_rgb',zeros(3)',markersize=8,markerstrokewidth=0,markercolor=["Red" "Green" "Blue"],legend=false)
+Plots.scatter!(sbrgb_primary',zeros(3)',markersize=8,markerstrokewidth=0,markercolor=["Red" "Green" "Blue"],legend=false)
 foreach(i->savefig("Color Matching Functions_rgb(2deg)$i"),[".png",".svg"])
 
 Plots.plot(sbrgb10[:,1],sbrgb10[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Tristimulus Value",label=["r" "g" "b"],title="Color Matching Functions_rgb(10deg)")
-Plots.scatter!(primary_rgb',zeros(3)',markersize=8,markerstrokewidth=0,markercolor=["Red" "Green" "Blue"],legend=false)
+Plots.scatter!(sbrgb_primary',zeros(3)',markersize=8,markerstrokewidth=0,markercolor=["Red" "Green" "Blue"],legend=false)
 foreach(i->savefig("Color Matching Functions_rgb(10deg)$i"),[".png",".svg"])
 
 # plot xyz color matching funcionts
-xyz2 = getcmf(linss2_10e,LMSToXYZ2)
+xyz2 = newcmf(sscone2le,LMSToXYZ2)
 Plots.plot(xyz2[:,1],xyz2[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Tristimulus Value",label=["x" "y" "z"],title="Color Matching Functions_xyz(2deg)")
 foreach(i->savefig("Color Matching Functions_xyz(2deg)$i"),[".png",".svg"])
 
-xyz10 = getcmf(linss10e,LMSToXYZ10)
+xyz10 = newcmf(sscone2le,LMSToXYZ10)
 Plots.plot(xyz10[:,1],xyz10[:,2:end],linewidth=2,color=["Red" "Green" "Blue"],xlabel="Wavelength (nm)",ylabel="Tristimulus Value",label=["x" "y" "z"],title="Color Matching Functions_xyz(10deg)")
 foreach(i->savefig("Color Matching Functions_xyz(10deg)$i"),[".png",".svg"])
 
@@ -44,26 +44,25 @@ displayname = "Trinitron"
 resultdir = "./$displayname"
 mkpath(resultdir)
 
-config = YAML.load_file("CommandConfig_SNL-C.yaml")
+config = YAML.load_file("CommandConfig - Display Measurement.yaml")
 RGBToLMS,LMSToRGB = RGBLMSMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
 RGBToXYZ,XYZToRGB = RGBXYZMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
 
 
-# unit cube colors
+# unit cube digital colors
 ur=0:0.01:1
 uc=[[i,j,k] for i=ur,j=ur,k=ur][:]
 ucm=hcat(uc...)
 uqcm=quavectors(ucm)
 
-# Transformation between specific display RGB and LMS Spaces
-lms_rgb = RGBToLMS*uqcm
-rgb_lms = LMSToRGB*uqcm
-
 s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGB(i...) for i in uc],markersize=0.01,transparency=true)
-s.center=false
 record(s,"Unit Color Space.mp4",1:360/5,framerate=12) do i
     rotate_cam!(s,5pi/180,0.0,0.0)
 end
+
+# Transformation between specific display RGB and LMS Spaces
+lms_rgb = RGBToLMS*uqcm
+rgb_lms = LMSToRGB*uqcm
 
 s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
 Makie.scatter!(lms_rgb[1,:],lms_rgb[2,:],lms_rgb[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
@@ -116,7 +115,7 @@ lms_cc = ContrastToLMS*uqcm
 s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
 Makie.scatter!(cc_lms[1,:],cc_lms[2,:],cc_lms[3,:],color=[RGBA(i...,0.1) for i in uc],markersize=0.01,transparency=true)
 
-s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
+s=Makie.scatter(ucm[1,:],ucm[2,:],ucm[3,:],color=[RGBA(i...,0.1) for i in uc],markersize=0.01,transparency=true)
 Makie.scatter!(lms_cc[1,:],lms_cc[2,:],lms_cc[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
 
 bg = RGBToLMS*[0.5,0.5,0.5,1]
@@ -186,7 +185,7 @@ ConeIsoRGBVec = trimatrix(LMSToRGB)
 ConeIsoRGBVec./=maximum(abs.(ConeIsoRGBVec),dims=1)
 # since through color is the center of RGB cube, the line intersects at two symmatric points on the faces of unit cube
 minc = th.-0.5*ConeIsoRGBVec;maxc = th.+0.5*ConeIsoRGBVec
-ConeIsoRGB =map((i,j)->collect(i.+j), minc,[0:0.0001:1].*(maxc.-minc))
+ConeIsoRGB =map((i,j)->collect(i.+j), minc,[0:0.001:1].*(maxc.-minc))
 
 Liso = hcat(ConeIsoRGB[:,1]...)'
 Lisoc = [RGB(Liso[:,i]...) for i in 1:size(Liso,2)]
@@ -231,7 +230,7 @@ DKLIsoRGBVec = trimatrix(LMSToRGB*DKLToLMS)
 DKLIsoRGBVec./=maximum(abs.(DKLIsoRGBVec),dims=1)
 # since through color is the center of RGB cube, the line intersects at two symmatric points on the faces of unit cube
 minc = th.-0.5*DKLIsoRGBVec;maxc = th.+0.5*DKLIsoRGBVec
-DKLIsoRGB =map((i,j)->collect(i.+j), minc,[0:0.0001:1].*(maxc.-minc))
+DKLIsoRGB =map((i,j)->collect(i.+j), minc,[0:0.001:1].*(maxc.-minc))
 
 Lumiso = hcat(DKLIsoRGB[:,1]...)'
 Lumisoc = [RGB(Lumiso[:,i]...) for i in 1:size(Lumiso,2)]
@@ -335,8 +334,8 @@ end
 
 
 # rgb color matching chromaticity
-ploc = divsum(hcat([lambdamatch(w,sbrgb10) for w in primary_rgb]...))
-wloc = divsum(hcat([lambdamatch(w,sbrgb10) for w in 390:830]...))
+ploc = divsum(hcat([matchlambda(w,sbrgb10) for w in sbrgb_primary]...))
+wloc = divsum(hcat([matchlambda(w,sbrgb10) for w in 390:830]...))
 
 s=Makie.lines(wloc[1,:],wloc[2,:],wloc[3,:],color=:black,linewidth=3,transparency=true)
 Makie.scatter!(ploc[1,:],ploc[2,:],ploc[3,:],color=[:red,:green,:blue],markersize=0.05,transparency=true)
@@ -344,7 +343,7 @@ Makie.lines!(wloc[1,:],wloc[2,:],color=:gray40,linewidth=3,transparency=true)
 Makie.scatter!(ploc[1,:],ploc[2,:],color=[:red,:green,:blue],markersize=0.05,transparency=true)
 
 aw =  [450,500,550,600]
-awloc = divsum(hcat([lambdamatch(w,sbrgb10) for w in aw]...))
+awloc = divsum(hcat([matchlambda(w,sbrgb10) for w in aw]...))
 Makie.scatter!(awloc[1,:],awloc[2,:],color=:gray20,markersize=0.03,transparency=true)
 annotations!(string.(" ",aw),Point2.(awloc[1,:],awloc[2,:]),textsize=0.08)
 s[Axis][:names,:axisnames]=("r","g","b")
@@ -354,89 +353,59 @@ end
 
 
 # xyz color matching chromaticity
-wloc = divsum(hcat([lambdamatch(w,xyz10) for w in 390:830]...))
+d = 250
+wloc = divsum(hcat([matchlambda(w,xyz10) for w in 390:0.15:830]...))
 aw =  [450,500,550,600,650]
-awloc = divsum(hcat([lambdamatch(w,xyz10) for w in aw]...))
-xyz_rgb =divsum(trivectors(XYZ_rgb))
+awloc = divsum(hcat([matchlambda(w,xyz10) for w in aw]...))
+realxy = hcat([linepoints(wloc[1:2,1],wloc[1:2,i],d=d) for i in 2:size(wloc,2)]...)
+realxyz = vcat(realxy,1 .- sum(realxy,dims=1))
 
-s=Makie.lines(wloc[1,:],wloc[2,:],color=:black,linewidth=1.5,limits = FRect(0,0,0.8,0.8))
+xyz_rgb_primary = divsum(trimatrix(RGBToXYZ))
+xyz_white = divsum(trimatrix(RGBToXYZ)*[1,1,1])
+xyzToRGB = inv(xyz_rgb_primary)
+xyzToRGB ./= xyzToRGB*xyz_white
+rgb_realxyz = desaturate2gamut!(xyzToRGB*realxyz)
+gamuttriangle = [xyz_rgb_primary xyz_rgb_primary[:,1:1]]
+
+s = Makie.scatter(realxy[1,:],realxy[2,:],color=[RGBA(rgb_realxyz[:,i]...,1) for i in 1:size(rgb_realxyz,2)],markersize=0.005,transparency=true,limits = FRect(0,0,0.8,0.8))
+Makie.lines!(wloc[1,:],wloc[2,:],color=:black,linewidth=4)
 Makie.scatter!(awloc[1,:],awloc[2,:],color=:black,markersize=0.01)
 annotations!(string.(aw),[Point2(awloc[1,i]>0.3 ? awloc[1,i]+0.01 : awloc[1,i]-0.05,awloc[2,i]) for i in 1:length(aw)],textsize=0.02)
-Makie.scatter!(xyz_rgb[1,:],xyz_rgb[2,:],color=[RGB(i...) for i in uc],markersize=0.01,transparency=true,scale_plot=false)
+Makie.lines!(gamuttriangle[1,:],gamuttriangle[2,:],gamuttriangle[3,:],linewidth=0.5,scale_plot=false)
 s=title(s,"RGB gamut in CIE xy chromaticity")
 s.center=false
 Makie.save(joinpath(resultdir,"RGB gamut in CIE xy chromaticity.png"),s)
 
 
+# CIECAM16 Uniform Color Space
+vc = cam16view(Surround=:Dark)
+cam = XYZ2CAM16(trivectors(100*XYZ_rgb);vc...)
+camucs = CAM16UCS(cam.J,cam.M,cam.h,form=:cartesian)
+
+cami = CAM16UCSinv(camucs,form=:cartesian)
+t = CAM162XYZ(cami.J,cami.M,cami.h;vc...)
 
 
-function linepoints(p1,p2,d)
-    dir = p2-p1
-    ll =norm(dir)
-    hcat([p1.+λ*dir for λ in 0:ll/d:1]...)
+s=Makie.scatter(camucs[1,:],camucs[2,:],camucs[3,:],color=[RGBA(i...,1) for i in uc],markersize=0.01,transparency=true)
+s.center=false
+s[Axis][:names,:axisnames]=("J","a","b")
+record(s,"Unit LMS To DKL$bg Space.mp4",1:360/5,framerate=12) do i
+    rotate_cam!(s,5pi/180,0.0,0.0)
 end
 
-wloc = divsum(hcat([lambdamatch(w,xyz10) for w in 390:0.2:830]...))
-t=hcat([linepoints(wloc[1:2,1],wloc[1:2,i],100) for i in 2:size(wloc,2)]...)
-txyz = vcat(t,1 .- sum(t,dims=1))
-trgb_xyz = desaturate(trimatrix(XYZToRGB)*txyz)
+s=Makie.lines(StatsMakie.histogram(nbins=200),cam02.J,colormap=:reds)
+
+lines(StatsMakie.histogram,camucs[3,:])
 
 
-Makie.scatter!(t[1,:],t[2,:],color=[RGBA(trgb_xyz[:,i]...,1) for i in 1:size(trgb_xyz,2)],markersize=0.005,transparency=true)
+lines(StatsMakie.histogram,cami.h)
+
+extrema(cam.h' .-cami.h)
 
 
+t.-trivectors(100*XYZ_rgb)
+sum(t.-trivectors(100*XYZ_rgb))
 
-vc=[[i,j,1-i-j] for i=0.2:0.01:0.4,j=0.2:0.01:0.5][:]
-vcm=hcat(vc...)
-vqcm = quavectors(vcm)
-
-rgb_vc = trivectors(XYZToRGB*vqcm)
-
-drgb_vc = desaturate(rgb_vc)
-
-function desaturate(m)
-    for i in 1:size(m,2)
-        minc = minimum(m[:,i])
-        if minc<0
-            m[:,i]=m[:,i].-minc
-        end
-        maxc = maximum(m[:,i])
-        if maxc>0
-            m[:,i]=m[:,i]./maxc
-        end
-    end
-    return m
-end
-
-
-Makie.scatter(rgb_vc[1,:],rgb_vc[2,:],rgb_vc[3,:],color=[RGBA(rgb_vc[:,i]...,1) for i in 1:size(rgb_vc,2)],markersize=0.01,transparency=true)
-
-Makie.scatter(drgb_vc[1,:],drgb_vc[2,:],drgb_vc[3,:],color=[RGBA(drgb_vc[:,i]...,1) for i in 1:size(drgb_vc,2)],markersize=0.01,transparency=true)
-
-Makie.scatter(vcm[1,:],vcm[2,:],color=[RGBA(rgb_vc[:,i]...,1) for i in 1:size(rgb_vc,2)],markersize=0.01,transparency=true)
-
-
-Makie.scatter(vcm[1,:],vcm[2,:],color=[RGBA(drgb_vc[:,i]...,1) for i in 1:size(drgb_vc,2)],markersize=0.01,transparency=true)
-
-RGBToxyz=divsum(trimatrix(RGBToXYZ))
-
-xyz_rgb = divsum(tt*ucm)
-
-xyz_white = divsum(trimatrix(RGBToXYZ)*ones(3))
-
-xyzToRGB = inv(RGBToxyz)
-
-
-xyzToRGB*xyz_white
-
-t = xyzToRGB./((xyzToRGB*xyz_white))
-t= xyzToRGB
-tt = inv(t)
-
-
-tt,t = RGBXYZMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
-
-xyz_rgb = divsum(trimatrix(tt)*ucm)
 
 
 
