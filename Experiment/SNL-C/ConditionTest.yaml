@@ -15,12 +15,12 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.3319459
-  CLUT@Camera@OrthoCamera: false
+  ScreenAspect@Camera@OrthoCamera: 1.36715615
+  CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 180 180 1
+  BGSize@BackGround@BackGround: 100 100 1
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.64 -13.74 -1000
+  MarkerPosition@Marker@Marker: 19.16 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
