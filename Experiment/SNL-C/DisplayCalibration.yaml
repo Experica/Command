@@ -15,17 +15,17 @@ EnvPath: Bar
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.80154824
+  ScreenAspect@Camera@OrthoCamera: 1.36715615
   CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 180 180 1
+  BGSize@BackGround@BackGround: 100 100 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 30
   Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0.4068 0 0 1
+  Color@Quad@Quad: 0.01695 0 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
@@ -103,7 +103,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: VX3276mhd
+Display_ID: Trinitron
 ResponseDelay: 20
 Version: 1
 Config: 
