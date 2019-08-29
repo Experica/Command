@@ -47,6 +47,8 @@ namespace Experica
         public System.Random rng = new MersenneTwister();
         public SampleMethod condsamplemethod = SampleMethod.Ascending;
         public SampleMethod blocksamplemethod = SampleMethod.Ascending;
+        public List<double> condidxweights = new List<double>();
+        public List<double> blockidxweights = new List<double>();
 
         public int scendingstep = 1;
         public int blockidx = -1;
@@ -198,6 +200,22 @@ namespace Experica
                 condrepeat[i] = 0;
             }
             nblock = blocksamplespace.Count;
+
+            condidxweights = Enumerable.Repeat(1.0/ncond, ncond).ToList();
+            blockidxweights = Enumerable.Repeat(1.0 / nblock, nblock).ToList();
+
+        }
+
+        public void UpdateSampleWeights(List<double> condidxweights, List<double> blockidxweights)
+        {
+            if (condidxweights == null || condidxweights.Count != ncond)
+                this.condidxweights = Enumerable.Repeat(1.0 / ncond, ncond).ToList();
+            else
+                this.condidxweights = condidxweights;
+            if (blockidxweights == null || blockidxweights.Count != nblock)
+                this.blockidxweights = Enumerable.Repeat(1.0 / nblock, nblock).ToList();
+            else
+                this.blockidxweights = blockidxweights;
         }
 
         public List<int> PrepareSampleSpace(List<int> space, SampleMethod samplemethod)
@@ -257,6 +275,16 @@ namespace Experica
                         }
                         blockidx = blocksamplespace[blocksampleidx];
                         break;
+                    case SampleMethod.OnlineWeighted:
+                        List<double> cumweights = blockidxweights.CumulativeSum().ToList();
+                        double rand = rng.NextDouble();
+                        blocksampleidx = 0;
+                        for (int i = 0; i < cumweights.Count; i++)
+                        {
+                            if (rand >= cumweights[i]) blocksampleidx = i + 1;
+                        }
+                        blockidx = blocksamplespace[blocksampleidx];
+                        break;
                     case SampleMethod.Manual:
                         blockidx = manualblockidx;
                         break;
@@ -292,6 +320,16 @@ namespace Experica
                         {
                             condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx], condsamplemethod);
                             condsampleidx = 0;
+                        }
+                        condidx = condsamplespaces[blockidx][condsampleidx];
+                        break;
+                    case SampleMethod.OnlineWeighted:
+                        List<double> cumweights = condidxweights.CumulativeSum().ToList();
+                        double rand = rng.NextDouble();
+                        condsampleidx = 0;
+                        for (int i = 0; i < cumweights.Count; i++)
+                        {
+                            if (rand >= cumweights[i]) condsampleidx = i + 1;
                         }
                         condidx = condsamplespaces[blockidx][condsampleidx];
                         break;

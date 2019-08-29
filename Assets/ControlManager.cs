@@ -23,6 +23,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.IO;
 
 namespace Experica.Command
 {
@@ -32,10 +33,13 @@ namespace Experica.Command
         public UIController uicontroller;
 
         [Command]
-        public void CmdManualCTIndex(int idx)
+        public void CmdControlSignal(byte[] signal)
         {
-            uicontroller.exmanager.el.manualcondidx = idx;
-            Debug.Log("Analysis set the idx to " + idx);
+            using (var stream = new MemoryStream(signal))
+            {
+                var ctl = MsgPack.CtlSerializer.Unpack(stream);
+                uicontroller.exmanager.el.OnReceiveControlSignal(ctl);
+            }
         }
 
 #if COMMAND

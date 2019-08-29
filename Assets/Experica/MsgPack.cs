@@ -29,6 +29,7 @@ namespace Experica
     public static class MsgPack
     {
         public static MessagePackSerializer<Experiment> ExSerializer;
+        public static MessagePackSerializer<Control> CtlSerializer;
         public static MessagePackSerializer<List<int>> ListIntSerializer;
         public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
         public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListListEventSerializer;
@@ -36,6 +37,7 @@ namespace Experica
         static MsgPack()
         {
             ExSerializer = MessagePackSerializer.Get<Experiment>();
+            CtlSerializer = MessagePackSerializer.Get<Control>();
             ListIntSerializer = MessagePackSerializer.Get<List<int>>();
             ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();
             ListListEventSerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();

@@ -666,6 +666,10 @@ namespace Experica
             }
         }
 
+        public virtual void OnReceiveControlSignal(Control ctl)
+        {
+        }
+
         protected virtual void Logic()
         {
         }
