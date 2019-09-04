@@ -180,28 +180,32 @@ end
 Intersection point of a line and a plane.
 points of a line are defined as a direction(Dₗ) through a point(Pₗ): P = Pₗ + λDₗ , where λ is a scaler
 points of a plane are defined as a plane through a point(Pₚ) and with normal vector(Nₚ) : Nₚᵀ(P - Pₚ) = 0 , where Nᵀ is the transpose of N
+
+return point of intersection and if it's on direction
 """
 function intersectlineplane(Pₗ,Dₗ,Pₚ,Nₚ)
     NₚᵀDₗ = Nₚ'*Dₗ
     NₚᵀDₗ == 0 && return []
     λ = Nₚ'*(Pₚ - Pₗ) / NₚᵀDₗ
-    return Pₗ + λ*Dₗ
+    return Pₗ + λ*Dₗ, λ >=0
 end
 """
 Intersection points of a line and the six faces of the unit cube with origin as a vertex and three axies as edges.
 points of a line are defined as a direction(Dₗ) through a point(Pₗ)
+
+return intersection points on opposite direction and direction
 """
 function intersectlineunitorigincube(Pₗ,Dₗ)
-    ips=[]
+    ips=[];ids=[]
     ps = [zeros(3,3) ones(3,3)]
     ns = [Matrix{Float64}(I,3,3) Matrix{Float64}(I,3,3)]
     for i in 1:6
-        p = intersectlineplane(Pₗ,Dₗ,ps[:,i],ns[:,i])
+        p,d = intersectlineplane(Pₗ,Dₗ,ps[:,i],ns[:,i])
         if !isempty(p) && all(i->-eps()<=i<=1+eps(),p)
-            push!(ips,p)
+            push!(ips,p);push!(ids,d)
         end
     end
-    return hcat(ips...)
+    return hcat(ips[sortperm(ids)]...)
 end
 """
 Points of a line segment defined by two points P₀ and P₁

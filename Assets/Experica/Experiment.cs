@@ -319,6 +319,15 @@ namespace Experica
         CubicSpline
     }
 
+    public enum ColorSpace
+    {
+        RGB,
+        XYZ,
+        LMS,
+        DKL,
+        CAM
+    }
+
     public enum InputMethod
     {
         None,

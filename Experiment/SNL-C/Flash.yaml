@@ -13,11 +13,12 @@ Subject_Weight: 100
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.33333337
   CLUT@Camera@OrthoCamera: true
+  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
+  BGSize@BackGround@BackGround: 100 100 1
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
@@ -30,10 +31,10 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 20
   Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 0 0 0 1
-  MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0.5
-  Sigma@Quad@Quad: 0.150000006
+  Color@Quad@Quad: 1 1 1 1
+  MaskType@Quad@Quad: DiskFade
+  MaskRadius@Quad@Quad: 0.449999988
+  Sigma@Quad@Quad: 20
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
@@ -46,13 +47,13 @@ RecordSite: 3000
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
-BlockSampling: UniformWithoutReplacement
-CondRepeat: 100
+BlockSampling: Ascending
+CondRepeat: 120
 BlockRepeat: 1
 BlockParam: []
 Input: None
 PreICI: 0
-CondDur: 1000
+CondDur: 1500
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -103,6 +104,8 @@ EnvInheritParam:
 - MarkOffColor@Marker@Marker
 - CLUT@Camera@OrthoCamera
 - MarkerSize@Marker@Marker
+- BGSize@BackGround@BackGround
+- Position@Quad@Quad
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
@@ -111,8 +114,8 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: Trinitron
-ResponseDelay: 20
+Display_ID: ROGPG279Q
+ResponseDelay: 15
 Version: 1
 Config: 
 CondTest: 

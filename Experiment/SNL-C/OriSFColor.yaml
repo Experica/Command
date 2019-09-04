@@ -1,5 +1,5 @@
-ID: OriSF
-Name: OriSF
+ID: OriSFColor
+Name: OriSFColor
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -27,17 +27,17 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.0500000007
+  SpatialFreq@GratingQuad@GratingQuad: 0.800000012
   TemporalFreq@GratingQuad@GratingQuad: 4
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0.3707 0.6147 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6293 0.3853 1 1
+  MinColor@GratingQuad@GratingQuad: 0.5 0.5 0.5 1
+  MaxColor@GratingQuad@GratingQuad: 0.3707 0.6147 0 1
   Drifting@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  GratingType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 180
+  Ori@GratingQuad@GratingQuad: 60
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 20
   Size@GratingQuad@GratingQuad: 20 20 1
@@ -49,9 +49,9 @@ EnvParam:
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\OriSF.yaml
+CondPath: ''
 Cond: 
-ExLogicPath: Experica.SpikeGLXCTLogic
+ExLogicPath: Experica.SpikeGLXColorLogic
 RecordSession: V1a
 RecordSite: 3000
 DataDir: X:\
@@ -122,7 +122,11 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 - CLUT@Camera@OrthoCamera
 - BGSize@BackGround@BackGround
-Param: {}
+Param:
+  ColorSpace: DKL
+  Color: HueMax_0
+  Ori: '[0, 30, 60, 90, 120, 150]'
+  SpatialFreq: '[0.1, 0.4, 0.8]'
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

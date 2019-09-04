@@ -9,9 +9,10 @@ PluginImporter:
   isPreloaded: 0
   isOverridable: 0
   isExplicitlyReferenced: 0
+  validateReferences: 1
   platformData:
   - first:
-      '': Any
+      : Any
     second:
       enabled: 0
       settings:
@@ -23,13 +24,13 @@ PluginImporter:
         Exclude Win: 0
         Exclude Win64: 0
   - first:
-      '': OSXIntel
+      : OSXIntel
     second:
       enabled: 0
       settings:
         CPU: None
   - first:
-      '': OSXIntel64
+      : OSXIntel64
     second:
       enabled: 0
       settings:
@@ -53,9 +54,9 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: x86_64
         DefaultValueInitialized: true
-        OS: AnyOS
+        OS: Windows
   - first:
       Facebook: Win
     second:

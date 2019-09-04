@@ -2,19 +2,25 @@
     "name": "Tests",
     "references": [
         "GUID:41c3f44a38643794aaa0e4850b0f06d7",
-        "GUID:2d35caf2072944b47af6bcd5f5e4b7b9"
-    ],
-    "optionalUnityReferences": [
-        "TestAssemblies"
+        "GUID:2d35caf2072944b47af6bcd5f5e4b7b9",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": []
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Ripple.dll",
+        "MWArray.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
