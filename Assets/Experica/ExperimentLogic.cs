@@ -303,11 +303,22 @@ namespace Experica
             if (ct.Count > 0)
             {
                 ex.CondTest = ct;
+                Dictionary<string, Dictionary<string, List<object>>[]> m = null;
                 if (config.SaveConfigInData)
                 {
+                    if (!config.SaveConfigDisplayMeasurementInData)
+                    {
+                        m = config.Display.ToDictionary(kv => kv.Key, kv => new[] { kv.Value.IntensityMeasurement, kv.Value.SpectralMeasurement });
+                        foreach (var d in config.Display.Values)
+                        {
+                            d.IntensityMeasurement = null;
+                            d.SpectralMeasurement = null;
+                        }
+                    }
                     ex.Config = config;
                 }
                 ex.EnvParam = envmanager.GetActiveParams();
+                ex.Version = Extension.ExDataVersion;
 
                 switch (config.SaveDataFormat)
                 {
@@ -317,6 +328,18 @@ namespace Experica
                     default:
                         DataPath(DataFormat.YAML).WriteYamlFile(ex);
                         break;
+                }
+
+                if (config.SaveConfigInData)
+                {
+                    if (!config.SaveConfigDisplayMeasurementInData)
+                    {
+                        foreach (var d in config.Display.Keys)
+                        {
+                            config.Display[d].IntensityMeasurement = m[d][0];
+                            config.Display[d].SpectralMeasurement = m[d][1];
+                        }
+                    }
                 }
                 ex.DataPath = null;
             }

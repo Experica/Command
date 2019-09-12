@@ -5,7 +5,7 @@ Experimenter: Alex
 Log: 
 Subject_ID: m1901
 Subject_Name: m1901
-Subject_Species: Mice
+Subject_Species: Mouse
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
@@ -43,7 +43,7 @@ CondPath: ''
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorLogic
 RecordSession: V1a
-RecordSite: 3000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending

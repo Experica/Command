@@ -5,7 +5,7 @@ Experimenter: Alex
 Log: 
 Subject_ID: m1901
 Subject_Name: m1901
-Subject_Species: Mice
+Subject_Species: Mouse
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
@@ -31,7 +31,7 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 20
   Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 1 1 1 1
+  Color@Quad@Quad: 0 0 0 1
   MaskType@Quad@Quad: DiskFade
   MaskRadius@Quad@Quad: 0.449999988
   Sigma@Quad@Quad: 20
@@ -43,7 +43,7 @@ CondPath: Condition\WhiteBlack.yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXCTLogic
 RecordSession: V1a
-RecordSite: 3000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
@@ -116,7 +116,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL

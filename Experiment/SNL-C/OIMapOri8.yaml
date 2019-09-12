@@ -1,22 +1,24 @@
 ID: OIMapOri8
 Name: OIMapOri8
 Designer: Alex
-Experimenter: Leo
+Experimenter: Alex
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
+Subject_ID: m1901
+Subject_Name: m1901
+Subject_Species: Mouse
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.33333337
+  CLUT@Camera@OrthoCamera: true
+  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
+  BGSize@BackGround@BackGround: 1 1 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0.200000003
@@ -106,8 +108,8 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
-ResponseDelay: 20
+Display_ID: ''
+ResponseDelay: 15
 Version: 1
 Config: 
 CondTest: 

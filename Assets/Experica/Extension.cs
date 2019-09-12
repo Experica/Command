@@ -62,6 +62,8 @@ namespace Experica
 
     public static class Extension
     {
+        public const uint ExDataVersion = 2;
+
         static Type TObject, TString, TBool, TInt, TFloat, TDouble, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
 

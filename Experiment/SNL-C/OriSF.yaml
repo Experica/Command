@@ -5,7 +5,7 @@ Experimenter: Alex
 Log: 
 Subject_ID: m1901
 Subject_Name: m1901
-Subject_Species: Mice
+Subject_Species: Mouse
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
@@ -27,7 +27,7 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.0500000007
+  SpatialFreq@GratingQuad@GratingQuad: 1
   TemporalFreq@GratingQuad@GratingQuad: 4
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0.3707 0.6147 0 1
@@ -37,7 +37,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 180
+  Ori@GratingQuad@GratingQuad: 337.5
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 20
   Size@GratingQuad@GratingQuad: 20 20 1
@@ -53,7 +53,7 @@ CondPath: Condition\OriSF.yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXCTLogic
 RecordSession: V1a
-RecordSite: 3000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -116,12 +116,12 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- TemporalFreq@GratingQuad@GratingQuad
 - Diameter@GratingQuad@GratingQuad
 - Position@GratingQuad@GratingQuad
 - MarkerSize@Marker@Marker
 - CLUT@Camera@OrthoCamera
 - BGSize@BackGround@BackGround
+- TemporalFreq@GratingQuad@GratingQuad
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
