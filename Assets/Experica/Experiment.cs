@@ -48,7 +48,7 @@ namespace Experica
 
         public PropertyAccess(Type reflectedtype, string propertyname)
         {
-            //var t = reflectedtype.GetProperty(propertyname);
+            var t = reflectedtype.GetProperty(propertyname);
             Type = reflectedtype.GetProperty(propertyname).PropertyType;
             Name = propertyname;
             Getter = reflectedtype.DelegateForGetPropertyValue(propertyname);
