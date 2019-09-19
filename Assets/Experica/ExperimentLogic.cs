@@ -24,12 +24,39 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Threading;
 using System.Linq;
 
 namespace Experica
 {
-    public class ExperimentLogic : MonoBehaviour
+    public class ExperimentLogic : MonoBehaviour, IDisposable
     {
+        #region Disposable
+        int disposecount = 0;
+
+        ~ExperimentLogic()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
+            {
+                return;
+            }
+            if (disposing)
+            {
+                recorder?.Dispose();
+            }
+        }
+        #endregion
         public CommandConfig config;
         public Experiment ex = new Experiment();
         public Timer timer = new Timer();

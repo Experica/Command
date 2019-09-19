@@ -72,9 +72,12 @@ namespace Experica
             lock (apilock)
             {
                 Close();
-                lock (spikeglxlock)
+                if (disposing)
                 {
-                    spikeglxdotnet.Dispose();
+                    lock (spikeglxlock)
+                    {
+                        spikeglxdotnet.Dispose();
+                    }
                 }
             }
         }
@@ -117,10 +120,14 @@ namespace Experica
 
         public void Close()
         {
-            lock (spikeglxlock)
+            try
             {
-                spikeglxdotnet.Disconnect();
+                lock (spikeglxlock)
+                {
+                    spikeglxdotnet.Disconnect();
+                }
             }
+            catch (Exception e) { Debug.LogException(e); }
         }
 
         public string RecordPath

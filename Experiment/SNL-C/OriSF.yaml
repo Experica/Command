@@ -15,20 +15,20 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
   CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -24.71 13.24 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1
-  TemporalFreq@GratingQuad@GratingQuad: 4
+  SpatialFreq@GratingQuad@GratingQuad: 0.5
+  TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0.3707 0.6147 0 1
   MaxColor@GratingQuad@GratingQuad: 0.6293 0.3853 1 1
@@ -37,7 +37,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 337.5
+  Ori@GratingQuad@GratingQuad: 67.5
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 20
   Size@GratingQuad@GratingQuad: 20 20 1
@@ -132,7 +132,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL

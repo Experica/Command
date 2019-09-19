@@ -273,6 +273,7 @@ namespace Experica.Command
             var idx = FindDuplicateOfLast();
             if (idx >= 0)
             {
+                elhistory[idx].Dispose();
                 Destroy(elhistory[idx]);
                 elhistory.RemoveAt(idx);
             }

@@ -189,6 +189,11 @@ namespace Experica.Command
                 SaveConfig();
             }
             configmanagerpath.WriteYamlFile(configmanager);
+
+            foreach(var el in exmanager.elhistory)
+            {
+                el?.Dispose();
+            }
         }
 
         public void SaveConfig()

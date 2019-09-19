@@ -15,13 +15,13 @@ EnvPath: MarkerBar
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
   CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -24.71 13.24 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -34,7 +34,7 @@ EnvParam:
   Color@Quad@Quad: 0 0.647 0.4938 1
   MaskType@Quad@Quad: DiskFade
   MaskRadius@Quad@Quad: 0.449999988
-  Sigma@Quad@Quad: 20
+  Sigma@Quad@Quad: 35
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
@@ -118,7 +118,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL
