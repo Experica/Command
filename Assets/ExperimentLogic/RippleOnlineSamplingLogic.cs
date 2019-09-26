@@ -21,6 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Experica
 {
@@ -32,6 +33,7 @@ namespace Experica
             {
                 case ControlType.SamplingDistribution:
                     condmanager.UpdateSampleWeights((List<double>)ctl.Param["weights"], null);
+                    Debug.Log("Updated sampling weights");
                     break;
                 case ControlType.StopExperiment:
                     StartStopExperiment(false);

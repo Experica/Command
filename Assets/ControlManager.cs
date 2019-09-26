@@ -38,7 +38,7 @@ namespace Experica.Command
             using (var stream = new MemoryStream(signal))
             {
                 var ctl = MsgPack.CtlSerializer.Unpack(stream);
-                uicontroller.exmanager.el.OnReceiveControlSignal(ctl);
+                if (ctl != null) uicontroller.exmanager.el.OnReceiveControlSignal(ctl);
             }
         }
 

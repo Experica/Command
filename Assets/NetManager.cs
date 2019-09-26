@@ -31,7 +31,7 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
-        public GameObject analysismanagerprefab, controlmanagerprefab;
+        public GameObject analysismanagerprefab, analysismanager, controlmanagerprefab;
 
         public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         {
@@ -122,6 +122,7 @@ namespace Experica.Command
             go.transform.SetParent(transform, false);
 
             NetworkServer.Spawn(go);
+            analysismanager = go;
         }
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
@@ -155,7 +156,16 @@ namespace Experica.Command
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
-            peerinfo.Remove(conn.connectionId);
+            if (peerinfo.ContainsKey(conn.connectionId))
+            {
+                PeerType pt = (PeerType)peerinfo[conn.connectionId]["PeerType"];
+                if (pt == PeerType.Analysis)
+                {
+                    Destroy(analysismanager);
+                    uicontroller.alsmanager = null;
+                }
+                peerinfo.Remove(conn.connectionId);
+            }
         }
 
         public override void OnServerSceneChanged(string sceneName)

@@ -29,7 +29,7 @@ namespace Experica
         Thread savethread;
 
 
-        public FrameRecorder(EnvironmentRecordMode recordmode = EnvironmentRecordMode.Environment)
+        public FrameRecorder(EnvironmentRecordMode recordmode = EnvironmentRecordMode.None)
         {
             EnvironmentRecordMode = recordmode;
             savethread = new Thread(_threadsave);
