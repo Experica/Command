@@ -31,7 +31,7 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
-        public GameObject analysismanagerprefab, analysismanager, controlmanagerprefab;
+        public GameObject analysismanagerprefab, analysismanager, controlmanagerprefab, controlmanager;
 
         public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         {
@@ -110,6 +110,10 @@ namespace Experica.Command
             {
                 SpawnAnalysisManager();
             }
+            if ((pt == PeerType.Analysis) && (uicontroller.ctrlmanager == null))
+            {
+                SpawnControlManager();
+            }
         }
 
         public void SpawnAnalysisManager()
@@ -125,7 +129,7 @@ namespace Experica.Command
             analysismanager = go;
         }
 
-        public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+        public void SpawnControlManager()
         {
             GameObject go = Instantiate(controlmanagerprefab);
             var ctrl = go.GetComponent<ControlManager>();
@@ -134,7 +138,8 @@ namespace Experica.Command
             go.name = "ControlManager";
             go.transform.SetParent(transform, false);
 
-            NetworkServer.AddPlayerForConnection(conn, go, playerControllerId);
+            NetworkServer.Spawn(go);
+            controlmanager = go;
         }
 
         void AspectRatioHandler(NetworkMessage netMsg)
@@ -163,6 +168,8 @@ namespace Experica.Command
                 {
                     Destroy(analysismanager);
                     uicontroller.alsmanager = null;
+                    Destroy(controlmanager);
+                    uicontroller.ctrlmanager = null;
                 }
                 peerinfo.Remove(conn.connectionId);
             }
