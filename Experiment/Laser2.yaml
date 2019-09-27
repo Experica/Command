@@ -3,8 +3,8 @@ Name: Laser2
 Designer: Alex
 Experimenter: Leo
 Log: 
-Subject_ID: LSR1907
-Subject_Name: LSR1907
+Subject_ID: C1901
+Subject_Name: C1901
 Subject_Species: Long Evans Rat
 Subject_Gender: Female
 Subject_Age: 7
@@ -12,46 +12,12 @@ Subject_Size: 0 0 0
 Subject_Weight: 300
 Subject_Log: 
 EnvPath: MarkerGrating
-EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 34
-  ScreenToEye@Camera@OrthoCamera: 42
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.00999999978
-  TemporalFreq@GratingQuad@GratingQuad: 2
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  Drifting@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@GratingQuad@GratingQuad: false
-  Rotation@GratingQuad@GratingQuad: 0 0 0
-  RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 222.820465
-  OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 296.031555
-  Size@GratingQuad@GratingQuad: 296 296 1
-  Color@GratingQuad@GratingQuad: 1 1 1 1
-  MaskType@GratingQuad@GratingQuad: Disk
-  MaskRadius@GratingQuad@GratingQuad: 0.5
-  Sigma@GratingQuad@GratingQuad: 0.150000006
-  OriPositionOffset@GratingQuad@GratingQuad: false
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: -17.09 8.819 0
-  PositionOffset@GratingQuad@GratingQuad: 0 0 0
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 68.32 -37.99 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+EnvParam: {}
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.RippleLaserLogic
-RecordSession: V2d
-RecordSite: 2500
+ExLogicPath: Experica.RippleLaser2Logic
+RecordSession: latencytest
+RecordSite: ''
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -138,7 +104,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
+DisplayLatency: 0
 ResponseDelay: 20
 Version: 1
 Config: 

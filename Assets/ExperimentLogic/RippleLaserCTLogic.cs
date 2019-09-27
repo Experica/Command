@@ -29,10 +29,11 @@ namespace Experica
     {
         protected override void GenerateFinalCondition()
         {
-            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
+            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2", "LaserIndex" };
 
             // get laser conditions
             laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
+            lasersignalch = null;
             switch (laser?.Type)
             {
                 case Laser.Omicron:
@@ -43,6 +44,7 @@ namespace Experica
                     break;
             }
             laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(config);
+            laser2signalch = null;
             switch (laser2?.Type)
             {
                 case Laser.Omicron:
@@ -68,41 +70,79 @@ namespace Experica
                 {
                     lcond["LaserFreq"] = f.Where(i => i != Vector4.zero).Select(i => (object)i).ToList();
                 }
+                if (laser2signalch != null)
+                {
+                    lcond["LaserPower2"] = new List<object>();
+                    lcond["LaserFreq2"] = new List<object>();
+                    lcond["LaserPower2"].Insert(0, 0f);
+                    lcond["LaserFreq2"].Insert(0, Vector4.zero);
+                }
             }
+            lcond = lcond.OrthoCondOfFactorLevel();
+            var l2cond = new Dictionary<string, List<object>>();
             if (laser2signalch != null)
             {
                 if (p2 != null)
                 {
-                    lcond["LaserPower2"] = p2.Where(i => i > 0).Select(i => (object)i).ToList();
+                    l2cond["LaserPower2"] = p2.Where(i => i > 0).Select(i => (object)i).ToList();
                 }
                 if (f2 != null)
                 {
-                    lcond["LaserFreq2"] = f2.Where(i => i != Vector4.zero).Select(i => (object)i).ToList();
+                    l2cond["LaserFreq2"] = f2.Where(i => i != Vector4.zero).Select(i => (object)i).ToList();
+                }
+                if (lasersignalch != null)
+                {
+                    l2cond["LaserPower"] = new List<object>();
+                    l2cond["LaserFreq"] = new List<object>();
+                    l2cond["LaserPower"].Insert(0, 0f);
+                    l2cond["LaserFreq"].Insert(0, Vector4.zero);
                 }
             }
-            lcond = lcond.OrthoCondOfFactorLevel();
+            l2cond = l2cond.OrthoCondOfFactorLevel();
 
+            // merge laser and laser2 conditions and add zero condition
+            var flcond = new Dictionary<string, List<object>>();
             var addzero = ex.GetParam("AddZeroCond").Convert<bool>();
             if (lasersignalch != null)
             {
+                if (laser2signalch != null)
+                {
+                    flcond["LaserPower"] = lcond["LaserPower"].Concat(l2cond["LaserPower"]).ToList();
+                    flcond["LaserFreq"] = lcond["LaserFreq"].Concat(l2cond["LaserFreq"]).ToList();
+                }
+                else
+                {
+                    flcond["LaserPower"] = lcond["LaserPower"];
+                    flcond["LaserFreq"] = lcond["LaserFreq"];
+                }
                 if (p != null && addzero)
                 {
-                    lcond["LaserPower"].Insert(0, 0f);
+                    flcond["LaserPower"].Insert(0, 0f);
                 }
                 if (f != null && addzero)
                 {
-                    lcond["LaserFreq"].Insert(0, Vector4.zero);
+                    flcond["LaserFreq"].Insert(0, Vector4.zero);
                 }
             }
             if (laser2signalch != null)
             {
+                if (lasersignalch != null)
+                {
+                    flcond["LaserPower2"] = lcond["LaserPower2"].Concat(l2cond["LaserPower2"]).ToList();
+                    flcond["LaserFreq2"] = lcond["LaserFreq2"].Concat(l2cond["LaserFreq2"]).ToList();
+                }
+                else
+                {
+                    flcond["LaserPower2"] = l2cond["LaserPower2"];
+                    flcond["LaserFreq2"] = l2cond["LaserFreq2"];
+                }
                 if (p2 != null && addzero)
                 {
-                    lcond["LaserPower2"].Insert(0, 0f);
+                    flcond["LaserPower2"].Insert(0, 0f);
                 }
                 if (f2 != null && addzero)
                 {
-                    lcond["LaserFreq2"].Insert(0, Vector4.zero);
+                    flcond["LaserFreq2"].Insert(0, Vector4.zero);
                 }
             }
 
@@ -112,32 +152,33 @@ namespace Experica
             // combine laser and base conditions
             var fcond = new Dictionary<string, List<object>>()
             {
-                {"l",Enumerable.Range(0,lcond.First().Value.Count).Select(i=>(object)i).ToList() },
-                {"b",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
+                {"LaserIndex",Enumerable.Range(0,flcond.First().Value.Count).Select(i=>(object)i).ToList() },
+                {"BaseCondIndex",Enumerable.Range(0,bcond.First().Value.Count).Select(i=>(object)i).ToList() }
             };
             fcond = fcond.OrthoCondOfFactorLevel();
             foreach (var bf in bcond.Keys)
             {
                 fcond[bf] = new List<object>();
             }
-            foreach (var lf in lcond.Keys)
+            foreach (var lf in flcond.Keys)
             {
                 fcond[lf] = new List<object>();
             }
-            for (var i = 0; i < fcond["l"].Count; i++)
+            for (var i = 0; i < fcond["LaserIndex"].Count; i++)
             {
-                var bci = (int)fcond["b"][i];
-                var lci = (int)fcond["l"][i];
+                var bci = (int)fcond["BaseCondIndex"][i];
+                var lci = (int)fcond["LaserIndex"][i];
                 foreach (var bf in bcond.Keys)
                 {
                     fcond[bf].Add(bcond[bf][bci]);
                 }
-                foreach (var lf in lcond.Keys)
+                foreach (var lf in flcond.Keys)
                 {
-                    fcond[lf].Add(lcond[lf][lci]);
+                    fcond[lf].Add(flcond[lf][lci]);
                 }
             }
-            fcond.Remove("b"); fcond.Remove("l");
+
+            fcond.Remove("BaseCondIndex");
 
             condmanager.FinalizeCondition(fcond);
         }
