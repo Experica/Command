@@ -33,6 +33,10 @@ function xyzresponse(C,λ,I;observer=10)
     end
     matchcolors(C,λ,I,newcmf(conef,m))
 end
+"Michelson Contrast, where `michelson(lmax, lmin) = weber(lmax, (lmax+lmin)/2)`"
+contrast_michelson(lmax,lmin) = (lmax-lmin)/(lmax+lmin)
+"Weber Contrast, where `weber(lmax, lmin) = michelson(lmax, 2*lmin-lmax)`"
+contrast_weber(lmax,lmin) = (lmax/lmin)-1
 
 TranslateXYZMatrix(;x=0,y=0,z=0) = TranslateXYZMatrix([x,y,z])
 function TranslateXYZMatrix(t::Vector)
@@ -113,7 +117,7 @@ function RGBXYZMatrix(C,λ,I;observer=10)
     return RGBToXYZ,XYZToRGB
 end
 """
-Converting Matrix between LMS and Cone Contrast Space
+Converting Matrix between LMS and Cone Contrast(Weber) Space
 (DH Brainard, Cone contrast and opponent modulation color spaces, human color vision, 1996)
 """
 function LMSContrastMatrix(bg)
