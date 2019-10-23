@@ -27,58 +27,10 @@ using System.Linq;
 namespace Experica
 {
     /// <summary>
-    /// Condition Test with Display-Derived ColorSpace
+    /// SpikeGLX Condition Test with Display-Derived ColorSpace
     /// </summary>
-    public class SpikeGLXColorLogic : ConditionTestLogic
+    public class SpikeGLXColorLogic : SpikeGLXCTLogic
     {
-        protected bool isspikeglxtriggered;
-
-        protected override void OnStart()
-        {
-            pport = new ParallelPort(dataaddress: config.ParallelPort1);
-            recorder = new SpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
-        }
-
-        protected override void StartExperimentTimeSync()
-        {
-            if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
-            {
-                isspikeglxtriggered = true;
-                recorder.RecordPath = ex.GetDataPath();
-                /* 
-                SpikeGLX recorder set path through network and remote server receive
-                message and change file path, all of which need time to complete.
-                Trigger record TTL before file path change completion will
-                not successfully start recording.
-
-                Analysis also need time to clear signal buffer,
-                otherwise the delayed action may clear the start TTL which is
-                needed to mark the timer zero.
-                */
-                timer.Timeout(config.NotifyLatency);
-                recorder.RecordStatus = RecordStatus.Recording;
-                //pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
-            }
-            /*
-            Immediately after the TTL triggering SpikeGLX recording, we reset timer, 
-            so that timer zero can be aligned with the triggering TTL.
-            */
-            timer.Restart();
-        }
-
-        protected override void StopExperimentTimeSync()
-        {
-            // Tail period to make sure lagged effect data are recorded before trigger recording stop
-            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
-            if (isspikeglxtriggered)
-            {
-                recorder.RecordStatus = RecordStatus.Stopped;
-                //pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
-                isspikeglxtriggered = false;
-            }
-            timer.Stop();
-        }
-
         protected override void GenerateFinalCondition()
         {
             var cond = new Dictionary<string, List<object>>();
@@ -93,7 +45,7 @@ namespace Experica
             var file = Path.Combine("Data", ex.Display_ID, "colordata.yaml");
             if (!File.Exists(file))
             {
-
+                // todo generate colordata
             }
             if (File.Exists(file))
             {
@@ -104,12 +56,12 @@ namespace Experica
                 }
                 else
                 {
-                    Debug.Log(colorname + " is not found in " + file);
+                    Debug.LogWarning(colorname + " is not found in " + file);
                 }
             }
             else
             {
-                Debug.Log("No Color Data Found.");
+                Debug.LogWarning($"Color Data: {file} Not Found.");
             }
 
             // combine factor levels
@@ -135,41 +87,6 @@ namespace Experica
             }
 
             condmanager.FinalizeCondition(cond.OrthoCondOfFactorLevel());
-        }
-
-        protected override void Logic()
-        {
-            switch (CondState)
-            {
-                case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
-                    break;
-                case CONDSTATE.PREICI:
-                    if (PreICIHold >= ex.PreICI)
-                    {
-                        CondState = CONDSTATE.COND;
-                        SyncEvent(CONDSTATE.COND.ToString());
-                        SetEnvActiveParam("Visible", true);
-                    }
-                    break;
-                case CONDSTATE.COND:
-                    if (CondHold >= ex.CondDur)
-                    {
-                        CondState = CONDSTATE.SUFICI;
-                        if (ex.PreICI != 0 || ex.SufICI != 0)
-                        {
-                            SyncEvent(CONDSTATE.SUFICI.ToString());
-                            SetEnvActiveParam("Visible", false);
-                        }
-                    }
-                    break;
-                case CONDSTATE.SUFICI:
-                    if (SufICIHold >= ex.SufICI)
-                    {
-                        CondState = CONDSTATE.NONE;
-                    }
-                    break;
-            }
         }
     }
 }

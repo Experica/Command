@@ -3,9 +3,9 @@ Name: BGColor
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: m1901
-Subject_Name: m1901
-Subject_Species: Mice
+Subject_ID: AE10
+Subject_Name: AE10
+Subject_Species: Macaque
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
@@ -20,7 +20,7 @@ EnvParam:
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 1 1 1
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.88 -14 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: true
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,7 +29,7 @@ CondPath: C:\Users\lyonlab\Desktop\VLab\Condition\BGColor.yaml
 Cond: 
 ExLogicPath: Experica.ConditionTestLogic
 RecordSession: V1a
-RecordSite: 3000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -92,7 +92,7 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ''
-ResponseDelay: 20
+ResponseDelay: 15
 Version: 1
 Config: 
 CondTest: 

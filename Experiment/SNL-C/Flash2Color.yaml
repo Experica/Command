@@ -3,9 +3,9 @@ Name: Flash2Color
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: m1901
-Subject_Name: m1901
-Subject_Species: Mouse
+Subject_ID: AE10
+Subject_Name: AE10
+Subject_Species: Macaque
 Subject_Gender: Female
 Subject_Age: 6
 Subject_Size: 0 0 0
@@ -15,12 +15,12 @@ EnvPath: MarkerBar
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  ScreenAspect@Camera@OrthoCamera: 1.63225806
   CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 100 100 1
   MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -24.71 13.24 -1000
+  MarkerPosition@Marker@Marker: -22.57 13.24 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1

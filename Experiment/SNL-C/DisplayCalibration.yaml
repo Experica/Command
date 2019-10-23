@@ -3,10 +3,10 @@ Name: DisplayCalibration
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: m1901
-Subject_Name: m1901
-Subject_Species: Mice
-Subject_Gender: Female
+Subject_ID: AF5
+Subject_Name: AF5
+Subject_Species: Macaque
+Subject_Gender: Male
 Subject_Age: 6
 Subject_Size: 0 0 0
 Subject_Weight: 100
@@ -15,17 +15,17 @@ EnvPath: Bar
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.36715615
-  CLUT@Camera@OrthoCamera: true
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  CLUT@Camera@OrthoCamera: false
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 100 100 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 30
-  Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0.01695 0 0 1
+  Diameter@Quad@Quad: 50
+  Size@Quad@Quad: 50 50 1
+  Color@Quad@Quad: 0.4746 0 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   Sigma@Quad@Quad: 0.150000006
@@ -37,7 +37,7 @@ CondPath: Condition\RGBColor.yaml
 Cond: 
 ExLogicPath: Experica.DisplayCalibration
 RecordSession: V1a
-RecordSite: 3000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -48,7 +48,7 @@ BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 300
+CondDur: 500
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -88,11 +88,10 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- CLUT@Camera@OrthoCamera
 - BGSize@BackGround@BackGround
 Param:
   PRModel: PR701
-  COM: COM2
+  COM: COM1
   PlotMeasure: True
   FitType: Gamma
   Measure: Spectral
@@ -103,8 +102,8 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: Trinitron
-ResponseDelay: 20
+Display_ID: ROGPG279Q
+ResponseDelay: 15
 Version: 1
 Config: 
 CondTest: 

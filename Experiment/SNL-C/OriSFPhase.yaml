@@ -27,9 +27,9 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@GratingQuad@GratingQuad: 4
-  SpatialPhase@GratingQuad@GratingQuad: 0
+  SpatialFreq@GratingQuad@GratingQuad: 0.0500000007
+  TemporalFreq@GratingQuad@GratingQuad: 1
+  SpatialPhase@GratingQuad@GratingQuad: 0.25
   MinColor@GratingQuad@GratingQuad: 0 0.647 0.4938 1
   MaxColor@GratingQuad@GratingQuad: 1 0.353 0.5062 1
   Drifting@GratingQuad@GratingQuad: false
@@ -37,7 +37,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 135
+  Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 20
   Size@GratingQuad@GratingQuad: 20 20 1

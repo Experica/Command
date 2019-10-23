@@ -22,7 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace Experica
 {
     /// <summary>
-    /// Basic PreICI-Cond-SufICI Logic with ParallelPort and ScreenMarker Event Sync
+    /// Basic PreICI-Cond-SufICI Logic with Digital and ScreenMarker Event Sync
     /// </summary>
     public class ConditionTestLogic : ExperimentLogic
     {
@@ -31,7 +31,11 @@ namespace Experica
 
         protected override void OnStart()
         {
-            pport = new ParallelPort(dataaddress: config.ParallelPort1);
+            var syncmethod = ex.EventSyncProtocol.SyncMethods;
+            if (syncmethod.Contains(SyncMethod.ParallelPort))
+            {
+                pport = new ParallelPort(dataaddress: config.ParallelPort1);
+            }
         }
 
         protected override void OnStartExperiment()
@@ -47,13 +51,17 @@ namespace Experica
         }
 
         /// <summary>
-        /// Register and Sync Event with External Device through Experiment Sync Protocol
+        /// Register and Sync Event with External Device through EventSyncProtocol
         /// </summary>
-        /// <param name="e">Event Name, NullorEmpty will Reset Sync Line to low/false state</param>
+        /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state, without event register</param>
         protected virtual void SyncEvent(string e = "")
         {
             var esp = ex.EventSyncProtocol;
-            if (esp.SyncMethods == null || esp.SyncMethods.Count == 0) return;
+            if (esp.SyncMethods == null || esp.SyncMethods.Count == 0)
+            {
+                UnityEngine.Debug.LogWarning("No SyncMethod in EventSyncProtocol, Skip SyncEvent ...");
+                return;
+            }
             bool addtosynclist = false;
             bool syncreset = string.IsNullOrEmpty(e) ? true : false;
 

@@ -28,16 +28,16 @@ EnvParam:
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0.100000001
-  TemporalFreq@GratingQuad@GratingQuad: 4
+  TemporalFreq@GratingQuad@GratingQuad: 1
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0.5 0.5 0.5 1
-  MaxColor@GratingQuad@GratingQuad: 1 0.346 0.5519 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.353 0.5062 1
   Drifting@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 150
+  Ori@GratingQuad@GratingQuad: 120
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 20
   Size@GratingQuad@GratingQuad: 20 20 1

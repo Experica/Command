@@ -31,9 +31,11 @@ using MathNet.Numerics.Interpolation;
 namespace Experica
 {
     /// <summary>
-    /// Present R,G,B colors and measure Spectral or Intensity, so that a color lookup table can
-    /// be constructed to linearize sRGB color, and Cone excitations can be calculated using 
-    /// Spectral and Cone Fundamentals.
+    /// Present R,G,B colors and measure Intensity, so that a color lookup table can
+    /// be constructed to linearize R,G,B Intensity.
+    /// 
+    /// Then, the linearized R,G,B colors Spectral can be measured, so that Cone excitations
+    /// can be calculated using the Spectral and Cone Fundamentals.
     /// 
     /// Required experiment custom parameters:
     /// 
@@ -101,8 +103,9 @@ namespace Experica
             }
         }
 
-        void OnDestroy()
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             iplot?.Dispose();
             splot?.Dispose();
         }

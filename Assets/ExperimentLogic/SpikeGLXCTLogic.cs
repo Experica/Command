@@ -30,7 +30,7 @@ namespace Experica
 
         protected override void OnStart()
         {
-            pport = new ParallelPort(dataaddress: config.ParallelPort1);
+            base.OnStart();
             recorder = new SpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
         }
 
@@ -38,37 +38,27 @@ namespace Experica
         {
             if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
             {
-                isspikeglxtriggered = true;
                 recorder.RecordPath = ex.GetDataPath();
                 /* 
                 SpikeGLX recorder set path through network and remote server receive
                 message and change file path, all of which need time to complete.
-                Trigger record TTL before file path change completion will
+                Trigger record before file path change completion will
                 not successfully start recording.
-
-                Analysis also need time to clear signal buffer,
-                otherwise the delayed action may clear the start TTL which is
-                needed to mark the timer zero.
                 */
                 timer.Timeout(config.NotifyLatency);
                 recorder.RecordStatus = RecordStatus.Recording;
-                //pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+                isspikeglxtriggered = true;
             }
-            /*
-            Immediately after the TTL triggering SpikeGLX recording, we reset timer, 
-            so that timer zero can be aligned with the triggering TTL.
-            */
             timer.Restart();
         }
 
         protected override void StopExperimentTimeSync()
         {
             // Tail period to make sure lagged effect data are recorded before trigger recording stop
-            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError);
             if (isspikeglxtriggered)
             {
                 recorder.RecordStatus = RecordStatus.Stopped;
-                //pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
                 isspikeglxtriggered = false;
             }
             timer.Stop();
