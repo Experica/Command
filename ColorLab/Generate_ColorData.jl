@@ -31,7 +31,7 @@ ConeIsoRGBVec = trimatrix(LMSToRGB)
 ConeIsoRGBVec./=maximum(abs.(ConeIsoRGBVec),dims=1)
 # since through color is the center of RGB cube, the line intersects at two symmatric points on the faces of unit cube
 minc_lms = quavectors(th.-0.5*ConeIsoRGBVec);maxc_lms = quavectors(th.+0.5*ConeIsoRGBVec)
-
+mcc = contrast_michelson.(RGBToLMS*maxc_lms,RGBToLMS*minc_lms)
 
 # Cone Isolating RGB color with same pooled michelson cone contrast
 # since all the maximum Cone Isolating color pairs are symmatric around `th` color, i.e. `th = (maxc+minc)/2`, then the weber contrast
@@ -42,9 +42,9 @@ mincc = LMSToContrast*RGBToLMS*minc_lms
 pcc = [norm(maxcc[1:3,i]) for i in 1:3]
 ccmf = minimum(pcc)./pcc
 ccmf[3]=1 # don't scale S Cone
-
 mmaxc_lms = LMSToRGB*ContrastToLMS*quavectors(ccmf'.*trivectors(maxcc))
 mminc_lms = LMSToRGB*ContrastToLMS*quavectors(ccmf'.*trivectors(mincc))
+mmcc = contrast_michelson.(RGBToLMS*mmaxc_lms,RGBToLMS*mminc_lms)
 
 
 # DKL Isolating RGB through a background color
@@ -84,9 +84,15 @@ p
 colordata = Dict("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
                 "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
                 "LMS_Z"=>colorstring.([maxc_lms[:,3],minc_lms[:,3]]),
+                "LMS_X_MichelsonContrast" => mcc[1,1],
+                "LMS_Y_MichelsonContrast" => mcc[2,2],
+                "LMS_Z_MichelsonContrast" => mcc[3,3],
                 "LMS_Xm"=>colorstring.([mmaxc_lms[:,1],mminc_lms[:,1]]),
                 "LMS_Ym"=>colorstring.([mmaxc_lms[:,2],mminc_lms[:,2]]),
                 "LMS_Zm"=>colorstring.([mmaxc_lms[:,3],mminc_lms[:,3]]),
+                "LMS_Xm_MichelsonContrast" => mmcc[1,1],
+                "LMS_Ym_MichelsonContrast" => mmcc[2,2],
+                "LMS_Zm_MichelsonContrast" => mmcc[3,3],
                 "DKL_X"=>colorstring.([maxc_dkl[:,1],minc_dkl[:,1]]),
                 "DKL_Y"=>colorstring.([maxc_dkl[:,2],minc_dkl[:,2]]),
                 "DKL_Z"=>colorstring.([maxc_dkl[:,3],minc_dkl[:,3]]),
