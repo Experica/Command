@@ -17784,7 +17784,7 @@ const LMSToXYZ2 =   [1.94735469  -1.41445123  0.36476327;
 const LMSToXYZ10 =  [1.93986443  -1.34664359  0.43044935;
                      0.69283932   0.34967567  0.0;
                      0.0          0.0         2.14687945]
-"CIE White Points"
+"CIE White Points in CIE XYZ coordinates"
 const WP_A   = [1.09850, 1.00000, 0.35585]
 const WP_B   = [0.99072, 1.00000, 0.85223]
 const WP_C   = [0.98074, 1.00000, 1.18232]
@@ -17812,7 +17812,7 @@ const cat16inv = [1.86206786 -1.01125463  0.14918677;
 const cam16uniquehue = [20.14 90.00 164.25 237.53 380.14;
                         0.8   0.7   1.0    1.2    0.8;
                         0.0   100.0 200.0  300.0  400.0]
-"HSL equal angular distance hue[0:30:360] with matched physical luminance in CIE [x,y,Y] coordinates"
-const hslhue_Ymatch = [0.63  0.54  0.42  0.34  0.3    0.27  0.22   0.17   0.15   0.2    0.32   0.5;
-                       0.34  0.41  0.5   0.57  0.6    0.5   0.33   0.15   0.07   0.1    0.16   0.27;
-                       9.96  9.98  9.99  9.87  9.94  10.02  9.99  10.06  10.02  10.03  10.01  10.03]
+"HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance in CIE [x,y,Y] coordinates"
+const hslhuewpYmatch = [0.63  0.54  0.42  0.34  0.3  0.27  0.22  0.17  0.15  0.2  0.32  0.5   0.33
+                        0.34  0.41  0.5   0.57  0.6  0.5   0.33  0.15  0.07  0.1  0.16  0.27  0.33
+                        1.0   1.0   1.0   1.0   1.0  1.0   1.0   1.0   1.0   1.0  1.0   1.0   1.0]
