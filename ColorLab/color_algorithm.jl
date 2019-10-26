@@ -253,15 +253,19 @@ end
 """
 CAM16 Viewing Conditions
 
-W: Adopted white in test illuminant [Xw, Yw, Zw]
+W: White in test illuminant [Xw, Yw, Zw]
 Yb: Background in test conditions
 La: Luminance of test adapting field (cd/m2)
-Surround: Surround condition {Average, Dim, Dark}, Nc and F are functions of c, and their values can be linearly interpolated
+Surround: Surround condition {Average, Dim, Dark}, Nc and F are functions of c, and their values can be linearly interpolated.
+          Sr = Lsw / Ldw, where Lsw is the luminance of reference white in surround and Ldw in the display area.
+          Sr == 0: Dark
+          0 < Sr < 0.2: Dim
+          Sr >= 0.2: Average
 """
 function cam16view(;W=100*WP_D65,Surround=:Average,La=40,Yb=20)
     F,c,Nc = cam16surround[cam16surround[:,1].==Surround,2:end]
-    k = 1.0/(5La + 1)
-    Fl = La*k^4 + 0.1*(1 - k^4)^2 * (5La)^(1/3)
+    k = 1.0/(5*La + 1)
+    Fl = La*(k^4) + 0.1 * ((1 - k^4)^2) * ((5*La)^(1/3))
 
     Yw = W[2]
     n = Yb/Yw
