@@ -1,4 +1,4 @@
-using YAML,PyCall,Plots
+using YAML,Plots
 include("color_algorithm.jl")
 
 "Get digital RGB color spectral measured from a specific display"
@@ -13,7 +13,7 @@ colorstring(c) = join(string.(c)," ")
 
 
 # Generate all color related data for a display
-displayname = "ROGPG279Q" # "Trinitron"
+displayname = "ROGPG279Q"
 resultdir = "../Data/$displayname"
 mkpath(resultdir)
 resultpath = "$resultdir/colordata.yaml"
@@ -81,10 +81,10 @@ p
 
 
 # HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance
-hslhuewp = copy(hslhuewpmY)
-hslhuewp[3,:] .= 0.4
+hslhuewp = copy(hslhuewpYm)
+hslhuewp[3,:] .= 0.17
 huewp_hsl=XYZToRGB*quavectors(xyY2XYZ(hslhuewp))
-huewphslc = [RGB(huewp_hsl[1:3,i]...) for i in 1:size(huewp_hsl,2)]
+huewpc = [RGB(huewp_hsl[1:3,i]...) for i in 1:size(huewp_hsl,2)]
 hue_hsl = huewp_hsl[:,1:end-1]
 wp_hsl = repeat(huewp_hsl[:,end],inner=(1,size(hue_hsl,2)))
 hueangle_hsl = 0:30:330
@@ -95,86 +95,24 @@ hueangle_hsl = 0:30:330
 
 
 
-using Colors
 
-a=[HSV(i,1,1) for i in 0:30:360]
-
-b=cat(map(i->[i.r,i.g,i.b],RGB.(a))...,dims=2)
-
-c=RGBToXYZ*quavectors(b)
-
-plotlyjs()
-
-
-XYZ2xyY(c)
-
-
-
-
-hslhue = copy(hslhue_Ymatch)
-hslhue[3,:].=0.35
-hue_hsl_Ymatch=XYZToRGB*quavectors(xyY2XYZ(hslhue))
-
-
-
-[RGB(a[:,i]...) for i in 1:size(a,2)]
-a./=maximum(abs.(a),dims=1)
-
-RGBToXYZ*[0,0,1,1]
-
-
-
-RGBToLMS*[th;1]
 
 # Save color data
-colordata = Dict("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
-                "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
-                "LMS_Z"=>colorstring.([maxc_lms[:,3],minc_lms[:,3]]),
-                "LMS_XYZ_MichelsonContrast" => diag(mcc),
-                "LMS_mX"=>colorstring.([mmaxc_lms[:,1],mminc_lms[:,1]]),
-                "LMS_mY"=>colorstring.([mmaxc_lms[:,2],mminc_lms[:,2]]),
-                "LMS_mZ"=>colorstring.([mmaxc_lms[:,3],mminc_lms[:,3]]),
-                "LMS_mXYZ_MichelsonContrast" => diag(mmcc),
-                "DKL_X"=>colorstring.([maxc_dkl[:,1],minc_dkl[:,1]]),
-                "DKL_Y"=>colorstring.([maxc_dkl[:,2],minc_dkl[:,2]]),
-                "DKL_Z"=>colorstring.([maxc_dkl[:,3],minc_dkl[:,3]]),
-                "HSL_HueAngle_mY" => hueangle_hsl,
-                "HSL_Hue_mY" => colorstring.([hue_hsl[:,i] for i in 1:size(hue_hsl,2)]),
-                "HSL_WP_mY" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
-                "DKL_HueAngle_0"=>hueangle_dkl_ilp,
-                "DKL_HueMax_0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
-                "DKL_WP_0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]))
-
-pyyaml = pyimport("yaml")
-open(resultpath,"w") do f
-    pyyaml.dump(colordata,f)
-end
-
-
+colordata = Dict{String,Vector}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
+                                "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
+                                "LMS_Z"=>colorstring.([maxc_lms[:,3],minc_lms[:,3]]),
+                                "LMS_XYZ_MichelsonContrast" => diag(mcc),
+                                "LMS_Xmcc"=>colorstring.([mmaxc_lms[:,1],mminc_lms[:,1]]),
+                                "LMS_Ymcc"=>colorstring.([mmaxc_lms[:,2],mminc_lms[:,2]]),
+                                "LMS_Zmcc"=>colorstring.([mmaxc_lms[:,3],mminc_lms[:,3]]),
+                                "LMS_XYZmcc_MichelsonContrast" => diag(mmcc),
+                                "DKL_X"=>colorstring.([maxc_dkl[:,1],minc_dkl[:,1]]),
+                                "DKL_Y"=>colorstring.([maxc_dkl[:,2],minc_dkl[:,2]]),
+                                "DKL_Z"=>colorstring.([maxc_dkl[:,3],minc_dkl[:,3]]),
+                                "HSL_HueAngle_Ym" => hueangle_hsl,
+                                "HSL_Hue_Ym" => colorstring.([hue_hsl[:,i] for i in 1:size(hue_hsl,2)]),
+                                "HSL_WP_Ym" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
+                                "DKL_HueAngle_L0"=>hueangle_dkl_ilp,
+                                "DKL_Hue_L0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
+                                "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]))
 YAML.write_file(resultpath,colordata)
-
-a=RGBToXYZ*([0,23,0,255]/255)
-
-
-
-XYZ2xyY(a)
-
-
-
-
-
-
-using MAT
-a=matread("hueTest.mat")
-a=a["test"]
-
-IsoLumc = [RGB(a[1:3,i]...) for i in 1:size(a,2)]
-
-
-
-
-IsoLumc = [RGB(a[1:3,i]...) for i in 1:size(a,2)]
-IsoLumdkl = RGBToDKL*quavectors(a)
-p=plot(IsoLumdkl[2,:],IsoLumdkl[3,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=4.5,marker=:circle,markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)")
-foreach(i->plot!(p,[0,IsoLumdkl[2,i]],[0,IsoLumdkl[3,i]],color=:gray,linestyle=:dot),1:size(hue_dkl_ilp,2))
-p
