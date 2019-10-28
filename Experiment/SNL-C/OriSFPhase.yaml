@@ -3,10 +3,10 @@ Name: OriSFPhase
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: m1901
-Subject_Name: m1901
-Subject_Species: Mouse
-Subject_Gender: Female
+Subject_ID: AF5
+Subject_Name: AF5
+Subject_Species: Macaque
+Subject_Gender: Male
 Subject_Age: 6
 Subject_Size: 0 0 0
 Subject_Weight: 100
@@ -15,13 +15,13 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  ScreenAspect@Camera@OrthoCamera: 1.33333337
   CLUT@Camera@OrthoCamera: true
   BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
   BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -24.71 13.24 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1

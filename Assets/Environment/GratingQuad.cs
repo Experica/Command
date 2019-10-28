@@ -48,6 +48,7 @@ namespace Experica
         public bool ReverseTime = false;
 
         double reversetime;
+        bool isblank;
 
         public override void OnAwake()
         {
@@ -58,6 +59,19 @@ namespace Experica
 
         public override void OnOri(float o)
         {
+            if (float.IsNaN(o))
+            {
+                renderer.material.SetColor("maxc", new Color(1, 1, 1, 0));
+                renderer.material.SetColor("minc", new Color(0, 0, 0, 0));
+                isblank = true;
+                return;
+            }
+            if (isblank)
+            {
+                renderer.material.SetColor("maxc", MaxColor);
+                renderer.material.SetColor("minc", MinColor);
+                isblank = false;
+            }
             renderer.material.SetFloat("ori", o);
             if (OriPositionOffset)
             {
@@ -122,8 +136,11 @@ namespace Experica
         }
         public virtual void OnSpatialFreq(float sf)
         {
-            renderer.material.SetFloat("sf", sf);
-            SpatialFreq = sf;
+            if (!float.IsNaN(sf))
+            {
+                renderer.material.SetFloat("sf", sf);
+                SpatialFreq = sf;
+            }
         }
 
         void ontemporalfreq(float tf)

@@ -56,6 +56,8 @@ namespace Experica
         public int MaxDisplayLatencyError { get; set; } = 20;
         public int OnlineSignalLatency { get; set; } = 50;
 
+        public string MCCDevice { get; set; } = "1208FS";
+        public int MCCDPort { get; set; } = 10;
         public int ParallelPort1 { get; set; } = 45072;
         public int ParallelPort2 { get; set; } = 53264;
         public int ParallelPort3 { get; set; } = 53264;

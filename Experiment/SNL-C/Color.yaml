@@ -1,47 +1,49 @@
 ID: Color
 Name: Color
 Designer: Alex
-Experimenter: Alex, Leo
+Experimenter: Alex
 Log: 
-Subject_ID: LZR1805
-Subject_Name: LZR1805
-Subject_Species: Long Evans Rat
-Subject_Gender: Female
-Subject_Age: 3
+Subject_ID: AF5
+Subject_Name: AF5
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 300
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  CLUT@Camera@OrthoCamera: true
+  BGColor@BackGround@BackGround: 0.07174 0.05976 0.06431 1
+  BGSize@BackGround@BackGround: 100 100 1
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 25.21 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 2
-  Size@Quad@Quad: 2 2 1
-  Color@Quad@Quad: 1 1 1 1
-  MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0.5
-  Sigma@Quad@Quad: 0.150000006
+  Diameter@Quad@Quad: 20
+  Size@Quad@Quad: 20 20 1
+  Color@Quad@Quad: 0.05943 0.0725 0.005691 1
+  MaskType@Quad@Quad: DiskFade
+  MaskRadius@Quad@Quad: 0.449999988
+  Sigma@Quad@Quad: 35
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: true
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-CondPath: Condition\Orientation22.5DegStep.yaml
+CondPath: ''
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
+ExLogicPath: Experica.SpikeGLXColorLogic
 RecordSession: V1a
-RecordSite: 2000
+RecordSite: 1000
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -50,9 +52,9 @@ CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
 Input: None
-PreICI: 150
+PreICI: 250
 CondDur: 500
-SufICI: 150
+SufICI: 250
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -61,11 +63,11 @@ BlockDur: 0
 SufIBI: 0
 PushCondAtState: PREICI
 CondTestAtState: PREICI
-NotifyPerCondTest: 2
+NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
-- CONDSTATE
-- CondRepeat
+- Event
+- SyncEvent
 ExInheritParam:
 - Subject_ID
 - Subject_Species
@@ -83,6 +85,7 @@ ExInheritParam:
 - Delay
 - DisplayLatency
 - ResponseDelay
+- Display_ID
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -95,7 +98,19 @@ EnvInheritParam:
 - Position@ENQuad@Quad
 - ScreenAspect@ENCamera@OrthoCamera
 - MarkerPosition@ENMarker@Marker
-Param: {}
+- ScreenHalfHeight@Camera@OrthoCamera
+- ScreenToEye@Camera@OrthoCamera
+- ScreenAspect@Camera@OrthoCamera
+- CLUT@Camera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Diameter@Quad@Quad
+- Position@Quad@Quad
+Param:
+  ColorSpace: HSL
+  Color: Hue_mY
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -103,9 +118,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
-ResponseDelay: 20
-Version: 1
+Display_ID: ROGPG279Q
+ResponseDelay: 15
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL

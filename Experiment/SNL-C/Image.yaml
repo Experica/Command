@@ -3,53 +3,22 @@ Name: Image
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
-Subject_Gender: Female
+Subject_ID: AF5
+Subject_Name: AF5
+Subject_Species: Macaque
+Subject_Gender: Male
 Subject_Age: 6
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 100
 Subject_Log: 
 EnvPath: MarkerImage
-EnvParam:
-  StartIndex@ImageQuad@ImageQuad: 2
-  NumOfImage@ImageQuad@ImageQuad: 24000
-  Image@ImageQuad@ImageQuad: 1243
-  ImageSet@ImageQuad@ImageQuad: Imageset_A_24000_32_32_0.5_0.35_Check
-  IsCacheImage@ImageQuad@ImageQuad: true
-  IsPreLoadImageset@ImageQuad@ImageQuad: true
-  Rotation@ImageQuad@ImageQuad: 0 0 0
-  RotationOffset@ImageQuad@ImageQuad: 0 0 0
-  Ori@ImageQuad@ImageQuad: 0
-  OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 20
-  Size@ImageQuad@ImageQuad: 20 20 1
-  Color@ImageQuad@ImageQuad: 1 1 1 1
-  MaskType@ImageQuad@ImageQuad: None
-  MaskRadius@ImageQuad@ImageQuad: 0.5
-  Sigma@ImageQuad@ImageQuad: 0.150000006
-  OriPositionOffset@ImageQuad@ImageQuad: false
-  Visible@ImageQuad@ImageQuad: true
-  Position@ImageQuad@ImageQuad: 0 0 0
-  PositionOffset@ImageQuad@ImageQuad: 0 0 0
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  CLUT@Camera@OrthoCamera: true
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+EnvParam: {}
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.RippleImageLogic
-RecordSession: V1e
-RecordSite: 3660
-DataDir: C:\
+RecordSession: V1a
+RecordSite: 1000
+DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
@@ -123,7 +92,7 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ''
-ResponseDelay: 20
+ResponseDelay: 15
 Version: 1
 Config: 
 CondTest: 

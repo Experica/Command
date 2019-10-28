@@ -27,9 +27,18 @@ using FTD2XX_NET;
 
 namespace Experica
 {
-    public interface GPIO
+    public interface IGPIO
     {
+        void Out(byte value);
+        void BitOut(int bit, bool value);
+        void BitPulse(int bit, double duration_ms);
+        bool Found { get; }
+    }
 
+    public enum IODirection
+    {
+        Input,
+        Output
     }
 
     public class SerialGPIO : IDisposable
@@ -169,27 +178,33 @@ namespace Experica
         uint ndevice;
         FTDI.FT_DEVICE_INFO_NODE[] devices;
 
-        uint NumBytesToSend = 0;
+        uint NumBytesToWrite = 0;
         uint NumBytesToRead = 0;
-        uint NumBytesSent = 0;
+        uint NumBytesWrite = 0;
         uint NumBytesRead = 0;
-        byte[] outbuffer;
-        byte[] inbuffer;
+        byte[] outputbuffer;
+        byte[] inputbuffer;
 
         public FTDIGPIO()
         {
             FTD2XX = new FTDI();
-            outbuffer = new byte[16];
-            inbuffer = new byte[16];
+            outputbuffer = new byte[64];
+            inputbuffer = new byte[64];
 
-            if(FTD2XX.GetNumberOfDevices(ref ndevice) == FTDI.FT_STATUS.FT_OK)
+            if (FTD2XX.GetNumberOfDevices(ref ndevice) == FTDI.FT_STATUS.FT_OK)
             {
-                if (ndevice>0)
+                if (ndevice > 0)
                 {
                     devices = new FTDI.FT_DEVICE_INFO_NODE[ndevice];
-                   FTSTATUS= FTD2XX.GetDeviceList(devices);
-                    FTSTATUS = FTD2XX.OpenByDescription(devices[0].Description);
-                    Config();
+                    FTSTATUS = FTD2XX.GetDeviceList(devices);
+                    if (FTD2XX.OpenByDescription(devices[0].Description) == FTDI.FT_STATUS.FT_OK)
+                    {
+                        Config();
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Can Not Open Device: {devices[0].Description}.");
+                    }
                 }
                 else
                 {
@@ -202,9 +217,9 @@ namespace Experica
             }
         }
 
-        void Config(byte bitdirection=0xFF)
+        void Config(byte bitdirection = 0xFF)
         {
-            FTSTATUS |= FTD2XX.ResetDevice(); 
+            FTSTATUS |= FTD2XX.ResetDevice();
             FTSTATUS |= FTD2XX.SetTimeouts(5000, 5000);
             FTSTATUS |= FTD2XX.SetLatency(0);
             FTSTATUS |= FTD2XX.SetFlowControl(FTDI.FT_FLOW_CONTROL.FT_FLOW_RTS_CTS, 0x00, 0x00);
@@ -226,47 +241,47 @@ namespace Experica
             //}
 
             // Use 60MHz master clock (disable divide by 5)
-            NumBytesToSend = 0;
-            outbuffer[NumBytesToSend++] = 0x8A;
+            NumBytesToWrite = 0;
+            outputbuffer[NumBytesToWrite++] = 0x8A;
             // Turn off adaptive clocking (may be needed for ARM)
-            outbuffer[NumBytesToSend++] = 0x97;
+            outputbuffer[NumBytesToWrite++] = 0x97;
             // Disable three-phase clocking
-            outbuffer[NumBytesToSend++] = 0x8D;
+            outputbuffer[NumBytesToWrite++] = 0x8D;
 
-            FTSTATUS = FTD2XX.Write(outbuffer, NumBytesToSend, ref NumBytesSent);
+            FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
 
             // Configure data bits low-byte of MPSSE port
-            NumBytesToSend = 0;
-            outbuffer[NumBytesToSend++] = 0x82;
+            NumBytesToWrite = 0;
+            outputbuffer[NumBytesToWrite++] = 0x82;
             // Initial state all low
-            outbuffer[NumBytesToSend++] = 0x00;
+            outputbuffer[NumBytesToWrite++] = 0x00;
             // Direction all output 
-            outbuffer[NumBytesToSend++] = 0xFF;
-            FTSTATUS = FTD2XX.Write(outbuffer, NumBytesToSend, ref NumBytesSent);
+            outputbuffer[NumBytesToWrite++] = 0xFF;
+            FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
         }
 
         void PinOut()
         {
-            NumBytesToSend = 0;
-            outbuffer[NumBytesToSend++] = 0x82;
+            NumBytesToWrite = 0;
+            outputbuffer[NumBytesToWrite++] = 0x82;
             // Initial state all low
-            outbuffer[NumBytesToSend++] = 0x00;
+            outputbuffer[NumBytesToWrite++] = 0x00;
             // Direction all output 
-            outbuffer[NumBytesToSend++] = 0xFF;
-            FTSTATUS = FTD2XX.Write(outbuffer, NumBytesToSend, ref NumBytesSent);
+            outputbuffer[NumBytesToWrite++] = 0xFF;
+            FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
 
         }
 
         public void Out(byte v)
         {
-            outbuffer[0] = v;
-            FTD2XX.Write(outbuffer, 1, ref NumBytesSent);
+            outputbuffer[0] = v;
+            FTD2XX.Write(outputbuffer, 1, ref NumBytesWrite);
         }
 
         public byte In()
         {
-            FTD2XX.Read(inbuffer, 1, ref NumBytesRead);
-            return inbuffer[0];
+            FTD2XX.Read(inputbuffer, 1, ref NumBytesRead);
+            return inputbuffer[0];
         }
 
         void Close()

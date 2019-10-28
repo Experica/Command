@@ -26,15 +26,17 @@ namespace Experica
     /// </summary>
     public class ConditionTestLogic : ExperimentLogic
     {
-        protected ParallelPort pport;
+        protected IGPIO gpio;
         protected bool syncvalue;
 
         protected override void OnStart()
         {
             var syncmethod = ex.EventSyncProtocol.SyncMethods;
-            if (syncmethod.Contains(SyncMethod.ParallelPort))
+            if (syncmethod.Contains(SyncMethod.GPIO))
             {
-                pport = new ParallelPort(dataaddress: config.ParallelPort1);
+                gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
+                if (gpio.Found) return;
+                gpio = new ParallelPort(dataaddress: config.ParallelPort1);
             }
         }
 
@@ -76,8 +78,8 @@ namespace Experica
                         case SyncMethod.Display:
                             SetEnvActiveParam("Mark", syncvalue);
                             break;
-                        case SyncMethod.ParallelPort:
-                            pport?.SetBit(bit: config.EventSyncCh, value: syncvalue);
+                        case SyncMethod.GPIO:
+                            gpio?.BitOut(bit: config.EventSyncCh, value: syncvalue);
                             break;
                     }
                 }

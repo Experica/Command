@@ -106,7 +106,7 @@ namespace Experica
         Output
     }
 
-    public class ParallelPort
+    public class ParallelPort:IGPIO
     {
         int dataaddress;
         public int DataAddress { get { lock (apilock) { return dataaddress; } } set { lock (apilock) { dataaddress = value; } } }
@@ -125,6 +125,9 @@ namespace Experica
                 }
             }
         }
+
+        public bool Found => true;
+
         int datavalue;
         readonly object apilock = new object();
 
@@ -170,7 +173,7 @@ namespace Experica
             }
         }
 
-        public void SetBit(int bit = 0, bool value = true)
+        public void BitOut(int bit = 0, bool value = true)
         {
             lock (apilock)
             {
@@ -233,9 +236,9 @@ namespace Experica
         public void BitPulse(int bit = 0, double duration_ms = 1)
         {
             var timer = new Timer();
-            SetBit(bit, true);
+            BitOut(bit, true);
             timer.Timeout(duration_ms);
-            SetBit(bit, false);
+            BitOut(bit, false);
         }
 
         void _BitPulse(object p)
@@ -440,7 +443,7 @@ namespace Experica
                     timer.Timeout(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
                     while (true)
                     {
-                        pport.SetBit(bit, true);
+                        pport.BitOut(bit, true);
                         start = timer.ElapsedMillisecond;
                         while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
                         {
@@ -453,13 +456,13 @@ namespace Experica
                                 }
                                 if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
                                 {
-                                    pport.SetBit(bit, false);
+                                    pport.BitOut(bit, false);
                                     goto Break;
                                 }
                             }
                         }
 
-                        pport.SetBit(bit, false);
+                        pport.BitOut(bit, false);
                         start = timer.ElapsedMillisecond;
                         while ((timer.ElapsedMillisecond - start) < bitlowdur_ms[bit])
                         {
@@ -502,7 +505,7 @@ namespace Experica
                                 }
                             }
 
-                            pport.SetBit(bit, true);
+                            pport.BitOut(bit, true);
                             start = timer.ElapsedMillisecond;
                             while ((timer.ElapsedMillisecond - start) < bitspikewidth_ms[bit])
                             {
@@ -515,12 +518,12 @@ namespace Experica
                                     }
                                     if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
                                     {
-                                        pport.SetBit(bit, false);
+                                        pport.BitOut(bit, false);
                                         goto Break;
                                     }
                                 }
                             }
-                            pport.SetBit(bit, false);
+                            pport.BitOut(bit, false);
                         }
                     }
             }

@@ -40,6 +40,8 @@ namespace Experica
             var ori = ex.GetParam("Ori").Convert<List<float>>();
             var sf = ex.GetParam("SpatialFreq").Convert<List<float>>();
             List<Color> color = null;
+            List<Color> wp = null;
+            List<float> angle = null;
 
             // get color
             var file = Path.Combine("Data", ex.Display_ID, "colordata.yaml");
@@ -53,6 +55,20 @@ namespace Experica
                 if (data.ContainsKey(colorname))
                 {
                     color = data[colorname].Convert<List<Color>>();
+                    if (colorname.Contains("Hue"))
+                    {
+                        var huename = colorvar.Substring(0, colorvar.IndexOf('_') );
+                        var wpname = colorname.Replace(huename, "WP");
+                        if(data.ContainsKey(wpname))
+                        {
+                            wp = data[wpname].Convert<List<Color>>();
+                        }
+                        var anglename = colorname.Replace(huename, "HueAngle");
+                        if (data.ContainsKey(anglename))
+                        {
+                            angle = data[anglename].Convert<List<float>>();
+                        }
+                    }
                 }
                 else
                 {
@@ -73,20 +89,46 @@ namespace Experica
             {
                 cond["SpatialFreq"] = sf.Select(i => (object)i).ToList();
             }
+            var colorcond = new Dictionary<string, List<object>>();
             if (color != null)
             {
+                cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList(); ;
                 var colorvarname = "Color";
-                if (ex.ID.StartsWith("Flash"))
+                if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
                 {
                 }
                 else
                 {
                     colorvarname = "MaxColor";
                 }
-                cond[colorvarname] = color.Select(i => (object)i).ToList();
+                colorcond[colorvarname] = color.Select(i => (object)i).ToList();
+                if (wp != null)
+                {
+                    colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
+                }
+                if (angle != null)
+                {
+                    colorcond["HueAngle"] = angle.Select(i => (object)i).ToList();
+                }
             }
 
-            condmanager.FinalizeCondition(cond.OrthoCondOfFactorLevel());
+            var fcond = cond.OrthoCondOfFactorLevel();
+            foreach(var i in fcond["_colorindex"])
+            {
+                foreach(var f in colorcond.Keys)
+                {
+                    if (!fcond.ContainsKey(f))
+                    {
+                        fcond[f] = new List<object> { colorcond[f].First() };
+                    }
+                    else
+                    {
+                        fcond[f].Add(colorcond[f][(int)i]);
+                    }
+                }
+            }
+            fcond.Remove("_colorindex");
+            condmanager.FinalizeCondition(fcond);
         }
     }
 }

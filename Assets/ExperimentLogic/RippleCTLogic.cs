@@ -27,7 +27,7 @@ namespace Experica
 
         protected override void OnStart()
         {
-            pport = new ParallelPort(dataaddress: config.ParallelPort1);
+            gpio = new ParallelPort(dataaddress: config.ParallelPort1);
             recorder = new RippleRecorder();
         }
 
@@ -48,7 +48,7 @@ namespace Experica
                 needed to mark the timer zero.
                 */
                 timer.Timeout(config.NotifyLatency);
-                pport.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+                gpio.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
             }
             /*
             Immediately after the TTL falling edge triggering ripple recording, we reset timer, 
@@ -63,7 +63,7 @@ namespace Experica
             timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
             if (isrippletriggered)
             {
-                pport.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+                gpio.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
             }
             timer.Stop();
         }

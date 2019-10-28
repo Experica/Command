@@ -87,11 +87,12 @@
 
 			float4 frag(v2f i) : SV_Target
 			{
-				float4 c;
+				float4 c = {0,0,0,0};
 			    float sinv, cosv;
 				sincos(radians(ori + orioffset), sinv, cosv);
 				float p = cosv*i.uv.y*sizey - sinv*i.uv.x*sizex;
 				float y = frac((p - t*tf / sf + phase / sf)*sf);
+				
 				if (gratingtype == 0)
 				{
 					if (y< 0.5)

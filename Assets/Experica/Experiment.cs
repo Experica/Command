@@ -322,6 +322,7 @@ namespace Experica
     public enum ColorSpace
     {
         RGB,
+        HSL,
         XYZ,
         LMS,
         DKL,
@@ -345,14 +346,14 @@ namespace Experica
 
     public class EventSyncProtocol
     {
-        public List<SyncMethod> SyncMethods { get; set; } = new List<SyncMethod>() { SyncMethod.ParallelPort, SyncMethod.Display };
+        public List<SyncMethod> SyncMethods { get; set; } = new List<SyncMethod>() { SyncMethod.GPIO, SyncMethod.Display };
         public uint nSyncChannel { get; set; } = 1;
         public uint nSyncpEvent { get; set; } = 1;
     }
 
     public enum SyncMethod
     {
-        ParallelPort,
+        GPIO,
         Display
     }
 
