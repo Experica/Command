@@ -17,14 +17,6 @@ EnvParam:
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.77777779
   CLUT@Camera@OrthoCamera: false
-  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
@@ -39,6 +31,14 @@ EnvParam:
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
+  BGSize@BackGround@BackGround: 100 100 1
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorLogic

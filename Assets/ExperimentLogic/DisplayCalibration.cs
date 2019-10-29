@@ -79,12 +79,18 @@ namespace Experica
         {
             SetEnvActiveParam("Visible", false);
             spectroradiometer?.Close();
-            if (!string.IsNullOrEmpty(ex.Display_ID) && Extension.YesNoDialog("Save Measurement to Configuration?"))
+            if (config.Display == null)
             {
-                if (config.Display == null)
-                {
-                    config.Display = new Dictionary<string, Display>();
-                }
+                config.Display = new Dictionary<string, Display>();
+            }
+            if (string.IsNullOrEmpty(ex.Display_ID))
+            {
+                Extension.WarningDialog("Display_ID is not set!");
+                return;
+            }
+
+            if (Extension.YesNoDialog("Save Measurement to Configuration?"))
+            {
                 if (config.Display.ContainsKey(ex.Display_ID))
                 {
                     if (imeasurement.Count > 0)
@@ -99,6 +105,15 @@ namespace Experica
                 else
                 {
                     config.Display[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
+                }
+            }
+            if (Extension.YesNoDialog("Save Measurement Data?"))
+            {
+                var path = Extension.SaveFile("Save Measurement Data ...");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var d = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
+                    path.WriteYamlFile(d);
                 }
             }
         }

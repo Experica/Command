@@ -33,6 +33,7 @@ namespace Experica
     {
         protected override void GenerateFinalCondition()
         {
+            pushexcludefactors = new List<string>() { "HueAngle"};
             var cond = new Dictionary<string, List<object>>();
             var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
             var colorvar = (string)ex.GetParam("Color");

@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.IO.Ports;
-using System.Text;
 using System.Linq;
 using System.Threading;
 using System.Collections.Concurrent;
@@ -100,27 +99,21 @@ namespace Experica
         }
     }
 
-    public enum ParallelPortDataMode
-    {
-        Input,
-        Output
-    }
-
-    public class ParallelPort:IGPIO
+    public class ParallelPort : IGPIO
     {
         int dataaddress;
         public int DataAddress { get { lock (apilock) { return dataaddress; } } set { lock (apilock) { dataaddress = value; } } }
         public int StatusAddress { get { lock (apilock) { return dataaddress + 1; } } }
         public int ControlAddress { get { lock (apilock) { return dataaddress + 2; } } }
-        ParallelPortDataMode datamode;
-        public ParallelPortDataMode DataMode
+        IODirection datamode;
+        public IODirection DataMode
         {
             get { lock (apilock) { return datamode; } }
             set
             {
                 lock (apilock)
                 {
-                    Inpout.Output8((ushort)ControlAddress, (byte)(value == ParallelPortDataMode.Input ? 0x01 << 5 : 0x00));
+                    Inpout.Output8((ushort)ControlAddress, (byte)(value == IODirection.Input ? 0x01 << 5 : 0x00));
                     datamode = value;
                 }
             }
@@ -131,7 +124,7 @@ namespace Experica
         int datavalue;
         readonly object apilock = new object();
 
-        public ParallelPort(int dataaddress = 0xB010, ParallelPortDataMode datamode = ParallelPortDataMode.Output)
+        public ParallelPort(int dataaddress = 0xB010, IODirection datamode = IODirection.Output)
         {
             DataAddress = dataaddress;
             DataMode = datamode;
@@ -141,9 +134,9 @@ namespace Experica
         {
             lock (apilock)
             {
-                if (DataMode == ParallelPortDataMode.Output)
+                if (DataMode == IODirection.Output)
                 {
-                    DataMode = ParallelPortDataMode.Input;
+                    DataMode = IODirection.Input;
                 }
                 return Inpout.Input8((ushort)dataaddress);
             }
@@ -153,9 +146,9 @@ namespace Experica
         {
             lock (apilock)
             {
-                if (DataMode == ParallelPortDataMode.Input)
+                if (DataMode == IODirection.Input)
                 {
-                    DataMode = ParallelPortDataMode.Output;
+                    DataMode = IODirection.Output;
                 }
                 Inpout.Output16((ushort)dataaddress, (ushort)data);
             }
@@ -165,9 +158,9 @@ namespace Experica
         {
             lock (apilock)
             {
-                if (DataMode == ParallelPortDataMode.Input)
+                if (DataMode == IODirection.Input)
                 {
-                    DataMode = ParallelPortDataMode.Output;
+                    DataMode = IODirection.Output;
                 }
                 Inpout.Output8((ushort)dataaddress, data);
             }

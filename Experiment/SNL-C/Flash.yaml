@@ -15,16 +15,8 @@ EnvPath: MarkerBar
 EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
-  CLUT@Camera@OrthoCamera: true
-  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenAspect@Camera@OrthoCamera: 1.77777779
+  CLUT@Camera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
@@ -39,6 +31,14 @@ EnvParam:
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
+  BGSize@BackGround@BackGround: 100 100 1
 CondPath: Condition\WhiteBlack.yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXCTLogic

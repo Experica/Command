@@ -16,22 +16,14 @@ EnvParam:
   ScreenHalfHeight@Camera@OrthoCamera: 15
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.77777779
-  CLUT@Camera@OrthoCamera: true
-  BGColor@BackGround@BackGround: 0.07174 0.05976 0.06431 1
-  BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 25.21 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
+  CLUT@Camera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 20
   Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 0.05943 0.0725 0.005691 1
+  Color@Quad@Quad: 0.1678 0.04122 0.004463 1
   MaskType@Quad@Quad: DiskFade
   MaskRadius@Quad@Quad: 0.449999988
   Sigma@Quad@Quad: 35
@@ -39,6 +31,14 @@ EnvParam:
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  BGColor@BackGround@BackGround: 0.07174 0.05976 0.06431 1
+  BGSize@BackGround@BackGround: 100 100 1
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorLogic
@@ -110,11 +110,11 @@ EnvInheritParam:
 - Position@Quad@Quad
 Param:
   ColorSpace: HSL
-  Color: Hue_mY
+  Color: Hue_Ym
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
-  - ParallelPort
+  - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1

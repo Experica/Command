@@ -303,10 +303,10 @@ namespace Experica
     public class Display
     {
         public string ID { get; set; } = "";
-        public DisplayType Type { get; set; } = DisplayType.CRT;
+        public DisplayType Type { get; set; } = DisplayType.LCD;
         public double Latency { get; set; } = 0;
-        public int CLUTSize { get; set; } = 16;
-        public DisplayFitType FitType { get; set; } = DisplayFitType.Gamma;
+        public int CLUTSize { get; set; } = 20;
+        public DisplayFitType FitType { get; set; } = DisplayFitType.LinearSpline;
         public Dictionary<string, List<object>> IntensityMeasurement { get; set; } = new Dictionary<string, List<object>>();
         public Dictionary<string, List<object>> SpectralMeasurement { get; set; } = new Dictionary<string, List<object>>();
         public Texture2D CLUT;

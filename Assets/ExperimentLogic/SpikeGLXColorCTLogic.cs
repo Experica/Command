@@ -27,20 +27,25 @@ using System.Linq;
 namespace Experica
 {
     /// <summary>
-    /// SpikeGLX Condition Test with Display-Derived ColorSpace
+    /// Condition Test with SpikeGLX Data Acquisition System, with Predefined Color
     /// </summary>
-    public class SpikeGLXMaxMinColorLogic : SpikeGLXCTLogic
+    public class SpikeGLXColorCTLogic : SpikeGLXCTLogic
     {
-        protected override void OnStartExperiment()
+        protected override void GenerateFinalCondition()
         {
-            base.OnStartExperiment();
+            base.GenerateFinalCondition();
 
             var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
             var colorvar = (string)ex.GetParam("Color");
             var colorname = colorspace + "_" + colorvar;
+            if (string.IsNullOrEmpty(colorvar))
+            {
+                Debug.LogWarning("No Color Specified.");
+                return;
+            }
+
             List<Color> color = null;
             List<Color> wp = null;
-
             // get color
             var file = Path.Combine("Data", ex.Display_ID, "colordata.yaml");
             if (!File.Exists(file))
@@ -61,7 +66,6 @@ namespace Experica
                         {
                             wp = data[wpname].Convert<List<Color>>();
                         }
-                        var anglename = colorname.Replace(huename, "HueAngle");
                     }
                 }
                 else
@@ -74,11 +78,15 @@ namespace Experica
                 Debug.LogWarning($"Color Data: {file} Not Found.");
             }
 
-
             if (color != null)
             {
-                SetEnvActiveParam("MaxColor", color[0]);
-                SetEnvActiveParam("MinColor", color[1]);
+                switch (ex.ID)
+                {
+                    case "HartleySubspace":
+                        SetEnvActiveParam("MaxColor", color[0]);
+                        SetEnvActiveParam("MinColor", color[1]);
+                        break;
+                }
             }
         }
 

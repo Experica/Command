@@ -171,7 +171,7 @@ namespace Experica
 
     }
 
-    public class FTDIGPIO
+    public class FTDIGPIO : IGPIO
     {
         FTDI FTD2XX;
         FTDI.FT_STATUS FTSTATUS;
@@ -184,6 +184,8 @@ namespace Experica
         uint NumBytesRead = 0;
         byte[] outputbuffer;
         byte[] inputbuffer;
+
+        public bool Found => throw new NotImplementedException();
 
         public FTDIGPIO()
         {
@@ -288,6 +290,16 @@ namespace Experica
         {
             FTD2XX.SetBitMode(0x00, 0x00);
             FTD2XX.Close();
+        }
+
+        public void BitOut(int bit, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BitPulse(int bit, double duration_ms)
+        {
+            throw new NotImplementedException();
         }
     }
 }
