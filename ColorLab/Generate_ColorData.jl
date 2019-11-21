@@ -23,6 +23,58 @@ RGBToLMS,LMSToRGB = RGBLMSMatrix(RGBSpectral(config["Display"][displayname]["Spe
 RGBToXYZ,XYZToRGB = RGBXYZMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
 
 
+
+a=rand(3,10)
+a_xyz = trivectors(RGBToXYZ*quavectors(a))
+
+a_xyz = [19.01	57.06	3.53	19.01;
+        20.00	43.06	6.56	20.00;
+        21.78   31.96   2.14    21.78]
+
+camview = cam16view(W=[100,100.00,100],La=200.31,Yb=20)
+
+cam = XYZ2CAM16(a_xyz;camview...)
+ucs = CAM16UCS(cam.J,cam.M,cam.h)
+
+
+
+
+
+rcam = CAM16UCSinv(ucs)
+
+rxyz = CAM162XYZ(cam.J,cam.M,cam.h;camview...)
+
+
+
+rxyz = CAM162XYZ(rcam...;camview...)
+
+
+cam.J
+
+rad2deg(cam.h[2])
+
+
+RGBToXYZ*[0.5,0.5,0.5,1]
+
+
+cam16uhs = hcat([[j,m,h] for h in deg2rad.(cam16uniquehue[1,1:end-1]), m in 25:25, j in 15:15]...)
+#rcam = CAM16UCSinv(cam16uhs,form=:polar)
+#uhs_rgb = XYZToRGB*quavectors(CAM162XYZ(rcam...;camview...))
+uhs_rgb = XYZToRGB*quavectors(CAM162XYZ(cam16uhs[1,:],cam16uhs[2,:],cam16uhs[3,:];camview...))
+
+
+uhs_rgb = quavectors(desaturate2gamut!(trivectors(uhs_rgb)))
+IsoLumc = [RGB(uhs_rgb[1:3,i]...) for i in 1:size(uhs_rgb,2)]
+IsoLumdkl = RGBToDKL*uhs_rgb
+p=plot(IsoLumdkl[2,:],IsoLumdkl[3,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=4.5,marker=:circle,markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)")
+foreach(i->plot!(p,[0,IsoLumdkl[2,i]],[0,IsoLumdkl[3,i]],color=:gray,linestyle=:dot),1:size(hue_dkl_ilp,2))
+p
+
+
+
+
+
+
 # Maximum Cone Isolating RGB through a color
 th = [0.5,0.5,0.5]
 # each column of LMSToRGB is the cone isolating RGB direction
