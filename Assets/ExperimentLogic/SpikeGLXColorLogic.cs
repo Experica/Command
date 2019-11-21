@@ -114,21 +114,24 @@ namespace Experica
             }
 
             var fcond = cond.OrthoCondOfFactorLevel();
-            foreach(var i in fcond["_colorindex"])
+            if (fcond.ContainsKey("_colorindex"))
             {
-                foreach(var f in colorcond.Keys)
+                foreach (var i in fcond["_colorindex"])
                 {
-                    if (!fcond.ContainsKey(f))
+                    foreach (var f in colorcond.Keys)
                     {
-                        fcond[f] = new List<object> { colorcond[f].First() };
-                    }
-                    else
-                    {
-                        fcond[f].Add(colorcond[f][(int)i]);
+                        if (!fcond.ContainsKey(f))
+                        {
+                            fcond[f] = new List<object> { colorcond[f].First() };
+                        }
+                        else
+                        {
+                            fcond[f].Add(colorcond[f][(int)i]);
+                        }
                     }
                 }
+                fcond.Remove("_colorindex");
             }
-            fcond.Remove("_colorindex");
             condmanager.FinalizeCondition(fcond);
         }
     }

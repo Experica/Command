@@ -559,8 +559,8 @@ namespace Experica
                             var hh = envmanager.maincamera_scene.orthographicSize + s.y / 2;
                             var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
                             envmanager.SetActiveParam("Position", new Vector3(
-                            Mathf.Clamp(p.x + Mathf.Pow(jxa * hw / 35, 3), -hw, hw),
-                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 35, 3), -hh, hh),
+                            Mathf.Clamp(p.x + Mathf.Pow(jxa * hw / 1135, 1), -hw, hw),
+                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 1135,1), -hh, hh),
                             p.z), true);
                         }
                     }
@@ -593,7 +593,7 @@ namespace Experica
                         var oo = envmanager.GetActiveParam("Ori");
                         if (oo != null)
                         {
-                            var o = ((float)oo + Mathf.Pow(jza, 3) * 4) % 360f;
+                            var o = ((float)oo + Mathf.Pow(jza, 1) * 0.4) % 360f;
                             envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o, true);
                         }
                     }
@@ -606,7 +606,7 @@ namespace Experica
                         if (dio != null)
                         {
                             var d = (float)dio;
-                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 3)), true);
+                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 1)*0.05f), true);
                         }
                     }
                     else
@@ -616,8 +616,8 @@ namespace Experica
                         {
                             var s = (Vector3)so;
                             envmanager.SetParam("Size", new Vector3(
-                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 3)),
-                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 3)),
+                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 1)*0.05f),
+                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 1)*0.05f),
                                 s.z), true);
                         }
                     }

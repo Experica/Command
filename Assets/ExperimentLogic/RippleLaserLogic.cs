@@ -28,7 +28,7 @@ namespace Experica
     public class RippleLaserLogic : RippleCTLogic
     {
         protected ParallelPort pport2;
-        protected ParallelPortWave ppw;
+        protected GPIOWave ppw;
         protected ILaser laser, laser2;
         protected int? lasersignalch = null, laser2signalch = null;
         protected float power, power2;
@@ -37,7 +37,7 @@ namespace Experica
         {
             base.OnStart();
             pport2 = new ParallelPort(config.ParallelPort2);
-            ppw = new ParallelPortWave(pport2);
+            ppw = new GPIOWave(pport2);
         }
 
         protected override void GenerateFinalCondition()

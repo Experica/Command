@@ -83,6 +83,7 @@ namespace Experica
                 switch (ex.ID)
                 {
                     case "HartleySubspace":
+                    case "OriSF":
                         SetEnvActiveParam("MaxColor", color[0]);
                         SetEnvActiveParam("MinColor", color[1]);
                         break;

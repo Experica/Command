@@ -29,19 +29,25 @@ namespace Experica
         protected IGPIO gpio;
         protected bool syncvalue;
 
-        protected override void OnStart()
+        protected override void OnStartExperiment()
         {
             var syncmethod = ex.EventSyncProtocol.SyncMethods;
             if (syncmethod.Contains(SyncMethod.GPIO))
             {
-                gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
-                if (gpio.Found) return;
                 gpio = new ParallelPort(dataaddress: config.ParallelPort1);
+                if (!gpio.Found)
+                {
+                    gpio = new FTDIGPIO();
+                }
+                if (!gpio.Found)
+                {
+                    gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
+                }
+                if (!gpio.Found)
+                {
+                    UnityEngine.Debug.LogWarning("No GPIO Sync Channel.");
+                }
             }
-        }
-
-        protected override void OnStartExperiment()
-        {
             SetEnvActiveParam("Visible", false);
             SyncEvent();
         }
@@ -50,6 +56,7 @@ namespace Experica
         {
             SetEnvActiveParam("Visible", false);
             SyncEvent();
+            gpio?.Dispose();
         }
 
         /// <summary>
@@ -92,6 +99,46 @@ namespace Experica
 
         protected override void Logic()
         {
+            //SyncEvent("t");
+            //return;
+            switch (CondState)
+            {
+                case CONDSTATE.NONE:
+                    CondState = CONDSTATE.PREICI;
+                    break;
+                case CONDSTATE.PREICI:
+                    if (PreICIHold >= ex.PreICI)
+                    {
+                        CondState = CONDSTATE.COND;
+                        SyncEvent(CONDSTATE.COND.ToString());
+                        SetEnvActiveParam("Visible", true);
+                    }
+                    break;
+                case CONDSTATE.COND:
+                    if (CondHold >= ex.CondDur)
+                    {
+                        if (ex.PreICI == 0 && ex.SufICI == 0)
+                        {
+                            CondOnTime = timer.ElapsedMillisecond;
+                            SyncEvent(CONDSTATE.COND.ToString());
+                        }
+                        else
+                        {
+                            CondState = CONDSTATE.SUFICI;
+                            SyncEvent(CONDSTATE.SUFICI.ToString());
+                            SetEnvActiveParam("Visible", false);
+                        }
+                    }
+                    break;
+                case CONDSTATE.SUFICI:
+                    if (SufICIHold >= ex.SufICI)
+                    {
+                        CondState = CONDSTATE.NONE;
+                    }
+                    break;
+            }
+
+            return;
             switch (BlockState)
             {
                 case BLOCKSTATE.NONE:

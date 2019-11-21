@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Threading;
 using System.Linq;
 using MccDaq;
 
 namespace Experica
 {
-    public interface IMFIO
+    public interface IMFIO : IDisposable
     {
 
     }
@@ -16,6 +18,31 @@ namespace Experica
     /// </summary>
     public class MCCDevice : IGPIO, IMFIO
     {
+        #region IDisposable
+        int disposecount = 0;
+
+        ~MCCDevice()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
+            {
+                return;
+            }
+            if (disposing)
+            {
+            }
+        }
+        #endregion
         MccBoard DaqBoard;
         ErrorInfo ULStat;
         DigitalPortType lastconfigDport;
@@ -68,6 +95,11 @@ namespace Experica
         }
 
         public void BitPulse(int bit, double duration_ms = 1)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public byte In()
         {
             throw new System.NotImplementedException();
         }

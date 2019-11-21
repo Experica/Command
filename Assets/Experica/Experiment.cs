@@ -48,7 +48,7 @@ namespace Experica
 
         public PropertyAccess(Type reflectedtype, string propertyname)
         {
-            //var t = reflectedtype.GetProperty(propertyname);
+            var t = reflectedtype.GetProperty(propertyname);
             Type = reflectedtype.GetProperty(propertyname).PropertyType;
             Name = propertyname;
             Getter = reflectedtype.DelegateForGetPropertyValue(propertyname);
@@ -231,8 +231,8 @@ namespace Experica
         {
             if (string.IsNullOrEmpty(DataPath))
             {
-                var sessionsite = string.Join("_", new[] { RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
-                var filename = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                var subjectsessionsite = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                var filename = string.Join("_", new[] { subjectsessionsite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
                 if (string.IsNullOrEmpty(DataDir))
                 {
                     DataDir = Directory.GetCurrentDirectory();
@@ -249,17 +249,14 @@ namespace Experica
                 {
                     Directory.CreateDirectory(subjectdir);
                 }
-                var sessionsitedir = Path.Combine(subjectdir, sessionsite);
-                if (!Directory.Exists(sessionsitedir))
+                var subjectsessionsitedir = Path.Combine(subjectdir, subjectsessionsite);
+                if (!Directory.Exists(subjectsessionsitedir))
                 {
-                    Directory.CreateDirectory(sessionsitedir);
+                    Directory.CreateDirectory(subjectsessionsitedir);
                 }
-                var fs = Directory.GetFiles(sessionsitedir, $"{filename}*.{ searchext}", SearchOption.TopDirectoryOnly);
-                if (fs.Length == 0)
-                {
-                    filename = filename + "_1" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
-                }
-                else
+                var fs = Directory.GetFiles(subjectsessionsitedir, $"{filename}*.{ searchext}", SearchOption.TopDirectoryOnly);
+                var filenameincrement = 1;
+                if (fs.Length > 0)
                 {
                     var ns = new List<int>();
                     foreach (var f in fs)
@@ -268,9 +265,10 @@ namespace Experica
                         var e = f.LastIndexOf('.') - 1;
                         ns.Add(int.Parse(f.Substring(s, e - s + 1)));
                     }
-                    filename = $"{filename}_{ns.Max() + 1}" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
+                    filenameincrement = ns.Max() + 1;
                 }
-                DataPath = Path.Combine(sessionsitedir, filename);
+                filename = $"{filename}_{filenameincrement}" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
+                DataPath = Path.Combine(subjectsessionsitedir, filename);
             }
             else
             {
@@ -297,6 +295,7 @@ namespace Experica
     {
         CRT,
         LCD,
+        LED,
         Projector
     }
 
@@ -305,6 +304,7 @@ namespace Experica
         public string ID { get; set; } = "";
         public DisplayType Type { get; set; } = DisplayType.LCD;
         public double Latency { get; set; } = 0;
+        public double FallRiseLagDiff { get; set; } = 0;
         public int CLUTSize { get; set; } = 20;
         public DisplayFitType FitType { get; set; } = DisplayFitType.LinearSpline;
         public Dictionary<string, List<object>> IntensityMeasurement { get; set; } = new Dictionary<string, List<object>>();

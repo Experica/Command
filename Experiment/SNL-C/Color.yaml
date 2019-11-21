@@ -2,18 +2,18 @@ ID: Color
 Name: Color
 Designer: Alex
 Experimenter: Alex
-Log: 
+Log: Left Eye
 Subject_ID: AF5
 Subject_Name: AF5
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 6
+Subject_Age: 13
 Subject_Size: 0 0 0
-Subject_Weight: 100
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerBar
 EnvParam:
-  ScreenHalfHeight@Camera@OrthoCamera: 15
+  ScreenHalfHeight@Camera@OrthoCamera: 16.7999992
   ScreenToEye@Camera@OrthoCamera: 57
   ScreenAspect@Camera@OrthoCamera: 1.77777779
   CLUT@Camera@OrthoCamera: false
@@ -21,34 +21,34 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 20
-  Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 0.1678 0.04122 0.004463 1
-  MaskType@Quad@Quad: DiskFade
-  MaskRadius@Quad@Quad: 0.449999988
-  Sigma@Quad@Quad: 35
+  Diameter@Quad@Quad: 3
+  Size@Quad@Quad: 3 3 1
+  Color@Quad@Quad: 0.3137 0 0 1
+  MaskType@Quad@Quad: Disk
+  MaskRadius@Quad@Quad: 0.5
+  Sigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 1.99 4.279 0
   PositionOffset@Quad@Quad: 0 0 0
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -27.2 -14.42 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  BGColor@BackGround@BackGround: 0.07174 0.05976 0.06431 1
+  BGColor@BackGround@BackGround: 0.07843 0.05882 0.06275 1
   BGSize@BackGround@BackGround: 100 100 1
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorLogic
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 8
+CondRepeat: 20
 BlockRepeat: 1
 BlockParam: []
 Input: None
@@ -106,8 +106,9 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- Diameter@Quad@Quad
 - Position@Quad@Quad
+- Diameter@Quad@Quad
+- BGSize@BackGround@BackGround
 Param:
   ColorSpace: HSL
   Color: Hue_Ym
@@ -124,4 +125,4 @@ Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL
-SendMail: false
+SendMail: true

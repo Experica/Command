@@ -134,7 +134,7 @@ namespace Experica.Command
                 var gratingquadinheritfrom = new Dictionary<string, List<string>>
                 {
                     [EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" },
-                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" }
+                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position", "Diameter" }
                 };
                 rule[EnvironmentObject.GratingQuad.ToString()] = gratingquadinheritfrom;
             }
