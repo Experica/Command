@@ -112,8 +112,9 @@ namespace Experica
                 var path = Extension.SaveFile("Save Measurement Data ...");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    var d = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
-                    path.WriteYamlFile(d);
+                    var ds = new Dictionary<string, Display>(config.Display);
+                    ds[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
+                    path.WriteYamlFile(ds);
                 }
             }
         }
