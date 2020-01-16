@@ -22,7 +22,8 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,7 +41,7 @@ namespace Experica.Command
     {
         public CommandConfigManager configmanager;
         public CommandConfig config;
-        public PostProcessVolume postprocessvolume;
+        public Volume postprocessvolume;
         readonly string configmanagerpath = "CommandConfigManager.yaml";    // The file storing serialized CommandConfigManager object
 
         public Toggle host, server, start, pause;
@@ -241,19 +242,19 @@ namespace Experica.Command
 
         public void ToggleColorGrading(bool ison)
         {
-            ColorGrading colorgrading;
-            if (postprocessvolume.profile.TryGetSettings(out colorgrading))
+            Tonemapping colorgrading;
+            if (postprocessvolume.profile.TryGet(out colorgrading))
             {
-                colorgrading.enabled.value = ison;
+                colorgrading.active = ison;
             }
         }
 
         public void SetCLUT(Texture2D clut)
         {
-            ColorGrading colorgrading;
-            if (postprocessvolume.profile.TryGetSettings(out colorgrading))
+            Tonemapping colorgrading;
+            if (postprocessvolume.profile.TryGet(out colorgrading))
             {
-                colorgrading.ldrLut.value = clut;
+                colorgrading.lutTexture.value = clut;
             }
         }
 

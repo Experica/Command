@@ -45,7 +45,7 @@ namespace Experica
                     break;
                 case "1208FS":
                     // On Average 500Hz
-                    gpio = new MCCDevice();
+                    //gpio = new MCCDevice();
                     break;
             }
             if (gpio != null)

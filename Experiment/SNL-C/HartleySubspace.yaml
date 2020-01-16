@@ -13,58 +13,61 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
-  CLUT@Camera@OrthoCamera: false
-  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 100 100 1
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -24.21 -12.74 -1000
+  ScreenHalfHeight@OrthoCamera@OrthoCamera: 15
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 5.01597452
-  TemporalFreq@GratingQuad@GratingQuad: 1
-  SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0.3672 0.6168 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6328 0.3832 1 1
-  Drifting@GratingQuad@GratingQuad: false
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 4.5739212
+  Ori@GratingQuad@GratingQuad: 114.623566
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 2
-  Size@GratingQuad@GratingQuad: 2 2 1
-  Color@GratingQuad@GratingQuad: 1 1 1 1
-  MaskType@GratingQuad@GratingQuad: Disk
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
+  MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   Sigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
+  Luminance@GratingQuad@GratingQuad: 0.5
+  Contrast@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 5.28015137
+  TemporalFreq@GratingQuad@GratingQuad: 1
+  ModulateFreq@GratingQuad@GratingQuad: 0.200000003
+  SpatialPhase@GratingQuad@GratingQuad: 0.5
+  MinColor@GratingQuad@GratingQuad: 0 3.886E-16 5.551E-16 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  Drifting@GratingQuad@GratingQuad: false
+  Modulating@GratingQuad@GratingQuad: false
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  ModulateType@GratingQuad@GratingQuad: Square
+  ReverseTime@GratingQuad@GratingQuad: false
+  Duty@GratingQuad@GratingQuad: 0.5
+  ModulateDuty@GratingQuad@GratingQuad: 0.5
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Hartley_k[30,30]_size[5,5].yaml
+CondPath: Condition\Hartley_k[30,30].yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorCTLogic
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 15
+CondRepeat: 1
 BlockRepeat: 1
 BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 10
+CondDur: 0
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -72,8 +75,8 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
-CondTestAtState: PREICI
+PushCondAtState: COND
+CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
@@ -123,8 +126,8 @@ EnvInheritParam:
 - CLUT@Camera@OrthoCamera
 - BGSize@BackGround@BackGround
 Param:
-  ColorSpace: LMS
-  Color: Zmcc
+  ColorSpace: DKL
+  Color: X
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

@@ -3,9 +3,12 @@
     "references": [
         "GUID:41c3f44a38643794aaa0e4850b0f06d7",
         "GUID:a44f47cf3ada4435dbc516bad0bc86fe",
-        "GUID:d60799ab2a985554ea1a39cd38695018"
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:46a67ded66a63de48b9329c593fc08de",
+        "GUID:a075b55b404a34748ac14ea9b6039911",
+        "GUID:457756d89b35d2941b3e7b37b4ece6f1",
+        "GUID:de1079f91ae5b43499b7c7e4f1269884"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -13,5 +16,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }

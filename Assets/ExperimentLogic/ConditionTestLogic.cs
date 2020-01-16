@@ -41,7 +41,7 @@ namespace Experica
                 }
                 if (!gpio.Found)
                 {
-                    gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
+                   // gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
                 }
                 if (!gpio.Found)
                 {
