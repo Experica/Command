@@ -112,8 +112,10 @@ minc_dkl = clamp.(quavectors(th.-0.5*DKLIsoRGBVec),0,1);maxc_dkl = clamp.(quavec
 ## DKL Isoluminance plane
 DKLToRGB = LMSToRGB*DKLToLMS
 RGBToDKL = LMSToDKL*RGBToLMS
-lum = 0;huestep = 30;hueangles = 0:huestep:180-huestep
-hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
+# lum = 0;huestep = 30;hueangles = 0:huestep:180-huestep
+# hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
+lum = 0;huestep = 1;hueangles = 0:huestep:180-huestep
+# hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
 # rotate l-m direction around l+m axis within the Isoluminance plane
 DKLIsoLumRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=1)*[0,1,0,0], hueangles)...))
 # find Intersections of Isoluminance directions with faces of unit RGB cube
@@ -122,7 +124,7 @@ minc_dkl_ilp=minmaxc[:,1:2:end];maxc_dkl_ilp=minmaxc[:,2:2:end]
 hue_dkl_ilp = clamp.(quavectors([maxc_dkl_ilp minc_dkl_ilp]),0,1)
 wp_dkl_ilp = repeat([th;1],inner=(1,size(hue_dkl_ilp,2)))
 hueangle_dkl_ilp = [hueangles;hueangles.+180]
-
+# save("DKL_rgb.jld2", "dkllut", hue_dkl_ilp)
 # Plot DKL Hues
 IsoLumc = [RGB(hue_dkl_ilp[1:3,i]...) for i in 1:size(hue_dkl_ilp,2)]
 IsoLumdkl = RGBToDKL*hue_dkl_ilp
@@ -130,6 +132,7 @@ IsoLumdkl = RGBToDKL*hue_dkl_ilp
 p=plot()
 foreach(i->plot!(p,[0,IsoLumdkl[2,i]],[0,IsoLumdkl[3,i]],color=RGBA(0.5,0.5,0.5,0.5)),1:size(hue_dkl_ilp,2))
 plot!(p,IsoLumdkl[2,:],IsoLumdkl[3,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=4.5,marker=:circle,markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)")
+
 p
 
 savefig(p,"dklhue.svg")
@@ -149,8 +152,8 @@ hueangle_hsl = 0:30:330
 
 # Plot HSL Hues
 IsoLumc = huewpc[1:end-1]
-IsoLumhsl = [cos.(deg2rad.(hueangle_hsl)) sin.(deg2rad.(hueangle_hsl))]'
-
+# IsoLumhsl = [cos.(deg2rad.(hueangle_hsl)) sin.(deg2rad.(hueangle_hsl))]'
+IsoLumhsl = [cos.(deg2rad.(hueangle_dkl_ilp)) sin.(deg2rad.(hueangle_dkl_ilp))]'
 p=plot()
 foreach(i->plot!(p,[0,IsoLumhsl[1,i]],[0,IsoLumhsl[2,i]],color=RGBA(0.5,0.5,0.5,0.5)),1:size(hue_hsl,2))
 plot!(p,IsoLumhsl[1,:],IsoLumhsl[2,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=10,marker=:circle,markerstrokewidth=0,legend=false,xlabel="S",ylabel="S")
