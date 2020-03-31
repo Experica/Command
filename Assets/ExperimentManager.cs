@@ -265,7 +265,6 @@ namespace Experica.Command
             InheritEx();
             RemoveDuplicateEx();
             AddELCallback();
-            uicontroller.PrepareDisplayCLUT(el.ex.Display_ID, false);
         }
 
         void RemoveDuplicateEx()

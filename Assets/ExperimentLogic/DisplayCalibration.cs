@@ -298,7 +298,7 @@ namespace Experica
                 new Dictionary<string, Type>() { { "R", typeof(ScatterSeries) }, { "G", typeof(ScatterSeries) }, { "B", typeof(ScatterSeries) } },
                 new Dictionary<string, double>() { { "R", 2 }, { "G", 2 }, { "B", 2 } },
                 new Dictionary<string, LineStyle>() { { "R", LineStyle.Automatic }, { "G", LineStyle.Automatic }, { "B", LineStyle.Automatic } },
-                "", "Color Component Value", "Intensity", legendposition: LegendPosition.LeftTop);
+                "", "Color Component Value", "Intensity (cd/m2)", legendposition: LegendPosition.LeftTop);
             plotview.Visualize(xx, new Dictionary<string, double[]>() { { "RFit", ryy }, { "GFit", gyy }, { "BFit", byy } },
                 null, new Dictionary<string, OxyColor>() { { "RFit", OxyColors.Red }, { "GFit", OxyColors.Green }, { "BFit", OxyColors.Blue } },
                 new Dictionary<string, Type>() { { "RFit", typeof(LineSeries) }, { "GFit", typeof(LineSeries) }, { "BFit", typeof(LineSeries) } },
@@ -353,7 +353,7 @@ namespace Experica
                 {
                     var color = OxyColor.FromAColor((byte)(x[f][i] * 127.5 + 127.5), c);
                     plotview.Visualize(yi[f][i], y[f][i], null, color, typeof(LineSeries), 1, LineStyle.Solid,
-                "", "Wavelength", "Intensity", isclear: false);
+                "", "Wavelength (nm)", "Intensity (cd/m2)", isclear: false);
                 }
 
             }

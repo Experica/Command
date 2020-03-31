@@ -25,7 +25,7 @@ using UnityEngine.VFX;
 
 namespace Experica
 {
-    public class Dots : EnvNet
+    public class Dots : EnvNetVisual
     {
         [SyncVar(hook = "onrotation")]
         public Vector3 Rotation = Vector3.zero;
@@ -36,23 +36,19 @@ namespace Experica
         [SyncVar(hook = "ondiroffset")]
         public float DirOffset = 0;
         [SyncVar(hook = "onspeed")]
-        public float Speed = 1f;
+        public float Speed = 1;
         [SyncVar(hook = "ondiameter")]
         public float Diameter = 10;
         [SyncVar(hook = "onsize")]
         public Vector3 Size = new Vector3(10, 10, 1);
+        [SyncVar(hook = "onndots")]
+        public uint NDots = 30;
         [SyncVar(hook = "ondotcolor")]
         public Color DotColor = Color.white;
         [SyncVar(hook = "ondotsize")]
         public Vector2 DotSize = new Vector2(1, 1);
-        [SyncVar(hook = "onmasktype")]
-        public MaskType MaskType = MaskType.None;
-        [SyncVar(hook = "onmaskradius")]
-        public float MaskRadius = 0.5f;
-        [SyncVar(hook = "onsigma")]
-        public float Sigma = 0.15f;
-        [SyncVar(hook = "onoripositionoffset")]
-        public bool OriPositionOffset = false;
+        [SyncVar(hook = "oncoherence")]
+        public float Coherence = 0;
 
         void onrotation(Vector3 r)
         {
@@ -69,58 +65,27 @@ namespace Experica
         void ondir(float d)
         {
             visualeffect.SetFloat("Dir", Mathf.Deg2Rad * (d + DirOffset));
-            if (OriPositionOffset)
-            {
-                transform.localPosition = Position + PositionOffset.RotateZCCW(DirOffset + d);
-            }
+            visualeffect.Reinit();
             Dir = d;
         }
 
         void ondiroffset(float doffset)
         {
             visualeffect.SetFloat("Dir", Mathf.Deg2Rad * (doffset + Dir));
-            if (OriPositionOffset)
-            {
-                transform.localPosition = Position + PositionOffset.RotateZCCW(Dir + doffset);
-            }
+            visualeffect.Reinit();
             DirOffset = doffset;
         }
 
         void onspeed(float s)
         {
             visualeffect.SetFloat("Speed", s);
+            visualeffect.Reinit();
             Speed = s;
-        }
-
-        public override void OnPosition(Vector3 p)
-        {
-            if (OriPositionOffset)
-            {
-                transform.localPosition = p + PositionOffset.RotateZCCW(Dir + DirOffset);
-                Position = p;
-            }
-            else
-            {
-                base.OnPosition(p);
-            }
-        }
-
-        public override void OnPositionOffset(Vector3 poffset)
-        {
-            if (OriPositionOffset)
-            {
-                transform.localPosition = Position + poffset.RotateZCCW(Dir + DirOffset);
-                PositionOffset = poffset;
-            }
-            else
-            {
-                base.OnPositionOffset(poffset);
-            }
         }
 
         void onsize(Vector3 s)
         {
-            transform.localScale = s;
+            visualeffect.SetVector3("Size", s);
             Size = s;
         }
 
@@ -128,6 +93,13 @@ namespace Experica
         {
             onsize(new Vector3(d, d, Size.z));
             Diameter = d;
+        }
+
+        void onndots(uint n)
+        {
+            visualeffect.SetUInt("NDots", n);
+            visualeffect.Reinit();
+            NDots = n;
         }
 
         void ondotcolor(Color c)
@@ -142,35 +114,21 @@ namespace Experica
             DotSize = s;
         }
 
-        void onmasktype(MaskType t)
+        void oncoherence(float c)
         {
-            renderer.material.SetInt("_masktype", (int)t);
-            MaskType = t;
+            visualeffect.SetFloat("Coherence", c);
+            visualeffect.Reinit();
+            Coherence = c;
         }
 
-        void onmaskradius(float r)
+        protected override void OnVisible(bool v)
         {
-            renderer.material.SetFloat("_maskradius", r);
-            MaskRadius = r;
-        }
-
-        void onsigma(float s)
-        {
-            renderer.material.SetFloat("_sigma", s);
-            Sigma = s;
-        }
-
-        void onoripositionoffset(bool opo)
-        {
-            if (opo)
+            // reset dots when reappear
+            if (v)
             {
-                transform.localPosition = Position + PositionOffset.RotateZCCW(Dir + DirOffset);
+                visualeffect.Reinit();
             }
-            else
-            {
-                transform.localPosition = Position + PositionOffset;
-            }
-            OriPositionOffset = opo;
+            base.OnVisible(v);
         }
     }
 }

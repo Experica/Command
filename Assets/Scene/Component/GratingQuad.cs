@@ -1,5 +1,5 @@
 ﻿/*
-Grating.cs is part of the Experica.
+GratingQuad.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -24,67 +24,101 @@ using UnityEngine.Networking;
 
 namespace Experica
 {
-    public class GratingQuad : EnvNet
+    public class GratingQuad : EnvNetVisual
     {
         [SyncVar(hook = "onrotation")]
         public Vector3 Rotation = Vector3.zero;
         [SyncVar(hook = "onrotationoffset")]
         public Vector3 RotationOffset = Vector3.zero;
+        /// <summary>
+        /// Orientation of the grating in degree
+        /// </summary>
         [SyncVar(hook = "onori")]
         public float Ori = 0;
         [SyncVar(hook = "onorioffset")]
         public float OriOffset = 0;
+        /// <summary>
+        /// Diameter of the grating in visual field degree
+        /// </summary>
         [SyncVar(hook = "ondiameter")]
         public float Diameter = 10;
         [SyncVar(hook = "onsize")]
         public Vector3 Size = new Vector3(10, 10, 1);
         [SyncVar(hook = "onmasktype")]
         public MaskType MaskType = MaskType.None;
+        /// <summary>
+        /// Mask radius in uv coordinates
+        /// </summary>
         [SyncVar(hook = "onmaskradius")]
         public float MaskRadius = 0.5f;
-        [SyncVar(hook = "onsigma")]
-        public float Sigma = 0.15f;
+        /// <summary>
+        /// Sigma parameter of the mask
+        /// </summary>
+        [SyncVar(hook = "onmasksigma")]
+        public float MaskSigma = 0.15f;
+        /// <summary>
+        /// Orient the position offset by `Ori`
+        /// </summary>
         [SyncVar(hook = "onoripositionoffset")]
         public bool OriPositionOffset = false;
+        /// <summary>
+        /// Mean luminance of grating in [0, 1] scale
+        /// </summary>
         [SyncVar(hook = "onluminance")]
         public float Luminance = 0.5f;
+        /// <summary>
+        /// Michelson contrast of grating in [0, 1]
+        /// </summary>
         [SyncVar(hook = "oncontrast")]
         public float Contrast = 1f;
+        /// <summary>
+        /// Spatial Frequency in cycle/degree
+        /// </summary>
         [SyncVar(hook = "onspatialfreq")]
         public float SpatialFreq = 0.2f;
+        /// <summary>
+        /// Temporal Frequency in cycle/second
+        /// </summary>
         [SyncVar(hook = "ontemporalfreq")]
         public float TemporalFreq = 1f;
-        [SyncVar(hook = "onmodulatefreq")]
-        public float ModulateFreq = 0.2f;
+        [SyncVar(hook = "onmodulatetemporalfreq")]
+        public float ModulateTemporalFreq = 0.2f;
+        /// <summary>
+        /// Spatial Phase in [0, 1] scale
+        /// </summary>
         [SyncVar(hook = "onspatialphase")]
         public float SpatialPhase = 0;
+        /// <summary>
+        /// minimum color of the grating
+        /// </summary>
         [SyncVar(hook = "onmincolor")]
         public Color MinColor = Color.black;
+        /// <summary>
+        /// maximum color of the grating
+        /// </summary>
         [SyncVar(hook = "onmaxcolor")]
         public Color MaxColor = Color.white;
-        [SyncVar(hook = "onisdrifting")]
-        public bool Drifting = true;
-        [SyncVar(hook = "onismodulating")]
-        public bool Modulating = false;
+        [SyncVar(hook = "onpausetime")]
+        public bool PauseTime = false;
+        [SyncVar(hook = "onpausemodulatetime")]
+        public bool PauseModulateTime = true;
         [SyncVar(hook = "ongratingtype")]
         public WaveType GratingType = WaveType.Square;
         [SyncVar(hook = "onmodulatetype")]
         public WaveType ModulateType = WaveType.Square;
-        [SyncVar(hook = "onisreversetime")]
+        [SyncVar(hook = "onreversetime")]
         public bool ReverseTime = false;
         [SyncVar(hook = "onduty")]
         public float Duty = 0.5f;
         [SyncVar(hook = "onmodulateduty")]
         public float ModulateDuty = 0.5f;
 
-        double reversetime;
-        bool isblank;
+        double timeatreverse;
         Timer timer = new Timer();
 
-        public override void OnAwake()
+        protected override void OnAwake()
         {
             base.OnAwake();
-            reversetime = 0;
             timer.Start();
         }
 
@@ -100,7 +134,7 @@ namespace Experica
             RotationOffset = roffset;
         }
 
-        public override void OnPosition(Vector3 p)
+        protected override void OnPosition(Vector3 p)
         {
             if (OriPositionOffset)
             {
@@ -113,7 +147,7 @@ namespace Experica
             }
         }
 
-        public override void OnPositionOffset(Vector3 poffset)
+        protected override void OnPositionOffset(Vector3 poffset)
         {
             if (OriPositionOffset)
             {
@@ -151,10 +185,10 @@ namespace Experica
             MaskRadius = r;
         }
 
-        void onsigma(float s)
+        void onmasksigma(float s)
         {
-            renderer.material.SetFloat("_sigma", s);
-            Sigma = s;
+            renderer.material.SetFloat("_masksigma", s);
+            MaskSigma = s;
         }
 
         void onoripositionoffset(bool opo)
@@ -172,19 +206,6 @@ namespace Experica
 
         void onori(float o)
         {
-            if (float.IsNaN(o))
-            {
-                renderer.material.SetColor("_maxcolor", new Color(1, 1, 1, 0));
-                renderer.material.SetColor("_mincolor", new Color(0, 0, 0, 0));
-                isblank = true;
-                return;
-            }
-            if (isblank)
-            {
-                renderer.material.SetColor("_maxcolor", MaxColor);
-                renderer.material.SetColor("_mincolor", MinColor);
-                isblank = false;
-            }
             var theta = o + OriOffset;
             renderer.material.SetFloat("_ori", Mathf.Deg2Rad * theta);
             if (OriPositionOffset)
@@ -205,11 +226,12 @@ namespace Experica
             OriOffset = ooffset;
         }
 
-        public override void OnVisible(bool v)
+        protected override void OnVisible(bool v)
         {
-            if (!Visible && v)
+            // reset time when reappear
+            if (v)
             {
-                reversetime = 0;
+                timeatreverse = 0;
                 renderer.material.SetFloat("_t", 0);
                 renderer.material.SetFloat("_mt", 0);
                 timer.Restart();
@@ -220,30 +242,27 @@ namespace Experica
         void onluminance(float l)
         {
             Color _mincolor, _maxcolor;
-            Extension.GetColorScale(l, Contrast).GetColor(MinColor, MaxColor, out _mincolor, out _maxcolor);
+            Extension.LuminanceSpan(l, Contrast).ScaleColor(MinColor, MaxColor, out _mincolor, out _maxcolor);
 
             renderer.material.SetColor("_mincolor", _mincolor);
             renderer.material.SetColor("_maxcolor", _maxcolor);
             Luminance = l;
         }
 
-        void oncontrast(float ct)
+        void oncontrast(float c)
         {
             Color _mincolor, _maxcolor;
-            Extension.GetColorScale(Luminance, ct).GetColor(MinColor, MaxColor, out _mincolor, out _maxcolor);
+            Extension.LuminanceSpan(Luminance, c).ScaleColor(MinColor, MaxColor, out _mincolor, out _maxcolor);
 
             renderer.material.SetColor("_mincolor", _mincolor);
             renderer.material.SetColor("_maxcolor", _maxcolor);
-            Contrast = ct;
+            Contrast = c;
         }
 
         void onspatialfreq(float sf)
         {
-            if (!float.IsNaN(sf))
-            {
-                renderer.material.SetFloat("_sf", sf);
-                SpatialFreq = sf;
-            }
+            renderer.material.SetFloat("_sf", sf);
+            SpatialFreq = sf;
         }
 
         void ontemporalfreq(float tf)
@@ -252,10 +271,10 @@ namespace Experica
             TemporalFreq = tf;
         }
 
-        void onmodulatefreq(float mf)
+        void onmodulatetemporalfreq(float mtf)
         {
-            renderer.material.SetFloat("_mf", mf);
-            ModulateFreq = mf;
+            renderer.material.SetFloat("_mtf", mtf);
+            ModulateTemporalFreq = mtf;
         }
 
         void onspatialphase(float p)
@@ -276,14 +295,14 @@ namespace Experica
             MaxColor = c;
         }
 
-        void onisdrifting(bool i)
+        void onpausetime(bool i)
         {
-            Drifting = i;
+            PauseTime = i;
         }
 
-        void onismodulating(bool i)
+        void onpausemodulatetime(bool i)
         {
-            Modulating = i;
+            PauseModulateTime = i;
         }
 
         void ongratingtype(WaveType t)
@@ -294,7 +313,7 @@ namespace Experica
 
         void onmodulatetype(WaveType t)
         {
-            renderer.material.SetInt("_modulatetype", (int)t);
+            renderer.material.SetInt("_mgratingtype", (int)t);
             ModulateType = t;
         }
 
@@ -306,26 +325,26 @@ namespace Experica
 
         void onmodulateduty(float d)
         {
-            renderer.material.SetFloat("_modulateduty", d);
+            renderer.material.SetFloat("_mduty", d);
             ModulateDuty = d;
         }
 
-        void onisreversetime(bool r)
+        void onreversetime(bool r)
         {
-            reversetime = ReverseTime ? reversetime - timer.ElapsedSecond : reversetime + timer.ElapsedSecond;
+            timeatreverse = ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond;
             timer.Restart();
             ReverseTime = r;
         }
 
         void LateUpdate()
         {
-            if (Drifting)
+            if (!PauseTime)
             {
-                renderer.material.SetFloat("_t", (float)(ReverseTime ? reversetime - timer.ElapsedSecond : reversetime + timer.ElapsedSecond));
+                renderer.material.SetFloat("_t", (float)(ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond));
             }
-            if (Modulating)
+            if (!PauseModulateTime)
             {
-                renderer.material.SetFloat("_mt", (float)(ReverseTime ? reversetime - timer.ElapsedSecond : reversetime + timer.ElapsedSecond));
+                renderer.material.SetFloat("_mt", (float)(ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond));
             }
         }
     }

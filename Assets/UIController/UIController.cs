@@ -41,7 +41,6 @@ namespace Experica.Command
     {
         public CommandConfigManager configmanager;
         public CommandConfig config;
-        public Volume postprocessvolume;
         readonly string configmanagerpath = "CommandConfigManager.yaml";    // The file storing serialized CommandConfigManager object
 
         public Toggle host, server, start, pause;
@@ -64,12 +63,6 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
-        /// <summary>
-        /// Awake is called when the script instance is being loaded. Awake is called only
-        /// a single time.See the following URL for more information: 
-        /// https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html
-        /// Loads a configmanger object from the configmanager path variable, then loads the config object.
-        /// </summary>
         void Awake()
         {
             // Check for CommandConfigManager.yaml existance
@@ -160,12 +153,6 @@ namespace Experica.Command
             return rule;
         }
 
-        /// <summary>
-        /// Sets the version number and starts the application.
-        /// Start is called on the frame when a script is enabled just before any of the
-        /// Update methods are called the first time.See the URL below for more information:
-        /// https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html
-        /// </summary>
         void Start()
         {
             version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
@@ -191,7 +178,7 @@ namespace Experica.Command
             }
             configmanagerpath.WriteYamlFile(configmanager);
 
-            foreach(var el in exmanager.elhistory)
+            foreach (var el in exmanager.elhistory)
             {
                 el?.Dispose();
             }
@@ -240,71 +227,42 @@ namespace Experica.Command
             }
         }
 
-        public void ToggleColorGrading(bool ison)
+        public Display CurrentDisplay
         {
-            Tonemapping colorgrading;
-            if (postprocessvolume.profile.TryGet(out colorgrading))
+            get
             {
-                colorgrading.active = ison;
-            }
-        }
-
-        public void SetCLUT(Texture2D clut)
-        {
-            Tonemapping colorgrading;
-            if (postprocessvolume.profile.TryGet(out colorgrading))
-            {
-                colorgrading.lutTexture.value = clut;
-            }
-        }
-
-        public bool PrepareDisplayCLUT(string displayid, bool forceprepare = false)
-        {
-            if (!config.Display.ContainsKey(displayid)) { return false; }
-            var display = config.Display[displayid];
-            var m = display.IntensityMeasurement;
-            if (m == null || m.Count == 0) { return false; }
-            if (display.CLUT == null || forceprepare)
-            {
-                Dictionary<string, double[]> x, y;
-                switch (display.FitType)
+                Display d = null;
+                var cdid = exmanager.el.ex.Display_ID;
+                if (!string.IsNullOrEmpty(cdid))
                 {
-                    case DisplayFitType.Gamma:
-                        m.GetRGBIntensityMeasurement(out x, out y, false, true);
-                        double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
-                        Extension.GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
-                        Extension.GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
-                        Extension.GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
-                        display.CLUT = Extension.GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, display.CLUTSize);
-                        break;
-                    case DisplayFitType.LinearSpline:
-                    case DisplayFitType.CubicSpline:
-                        m.GetRGBIntensityMeasurement(out x, out y, true, true);
-                        IInterpolation rii, gii, bii;
-                        Extension.SplineFit(y["R"], x["R"], out rii, display.FitType);
-                        Extension.SplineFit(y["G"], x["G"], out gii, display.FitType);
-                        Extension.SplineFit(y["B"], x["B"], out bii, display.FitType);
-                        if (rii != null && gii != null && bii != null)
-                        {
-                            display.CLUT = Extension.GenerateRGBSplineCLUT(rii, gii, bii, display.CLUTSize);
-                        }
-                        break;
+                    if (config.Display.ContainsKey(cdid))
+                    {
+                        d = config.Display[cdid];
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.LogWarning($"Display ID: {cdid} is not configed.");
+                    }
                 }
+                return d;
             }
-            if (display.CLUT == null) { return false; }
-            SetCLUT(display.CLUT);
-            return true;
         }
 
-        public byte[] SerializeCLUT(out int width, out int height)
+        public Texture3D CurrentDisplayCLUT
         {
-            width = 0; height = 0;
-            var displayid = exmanager.el.ex.Display_ID;
-            if (!config.Display.ContainsKey(displayid) || config.Display[displayid].CLUT == null) { return null; }
-            var clut = config.Display[displayid].CLUT;
-            width = clut.width;
-            height = clut.height;
-            return clut.GetRawTextureData();
+            get
+            {
+                Texture3D tex = null;
+                var cd = CurrentDisplay;
+                if (cd != null)
+                {
+                    if (cd.PrepareCLUT())
+                    {
+                        tex = cd.CLUT;
+                    }
+                }
+                return tex;
+            }
         }
 
         public void OnAspectRatioMessage(float ratio)

@@ -305,11 +305,11 @@ namespace Experica
         public DisplayType Type { get; set; } = DisplayType.LCD;
         public double Latency { get; set; } = 0;
         public double FallRiseLagDiff { get; set; } = 0;
-        public int CLUTSize { get; set; } = 20;
+        public int CLUTSize { get; set; } = 32;
         public DisplayFitType FitType { get; set; } = DisplayFitType.LinearSpline;
         public Dictionary<string, List<object>> IntensityMeasurement { get; set; } = new Dictionary<string, List<object>>();
         public Dictionary<string, List<object>> SpectralMeasurement { get; set; } = new Dictionary<string, List<object>>();
-        public Texture2D CLUT;
+        public Texture3D CLUT;
     }
 
     public enum DisplayFitType

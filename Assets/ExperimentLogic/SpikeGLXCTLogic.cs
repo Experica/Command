@@ -49,7 +49,7 @@ namespace Experica
                 recorder.RecordStatus = RecordStatus.Recording;
                 isspikeglxtriggered = true;
             }
-            timer.Restart();
+            base.StartExperimentTimeSync();
         }
 
         protected override void StopExperimentTimeSync()
@@ -61,42 +61,7 @@ namespace Experica
                 recorder.RecordStatus = RecordStatus.Stopped;
                 isspikeglxtriggered = false;
             }
-            timer.Stop();
-        }
-
-        protected override void Logic()
-        {
-            switch (CondState)
-            {
-                case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
-                    break;
-                case CONDSTATE.PREICI:
-                    if (PreICIHold >= ex.PreICI)
-                    {
-                        CondState = CONDSTATE.COND;
-                        SyncEvent(CONDSTATE.COND.ToString());
-                        SetEnvActiveParam("Visible", true);
-                    }
-                    break;
-                case CONDSTATE.COND:
-                    if (CondHold >= ex.CondDur)
-                    {
-                        CondState = CONDSTATE.SUFICI;
-                        if (ex.PreICI != 0 || ex.SufICI != 0)
-                        {
-                            SyncEvent(CONDSTATE.SUFICI.ToString());
-                            SetEnvActiveParam("Visible", false);
-                        }
-                    }
-                    break;
-                case CONDSTATE.SUFICI:
-                    if (SufICIHold >= ex.SufICI)
-                    {
-                        CondState = CONDSTATE.NONE;
-                    }
-                    break;
-            }
+            base.StopExperimentTimeSync();
         }
     }
 }

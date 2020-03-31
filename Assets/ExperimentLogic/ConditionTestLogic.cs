@@ -41,7 +41,7 @@ namespace Experica
                 }
                 if (!gpio.Found)
                 {
-                   // gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
+                    // gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
                 }
                 if (!gpio.Found)
                 {
@@ -62,7 +62,7 @@ namespace Experica
         /// <summary>
         /// Register and Sync Event with External Device through EventSyncProtocol
         /// </summary>
-        /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state, without event register</param>
+        /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state, without register event</param>
         protected virtual void SyncEvent(string e = "")
         {
             var esp = ex.EventSyncProtocol;
@@ -99,8 +99,6 @@ namespace Experica
 
         protected override void Logic()
         {
-            //SyncEvent("t");
-            //return;
             switch (CondState)
             {
                 case CONDSTATE.NONE:
@@ -117,9 +115,15 @@ namespace Experica
                 case CONDSTATE.COND:
                     if (CondHold >= ex.CondDur)
                     {
+                        /*
+                        for successive conditions without rest, 
+                        make sure no extra updates(frames) are inserted.
+                        */
                         if (ex.PreICI == 0 && ex.SufICI == 0)
                         {
-                            CondOnTime = timer.ElapsedMillisecond;
+                            // new condtest usually starts at PreICI
+                            CondState = CONDSTATE.PREICI;
+                            CondState = CONDSTATE.COND;
                             SyncEvent(CONDSTATE.COND.ToString());
                         }
                         else
@@ -134,89 +138,6 @@ namespace Experica
                     if (SufICIHold >= ex.SufICI)
                     {
                         CondState = CONDSTATE.NONE;
-                    }
-                    break;
-            }
-
-            return;
-            switch (BlockState)
-            {
-                case BLOCKSTATE.NONE:
-                    BlockState = BLOCKSTATE.PREIBI;
-                    break;
-                case BLOCKSTATE.PREIBI:
-                    if (PreIBIHold >= ex.PreIBI)
-                    {
-                        BlockState = BLOCKSTATE.BLOCK;
-                    }
-                    break;
-                case BLOCKSTATE.BLOCK:
-                    switch (TrialState)
-                    {
-                        case TRIALSTATE.NONE:
-                            TrialState = TRIALSTATE.PREITI;
-                            break;
-                        case TRIALSTATE.PREITI:
-                            if (PreITIHold >= ex.PreITI)
-                            {
-                                TrialState = TRIALSTATE.TRIAL;
-                            }
-                            break;
-                        case TRIALSTATE.TRIAL:
-                            switch (CondState)
-                            {
-                                case CONDSTATE.NONE:
-                                    CondState = CONDSTATE.PREICI;
-                                    break;
-                                case CONDSTATE.PREICI:
-                                    if (PreICIHold >= ex.PreICI)
-                                    {
-                                        // State transition: PREICI -> COND
-                                        CondState = CONDSTATE.COND;
-                                        SyncEvent(CONDSTATE.COND.ToString());
-                                        SetEnvActiveParam("Visible", true);
-                                    }
-                                    break;
-                                case CONDSTATE.COND:
-                                    if (CondHold >= ex.CondDur)
-                                    {
-                                        // State transition: COND -> SUFICI
-                                        CondState = CONDSTATE.SUFICI;
-                                        if (ex.PreICI != 0 || ex.SufICI != 0)
-                                        {
-                                            SyncEvent(CONDSTATE.SUFICI.ToString());
-                                            SetEnvActiveParam("Visible", false);
-                                        }
-                                    }
-                                    break;
-                                case CONDSTATE.SUFICI:
-                                    if (SufICIHold >= ex.SufICI)
-                                    {
-                                        CondState = CONDSTATE.NONE;
-                                        if (TrialHold >= ex.TrialDur)
-                                        {
-                                            TrialState = TRIALSTATE.SUFITI;
-                                        }
-                                    }
-                                    break;
-                            }
-                            break;
-                        case TRIALSTATE.SUFITI:
-                            if (SufITIHold >= ex.SufITI)
-                            {
-                                TrialState = TRIALSTATE.NONE;
-                                if (BlockHold >= ex.BlockDur)
-                                {
-                                    BlockState = BLOCKSTATE.SUFIBI;
-                                }
-                            }
-                            break;
-                    }
-                    break;
-                case BLOCKSTATE.SUFIBI:
-                    if (SufIBIHold >= ex.SufIBI)
-                    {
-                        BlockState = BLOCKSTATE.NONE;
                     }
                     break;
             }

@@ -24,7 +24,7 @@ using UnityEngine.Networking;
 
 namespace Experica
 {
-    public class Quad : EnvNet
+    public class Quad : EnvNetVisual
     {
         [SyncVar(hook = "onrotation")]
         public Vector3 Rotation = Vector3.zero;
@@ -44,8 +44,8 @@ namespace Experica
         public MaskType MaskType = MaskType.None;
         [SyncVar(hook = "onmaskradius")]
         public float MaskRadius = 0.5f;
-        [SyncVar(hook = "onsigma")]
-        public float Sigma = 0.15f;
+        [SyncVar(hook = "onmasksigma")]
+        public float MaskSigma = 0.15f;
         [SyncVar(hook = "onoripositionoffset")]
         public bool OriPositionOffset = false;
 
@@ -63,7 +63,7 @@ namespace Experica
 
         void onori(float o)
         {
-            transform.localEulerAngles = new Vector3(0, 0, o + OriOffset);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, o + OriOffset);
             if (OriPositionOffset)
             {
                 transform.localPosition = Position + PositionOffset.RotateZCCW(OriOffset + o);
@@ -73,7 +73,7 @@ namespace Experica
 
         void onorioffset(float ooffset)
         {
-            transform.localEulerAngles = new Vector3(0, 0, ooffset + Ori);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, ooffset + Ori);
             if (OriPositionOffset)
             {
                 transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + ooffset);
@@ -81,7 +81,7 @@ namespace Experica
             OriOffset = ooffset;
         }
 
-        public override void OnPosition(Vector3 p)
+        protected override void OnPosition(Vector3 p)
         {
             if (OriPositionOffset)
             {
@@ -94,7 +94,7 @@ namespace Experica
             }
         }
 
-        public override void OnPositionOffset(Vector3 poffset)
+        protected override void OnPositionOffset(Vector3 poffset)
         {
             if (OriPositionOffset)
             {
@@ -137,10 +137,10 @@ namespace Experica
             MaskRadius = r;
         }
 
-        void onsigma(float s)
+        void onmasksigma(float s)
         {
-            renderer.material.SetFloat("_sigma", s);
-            Sigma = s;
+            renderer.material.SetFloat("_masksigma", s);
+            MaskSigma = s;
         }
 
         void onoripositionoffset(bool opo)

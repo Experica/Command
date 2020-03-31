@@ -42,22 +42,37 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4940241983149454122}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 499474cfd69931e478d9d38d915daae4, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 2a8b1ac1865ebad49bcfaa655d651ba4, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: Speed
+        m_Overridden: 0
+      - m_Value: 0
+        m_Name: Dir
+        m_Overridden: 0
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1, y: 1}
+        m_Name: DotSize
+        m_Overridden: 0
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1, y: 1, z: 1, w: 1}
+        m_Name: DotColor
+        m_Overridden: 0
     m_Uint:
-      m_Array: []
+      m_Array:
+      - m_Value: 30
+        m_Name: NDots
+        m_Overridden: 0
     m_Int:
       m_Array: []
     m_Matrix4x4f:
@@ -85,6 +100,7 @@ VFXRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -157,16 +173,16 @@ MonoBehaviour:
   Visible: 1
   Position: {x: 0, y: 0, z: 0}
   PositionOffset: {x: 0, y: 0, z: 0}
-  renderer: {fileID: 0}
-  visualeffect: {fileID: 0}
   Rotation: {x: 0, y: 0, z: 0}
   RotationOffset: {x: 0, y: 0, z: 0}
-  Ori: 0
-  OriOffset: 0
+  Dir: 0
+  DirOffset: 0
+  Speed: 1
   Diameter: 10
   Size: {x: 10, y: 10, z: 1}
-  Color: {r: 1, g: 1, b: 1, a: 1}
+  NDots: 30
+  DotColor: {r: 1, g: 1, b: 1, a: 1}
+  DotSize: {x: 1, y: 1}
   MaskType: 0
   MaskRadius: 0.5
-  Sigma: 0.15
-  OriPositionOffset: 0
+  MaskSigma: 0.15

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace Experica
 {
-    public class ImageQuad : EnvNet
+    public class ImageQuad : EnvNetVisual
     {
         [SyncVar(hook = "onrotation")]
         public Vector3 Rotation = Vector3.zero;
@@ -43,22 +43,14 @@ namespace Experica
         public MaskType MaskType = MaskType.None;
         [SyncVar(hook = "onmaskradius")]
         public float MaskRadius = 0.5f;
-        [SyncVar(hook = "onsigma")]
-        public float Sigma = 0.15f;
+        [SyncVar(hook = "onmasksigma")]
+        public float MaskSigma = 0.15f;
         [SyncVar(hook = "onoripositionoffset")]
         public bool OriPositionOffset = false;
-        [SyncVar(hook = "onstartindex")]
-        public int StartIndex = 1;
-        [SyncVar(hook = "onnumofimage")]
-        public int NumOfImage = 10;
         [SyncVar(hook = "onimage")]
         public string Image = "1";
         [SyncVar(hook = "onimageset")]
         public string ImageSet = "ExampleImageSet";
-        [SyncVar]
-        public bool IsCacheImage = true;
-        [SyncVar(hook = "onispreloadimageset")]
-        public bool IsPreLoadImageset = true;
 
         Dictionary<string, Texture2D> imagecache = new Dictionary<string, Texture2D>();
 
@@ -77,7 +69,7 @@ namespace Experica
 
         void onori(float o)
         {
-            transform.localEulerAngles = new Vector3(0, 0, o + OriOffset);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, o + OriOffset);
             if (OriPositionOffset)
             {
                 transform.localPosition = Position + PositionOffset.RotateZCCW(OriOffset + o);
@@ -87,7 +79,7 @@ namespace Experica
 
         void onorioffset(float ooffset)
         {
-            transform.localEulerAngles = new Vector3(0, 0, ooffset + Ori);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, ooffset + Ori);
             if (OriPositionOffset)
             {
                 transform.localPosition = Position + PositionOffset.RotateZCCW(Ori + ooffset);
@@ -95,7 +87,7 @@ namespace Experica
             OriOffset = ooffset;
         }
 
-        public override void OnPosition(Vector3 p)
+        protected override void OnPosition(Vector3 p)
         {
             if (OriPositionOffset)
             {
@@ -108,7 +100,7 @@ namespace Experica
             }
         }
 
-        public override void OnPositionOffset(Vector3 poffset)
+        protected override void OnPositionOffset(Vector3 poffset)
         {
             if (OriPositionOffset)
             {
@@ -145,10 +137,10 @@ namespace Experica
             MaskRadius = r;
         }
 
-        void onsigma(float s)
+        void onmasksigma(float s)
         {
-            renderer.material.SetFloat("_sigma", s);
-            Sigma = s;
+            renderer.material.SetFloat("_masksigma", s);
+            MaskSigma = s;
         }
 
         void onoripositionoffset(bool opo)
@@ -164,84 +156,25 @@ namespace Experica
             OriPositionOffset = opo;
         }
 
-
-        [ClientRpc]
-        void RpcPreLoadImage(string[] iidx)
-        {
-            imagecache.Clear();
-            foreach (var i in iidx)
-            {
-                imagecache[i] = Resources.Load<Texture2D>(ImageSet + "/" + i);
-            }
-            Resources.UnloadUnusedAssets();
-        }
-
-        [ClientRpc]
-        void RpcPreLoadImageset(int startidx, int numofimg)
-        {
-            var imgs = ImageSet.LoadImageSet(startidx, numofimg);
-            if (imgs != null)
-            {
-                imagecache = imgs;
-            }
-        }
-
-        void onstartindex(int i)
-        {
-            StartIndex = i;
-            onimageset(ImageSet);
-        }
-
-        void onnumofimage(int n)
-        {
-            NumOfImage = n;
-            onimageset(ImageSet);
-        }
-
-        void onispreloadimageset(bool b)
-        {
-            if (b)
-            {
-                onimageset(ImageSet);
-            }
-            IsPreLoadImageset = b;
-        }
-
         void onimage(string i)
         {
             if (imagecache.ContainsKey(i))
             {
                 renderer.material.SetTexture("_image", imagecache[i]);
-                Image = i;
             }
-            else
-            {
-                var img = Resources.Load<Texture2D>(ImageSet + "/" + i);
-                if (img != null)
-                {
-                    renderer.material.SetTexture("_image", img);
-                    if (IsCacheImage)
-                    {
-                        imagecache[i] = img;
-                    }
-                    Image = i;
-                }
-            }
+            Image = i;
         }
 
-        void onimageset(string iset)
+        void onimageset(string imageset)
         {
-            ImageSet = iset;
-            imagecache.Clear();
-            if (IsPreLoadImageset)
+            var imgs = imageset.Load();
+            if (imgs != null)
             {
-                var imgs = iset.LoadImageSet(StartIndex, NumOfImage);
-                if (imgs != null)
-                {
-                    imagecache = imgs;
-                }
+                imagecache = imgs;
+                onimage("1");
             }
-            onimage("1");
+            ImageSet = imageset;
         }
+
     }
 }

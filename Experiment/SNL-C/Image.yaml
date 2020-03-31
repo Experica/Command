@@ -1,23 +1,49 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: Alex
+Experimenter: PL
 Log: 
-Subject_ID: AF5
-Subject_Name: AF5
+Subject_ID: AF6
+Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 6
+Subject_Age: 13
 Subject_Size: 0 0 0
-Subject_Weight: 100
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerImage
-EnvParam: {}
+EnvParam:
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  MapColor@OrthoCamera@OrthoCamera: true
+  Rotation@ImageQuad@ImageQuad: 0 0 0
+  RotationOffset@ImageQuad@ImageQuad: 0 0 0
+  Ori@ImageQuad@ImageQuad: 0
+  OriOffset@ImageQuad@ImageQuad: 0
+  Diameter@ImageQuad@ImageQuad: 10
+  Size@ImageQuad@ImageQuad: 10 10 1
+  MaskType@ImageQuad@ImageQuad: None
+  MaskRadius@ImageQuad@ImageQuad: 0.5
+  MaskSigma@ImageQuad@ImageQuad: 0.150000006
+  OriPositionOffset@ImageQuad@ImageQuad: false
+  Image@ImageQuad@ImageQuad: 10
+  ImageSet@ImageQuad@ImageQuad: ExampleImageSet
+  Visible@ImageQuad@ImageQuad: true
+  Position@ImageQuad@ImageQuad: 0 0 0
+  PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: Experica.RippleImageLogic
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -36,7 +62,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -87,7 +113,7 @@ Param:
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
-  - ParallelPort
+  - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1

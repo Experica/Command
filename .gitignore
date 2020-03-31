@@ -5,8 +5,8 @@
 /[Mm]ono*/
 /[Ll]og*/
 /[Rr]ecordings/
+/[Aa]ssetBundles/
 
-/Assets/Resources/Imageset_*/
 /Command_Data/
 /*.exe
 /*.dll
@@ -26,7 +26,6 @@
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb
-# *.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt

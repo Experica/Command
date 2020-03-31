@@ -11,16 +11,15 @@ Subject_Age: 13
 Subject_Size: 0 0 0
 Subject_Weight: 6.75
 Subject_Log: 
-EnvPath: MarkerBar
+EnvPath: MarkerQuad
 EnvParam:
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
-  CLUT@Camera@OrthoCamera: true
-  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 100 100 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  MapColor@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 25.21 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,12 +28,12 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 20
-  Size@Quad@Quad: 20 20 1
+  Diameter@Quad@Quad: 10
+  Size@Quad@Quad: 10 10 1
   Color@Quad@Quad: 0.6328 0.3832 1 1
-  MaskType@Quad@Quad: Disk
+  MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
-  Sigma@Quad@Quad: 0.150000006
+  MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
@@ -61,7 +60,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:

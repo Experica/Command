@@ -1,8 +1,8 @@
 ﻿#ifndef EXPERICA_SHADER_CORE_INCLUDED
 #define EXPERICA_SHADER_CORE_INCLUDED
 
-#define PI		3.141592653589793238462
-#define TWOPI	6.283185307179586476924
+#define PI		3.14159265358979323846264
+#define TWOPI	6.28318530717958647692528
 
 // error function
 float erf(float x)
@@ -38,19 +38,15 @@ POSTEXOutput vert(POSTEXInput i)
 	return o;
 }
 
-// distance of a uv point to the x axis rotated theta(radious), uv coordinates have been centered[-0.5, 0.5]
-void torotx_float(float2 uv, float2 size, float theta, out float Out)
+// scaled y of a point clock-wise rotated theta(radious).
+void cwroty_float(float2 uv, float2 uvscale, float theta, out float Out)
 {
 	float sinv, cosv;
 	sincos(theta, sinv, cosv);
-	Out = cosv * uv.y * size.y - sinv * uv.x * size.x;
+	Out = cosv * uv.y * uvscale.y - sinv * uv.x * uvscale.x;
 }
 
-float squarewave(float x, float sf, float t, float tf, float phase, float duty)
-{
-	return frac(sf * x - tf * t + phase) < duty ? 1.0 : -1.0;
-}
-
+// sin wave, phase is in [0, 1] scale
 float sinwave(float x, float sf, float t, float tf, float phase)
 {
 	return sin(TWOPI * (sf * x - tf * t + phase));
@@ -73,6 +69,12 @@ float trianglewave(float x, float sf, float t, float tf, float phase)
 	}
 }
 
+// square wave, phase and duty are in [0, 1] scale, phase == duty => 0.
+float squarewave(float x, float sf, float t, float tf, float phase, float duty)
+{
+	return -sign(frac(sf * x - tf * t + phase) - duty);
+}
+
 void grating_float(float gratingtype, float x, float sf, float t, float tf, float phase, float duty, out float Out)
 {
 	if (gratingtype == 1)
@@ -89,17 +91,7 @@ void grating_float(float gratingtype, float x, float sf, float t, float tf, floa
 	}
 }
 
-void scale01_float(float x, float s, float d, out float Out)
-{
-	Out = (x + s) / d;
-}
-
-// wave[0, 1] modulate each channel of mincolor and maxcolor
-void wavecolor_float(float a, float4 mincolor, float4 maxcolor, out float4 Out)
-{
-	Out = (maxcolor - mincolor) * a + mincolor;
-}
-
+// disk mask centered on uv [0, 0], maskradius in uv coordinates
 float diskmask(float2 uv, float maskradius)
 {
 	return length(uv) > maskradius ? 0.0 : 1.0;
@@ -107,14 +99,14 @@ float diskmask(float2 uv, float maskradius)
 
 float gaussianmask(float2 uv, float sigma)
 {
-	float ds = pow(uv.x, 2) + pow(uv.y, 2);
-	return exp(-ds / (2 * pow(sigma, 2)));
+	float r2 = pow(uv.x, 2) + pow(uv.y, 2);
+	return exp(-0.5 * r2 / pow(sigma, 2));
 }
 
-float diskfademask(float2 uv, float maskradius, float sigma)
+float diskfademask(float2 uv, float maskradius, float scale)
 {
 	float d = length(uv) - maskradius;
-	return d > 0 ? erfc(sigma*d) : 1.0;
+	return d > 0 ? erfc(scale*d) : 1.0;
 }
 
 void mask_float(float masktype, float2 uv, float maskradius, float sigma, out float Out)

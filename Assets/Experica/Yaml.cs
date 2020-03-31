@@ -66,7 +66,7 @@ namespace Experica
         static Yaml()
         {
             var yamlvlabconverter = new YamlTypeConverter();
-            serializer = new SerializerBuilder().DisableAliases().EmitDefaults().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
+            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
             deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
         }
 

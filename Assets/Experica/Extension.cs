@@ -588,6 +588,14 @@ namespace Experica
             return false;
         }
 
+        /// <summary>
+        /// Get Independent R,G,B channel measurement
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="isnormalize"></param>
+        /// <param name="issort"></param>
         public static void GetRGBIntensityMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
         {
             var colors = m["Color"].Convert<List<Color>>();
@@ -662,20 +670,21 @@ namespace Experica
             y = new Dictionary<string, double[][]>() { { "R", rwlis.ToArray() }, { "G", gwlis.ToArray() }, { "B", bwlis.ToArray() } };
         }
 
-        public static Texture2D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)
+        public static Texture3D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)
         {
             var xx = Generate.LinearSpaced(n, 0, 1);
             var riy = Generate.Map(xx, i => (float)InverseGammaFunc(i, rgamma));
             var giy = Generate.Map(xx, i => (float)InverseGammaFunc(i, ggamma));
             var biy = Generate.Map(xx, i => (float)InverseGammaFunc(i, bgamma));
-            var clut = new Texture2D(n * n, n, TextureFormat.RGBA32, false, true);
+
+            var clut = new Texture3D(n, n, n, TextureFormat.RGB24, false);
             for (var r = 0; r < n; r++)
             {
                 for (var g = 0; g < n; g++)
                 {
                     for (var b = 0; b < n; b++)
                     {
-                        clut.SetPixel(n * b + r, g, new Color(riy[r], giy[g], biy[b]));
+                        clut.SetPixel(r, g, b, new Color(riy[r], giy[g], biy[b]));
                     }
                 }
             }
@@ -683,25 +692,65 @@ namespace Experica
             return clut;
         }
 
-        public static Texture2D GenerateRGBSplineCLUT(IInterpolation rii, IInterpolation gii, IInterpolation bii, int n)
+        public static Texture3D GenerateRGBSplineCLUT(IInterpolation rii, IInterpolation gii, IInterpolation bii, int n)
         {
             var xx = Generate.LinearSpaced(n, 0, 1);
             var riy = Generate.Map(xx, i => (float)rii.Interpolate(i));
             var giy = Generate.Map(xx, i => (float)gii.Interpolate(i));
             var biy = Generate.Map(xx, i => (float)bii.Interpolate(i));
-            var clut = new Texture2D(n * n, n, TextureFormat.RGBA32, false, true);
+
+            var clut = new Texture3D(n, n, n, TextureFormat.RGB24, false);
             for (var r = 0; r < n; r++)
             {
                 for (var g = 0; g < n; g++)
                 {
                     for (var b = 0; b < n; b++)
                     {
-                        clut.SetPixel(n * b + r, g, new Color(riy[r], giy[g], biy[b]));
+                        clut.SetPixel(r, g, b, new Color(riy[r], giy[g], biy[b]));
                     }
                 }
             }
             clut.Apply();
             return clut;
+        }
+
+        /// <summary>
+        /// Prepare Color Look-Up Table based on Display R,G,B intensity measurement
+        /// </summary>
+        /// <param name="display"></param>
+        /// <param name="forceprepare"></param>
+        /// <returns></returns>
+        public static bool PrepareCLUT(this Display display, bool forceprepare = false)
+        {
+            if (display.CLUT != null && !forceprepare) { return true; }
+            var m = display.IntensityMeasurement;
+            if (m == null || m.Count == 0) { return false; }
+
+            Dictionary<string, double[]> x, y;
+            switch (display.FitType)
+            {
+                case DisplayFitType.Gamma:
+                    m.GetRGBIntensityMeasurement(out x, out y, false, true);
+                    double rgamma, ra, rc, ggamma, ga, gc, bgamma, ba, bc;
+                    GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
+                    GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
+                    GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
+                    display.CLUT = GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, display.CLUTSize);
+                    break;
+                case DisplayFitType.LinearSpline:
+                case DisplayFitType.CubicSpline:
+                    m.GetRGBIntensityMeasurement(out x, out y, true, true);
+                    IInterpolation rii, gii, bii;
+                    SplineFit(y["R"], x["R"], out rii, display.FitType);
+                    SplineFit(y["G"], x["G"], out gii, display.FitType);
+                    SplineFit(y["B"], x["B"], out bii, display.FitType);
+                    if (rii != null && gii != null && bii != null)
+                    {
+                        display.CLUT = GenerateRGBSplineCLUT(rii, gii, bii, display.CLUTSize);
+                    }
+                    break;
+            }
+            return display.CLUT == null ? false : true;
         }
 #endif
 
@@ -947,19 +996,31 @@ namespace Experica
             }
         }
 
-        public static float GetColorScale(float luminance, float contrast)
+        /// <summary>
+        /// Luminance span based on average luminance and michelson contrast(symmatric min and max luminance)
+        /// </summary>
+        /// <param name="luminance"></param>
+        /// <param name="contrast"></param>
+        /// <returns></returns>
+        public static float LuminanceSpan(float luminance, float contrast)
         {
-            luminance = Mathf.Clamp(luminance, 0, 1);
-            contrast = Mathf.Clamp(contrast, 0, 1);
             return 2 * luminance * contrast;
         }
 
-        public static void GetColor(this float scale, Color minc, Color maxc, out Color sminc, out Color smaxc)
+        /// <summary>
+        /// Symmatric scale between mincolor and maxcolor
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="minc"></param>
+        /// <param name="maxc"></param>
+        /// <param name="sminc"></param>
+        /// <param name="smaxc"></param>
+        public static void ScaleColor(this float scale, Color minc, Color maxc, out Color sminc, out Color smaxc)
         {
-            var ac = (minc + maxc) / 2;
-            var acd = maxc - ac;
-            sminc = new Color(ac.r - acd.r * scale, ac.g - acd.g * scale, ac.b - acd.b * scale, minc.a);
-            smaxc = new Color(ac.r + acd.r * scale, ac.g + acd.g * scale, ac.b + acd.b * scale, maxc.a);
+            var mc = (minc + maxc) / 2;
+            var dmc = maxc - mc;
+            sminc = new Color(mc.r - dmc.r * scale, mc.g - dmc.g * scale, mc.b - dmc.b * scale, minc.a);
+            smaxc = new Color(mc.r + dmc.r * scale, mc.g + dmc.g * scale, mc.b + dmc.b * scale, maxc.a);
         }
 
         public static Vector3 RotateZCCW(this Vector3 v, float angle)
@@ -1009,13 +1070,39 @@ namespace Experica
             smtp.Send("vlabsys@gmail.com", to, subject, body);
         }
 
-        public static Dictionary<string, Texture2D> LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10)
+        /// <summary>
+        /// Load all images from a AssetBundle
+        /// </summary>
+        /// <param name="imageset"></param>
+        /// <returns></returns>
+        public static Dictionary<string, Texture2D> Load(this string imageset)
         {
-            if (string.IsNullOrEmpty(imgsetdir)) return null;
+            if (string.IsNullOrEmpty(imageset)) return null;
+
+            var isab = AssetBundle.LoadFromFile(Path.Combine(UnityEngine.Application.streamingAssetsPath, imageset));
+            var ins = isab.GetAllAssetNames().Select(i => Path.GetFileNameWithoutExtension(i));
+            if (ins != null && ins.Count() > 0)
+            {
+                var imgs = new Dictionary<string, Texture2D>();
+                foreach (var n in ins)
+                {
+                    imgs[n] = isab.LoadAsset<Texture2D>(n);
+                }
+                return imgs;
+            }
+            return null;
+        }
+
+        public static Dictionary<string, Texture2D> Load(this string imageset, int startidx = 0, int numofimg = 10)
+        {
+            if (string.IsNullOrEmpty(imageset)) return null;
             var imgs = new Dictionary<string, Texture2D>();
+
+            //Addressables.LoadAssetsAsync
+
             for (var i = startidx; i < numofimg + startidx; i++)
             {
-                var img = Resources.Load<Texture2D>(imgsetdir + "/" + i);
+                var img = Resources.Load<Texture2D>(imageset + "/" + i);
                 if (img != null)
                 {
                     imgs[i.ToString()] = img;

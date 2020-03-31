@@ -31,21 +31,27 @@ namespace Experica
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class Marker : NetworkBehaviour
     {
-        [SyncVar(hook = "OnMarkerSize")]
+        /// <summary>
+        /// Marker Quad size in visual field degree
+        /// </summary>
+        [SyncVar(hook = "onmarkersize")]
         public float MarkerSize = 2;
-        [SyncVar(hook = "OnMarkerPosition")]
-        public Vector3 MarkerPosition = Vector3.zero;
-        [SyncVar(hook = "OnMarkerCorner")]
+        [SyncVar(hook = "onmarkerposition")]
+        public Vector3 MarkerPosition = new Vector3(-10,-10,0);
+        [SyncVar(hook = "onmarkercorner")]
         public Corner MarkerCorner = Corner.BottomLeft;
-        [SyncVar(hook = "OnMark")]
+        /// <summary>
+        /// Mark On/Off
+        /// </summary>
+        [SyncVar(hook = "onmark")]
         public bool Mark = false;
-        [SyncVar(hook = "OnMarkOnColor")]
+        [SyncVar(hook = "onmarkoncolor")]
         public Color MarkOnColor = Color.white;
-        [SyncVar(hook = "OnMarkOffColor")]
+        [SyncVar(hook = "onmarkoffcolor")]
         public Color MarkOffColor = Color.black;
 
-        public OrthoCamera encamera;
-        public Renderer renderer;
+        OrthoCamera camera;
+        Renderer renderer;
 #if COMMAND
         NetManager netmanager;
 #endif
@@ -56,70 +62,70 @@ namespace Experica
 #if COMMAND
             netmanager = FindObjectOfType<NetManager>();
 #endif
-            encamera = FindObjectOfType<OrthoCamera>();
-            encamera.CameraChange += UpdatePosition;
-            UpdatePosition();
+            camera = FindObjectOfType<OrthoCamera>();
+            camera.OnCameraChange += UpdatePosition;
+            transform.localPosition = new Vector3(-10, -10, camera.NearPlane);
         }
 
-        Vector3 CornerPosition(Corner c, float m = 0)
+        Vector3 getmarkerposition(Corner corner, float size, float margin = 0)
         {
-            var hh = encamera.camera.orthographicSize;
-            var hw = hh * encamera.camera.aspect;
-            switch (c)
+            var h = camera.Height;
+            var w = camera.Width;
+            switch (corner)
             {
                 case Corner.TopLeft:
-                    return new Vector3(-(hw - MarkerSize / 2.0f - m), hh - MarkerSize / 2.0f - m, transform.localPosition.z);
+                    return new Vector3((-w+size)/2 + margin, (h-size)/2 - margin, transform.localPosition.z);
                 case Corner.TopRight:
-                    return new Vector3(hw - MarkerSize / 2.0f - m, hh - MarkerSize / 2.0f - m, transform.localPosition.z);
-                case Corner.BottomRight:
-                    return new Vector3(hw - MarkerSize / 2.0f - m, -(hh - MarkerSize / 2.0f - m), transform.localPosition.z);
+                    return new Vector3((w-size)/2 - margin, (h-size)/2 - margin, transform.localPosition.z);
                 case Corner.BottomLeft:
-                    return new Vector3(-(hw - MarkerSize / 2.0f - m), -(hh - MarkerSize / 2.0f - m), transform.localPosition.z);
+                    return new Vector3((-w+size)/2 + margin, (-h+size)/2 + margin, transform.localPosition.z);
+                case Corner.BottomRight:
+                    return new Vector3((w-size)/2 - margin, (-h+size)/2 + margin, transform.localPosition.z);
                 default:
-                    return new Vector3(0, 0, transform.localPosition.z);
+                    return new Vector3(-10, -10, transform.localPosition.z);
             }
         }
 
         void UpdatePosition()
         {
-            OnMarkerPosition(CornerPosition(MarkerCorner));
+            onmarkerposition(getmarkerposition(MarkerCorner,MarkerSize));
         }
 
-        void OnMarkerSize(float s)
+        void onmarkersize(float s)
         {
             transform.localScale = new Vector3(s, s, 1);
             MarkerSize = s;
             UpdatePosition();
         }
 
-        void OnMarkerPosition(Vector3 p)
+        void onmarkerposition(Vector3 p)
         {
             transform.localPosition = p;
             MarkerPosition = p;
         }
 
-        void OnMarkerCorner(Corner c)
+        void onmarkercorner(Corner c)
         {
             MarkerCorner = c;
             UpdatePosition();
         }
 
-        void OnMark(bool m)
+        void onmark(bool m)
         {
             renderer.material.SetColor("_color", m ? MarkOnColor : MarkOffColor);
             Mark = m;
         }
 
-        void OnMarkOnColor(Color c)
+        void onmarkoncolor(Color c)
         {
             MarkOnColor = c;
-            OnMark(Mark);
+            onmark(Mark);
         }
 
-        void OnMarkOffColor(Color c)
+        void onmarkoffcolor(Color c)
         {
             MarkOffColor = c;
-            OnMark(Mark);
+            onmark(Mark);
         }
 
 #if COMMAND

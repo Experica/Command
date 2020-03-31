@@ -1,5 +1,5 @@
 ﻿/*
-Camera.cs is part of the Experica.
+OrthoCamera.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -21,6 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using System;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Networking;
 using System.Collections.Generic;
@@ -36,84 +37,136 @@ namespace Experica
     [NetworkSettings(channel = 0, sendInterval = 0)]
     public class OrthoCamera : NetworkBehaviour
     {
-        [SyncVar(hook = "onscreenhalfheight")]
-        public float ScreenHalfHeight = 15;
+        /// <summary>
+        /// Distance from screen to eye in arbitory unit
+        /// </summary>
         [SyncVar(hook = "onscreentoeye")]
         public float ScreenToEye = 57;
+        /// <summary>
+        /// Height of the viewport(i.e. height of the display if full screen), same unit as `ScreenToEye`
+        /// </summary>
+        [SyncVar(hook = "onscreenheight")]
+        public float ScreenHeight = 30;
+        /// <summary>
+        /// Aspect ratio(width/height) of the viewport
+        /// </summary>
         [SyncVar(hook = "onscreenaspect")]
-        public float ScreenAspect = 4.0f / 3.0f;
+        public float ScreenAspect = 4 / 3;
+        /// <summary>
+        /// Background color of the camera
+        /// </summary>
         [SyncVar(hook = "onbgcolor")]
         public Color BGColor = Color.gray;
-        [SyncVar(hook = "onclut")]
-        public bool CLUT = true;
+        [SyncVar(hook = "onmapcolor")]
+        public bool MapColor = true;
 
-        public Action CameraChange;
+        /// <summary>
+        /// Height of the viewport in visual field degree
+        /// </summary>
+        public float Height
+        {
+            get { return camera.orthographicSize * 2; }
+        }
 
-        public Camera camera;
+        /// <summary>
+        /// Width of the viewport in visual field degree
+        /// </summary>
+        public float Width
+        {
+            get { return camera.orthographicSize * 2 * camera.aspect; }
+        }
+
+        public float NearPlane
+        {
+            get { return transform.localPosition.z + camera.nearClipPlane; }
+        }
+
+        public float FarPlane
+        {
+            get { return transform.localPosition.z + camera.farClipPlane; }
+        }
+
+        public Action OnCameraChange;
+        Camera camera;
+        HDAdditionalCameraData camerahddata;
+        Volume postprocessvolume;
         NetManager netmanager;
 
         void Awake()
         {
             camera = gameObject.GetComponent<Camera>();
+            camerahddata = gameObject.GetComponent<HDAdditionalCameraData>();
             netmanager = FindObjectOfType<NetManager>();
-        }
-
-        void Start()
-        {
 #if COMMAND
-            CameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
+            OnCameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
+            tag = "MainCamera";
+            transform.localPosition = new Vector3(0, 0, -1001);
+            camera.nearClipPlane = 1;
+            camera.farClipPlane = 2001;
+            postprocessvolume = gameObject.GetComponent<Volume>();
         }
 
-        void onscreenhalfheight(float shh)
+        void onscreentoeye(float d)
         {
-            camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(shh, ScreenToEye);
-            ScreenHalfHeight = shh;
-            CameraChange?.Invoke();
+            camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(ScreenHeight / 2, d);
+            ScreenToEye = d;
+            OnCameraChange?.Invoke();
         }
 
-        void onscreentoeye(float ste)
+        void onscreenheight(float h)
         {
-            camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(ScreenHalfHeight, ste);
-            ScreenToEye = ste;
-            CameraChange?.Invoke();
+            camera.orthographicSize = Mathf.Rad2Deg * Mathf.Atan2(h / 2, ScreenToEye);
+            ScreenHeight = h;
+            OnCameraChange?.Invoke();
         }
 
-        void onscreenaspect(float apr)
+        void onscreenaspect(float r)
         {
-            camera.aspect = apr;
-            ScreenAspect = apr;
-            CameraChange?.Invoke();
+            camera.aspect = r;
+            ScreenAspect = r;
+            OnCameraChange?.Invoke();
         }
 
-        void onbgcolor(Color bc)
+        void onbgcolor(Color c)
         {
-            camera.backgroundColor = bc;
-            BGColor = bc;
+            camerahddata.backgroundColorHDR = c;
+            BGColor = c;
         }
 
-        void onclut(bool cluton)
+        void onmapcolor(bool ismapcolor)
         {
-            netmanager.uicontroller.ToggleColorGrading(cluton);
-#if COMMAND
-            int width, height;
-            var data = netmanager.uicontroller.SerializeCLUT(out width, out height);
-            if (data != null)
+            Tonemapping tonemapping;
+            if (postprocessvolume.profile.TryGet(out tonemapping))
             {
-                RpcCLUT(data, width, height);
-            }
+                tonemapping.active = ismapcolor;
+#if COMMAND
+                if (ismapcolor)
+                {
+                    var cdclut = netmanager.uicontroller.CurrentDisplayCLUT;
+                    if (cdclut != null)
+                    {
+                        tonemapping.lutTexture.value = cdclut;
+                        RpcCLUT(cdclut.GetPixelData<byte>(0).ToArray(), cdclut.width);
+                    }
+                }
 #endif
-            CLUT = cluton;
+            }
+            MapColor = ismapcolor;
         }
 
         [ClientRpc]
-        void RpcCLUT(byte[] clut, int width, int height)
+        void RpcCLUT(byte[] clut, int size)
         {
 #if ENVIRONMENT
-            var tex = new Texture2D(width, height, TextureFormat.RGBA32, false,true);
-            tex.LoadRawTextureData(clut);
-            tex.Apply();
-            netmanager.uicontroller.SetCLUT(tex);
+            Tonemapping tonemapping;
+            if (postprocessvolume.profile.TryGet(out tonemapping))
+            {
+                var tex = new Texture3D(size, size, size, TextureFormat.RGB24, false);
+                tex.SetPixelData(clut, 0);
+                tex.Apply();
+                tonemapping.lutTexture.value = tex;
+            }
 #endif
         }
 
