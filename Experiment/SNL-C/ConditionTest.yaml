@@ -13,17 +13,17 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.48829436
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 20.94 -13.74 0
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  MapColor@OrthoCamera@OrthoCamera: true
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -65,7 +65,7 @@ CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
 Input: Joystick
-PreICI: 0
+PreICI: 150
 CondDur: 500
 SufICI: 0
 PreITI: 0
