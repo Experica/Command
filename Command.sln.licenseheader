@@ -1,4 +1,4 @@
-extensions: .cs .cpp .h .shader
+extensions: .cs .c .cpp .h .hpp .shader .hlsl .jl
 /*
 %FileName% is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors

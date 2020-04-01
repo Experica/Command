@@ -15,18 +15,18 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.48829436
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: true
+  MapColor@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerPosition@Marker@Marker: 20.94 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 0.502843201
+  Ori@GratingQuad@GratingQuad: -3.89842725
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,13 +36,13 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 4.56508493
+  SpatialFreq@GratingQuad@GratingQuad: 4.95176744
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0.625
+  SpatialPhase@GratingQuad@GratingQuad: 0.125
   MinColor@GratingQuad@GratingQuad: 0 3.886E-16 5.551E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  PauseTime@GratingQuad@GratingQuad: false
+  PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
   ModulateType@GratingQuad@GratingQuad: Square
@@ -59,7 +59,7 @@ RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
+CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
@@ -67,7 +67,7 @@ BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 0
+CondDur: 30
 SufICI: 0
 PreITI: 0
 TrialDur: 0

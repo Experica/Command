@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scene/DynamicShowroom.unity
     guid: e2b066d5ee3be2c4e99e83f19bd6bf42
   - enabled: 1
+    path: Assets/Scene/Marker.unity
+    guid: b1fd280602c504e4a8a0321b31886c5f
+  - enabled: 1
     path: Assets/Scene/MarkerQuad.unity
     guid: 5a5b6206aecbd48438fb1df8683922c3
   - enabled: 1
@@ -29,9 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/MarkerDots.unity
     guid: ae69a12622de0f84cacbc33be6414456
-  - enabled: 1
-    path: Assets/Scene/Marker.unity
-    guid: b1fd280602c504e4a8a0321b31886c5f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 49825b072e596014da1ce543779c1ee1,
       type: 2}
