@@ -13,8 +13,9 @@ colorstring(c::Vector) = join(string.(c)," ")
 cd(@__DIR__)
 displayname = "ROGPG279Q"
 resultdir = "./$displayname"
-mkpath(resultdir)
-resultpath = joinpath(resultdir,"colordata.yaml")
+isdir(resultdir) || mkpath(resultdir)
+colordatapath = joinpath(resultdir,"colordata.yaml")
+figfmt = [".png",".svg"]
 
 config = YAML.load_file("../Configuration/CommandConfig_SNL-C.yaml")
 RGBToLMS,LMSToRGB = RGBLMSMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
@@ -143,16 +144,12 @@ foreach(i->plot!(p,[0,IsoLumdkl[2,i]],[0,IsoLumdkl[3,i]],color=RGBA(0.5,0.5,0.5,
 plot!(p,IsoLumdkl[2,:],IsoLumdkl[3,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=6,marker=:circle,
 markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)",title=title)
 p
-foreach(i->savefig(joinpath(resultdir,"$title$i")),[".svg",".png"])
+foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
 ## Exact DKL Hues colormap
 cs = [RGBA(hue_dkl_ilp[:,i]...) for i in 1:size(hue_dkl_ilp,2)]
-cm_dkl = Dict("colors"=>[cs;cs[1]],
-              "values"=>[hueangle_dkl_ilp./360;1],
-              "log"=>"This is the exact DKL max_cone_contrast hues angled(0-360) in lum=0 plane,
-                      constrained by a `ROGPG279Q` LCD Display.")
-plotcolormap(cm_dkl,xlabel="L-M",ylabel="S-(L+M)")
-foreach(i->save(joinpath(resultdir,"cm_dkl_mcchue_l$lum$i"),cm_dkl),[".yaml",".mat"])
+cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled(0-360) in lum=$lum plane, constrained by a `ROGPG279Q` LCD Display.")
+plotcolormap(cm_dkl.colors,xlabel="L-M",ylabel="S-(L+M)")
 
 ## Linear colormap generated from DKL L-M and S-(L+M) axis colors
 L➕ = RGBA(maxc_dkl[:,2]...)
@@ -160,12 +157,8 @@ M➕ = RGBA(minc_dkl[:,2]...)
 S➕ = RGBA(maxc_dkl[:,3]...)
 S➖ = RGBA(minc_dkl[:,3]...)
 cs = range(L➕,S➕,M➕,S➖,L➕,length=360)
-cm_lidkl = Dict("colors"=>cs,
-                "values"=>collect(range(0,1,length=length(cs))),
-                "log"=>"This is the DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=0 plane,
-                      constrained by a `ROGPG279Q` LCD Display.")
-plotcolormap(cm_lidkl,xlabel="L-M",ylabel="S-(L+M)")
-foreach(i->save(joinpath(resultdir,"cm_lidkl_mcchue_l$lum$i"),cm_lidkl),[".yaml",".mat"])
+cm_lidkl = (colors=cs,notes="The DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `ROGPG279Q` LCD Display.")
+plotcolormap(cm_lidkl.colors,xlabel="L-M",ylabel="S-(L+M)")
 
 ## HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance in CIE [x,y,Y] coordinates
 hueangle_hsl = 0:30:330
@@ -189,34 +182,33 @@ foreach(i->plot!(p,[0,IsoLumhsl[1,i]],[0,IsoLumhsl[2,i]],color=RGBA(0.5,0.5,0.5,
 plot!(p,IsoLumhsl[1,:],IsoLumhsl[2,:],aspectratio=:equal,color=IsoLumc,lw=1.5,markersize=9,marker=:circle,
 markerstrokewidth=0,legend=false,xlabel="S",ylabel="S",title=title)
 p
-foreach(i->savefig(joinpath(resultdir,"$title$i")),[".svg",".png"])
+foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
 ## HSL Hues colormap
-hueangle_hsl = 0.0:360.0
 l=0.4
-cs = map(i->RGBA(HSLA(i,1,l,1)),hueangle_hsl)
-cm_hsl = Dict("colors"=>cs,
-              "values"=>collect(hueangle_hsl./360),
-              "log"=>"This is the HSL max_saturated hues angled(0-360) at L=$l.")
-plotcolormap(cm_hsl,xlabel="S",ylabel="S")
-foreach(i->save(joinpath(resultdir,"cm_hsl_mshue_l$l$i"),cm_hsl),[".yaml",".mat"])
+cs = map(i->RGBA(HSLA(i,1,l,1)),0:360)
+cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled(0-360) at L=$l.")
+plotcolormap(cm_hsl.colors,xlabel="S",ylabel="S")
+
+## Save Color Maps
+save(joinpath(resultdir,"colormaps.jld2"),"dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)
 
 ## Save color data
-colordata = Dict{String,Vector}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
-                                "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
-                                "LMS_Z"=>colorstring.([maxc_lms[:,3],minc_lms[:,3]]),
-                                "LMS_XYZ_MichelsonContrast" => diag(mcc),
-                                "LMS_Xmcc"=>colorstring.([mmaxc_lms[:,1],mminc_lms[:,1]]),
-                                "LMS_Ymcc"=>colorstring.([mmaxc_lms[:,2],mminc_lms[:,2]]),
-                                "LMS_Zmcc"=>colorstring.([mmaxc_lms[:,3],mminc_lms[:,3]]),
-                                "LMS_XYZmcc_MichelsonContrast" => diag(mmcc),
-                                "DKL_X"=>colorstring.([maxc_dkl[:,1],minc_dkl[:,1]]),
-                                "DKL_Y"=>colorstring.([maxc_dkl[:,2],minc_dkl[:,2]]),
-                                "DKL_Z"=>colorstring.([maxc_dkl[:,3],minc_dkl[:,3]]),
-                                "HSL_HueAngle_Ym" => hueangle_hsl,
-                                "HSL_Hue_Ym" => colorstring.([hue_hsl[:,i] for i in 1:size(hue_hsl,2)]),
-                                "HSL_WP_Ym" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
-                                "DKL_HueAngle_L0"=>hueangle_dkl_ilp,
-                                "DKL_Hue_L0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
-                                "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]))
-YAML.write_file(resultpath,colordata)
+colordata = Dict{String,Any}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
+                            "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
+                            "LMS_Z"=>colorstring.([maxc_lms[:,3],minc_lms[:,3]]),
+                            "LMS_XYZ_MichelsonContrast" => diag(mcc),
+                            "LMS_Xmcc"=>colorstring.([mmaxc_lms[:,1],mminc_lms[:,1]]),
+                            "LMS_Ymcc"=>colorstring.([mmaxc_lms[:,2],mminc_lms[:,2]]),
+                            "LMS_Zmcc"=>colorstring.([mmaxc_lms[:,3],mminc_lms[:,3]]),
+                            "LMS_XYZmcc_MichelsonContrast" => diag(mmcc),
+                            "DKL_X"=>colorstring.([maxc_dkl[:,1],minc_dkl[:,1]]),
+                            "DKL_Y"=>colorstring.([maxc_dkl[:,2],minc_dkl[:,2]]),
+                            "DKL_Z"=>colorstring.([maxc_dkl[:,3],minc_dkl[:,3]]),
+                            "HSL_HueAngle_Ym" => hueangle_hsl,
+                            "HSL_Hue_Ym" => colorstring.([hue_hsl[:,i] for i in 1:size(hue_hsl,2)]),
+                            "HSL_WP_Ym" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
+                            "DKL_HueAngle_L0"=>hueangle_dkl_ilp,
+                            "DKL_Hue_L0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
+                            "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]))
+YAML.write_file(colordatapath,colordata)
