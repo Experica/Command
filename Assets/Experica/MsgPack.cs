@@ -23,22 +23,31 @@ using System.Collections.Generic;
 using MsgPack;
 using MsgPack.Serialization;
 using System.Linq;
+using System;
 
 namespace Experica
 {
     public static class MsgPack
     {
+#if COMMAND
         public static MessagePackSerializer<Experiment> ExSerializer;
+#endif
         public static MessagePackSerializer<List<int>> ListIntSerializer;
         public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
         public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListListEventSerializer;
+        public static MessagePackSerializer<Dictionary<string, List<List<Byte>>>> ImageSet8Serializer;
+        public static MessagePackSerializer<Dictionary<string, List<List<UInt32>>>> ImageSet32Serializer;
 
         static MsgPack()
         {
+#if COMMAND
             ExSerializer = MessagePackSerializer.Get<Experiment>();
+#endif
             ListIntSerializer = MessagePackSerializer.Get<List<int>>();
             ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();
             ListListEventSerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
+            ImageSet8Serializer = MessagePackSerializer.Get<Dictionary<string, List<List<Byte>>>>();
+            ImageSet32Serializer = MessagePackSerializer.Get<Dictionary<string, List<List<UInt32>>>>();
         }
 
         public static object MsgPackObjectToObject(this object o)

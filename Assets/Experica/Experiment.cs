@@ -48,7 +48,8 @@ namespace Experica
 
         public PropertyAccess(Type reflectedtype, string propertyname)
         {
-            //var t = reflectedtype.GetProperty(propertyname);
+            // comment/uncomment the following line to trigger unity compile will solve the issuse.
+            var t = reflectedtype.GetProperty(propertyname);
             Type = reflectedtype.GetProperty(propertyname).PropertyType;
             Name = propertyname;
             Getter = reflectedtype.DelegateForGetPropertyValue(propertyname);
@@ -137,6 +138,7 @@ namespace Experica
         public string Display_ID { get; set; } = "";
         public double ResponseDelay { get; set; }
         public uint Version { get; set; } = 2;
+        [MessagePackIgnore]
         public CommandConfig Config { get; set; }
 
         [MessagePackIgnore]

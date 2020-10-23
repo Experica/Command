@@ -17,7 +17,7 @@ EnvParam:
   ScreenHeight@OrthoCamera@OrthoCamera: 30
   ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
@@ -28,20 +28,23 @@ EnvParam:
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 10
-  Size@ImageQuad@ImageQuad: 10 10 1
+  Diameter@ImageQuad@ImageQuad: 20
+  Size@ImageQuad@ImageQuad: 20 20 1
   MaskType@ImageQuad@ImageQuad: None
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  Image@ImageQuad@ImageQuad: 3
-  ImageSet@ImageQuad@ImageQuad: ExampleImageSet
+  MinColor@ImageQuad@ImageQuad: 0.3672 0.6168 0 1
+  MaxColor@ImageQuad@ImageQuad: 0.6328 0.3832 1 1
+  ChannelModulate@ImageQuad@ImageQuad: None
+  Image@ImageQuad@ImageQuad: 1
+  ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
   Visible@ImageQuad@ImageQuad: true
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.RippleImageLogic
+ExLogicPath: Experica.SpikeGLXImageLogic
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
@@ -86,6 +89,7 @@ ExInheritParam:
 - TimerDriftSpeed
 - DisplayLatency
 - ResponseDelay
+- Display_ID
 EnvInheritParam:
 - ScreenHalfHeight@ENCamera@OrthoCamera
 - ScreenToEye@ENCamera@OrthoCamera
@@ -109,7 +113,8 @@ EnvInheritParam:
 - Position@ImageQuad@ImageQuad
 - MarkerSize@Marker@Marker
 Param:
-  time: '[1, 4, 3]'
+  ColorSpace: DKL
+  Color: Z
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -117,7 +122,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ''
+Display_ID: ROGPG279Q
 ResponseDelay: 15
 Version: 1
 Config: 

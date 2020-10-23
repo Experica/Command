@@ -26,12 +26,16 @@ namespace Experica
     /// </summary>
     public class SpikeGLXCTLogic : ConditionTestLogic
     {
-        protected bool isspikeglxtriggered;
-
-        protected override void OnStart()
+        protected override void OnStartExperiment()
         {
-            base.OnStart();
             recorder = new SpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
+            base.OnStartExperiment();
+        }
+
+        protected override void OnExperimentStopped()
+        {
+            base.OnExperimentStopped();
+            recorder?.Dispose();
         }
 
         protected override void StartExperimentTimeSync()
@@ -42,25 +46,25 @@ namespace Experica
                 /* 
                 SpikeGLX recorder set path through network and remote server receive
                 message and change file path, all of which need time to complete.
-                Trigger record before file path change completion will
-                not successfully start recording.
+                Set record before file path change completion may not save to correct file path.
                 */
                 timer.Timeout(config.NotifyLatency);
                 recorder.RecordStatus = RecordStatus.Recording;
-                isspikeglxtriggered = true;
+                /* 
+                SpikeGLX recorder set record status through network and remote server receive
+                message and change record state, all of which need time to complete.
+                Start experiment before record may loss information.
+                */
+                timer.Timeout(config.NotifyLatency);
             }
             base.StartExperimentTimeSync();
         }
 
         protected override void StopExperimentTimeSync()
         {
-            // Tail period to make sure lagged effect data are recorded before trigger recording stop
+            // Tail period to make sure lagged effect data are collected before stop recording
             timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError);
-            if (isspikeglxtriggered)
-            {
-                recorder.RecordStatus = RecordStatus.Stopped;
-                isspikeglxtriggered = false;
-            }
+            recorder.RecordStatus = RecordStatus.Stopped;
             base.StopExperimentTimeSync();
         }
     }

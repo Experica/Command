@@ -129,4 +129,32 @@ void mask_float(float masktype, float2 uv, float maskradius, float sigma, out fl
 	}
 }
 
+void colormodulatecolor_float(float4 mincolor, float4 maxcolor, float channelmodulate, float4 color, out float4 Out)
+{
+	if (channelmodulate == 0)
+	{
+		Out = color;
+	}
+	else if (channelmodulate == 1)
+	{
+		Out = lerp(mincolor, maxcolor, color.r);
+	}
+	else if (channelmodulate == 2)
+	{
+		Out = lerp(mincolor, maxcolor, color.g);
+	}
+	else if (channelmodulate == 3)
+	{
+		Out = lerp(mincolor, maxcolor, color.b);
+	}
+	else if (channelmodulate == 4)
+	{
+		Out = lerp(mincolor, maxcolor, color.a);
+	}
+	else
+	{
+		Out = lerp(mincolor, maxcolor, color);
+	}
+}
+
 #endif

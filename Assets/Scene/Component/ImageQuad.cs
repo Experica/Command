@@ -22,6 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Experica
 {
@@ -47,12 +48,18 @@ namespace Experica
         public float MaskSigma = 0.15f;
         [SyncVar(hook = "onoripositionoffset")]
         public bool OriPositionOffset = false;
+        [SyncVar(hook = "onmincolor")]
+        public Color MinColor = Color.black;
+        [SyncVar(hook = "onmaxcolor")]
+        public Color MaxColor = Color.white;
+        [SyncVar(hook = "onchannelmodulate")]
+        public ColorChannel ChannelModulate = ColorChannel.None;
         [SyncVar(hook = "onimage")]
         public string Image = "1";
         [SyncVar(hook = "onimageset")]
         public string ImageSet = "ExampleImageSet";
 
-        Dictionary<string, Texture2D> imagecache = new Dictionary<string, Texture2D>();
+        Dictionary<string, Texture2D> imagesetcache = null;
 
 
         void onrotation(Vector3 r)
@@ -156,22 +163,39 @@ namespace Experica
             OriPositionOffset = opo;
         }
 
+        void onmincolor(Color c)
+        {
+            renderer.material.SetColor("_mincolor", c);
+            MinColor = c;
+        }
+
+        void onmaxcolor(Color c)
+        {
+            renderer.material.SetColor("_maxcolor", c);
+            MaxColor = c;
+        }
+
+        void onchannelmodulate(ColorChannel c)
+        {
+            renderer.material.SetInt("_channelmodulate", (int)c);
+            ChannelModulate = c;
+        }
+
         void onimage(string i)
         {
-            if (imagecache.ContainsKey(i))
+            if (imagesetcache != null && imagesetcache.ContainsKey(i))
             {
-                renderer.material.SetTexture("_image", imagecache[i]);
+                renderer.material.SetTexture("_image", imagesetcache[i]);
             }
             Image = i;
         }
 
         void onimageset(string imageset)
         {
-            var imgs = imageset.Load();
-            if (imgs != null)
+            imagesetcache = imageset.GetImageData();
+            if (imagesetcache != null)
             {
-                imagecache = imgs;
-                onimage("1");
+                onimage(imagesetcache.Keys.First());
             }
             ImageSet = imageset;
         }

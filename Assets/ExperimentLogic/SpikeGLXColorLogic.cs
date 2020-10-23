@@ -20,47 +20,41 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using System.Linq;
 
 namespace Experica
 {
     /// <summary>
-    /// SpikeGLX Condition Test with Display-Derived ColorSpace
+    /// SpikeGLX Condition Test with Display-Confined ColorSpace
     /// </summary>
     public class SpikeGLXColorLogic : SpikeGLXCTLogic
     {
         protected override void GenerateFinalCondition()
         {
-            pushexcludefactors = new List<string>() { "HueAngle"};
+            pushexcludefactors = new List<string>() { "HueAngle" };
             var cond = new Dictionary<string, List<object>>();
             var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
-            var colorvar = (string)ex.GetParam("Color");
+            var colorvar = ex.GetParam("Color").Convert<string>();
             var colorname = colorspace + "_" + colorvar;
             var ori = ex.GetParam("Ori").Convert<List<float>>();
             var sf = ex.GetParam("SpatialFreq").Convert<List<float>>();
+
+            // get color
             List<Color> color = null;
             List<Color> wp = null;
             List<float> angle = null;
-
-            // get color
-            var file = Path.Combine("Data", ex.Display_ID, "colordata.yaml");
-            if (!File.Exists(file))
+            var data = ex.Display_ID.GetColorData();
+            if (data != null)
             {
-                // todo generate colordata
-            }
-            if (File.Exists(file))
-            {
-                var data = Yaml.ReadYamlFile<Dictionary<string, List<object>>>(file);
                 if (data.ContainsKey(colorname))
                 {
                     color = data[colorname].Convert<List<Color>>();
                     if (colorname.Contains("Hue"))
                     {
-                        var huename = colorvar.Substring(0, colorvar.IndexOf('_') );
+                        var huename = colorvar.Substring(0, colorvar.IndexOf('_'));
                         var wpname = colorname.Replace(huename, "WP");
-                        if(data.ContainsKey(wpname))
+                        if (data.ContainsKey(wpname))
                         {
                             wp = data[wpname].Convert<List<Color>>();
                         }
@@ -73,12 +67,8 @@ namespace Experica
                 }
                 else
                 {
-                    Debug.LogWarning(colorname + " is not found in " + file);
+                    Debug.LogWarning(colorname + " is not found in colordata of " + ex.Display_ID);
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"Color Data: {file} Not Found.");
             }
 
             // combine factor levels
@@ -93,7 +83,7 @@ namespace Experica
             var colorcond = new Dictionary<string, List<object>>();
             if (color != null)
             {
-                cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList(); ;
+                cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList();
                 var colorvarname = "Color";
                 if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
                 {
@@ -122,7 +112,7 @@ namespace Experica
                     {
                         if (!fcond.ContainsKey(f))
                         {
-                            fcond[f] = new List<object> { colorcond[f].First() };
+                            fcond[f] = new List<object> { colorcond[f][(int)i] };
                         }
                         else
                         {

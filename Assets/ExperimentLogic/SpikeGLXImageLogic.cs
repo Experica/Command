@@ -1,5 +1,5 @@
-﻿/*
-SpikeGLXColorCTLogic.cs is part of the Experica.
+/*
+SpikeGLXImageLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -21,26 +21,20 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Experica
 {
     /// <summary>
-    /// Condition Test with SpikeGLX Data Acquisition System, and with Predefined Color
+    /// Image Test with SpikeGLX Data Acquisition System, and with Predefined Color
     /// </summary>
-    public class SpikeGLXColorCTLogic : SpikeGLXCTLogic
+    public class SpikeGLXImageLogic : SpikeGLXCTLogic
     {
         protected override void GenerateFinalCondition()
         {
-            base.GenerateFinalCondition();
-
             var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
             var colorvar = ex.GetParam("Color").Convert<string>();
             var colorname = colorspace + "_" + colorvar;
-            if (string.IsNullOrEmpty(colorvar))
-            {
-                Debug.LogWarning("No Color Specified.");
-                return;
-            }
 
             // get color
             List<Color> color = null;
@@ -61,12 +55,23 @@ namespace Experica
             {
                 switch (ex.ID)
                 {
-                    case "HartleySubspace":
-                    case "OriSF":
+                    case "Image":
                         SetEnvActiveParam("MaxColor", color[0]);
                         SetEnvActiveParam("MinColor", color[1]);
                         break;
                 }
+            }
+
+            // get imageset
+            var imagesetname = GetEnvActiveParam("ImageSet").Convert<string>();
+            var imageset = imagesetname.GetImageData();
+            if (imageset != null)
+            {
+                var cond = new Dictionary<string, List<object>>
+                {
+                    ["Image"] = imageset.Keys.Select(i => (object)i).ToList()
+                };
+                condmanager.FinalizeCondition(cond);
             }
         }
     }

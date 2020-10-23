@@ -1,5 +1,5 @@
-﻿/*
-Environment.cs is part of the Experica.
+/*
+RunTimeTextureTest.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -21,49 +21,30 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Experica
 {
-    public enum EnvironmentObject
+    public class RunTimeTextureTest
     {
-        None,
-        Quad,
-        GratingQuad,
-        ImageQuad,
-        ImageArrayQuad
-    }
+        // A Test behaves as an ordinary method
+        [Test]
+        public void RunTimeTextureTestSimplePasses()
+        {
+            var imagesetname = "test";
+            imagesetname.GetImageData();
+        }
 
-    public enum MaskType
-    {
-        None,
-        Disk,
-        Gaussian,
-        DiskFade
-    }
-
-    public enum Corner
-    {
-        TopLeft,
-        TopRight,
-        BottomRight,
-        BottomLeft
-    }
-
-    public enum WaveType
-    {
-        Square,
-        Sinusoidal,
-        Triangle
-    }
-
-    public enum ColorChannel
-    {
-        None,
-        R,
-        G,
-        B,
-        A,
-        Each
+        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
+        // `yield return null;` to skip a frame.
+        [UnityTest]
+        public IEnumerator RunTimeTextureTestWithEnumeratorPasses()
+        {
+            // Use the Assert class to test conditions.
+            // Use yield to skip a frame.
+            yield return null;
+        }
     }
 }

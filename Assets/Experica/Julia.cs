@@ -36,35 +36,35 @@ namespace Experica
 {
     public static class Julia
     {
-        static readonly string dll = "C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll";
+        static readonly string dll = "C:\\Users\\fff00\\AppData\\Local\\Julia-1.5.2\\bin\\libjulia.dll";
 
         [DllImport("kernel32.dll")]
         static extern bool SetDllDirectory(string pathName);
-        //[DllImport("libjulia",CallingConvention = CallingConvention.Cdecl)]
-        //static extern void jl_init__threading();
-        //[DllImport("libjulia",CallingConvention = CallingConvention.Cdecl)]
+        //[DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+        //static extern void jl_init();
+        //[DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         //static extern IntPtr jl_eval_string(string jlcode);
-        //[DllImport("libjulia",CallingConvention = CallingConvention.Cdecl)]
+        //[DllImport("libjulia", CallingConvention = CallingConvention.Cdecl)]
         //static extern IntPtr jl_exception_occurred();
 
-        //[DllImport("libjulia",CallingConvention = CallingConvention.Cdecl)]
+        //[DllImport("libjulia", CallingConvention = CallingConvention.Cdecl)]
         //static extern IntPtr jl_typeof_str(IntPtr value);
 
-        //[DllImport("libjulia",CallingConvention = CallingConvention.Cdecl)]
+        //[DllImport("libjulia", CallingConvention = CallingConvention.Cdecl)]
         //static extern void jl_atexit_hook(int a);
-        
 
-        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void jl_init__threading();
-        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+
+        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Programs\\Julia 1.5.2\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void jl_init();
+        [DllImport("C:/Users/fff00/AppData/Local/Programs/Julia 1.5.2/bin/libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr jl_eval_string(string jlcode);
-        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Programs\\Julia 1.5.2\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr jl_exception_occurred();
 
-        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Programs\\Julia 1.5.2\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr jl_typeof_str(IntPtr value);
 
-        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("C:\\Users\\fff00\\AppData\\Local\\Programs\\Julia 1.5.2\\bin\\libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void jl_atexit_hook(int a);
 
 
@@ -78,8 +78,8 @@ namespace Experica
             {
                 lock (apilock)
                 {
-                    //SetDllDirectory("C:\\Users\\fff00\\AppData\\Local\\Julia-1.2.0\\bin");
-                    jl_init__threading();
+                    SetDllDirectory("C:\\Users\\fff00\\AppData\\Local\\Programs\\Julia 1.5.2\\bin");
+                    jl_init();
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -99,11 +99,11 @@ namespace Experica
             object v = null;
             lock (apilock)
             {
-                string script = @"Base.include(Base,raw""d:\Temp\test.jl"";)";
+                //string script = @"Base.include(Base,raw""d:\Temp\test.jl"";)";
 
                 //string script = @"Base.include(Base,raw""" + juliaScriptDir + @""";)";
 
-                jl_eval_string(script);
+                //jl_eval_string(script);
                 jl_eval_string("sqrt(4.0)");
 
                 IntPtr exception = jl_exception_occurred();

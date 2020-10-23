@@ -57,8 +57,8 @@ namespace Experica
         /// </summary>
         [SyncVar(hook = "onbgcolor")]
         public Color BGColor = Color.gray;
-        [SyncVar(hook = "onmapcolor")]
-        public bool MapColor = true;
+        [SyncVar(hook = "onclut")]
+        public bool CLUT = true;
 
         /// <summary>
         /// Height of the viewport in visual field degree
@@ -134,14 +134,14 @@ namespace Experica
             BGColor = c;
         }
 
-        void onmapcolor(bool ismapcolor)
+        void onclut(bool isclut)
         {
             Tonemapping tonemapping;
             if (postprocessvolume.profile.TryGet(out tonemapping))
             {
-                tonemapping.active = ismapcolor;
+                tonemapping.active = isclut;
 #if COMMAND
-                if (ismapcolor)
+                if (isclut)
                 {
                     var cdclut = netmanager.uicontroller.CurrentDisplayCLUT;
                     if (cdclut != null)
@@ -152,7 +152,7 @@ namespace Experica
                 }
 #endif
             }
-            MapColor = ismapcolor;
+            CLUT = isclut;
         }
 
         [ClientRpc]

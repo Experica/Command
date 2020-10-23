@@ -31,8 +31,7 @@ namespace Experica
 
         protected override void OnStartExperiment()
         {
-            var syncmethod = ex.EventSyncProtocol.SyncMethods;
-            if (syncmethod.Contains(SyncMethod.GPIO))
+            if (ex.EventSyncProtocol.SyncMethods.Contains(SyncMethod.GPIO))
             {
                 gpio = new ParallelPort(dataaddress: config.ParallelPort1);
                 if (!gpio.Found)
@@ -119,10 +118,9 @@ namespace Experica
                         for successive conditions without rest, 
                         make sure no extra updates(frames) are inserted.
                         */
-                        if (ex.PreICI == 0 && ex.SufICI == 0)
+                        if (ex.PreICI <= 0 && ex.SufICI <= 0)
                         {
-                            // new condtest usually starts at PreICI
-                            CondState = CONDSTATE.PREICI;
+                            CondState = CONDSTATE.PREICI; // new condtest could start at PreICI
                             CondState = CONDSTATE.COND;
                             SyncEvent(CONDSTATE.COND.ToString());
                         }
@@ -137,7 +135,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        CondState = CONDSTATE.NONE;
+                        CondState = CONDSTATE.PREICI;
                     }
                     break;
             }

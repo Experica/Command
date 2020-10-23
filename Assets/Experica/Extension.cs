@@ -63,6 +63,8 @@ namespace Experica
     public static class Extension
     {
         public const uint ExDataVersion = 2;
+        static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();
+        static Dictionary<string, Dictionary<string, Texture2D>> imagedata = new Dictionary<string, Dictionary<string, Texture2D>>();
 
         static Type TObject, TString, TBool, TInt, TFloat, TDouble, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
@@ -1071,26 +1073,114 @@ namespace Experica
         }
 
         /// <summary>
-        /// Load all images from a AssetBundle
+        /// Load textures from a AssetBundle
         /// </summary>
-        /// <param name="imageset"></param>
+        /// <param name="imagesetname"></param>
         /// <returns></returns>
-        public static Dictionary<string, Texture2D> Load(this string imageset)
+        public static Dictionary<string, Texture2D> LoadTextures(this string imagesetname)
         {
-            if (string.IsNullOrEmpty(imageset)) return null;
-
-            var isab = AssetBundle.LoadFromFile(Path.Combine(UnityEngine.Application.streamingAssetsPath, imageset));
-            var ins = isab.GetAllAssetNames().Select(i => Path.GetFileNameWithoutExtension(i));
-            if (ins != null && ins.Count() > 0)
+            if (string.IsNullOrEmpty(imagesetname)) return null;
+            var file = Path.Combine(UnityEngine.Application.streamingAssetsPath, imagesetname);
+            if (File.Exists(file))
             {
-                var imgs = new Dictionary<string, Texture2D>();
-                foreach (var n in ins)
+                var isab = AssetBundle.LoadFromFile(file);
+                var ins = isab.GetAllAssetNames().Select(i => Path.GetFileNameWithoutExtension(i));
+                if (ins != null && ins.Count() > 0)
                 {
-                    imgs[n] = isab.LoadAsset<Texture2D>(n);
+                    var imgset = new Dictionary<string, Texture2D>();
+                    foreach (var n in ins)
+                    {
+                        imgset[n] = isab.LoadAsset<Texture2D>(n);
+                    }
+                    return imgset;
                 }
-                return imgs;
+                else
+                {
+                    Debug.LogWarning($"Image Data: {file} Empty.");
+                    return null;
+                }
             }
-            return null;
+            else
+            {
+                Debug.LogWarning($"Image Data: {file} Not Found.");
+                return null;
+            }
+        }
+
+        public static Dictionary<string, Texture2D> FillRawTextures8(this Dictionary<string, List<List<Byte>>> imgdata)
+        {
+            if (imgdata == null) return null;
+
+            var imgsize = imgdata["imagesize"];
+            var h = (int)imgsize[0][0]; var w = (int)imgsize[1][0];
+            var imgs = imgdata["images"];
+            var imgset = new Dictionary<string, Texture2D>();
+            for (var i = 0; i < imgs.Count(); i++)
+            {
+                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
+                var ps = t.GetRawTextureData<Color32>();
+                for (var j = 0; j < imgs[i].Count(); j++)
+                {
+                    var c = imgs[i][j];
+                    ps[j] = new Color32(c, c, c, 255);
+                }
+                t.Apply();
+                imgset[(i + 1).ToString()] = t;
+            }
+            return imgset;
+        }
+
+        public static Dictionary<string, Texture2D> FillRawTextures32(this Dictionary<string, List<List<UInt32>>> imgdata)
+        {
+            if (imgdata == null) return null;
+
+            var imgsize = imgdata["imagesize"];
+            var h = (int)imgsize[0][0]; var w = (int)imgsize[1][0];
+            var imgs = imgdata["images"];
+            var imgset = new Dictionary<string, Texture2D>();
+            for (var i = 0; i < imgs.Count(); i++)
+            {
+                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
+                var ps = t.GetRawTextureData<Color32>();
+                for (var j = 0; j < imgs[i].Count(); j++)
+                {
+                    var c = BitConverter.GetBytes(imgs[i][j]);
+                    ps[j] = new Color32(c[3], c[2], c[1], c[0]);
+                }
+                t.Apply();
+                imgset[(i + 1).ToString()] = t;
+            }
+            return imgset;
+        }
+
+        /// <summary>
+        /// Load raw textures from a file
+        /// </summary>
+        /// <param name="imagesetname"></param>
+        /// <returns></returns>
+        public static Dictionary<string, Texture2D> LoadRawTextures(this string imagesetname)
+        {
+            if (string.IsNullOrEmpty(imagesetname)) return null;
+            var files = Directory.GetFiles("Data", imagesetname + ".*", SearchOption.TopDirectoryOnly);
+            if (files.Length > 0)
+            {
+                var file = files[0]; var ext = Path.GetExtension(file);
+                switch (ext)
+                {
+                    case ".mp8":
+                        return MsgPack.ImageSet8Serializer.Unpack(File.OpenRead(file)).FillRawTextures8();
+                    case ".mp32":
+                        return MsgPack.ImageSet32Serializer.Unpack(File.OpenRead(file)).FillRawTextures32();
+                    case ".yaml":
+                        return Yaml.ReadYamlFile<Dictionary<string, List<List<UInt32>>>>(file).FillRawTextures32();
+                }
+                return null;
+            }
+            else
+            {
+                Debug.LogWarning($"Image Data: {Path.Combine("Data", imagesetname)} Not Found.");
+                return null;
+            }
         }
 
         public static Dictionary<string, Texture2D> Load(this string imageset, int startidx = 0, int numofimg = 10)
@@ -1137,5 +1227,49 @@ namespace Experica
             return imgarray;
         }
 
+        public static Dictionary<string, List<object>> GetColorData(this string Display_ID, bool forceload = false)
+        {
+            if (!forceload && colordata.ContainsKey(Display_ID))
+            {
+                return colordata[Display_ID];
+            }
+            var file = Path.Combine("Data", Display_ID, "colordata.yaml");
+            if (!File.Exists(file))
+            {
+                // generate colordata
+            }
+            if (File.Exists(file))
+            {
+                var data = Yaml.ReadYamlFile<Dictionary<string, List<object>>>(file);
+                colordata[Display_ID] = data;
+                return data;
+            }
+            else
+            {
+                Debug.LogWarning($"Color Data: {file} Not Found.");
+                return null;
+            }
+        }
+
+        public static Dictionary<string, Texture2D> GetImageData(this string imagesetname, bool forceload = false)
+        {
+            if (!forceload && imagedata.ContainsKey(imagesetname))
+            {
+                return imagedata[imagesetname];
+            }
+            var imgset = imagesetname.LoadTextures();
+            if (imgset != null)
+            {
+                imagedata[imagesetname] = imgset;
+                return imgset;
+            }
+            imgset = imagesetname.LoadRawTextures();
+            if (imgset != null)
+            {
+                imagedata[imagesetname] = imgset;
+                return imgset;
+            }
+            return null;
+        }
     }
 }

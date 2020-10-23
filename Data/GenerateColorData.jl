@@ -1,4 +1,4 @@
-using ColorLab,LinearAlgebra,YAML,Plots
+using ColorLab,LinearAlgebra,YAML,Plots,NeuroAnalysis
 
 "Get digital RGB color spectral measured from a specific display"
 function RGBSpectral(measurement)
@@ -110,6 +110,7 @@ mminc_lms = clamp.(LMSToRGB*ContrastToLMS*quavectors(ccf'.*trivectors(mincc)),0,
 mmcc = contrast_michelson.(RGBToLMS*mmaxc_lms,RGBToLMS*mminc_lms)
 
 ## DKL Isolating RGBs through a background RGB color
+# bg = RGBToLMS*[0.07843, 0.05882, 0.06275,1]
 bg = RGBToLMS*[th;1]
 LMSToDKL,DKLToLMS = LMSDKLMatrix(bg,isnorm=true)
 # each column of DKLToLMS is the DKL Isolating LMS direction, then it's converted to RGB direction
@@ -146,19 +147,6 @@ markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)",title=title)
 p
 foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
-## Exact DKL Hues colormap
-cs = [RGBA(hue_dkl_ilp[:,i]...) for i in 1:size(hue_dkl_ilp,2)]
-cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled(0-360) in lum=$lum plane, constrained by a `ROGPG279Q` LCD Display.")
-plotcolormap(cm_dkl.colors,xlabel="L-M",ylabel="S-(L+M)")
-
-## Linear colormap generated from DKL L-M and S-(L+M) axis colors
-L➕ = RGBA(maxc_dkl[:,2]...)
-M➕ = RGBA(minc_dkl[:,2]...)
-S➕ = RGBA(maxc_dkl[:,3]...)
-S➖ = RGBA(minc_dkl[:,3]...)
-cs = range(L➕,S➕,M➕,S➖,L➕,length=360)
-cm_lidkl = (colors=cs,notes="The DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `ROGPG279Q` LCD Display.")
-plotcolormap(cm_lidkl.colors,xlabel="L-M",ylabel="S-(L+M)")
 
 ## HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance in CIE [x,y,Y] coordinates
 hueangle_hsl = 0:30:330
@@ -184,15 +172,6 @@ markerstrokewidth=0,legend=false,xlabel="S",ylabel="S",title=title)
 p
 foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
-## HSL Hues colormap
-l=0.4
-cs = map(i->RGBA(HSLA(i,1,l,1)),0:360)
-cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled(0-360) at L=$l.")
-plotcolormap(cm_hsl.colors,xlabel="S",ylabel="S")
-
-## Save Color Maps
-save(joinpath(resultdir,"colormaps.jld2"),"dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)
-
 ## Save color data
 colordata = Dict{String,Any}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]),
                             "LMS_Y"=>colorstring.([maxc_lms[:,2],minc_lms[:,2]]),
@@ -210,5 +189,57 @@ colordata = Dict{String,Any}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]
                             "HSL_WP_Ym" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
                             "DKL_HueAngle_L0"=>hueangle_dkl_ilp,
                             "DKL_Hue_L0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
-                            "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]))
+                            "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]),
+                            "RGBToLMS" => vec(RGBToLMS),
+                            "RGBToXYZ" => vec(RGBToXYZ),
+                            "LMSToContrast" => vec(LMSToContrast),
+                            "LMSToDKL" => vec(LMSToDKL))
 YAML.write_file(colordatapath,colordata)
+
+
+## HSL hues in DKL
+huewp_hsl=[0.3137 0 0 1;
+           0.1922 0.03137 0 1;
+           0.07059 0.07059 0 1;
+           0.01569 0.08627 0 1;
+           0 0.0902 0 1;
+           0 0.08627 0.01961 1;
+           0 0.07843 0.09412 1;
+           0 0.0549 0.3608 1;
+           0 0 0.9843 1;
+           0.1255 0 0.5686 1;
+           0.2314 0 0.2353 1;
+           0.2902 0 0.05882 1;
+           0.07843 0.05882 0.06275 1]'
+huewp_hsl_dkl = trivectors(RGBToDKL*huewp_hsl)
+
+plot(huewp_hsl_dkl[2,1:end-1],huewp_hsl_dkl[3,1:end-1],markersize=9,marker=:circle,color=cm_hsl.colors[1:30:331],xlabel="L-M",ylabel="S-(L+M)",frame=:origin,
+annotations=[(huewp_hsl_dkl[2,i]+0.05,huewp_hsl_dkl[3,i],text(hueangle_hsl[i],7,:gray5,:bottom,:left)) for i in eachindex(hueangle_hsl)])
+scatter!(huewp_hsl_dkl[2,end:end],huewp_hsl_dkl[3,end:end],markersize=9,marker=:circle,color=:gray,leg=false)
+foreach(ext->savefig(joinpath(resultdir,"HSL_$(length(hueangle_hsl))Hue_Ym_KL$ext")),figfmt)
+
+plot(huewp_hsl_dkl[2,1:end-1],huewp_hsl_dkl[1,1:end-1],markersize=9,marker=:circle,color=cm_hsl.colors[1:30:331],xlabel="L-M",ylabel="Lum",frame=:origin,
+annotations=[(huewp_hsl_dkl[2,i]+0.05,huewp_hsl_dkl[1,i],text(hueangle_hsl[i],7,:gray5,:bottom,:left)) for i in eachindex(hueangle_hsl)])
+scatter!(huewp_hsl_dkl[2,end:end],huewp_hsl_dkl[1,end:end],markersize=9,marker=:circle,color=:gray,leg=false)
+foreach(ext->savefig(joinpath(resultdir,"HSL_$(length(hueangle_hsl))Hue_Ym_KD$ext")),figfmt)
+
+
+## Exact DKL Hues colormap
+cs = [RGBA(hue_dkl_ilp[:,i]...) for i in 1:size(hue_dkl_ilp,2)]
+cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled(0-360) in lum=$lum plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_dkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+## Linear colormap generated from DKL L-M and S-(L+M) axis colors
+L➕ = RGBA(maxc_dkl[:,2]...)
+M➕ = RGBA(minc_dkl[:,2]...)
+S➕ = RGBA(maxc_dkl[:,3]...)
+S➖ = RGBA(minc_dkl[:,3]...)
+cs = range(L➕,S➕,M➕,S➖,L➕,length=360)
+cm_lidkl = (colors=cs,notes="The DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_lidkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+## HSL Hues colormap
+l=0.4
+cs = map(i->RGBA(HSLA(i,1,l,1)),0:360)
+cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled(0-360) at L=$l.")
+plotcolormap(cm_hsl.colors,xlabel="S",ylabel="S")
+## Save Color Maps
+save(joinpath(resultdir,"colormaps.jld2"),"dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)

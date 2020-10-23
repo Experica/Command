@@ -22,7 +22,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System;
 using System.IO;
-using System.Text;
 using YamlDotNet.Serialization;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
@@ -65,14 +64,14 @@ namespace Experica
 
         static Yaml()
         {
-            var yamlvlabconverter = new YamlTypeConverter();
-            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
-            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlvlabconverter).Build();
+            var yamlexpericaconverter = new YamlTypeConverter();
+            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(yamlexpericaconverter).Build();
+            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlexpericaconverter).Build();
         }
 
         public static void WriteYamlFile<T>(this string path, T data)
         {
-            File.WriteAllText(path, SerializeYaml(data));
+            File.WriteAllText(path, data.SerializeYaml());
         }
 
         public static string SerializeYaml<T>(this T data)
@@ -82,7 +81,7 @@ namespace Experica
 
         public static T ReadYamlFile<T>(this string path)
         {
-            return deserializer.Deserialize<T>(File.ReadAllText(path));
+            return File.ReadAllText(path).DeserializeYaml<T>();
         }
 
         public static T DeserializeYaml<T>(this string data)
