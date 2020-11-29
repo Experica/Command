@@ -30,12 +30,12 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 20
   Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 1 1 1 1
-  MaskType@Quad@Quad: None
+  Color@Quad@Quad: 0 0 0 1
+  MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.449999988
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: Condition\WhiteBlack.yaml

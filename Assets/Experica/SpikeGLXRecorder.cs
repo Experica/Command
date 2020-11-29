@@ -19,12 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HHMI;
 using MathWorks.MATLAB.NET.Arrays;
-using MathWorks.MATLAB.NET.Utility;
 using System.Threading;
 using System;
 
@@ -33,23 +31,19 @@ namespace Experica
     public class SpikeGLXRecorder : IRecorder
     {
         int disposecount = 0;
-        SpikeGLXDotnet spikeglxdotnet = new SpikeGLXDotnet();
+        SpikeGLXDotnet spikeglx = new SpikeGLXDotnet();
 
         readonly object spikeglxlock = new object();
         readonly object apilock = new object();
 
-        public SpikeGLXRecorder(string host = "localhost", int port = 4142, string recordpath = null)
+        public SpikeGLXRecorder(string host = "localhost", int port = 4142)
         {
             if (!Connect(host, port))
             {
-                Debug.Log("Can't connect to SpikeGLX remote server, make sure remote server is started and the server IP and Port are correct.");
+                Debug.LogWarning($"Can't connect to SpikeGLX, make sure SpikeGLX command server is started and the Host: {host} / Port: {port} match the server.");
                 return;
             }
             SetRecordingBeep(1046, 700, 880, 800);
-            if (!string.IsNullOrEmpty(recordpath))
-            {
-                RecordPath = recordpath;
-            }
         }
 
         ~SpikeGLXRecorder()
@@ -71,12 +65,12 @@ namespace Experica
             }
             lock (apilock)
             {
-                Close();
+                Disconnect();
                 if (disposing)
                 {
                     lock (spikeglxlock)
                     {
-                        spikeglxdotnet.Dispose();
+                        spikeglx.Dispose();
                     }
                 }
             }
@@ -88,7 +82,7 @@ namespace Experica
             {
                 lock (spikeglxlock)
                 {
-                    spikeglxdotnet.SetRecordingBeep(0, onfreq, ondur_ms, offfreq, offdur_ms);
+                    spikeglx.SetRecordingBeep(0, onfreq, ondur_ms, offfreq, offdur_ms);
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -106,7 +100,7 @@ namespace Experica
             {
                 lock (spikeglxlock)
                 {
-                    r = ((MWLogicalArray)spikeglxdotnet.Connect(1, host, port)[0]).ToVector()[0];
+                    r = ((MWLogicalArray)spikeglx.Connect(1, host, port)[0]).ToVector()[0];
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -118,13 +112,13 @@ namespace Experica
             return Connect("localhost", 4142);
         }
 
-        public void Close()
+        public void Disconnect()
         {
             try
             {
                 lock (spikeglxlock)
                 {
-                    spikeglxdotnet.Disconnect();
+                    spikeglx.Disconnect();
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -132,13 +126,17 @@ namespace Experica
 
         public string RecordPath
         {
+            get
+            {
+                throw new NotImplementedException();
+            }
             set
             {
                 try
                 {
                     lock (spikeglxlock)
                     {
-                        spikeglxdotnet.SetFile(0, value);
+                        spikeglx.SetFile(0, value);
                     }
                 }
                 catch (Exception e) { Debug.LogException(e); }
@@ -159,11 +157,11 @@ namespace Experica
                     {
                         if (value == RecordStatus.Recording)
                         {
-                            spikeglxdotnet.SetRecording(0, 1);
+                            spikeglx.SetRecording(0, 1);
                         }
                         else if (value == RecordStatus.Stopped)
                         {
-                            spikeglxdotnet.SetRecording(0, 0);
+                            spikeglx.SetRecording(0, 0);
                         }
                     }
                 }

@@ -28,8 +28,8 @@ EnvParam:
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 20
-  Size@GratingQuad@GratingQuad: 20 20 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006

@@ -26,33 +26,33 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 0
+  Ori@GratingQuad@GratingQuad: 1.22202528
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 20
-  Size@GratingQuad@GratingQuad: 20 20 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
+  SpatialFreq@GratingQuad@GratingQuad: 4.68188
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  PauseTime@GratingQuad@GratingQuad: false
+  SpatialPhase@GratingQuad@GratingQuad: 0.625
+  MinColor@GratingQuad@GratingQuad: 0 0.6462 0.4939 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.3538 0.5061 1
+  PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2].yaml
+CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 ExLogicPath: Experica.SpikeGLXColorCTLogic
 RecordSession: HLV1
@@ -127,7 +127,7 @@ EnvInheritParam:
 - BGSize@BackGround@BackGround
 Param:
   ColorSpace: DKL
-  Color: X
+  Color: Y
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

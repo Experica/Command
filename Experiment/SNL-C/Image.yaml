@@ -28,18 +28,18 @@ EnvParam:
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 20
-  Size@ImageQuad@ImageQuad: 20 20 1
-  MaskType@ImageQuad@ImageQuad: None
+  Diameter@ImageQuad@ImageQuad: 10
+  Size@ImageQuad@ImageQuad: 10 10 1
+  MaskType@ImageQuad@ImageQuad: Disk
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0.3672 0.6168 0 1
-  MaxColor@ImageQuad@ImageQuad: 0.6328 0.3832 1 1
-  ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 1
+  MinColor@ImageQuad@ImageQuad: 0 0.6462 0.4939 1
+  MaxColor@ImageQuad@ImageQuad: 1 0.3538 0.5061 1
+  ChannelModulate@ImageQuad@ImageQuad: R
+  Image@ImageQuad@ImageQuad: 17617
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
-  Visible@ImageQuad@ImageQuad: true
+  Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
@@ -114,7 +114,7 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 Param:
   ColorSpace: DKL
-  Color: Z
+  Color: Y
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -124,8 +124,8 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: SHORT
-SendMail: true
+SendMail: false

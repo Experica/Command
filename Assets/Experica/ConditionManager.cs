@@ -59,6 +59,7 @@ namespace Experica
         {
             if (!File.Exists(path))
             {
+                Debug.LogWarning($"Condition File: {path} not found.");
                 return null;
             }
             return path.ReadYamlFile<Dictionary<string, List<object>>>();

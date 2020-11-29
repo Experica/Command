@@ -15,11 +15,11 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -1 -13.74 0
+  MarkerPosition@Marker@Marker: 18.66 -13.74 0
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -49,7 +49,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''

@@ -36,11 +36,6 @@ namespace Experica
             var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
             var colorvar = ex.GetParam("Color").Convert<string>();
             var colorname = colorspace + "_" + colorvar;
-            if (string.IsNullOrEmpty(colorvar))
-            {
-                Debug.LogWarning("No Color Specified.");
-                return;
-            }
 
             // get color
             List<Color> color = null;
@@ -53,7 +48,7 @@ namespace Experica
                 }
                 else
                 {
-                    Debug.LogWarning(colorname + " is not found in colordata of " + ex.Display_ID);
+                    Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
                 }
             }
 

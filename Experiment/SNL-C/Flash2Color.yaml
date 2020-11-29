@@ -17,7 +17,7 @@ EnvParam:
   ScreenHeight@OrthoCamera@OrthoCamera: 30
   ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
@@ -31,11 +31,11 @@ EnvParam:
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 10 10 1
   Color@Quad@Quad: 0.6328 0.3832 1 1
-  MaskType@Quad@Quad: None
+  MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
@@ -121,4 +121,4 @@ Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL
-SendMail: true
+SendMail: false

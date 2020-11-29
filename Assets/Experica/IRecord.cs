@@ -19,24 +19,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace Experica
 {
     public enum RecordStatus
     {
-        Recording,
         Stopped,
+        Recording,
         Paused
     }
 
     public interface IRecord
     {
-        string RecordPath { set; }
+        string RecordPath { get; set; }
         RecordStatus RecordStatus { get; set; }
     }
 

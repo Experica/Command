@@ -14,7 +14,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
-      "version": "1.0.0",
+      "version": "1.0.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -22,13 +22,6 @@
     },
     "com.unity.ide.visualstudio": {
       "version": "2.0.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.inputsystem": {
-      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -53,7 +46,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "10.1.0",
+      "version": "10.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -62,23 +55,23 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.high-definition": {
-      "version": "10.1.0",
+      "version": "10.2.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "10.1.0",
-        "com.unity.shadergraph": "10.1.0",
-        "com.unity.visualeffectgraph": "10.1.0",
-        "com.unity.render-pipelines.high-definition-config": "10.1.0"
+        "com.unity.render-pipelines.core": "10.2.0",
+        "com.unity.shadergraph": "10.2.0",
+        "com.unity.visualeffectgraph": "10.2.0",
+        "com.unity.render-pipelines.high-definition-config": "10.2.0"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.high-definition-config": {
-      "version": "10.1.0",
+      "version": "10.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "10.1.0"
+        "com.unity.render-pipelines.core": "10.2.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -90,11 +83,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "10.1.0",
+      "version": "10.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "10.1.0",
+        "com.unity.render-pipelines.core": "10.2.0",
         "com.unity.searcher": "4.3.1"
       },
       "url": "https://packages.unity.com"
@@ -109,11 +102,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.18",
+      "version": "1.1.19",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.ext.nunit": "1.0.0",
+        "com.unity.ext.nunit": "1.0.5",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
@@ -129,7 +122,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.4",
+      "version": "1.4.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -149,13 +142,6 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "com.unity.ui.builder": {
-      "version": "1.0.0-preview.9",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.vectorgraphics": {
       "version": "2.0.0-preview.13",
       "depth": 0,
@@ -167,11 +153,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.visualeffectgraph": {
-      "version": "10.1.0",
+      "version": "10.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.shadergraph": "10.1.0"
+        "com.unity.shadergraph": "10.2.0"
       },
       "url": "https://packages.unity.com"
     },

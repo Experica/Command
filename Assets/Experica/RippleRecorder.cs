@@ -81,7 +81,7 @@ namespace Experica
             }
             lock (apilock)
             {
-                Close();
+                Disconnect();
                 lock (xippmexlock)
                 {
                     xippmexdotnet.Dispose();
@@ -146,7 +146,7 @@ namespace Experica
             return r;
         }
 
-        public void Close()
+        public void Disconnect()
         {
             lock (xippmexlock)
             {
@@ -176,6 +176,7 @@ namespace Experica
                 }
                 catch (Exception e) { Debug.LogException(e); }
             }
+            get { throw new NotImplementedException(); }
         }
 
         public RecordStatus RecordStatus

@@ -67,7 +67,7 @@ namespace Experica
                 }
                 else
                 {
-                    Debug.LogWarning(colorname + " is not found in colordata of " + ex.Display_ID);
+                    Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
                 }
             }
 
@@ -96,6 +96,10 @@ namespace Experica
                 if (wp != null)
                 {
                     colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
+                    if (colorvarname == "MaxColor")
+                    {
+                        colorcond["MinColor"] = wp.Select(i => (object)i).ToList();
+                    }
                 }
                 if (angle != null)
                 {

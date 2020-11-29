@@ -19,6 +19,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
+
 namespace Experica
 {
     /// <summary>
@@ -44,7 +46,7 @@ namespace Experica
                 }
                 if (!gpio.Found)
                 {
-                    UnityEngine.Debug.LogWarning("No GPIO Sync Channel.");
+                    Debug.LogWarning("No GPIO Sync Channel.");
                 }
             }
             SetEnvActiveParam("Visible", false);
@@ -59,15 +61,15 @@ namespace Experica
         }
 
         /// <summary>
-        /// Register and Sync Event with External Device through EventSyncProtocol
+        /// Sync and Register Event with External Device through EventSyncProtocol
         /// </summary>
-        /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state, without register event</param>
-        protected virtual void SyncEvent(string e = "")
+        /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state without event register</param>
+        protected virtual void SyncEvent(string e = null)
         {
             var esp = ex.EventSyncProtocol;
             if (esp.SyncMethods == null || esp.SyncMethods.Count == 0)
             {
-                UnityEngine.Debug.LogWarning("No SyncMethod in EventSyncProtocol, Skip SyncEvent ...");
+                Debug.LogWarning("No SyncMethod in EventSyncProtocol, Skip SyncEvent ...");
                 return;
             }
             bool addtosynclist = false;

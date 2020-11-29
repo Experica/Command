@@ -109,6 +109,10 @@ namespace Experica
                     }
                     break;
                 case CONDSTATE.PREICI:
+                    if (condmanager.IsCondRepeat(ex.CondRepeat))
+                    {
+                        StartStopExperiment(false);
+                    }
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
                     {
@@ -295,9 +299,9 @@ namespace Experica
             condmanager.GenerateFinalCondition(ex.CondPath);
         }
 
-        public virtual void PrepareCondition(bool regenerateconditon = true)
+        public void PrepareCondition(bool forceprepare = true)
         {
-            if (regenerateconditon == false && condmanager.finalcond != null)
+            if (forceprepare == false && condmanager.finalcond != null)
             { }
             else
             {
@@ -438,7 +442,7 @@ namespace Experica
             islogicactive = true;
         }
 
-        public virtual void StartStopExperiment(bool isstart)
+        public void StartStopExperiment(bool isstart)
         {
             if (isstart)
             {
@@ -454,7 +458,7 @@ namespace Experica
             }
         }
 
-        protected virtual void StartExperiment()
+        protected void StartExperiment()
         {
             condstate = CONDSTATE.NONE;
             trialstate = TRIALSTATE.NONE;
@@ -463,13 +467,26 @@ namespace Experica
 
             OnStartExperiment();
             PrepareCondition(regeneratecond);
-            StartExperimentTimeSync();
-            islogicactive = true;
-            OnExperimentStarted();
+            StartCoroutine(ExperimentStartSequence());
         }
 
         protected virtual void OnStartExperiment()
         {
+        }
+
+        protected IEnumerator ExperimentStartSequence()
+        {
+            // several frames to clean randering
+            var nframe = 2;
+            for (var i = 0; i < nframe; i++)
+            {
+                yield return null;
+            }
+            // also wait for client finish cleaning
+            yield return new WaitForSecondsRealtime(config.NotifyLatency / 1000f);
+            StartExperimentTimeSync();
+            OnExperimentStarted();
+            islogicactive = true;
         }
 
         protected virtual void StartExperimentTimeSync()
@@ -481,18 +498,31 @@ namespace Experica
         {
         }
 
-        protected virtual void StopExperiment()
+        protected void StopExperiment()
         {
+            islogicactive = false;
+            OnStopExperiment();
             // Push any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
-            OnStopExperiment();
-            StopExperimentTimeSync();
-            islogicactive = false;
-            OnExperimentStopped();
+            StartCoroutine(ExperimentStopSequence());
         }
 
         protected virtual void OnStopExperiment()
         {
+        }
+
+        protected IEnumerator ExperimentStopSequence()
+        {
+            // several frames to rander stop state
+            var nframe = 2;
+            for (var i = 0; i < nframe; i++)
+            {
+                yield return null;
+            }
+            // also wait for client finish randering
+            yield return new WaitForSecondsRealtime(config.NotifyLatency / 1000f);
+            StopExperimentTimeSync();
+            OnExperimentStopped();
         }
 
         protected virtual void StopExperimentTimeSync()
@@ -560,7 +590,7 @@ namespace Experica
                             var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
                             envmanager.SetActiveParam("Position", new Vector3(
                             Mathf.Clamp(p.x + Mathf.Pow(jxa * hw / 1135, 1), -hw, hw),
-                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 1135,1), -hh, hh),
+                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 1135, 1), -hh, hh),
                             p.z), true);
                         }
                     }
@@ -606,7 +636,7 @@ namespace Experica
                         if (dio != null)
                         {
                             var d = (float)dio;
-                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 1)*0.05f), true);
+                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 1) * 0.05f), true);
                         }
                     }
                     else
@@ -616,8 +646,8 @@ namespace Experica
                         {
                             var s = (Vector3)so;
                             envmanager.SetParam("Size", new Vector3(
-                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 1)*0.05f),
-                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 1)*0.05f),
+                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 1) * 0.05f),
+                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 1) * 0.05f),
                                 s.z), true);
                         }
                     }
