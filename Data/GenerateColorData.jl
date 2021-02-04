@@ -135,7 +135,7 @@ hue_dkl_ilp = clamp.(quavectors([maxc_dkl_ilp minc_dkl_ilp]),0,1)
 wp_dkl_ilp = repeat([th;1],inner=(1,size(hue_dkl_ilp,2)))
 hueangle_dkl_ilp = [hueangles;hueangles.+180]
 
-## Plot DKL Hues
+# Plot DKL Hues
 IsoLumc = [RGB(hue_dkl_ilp[1:3,i]...) for i in 1:size(hue_dkl_ilp,2)]
 IsoLumdkl = RGBToDKL*hue_dkl_ilp
 
@@ -160,7 +160,7 @@ huewpc = [RGB(huewp_hsl[1:3,i]...) for i in 1:size(huewp_hsl,2)]
 hue_hsl = huewp_hsl[:,1:end-1]
 wp_hsl = repeat(huewp_hsl[:,end],inner=(1,size(hue_hsl,2)))
 
-## Plot HSL Hues
+# Plot HSL Hues
 IsoLumc = huewpc[1:end-1]
 IsoLumhsl = [cos.(deg2rad.(hueangle_hsl)) sin.(deg2rad.(hueangle_hsl))]'
 
@@ -224,22 +224,75 @@ scatter!(huewp_hsl_dkl[2,end:end],huewp_hsl_dkl[1,end:end],markersize=9,marker=:
 foreach(ext->savefig(joinpath(resultdir,"HSL_$(length(hueangle_hsl))Hue_Ym_KD$ext")),figfmt)
 
 
-## Exact DKL Hues colormap
+
+## Cone Isolating colormap
+L➕ = RGBA(maxc_lms[:,1]...)
+L➖ = RGBA(minc_lms[:,1]...)
+M➕ = RGBA(maxc_lms[:,2]...)
+M➖ = RGBA(minc_lms[:,2]...)
+S➕ = RGBA(maxc_lms[:,3]...)
+S➖ = RGBA(minc_lms[:,3]...)
+
+cs = range(L➖,L➕,length=360)
+cm_liso = (colors=cs,notes="The L Cone Isolating colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(M➖,M➕,length=360)
+cm_miso = (colors=cs,notes="The M Cone Isolating colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(S➖,S➕,length=360)
+cm_siso = (colors=cs,notes="The S Cone Isolating colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(L➖,RGBA(1,1,1,1.0),L➕,length=360)
+cm_lisow = (colors=cs,notes="The L Cone Isolating colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(M➖,RGBA(1,1,1,1.0),M➕,length=360)
+cm_misow = (colors=cs,notes="The M Cone Isolating colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(S➖,RGBA(1,1,1,1.0),S➕,length=360)
+cm_sisow = (colors=cs,notes="The S Cone Isolating colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
+
+## DKL Axis Isolating colormap
+Lum➕ = RGBA(maxc_dkl[:,1]...)
+Lum➖ = RGBA(minc_dkl[:,1]...)
+L_M➕ = RGBA(maxc_dkl[:,2]...)
+L_M➖ = RGBA(minc_dkl[:,2]...)
+S_LM➕ = RGBA(maxc_dkl[:,3]...)
+S_LM➖ = RGBA(minc_dkl[:,3]...)
+
+cs = range(Lum➖,Lum➕,length=360)
+cm_lumiso = (colors=cs,notes="The DKL Lum Axis colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(L_M➖,L_M➕,length=360)
+cm_lmiso = (colors=cs,notes="The DKL L-M Axis colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(S_LM➖,S_LM➕,length=360)
+cm_slmiso = (colors=cs,notes="The DKL S-(L+M) Axis colors linearly generated between[min,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(L_M➖,RGBA(1,1,1,1.0),L_M➕,length=360)
+cm_lmisow = (colors=cs,notes="The DKL L-M Axis colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(S_LM➖,RGBA(1,1,1,1.0),S_LM➕,length=360)
+cm_slmisow = (colors=cs,notes="The DKL S-(L+M) Axis colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
+
+## DKL Hues colormap
 cs = [RGBA(hue_dkl_ilp[:,i]...) for i in 1:size(hue_dkl_ilp,2)]
-cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled(0-360) in lum=$lum plane, constrained by a `$displayname` LCD Display.")
+cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled[0,360] in lum=$lum plane, constrained by a `$displayname` LCD Display.")
 plotcolormap(cm_dkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+
 ## Linear colormap generated from DKL L-M and S-(L+M) axis colors
-L➕ = RGBA(maxc_dkl[:,2]...)
-M➕ = RGBA(minc_dkl[:,2]...)
-S➕ = RGBA(maxc_dkl[:,3]...)
-S➖ = RGBA(minc_dkl[:,3]...)
-cs = range(L➕,S➕,M➕,S➖,L➕,length=360)
+cs = range(L_M➕,S_LM➕,L_M➖,S_LM➖,L_M➕,length=365)
 cm_lidkl = (colors=cs,notes="The DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `$displayname` LCD Display.")
 plotcolormap(cm_lidkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+
 ## HSL Hues colormap
 l=0.4
 cs = map(i->RGBA(HSLA(i,1,l,1)),0:360)
-cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled(0-360) at L=$l.")
+cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled[0,360] at L=$l.")
 plotcolormap(cm_hsl.colors,xlabel="S",ylabel="S")
+
 ## Save Color Maps
-save(joinpath(resultdir,"colormaps.jld2"),"dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)
+save(joinpath(resultdir,"colormaps.jld2"),"lms_mccliso",cm_liso,"lms_mccmiso",cm_miso,"lms_mccsiso",cm_siso,
+    "lms_mcclisow",cm_lisow,"lms_mccmisow",cm_misow,"lms_mccsisow",cm_sisow,
+    "dkl_mcclumiso",cm_lumiso,"dkl_mcclmiso",cm_lmiso,"dkl_mccslmiso",cm_slmiso,
+    "dkl_mcclmisow",cm_lmisow,"dkl_mccslmisow",cm_slmisow,
+    "dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)

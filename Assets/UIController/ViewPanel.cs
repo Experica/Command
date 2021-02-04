@@ -41,6 +41,7 @@ namespace Experica.Command
 
         void Start()
         {
+            Debug.Log("");
             SetGridCenter(new Vector3(0, 0, 50));
             RenderTextureDescriptor = new RenderTextureDescriptor()
             {
@@ -94,6 +95,7 @@ namespace Experica.Command
             var maincamera = envmanager.maincamera_scene;
             if (maincamera != null)
             {
+                Debug.Log("init view");
                 // Get Render Size
                 var vpcsize = (viewportcontent.transform as RectTransform).rect.size;
                 float width, height;
