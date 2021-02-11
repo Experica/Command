@@ -15,11 +15,11 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.19817805
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerPosition@Marker@Marker: 16.67 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -35,7 +35,7 @@ EnvParam:
   MaskRadius@Quad@Quad: 0.449999988
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
+  Visible@Quad@Quad: true
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: Condition\WhiteBlack.yaml

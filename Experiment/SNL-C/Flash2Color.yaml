@@ -35,7 +35,7 @@ EnvParam:
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
+  Visible@Quad@Quad: true
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
@@ -107,7 +107,7 @@ EnvInheritParam:
 - Position@Quad@Quad
 Param:
   ColorSpace: DKL
-  Color: Z
+  Color: X
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:

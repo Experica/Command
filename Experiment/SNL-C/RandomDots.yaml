@@ -17,7 +17,7 @@ EnvParam:
   ScreenHeight@OrthoCamera@OrthoCamera: 30
   ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: -18.66 -13.74 0
   MarkerCorner@Marker@Marker: BottomLeft
@@ -28,13 +28,13 @@ EnvParam:
   RotationOffset@Dots@Dots: 0 0 0
   Dir@Dots@Dots: 0
   DirOffset@Dots@Dots: 0
-  Speed@Dots@Dots: 1
+  Speed@Dots@Dots: 3
   Diameter@Dots@Dots: 10
   Size@Dots@Dots: 10 10 1
   NDots@Dots@Dots: 30
   DotColor@Dots@Dots: 1 1 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0
+  Coherence@Dots@Dots: 0.5
   Visible@Dots@Dots: false
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0

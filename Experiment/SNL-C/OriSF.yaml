@@ -17,7 +17,7 @@ EnvParam:
   ScreenHeight@OrthoCamera@OrthoCamera: 30
   ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
   MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
@@ -36,7 +36,7 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 6.4000001
+  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
@@ -49,7 +49,7 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
-  Visible@GratingQuad@GratingQuad: false
+  Visible@GratingQuad@GratingQuad: true
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Ori12SF6.yaml

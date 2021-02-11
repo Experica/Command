@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -32,7 +33,7 @@ namespace Experica.Command
     public class ViewPanel : MonoBehaviour
     {
         public UIController uicontroller;
-        public RenderTexture rendertexture;
+        RenderTexture rendertexture;
         public GameObject viewportcontent;
         public Grid grid;
         public InputField gridcenterinput;
@@ -41,18 +42,21 @@ namespace Experica.Command
 
         void Start()
         {
-            Debug.Log("");
-            SetGridCenter(new Vector3(0, 0, 50));
-            RenderTextureDescriptor = new RenderTextureDescriptor()
+            rendertexture = new RenderTexture(new RenderTextureDescriptor()
             {
-                dimension = UnityEngine.Rendering.TextureDimension.Tex2D,
+                dimension = TextureDimension.Tex2D,
                 depthBufferBits = 32,
                 autoGenerateMips = false,
                 msaaSamples = uicontroller.config.AntiAliasing,
                 colorFormat = RenderTextureFormat.ARGBHalf,
                 sRGB = false,
+                width = 1,
+                height = 1,
                 volumeDepth = 1
-            };
+            });
+            rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
+
+            SetGridCenter(new Vector3(0, 0, 50));
         }
 
         void OnApplicationQuit()
@@ -95,7 +99,6 @@ namespace Experica.Command
             var maincamera = envmanager.maincamera_scene;
             if (maincamera != null)
             {
-                Debug.Log("init view");
                 // Get Render Size
                 var vpcsize = (viewportcontent.transform as RectTransform).rect.size;
                 float width, height;
@@ -113,15 +116,11 @@ namespace Experica.Command
                 var ri = viewportcontent.GetComponentInChildren<RawImage>();
                 var rirt = ri.gameObject.transform as RectTransform;
                 rirt.sizeDelta = new Vector2(width, height);
-                if (ri.texture != null)
-                {
-                    rendertexture.Release();
-                    Destroy(ri.texture);
-                }
-                RenderTextureDescriptor.width = Math.Max(1, (int)width);
-                RenderTextureDescriptor.height = Math.Max(1, (int)height);
-                rendertexture = new RenderTexture(RenderTextureDescriptor);
-                rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
+
+                rendertexture.Release();
+                rendertexture.width = Math.Max(1, Mathf.FloorToInt(width));
+                rendertexture.height = Math.Max(1, Mathf.FloorToInt(height));
+
                 maincamera.targetTexture = rendertexture;
                 ri.texture = rendertexture;
 

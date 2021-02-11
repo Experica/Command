@@ -61,17 +61,8 @@ namespace Experica
         Analysis
     }
 
-    public class FloatMessage: MessageBase
+    public class FloatMessage : MessageBase
     {
         public float value;
-
-        public FloatMessage()
-        {
-        }
-
-        public FloatMessage(float value)
-        {
-            this.value = value;
-        }
     }
 }

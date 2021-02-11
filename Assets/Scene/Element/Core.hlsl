@@ -1,7 +1,6 @@
 ﻿#ifndef EXPERICA_SHADER_CORE_INCLUDED
 #define EXPERICA_SHADER_CORE_INCLUDED
 
-#define PI		3.14159265358979323846264
 #define TWOPI	6.28318530717958647692528
 
 // error function
@@ -18,27 +17,7 @@ float erfc(float x)
 	return 1.3693 * exp(-0.8072 * pow(x + 0.6388, 2));
 }
 
-struct POSTEXInput
-{
-	float4 vertex : POSITION;
-	float2 uv : TEXCOORD0;
-};
-
-struct POSTEXOutput
-{
-	float4 vertex : SV_POSITION;
-	float2 uv : TEXCOORD0;
-};
-
-POSTEXOutput vert(POSTEXInput i)
-{
-	POSTEXOutput o;
-	//o.vertex = UnityObjectToClipPos(i.vertex);
-	o.uv = i.uv - 0.5;
-	return o;
-}
-
-// scaled y of a point clock-wise rotated theta(radious).
+// scaled y of a point clock-wise rotated theta(radius).
 void cwroty_float(float2 uv, float2 uvscale, float theta, out float Out)
 {
 	float sinv, cosv;

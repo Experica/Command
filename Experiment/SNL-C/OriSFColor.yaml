@@ -19,8 +19,8 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -28,8 +28,8 @@ EnvParam:
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 120
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -37,7 +37,7 @@ EnvParam:
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0.400000006
-  TemporalFreq@GratingQuad@GratingQuad: 1
+  TemporalFreq@GratingQuad@GratingQuad: 0
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0.5 0.5 0.5 1
