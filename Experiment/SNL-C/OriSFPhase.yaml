@@ -15,18 +15,18 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.19817805
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 16.67 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.32 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 120
+  Ori@GratingQuad@GratingQuad: 45
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,10 +36,10 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.00999999978
+  SpatialFreq@GratingQuad@GratingQuad: 0.699999988
   TemporalFreq@GratingQuad@GratingQuad: 0
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0.25
+  SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false

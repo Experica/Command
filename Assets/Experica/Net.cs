@@ -31,12 +31,18 @@ namespace Experica
 
         public const short AspectRatio = PeerType + 1;
 
-        public const short Highest = AspectRatio;
+        public const short BeginSyncFrame = AspectRatio + 1;
+
+        public const short EndSyncFrame = BeginSyncFrame + 1;
+
+        public const short Highest = EndSyncFrame;
 
         internal static string[] msgLabels = new string[]
         {
             "PeerType",
-            "AspectRatio"
+            "AspectRatio",
+            "BeginSyncFrame",
+            "EndSyncFrame"
         };
 
         public static string MsgTypeToString(short value)
@@ -64,5 +70,13 @@ namespace Experica
     public class FloatMessage : MessageBase
     {
         public float value;
+
+        public FloatMessage()
+        { }
+
+        public FloatMessage(float v)
+        {
+            value = v;
+        }
     }
 }

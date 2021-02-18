@@ -295,6 +295,7 @@ namespace Experica.Command
             el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
             el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
             el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
+            el.SyncFrame = uicontroller.syncmanager.SyncFrame;
         }
 
         public int FindDuplicateOfLast()

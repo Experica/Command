@@ -52,6 +52,7 @@ namespace Experica
         public string FirstTestID { get; set; } = "ConditionTest";
         public Dictionary<string, string> ExperimenterAddress { get; set; } = new Dictionary<string, string> { { "Alex", "4109829463@mms.att.net" } };
 
+        public float SyncFrameTimeOut { get; set; } = 4;
         public int NotifyLatency { get; set; } = 200;
         public int MaxDisplayLatencyError { get; set; } = 20;
         public int OnlineSignalLatency { get; set; } = 50;

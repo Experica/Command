@@ -100,6 +100,7 @@ namespace Experica
 
         protected override void Logic()
         {
+            SyncFrame?.Invoke();
             switch (CondState)
             {
                 case CONDSTATE.NONE:

@@ -32,6 +32,8 @@ namespace Experica.Command
         public UIController uicontroller;
         public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
         public GameObject vlabanalysismanagerprefab, vlabcontrolmanagerprefab;
+        HashSet<int> envconnid = new HashSet<int>();
+        int nenvsyncframe;
 
         public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         {
@@ -72,16 +74,10 @@ namespace Experica.Command
         public override void OnStartServer()
         {
             base.OnStartServer();
-            if (LogFilter.logDebug)
-            {
-                Debug.Log("Register PeerType Message Handler.");
-            }
             NetworkServer.RegisterHandler(MsgType.PeerType, new NetworkMessageDelegate(PeerTypeHandler));
-            if (LogFilter.logDebug)
-            {
-                Debug.Log("Register AspectRatio Message Handler.");
-            }
             NetworkServer.RegisterHandler(MsgType.AspectRatio, new NetworkMessageDelegate(AspectRatioHandler));
+            NetworkServer.RegisterHandler(MsgType.EndSyncFrame, new NetworkMessageDelegate(EndSyncFrameHandler));
+            envconnid.Clear();
         }
 
         /// <summary>
@@ -101,6 +97,12 @@ namespace Experica.Command
                 peerinfo[connid] = new Dictionary<string, object>();
             }
             peerinfo[connid][strkey] = pt;
+
+            if (pt == PeerType.Environment)
+            {
+                envconnid.Add(connid);
+            }
+
             // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
             // and server will automatically spwan scene and network objects(including VLabAnalysisManager) to 
             // newly conneted client. if not, then this is the first time a VLabAnalysis client connected,
@@ -140,7 +142,7 @@ namespace Experica.Command
         void AspectRatioHandler(NetworkMessage netMsg)
         {
             //var r = netMsg.ReadMessage<FloatMessage>().value;
-            var r = float.Parse( netMsg.ReadMessage<StringMessage>().value);
+            var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
             if (LogFilter.logDebug)
             {
                 Debug.Log("Receive AspectRatio Message: " + r.ToString());
@@ -154,6 +156,40 @@ namespace Experica.Command
             uicontroller.OnAspectRatioMessage(r);
         }
 
+        public void BeginSyncFrame()
+        {
+            if (envconnid.Count > 0)
+            {
+                foreach (var id in envconnid)
+                {
+                    NetworkServer.SendToClient(id, MsgType.BeginSyncFrame, new EmptyMessage());
+                }
+            }
+        }
+
+        public void EndSyncFrame()
+        {
+            if (envconnid.Count > 0)
+            {
+                nenvsyncframe = envconnid.Count;
+                foreach (var id in envconnid)
+                {
+                    NetworkServer.SendToClient(id, MsgType.EndSyncFrame, new EmptyMessage());
+                }
+                uicontroller.exmanager.el.issyncingframe = true;
+                uicontroller.exmanager.el.SyncFrameOnTime = Time.realtimeSinceStartupAsDouble;
+            }
+        }
+
+        void EndSyncFrameHandler(NetworkMessage netMsg)
+        {
+            nenvsyncframe--;
+            if (nenvsyncframe == 0)
+            {
+                uicontroller.exmanager.el.issyncingframe = false;
+            }
+        }
+
         /// <summary>
         /// Called on the server when a client disconnects. Removes the connections.
         /// </summary>
@@ -162,6 +198,7 @@ namespace Experica.Command
         {
             base.OnServerDisconnect(conn);
             peerinfo.Remove(conn.connectionId);
+            envconnid.Remove(conn.connectionId);
         }
 
         /// <summary>
@@ -183,7 +220,7 @@ namespace Experica.Command
         public override void OnServerReady(NetworkConnection conn)
         {
             base.OnServerReady(conn);                                   // continue the network setup process
-            uicontroller.exmanager.el?.envmanager.ForcePushParams();     
+            uicontroller.exmanager.el?.envmanager.ForcePushParams();
         }
     }
 }

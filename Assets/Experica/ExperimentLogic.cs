@@ -70,11 +70,18 @@ namespace Experica
             OnBeginStopExperiment, OnEndStopExperiment,
             OnBeginPauseExperiment, OnEndPauseExperiment,
             OnBeginResumeExperiment, OnEndResumeExpeirment,
-            OnConditionPrepared;
+            OnConditionPrepared,
+            /* called anywhere in update will guarantee:
+            1. all updates will be received and processed in a whole in all Environment connected to Command,
+               so that rendered frame is the same as the Command.
+            2. logic will not resume until last frame has been fully processed by all Environment,
+               so that no frame will ever dropped/missed by any Environment.
+            */
+            SyncFrame;
 
-        public bool islogicactive = false, regeneratecond = true;
+        public bool issyncingframe = false, islogicactive = false, regeneratecond = true;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
-            TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
+            TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime, SyncFrameOnTime;
         public double PreICIHold { get { return timer.ElapsedMillisecond - PreICIOnTime; } }
         public double CondHold { get { return timer.ElapsedMillisecond - CondOnTime; } }
         public double SufICIHold { get { return timer.ElapsedMillisecond - SufICIOnTime; } }
@@ -552,10 +559,21 @@ namespace Experica
 
         void Update()
         {
-            OnUpdate();
-            if (islogicactive)
+            if (issyncingframe)
             {
-                Logic();
+                if (Time.realtimeSinceStartupAsDouble - SyncFrameOnTime >= config.SyncFrameTimeOut)
+                {
+                    Debug.Log($"SyncFrame Timeout({config.SyncFrameTimeOut}s), Stop Waiting.");
+                    issyncingframe = false;
+                }
+            }
+            else
+            {
+                OnUpdate();
+                if (islogicactive)
+                {
+                    Logic();
+                }
             }
         }
 

@@ -50,6 +50,7 @@ namespace Experica.Command
 
         // The managers for the panels on the Scene
         public NetManager netmanager;
+        public SyncFrameManager syncmanager;
         public ExperimentManager exmanager;
         public AnalysisManager alsmanager;
         public ControlManager ctrlmanager;
