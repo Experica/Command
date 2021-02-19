@@ -371,7 +371,15 @@ namespace Experica.Command
 
         public void ToggleStartStopExperiment(bool isstart)
         {
-            exmanager.el?.StartStopExperiment(isstart);
+            var el = exmanager?.el;
+            if (el != null)
+            {
+                el.StartStopExperiment(isstart);
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("No Current ExperimentLogic to Start/Stop.");
+            }
         }
 
         public void OnBeginStopExperiment()

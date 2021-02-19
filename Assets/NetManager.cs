@@ -156,6 +156,9 @@ namespace Experica.Command
             uicontroller.OnAspectRatioMessage(r);
         }
 
+        /// <summary>
+        /// send BeginSyncFrame Msg before lateupdate where syncvars being batched by UNET
+        /// </summary>
         public void BeginSyncFrame()
         {
             if (envconnid.Count > 0)
@@ -164,6 +167,8 @@ namespace Experica.Command
                 {
                     NetworkServer.SendToClient(id, MsgType.BeginSyncFrame, new EmptyMessage());
                 }
+                // mark task in SyncFrameManager lateupdate(of which the script execution order later than UNET) to end SyncFrame Msg structure
+                uicontroller.syncmanager.endingsyncframe = true;
             }
         }
 

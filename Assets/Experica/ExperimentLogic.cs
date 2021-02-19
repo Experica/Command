@@ -483,14 +483,17 @@ namespace Experica
 
         protected IEnumerator ExperimentStartSequence()
         {
-            // several frames to clean randering
-            var nframe = 2;
-            for (var i = 0; i < nframe; i++)
+            // sync several frames to make sure Command and all connected Environment have been initialized to the same start state.
+            var n = 2;
+            for (var i = 0; i < n; i++)
             {
+                SyncFrame?.Invoke();
                 yield return null;
+                while (issyncingframe)
+                {
+                    yield return null;
+                }
             }
-            // also wait for client finish cleaning
-            yield return new WaitForSecondsRealtime(config.NotifyLatency / 1000f);
             StartExperimentTimeSync();
             OnExperimentStarted();
             islogicactive = true;
@@ -509,6 +512,7 @@ namespace Experica
         {
             islogicactive = false;
             OnStopExperiment();
+
             // Push any condtest left
             condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
             StartCoroutine(ExperimentStopSequence());
@@ -520,14 +524,17 @@ namespace Experica
 
         protected IEnumerator ExperimentStopSequence()
         {
-            // several frames to rander stop state
-            var nframe = 2;
-            for (var i = 0; i < nframe; i++)
+            // sync several frames to make sure Command and all connected Environment have been set to the same stop state.
+            var n = 2;
+            for (var i = 0; i < n; i++)
             {
+                SyncFrame?.Invoke();
                 yield return null;
+                while (issyncingframe)
+                {
+                    yield return null;
+                }
             }
-            // also wait for client finish randering
-            yield return new WaitForSecondsRealtime(config.NotifyLatency / 1000f);
             StopExperimentTimeSync();
             OnExperimentStopped();
         }
