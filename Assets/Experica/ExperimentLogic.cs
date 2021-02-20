@@ -110,16 +110,8 @@ namespace Experica
             switch (value)
             {
                 case CONDSTATE.NONE:
-                    if (condmanager.IsCondRepeat(ex.CondRepeat))
-                    {
-                        StartStopExperiment(false);
-                    }
                     break;
                 case CONDSTATE.PREICI:
-                    if (condmanager.IsCondRepeat(ex.CondRepeat))
-                    {
-                        StartStopExperiment(false);
-                    }
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
                     {
@@ -193,10 +185,6 @@ namespace Experica
             switch (value)
             {
                 case TRIALSTATE.NONE:
-                    if (condmanager.IsCondRepeat(ex.CondRepeat))
-                    {
-                        StartStopExperiment(false);
-                    }
                     break;
                 case TRIALSTATE.PREITI:
                     PreITIOnTime = timer.ElapsedMillisecond;
@@ -272,10 +260,6 @@ namespace Experica
             switch (value)
             {
                 case BLOCKSTATE.NONE:
-                    if (condmanager.IsCondRepeat(ex.CondRepeat))
-                    {
-                        StartStopExperiment(false);
-                    }
                     break;
                 case BLOCKSTATE.PREIBI:
                     PreIBIOnTime = timer.ElapsedMillisecond;
@@ -455,13 +439,11 @@ namespace Experica
             {
                 OnBeginStartExperiment?.Invoke();
                 StartExperiment();
-                OnEndStartExperiment?.Invoke();
             }
             else
             {
                 OnBeginStopExperiment?.Invoke();
                 StopExperiment();
-                OnEndStopExperiment?.Invoke();
             }
         }
 
@@ -496,6 +478,7 @@ namespace Experica
             }
             StartExperimentTimeSync();
             OnExperimentStarted();
+            OnEndStartExperiment?.Invoke();
             islogicactive = true;
         }
 
@@ -537,6 +520,7 @@ namespace Experica
             }
             StopExperimentTimeSync();
             OnExperimentStopped();
+            OnEndStopExperiment?.Invoke();
         }
 
         protected virtual void StopExperimentTimeSync()
@@ -579,7 +563,14 @@ namespace Experica
                 OnUpdate();
                 if (islogicactive)
                 {
-                    Logic();
+                    if (condmanager.IsCondRepeat(ex.CondRepeat))
+                    {
+                        StartStopExperiment(false);
+                    }
+                    else
+                    {
+                        Logic();
+                    }
                 }
             }
         }

@@ -347,6 +347,8 @@ namespace Experica.Command
             Time.fixedDeltaTime = config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
+            // Get Lowest GC Intrusiveness
+            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
             alsmanager?.RpcNotifyStartExperiment();
         }
@@ -364,9 +366,7 @@ namespace Experica.Command
                 }
             }
 
-            // Get Lowest GC Intrusiveness
             GC.Collect();
-            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
         }
 
         public void ToggleStartStopExperiment(bool isstart)
@@ -405,13 +405,6 @@ namespace Experica.Command
             startstoptext.text = "Start";
             pause.interactable = false;
             consolepanel.Log("Experiment Stoped.");
-
-            // Return Normal Performance
-            QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 1;
-            Time.fixedDeltaTime = 0.02f;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
-            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
         }
 
         public void OnEndStopExperiment()
@@ -427,6 +420,13 @@ namespace Experica.Command
                 var body = $"{exmanager.el.ex.ID} finished in {exmanager.el.timer.Elapsed.ToString("g")}";
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
+
+            // Return Normal Performance
+            QualitySettings.vSyncCount = 1;
+            QualitySettings.maxQueuedFrames = 1;
+            Time.fixedDeltaTime = 0.02f;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
             // Return Normal GC
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
             GC.Collect();

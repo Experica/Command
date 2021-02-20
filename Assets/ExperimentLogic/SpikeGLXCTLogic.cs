@@ -53,7 +53,7 @@ namespace Experica
                 /* 
                 SpikeGLX recorder set record status through network and remote server receive
                 message and change record state, all of which need time to complete.
-                Begin experiment before record may lose information.
+                Begin experiment before record started may lose information.
                 */
                 timer.Timeout(config.NotifyLatency);
             }
@@ -62,8 +62,6 @@ namespace Experica
 
         protected override void StopExperimentTimeSync()
         {
-            // Tail period to make sure lagged effect data are collected before stop recording
-            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) + config.MaxDisplayLatencyError);
             recorder.RecordStatus = RecordStatus.Stopped;
             /* 
             SpikeGLX recorder set record status through network and remote server receive

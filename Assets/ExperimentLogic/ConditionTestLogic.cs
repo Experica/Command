@@ -100,11 +100,11 @@ namespace Experica
 
         protected override void Logic()
         {
-            SyncFrame?.Invoke();
             switch (CondState)
             {
                 case CONDSTATE.NONE:
                     CondState = CONDSTATE.PREICI;
+                    SyncFrame();
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
@@ -112,6 +112,7 @@ namespace Experica
                         CondState = CONDSTATE.COND;
                         SyncEvent(CONDSTATE.COND.ToString());
                         SetEnvActiveParam("Visible", true);
+                        SyncFrame();
                     }
                     break;
                 case CONDSTATE.COND:
@@ -133,12 +134,14 @@ namespace Experica
                             SyncEvent(CONDSTATE.SUFICI.ToString());
                             SetEnvActiveParam("Visible", false);
                         }
+                        SyncFrame();
                     }
                     break;
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
                         CondState = CONDSTATE.PREICI;
+                        SyncFrame();
                     }
                     break;
             }
