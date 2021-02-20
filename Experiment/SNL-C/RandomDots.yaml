@@ -15,11 +15,11 @@ EnvPath: MarkerDots
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.66 -13.74 0
+  MarkerPosition@Marker@Marker: -18.32 -13.74 0
   MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -28,14 +28,14 @@ EnvParam:
   RotationOffset@Dots@Dots: 0 0 0
   Dir@Dots@Dots: 0
   DirOffset@Dots@Dots: 0
-  Speed@Dots@Dots: 3
-  Diameter@Dots@Dots: 10
-  Size@Dots@Dots: 10 10 1
+  Speed@Dots@Dots: 5
+  Diameter@Dots@Dots: 20
+  Size@Dots@Dots: 20 20 1
   NDots@Dots@Dots: 30
-  DotColor@Dots@Dots: 1 1 1 1
+  DotColor@Dots@Dots: 1 0 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0.5
-  Visible@Dots@Dots: false
+  Coherence@Dots@Dots: 0
+  Visible@Dots@Dots: true
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0
 CondPath: ''
@@ -67,8 +67,31 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam: []
-EnvInheritParam: []
+ExInheritParam:
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- Display_ID
+- ResponseDelay
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Position@Dots@Dots
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:

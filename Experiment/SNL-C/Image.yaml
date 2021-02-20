@@ -15,12 +15,12 @@ EnvPath: MarkerImage
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -18.32 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -36,9 +36,9 @@ EnvParam:
   OriPositionOffset@ImageQuad@ImageQuad: false
   MinColor@ImageQuad@ImageQuad: 0 0.6462 0.4939 1
   MaxColor@ImageQuad@ImageQuad: 1 0.3538 0.5061 1
-  ChannelModulate@ImageQuad@ImageQuad: R
-  Image@ImageQuad@ImageQuad: 17617
-  ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
+  ChannelModulate@ImageQuad@ImageQuad: None
+  Image@ImageQuad@ImageQuad: 7
+  ImageSet@ImageQuad@ImageQuad: ExampleImageSet
   Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
@@ -51,13 +51,13 @@ DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 20
 BlockRepeat: 1
 BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 40
+CondDur: 30
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -111,7 +111,10 @@ EnvInheritParam:
 - MarkOffColor@Marker@Marker
 - Diameter@ImageQuad@ImageQuad
 - Position@ImageQuad@ImageQuad
-- MarkerSize@Marker@Marker
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
 Param:
   ColorSpace: DKL
   Color: Y

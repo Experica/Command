@@ -15,12 +15,12 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.19817805
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 16.67 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -30,12 +30,12 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 20
   Size@Quad@Quad: 20 20 1
-  Color@Quad@Quad: 0 0 0 1
+  Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: Disk
-  MaskRadius@Quad@Quad: 0.449999988
+  MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: Condition\WhiteBlack.yaml
@@ -105,6 +105,10 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 - BGSize@BackGround@BackGround
 - Position@Quad@Quad
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
 Param: {}
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:

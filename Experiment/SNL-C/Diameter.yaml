@@ -1,57 +1,62 @@
 ID: Diameter
 Name: Diameter
 Designer: Alex
-Experimenter: Leo
+Experimenter: PL
 Log: 
-Subject_ID: C1901
-Subject_Name: C1901
-Subject_Species: Long Evans Rat
-Subject_Gender: Female
-Subject_Age: 6
+Subject_ID: AF6
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Age: 13
 Subject_Size: 0 0 0
-Subject_Weight: 250
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  BGColor@Camera@OrthoCamera: 0.5 0.5 0.5 1
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.33333337
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -18.32 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.699999988
-  TemporalFreq@GratingQuad@GratingQuad: 4
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  Drifting@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ReverseTime@GratingQuad@GratingQuad: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 135
+  Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 9
-  Size@GratingQuad@GratingQuad: 9 9 1
-  Color@GratingQuad@GratingQuad: 1 1 1 1
+  Diameter@GratingQuad@GratingQuad: 4
+  Size@GratingQuad@GratingQuad: 4 4 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
-  Sigma@GratingQuad@GratingQuad: 0.150000006
+  MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
+  Luminance@GratingQuad@GratingQuad: 0.5
+  Contrast@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@GratingQuad@GratingQuad: 3
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
+  SpatialPhase@GratingQuad@GratingQuad: 0
+  MinColor@GratingQuad@GratingQuad: 0 0.5555 0.4996 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.4445 0.5004 1
+  PauseTime@GratingQuad@GratingQuad: false
+  PauseModulateTime@GratingQuad@GratingQuad: true
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  ModulateType@GratingQuad@GratingQuad: Square
+  ReverseTime@GratingQuad@GratingQuad: false
+  Duty@GratingQuad@GratingQuad: 0.5
+  ModulateDuty@GratingQuad@GratingQuad: 0.5
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 3.359 1.346 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Diameter.yaml
 Cond: 
-ExLogicPath: Experica.RippleCTLogic
-RecordSession: V1e
-RecordSite: 3660
+ExLogicPath: Experica.SpikeGLXColorCTLogic
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -69,9 +74,9 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: PREICI
-NotifyPerCondTest: 2
+NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - Event
@@ -93,6 +98,7 @@ ExInheritParam:
 - Delay
 - DisplayLatency
 - ResponseDelay
+- Display_ID
 EnvInheritParam:
 - MarkerSize@ENMarker@Marker
 - MarkerCorner@ENMarker@Marker
@@ -121,17 +127,23 @@ EnvInheritParam:
 - Ori@GratingQuad@GratingQuad
 - Position@GratingQuad@GratingQuad
 - MarkerSize@Marker@Marker
-Param: {}
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+Param:
+  ColorSpace: LMS
+  Color: Xmcc
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
-  - ParallelPort
+  - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-DisplayLatency: 180
-ResponseDelay: 20
-Version: 1
+Display_ID: ROGPG279Q
+ResponseDelay: 15
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL
