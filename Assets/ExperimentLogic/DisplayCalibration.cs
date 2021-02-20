@@ -31,19 +31,19 @@ using MathNet.Numerics.Interpolation;
 namespace Experica
 {
     /// <summary>
-    /// Present R,G,B colors and measure Intensity, so that a color lookup table can
-    /// be constructed to linearize R,G,B Intensity.
+    /// Present R,G,B colors and measure intensities, so that a color lookup table can
+    /// be constructed to linearize R,G,B intensity.
     /// 
-    /// Then, the linearized R,G,B colors Spectral can be measured, so that Cone excitations
-    /// can be calculated using the Spectral and Cone Fundamentals.
+    /// Then, the linearized R,G,B colors spectral can be measured, so that cone excitations
+    /// can be calculated using the spectral and cone Fundamentals.
     /// 
     /// Required experiment custom parameters:
     /// 
-    /// PRModel: model name of the spectroradiometer from Photo Research, Inc. (e.g., PR701)
-    /// COM: COM port of the spectroradiometer. (e.g., COM2)
-    /// Measure: type of measurement, Spectral or Intensity.
-    /// PlotMeasure: if plot measurement. (Bool)
-    /// FitType: function used to fit the intensity measurement, Gamma, LinearSpline or CubicSpline.
+    /// PRModel:        model name of the spectroradiometer from Photo Research, Inc. (e.g., PR701)
+    /// COM:            COM port of the spectroradiometer. (e.g., COM2)
+    /// Measure:        type of measurement, "Spectral" or "Intensity".
+    /// PlotMeasure:    if plot measurement. (Bool)
+    /// FitType:        function used to fit the intensity measurement, "Gamma", "LinearSpline" or "CubicSpline".
     /// </summary>
     public class DisplayCalibration : ExperimentLogic
     {
@@ -65,17 +65,28 @@ namespace Experica
             }
             SetEnvActiveParam("Visible", false);
             spectroradiometer?.Connect(1000);
-            // Setup Measurement: Primary Lens, Add On Lens 1, Add On Lens 2, Aperture, Photometric Units(1=Metric), 
-            // Detector Exposure Time(1000ms), Capture Mode(0=Single Capture), Number of Measure to Average(1=No Average), 
-            // Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
+            /* Setup Measurement: 
+               Primary Lens, AddOn Lens 1, AddOn Lens 2, Aperture, Photometric Units(1=Metric), 
+               Detector Exposure Time(1000ms), Capture Mode(0=Single Capture), Number of Measure to Average(1=No Average), 
+               Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
+            */
             spectroradiometer?.Setup("S,,,,1,1000,0,1,0,0,0,0", 1000);
+            switch ((string)ex.GetParam("Measure"))
+            {
+                case "Intensity":
+                    imeasurement.Clear();
+                    break;
+                case "Spectral":
+                    smeasurement.Clear();
+                    break;
+            }
             iplot?.Dispose();
             iplot = new IntensityMeasurementPlot();
             splot?.Dispose();
             splot = new SpectralMeasurementPlot();
         }
 
-        protected override void OnStopExperiment()
+        protected override void OnExperimentStopped()
         {
             SetEnvActiveParam("Visible", false);
             spectroradiometer?.Close();
@@ -132,17 +143,20 @@ namespace Experica
             {
                 case CONDSTATE.NONE:
                     CondState = CONDSTATE.PREICI;
+                    SyncFrame();
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
                     {
                         CondState = CONDSTATE.COND;
                         SetEnvActiveParam("Visible", true);
+                        SyncFrame();
                     }
                     break;
                 case CONDSTATE.COND:
                     if (CondHold >= ex.CondDur)
                     {
+                        // Make Measurement
                         switch ((string)ex.GetParam("Measure"))
                         {
                             case "Intensity":
@@ -200,17 +214,19 @@ namespace Experica
                                 }
                                 break;
                         }
+
                         CondState = CONDSTATE.SUFICI;
-                        if (ex.PreICI != 0 || ex.SufICI != 0)
+                        if (ex.PreICI > 0 || ex.SufICI > 0)
                         {
                             SetEnvActiveParam("Visible", false);
                         }
+                        SyncFrame();
                     }
                     break;
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        // Plot Measurement
+                        // Update Measurement Plot
                         if (ex.GetParam("PlotMeasure").Convert<bool>())
                         {
                             switch ((string)ex.GetParam("Measure"))
@@ -223,7 +239,9 @@ namespace Experica
                                     break;
                             }
                         }
-                        CondState = CONDSTATE.NONE;
+
+                        CondState = CONDSTATE.PREICI;
+                        SyncFrame();
                     }
                     break;
             }
