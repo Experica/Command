@@ -206,26 +206,16 @@ namespace Experica.Command
             envconnid.Remove(conn.connectionId);
         }
 
-        /// <summary>
-        /// Called on the server when a scene is completed loaded, when the scene load was 
-        /// initiated by the server with ServerChangeScene(). Signals UIController to 
-        /// update Scene.
-        /// </summary>
-        /// <param name="sceneName">Specific Scene to update</param>
         public override void OnServerSceneChanged(string sceneName)
         {
-            base.OnServerSceneChanged(sceneName);
             uicontroller.OnServerSceneChanged(sceneName);
         }
 
-        /// <summary>
-        /// Called on the server when a client is ready.
-        /// </summary>
-        /// <param name="conn">The client connection that is ready.</param>
         public override void OnServerReady(NetworkConnection conn)
         {
-            base.OnServerReady(conn);                                   // continue the network setup process
-            uicontroller.exmanager.el?.envmanager.ForcePushParams();
+            base.OnServerReady(conn);
+            // when a client loaded scene and been spawned, refresh all syncvars in the scene
+            uicontroller.ForcePushEnv();
         }
     }
 }

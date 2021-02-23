@@ -74,7 +74,7 @@ namespace Experica
                 NetworkServer.Spawn(marker);
                 uicontroller.exmanager.el.envmanager.ForcePushParams(marker.name);
             }
-            uicontroller.exmanager.el.envmanager.UpdateScene();
+            uicontroller.exmanager.el.envmanager.ParseScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
         }
@@ -98,7 +98,7 @@ namespace Experica
             }
             Show = id;
 #if COMMAND
-            uicontroller.exmanager.el.envmanager.UpdateScene();
+            uicontroller.exmanager.el.envmanager.ParseScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
         }

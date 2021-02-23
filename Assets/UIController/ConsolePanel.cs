@@ -26,20 +26,29 @@ using System.Collections.Generic;
 
 namespace Experica.Command
 {
-    public enum LogType
-    {
-        Log,
-        Warning,
-        Error
-    }
-
     public class ConsolePanel : MonoBehaviour
     {
         public UIController uicontroller;
         public GameObject content, logprefab, warningprefab, errorprefab;
 
+        public bool IsStackTrace { get; set; }
         public int maxentry;
         int entrycount;
+
+        void OnEnable()
+        {
+            Application.logMessageReceived += HandleLog;
+        }
+
+        void OnDisable()
+        {
+            Application.logMessageReceived -= HandleLog;
+        }
+
+        void HandleLog(string condition, string stackTrace, LogType type)
+        {
+            Log(type, condition, stackTrace, false);
+        }
 
         public void Clear()
         {
@@ -53,22 +62,27 @@ namespace Experica.Command
 
         public void LogError(object msg, bool istimestamp = true)
         {
-            Log(LogType.Error, msg, istimestamp);
+            Log(LogType.Error, msg, istimestamp: istimestamp);
         }
 
         public void LogWarn(object msg, bool istimestamp = true)
         {
-            Log(LogType.Warning, msg, istimestamp);
+            Log(LogType.Warning, msg, istimestamp: istimestamp);
         }
 
         public void Log(object msg, bool istimestamp = true)
         {
-            Log(LogType.Log, msg, istimestamp);
+            Log(LogType.Log, msg, istimestamp: istimestamp);
         }
 
-        public void Log(LogType logtype, object msg, bool istimestamp = true)
+        public void Log(LogType logtype, object msg, string stacktrace = "", bool istimestamp = true)
         {
             var v = msg.Convert<string>();
+            if (IsStackTrace && !string.IsNullOrEmpty(stacktrace))
+            {
+                Extension.WarningDialog(v + "\r\n\r\n" + stacktrace);
+                return;
+            }
             if (istimestamp)
             {
                 v = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + ":  " + v;
@@ -104,6 +118,10 @@ namespace Experica.Command
                 case LogType.Warning:
                     return warningprefab;
                 case LogType.Error:
+                    return errorprefab;
+                case LogType.Assert:
+                    return warningprefab;
+                case LogType.Exception:
                     return errorprefab;
                 default:
                     return logprefab;

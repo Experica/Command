@@ -20,10 +20,12 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -83,13 +85,6 @@ namespace Experica.Command
             }
         }
 
-        /// <summary>
-        /// Loads in and returns a CommandConfig object from configfilepath. Creates A new
-        /// config object if it can't be loaded
-        /// </summary>
-        /// <param name="configfilepath">The config file path to the CommandConfig object</param>
-        /// <param name="otherwisedefault">create a new CommandConfig object to use instead.</param>
-        /// <returns>The loaded/deault CommandConfig object</returns>
         public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
         {
             CommandConfig cfg = null;
@@ -224,7 +219,7 @@ namespace Experica.Command
             {
                 exmanager.LoadEL(exmanager.exfiles[idx]);
                 expanel.UpdateEx(exmanager.el.ex);
-                ChangeScene();
+                ServerChangeScene();
             }
         }
 
@@ -271,11 +266,6 @@ namespace Experica.Command
             exmanager.el.envmanager.SetParam("ScreenAspect", ratio, true);
         }
 
-        /// <summary>
-        /// Called on the server when a scene is completed loaded, when the scene load was 
-        /// initiated by the server with ServerChangeScene().
-        /// </summary>
-        /// <param name="sceneName">The scene that changed</param>
         public void OnServerSceneChanged(string sceneName)
         {
             exmanager.PrepareEnv(sceneName);
@@ -505,12 +495,11 @@ namespace Experica.Command
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fullname"></param>
-        /// <param name="paramname"></param>
-        /// <param name="isinherit"></param>
+        public void ForcePushEnv()
+        {
+            exmanager.el?.envmanager.ForcePushParams();
+        }
+
         public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
             var ip = exmanager.el.ex.EnvInheritParam;
@@ -540,17 +529,11 @@ namespace Experica.Command
             }
         }
 
-        /// <summary>
-        /// Function called for when the 'Save' button in the Control panel is pressed.
-        /// </summary>
         public void SaveEx()
         {
             exmanager.SaveEx(exs.captionText.text);
         }
 
-        /// <summary>
-        /// Script for when the 'X' button in the Control panel is clicked to delete an experiment
-        /// </summary>
         public void DeleteEx()
         {
             // Delete the file
@@ -577,54 +560,35 @@ namespace Experica.Command
             }
         }
 
-        /// <summary>
-        /// This function is called when 'Host' button in Control Panel is pressed. Signals
-        /// to the network manager to start hosting.
-        /// </summary>
-        /// <param name="ison">True when the toggle is now down, else false</param>
         public void ToggleHost(bool ison)
         {
-            // Toggle is now down / on
             if (ison)
             {
-                // Start hosting. Host is both a server and client in one.
                 netmanager.StartHost();
-                ChangeScene();
+                ServerChangeScene();
             }
-            // Toggle is now unpressed / off
             else
             {
-                // When there was an experiment running, stop the experiment
                 if (start.isOn)
                 {
                     ToggleStartStopExperiment(false);
                     start.isOn = false;
                 }
-                // Quit hosting
                 netmanager.StopHost();
             }
-            // Turn server button active, and start button inactive
             server.interactable = !ison;
             start.interactable = ison;
         }
 
-        /// <summary>
-        /// This function is called when 'Server' button in Control Panel is pressed. Signals
-        /// to the network manager to start up a server.
-        /// </summary>
-        /// <param name="ison">True when the toggle is now down, else false</param>
         public void ToggleServer(bool ison)
         {
-            // Toggle is now down / on
             if (ison)
             {
                 netmanager.StartServer();
-                ChangeScene();
+                ServerChangeScene();
             }
-            // Toggle is now up / off
             else
             {
-                // Stop an experiment if there is one, and stop the server
                 if (start.isOn)
                 {
                     ToggleStartStopExperiment(false);
@@ -632,27 +596,25 @@ namespace Experica.Command
                 }
                 netmanager.StopServer();
             }
-            // host button is interactable, start button isn't
             host.interactable = !ison;
             start.interactable = ison;
         }
 
-
-        public void ChangeScene()
+        public void ServerChangeScene()
         {
+            var scene = "Showroom";
             if (exmanager.el != null)
             {
-                var scene = exmanager.el.ex.EnvPath;
-                if (string.IsNullOrEmpty(scene))
-                {
-                    scene = "Showroom";
-                    exmanager.el.ex.EnvPath = scene;
-                }
-                if (NetworkServer.active)
-                {
-                    // causes the server to switch scenes to the specified scene
-                    netmanager.ServerChangeScene(scene);
-                }
+                scene = exmanager.el.ex.EnvPath;
+            }
+            ServerChangeScene(scene);
+        }
+
+        public void ServerChangeScene(string scene)
+        {
+            if (NetworkServer.active)
+            {
+                netmanager.ServerChangeScene(scene);
             }
         }
     }

@@ -15,11 +15,11 @@ EnvPath: Marker
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  MapColor@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.32 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -78,6 +78,10 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
 - CLUT@Camera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
 Param:
   GPIO: 1208FS
   WaveType: PWM

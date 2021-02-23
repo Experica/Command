@@ -73,7 +73,7 @@ namespace Experica
         /// </summary>
         public float Width
         {
-            get { return camera.orthographicSize * 2 * camera.aspect; }
+            get { return Height * camera.aspect; }
         }
 
         public float NearPlane
@@ -90,20 +90,22 @@ namespace Experica
         Camera camera;
         HDAdditionalCameraData camerahddata;
         Volume postprocessvolume;
+#if COMMAND
         NetManager netmanager;
+#endif
 
         void Awake()
         {
+            tag = "MainCamera";
             camera = gameObject.GetComponent<Camera>();
             camerahddata = gameObject.GetComponent<HDAdditionalCameraData>();
-            netmanager = FindObjectOfType<NetManager>();
-#if COMMAND
-            OnCameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
-#endif
-            tag = "MainCamera";
             transform.localPosition = new Vector3(0, 0, -1001);
             camera.nearClipPlane = 1;
             camera.farClipPlane = 2001;
+#if COMMAND
+            netmanager = FindObjectOfType<NetManager>();
+            OnCameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
+#endif
             postprocessvolume = gameObject.GetComponent<Volume>();
         }
 
@@ -190,6 +192,5 @@ namespace Experica
             return false;
         }
 #endif
-
     }
 }

@@ -106,7 +106,7 @@ namespace Experica
             }
             Marker = ismarker;
 #if COMMAND
-            uicontroller.exmanager.el.envmanager.UpdateScene();
+            uicontroller.exmanager.el.envmanager.ParseScene();
             uicontroller.envpanel.UpdateEnv(uicontroller.exmanager.el.envmanager);
 #endif
         }
@@ -121,7 +121,7 @@ namespace Experica
             {
                 SetAllItemActive(false);
 #if COMMAND
-                uicontroller.exmanager.el.envmanager.UpdateScene();
+                uicontroller.exmanager.el.envmanager.ParseScene();
 #endif
             }
             else
@@ -130,14 +130,14 @@ namespace Experica
                 {
                     SetAllItemActiveExceptOtherWise(id, false);
 #if COMMAND
-                    uicontroller.exmanager.el.envmanager.UpdateScene();
+                    uicontroller.exmanager.el.envmanager.ParseScene();
 #endif
                 }
                 else
                 {
 #if COMMAND
                     var go = LoadItem(id);
-                    uicontroller.exmanager.el.envmanager.UpdateScene();
+                    uicontroller.exmanager.el.envmanager.ParseScene();
                     uicontroller.exmanager.el.envmanager.SetParams(uicontroller.exmanager.el.ex.EnvParam, go.name);
                     uicontroller.exmanager.InheritEnv(go.name);
                     NetworkServer.Spawn(go);

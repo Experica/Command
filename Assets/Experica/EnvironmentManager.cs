@@ -31,8 +31,8 @@ namespace Experica
 {
     public class EnvironmentManager
     {
-        public Scene scene;
-        public UnityEngine.Camera maincamera_scene;
+        Scene scene;
+        public Camera maincamera_scene;
         public Dictionary<string, GameObject> sceneobject = new Dictionary<string, GameObject>();
         public Dictionary<string, NetworkBehaviour> networkbehaviour_sceneobject = new Dictionary<string, NetworkBehaviour>();
         public Dictionary<string, PropertyAccess> syncvar_nb_so = new Dictionary<string, PropertyAccess>();
@@ -43,11 +43,23 @@ namespace Experica
 
         public void ParseScene(string scenename)
         {
-            scene = SceneManager.GetSceneByName(scenename);
-            UpdateScene();
+            ParseScene(SceneManager.GetSceneByName(scenename));
         }
 
-        public void UpdateScene()
+        public void ParseScene(Scene scene)
+        {
+            if (scene.IsValid())
+            {
+                this.scene = scene;
+                ParseScene();
+            }
+            else
+            {
+                Debug.LogError($"Scene: {scene.name} Is Not Valid.");
+            }
+        }
+
+        public void ParseScene()
         {
             sceneobject.Clear();
             networkbehaviour_sceneobject.Clear();

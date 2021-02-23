@@ -37,7 +37,7 @@ namespace Experica
         [SyncVar(hook = "onmarkersize")]
         public float MarkerSize = 2;
         [SyncVar(hook = "onmarkerposition")]
-        public Vector3 MarkerPosition = new Vector3(-10,-10,0);
+        public Vector3 MarkerPosition = Vector3.zero;
         [SyncVar(hook = "onmarkercorner")]
         public Corner MarkerCorner = Corner.BottomLeft;
         /// <summary>
@@ -50,7 +50,8 @@ namespace Experica
         [SyncVar(hook = "onmarkoffcolor")]
         public Color MarkOffColor = Color.black;
 
-        OrthoCamera camera;
+        // can not been found in Awake(), so statically set the reference in a scene
+        public OrthoCamera orthocamera;
         Renderer renderer;
 #if COMMAND
         NetManager netmanager;
@@ -58,37 +59,36 @@ namespace Experica
 
         void Awake()
         {
-            renderer = gameObject.GetComponent<Renderer>();
 #if COMMAND
             netmanager = FindObjectOfType<NetManager>();
 #endif
-            camera = FindObjectOfType<OrthoCamera>();
-            camera.OnCameraChange += UpdatePosition;
-            transform.localPosition = new Vector3(-10, -10, camera.NearPlane);
+            renderer = gameObject.GetComponent<Renderer>();
+            orthocamera.OnCameraChange += UpdatePosition;
         }
 
         Vector3 getmarkerposition(Corner corner, float size, float margin = 0)
         {
-            var h = camera.Height;
-            var w = camera.Width;
+            var h = orthocamera.Height;
+            var w = orthocamera.Width;
+            var z = orthocamera.NearPlane;
             switch (corner)
             {
                 case Corner.TopLeft:
-                    return new Vector3((-w+size)/2 + margin, (h-size)/2 - margin, transform.localPosition.z);
+                    return new Vector3((-w + size) / 2 + margin, (h - size) / 2 - margin, z);
                 case Corner.TopRight:
-                    return new Vector3((w-size)/2 - margin, (h-size)/2 - margin, transform.localPosition.z);
+                    return new Vector3((w - size) / 2 - margin, (h - size) / 2 - margin, z);
                 case Corner.BottomLeft:
-                    return new Vector3((-w+size)/2 + margin, (-h+size)/2 + margin, transform.localPosition.z);
+                    return new Vector3((-w + size) / 2 + margin, (-h + size) / 2 + margin, z);
                 case Corner.BottomRight:
-                    return new Vector3((w-size)/2 - margin, (-h+size)/2 + margin, transform.localPosition.z);
+                    return new Vector3((w - size) / 2 - margin, (-h + size) / 2 + margin, z);
                 default:
-                    return new Vector3(-10, -10, transform.localPosition.z);
+                    return new Vector3(0, 0, z);
             }
         }
 
         void UpdatePosition()
         {
-            onmarkerposition(getmarkerposition(MarkerCorner,MarkerSize));
+            onmarkerposition(getmarkerposition(MarkerCorner, MarkerSize));
         }
 
         void onmarkersize(float s)
@@ -148,6 +148,5 @@ namespace Experica
             return false;
         }
 #endif
-
     }
 }

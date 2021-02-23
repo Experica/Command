@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Welcome.unity
     guid: 59d3a86ca0186ee4d82c5383dba137aa
   - enabled: 1
-    path: Assets/Welcomeback.unity
+    path: Assets/WelcomeBack.unity
     guid: 99d61bf686617074f9f26bd6f313846a
   - enabled: 1
     path: Assets/Scene/Showroom.unity

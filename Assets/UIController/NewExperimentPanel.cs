@@ -73,7 +73,7 @@ namespace Experica.Command
                 uicontroller.exs.captionText.text = newname;
             }
             uicontroller.expanel.UpdateEx(uicontroller.exmanager.el.ex);
-            uicontroller.ChangeScene();
+            uicontroller.ServerChangeScene();
             uicontroller.controlpanel.DeleteExPanel();
         }
 

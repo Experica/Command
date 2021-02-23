@@ -49,6 +49,7 @@ namespace Experica
         {
             OnAwake();
         }
+
         protected virtual void OnAwake()
         {
             renderer = gameObject.GetComponent<Renderer>();
@@ -108,6 +109,5 @@ namespace Experica
             return false;
         }
 #endif
-
     }
 }
