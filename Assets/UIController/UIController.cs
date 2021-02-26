@@ -351,8 +351,8 @@ namespace Experica.Command
                 {
                     exmanager.el.ex.Config = config;
                     exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
-                    MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
-                    alsmanager.RpcNotifyExperiment(stream.ToArray());
+                    //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
+                    //alsmanager.RpcNotifyExperiment(stream.ToArray());
                 }
             }
 

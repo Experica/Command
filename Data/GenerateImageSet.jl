@@ -185,8 +185,9 @@ sdrange=[0.23,0.33]
 checkimageset!(imgset;sdrange)
 
 imgsetname = "n$(length(imgset))_sizedeg$(sizedeg)_c$(c)_r$(r)_sd$(sdrange)"
-saveunityrawtexture(joinpath(@__DIR__,imgsetname),imgset)
 save(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset",imgset)
+saveunityrawtexture(joinpath(stimuliroot,imgsetname),imgset)
+matwrite(joinpath(stimuliroot,"$imgsetname.mat"),Dict("imgset"=>imgset))
 imgset = load(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset")
 
 

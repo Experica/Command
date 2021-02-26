@@ -139,24 +139,24 @@ namespace Experica
 
         public object InvokeActiveRPC(string name, object[] param, bool notifyui = false)
         {
-            object r = null; string pn, nbn;
-            if (name.FirstAtSplit(out pn, out nbn))
+            object r = null;
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (active_networkbehaviour.Contains(nbn) && clientrpc_nb_so.ContainsKey(name))
+                if (active_networkbehaviour.Contains(nbsoname) && clientrpc_nb_so.ContainsKey(fullname))
                 {
-                    r = InvokeRPC(networkbehaviour_sceneobject[nbn], clientrpc_nb_so[name], param, name, notifyui);
+                    r = InvokeRPC(networkbehaviour_sceneobject[nbsoname], clientrpc_nb_so[fullname], param, fullname, notifyui);
                 }
             }
             else
             {
-                if (!string.IsNullOrEmpty(pn))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var anbname in active_networkbehaviour)
+                    foreach (var nbso in active_networkbehaviour)
                     {
-                        var fname = pn + "@" + anbname;
+                        var fname = name + "@" + nbso;
                         if (clientrpc_nb_so.ContainsKey(fname))
                         {
-                            r = InvokeRPC(networkbehaviour_sceneobject[anbname], clientrpc_nb_so[fname], param, fname, notifyui);
+                            r = InvokeRPC(networkbehaviour_sceneobject[nbso], clientrpc_nb_so[fname], param, fname, notifyui);
                         }
                     }
                 }
@@ -167,29 +167,31 @@ namespace Experica
         public object InvokeRPC(string name, object[] param, bool notifyui = false)
         {
             object r = null;
-            var atidx = name.IndexOf('@');
-            if (atidx > 0)
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (clientrpc_nb_so.ContainsKey(name))
+                if (clientrpc_nb_so.ContainsKey(fullname))
                 {
-                    r = InvokeRPC(networkbehaviour_sceneobject[name.Substring(atidx + 1)], clientrpc_nb_so[name], param, name, notifyui);
+                    r = InvokeRPC(networkbehaviour_sceneobject[nbsoname], clientrpc_nb_so[fullname], param, fullname, notifyui);
                 }
             }
-            else if (atidx < 0 && name.Length > 0)
+            else
             {
-                foreach (var nbname in networkbehaviour_sceneobject.Keys.ToList())
+                if (!string.IsNullOrEmpty(name))
                 {
-                    var fname = name + "@" + nbname;
-                    if (clientrpc_nb_so.ContainsKey(fname))
+                    foreach (var nbso in networkbehaviour_sceneobject.Keys.ToArray())
                     {
-                        r = InvokeRPC(networkbehaviour_sceneobject[nbname], clientrpc_nb_so[fname], param, fname, notifyui);
+                        var fname = name + "@" + nbso;
+                        if (clientrpc_nb_so.ContainsKey(fname))
+                        {
+                            r = InvokeRPC(networkbehaviour_sceneobject[nbso], clientrpc_nb_so[fname], param, fname, notifyui);
+                        }
                     }
                 }
             }
             return r;
         }
 
-        public object InvokeRPC(NetworkBehaviour nb, MethodAccess m, object[] param, string fullname = "", bool notifyui = false)
+        object InvokeRPC(NetworkBehaviour nb, MethodAccess m, object[] param, string fullname = "", bool notifyui = false)
         {
             object r = m.Call(nb, param);
             if (notifyui && OnNotifyUI != null && !string.IsNullOrEmpty(fullname))
@@ -211,7 +213,7 @@ namespace Experica
         {
             foreach (var p in envparam.Keys)
             {
-                var tail = p.LastAtSplitTail();
+                var tail = p.LastSplitTail();
                 if (tail != null && tail == forsceneobjectname)
                 {
                     SetParam(p, envparam[p], notifyui);
@@ -221,24 +223,23 @@ namespace Experica
 
         public void SetActiveParam(string name, object value, bool notifyui = true)
         {
-            string pn, nbn;
-            if (name.FirstAtSplit(out pn, out nbn))
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (active_networkbehaviour.Contains(nbn) && syncvar_nb_so.ContainsKey(name))
+                if (active_networkbehaviour.Contains(nbsoname) && syncvar_nb_so.ContainsKey(fullname))
                 {
-                    SetParam(networkbehaviour_sceneobject[nbn], syncvar_nb_so[name], name, value, notifyui);
+                    SetParam(networkbehaviour_sceneobject[nbsoname], syncvar_nb_so[fullname], fullname, value, notifyui);
                 }
             }
             else
             {
-                if (!string.IsNullOrEmpty(pn))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var anbname in active_networkbehaviour)
+                    foreach (var nbso in active_networkbehaviour)
                     {
-                        var fname = pn + "@" + anbname;
+                        var fname = name + "@" + nbso;
                         if (syncvar_nb_so.ContainsKey(fname))
                         {
-                            SetParam(networkbehaviour_sceneobject[anbname], syncvar_nb_so[fname], fname, value, notifyui);
+                            SetParam(networkbehaviour_sceneobject[nbso], syncvar_nb_so[fname], fname, value, notifyui);
                         }
                     }
                 }
@@ -247,34 +248,36 @@ namespace Experica
 
         public void SetParam(string name, object value, bool notifyui = false)
         {
-            var atidx = name.IndexOf('@');
-            if (atidx > 0)
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (syncvar_nb_so.ContainsKey(name))
+                if (syncvar_nb_so.ContainsKey(fullname))
                 {
-                    SetParam(networkbehaviour_sceneobject[name.Substring(atidx + 1)], syncvar_nb_so[name], name, value, notifyui);
+                    SetParam(networkbehaviour_sceneobject[nbsoname], syncvar_nb_so[fullname], fullname, value, notifyui);
                 }
             }
-            else if (atidx < 0 && name.Length > 0)
+            else
             {
-                foreach (var nbname in networkbehaviour_sceneobject.Keys.ToList())
+                if (!string.IsNullOrEmpty(name))
                 {
-                    var fname = name + "@" + nbname;
-                    if (syncvar_nb_so.ContainsKey(fname))
+                    foreach (var nbso in networkbehaviour_sceneobject.Keys.ToArray())
                     {
-                        SetParam(networkbehaviour_sceneobject[nbname], syncvar_nb_so[fname], fname, value, notifyui);
+                        var fname = name + "@" + nbso;
+                        if (syncvar_nb_so.ContainsKey(fname))
+                        {
+                            SetParam(networkbehaviour_sceneobject[nbso], syncvar_nb_so[fname], fname, value, notifyui);
+                        }
                     }
                 }
             }
         }
 
-        public void SetParam(NetworkBehaviour nb, PropertyAccess p, string fullname, object value, bool notifyui = false)
+        void SetParam(NetworkBehaviour nb, PropertyAccess p, string fullname, object value, bool notifyui = false)
         {
             object v = value.Convert(p.Type);
             p.Setter(nb, v);
-            if (notifyui && OnNotifyUI != null)
+            if (notifyui)
             {
-                OnNotifyUI(fullname, v);
+                OnNotifyUI?.Invoke(fullname, v);
             }
         }
 
@@ -290,7 +293,7 @@ namespace Experica
         {
             foreach (var nbname in networkbehaviour_sceneobject.Keys)
             {
-                var tail = nbname.FirstAtSplitTail();
+                var tail = nbname.FirstSplitTail();
                 if (tail != null && tail == forsceneobjectname)
                 {
                     networkbehaviour_sceneobject[nbname].SetDirtyBit(uint.MaxValue);
@@ -318,10 +321,10 @@ namespace Experica
             }
             if (withshortname)
             {
-                var shortnames = envparam.Keys.Select(i => i.FirstAtSplitHead());
+                var shortnames = envparam.Keys.Select(i => i.FirstSplitHead());
                 if (shortnames.Distinct().Count() == envparam.Keys.Count)
                 {
-                    envparam = envparam.ToDictionary(kv => kv.Key.FirstAtSplitHead(), kv => kv.Value);
+                    envparam = envparam.ToDictionary(kv => kv.Key.FirstSplitHead(), kv => kv.Value);
                 }
             }
             return envparam;
@@ -329,24 +332,23 @@ namespace Experica
 
         public object GetActiveParam(string name)
         {
-            string pn, nbn;
-            if (name.FirstAtSplit(out pn, out nbn))
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (active_networkbehaviour.Contains(nbn) && syncvar_nb_so.ContainsKey(name))
+                if (active_networkbehaviour.Contains(nbsoname) && syncvar_nb_so.ContainsKey(fullname))
                 {
-                    return GetParam(networkbehaviour_sceneobject[nbn], syncvar_nb_so[name]);
+                    return GetParam(networkbehaviour_sceneobject[nbsoname], syncvar_nb_so[fullname]);
                 }
             }
             else
             {
-                if (!string.IsNullOrEmpty(pn))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var anbname in active_networkbehaviour)
+                    foreach (var nbso in active_networkbehaviour)
                     {
-                        var fname = pn + "@" + anbname;
+                        var fname = name + "@" + nbso;
                         if (syncvar_nb_so.ContainsKey(fname))
                         {
-                            return GetParam(networkbehaviour_sceneobject[anbname], syncvar_nb_so[fname]);
+                            return GetParam(networkbehaviour_sceneobject[nbso], syncvar_nb_so[fname]);
                         }
                     }
                 }
@@ -356,49 +358,48 @@ namespace Experica
 
         public object GetParam(string name)
         {
-            var atidx = name.IndexOf('@');
-            if (atidx > 0)
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out string fullname))
             {
-                if (syncvar_nb_so.ContainsKey(name))
+                if (syncvar_nb_so.ContainsKey(fullname))
                 {
-                    return GetParam(networkbehaviour_sceneobject[name.Substring(atidx + 1)], syncvar_nb_so[name]);
+                    return GetParam(networkbehaviour_sceneobject[nbsoname], syncvar_nb_so[fullname]);
                 }
             }
-            else if (atidx < 0 && name.Length > 0)
+            else
             {
-                foreach (var nbname in networkbehaviour_sceneobject.Keys)
+                if (!string.IsNullOrEmpty(name))
                 {
-                    var fname = name + "@" + nbname;
-                    if (syncvar_nb_so.ContainsKey(fname))
+                    foreach (var nbso in networkbehaviour_sceneobject.Keys)
                     {
-                        return GetParam(networkbehaviour_sceneobject[nbname], syncvar_nb_so[fname]);
+                        var fname = name + "@" + nbso;
+                        if (syncvar_nb_so.ContainsKey(fname))
+                        {
+                            return GetParam(networkbehaviour_sceneobject[nbso], syncvar_nb_so[fname]);
+                        }
                     }
                 }
             }
             return null;
         }
 
-        public object GetParam(NetworkBehaviour nb, PropertyAccess p)
+        object GetParam(NetworkBehaviour nb, PropertyAccess p)
         {
             return p.Getter(nb);
         }
 
         public bool ContainsActiveParam(string name, out string fullname)
         {
-            string pn, nbn;
-            if (name.FirstAtSplit(out pn, out nbn))
+            if (name.IsEnvParamFullName(out _, out string nbsoname, out fullname))
             {
-                fullname = name;
-                return active_networkbehaviour.Contains(nbn) && syncvar_nb_so.ContainsKey(name);
+                return active_networkbehaviour.Contains(nbsoname) && syncvar_nb_so.ContainsKey(fullname);
             }
             else
             {
-                fullname = null;
-                if (!string.IsNullOrEmpty(pn))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var anbname in active_networkbehaviour)
+                    foreach (var nbso in active_networkbehaviour)
                     {
-                        var fname = pn + '@' + anbname;
+                        var fname = name + '@' + nbso;
                         if (syncvar_nb_so.ContainsKey(fname))
                         {
                             fullname = fname;
@@ -412,26 +413,22 @@ namespace Experica
 
         public bool ContainsActiveParam(string name)
         {
-            string fullname;
-            return ContainsActiveParam(name, out fullname);
+            return ContainsActiveParam(name, out _);
         }
 
         public bool ContainsParam(string name, out string fullname)
         {
-            string pn, nbn;
-            if (name.FirstAtSplit(out pn, out nbn))
+            if (name.IsEnvParamFullName(out _, out _, out fullname))
             {
-                fullname = name;
-                return syncvar_nb_so.ContainsKey(name);
+                return syncvar_nb_so.ContainsKey(fullname);
             }
             else
             {
-                fullname = null;
-                if (!string.IsNullOrEmpty(pn))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var nbname in networkbehaviour_sceneobject.Keys)
+                    foreach (var nbso in networkbehaviour_sceneobject.Keys)
                     {
-                        var fname = pn + '@' + nbname;
+                        var fname = name + '@' + nbso;
                         if (syncvar_nb_so.ContainsKey(fname))
                         {
                             fullname = fname;
@@ -445,8 +442,7 @@ namespace Experica
 
         public bool ContainsParam(string name)
         {
-            string fullname;
-            return ContainsParam(name, out fullname);
+            return ContainsParam(name, out _);
         }
     }
 }

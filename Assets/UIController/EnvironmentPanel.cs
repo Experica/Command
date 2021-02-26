@@ -56,7 +56,7 @@ namespace Experica.Command
             foreach (var fullname in em.syncvar_nb_so.Keys.ToArray())
             {
                 string paramname, nb;
-                fullname.FirstAtSplit(out paramname, out nb);
+                fullname.FirstSplit(out paramname, out nb);
                 var showname = isshowfullname ? fullname : paramname;
                 var T = em.syncvar_nb_so[fullname].Type;
                 if (!isshowinactive)

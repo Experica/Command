@@ -32,8 +32,8 @@ using System.Net.Mail;
 using System.Windows.Forms;
 using MathNet.Numerics;
 using MathNet.Numerics.Interpolation;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+//using Microsoft.CodeAnalysis;
+//using Microsoft.CodeAnalysis.CSharp;
 #endif
 
 namespace Experica
@@ -465,20 +465,23 @@ namespace Experica
 
         public static Assembly Compile(this string source)
         {
-            var sourcetree = CSharpSyntaxTree.ParseText(source);
-            var compilation = CSharpCompilation.Create("sdfsdf")
-                .AddReferences()
-                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-                                 .WithOptimizationLevel(OptimizationLevel.Release))
-                .AddSyntaxTrees(sourcetree);
-            using (var asm = new MemoryStream())
-            {
-                var emitresult = compilation.Emit(asm);
-                if (emitresult.Success)
-                {
-                    return Assembly.Load(asm.GetBuffer());
-                }
-            }
+            // currently not really needed, so desable them
+
+
+            //var sourcetree = CSharpSyntaxTree.ParseText(source);
+            //var compilation = CSharpCompilation.Create("sdfsdf")
+            //    .AddReferences()
+            //    .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+            //                     .WithOptimizationLevel(OptimizationLevel.Release))
+            //    .AddSyntaxTrees(sourcetree);
+            //using (var asm = new MemoryStream())
+            //{
+            //    var emitresult = compilation.Emit(asm);
+            //    if (emitresult.Success)
+            //    {
+            //        return Assembly.Load(asm.GetBuffer());
+            //    }
+            //}
             return null;
         }
 
@@ -856,129 +859,78 @@ namespace Experica
             return final;
         }
 
-        public static bool FirstAtSplit(this string name, out string head, out string tail)
+        public static void FirstSplit(this string name, out string head, out string tail, string del = "@")
         {
             head = null; tail = null;
             if (!string.IsNullOrEmpty(name))
             {
-                var ati = name.IndexOf('@');
-                if (ati < 0)
+                var n = del.Length;
+                var i = name.IndexOf(del);
+                if (i == 0)
                 {
-                    head = name;
-                    tail = null;
-                    return false;
+                    tail = name.Substring(n);
                 }
-                else if (ati == 0)
+                else if (i > 0)
                 {
-                    if (name.Length >= 4)
-                    {
-                        head = null;
-                        tail = name.Substring(1);
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (name.Length >= 5)
-                    {
-                        head = name.Substring(0, ati);
-                        tail = name.Substring(ati + 1);
-                        return true;
-                    }
+                    head = name.Substring(0, i);
+                    tail = name.Substring(i + n);
                 }
             }
-            return false;
         }
 
-        public static string FirstAtSplitHead(this string name)
+        public static string FirstSplitHead(this string name, string del = "@")
         {
-            string head, tail;
-            name.FirstAtSplit(out head, out tail);
+            name.FirstSplit(out string head, out _, del);
             return head;
         }
 
-        public static string FirstAtSplitTail(this string name)
+        public static string FirstSplitTail(this string name, string del = "@")
         {
-            string head, tail;
-            name.FirstAtSplit(out head, out tail);
+            name.FirstSplit(out _, out string tail, del);
             return tail;
         }
 
         public static bool IsEnvParamFullName(this string name)
         {
-            string head, tail;
-            return name.FirstAtSplit(out head, out tail);
+            return name.IsEnvParamFullName(out _, out _, out _);
         }
 
-        public static bool IsEnvParamFullName(this string name, out string shortname, out string fullname)
+        public static bool IsEnvParamFullName(this string name, out string varname, out string nbsoname, out string fullname)
         {
-            string head, tail;
-            var t = name.FirstAtSplit(out head, out tail);
-            if (t)
-            {
-                shortname = head;
-                fullname = name;
-            }
-            else
-            {
-                shortname = name;
-                fullname = null;
-            }
+            name.FirstSplit(out varname, out nbsoname, "@");
+            var t = !string.IsNullOrEmpty(varname) && !string.IsNullOrEmpty(nbsoname) && nbsoname.Length >= 3; // shortest nbso name: {nb}@{so}
+            fullname = t ? name : null;
             return t;
         }
 
-        public static bool IsEnvParamShortName(this string name)
-        {
-            string head, tail;
-            name.FirstAtSplit(out head, out tail);
-            return head != null && tail == null;
-        }
-
-        public static bool LastAtSplit(this string name, out string head, out string tail)
+        public static void LastSplit(this string name, out string head, out string tail, string del = "@")
         {
             head = null; tail = null;
             if (!string.IsNullOrEmpty(name))
             {
-                var ati = name.LastIndexOf('@');
-                if (ati < 0)
+                var n = del.Length;
+                var i = name.LastIndexOf(del);
+                if (i == 0)
                 {
-                    head = name;
-                    tail = null;
-                    return false;
+                    tail = name.Substring(n);
                 }
-                else if (ati == 0)
+                else if (i > 0)
                 {
-                    if (name.Length >= 2)
-                    {
-                        head = null;
-                        tail = name.Substring(1);
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (name.Length >= 5)
-                    {
-                        head = name.Substring(0, ati);
-                        tail = name.Substring(ati + 1);
-                        return true;
-                    }
+                    head = name.Substring(0, i);
+                    tail = name.Substring(i + n);
                 }
             }
-            return false;
         }
 
-        public static string LastAtSplitHead(this string name)
+        public static string LastSplitHead(this string name, string del = "@")
         {
-            string head, tail;
-            name.LastAtSplit(out head, out tail);
+            name.LastSplit(out string head, out _, del);
             return head;
         }
 
-        public static string LastAtSplitTail(this string name)
+        public static string LastSplitTail(this string name, string del = "@")
         {
-            string head, tail;
-            name.LastAtSplit(out head, out tail);
+            name.LastSplit(out _, out string tail, del);
             return tail;
         }
 

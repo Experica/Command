@@ -32,8 +32,8 @@ namespace Experica
     {
         protected override void GenerateFinalCondition()
         {
-            var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
-            var colorvar = ex.GetParam("Color").Convert<string>();
+            var colorspace = GetExParam<ColorSpace>("ColorSpace");
+            var colorvar = GetExParam<string>("Color");
             var colorname = colorspace + "_" + colorvar;
 
             // get color
@@ -63,7 +63,7 @@ namespace Experica
             }
 
             // get imageset
-            var imagesetname = GetEnvActiveParam("ImageSet").Convert<string>();
+            var imagesetname = GetEnvActiveParam<string>("ImageSet");
             var imageset = imagesetname.GetImageData();
             if (imageset != null)
             {

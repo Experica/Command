@@ -171,9 +171,9 @@ namespace Experica
                 if (Param.ContainsKey(name))
                 {
                     Param[name] = value;
-                    if (notifyui && OnNotifyUI != null)
+                    if (notifyui)
                     {
-                        OnNotifyUI(name, Param[name]);
+                        OnNotifyUI?.Invoke(name, Param[name]);
                     }
                     return true;
                 }
@@ -191,13 +191,13 @@ namespace Experica
             return false;
         }
 
-        public bool SetProperty(Experiment ex, PropertyAccess p, object value, bool notifyui = false)
+        bool SetProperty(Experiment ex, PropertyAccess p, object value, bool notifyui = false)
         {
             object v = value.Convert(p.Type);
             p.Setter(ex, v);
-            if (notifyui && OnNotifyUI != null)
+            if (notifyui)
             {
-                OnNotifyUI(p.Name, v);
+                OnNotifyUI?.Invoke(p.Name, v);
             }
             return true;
         }
@@ -224,7 +224,7 @@ namespace Experica
             return null;
         }
 
-        public object GetProperty(Experiment ex, PropertyAccess p)
+        object GetProperty(Experiment ex, PropertyAccess p)
         {
             return p.Getter(ex);
         }

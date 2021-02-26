@@ -339,9 +339,9 @@ namespace Experica
                     }
                     ex.Config = config;
                 }
+
                 ex.EnvParam = envmanager.GetActiveParams();
                 ex.Version = Extension.ExDataVersion;
-
                 switch (config.SaveDataFormat)
                 {
                     case DataFormat.EXPERICA:
@@ -351,6 +351,7 @@ namespace Experica
                         DataPath(DataFormat.YAML).WriteYamlFile(ex);
                         break;
                 }
+                ex.DataPath = null;
 
                 if (config.SaveConfigInData)
                 {
@@ -363,13 +364,36 @@ namespace Experica
                         }
                     }
                 }
-                ex.DataPath = null;
             }
+            else
+            {
+                Debug.LogWarning("No Data to Save.");
+            }
+        }
+
+        public T GetExParam<T>(string name)
+        {
+            return ex.GetParam(name).Convert<T>();
+        }
+
+        public object GetExParam(string name)
+        {
+            return ex.GetParam(name);
+        }
+
+        public T GetEnvActiveParam<T>(string name)
+        {
+            return envmanager.GetActiveParam(name).Convert<T>();
         }
 
         public object GetEnvActiveParam(string name)
         {
             return envmanager.GetActiveParam(name);
+        }
+
+        public void SetExParam(string name, object value, bool notifyui = true)
+        {
+            ex.SetParam(name, value, notifyui);
         }
 
         public void SetEnvActiveParam(string name, object value, bool notifyui = true)

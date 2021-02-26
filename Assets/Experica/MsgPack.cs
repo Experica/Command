@@ -30,7 +30,9 @@ namespace Experica
     public static class MsgPack
     {
 #if COMMAND
-        public static MessagePackSerializer<Experiment> ExSerializer;
+        // currently not needed for online analysis, and it cause bugs in build not in editor
+        // will change plugin from msgpack-cli to messagepack-for-csharp in the future
+        //public static MessagePackSerializer<Experiment> ExSerializer;
 #endif
         public static MessagePackSerializer<List<int>> ListIntSerializer;
         public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
@@ -41,7 +43,7 @@ namespace Experica
         static MsgPack()
         {
 #if COMMAND
-            ExSerializer = MessagePackSerializer.Get<Experiment>();
+            //ExSerializer = MessagePackSerializer.Get<Experiment>();
 #endif
             ListIntSerializer = MessagePackSerializer.Get<List<int>>();
             ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();

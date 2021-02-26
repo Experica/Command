@@ -322,11 +322,17 @@ namespace Experica.Command
 
         public void InheritEx()
         {
-            if (elhistory.Last().ex.ExInheritParam.Count > 0)
+            var ellex = elhistory.Last().ex;
+            var ellexip = ellex.ExInheritParam;
+            foreach (var ip in ellexip.ToArray())
             {
-                foreach (var ip in elhistory.Last().ex.ExInheritParam.ToArray())
+                if (Experiment.Properties.ContainsKey(ip) || ellex.Param.ContainsKey(ip))
                 {
                     InheritExParam(ip);
+                }
+                else
+                {
+                    ellexip.Remove(ip);
                 }
             }
         }
@@ -363,19 +369,19 @@ namespace Experica.Command
 
         public void InheritEnv(string toobject = null)
         {
-            string paramname, fullname;
-            var eip = elhistory.Last().ex.EnvInheritParam;
+            var ell = elhistory.Last();
+            var eip = ell.ex.EnvInheritParam;
             foreach (var ip in eip.ToArray())
             {
-                if (ip.IsEnvParamFullName(out paramname, out fullname))
+                if (ell.envmanager.ContainsParam(ip, out string fullname))
                 {
-                    if (String.IsNullOrEmpty(toobject))
+                    if (string.IsNullOrEmpty(toobject))
                     {
                         InheritEnvParam(fullname);
                     }
                     else
                     {
-                        if (fullname.LastAtSplitTail() == toobject)
+                        if (fullname.LastSplitTail() == toobject)
                         {
                             InheritEnvParam(fullname);
                         }
@@ -385,14 +391,13 @@ namespace Experica.Command
                 {
                     eip.Remove(ip);
                 }
-
             }
         }
 
         public void InheritEnvParam(string fullname)
         {
-            string paramname = fullname.FirstAtSplitHead();
-            string objectname = fullname.LastAtSplitTail();
+            string paramname = fullname.FirstSplitHead();
+            string objectname = fullname.LastSplitTail();
 
             var hn = elhistory.Count;
             if (hn > 1)
@@ -416,7 +421,7 @@ namespace Experica.Command
                                 {
                                     foreach (var hpk in hp.Keys.ToArray())
                                     {
-                                        if (hpk.FirstAtSplitHead() == paramname && hpk.LastAtSplitTail() == showobj)
+                                        if (hpk.FirstSplitHead() == paramname && hpk.LastSplitTail() == showobj)
                                         {
                                             v = hp[hpk];
                                             break;
@@ -438,8 +443,8 @@ namespace Experica.Command
                     {
                         foreach (var hpn in hp.Keys.ToArray())
                         {
-                            string paramfrom = hpn.FirstAtSplitHead();
-                            string objectfrom = hpn.LastAtSplitTail();
+                            string paramfrom = hpn.FirstSplitHead();
+                            string objectfrom = hpn.LastSplitTail();
                             if (paramname == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
                             {
                                 v = hp[hpn];

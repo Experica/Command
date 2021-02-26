@@ -34,11 +34,11 @@ namespace Experica
         {
             pushexcludefactors = new List<string>() { "HueAngle" };
             var cond = new Dictionary<string, List<object>>();
-            var colorspace = ex.GetParam("ColorSpace").Convert<ColorSpace>();
-            var colorvar = ex.GetParam("Color").Convert<string>();
+            var colorspace = GetExParam<ColorSpace>("ColorSpace");
+            var colorvar = GetExParam<string>("Color");
             var colorname = colorspace + "_" + colorvar;
-            var ori = ex.GetParam("Ori").Convert<List<float>>();
-            var sf = ex.GetParam("SpatialFreq").Convert<List<float>>();
+            var ori = GetExParam<List<float>>("Ori");
+            var sf = GetExParam<List<float>>("SpatialFreq");
 
             // get color
             List<Color> color = null;
