@@ -37,9 +37,9 @@ EnvParam:
   MinColor@ImageQuad@ImageQuad: 0 0.6462 0.4939 1
   MaxColor@ImageQuad@ImageQuad: 1 0.3538 0.5061 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 1
+  Image@ImageQuad@ImageQuad: 11459
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
-  Visible@ImageQuad@ImageQuad: true
+  Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: -2.104 -0.6258 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
@@ -57,7 +57,7 @@ BlockParam:
 - ''
 Input: None
 PreICI: 0
-CondDur: 30
+CondDur: 20
 SufICI: 0
 PreITI: 0
 TrialDur: 0

@@ -83,9 +83,9 @@ Display:
   ROGPG279Q:
     ID: ROGPG279Q
     Type: LCD
-    Latency: 80
-    RiseLag: 0
-    FallLag: 0
+    Latency: 40
+    RiseLag: 1
+    FallLag: 12
     CLUTSize: 20
     FitType: LinearSpline
     IntensityMeasurement: {}

@@ -489,8 +489,8 @@ namespace Experica
 
         protected IEnumerator ExperimentStartSequence()
         {
-            // sync several frames to make sure Command and all connected Environment have been initialized to the same start state.
-            var n = 2;
+            // sync several frames to make sure Command and all connected Environment have been initialized to the same start frame.
+            var n = 3;
             for (var i = 0; i < n; i++)
             {
                 SyncFrame?.Invoke();
@@ -500,6 +500,9 @@ namespace Experica
                     yield return null;
                 }
             }
+            // wait until the synced same start frame have completed being presented on display.
+            var dur = n * ex.Display_ID.DisplayLatency(config.Display) ?? config.NotifyLatency;
+            yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StartExperimentTimeSync();
             OnExperimentStarted();
             OnEndStartExperiment?.Invoke();
@@ -531,8 +534,8 @@ namespace Experica
 
         protected IEnumerator ExperimentStopSequence()
         {
-            // sync several frames to make sure Command and all connected Environment have been set to the same stop state.
-            var n = 2;
+            // sync several frames to make sure Command and all connected Environment have been set to the same stop frame.
+            var n = 3;
             for (var i = 0; i < n; i++)
             {
                 SyncFrame?.Invoke();
@@ -542,6 +545,9 @@ namespace Experica
                     yield return null;
                 }
             }
+            // wait until the synced same stop frame have completed being presented on display.
+            var dur = n * ex.Display_ID.DisplayLatency(config.Display) ?? config.NotifyLatency;
+            yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StopExperimentTimeSync();
             OnExperimentStopped();
             OnEndStopExperiment?.Invoke();

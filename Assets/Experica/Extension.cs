@@ -541,13 +541,16 @@ namespace Experica
             MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public static double DisplayLatency(this string displayid, Dictionary<string, Display> display)
+        public static double? DisplayLatency(this string displayid, Dictionary<string, Display> displays)
         {
-            if (!string.IsNullOrEmpty(displayid) && display != null && display.ContainsKey(displayid))
+            if (!string.IsNullOrEmpty(displayid) && displays != null && displays.ContainsKey(displayid))
             {
-                return display[displayid].Latency;
+                var d = displays[displayid];
+                if (d == null) return null;
+                if (d.Latency > 0) return d.Latency;
+                return Math.Max(d.RiseLag, d.FallLag);
             }
-            return double.NaN;
+            return null;
         }
 
         public static double GammaFunc(double x, double gamma, double a = 1, double c = 0)

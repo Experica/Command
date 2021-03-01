@@ -30,7 +30,7 @@ EnvParam:
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 0.278 0 0.2535 1
+  Color@Quad@Quad: 0.007589 0.04947 0.3516 1
   MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
