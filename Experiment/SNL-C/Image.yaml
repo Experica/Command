@@ -14,16 +14,16 @@ Subject_Log:
 EnvPath: MarkerImage
 EnvParam:
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
@@ -40,7 +40,7 @@ EnvParam:
   Image@ImageQuad@ImageQuad: 1
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
   Visible@ImageQuad@ImageQuad: true
-  Position@ImageQuad@ImageQuad: 0 0 0
+  Position@ImageQuad@ImageQuad: -2.104 -0.6258 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
@@ -84,28 +84,10 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- Latency
-- Delay
 - TimerDriftSpeed
-- DisplayLatency
 - ResponseDelay
 - Display_ID
 EnvInheritParam:
-- ScreenHalfHeight@ENCamera@OrthoCamera
-- ScreenToEye@ENCamera@OrthoCamera
-- MarkerSize@ENMarker@Marker
-- MarkerCorner@ENMarker@Marker
-- MarkOnColor@ENMarker@Marker
-- MarkOffColor@ENMarker@Marker
-- Marker@Showroom@ShowroomManager
-- ScreenAspect@ENCamera@OrthoCamera
-- Diameter@ENImageQuad@ImageQuad$ShowroomManager
-- Position@ENImageQuad@ImageQuad$ShowroomManager
-- Position@ENImageQuad@ImageQuad
-- Diameter@ENImageQuad@ImageQuad
-- ScreenHalfHeight@Camera@OrthoCamera
-- ScreenToEye@Camera@OrthoCamera
-- ScreenAspect@Camera@OrthoCamera
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker

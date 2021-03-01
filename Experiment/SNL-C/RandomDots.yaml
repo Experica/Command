@@ -3,7 +3,7 @@ Name: RandomDots
 Designer: Alex
 Experimenter: PL
 Log: RIGHT EYE
-Subject_ID: AF6
+Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -14,14 +14,14 @@ Subject_Log:
 EnvPath: MarkerDots
 EnvParam:
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.32 -13.74 0
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -25.21 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
@@ -34,8 +34,8 @@ EnvParam:
   NDots@Dots@Dots: 30
   DotColor@Dots@Dots: 1 0 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0
-  Visible@Dots@Dots: true
+  Coherence@Dots@Dots: 0.5
+  Visible@Dots@Dots: false
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0
 CondPath: ''
