@@ -183,7 +183,7 @@ namespace Experica
             switch (BlockState)
             {
                 case BLOCKSTATE.NONE:
-                    BlockState = BLOCKSTATE.PREIBI;
+                    EnterBlockState(BLOCKSTATE.PREIBI);
                     if (condmanager.blockidx < 0)
                     {
                         condmanager.SampleBlockSpace();
@@ -198,15 +198,15 @@ namespace Experica
                                     var freq = (Vector4)condmanager.finalblockcond["LaserFreq"][condmanager.blockidx];
                                     if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                                     {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                                        ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                                     }
                                     else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
                                     {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                                     }
                                     else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
                                     {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                                     }
                                 }
                             }
@@ -222,15 +222,15 @@ namespace Experica
                                     var freq2 = (Vector4)condmanager.finalblockcond["LaserFreq2"][condmanager.blockidx];
                                     if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                                     {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                                     }
                                     else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
                                     {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                                     }
                                     else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
                                     {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                                     }
                                 }
                             }
@@ -240,19 +240,19 @@ namespace Experica
                 case BLOCKSTATE.PREIBI:
                     if (PreIBIHold >= ex.PreIBI)
                     {
-                        BlockState = BLOCKSTATE.BLOCK;
+                        EnterBlockState(BLOCKSTATE.BLOCK);
                     }
                     break;
                 case BLOCKSTATE.BLOCK:
                     switch (TrialState)
                     {
                         case TRIALSTATE.NONE:
-                            TrialState = TRIALSTATE.PREITI;
+                            if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
                             break;
                         case TRIALSTATE.PREITI:
                             if (PreITIHold >= ex.PreITI)
                             {
-                                TrialState = TRIALSTATE.TRIAL;
+                                EnterTrialState(TRIALSTATE.TRIAL);
                                 var lsc = new List<int>();
                                 if (power > 0 && lasersignalch != null)
                                 {
@@ -269,12 +269,12 @@ namespace Experica
                             switch (CondState)
                             {
                                 case CONDSTATE.NONE:
-                                    CondState = CONDSTATE.PREICI;
+                                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                                     break;
                                 case CONDSTATE.PREICI:
                                     if (PreICIHold >= ex.PreICI)
                                     {
-                                        CondState = CONDSTATE.COND;
+                                        EnterCondState(CONDSTATE.COND);
                                         SyncEvent(CONDSTATE.COND.ToString());
                                         if (ex.GetParam("WithVisible").Convert<bool>())
                                         {
@@ -285,7 +285,7 @@ namespace Experica
                                 case CONDSTATE.COND:
                                     if (CondHold >= ex.CondDur)
                                     {
-                                        CondState = CONDSTATE.SUFICI;
+                                        EnterCondState(CONDSTATE.SUFICI);
                                         if (ex.PreICI != 0 || ex.SufICI != 0)
                                         {
                                             SyncEvent(CONDSTATE.SUFICI.ToString());
@@ -299,10 +299,10 @@ namespace Experica
                                 case CONDSTATE.SUFICI:
                                     if (SufICIHold >= ex.SufICI)
                                     {
-                                        CondState = CONDSTATE.NONE;
+                                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                                         if (TrialHold >= ex.TrialDur || condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
                                         {
-                                            TrialState = TRIALSTATE.SUFITI;
+                                            EnterTrialState(TRIALSTATE.SUFITI);
                                             if (ex.GetParam("WithVisible").Convert<bool>())
                                             {
                                                 SetEnvActiveParam("Visible", false);
@@ -325,10 +325,10 @@ namespace Experica
                         case TRIALSTATE.SUFITI:
                             if (SufITIHold >= ex.SufITI + power * ex.TrialDur * ex.GetParam("ITIFactor").Convert<float>())
                             {
-                                TrialState = TRIALSTATE.NONE;
+                                if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
                                 if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
                                 {
-                                    BlockState = BLOCKSTATE.SUFIBI;
+                                    EnterBlockState(BLOCKSTATE.SUFIBI);
                                 }
                             }
                             break;
@@ -338,7 +338,7 @@ namespace Experica
                     if (SufIBIHold >= ex.SufIBI)
                     {
                         condmanager.blockidx = -1;
-                        BlockState = BLOCKSTATE.NONE;
+                        EnterBlockState(BLOCKSTATE.NONE);
                     }
                     break;
             }

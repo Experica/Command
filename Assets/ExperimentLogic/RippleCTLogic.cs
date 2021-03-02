@@ -60,7 +60,7 @@ namespace Experica
         protected override void StopExperimentTimeSync()
         {
             // Tail period to make sure lagged effect data is recorded before trigger recording stop
-            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display)??0 + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+            timer.Timeout(ex.Display_ID.DisplayLatency(config.Display) ?? 0 + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
             if (isrippletriggered)
             {
                 gpio.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
@@ -73,12 +73,12 @@ namespace Experica
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
                     {
-                        CondState = CONDSTATE.COND;
+                        EnterCondState(CONDSTATE.COND);
                         SyncEvent(CONDSTATE.COND.ToString());
                         SetEnvActiveParam("Visible", true);
                     }
@@ -86,7 +86,7 @@ namespace Experica
                 case CONDSTATE.COND:
                     if (CondHold >= ex.CondDur)
                     {
-                        CondState = CONDSTATE.SUFICI;
+                        EnterCondState(CONDSTATE.SUFICI);
                         if (ex.PreICI != 0 || ex.SufICI != 0)
                         {
                             SyncEvent(CONDSTATE.SUFICI.ToString());
@@ -97,7 +97,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        CondState = CONDSTATE.NONE;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     }
                     break;
             }

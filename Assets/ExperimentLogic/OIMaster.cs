@@ -121,7 +121,7 @@ namespace Experica
                 case CONDSTATE.NONE:
                     if (start)
                     {
-                        CondState = CONDSTATE.PREICI;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                         SetEnvActiveParam("Drifting", false);
                         SetEnvActiveParam("Visible", true);
                     }
@@ -129,7 +129,7 @@ namespace Experica
                 case CONDSTATE.PREICI:
                     if (go)
                     {
-                        CondState = CONDSTATE.COND;
+                        EnterCondState(CONDSTATE.COND);
                         SetEnvActiveParam("Drifting", true);
                         reversetime = CondOnTime;
                     }
@@ -146,7 +146,7 @@ namespace Experica
                     }
                     else
                     {
-                        CondState = CONDSTATE.SUFICI;
+                        EnterCondState(CONDSTATE.SUFICI);
                         SetEnvActiveParam("Visible", false);
                         SetEnvActiveParam("ReverseTime", false);
                     }
@@ -154,7 +154,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        CondState = CONDSTATE.NONE;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     }
                     break;
             }

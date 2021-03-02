@@ -13,8 +13,8 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -24.21 12.74 -1000
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -26,7 +26,7 @@ EnvParam:
   CLUT@OrthoCamera@OrthoCamera: true
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 110.854462
+  Ori@GratingQuad@GratingQuad: 246.501434
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,10 +36,10 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 4.49444103
+  SpatialFreq@GratingQuad@GratingQuad: 5.01597452
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0.125
+  SpatialPhase@GratingQuad@GratingQuad: 0.625
   MinColor@GratingQuad@GratingQuad: 0 3.886E-16 5.551E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true

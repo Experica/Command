@@ -103,13 +103,13 @@ namespace Experica
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     SyncFrame();
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
                     {
-                        CondState = CONDSTATE.COND;
+                        EnterCondState(CONDSTATE.COND);
                         SyncEvent(CONDSTATE.COND.ToString());
                         SetEnvActiveParam("Visible", true);
                         SyncFrame();
@@ -124,13 +124,14 @@ namespace Experica
                         */
                         if (ex.PreICI <= 0 && ex.SufICI <= 0)
                         {
-                            CondState = CONDSTATE.PREICI; // new condtest could start at PreICI
-                            CondState = CONDSTATE.COND;
+                            // new condtest start at PreICI
+                            if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                            EnterCondState(CONDSTATE.COND);
                             SyncEvent(CONDSTATE.COND.ToString());
                         }
                         else
                         {
-                            CondState = CONDSTATE.SUFICI;
+                            EnterCondState(CONDSTATE.SUFICI);
                             SyncEvent(CONDSTATE.SUFICI.ToString());
                             SetEnvActiveParam("Visible", false);
                         }
@@ -140,7 +141,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        CondState = CONDSTATE.PREICI;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                         SyncFrame();
                     }
                     break;

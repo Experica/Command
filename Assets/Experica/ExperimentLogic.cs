@@ -96,17 +96,10 @@ namespace Experica
         public CONDSTATE CondState
         {
             get { return condstate; }
-            set
-            {
-                if (value != condstate)
-                {
-                    OnEnterCondState(value);
-                    condstate = value;
-                }
-            }
         }
-        protected virtual void OnEnterCondState(CONDSTATE value)
+        protected virtual EnterCode EnterCondState(CONDSTATE value)
         {
+            if (value == condstate) { return EnterCode.AlreadyIn; }
             switch (value)
             {
                 case CONDSTATE.NONE:
@@ -115,6 +108,11 @@ namespace Experica
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
                     {
+                        if (condmanager.IsCondRepeat(ex.CondRepeat))
+                        {
+                            StartStopExperiment(false);
+                            return EnterCode.NoNeed;
+                        }
                         condtestmanager.NewCondTest(PreICIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
@@ -165,23 +163,18 @@ namespace Experica
                     }
                     break;
             }
+            condstate = value;
+            return EnterCode.Success;
         }
 
         TRIALSTATE trialstate = TRIALSTATE.NONE;
         public TRIALSTATE TrialState
         {
             get { return trialstate; }
-            set
-            {
-                if (value != trialstate)
-                {
-                    OnEnterTrialState(value);
-                    trialstate = value;
-                }
-            }
         }
-        protected virtual void OnEnterTrialState(TRIALSTATE value)
+        protected virtual EnterCode EnterTrialState(TRIALSTATE value)
         {
+            if (value == trialstate) { return EnterCode.AlreadyIn; }
             switch (value)
             {
                 case TRIALSTATE.NONE:
@@ -190,6 +183,11 @@ namespace Experica
                     PreITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREITI)
                     {
+                        if (condmanager.IsCondRepeat(ex.CondRepeat))
+                        {
+                            StartStopExperiment(false);
+                            return EnterCode.NoNeed;
+                        }
                         condtestmanager.NewCondTest(PreITIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
@@ -240,23 +238,18 @@ namespace Experica
                     }
                     break;
             }
+            trialstate = value;
+            return EnterCode.Success;
         }
 
         BLOCKSTATE blockstate = BLOCKSTATE.NONE;
         public BLOCKSTATE BlockState
         {
             get { return blockstate; }
-            set
-            {
-                if (value != blockstate)
-                {
-                    OnEnterBlockState(value);
-                    blockstate = value;
-                }
-            }
         }
-        protected virtual void OnEnterBlockState(BLOCKSTATE value)
+        protected virtual EnterCode EnterBlockState(BLOCKSTATE value)
         {
+            if (value == blockstate) { return EnterCode.AlreadyIn; }
             switch (value)
             {
                 case BLOCKSTATE.NONE:
@@ -283,6 +276,8 @@ namespace Experica
                     }
                     break;
             }
+            blockstate = value;
+            return EnterCode.Success;
         }
 
         protected virtual void GenerateFinalCondition()
@@ -593,14 +588,7 @@ namespace Experica
                 OnUpdate();
                 if (islogicactive)
                 {
-                    if (condmanager.IsCondRepeat(ex.CondRepeat))
-                    {
-                        StartStopExperiment(false);
-                    }
-                    else
-                    {
-                        Logic();
-                    }
+                    Logic();
                 }
             }
         }

@@ -161,15 +161,15 @@ namespace Experica
                         var freq = (Vector4)condmanager.finalcond["LaserFreq"][condmanager.condidx];
                         if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                         }
                         else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                         }
                         else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(config.Display)??0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
                         }
                     }
                 }
@@ -185,15 +185,15 @@ namespace Experica
                         var freq2 = (Vector4)condmanager.finalcond["LaserFreq2"][condmanager.condidx];
                         if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                         }
                         else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                         }
                         else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(config.Display)??0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
                         }
                     }
                 }
@@ -205,12 +205,12 @@ namespace Experica
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
                     {
-                        CondState = CONDSTATE.COND;
+                        EnterCondState(CONDSTATE.COND);
                         SyncEvent(CONDSTATE.COND.ToString());
                         if (ex.GetParam("WithVisible").Convert<bool>())
                         {
@@ -231,7 +231,7 @@ namespace Experica
                 case CONDSTATE.COND:
                     if (CondHold >= ex.CondDur)
                     {
-                        CondState = CONDSTATE.SUFICI;
+                        EnterCondState(CONDSTATE.SUFICI);
                         if (ex.PreICI != 0 || ex.SufICI != 0)
                         {
                             SyncEvent(CONDSTATE.SUFICI.ToString());
@@ -255,7 +255,7 @@ namespace Experica
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI + power * ex.CondDur * ex.GetParam("ICIFactor").Convert<float>())
                     {
-                        CondState = CONDSTATE.NONE;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     }
                     break;
             }

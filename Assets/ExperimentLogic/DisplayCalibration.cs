@@ -142,13 +142,13 @@ namespace Experica
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    CondState = CONDSTATE.PREICI;
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                     SyncFrame();
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
                     {
-                        CondState = CONDSTATE.COND;
+                        EnterCondState(CONDSTATE.COND);
                         SetEnvActiveParam("Visible", true);
                         SyncFrame();
                     }
@@ -215,7 +215,7 @@ namespace Experica
                                 break;
                         }
 
-                        CondState = CONDSTATE.SUFICI;
+                        EnterCondState(CONDSTATE.SUFICI);
                         if (ex.PreICI > 0 || ex.SufICI > 0)
                         {
                             SetEnvActiveParam("Visible", false);
@@ -240,7 +240,7 @@ namespace Experica
                             }
                         }
 
-                        CondState = CONDSTATE.PREICI;
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
                         SyncFrame();
                     }
                     break;

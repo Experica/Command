@@ -414,6 +414,14 @@ namespace Experica
         PREITI = TRIALSTATE.PREITI,
     }
 
+    public enum EnterCode
+    {
+        Success = 0,
+        Failure,
+        AlreadyIn,
+        NoNeed
+    }
+
     public enum CONDTESTSHOWLEVEL
     {
         NONE,
