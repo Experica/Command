@@ -36,6 +36,7 @@ using MathNet.Numerics;
 using MathNet.Numerics.Interpolation;
 using MsgPack;
 using MsgPack.Serialization;
+using UnityEngine.InputSystem;
 
 namespace Experica.Command
 {
@@ -57,7 +58,7 @@ namespace Experica.Command
         public AnalysisManager alsmanager;
         public ControlManager ctrlmanager;
 
-        // The Panels Physically created on the scene
+        public GameObject canvas;
         public ControlPanel controlpanel;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
@@ -65,6 +66,7 @@ namespace Experica.Command
         public ConsolePanel consolepanel;
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
+        int lastwindowwidth=1024, lastwindowheight=768;
 
         void Awake()
         {
@@ -153,6 +155,55 @@ namespace Experica.Command
         {
             version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
             PushConfig();
+        }
+
+        public void OnToggleViewAction(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                if (canvas.activeSelf)
+                {
+                    canvas.SetActive(false);
+                    var maincamera = exmanager.el.envmanager.maincamera_scene;
+                    if (maincamera != null) 
+                    {
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
+                        maincamera.targetTexture = null;
+                    }
+                }
+                else
+                {
+                    canvas.SetActive(true);
+                    viewpanel.UpdateViewport();
+                }
+            }
+        }
+
+        public void OnStartStopExperimentAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { controlpanel.startstop.isOn = !controlpanel.startstop.isOn; }
+        }
+
+        public void OnToggleFullScreenAction(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                if (Screen.fullScreen)
+                {
+                    Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
+                }
+                else
+                {
+                    lastwindowwidth = Math.Max(1024, Screen.width);
+                    lastwindowheight = Math.Max(768, Screen.height);
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
+                }
+            }
+        }
+
+        public void OnQuitAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { Application.Quit(); }
         }
 
         public void PushConfig()
@@ -333,6 +384,14 @@ namespace Experica.Command
 
             // Get Highest Performance
             QualitySettings.vSyncCount = 0;
+            if (!canvas.activeSelf)
+            {
+                Cursor.visible = false;
+                if(Screen.fullScreen)
+                {
+                    QualitySettings.vSyncCount = 1;
+                }
+            }
             QualitySettings.maxQueuedFrames = 0;
             Time.fixedDeltaTime = config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
@@ -412,6 +471,7 @@ namespace Experica.Command
             }
 
             // Return Normal Performance
+            Cursor.visible = true;
             QualitySettings.vSyncCount = 1;
             QualitySettings.maxQueuedFrames = 1;
             Time.fixedDeltaTime = 0.02f;

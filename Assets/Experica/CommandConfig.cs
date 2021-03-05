@@ -45,6 +45,7 @@ namespace Experica
         public int AntiAliasing { get; set; } = 2;
         public int AnisotropicFilterLevel { get; set; } = 5;
         public float FixedDeltaTime { get; set; } = 1000000f;
+        public FullScreenMode FullScreenMode { get; set; } = FullScreenMode.FullScreenWindow;
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;
         public int MaxLogEntry { get; set; } = 999;

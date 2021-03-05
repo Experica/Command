@@ -29,6 +29,7 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public GameObject newexpanelprefab;
+        public Toggle startstop;
         GameObject newexpanel;
 
         public Canvas canvas;
