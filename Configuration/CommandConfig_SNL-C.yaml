@@ -13,7 +13,9 @@ NotifyParams:
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
 FixedDeltaTime: 1000000
-FullScreenMode: ExclusiveFullScreen
+VSyncCount: 1
+MaxQueuedFrames: 0
+FullScreenMode: FullScreenWindow
 IsShowInactiveEnvParam: false
 IsShowEnvParamFullName: false
 MaxLogEntry: 999
@@ -53,7 +55,7 @@ SignalCh3: 2
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
-RecordHost: localhost
+RecordHost: 10.1.51.72
 RecordHostPort: 4142
 Param: {}
 EnvCrossInheritRule:

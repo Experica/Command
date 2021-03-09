@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearColorMode: 1
-  backgroundColorHDR: {r: 0.24959952, g: 0.4266549, b: 0.745283, a: 0}
+  backgroundColorHDR: {r: 0.18396226, g: 0.53830326, b: 0.735849, a: 0}
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2

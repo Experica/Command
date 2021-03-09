@@ -179,9 +179,14 @@ namespace Experica.Command
             }
         }
 
+        public void OnStartStopHostAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { controlpanel.startstophost.isOn = !controlpanel.startstophost.isOn; }
+        }
+
         public void OnStartStopExperimentAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { controlpanel.startstop.isOn = !controlpanel.startstop.isOn; }
+            if (context.performed) { controlpanel.startstopexperiment.isOn = !controlpanel.startstopexperiment.isOn; }
         }
 
         public void OnToggleFullScreenAction(InputAction.CallbackContext context)
@@ -204,6 +209,12 @@ namespace Experica.Command
         public void OnQuitAction(InputAction.CallbackContext context)
         {
             if (context.performed) { Application.Quit(); }
+        }
+
+        public void OnPositionAction(InputAction.CallbackContext context)
+        {
+            if (context.performed&&exmanager.el!=null&&exmanager.el.ex.Input == InputMethod.Joystick) 
+            { exmanager.el.OnPositionAction(context.ReadValue<Vector2>()); }
         }
 
         public void PushConfig()
@@ -382,17 +393,20 @@ namespace Experica.Command
             pause.interactable = true;
             consolepanel.Log("Experiment Started.");
 
-            // Get Highest Performance
+            // By default, Command is the server which just need to run as fast as possible, whereas the 
+            // connected Environment presenting the final stimuli.
             QualitySettings.vSyncCount = 0;
+            QualitySettings.maxQueuedFrames = 0;
             if (!canvas.activeSelf)
             {
                 Cursor.visible = false;
                 if(Screen.fullScreen)
                 {
-                    QualitySettings.vSyncCount = 1;
+                    // FullScreen Viewport maybe used to present the final stimuli without any connected Environment.
+                    QualitySettings.vSyncCount = config.VSyncCount;
+                    QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
                 }
             }
-            QualitySettings.maxQueuedFrames = 0;
             Time.fixedDeltaTime = config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
@@ -470,14 +484,13 @@ namespace Experica.Command
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
 
-            // Return Normal Performance
+            // Return Normal
             Cursor.visible = true;
             QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 1;
+            QualitySettings.maxQueuedFrames = 2;
             Time.fixedDeltaTime = 0.02f;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
-            // Return Normal GC
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
             GC.Collect();
         }

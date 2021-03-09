@@ -14,14 +14,14 @@ Subject_Log:
 EnvPath: MarkerImage
 EnvParam:
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
+  MarkerPosition@Marker@Marker: -18.64 13.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.3319459
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   Rotation@ImageQuad@ImageQuad: 0 0 0
@@ -40,7 +40,7 @@ EnvParam:
   Image@ImageQuad@ImageQuad: 1
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
   Visible@ImageQuad@ImageQuad: true
-  Position@ImageQuad@ImageQuad: -2.104 -0.6258 0
+  Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 

@@ -585,7 +585,7 @@ namespace Experica
             }
             else
             {
-                OnUpdate();
+                //OnUpdate();
                 if (islogicactive)
                 {
                     Logic();
@@ -685,6 +685,26 @@ namespace Experica
                                 s.z), true);
                         }
                     }
+                }
+            }
+        }
+
+        public virtual void OnPositionAction(Vector2 pos)
+        {
+            if(envmanager.active_networkbehaviour.Count > 0 && pos!=Vector2.zero&& envmanager.maincamera_scene != null)
+            {
+                var po = envmanager.GetActiveParam("Position");
+                if (po != null)
+                {
+                    var so = envmanager.GetActiveParam("Size");
+                    var p = (Vector3)po;
+                    var s = so == null ? Vector3.zero : (Vector3)so;
+                    var hh = envmanager.maincamera_scene.orthographicSize + s.y / 2;
+                    var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
+                    envmanager.SetActiveParam("Position", new Vector3(
+                    Mathf.Clamp(p.x + Mathf.Pow(pos.x * hw / 100, 1), -hw, hw),
+                    Mathf.Clamp(p.y + Mathf.Pow(pos.y * hh / 100, 1), -hh, hh),
+                    p.z), true);
                 }
             }
         }
