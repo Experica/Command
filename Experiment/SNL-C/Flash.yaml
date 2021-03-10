@@ -50,7 +50,7 @@ BlockSampling: Ascending
 CondRepeat: 120
 BlockRepeat: 1
 BlockParam: []
-Input: None
+Input: false
 PreICI: 0
 CondDur: 300
 SufICI: 0

@@ -50,7 +50,7 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
-Input: Joystick
+Input: false
 PreICI: 150
 CondDur: 500
 SufICI: 0

@@ -65,7 +65,7 @@ CondRepeat: 1
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: None
+Input: false
 PreICI: 250
 CondDur: 1500
 SufICI: 250

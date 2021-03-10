@@ -66,7 +66,7 @@ namespace Experica.Command
         public ConsolePanel consolepanel;
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
-        int lastwindowwidth=1024, lastwindowheight=768;
+        int lastwindowwidth = 1024, lastwindowheight = 768;
 
         void Awake()
         {
@@ -165,7 +165,7 @@ namespace Experica.Command
                 {
                     canvas.SetActive(false);
                     var maincamera = exmanager.el.envmanager.maincamera_scene;
-                    if (maincamera != null) 
+                    if (maincamera != null)
                     {
                         exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
                         maincamera.targetTexture = null;
@@ -179,12 +179,12 @@ namespace Experica.Command
             }
         }
 
-        public void OnStartStopHostAction(InputAction.CallbackContext context)
+        public void OnToggleHostAction(InputAction.CallbackContext context)
         {
             if (context.performed) { controlpanel.startstophost.isOn = !controlpanel.startstophost.isOn; }
         }
 
-        public void OnStartStopExperimentAction(InputAction.CallbackContext context)
+        public void OnToggleExperimentAction(InputAction.CallbackContext context)
         {
             if (context.performed) { controlpanel.startstopexperiment.isOn = !controlpanel.startstopexperiment.isOn; }
         }
@@ -213,8 +213,44 @@ namespace Experica.Command
 
         public void OnPositionAction(InputAction.CallbackContext context)
         {
-            if (context.performed&&exmanager.el!=null&&exmanager.el.ex.Input == InputMethod.Joystick) 
+            if (context.performed && exmanager.el != null)
             { exmanager.el.OnPositionAction(context.ReadValue<Vector2>()); }
+        }
+
+        public void OnSizeAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnSizeAction(context.ReadValue<Vector2>()); }
+        }
+
+        public void OnDiameterAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnDiameterAction(context.ReadValue<float>()); }
+        }
+
+        public void OnVisibleAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnVisibleAction(context.ReadValue<float>()); }
+        }
+
+        public void OnOriAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnOriAction(context.ReadValue<float>()); }
+        }
+
+        public void OnSpatialFreqAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnSpatialFreqAction(context.ReadValue<float>()); }
+        }
+
+        public void OnTemporalFreqAction(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnTemporalFreqAction(context.ReadValue<float>()); }
         }
 
         public void PushConfig()
@@ -400,7 +436,7 @@ namespace Experica.Command
             if (!canvas.activeSelf)
             {
                 Cursor.visible = false;
-                if(Screen.fullScreen)
+                if (Screen.fullScreen)
                 {
                     // FullScreen Viewport maybe used to present the final stimuli without any connected Environment.
                     QualitySettings.vSyncCount = config.VSyncCount;

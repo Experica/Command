@@ -575,6 +575,7 @@ namespace Experica
 
         void Update()
         {
+            OnUpdate();
             if (issyncingframe)
             {
                 if (Time.realtimeSinceStartupAsDouble - SyncFrameOnTime >= config.SyncFrameTimeOut)
@@ -585,7 +586,6 @@ namespace Experica
             }
             else
             {
-                //OnUpdate();
                 if (islogicactive)
                 {
                     Logic();
@@ -595,103 +595,15 @@ namespace Experica
 
         protected virtual void OnUpdate()
         {
-            if (ex.Input == InputMethod.Joystick && Input.GetJoystickNames().Count() > 0 && envmanager.active_networkbehaviour.Count > 0)
-            {
-                var jxa = Input.GetAxis("JXA");
-                var jya = Input.GetAxis("JYA");
-                var jza = Input.GetAxis("JZA");
-                var jxra = Input.GetAxis("JXRA");
-                var jyra = Input.GetAxis("JYRA");
-                var jlb = Input.GetAxis("JLB");
-                var jrb = Input.GetAxis("JRB");
-                var ja = Input.GetAxis("JA");
-                var jb = Input.GetAxis("JB");
-                var jx = Input.GetAxis("JX");
-                var jy = Input.GetAxis("JY");
-                var jxh = Input.GetAxis("JXH");
-                var jyh = Input.GetAxis("JYH");
-                if (jxa != 0 || jya != 0)
-                {
-                    if (envmanager.maincamera_scene != null)
-                    {
-                        var po = envmanager.GetActiveParam("Position");
-                        if (po != null)
-                        {
-                            var so = envmanager.GetActiveParam("Size");
-                            var p = (Vector3)po;
-                            var s = so == null ? Vector3.zero : (Vector3)so;
-                            var hh = envmanager.maincamera_scene.orthographicSize + s.y / 2;
-                            var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
-                            envmanager.SetActiveParam("Position", new Vector3(
-                            Mathf.Clamp(p.x + Mathf.Pow(jxa * hw / 1135, 1), -hw, hw),
-                            Mathf.Clamp(p.y + Mathf.Pow(jya * hh / 1135, 1), -hh, hh),
-                            p.z), true);
-                        }
-                    }
-                }
-                if (jza != 0)
-                {
-                    if (ja > 0.5)
-                    {
-                        var v = jza > 0 ? true : false;
-                        envmanager.SetActiveParam("Visible", v, true);
-                    }
-                    else if (jb > 0.5)
-                    {
-                        var sfo = envmanager.GetActiveParam("SpatialFreq");
-                        if (sfo != null)
-                        {
-                            envmanager.SetActiveParam("SpatialFreq", Mathf.Clamp((float)sfo + jza / 200, 0.001f, 20f), true);
-                        }
-                    }
-                    else if (jx > 0.5)
-                    {
-                        var tfo = envmanager.GetActiveParam("TemporalFreq");
-                        if (tfo != null)
-                        {
-                            envmanager.SetActiveParam("TemporalFreq", Mathf.Clamp((float)tfo + jza / 10, 0.001f, 20f), true);
-                        }
-                    }
-                    else
-                    {
-                        var oo = envmanager.GetActiveParam("Ori");
-                        if (oo != null)
-                        {
-                            var o = ((float)oo + Mathf.Pow(jza, 1) * 0.4) % 360f;
-                            envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o, true);
-                        }
-                    }
-                }
-                if (jxra != 0 || jyra != 0)
-                {
-                    if (jrb > 0.5)
-                    {
-                        var dio = envmanager.GetActiveParam("Diameter");
-                        if (dio != null)
-                        {
-                            var d = (float)dio;
-                            envmanager.SetParam("Diameter", Mathf.Max(0, d + Mathf.Pow(jxra, 1) * 0.05f), true);
-                        }
-                    }
-                    else
-                    {
-                        var so = envmanager.GetActiveParam("Size");
-                        if (so != null)
-                        {
-                            var s = (Vector3)so;
-                            envmanager.SetParam("Size", new Vector3(
-                                Mathf.Max(0, s.x + Mathf.Pow(jxra, 1) * 0.05f),
-                                Mathf.Max(0, s.y + Mathf.Pow(jyra, 1) * 0.05f),
-                                s.z), true);
-                        }
-                    }
-                }
-            }
         }
 
-        public virtual void OnPositionAction(Vector2 pos)
+        protected virtual void Logic()
         {
-            if(envmanager.active_networkbehaviour.Count > 0 && pos!=Vector2.zero&& envmanager.maincamera_scene != null)
+        }
+
+        public virtual void OnPositionAction(Vector2 position)
+        {
+            if (ex.Input && envmanager.maincamera_scene != null)
             {
                 var po = envmanager.GetActiveParam("Position");
                 if (po != null)
@@ -702,15 +614,88 @@ namespace Experica
                     var hh = envmanager.maincamera_scene.orthographicSize + s.y / 2;
                     var hw = envmanager.maincamera_scene.orthographicSize * envmanager.maincamera_scene.aspect + s.x / 2;
                     envmanager.SetActiveParam("Position", new Vector3(
-                    Mathf.Clamp(p.x + Mathf.Pow(pos.x * hw / 100, 1), -hw, hw),
-                    Mathf.Clamp(p.y + Mathf.Pow(pos.y * hh / 100, 1), -hh, hh),
+                    Mathf.Clamp(p.x + position.x * hw * Time.deltaTime, -hw, hw),
+                    Mathf.Clamp(p.y + position.y * hh * Time.deltaTime, -hh, hh),
                     p.z), true);
                 }
             }
         }
 
-        protected virtual void Logic()
+        public virtual void OnSizeAction(Vector2 size)
         {
+            if (ex.Input)
+            {
+                var so = envmanager.GetActiveParam("Size");
+                if (so != null)
+                {
+                    var s = (Vector3)so;
+                    envmanager.SetActiveParam("Size", new Vector3(
+                        Mathf.Max(0, s.x + size.x * s.x * Time.deltaTime),
+                        Mathf.Max(0, s.y + size.y * s.y * Time.deltaTime),
+                        s.z), true);
+                }
+            }
+        }
+
+        public virtual void OnVisibleAction(float v)
+        {
+            if (ex.Input)
+            {
+                envmanager.SetActiveParam("Visible", v > 0, true);
+            }
+        }
+
+        public virtual void OnOriAction(float v)
+        {
+            if (ex.Input)
+            {
+                var oo = envmanager.GetActiveParam("Ori");
+                if (oo != null)
+                {
+                    var o = (float)oo;
+                    o = (o + v * 180 * Time.deltaTime) % 360f;
+                    envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o, true);
+                }
+            }
+        }
+
+        public virtual void OnDiameterAction(float diameter)
+        {
+            if (ex.Input)
+            {
+                var dio = envmanager.GetActiveParam("Diameter");
+                if (dio != null)
+                {
+                    var d = (float)dio;
+                    envmanager.SetActiveParam("Diameter", Mathf.Max(0, d + Mathf.Pow(diameter * d * Time.deltaTime, 1)), true);
+                }
+            }
+        }
+
+        public virtual void OnSpatialFreqAction(float sf)
+        {
+            if (ex.Input)
+            {
+                var sfo = envmanager.GetActiveParam("SpatialFreq");
+                if (sfo != null)
+                {
+                    var s = (float)sfo;
+                    envmanager.SetActiveParam("SpatialFreq", Mathf.Clamp(s + sf * s * Time.deltaTime, 0, 20f), true);
+                }
+            }
+        }
+
+        public virtual void OnTemporalFreqAction(float tf)
+        {
+            if (ex.Input)
+            {
+                var tfo = envmanager.GetActiveParam("TemporalFreq");
+                if (tfo != null)
+                {
+                    var t = (float)tfo;
+                    envmanager.SetActiveParam("TemporalFreq", Mathf.Clamp(t + tf * t * Time.deltaTime, 0, 20f), true);
+                }
+            }
         }
 
     }

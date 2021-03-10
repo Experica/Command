@@ -113,7 +113,7 @@ namespace Experica
         public int CondRepeat { get; set; }
         public int BlockRepeat { get; set; }
         public List<string> BlockParam { get; set; } = new List<string>();
-        public InputMethod Input { get; set; }
+        public bool Input { get; set; }
 
         public double PreICI { get; set; }
         public double CondDur { get; set; }
@@ -331,13 +331,6 @@ namespace Experica
         DKL,
         CAM
     }
-
-    public enum InputMethod
-    {
-        None,
-        Joystick
-    }
-
     public enum SampleMethod
     {
         Manual,
