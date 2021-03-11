@@ -130,6 +130,7 @@ namespace Experica
                                     ls.Add(new Vector3(xl[0], yl[0], zl[zi]));
                                 }
                             }
+                            ls = ls.Distinct().ToList();
                         }
                     }
                     else if (T == typeof(Color))
@@ -204,6 +205,7 @@ namespace Experica
                                     ls.Add(new Color(rl[0], gl[0], bl[0], al[ai]));
                                 }
                             }
+                            ls = ls.Distinct().ToList();
                         }
                     }
                     break;

@@ -321,33 +321,12 @@ namespace Experica.Command
             }
         }
 
-        public Display CurrentDisplay
-        {
-            get
-            {
-                Display d = null;
-                var cdid = exmanager.el.ex.Display_ID;
-                if (!string.IsNullOrEmpty(cdid))
-                {
-                    if (config.Display.ContainsKey(cdid))
-                    {
-                        d = config.Display[cdid];
-                    }
-                    else
-                    {
-                        UnityEngine.Debug.LogWarning($"Display ID: {cdid} is not configed.");
-                    }
-                }
-                return d;
-            }
-        }
-
         public Texture3D CurrentDisplayCLUT
         {
             get
             {
                 Texture3D tex = null;
-                var cd = CurrentDisplay;
+                var cd = exmanager.el.ex.Display_ID.GetDisplay(config.Display);
                 if (cd != null)
                 {
                     if (cd.PrepareCLUT())
@@ -429,22 +408,23 @@ namespace Experica.Command
             pause.interactable = true;
             consolepanel.Log("Experiment Started.");
 
-            // By default, Command is the server which just need to run as fast as possible, whereas the 
-            // connected Environment presenting the final stimuli.
+            // By default, Command need to run as fast as possible, whereas the connected Environment presenting the final stimuli.
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 0;
-            QualitySettings.maxQueuedFrames = 0;
+            QualitySettings.maxQueuedFrames = 1;
             if (!canvas.activeSelf)
             {
                 Cursor.visible = false;
                 if (Screen.fullScreen)
                 {
-                    // FullScreen Viewport maybe used to present the final stimuli without any connected Environment.
+                    // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
                     QualitySettings.vSyncCount = config.VSyncCount;
                     QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
                 }
             }
             Time.fixedDeltaTime = config.FixedDeltaTime;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
             // Get Lowest GC Intrusiveness
             GCSettings.LatencyMode = GCLatencyMode.LowLatency;
@@ -522,8 +502,9 @@ namespace Experica.Command
 
             // Return Normal
             Cursor.visible = true;
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 2;
+            QualitySettings.maxQueuedFrames = 1;
             Time.fixedDeltaTime = 0.02f;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;

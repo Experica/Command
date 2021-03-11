@@ -441,7 +441,7 @@ namespace Experica
             var al = experimenter.Split(',', ';').Where(i => config.ExperimenterAddress.ContainsKey(i)).Select(i => config.ExperimenterAddress[i]).ToArray();
             if (al != null && al.Length > 0)
             {
-                addresses = String.Join(",", al);
+                addresses = string.Join(",", al);
             }
             return addresses;
         }
@@ -541,13 +541,22 @@ namespace Experica
             MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public static double? DisplayLatency(this string displayid, Dictionary<string, Display> displays)
+        public static Display GetDisplay(this string displayid, Dictionary<string,Display> displays)
         {
             if (!string.IsNullOrEmpty(displayid) && displays != null && displays.ContainsKey(displayid))
             {
-                var d = displays[displayid];
-                if (d == null) return null;
-                if (d.Latency > 0) return d.Latency;
+                return displays[displayid];
+            }
+            Debug.LogWarning($"Display ID: {displayid} can not be found.");
+            return null;
+        }
+
+        public static double? DisplayLatency(this string displayid, Dictionary<string, Display> displays)
+        {
+            var d = displayid.GetDisplay(displays);
+            if (d!=null)
+            {
+                if (d.Latency > 0) { return d.Latency; }
                 return Math.Max(d.RiseLag, d.FallLag);
             }
             return null;
@@ -558,7 +567,7 @@ namespace Experica
             return a * Math.Pow(x, gamma) + c;
         }
 
-        public static double InverseGammaFunc(double x, double gamma, double a = 1, double c = 0)
+        public static double CounterGammaFunc(double x, double gamma, double a = 1, double c = 0)
         {
             return a * Math.Pow(x, 1 / gamma) + c;
         }
@@ -572,7 +581,7 @@ namespace Experica
                 gamma = param.Item1; amp = param.Item2; cons = param.Item3;
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
             return false;
         }
 
@@ -592,7 +601,7 @@ namespace Experica
                 }
                 return false;
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
             return false;
         }
 
@@ -614,20 +623,32 @@ namespace Experica
             for (var j = 0; j < colors.Count; j++)
             {
                 var c = colors[j]; var i = intensities[j];
-                if (c.g == 0 && c.b == 0)
+                if (c.r == 0 && c.g == 0 && c.b == 0)
                 {
                     rs.Add(c.r);
                     rys.Add(i);
-                }
-                if (c.r == 0 && c.b == 0)
-                {
                     gs.Add(c.g);
                     gys.Add(i);
-                }
-                if (c.r == 0 && c.g == 0)
-                {
                     bs.Add(c.b);
                     bys.Add(i);
+                }
+                else
+                {
+                    if (c.g == 0 && c.b == 0)
+                    {
+                        rs.Add(c.r);
+                        rys.Add(i);
+                    }
+                    if (c.r == 0 && c.b == 0)
+                    {
+                        gs.Add(c.g);
+                        gys.Add(i);
+                    }
+                    if (c.r == 0 && c.g == 0)
+                    {
+                        bs.Add(c.b);
+                        bys.Add(i);
+                    }
                 }
             }
             if (issort)
@@ -654,23 +675,38 @@ namespace Experica
             for (var j = 0; j < colors.Count; j++)
             {
                 var c = colors[j]; var wl = wls[j]; var wli = wlis[j];
-                if (c.g == 0 && c.b == 0)
+                if (c.r == 0 && c.g == 0 && c.b == 0)
                 {
                     rs.Add(c.r);
                     rwls.Add(wl);
                     rwlis.Add(wli);
-                }
-                if (c.r == 0 && c.b == 0)
-                {
                     gs.Add(c.g);
                     gwls.Add(wl);
                     gwlis.Add(wli);
-                }
-                if (c.r == 0 && c.g == 0)
-                {
                     bs.Add(c.b);
                     bwls.Add(wl);
                     bwlis.Add(wli);
+                }
+                else
+                {
+                    if (c.g == 0 && c.b == 0)
+                    {
+                        rs.Add(c.r);
+                        rwls.Add(wl);
+                        rwlis.Add(wli);
+                    }
+                    if (c.r == 0 && c.b == 0)
+                    {
+                        gs.Add(c.g);
+                        gwls.Add(wl);
+                        gwlis.Add(wli);
+                    }
+                    if (c.r == 0 && c.g == 0)
+                    {
+                        bs.Add(c.b);
+                        bwls.Add(wl);
+                        bwlis.Add(wli);
+                    }
                 }
             }
             x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
@@ -678,12 +714,12 @@ namespace Experica
             y = new Dictionary<string, double[][]>() { { "R", rwlis.ToArray() }, { "G", gwlis.ToArray() }, { "B", bwlis.ToArray() } };
         }
 
-        public static Texture3D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, int n)
+        public static Texture3D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, double ra, double ga, double ba, double rc, double gc, double bc, int n)
         {
             var xx = Generate.LinearSpaced(n, 0, 1);
-            var riy = Generate.Map(xx, i => (float)InverseGammaFunc(i, rgamma));
-            var giy = Generate.Map(xx, i => (float)InverseGammaFunc(i, ggamma));
-            var biy = Generate.Map(xx, i => (float)InverseGammaFunc(i, bgamma));
+            var riy = Generate.Map(xx, i => (float)CounterGammaFunc(i, rgamma,ra,rc));
+            var giy = Generate.Map(xx, i => (float)CounterGammaFunc(i, ggamma,ga,gc));
+            var biy = Generate.Map(xx, i => (float)CounterGammaFunc(i, bgamma,ba,bc));
 
             var clut = new Texture3D(n, n, n, TextureFormat.RGB24, false);
             for (var r = 0; r < n; r++)
@@ -723,7 +759,7 @@ namespace Experica
         }
 
         /// <summary>
-        /// Prepare Color Look-Up Table based on Display R,G,B intensity measurement
+        /// Prepare Color Look-Up Table based on display R,G,B intensity measurement
         /// </summary>
         /// <param name="display"></param>
         /// <param name="forceprepare"></param>
@@ -743,7 +779,7 @@ namespace Experica
                     GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
                     GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
                     GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
-                    display.CLUT = GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, display.CLUTSize);
+                    display.CLUT = GenerateRGBGammaCLUT(rgamma, ggamma, bgamma,ra,ga,ba,rc,gc,bc, display.CLUTSize);
                     break;
                 case DisplayFitType.LinearSpline:
                 case DisplayFitType.CubicSpline:

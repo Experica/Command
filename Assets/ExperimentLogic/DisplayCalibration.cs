@@ -133,6 +133,7 @@ namespace Experica
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            spectroradiometer?.Dispose();
             iplot?.Dispose();
             splot?.Dispose();
         }
@@ -232,10 +233,10 @@ namespace Experica
                             switch ((string)ex.GetParam("Measure"))
                             {
                                 case "Intensity":
-                                    iplot.Visualize(imeasurement, ex.GetParam("FitType"));
+                                    iplot?.Visualize(imeasurement, ex.GetParam("FitType"));
                                     break;
                                 case "Spectral":
-                                    splot.Visualize(smeasurement);
+                                    splot?.Visualize(smeasurement);
                                     break;
                             }
                         }
@@ -277,9 +278,9 @@ namespace Experica
                     ryy = Generate.Map(xx, i => Extension.GammaFunc(i, rgamma, ra, rc));
                     gyy = Generate.Map(xx, i => Extension.GammaFunc(i, ggamma, ga, gc));
                     byy = Generate.Map(xx, i => Extension.GammaFunc(i, bgamma, ba, bc));
-                    riy = Generate.Map(xx, i => Extension.InverseGammaFunc(i, rgamma, ra, rc));
-                    giy = Generate.Map(xx, i => Extension.InverseGammaFunc(i, ggamma, ga, gc));
-                    biy = Generate.Map(xx, i => Extension.InverseGammaFunc(i, bgamma, ba, bc));
+                    riy = Generate.Map(xx, i => Extension.CounterGammaFunc(i, rgamma, ra, rc));
+                    giy = Generate.Map(xx, i => Extension.CounterGammaFunc(i, ggamma, ga, gc));
+                    biy = Generate.Map(xx, i => Extension.CounterGammaFunc(i, bgamma, ba, bc));
                     break;
                 case DisplayFitType.LinearSpline:
                 case DisplayFitType.CubicSpline:

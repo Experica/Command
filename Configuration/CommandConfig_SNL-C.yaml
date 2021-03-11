@@ -89,7 +89,7 @@ Display:
     Latency: 40
     RiseLag: 1
     FallLag: 12
-    CLUTSize: 20
+    CLUTSize: 32
     FitType: LinearSpline
     IntensityMeasurement: {}
     SpectralMeasurement: {}

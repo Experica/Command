@@ -57,6 +57,9 @@ namespace Experica
         /// </summary>
         [SyncVar(hook = "onbgcolor")]
         public Color BGColor = Color.gray;
+        /// <summary>
+        /// Turn On/Off postprocessing of tonemapping
+        /// </summary>
         [SyncVar(hook = "onclut")]
         public bool CLUT = true;
 
@@ -89,7 +92,7 @@ namespace Experica
         public Action OnCameraChange;
         Camera camera;
         HDAdditionalCameraData camerahddata;
-        Volume postprocessvolume;
+        Volume postprocessing;
 #if COMMAND
         NetManager netmanager;
 #endif
@@ -106,7 +109,7 @@ namespace Experica
             netmanager = FindObjectOfType<NetManager>();
             OnCameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
-            postprocessvolume = gameObject.GetComponent<Volume>();
+            postprocessing = gameObject.GetComponent<Volume>();
         }
 
         void onscreentoeye(float d)
@@ -139,7 +142,7 @@ namespace Experica
         void onclut(bool isclut)
         {
             Tonemapping tonemapping;
-            if (postprocessvolume.profile.TryGet(out tonemapping))
+            if (postprocessing.profile.TryGet(out tonemapping))
             {
                 tonemapping.active = isclut;
 #if COMMAND
@@ -162,7 +165,7 @@ namespace Experica
         {
 #if ENVIRONMENT
             Tonemapping tonemapping;
-            if (postprocessvolume.profile.TryGet(out tonemapping))
+            if (postprocessing.profile.TryGet(out tonemapping))
             {
                 var tex = new Texture3D(size, size, size, TextureFormat.RGB24, false);
                 tex.SetPixelData(clut, 0);

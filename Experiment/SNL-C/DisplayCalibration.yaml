@@ -1,43 +1,48 @@
 ID: DisplayCalibration
 Name: DisplayCalibration
 Designer: Alex
-Experimenter: Alex
+Experimenter: PL
 Log: 
-Subject_ID: AF5
-Subject_Name: AF5
+Subject_ID: Test
+Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 6
+Subject_Age: 13
 Subject_Size: 0 0 0
-Subject_Weight: 100
+Subject_Weight: 6.75
 Subject_Log: 
-EnvPath: Bar
+EnvPath: MarkerQuad
 EnvParam:
-  ScreenHalfHeight@Camera@OrthoCamera: 15
-  ScreenToEye@Camera@OrthoCamera: 57
-  ScreenAspect@Camera@OrthoCamera: 1.77777779
-  CLUT@Camera@OrthoCamera: false
-  BGColor@BackGround@BackGround: 0.5 0.5 0.5 1
-  BGSize@BackGround@BackGround: 100 100 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 50
-  Size@Quad@Quad: 50 50 1
-  Color@Quad@Quad: 0.4746 0 0 1
+  Diameter@Quad@Quad: 10
+  Size@Quad@Quad: 10 10 1
+  Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
-  Sigma@Quad@Quad: 0.150000006
+  MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
+  Visible@Quad@Quad: true
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
-CondPath: Condition\RGBColor.yaml
+CondPath: Condition\RGBLevel.yaml
 Cond: 
 ExLogicPath: Experica.DisplayCalibration
-RecordSession: V1a
-RecordSite: 1000
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -56,7 +61,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: COND
 CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
@@ -76,19 +81,18 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - TimerDriftSpeed
-- DisplayLatency
 - ResponseDelay
 - Display_ID
 - NotifyParam
 EnvInheritParam:
-- ScreenHalfHeight@Camera@OrthoCamera
-- ScreenToEye@Camera@OrthoCamera
-- ScreenAspect@Camera@OrthoCamera
 - MarkerSize@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- BGSize@BackGround@BackGround
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
 Param:
   PRModel: PR701
   COM: COM1
@@ -98,7 +102,7 @@ Param:
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
-  - ParallelPort
+  - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1

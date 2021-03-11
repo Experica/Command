@@ -287,9 +287,7 @@ namespace Experica
 
         public void PrepareCondition(bool forceprepare = true)
         {
-            if (forceprepare == false && condmanager.finalcond != null)
-            { }
-            else
+            if (forceprepare == true || condmanager.finalcond == null)
             {
                 GenerateFinalCondition();
             }
