@@ -19,6 +19,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
 using System.Diagnostics;
 using System;
 
@@ -26,60 +27,65 @@ namespace Experica
 {
     public class Timer : Stopwatch
     {
+        public bool IsFrameTime = false;
+        double ft0;
+
+        public new void Restart()
+        {
+            ft0 = Time.unscaledTimeAsDouble;
+            base.Restart();
+        }
+
         public double ElapsedSecond
         {
-            get { return Elapsed.TotalSeconds; }
+            get { return IsFrameTime ? Time.unscaledTimeAsDouble - ft0 : Elapsed.TotalSeconds; }
         }
 
         public double ElapsedMillisecond
         {
 
-            get { return Elapsed.TotalMilliseconds; }
+            get { return ElapsedSecond * 1000; }
         }
 
-        public void Timeout(double timeout_ms)
+        public void TimeoutSecond(double timeout_s)
         {
-            if (!IsRunning)
-            {
-                Start();
-            }
-            var start = ElapsedMillisecond;
-            while ((ElapsedMillisecond - start) < timeout_ms)
+            var start = Time.realtimeSinceStartupAsDouble;
+            while ((Time.realtimeSinceStartupAsDouble - start) < timeout_s)
             {
             }
         }
 
-        public TimeoutResult Timeout<T>(Func<T, object> function, T argument, double timeout_ms = 1.0)
+        public void TimeoutMillisecond(double timeout_ms)
         {
-            if (!IsRunning)
-            {
-                Start();
-            }
-            var start = ElapsedMillisecond;
-            while ((ElapsedMillisecond - start) < timeout_ms)
+            TimeoutSecond(timeout_ms / 1000);
+        }
+
+        public TimeoutResult<Tout> TimeoutSecond<Tin, Tout>(Func<Tin, Tout> function, Tin argument, double timeout_s) where Tout : class
+        {
+            var start = Time.realtimeSinceStartupAsDouble;
+            while ((Time.realtimeSinceStartupAsDouble - start) < timeout_s)
             {
                 if (function != null)
                 {
                     var r = function(argument);
                     if (r != null)
                     {
-                        return new TimeoutResult(r, ElapsedMillisecond - start);
+                        return new TimeoutResult<Tout>() { Result = r, ElapsedMillisecond = (Time.realtimeSinceStartupAsDouble - start) * 1000 };
                     }
                 }
             }
-            return new TimeoutResult(null, ElapsedMillisecond - start);
+            return new TimeoutResult<Tout>() { Result = null, ElapsedMillisecond = (Time.realtimeSinceStartupAsDouble - start) * 1000 };
+        }
+
+        public TimeoutResult<Tout> TimeoutMillisecond<Tin, Tout>(Func<Tin, Tout> function, Tin argument, double timeout_ms) where Tout : class
+        {
+            return TimeoutSecond(function, argument, timeout_ms / 1000);
         }
     }
 
-    public class TimeoutResult
+    public class TimeoutResult<T> where T : class
     {
-        public object Result;
+        public T Result;
         public double ElapsedMillisecond;
-
-        public TimeoutResult(object result, double time_ms)
-        {
-            Result = result;
-            ElapsedMillisecond = time_ms;
-        }
     }
 }

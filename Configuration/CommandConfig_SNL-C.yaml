@@ -14,7 +14,7 @@ AntiAliasing: 2
 AnisotropicFilterLevel: 5
 FixedDeltaTime: 1000000
 VSyncCount: 1
-MaxQueuedFrames: 0
+MaxQueuedFrames: 2
 FullScreenMode: FullScreenWindow
 IsShowInactiveEnvParam: false
 IsShowEnvParamFullName: false

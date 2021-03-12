@@ -48,14 +48,14 @@ namespace Experica
                 message and change file path, all of which need time to complete.
                 Set record before file path change completion may not save to correct file path.
                 */
-                timer.Timeout(config.NotifyLatency);
+                timer.TimeoutMillisecond(config.NotifyLatency);
                 recorder.RecordStatus = RecordStatus.Recording;
                 /* 
                 SpikeGLX recorder set record status through network and remote server receive
                 message and change record state, all of which need time to complete.
                 Begin experiment before record started may lose information.
                 */
-                timer.Timeout(config.NotifyLatency);
+                timer.TimeoutMillisecond(config.NotifyLatency);
             }
             base.StartExperimentTimeSync();
         }
@@ -68,7 +68,7 @@ namespace Experica
             message and change record state, all of which need time to complete.
             Here wait recording ended before further processing.
             */
-            timer.Timeout(config.NotifyLatency);
+            timer.TimeoutMillisecond(config.NotifyLatency);
             base.StopExperimentTimeSync();
         }
     }

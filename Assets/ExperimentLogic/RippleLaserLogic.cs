@@ -125,7 +125,7 @@ namespace Experica
         {
             laser?.LaserOn();
             laser2?.LaserOn();
-            timer.Timeout(ex.GetParam("LaserOnLatency").Convert<int>());
+            timer.TimeoutMillisecond(ex.GetParam("LaserOnLatency").Convert<int>());
             base.StartExperimentTimeSync();
         }
 

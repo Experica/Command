@@ -408,16 +408,19 @@ namespace Experica.Command
             pause.interactable = true;
             consolepanel.Log("Experiment Started.");
 
-            // By default, Command need to run as fast as possible, whereas the connected Environment presenting the final stimuli.
+            // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
+            // whereas the connected Environment presenting the final stimuli.
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 0;
-            QualitySettings.maxQueuedFrames = 1;
+            QualitySettings.maxQueuedFrames = 2;
+            exmanager.el.timer.IsFrameTime = false;
             if (!canvas.activeSelf)
             {
                 Cursor.visible = false;
                 if (Screen.fullScreen)
                 {
                     // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
+                    exmanager.el.timer.IsFrameTime = true;
                     QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
                     QualitySettings.vSyncCount = config.VSyncCount;
                     QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
@@ -504,7 +507,7 @@ namespace Experica.Command
             Cursor.visible = true;
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 1;
+            QualitySettings.maxQueuedFrames = 2;
             Time.fixedDeltaTime = 0.02f;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;

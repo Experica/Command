@@ -99,7 +99,7 @@ namespace Experica
                 sp.WriteLine(cmd);
             }
 
-            var hr = timer.Timeout(x =>
+            var hr = timer.TimeoutMillisecond(x =>
             {
                 var r = x.Read();
                 var i = r.LastIndexOf("\r\n");
@@ -178,7 +178,7 @@ namespace Experica
                 case "5":
                     cmdresp("M" + datareportformat, 0); // cmd and return, without reading response
                      timer = new Timer();
-                    timer.Timeout(timeout_ms); // need at least 8s at BaudRate:9600
+                    timer.TimeoutMillisecond(timeout_ms); // need at least 8s at BaudRate:9600
                     hr = cmdresp("", timeout_ms, false); // now the full response should be returned
                     if (!string.IsNullOrEmpty(hr))
                     {

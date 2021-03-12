@@ -252,7 +252,7 @@ namespace Experica
         {
             var timer = new Timer();
             BitOut(bit, true);
-            timer.Timeout(duration_ms);
+            timer.TimeoutMillisecond(duration_ms);
             BitOut(bit, false);
         }
 

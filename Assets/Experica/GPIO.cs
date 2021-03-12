@@ -96,7 +96,7 @@ namespace Experica
             sp.DiscardInBuffer();
             sp.receiveddata = "";
             sp.WriteLine(cmd);
-            var hr = timer.Timeout(x =>
+            var hr = timer.TimeoutMillisecond(x =>
             {
                 var r = x.Read();
                 var i = r.IndexOf(cmd);
@@ -462,7 +462,7 @@ namespace Experica
             switch (bitwave[bit])
             {
                 case DigitalWaveType.PWM:
-                    timer.Timeout(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
+                    timer.TimeoutMillisecond(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
                     while (true)
                     {
                         gpio.BitOut(bit, true);
@@ -503,7 +503,7 @@ namespace Experica
                         }
                     }
                 case DigitalWaveType.PoissonSpike:
-                    timer.Timeout(bitlatency_ms[bit] + bitphase[bit] / bitspikerate[bit]);
+                    timer.TimeoutMillisecond(bitlatency_ms[bit] + bitphase[bit] / bitspikerate[bit]);
                     var isid = new Exponential(bitspikerate[bit], rng);
                     while (true)
                     {

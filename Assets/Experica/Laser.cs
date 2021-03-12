@@ -89,7 +89,7 @@ namespace Experica
             sp.DiscardInBuffer();
             sp.receiveddata = "";
             sp.WriteLine("?" + cmd);
-            var hr = timer.Timeout(x =>
+            var hr = timer.TimeoutMillisecond(x =>
             {
                 var r = x.Read();
                 var i = r.LastIndexOf("!" + cmd);
@@ -219,7 +219,7 @@ namespace Experica
             sp.DiscardInBuffer();
             sp.receiveddata = "";
             sp.WriteLine(cmd);
-            var hr = timer.Timeout(x =>
+            var hr = timer.TimeoutMillisecond(x =>
             {
                 var r = x.Read();
                 var i = r.IndexOf('\r');
