@@ -28,8 +28,14 @@ namespace Experica
     {
         protected override void OnStartExperiment()
         {
-            recorder = Extension.GetSpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
+            recorder = Extension.GetSpikeGLXRecorder(config.RecordHost, config.RecordHostPort);
             base.OnStartExperiment();
+        }
+
+        protected override void OnExperimentStopped()
+        {
+            recorder = null;
+            base.OnExperimentStopped();
         }
 
         protected override void StartExperimentTimeSync()

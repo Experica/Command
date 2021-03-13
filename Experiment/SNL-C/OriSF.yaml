@@ -1,7 +1,7 @@
 ID: OriSF
 Name: OriSF
 Designer: Alex
-Experimenter: PL
+Experimenter: Alex
 Log: Left Eye
 Subject_ID: Test
 Subject_Name: AF6
@@ -13,20 +13,20 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -24.21 12.74 -1000
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 60
+  Ori@GratingQuad@GratingQuad: 150
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -40,8 +40,8 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 5
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 3.886E-16 5.551E-16 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  MinColor@GratingQuad@GratingQuad: 0 0.6462 0.4939 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.3538 0.5061 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -50,7 +50,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: -2.104 -0.6258 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
 Cond: 
@@ -110,7 +110,7 @@ EnvInheritParam:
 - CLUT@OrthoCamera@OrthoCamera
 Param:
   ColorSpace: DKL
-  Color: X
+  Color: Y
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -124,4 +124,4 @@ Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: FULL
-SendMail: false
+SendMail: true

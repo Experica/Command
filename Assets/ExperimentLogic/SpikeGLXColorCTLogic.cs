@@ -25,7 +25,7 @@ using UnityEngine;
 namespace Experica
 {
     /// <summary>
-    /// Condition Test with SpikeGLX Data Acquisition System, and with Predefined Color
+    /// Condition Test with SpikeGLX Data Acquisition System, and Predefined Color
     /// </summary>
     public class SpikeGLXColorCTLogic : SpikeGLXCTLogic
     {

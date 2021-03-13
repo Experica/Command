@@ -499,7 +499,7 @@ namespace Experica.Command
             if (exmanager.el.ex.SendMail)
             {
                 var subject = "Experiment Stopped";
-                var body = $"{exmanager.el.ex.ID} finished in {exmanager.el.timer.Elapsed.ToString("g")}";
+                var body = $"{exmanager.el.ex.Subject_ID} finished {exmanager.el.ex.ID} in {exmanager.el.timer.Elapsed.ToString("g")}";
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
 

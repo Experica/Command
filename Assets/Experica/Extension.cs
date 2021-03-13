@@ -1097,7 +1097,7 @@ namespace Experica
         public static void Mail(this string to, string subject, string body)
         {
             if (string.IsNullOrEmpty(to)) return;
-            var smtp = new SmtpClient() { Host = "smtp.gmail.com", Port = 587, EnableSsl = true, Credentials = new NetworkCredential("vlabsys@gmail.com", "VLab$y$tem") };
+            var smtp = new SmtpClient() { Host = "smtp.gmail.com", Port = 587, EnableSsl = true, Credentials = new NetworkCredential("vlabsys@gmail.com", "Experica$y$tem") };
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             smtp.Send("vlabsys@gmail.com", to, subject, body);
         }

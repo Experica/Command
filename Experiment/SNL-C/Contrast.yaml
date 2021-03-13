@@ -1,9 +1,9 @@
 ID: Contrast
 Name: Contrast
 Designer: Alex
-Experimenter: PL
+Experimenter: Alex
 Log: 
-Subject_ID: AF6
+Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -13,17 +13,17 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.31014204
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.32 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomLeft
+  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -35,9 +35,9 @@ EnvParam:
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 0.300000012
+  Contrast@GratingQuad@GratingQuad: 0.800000012
   SpatialFreq@GratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@GratingQuad@GratingQuad: 3
+  TemporalFreq@GratingQuad@GratingQuad: 2
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0.3672 0.6168 0 1
@@ -64,10 +64,10 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
-Input: None
-PreICI: 150
+Input: false
+PreICI: 250
 CondDur: 500
-SufICI: 350
+SufICI: 250
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -93,33 +93,10 @@ ExInheritParam:
 - RecordSite
 - DataDir
 - Experimenter
-- Latency
 - TimerDriftSpeed
-- Delay
-- DisplayLatency
 - ResponseDelay
 - Display_ID
 EnvInheritParam:
-- MarkerSize@ENMarker@Marker
-- MarkerCorner@ENMarker@Marker
-- ScreenHalfHeight@ENCamera@OrthoCamera
-- ScreenToEye@ENCamera@OrthoCamera
-- Marker@Showroom@ShowroomManager
-- SpatialFreq@ENGratingQuad@GratingQuad
-- TemporalFreq@ENGratingQuad@GratingQuad
-- Ori@ENGratingQuad@GratingQuad
-- Diameter@ENGratingQuad@GratingQuad
-- Position@ENGratingQuad@GratingQuad
-- MarkOnColor@ENMarker@Marker
-- MarkOffColor@ENMarker@Marker
-- ScreenAspect@ENCamera@OrthoCamera
-- SpatialFreq@ENGratingQuad@GratingQuad$ShowroomManager
-- TemporalFreq@ENGratingQuad@GratingQuad$ShowroomManager
-- Ori@ENGratingQuad@GratingQuad$ShowroomManager
-- Diameter@ENGratingQuad@GratingQuad$ShowroomManager
-- ScreenHalfHeight@Camera@OrthoCamera
-- ScreenToEye@Camera@OrthoCamera
-- ScreenAspect@Camera@OrthoCamera
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker

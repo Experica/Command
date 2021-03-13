@@ -26,7 +26,7 @@ using System.Linq;
 namespace Experica
 {
     /// <summary>
-    /// Image Test with SpikeGLX Data Acquisition System, and with Predefined Color
+    /// Image Test with SpikeGLX Data Acquisition System, and Predefined Color
     /// </summary>
     public class SpikeGLXImageLogic : SpikeGLXCTLogic
     {
