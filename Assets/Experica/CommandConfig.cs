@@ -47,6 +47,7 @@ namespace Experica
         public float FixedDeltaTime { get; set; } = 1000000f;
         public int VSyncCount { get; set; } = 1;
         public int MaxQueuedFrames { get; set; } = 2;
+        public bool FrameTimer { get; set; } = false;
         public FullScreenMode FullScreenMode { get; set; } = FullScreenMode.FullScreenWindow;
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;

@@ -34,6 +34,8 @@ namespace Experica.Command
             blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;
         public Toggle forceprepare;
+        // this control how many condition the panel can show, too many in current UGUI
+        // would serverly hurt the perfermance(may be better in new UI Toolkit)
         public int maxcondshow = 500;
 
         public void OnConditionPanel(bool ison)

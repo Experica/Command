@@ -28,47 +28,48 @@ namespace Experica
     {
         protected override void OnStartExperiment()
         {
-            recorder = new SpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
+            recorder = Extension.GetSpikeGLXRecorder(host: config.RecordHost, port: config.RecordHostPort);
             base.OnStartExperiment();
-        }
-
-        protected override void OnExperimentStopped()
-        {
-            base.OnExperimentStopped();
-            recorder?.Dispose();
         }
 
         protected override void StartExperimentTimeSync()
         {
             if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
             {
-                recorder.RecordPath = ex.GetDataPath();
-                /* 
-                SpikeGLX recorder set path through network and remote server receive
-                message and change file path, all of which need time to complete.
-                Set record before file path change completion may not save to correct file path.
-                */
-                timer.TimeoutMillisecond(config.NotifyLatency);
-                recorder.RecordStatus = RecordStatus.Recording;
-                /* 
-                SpikeGLX recorder set record status through network and remote server receive
-                message and change record state, all of which need time to complete.
-                Begin experiment before record started may lose information.
-                */
-                timer.TimeoutMillisecond(config.NotifyLatency);
+                if (recorder != null)
+                {
+                    recorder.RecordPath = ex.GetDataPath();
+                    /* 
+                    SpikeGLX recorder set path through network and remote server receive
+                    message and change file path, all of which need time to complete.
+                    Set record before file path change completion may not save to correct file path.
+                    */
+                    timer.TimeoutMillisecond(config.NotifyLatency);
+
+                    recorder.RecordStatus = RecordStatus.Recording;
+                    /* 
+                    SpikeGLX recorder set record status through network and remote server receive
+                    message and change record state, all of which need time to complete.
+                    Begin experiment before record started may lose information.
+                    */
+                    timer.TimeoutMillisecond(config.NotifyLatency);
+                }
             }
             base.StartExperimentTimeSync();
         }
 
         protected override void StopExperimentTimeSync()
         {
-            recorder.RecordStatus = RecordStatus.Stopped;
-            /* 
-            SpikeGLX recorder set record status through network and remote server receive
-            message and change record state, all of which need time to complete.
-            Here wait recording ended before further processing.
-            */
-            timer.TimeoutMillisecond(config.NotifyLatency);
+            if (recorder != null)
+            {
+                recorder.RecordStatus = RecordStatus.Stopped;
+                /* 
+                SpikeGLX recorder set record status through network and remote server receive
+                message and change record state, all of which need time to complete.
+                Here wait recording ended before further processing.
+                */
+                timer.TimeoutMillisecond(config.NotifyLatency);
+            }
             base.StopExperimentTimeSync();
         }
     }

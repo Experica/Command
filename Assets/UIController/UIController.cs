@@ -420,7 +420,7 @@ namespace Experica.Command
                 if (Screen.fullScreen)
                 {
                     // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
-                    exmanager.el.timer.IsFrameTime = true;
+                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
                     QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
                     QualitySettings.vSyncCount = config.VSyncCount;
                     QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;

@@ -76,6 +76,10 @@ namespace Experica
             typeof(float),typeof(double),typeof(decimal)
         };
 
+#if COMMAND
+        static IRecorder recorder = null;
+#endif
+
         static Extension()
         {
             TObject = typeof(object);
@@ -389,6 +393,41 @@ namespace Experica
         //}
 
 #if COMMAND
+        public static IRecorder GetSpikeGLXRecorder(string host = "localhost", int port = 4142)
+        {
+            if (recorder == null)
+            {
+                var r = new SpikeGLXRecorder(host, port);
+                if (r.IsConnected) { r.SetRecordingBeep(); recorder = r; }
+                return recorder;
+            }
+            else
+            {
+                if (recorder.GetType() == typeof(SpikeGLXRecorder))
+                {
+                    var r = recorder as SpikeGLXRecorder;
+                    if (r.IsConnected)
+                    {
+                        if (r.Host == host && r.Port == port)
+                        {
+                            return recorder;
+                        }
+                        r.Disconnect();
+                    }
+                    if (r.Connect(host, port))
+                    { r.SetRecordingBeep(); }
+                    else { recorder = null; }
+                    return recorder;
+                }
+                else
+                {
+                    recorder.Dispose();
+                    recorder = null;
+                    return GetSpikeGLXRecorder(host, port);
+                }
+            }
+        }
+
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
         {
             foreach (var f in conddesign.Keys.ToArray())
@@ -541,7 +580,7 @@ namespace Experica
             MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public static Display GetDisplay(this string displayid, Dictionary<string,Display> displays)
+        public static Display GetDisplay(this string displayid, Dictionary<string, Display> displays)
         {
             if (!string.IsNullOrEmpty(displayid) && displays != null && displays.ContainsKey(displayid))
             {
@@ -554,7 +593,7 @@ namespace Experica
         public static double? DisplayLatency(this string displayid, Dictionary<string, Display> displays)
         {
             var d = displayid.GetDisplay(displays);
-            if (d!=null)
+            if (d != null)
             {
                 if (d.Latency > 0) { return d.Latency; }
                 return Math.Max(d.RiseLag, d.FallLag);
@@ -717,9 +756,9 @@ namespace Experica
         public static Texture3D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, double ra, double ga, double ba, double rc, double gc, double bc, int n)
         {
             var xx = Generate.LinearSpaced(n, 0, 1);
-            var riy = Generate.Map(xx, i => (float)CounterGammaFunc(i, rgamma,ra,rc));
-            var giy = Generate.Map(xx, i => (float)CounterGammaFunc(i, ggamma,ga,gc));
-            var biy = Generate.Map(xx, i => (float)CounterGammaFunc(i, bgamma,ba,bc));
+            var riy = Generate.Map(xx, i => (float)CounterGammaFunc(i, rgamma, ra, rc));
+            var giy = Generate.Map(xx, i => (float)CounterGammaFunc(i, ggamma, ga, gc));
+            var biy = Generate.Map(xx, i => (float)CounterGammaFunc(i, bgamma, ba, bc));
 
             var clut = new Texture3D(n, n, n, TextureFormat.RGB24, false);
             for (var r = 0; r < n; r++)
@@ -779,7 +818,7 @@ namespace Experica
                     GammaFit(x["R"], y["R"], out rgamma, out ra, out rc);
                     GammaFit(x["G"], y["G"], out ggamma, out ga, out gc);
                     GammaFit(x["B"], y["B"], out bgamma, out ba, out bc);
-                    display.CLUT = GenerateRGBGammaCLUT(rgamma, ggamma, bgamma,ra,ga,ba,rc,gc,bc, display.CLUTSize);
+                    display.CLUT = GenerateRGBGammaCLUT(rgamma, ggamma, bgamma, ra, ga, ba, rc, gc, bc, display.CLUTSize);
                     break;
                 case DisplayFitType.LinearSpline:
                 case DisplayFitType.CubicSpline:

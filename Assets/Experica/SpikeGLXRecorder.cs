@@ -43,7 +43,8 @@ namespace Experica
                 Debug.LogWarning($"Can't connect to SpikeGLX, make sure SpikeGLX command server is started and the Host: {host} / Port: {port} match the server.");
                 return;
             }
-            SetRecordingBeep(1046, 700, 880, 800);
+            Host = host;
+            Port = port;
         }
 
         ~SpikeGLXRecorder()
@@ -66,23 +67,21 @@ namespace Experica
             lock (apilock)
             {
                 Disconnect();
-                if (disposing)
+                lock (spikeglxlock)
                 {
-                    lock (spikeglxlock)
-                    {
-                        spikeglx.Dispose();
-                    }
+                    spikeglx.Dispose();
+                    spikeglx = null;
                 }
             }
         }
 
-        void SetRecordingBeep(int onfreq, int ondur_ms, int offfreq, int offdur_ms)
+        public void SetRecordingBeep(int onfreq = 1046, int ondur_ms = 700, int offfreq = 880, int offdur_ms = 800)
         {
             try
             {
                 lock (spikeglxlock)
                 {
-                    spikeglx.SetRecordingBeep(0, onfreq, ondur_ms, offfreq, offdur_ms);
+                    spikeglx?.SetRecordingBeep(0, onfreq, ondur_ms, offfreq, offdur_ms);
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -93,6 +92,12 @@ namespace Experica
             throw new NotImplementedException();
         }
 
+        public string Host { get; private set; }
+
+        public int Port { get; private set; }
+
+        public bool IsConnected { get; private set; }
+
         public bool Connect(string host = "localhost", int port = 4142)
         {
             bool r = false;
@@ -100,10 +105,11 @@ namespace Experica
             {
                 lock (spikeglxlock)
                 {
-                    r = ((MWLogicalArray)spikeglx.Connect(1, host, port)[0]).ToVector()[0];
+                    r = ((MWLogicalArray)spikeglx?.Connect(1, host, port)[0]).ToVector()[0];
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
+            IsConnected = r;
             return r;
         }
 
@@ -118,7 +124,7 @@ namespace Experica
             {
                 lock (spikeglxlock)
                 {
-                    spikeglx.Disconnect();
+                    spikeglx?.Disconnect();
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
@@ -136,7 +142,7 @@ namespace Experica
                 {
                     lock (spikeglxlock)
                     {
-                        spikeglx.SetFile(0, value);
+                        spikeglx?.SetFile(0, value);
                     }
                 }
                 catch (Exception e) { Debug.LogException(e); }
@@ -157,11 +163,11 @@ namespace Experica
                     {
                         if (value == RecordStatus.Recording)
                         {
-                            spikeglx.SetRecording(0, 1);
+                            spikeglx?.SetRecording(0, 1);
                         }
                         else if (value == RecordStatus.Stopped)
                         {
-                            spikeglx.SetRecording(0, 0);
+                            spikeglx?.SetRecording(0, 0);
                         }
                     }
                 }
