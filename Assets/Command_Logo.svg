@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -19,90 +16,9 @@
    inkscape:export-filename="C:\Users\Alex\Command\Assets\Resources\Command_Logo.png"
    inkscape:export-xdpi="96.000008"
    inkscape:export-ydpi="96.000008"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
   <defs
-     id="defs2">
-    <linearGradient
-       id="linearGradient6199"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#dd1331;stop-opacity:1;"
-         offset="0"
-         id="stop6197" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient6067"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#dd5832;stop-opacity:1;"
-         offset="0"
-         id="stop6065" />
-    </linearGradient>
-    <filter
-       style="color-interpolation-filters:sRGB"
-       inkscape:label="Drop Shadow"
-       id="filter4126">
-      <feFlood
-         flood-opacity="0.498039"
-         flood-color="rgb(0,0,0)"
-         result="flood"
-         id="feFlood4116" />
-      <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="in"
-         result="composite1"
-         id="feComposite4118" />
-      <feGaussianBlur
-         in="composite1"
-         stdDeviation="3"
-         result="blur"
-         id="feGaussianBlur4120" />
-      <feOffset
-         dx="5"
-         dy="5"
-         result="offset"
-         id="feOffset4122" />
-      <feComposite
-         in="SourceGraphic"
-         in2="offset"
-         operator="over"
-         result="composite2"
-         id="feComposite4124" />
-    </filter>
-    <filter
-       style="color-interpolation-filters:sRGB"
-       inkscape:label="Drop Shadow"
-       id="filter4138">
-      <feFlood
-         flood-opacity="0.498039"
-         flood-color="rgb(0,0,0)"
-         result="flood"
-         id="feFlood4128" />
-      <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="in"
-         result="composite1"
-         id="feComposite4130" />
-      <feGaussianBlur
-         in="composite1"
-         stdDeviation="3"
-         result="blur"
-         id="feGaussianBlur4132" />
-      <feOffset
-         dx="5"
-         dy="5"
-         result="offset"
-         id="feOffset4134" />
-      <feComposite
-         in="SourceGraphic"
-         in2="offset"
-         operator="over"
-         result="composite2"
-         id="feComposite4136" />
-    </filter>
-  </defs>
+     id="defs2" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -110,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.2413086"
-     inkscape:cx="419.11622"
-     inkscape:cy="44.783468"
+     inkscape:zoom="0.68252379"
+     inkscape:cx="486.61898"
+     inkscape:cy="478.67038"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -125,11 +41,12 @@
      showborder="true"
      borderlayer="false"
      inkscape:showpageshadow="true"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1368"
+     inkscape:window-height="850"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:document-rotation="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -149,7 +66,7 @@
      transform="translate(-400.78352,145.3077)"
      style="display:inline">
     <path
-       style="fill:#323232;fill-opacity:1;stroke:none;stroke-width:0.46323526;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4138)"
+       style="fill:#323232;fill-opacity:1;stroke:none;stroke-width:0.463;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4138)"
        d="m 536.6985,-124.75671 v 54.549649 a 49.888568,49.888568 0 0 1 35.6267,35.59627 h 54.4783 a 103.61472,103.61472 0 0 0 -90.105,-90.145919 z m -25.2186,0.0408 a 103.61472,103.61472 0 0 0 -90.14544,90.105099 h 54.54912 a 49.888568,49.888568 0 0 1 35.59632,-35.62675 z M 421.37475,-9.3927109 A 103.61472,103.61472 0 0 0 511.4799,80.753213 V 26.203559 A 49.888568,49.888568 0 0 1 475.8531,-9.3927109 Z m 150.91945,0 A 49.888568,49.888568 0 0 1 536.6985,26.234069 v 54.478324 a 103.61472,103.61472 0 0 0 90.1454,-90.1051039 z"
        id="path1279"
        inkscape:connector-curvature="0" />
