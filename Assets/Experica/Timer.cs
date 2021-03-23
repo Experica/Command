@@ -28,17 +28,68 @@ namespace Experica
     public class Timer : Stopwatch
     {
         public bool IsFrameTime = false;
-        double ft0;
+
+        double ftatstop = 0;
+        bool ftrunning = false;
+        double ft0 = 0;
+
+        public Timer(bool frametime = false)
+        {
+            IsFrameTime = frametime;
+        }
+
+        public new bool IsRunning
+        {
+            get
+            {
+                if (IsFrameTime) { return ftrunning; }
+                else { return base.IsRunning; }
+            }
+        }
+
+        public new void Start()
+        {
+            if (IsFrameTime)
+            {
+                ft0 = Time.timeAsDouble - ftatstop;
+                ftrunning = true;
+            }
+            else { base.Start(); }
+        }
+
+        public new void Stop()
+        {
+            if (IsFrameTime)
+            {
+                ftatstop = Time.timeAsDouble - ft0;
+                ftrunning = false;
+            }
+            else { base.Stop(); }
+        }
+
+        public new void Reset()
+        {
+            if (IsFrameTime)
+            {
+                ftatstop = 0;
+                ftrunning = false;
+            }
+            else { base.Reset(); }
+        }
 
         public new void Restart()
         {
-            ft0 = Time.unscaledTimeAsDouble;
-            base.Restart();
+            if (IsFrameTime)
+            {
+                ft0 = Time.timeAsDouble;
+                ftrunning = true;
+            }
+            else { base.Restart(); }
         }
 
         public double ElapsedSecond
         {
-            get { return IsFrameTime ? Time.unscaledTimeAsDouble - ft0 : Elapsed.TotalSeconds; }
+            get { return IsFrameTime ? (ftrunning ? Time.timeAsDouble - ft0 : ftatstop) : Elapsed.TotalSeconds; }
         }
 
         public double ElapsedMillisecond

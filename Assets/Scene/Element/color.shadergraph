@@ -460,6 +460,8 @@
         "m_GuidSerialized": "50e39f45-266c-4a71-930a-b8f9640410f2"
     },
     "m_Name": "Color",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_4E10550E",
     "m_OverrideReferenceName": "_color",
     "m_GeneratePropertyBlock": true,

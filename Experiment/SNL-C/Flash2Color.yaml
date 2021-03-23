@@ -13,17 +13,17 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -24.21 12.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0

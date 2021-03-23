@@ -28,10 +28,11 @@ using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.Interpolation;
 #if COMMAND
 using System.Windows.Forms;
-using MathNet.Numerics;
-using MathNet.Numerics.Interpolation;
 //using Microsoft.CodeAnalysis;
 //using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -65,6 +66,13 @@ namespace Experica
         public const uint ExDataVersion = 2;
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();
         static Dictionary<string, Dictionary<string, Texture2D>> imagedata = new Dictionary<string, Dictionary<string, Texture2D>>();
+        static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new Dictionary<string, Dictionary<string, Matrix<float>>>();
+
+        // Plants of the Unit Cube defined by a point and a corresponding normal, used for intersection of line and six faces of the Unit Cube
+        static Vector<float>[] UnitOriginCubePoints = new[] { CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f),
+                                                              CreateVector.Dense(3, 1f),CreateVector.Dense(3, 1f),CreateVector.Dense(3, 1f)};
+        static Vector<float>[] UnitOriginCubeNormals = new[] { CreateVector.Dense(new[] { 1f, 0f, 0f }), CreateVector.Dense(new[] { 0f, 1f, 0f }), CreateVector.Dense(new[] { 0f, 0f, 1f }),
+                                                               CreateVector.Dense(new[] { 1f, 0f, 0f }), CreateVector.Dense(new[] { 0f, 1f, 0f }), CreateVector.Dense(new[] { 0f, 0f, 1f })};
 
         static Type TObject, TString, TBool, TInt, TFloat, TDouble, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
@@ -1271,14 +1279,92 @@ namespace Experica
             if (File.Exists(file))
             {
                 var data = Yaml.ReadYamlFile<Dictionary<string, List<object>>>(file);
-                colordata[Display_ID] = data;
-                return data;
+                var cm = new Dictionary<string, Matrix<float>>();
+                foreach (var k in data.Keys)
+                {
+                    if (k.Contains("To") && data[k].Count == 16)
+                    {
+                        cm[k] = CreateMatrix.DenseOfColumnMajor(4, 4, data[k].Select(i => i.Convert<float>()));
+                    }
+                }
+                if (cm.Count > 0)
+                {
+                    colormatrix[Display_ID] = cm;
+                }
+                if (data.Count > 0)
+                {
+                    colordata[Display_ID] = data;
+                    return data;
+                }
+                else
+                {
+                    Debug.LogWarning("Color Data Empty.");
+                    return null;
+                }
             }
             else
             {
                 Debug.LogWarning($"Color Data: {file} Not Found.");
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Intersection point of a line and a plane.
+        /// points of a line are defined as a direction(Dₗ) through a point(Pₗ) : P = Pₗ + λDₗ , where λ is a scaler
+        /// points of a plane are defined as a plane through a point(Pₚ) and with normal vector(Nₚ) : Nₚᵀ(P - Pₚ) = 0 , where Nᵀ is the transpose of N
+        /// return point of intersection on direction
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static Vector<float> IntersectLinePlane(Vector<float> pl, Vector<float> dl, Vector<float> pp, Vector<float> np)
+        {
+            var nptdl = np.PointwiseMultiply(dl).Sum(); // Nₚ'*Dₗ
+            if (nptdl == 0f) { return null; } // line on the plane
+            var lam = np.PointwiseMultiply(pp - pl).Sum() / nptdl; // λ = Nₚ'*(Pₚ - Pₗ) / NₚᵀDₗ
+            if (lam < 0f) { return null; } // intersection point at opposite direction
+            return pl + lam * dl;
+        }
+
+        /// <summary>
+        /// Intersection point of a line and the six faces of the unit cube with origin as a vertex and three axies as edges.
+        /// points of a line are defined as a direction(Dₗ) through a point(Pₗ)
+        /// return intersection point on direction
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static Vector<float> IntersectLineUnitOriginCube(Vector<float> pl, Vector<float> dl)
+        {
+            for (var i = 0; i < 6; i++)
+            {
+                var p = IntersectLinePlane(pl, dl, UnitOriginCubePoints[i], UnitOriginCubeNormals[i]);
+                if (p != null && p.AsArray().Select(j => j >= -1.192e-7f && j <= 1 + 1.192e-7f).All(j => j)) // check if all are within 0-1 with rounding error[eps(float(1))]
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public static Color DKLIsoLumHue(this float hueangle, float lum, string displayid)
+        {
+            if (colormatrix.ContainsKey(displayid))
+            {
+                var cm = colormatrix[displayid];
+                if (cm.ContainsKey("DKLToRGB"))
+                {
+                    var DKLToRGB = cm["DKLToRGB"];
+                    var hd = Matrix4x4.Rotate(Quaternion.Euler(hueangle, 0, 0)).MultiplyVector(Vector3.up);
+                    var cd = DKLToRGB.Multiply(CreateVector.Dense(new[] { hd.x, hd.y, hd.z, 0f })).SubVector(0, 3);
+                    var c = IntersectLineUnitOriginCube(DKLToRGB.Multiply(CreateVector.Dense(new[] { lum, 0f, 0f, 1f })).SubVector(0, 3), cd);
+                    if (c != null) { return new Color(Mathf.Clamp01(c.At(0)), Mathf.Clamp01(c.At(1)), Mathf.Clamp01(c.At(2)), 1f); }
+                }
+            }
+            return Color.gray;
         }
 
         public static Dictionary<string, Texture2D> GetImageData(this string imagesetname, bool forceload = false)

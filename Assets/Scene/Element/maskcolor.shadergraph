@@ -506,6 +506,8 @@
         "m_GuidSerialized": "08a041f8-0cce-4ab1-b99a-3d095a3d106c"
     },
     "m_Name": "MaskType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_DCE04279",
     "m_OverrideReferenceName": "_masktype",
     "m_GeneratePropertyBlock": true,
@@ -775,6 +777,8 @@
         "m_GuidSerialized": "1d65d5c2-a159-4a79-a06b-303c8b374f6d"
     },
     "m_Name": "Color",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_9D9DA6B0",
     "m_OverrideReferenceName": "_color",
     "m_GeneratePropertyBlock": true,
@@ -1033,6 +1037,8 @@
         "m_GuidSerialized": "04e222f8-2569-4d23-9c21-113728afac38"
     },
     "m_Name": "MaskRadius",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_843109C8",
     "m_OverrideReferenceName": "_maskradius",
     "m_GeneratePropertyBlock": true,
@@ -1871,6 +1877,8 @@
         "m_GuidSerialized": "6074d2dd-82a2-494d-873f-be7fb4cd1e27"
     },
     "m_Name": "MaskSigma",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_4E1F5F97",
     "m_OverrideReferenceName": "_masksigma",
     "m_GeneratePropertyBlock": true,

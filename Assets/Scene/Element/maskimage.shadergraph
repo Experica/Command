@@ -758,6 +758,8 @@
         "m_GuidSerialized": "6074d2dd-82a2-494d-873f-be7fb4cd1e27"
     },
     "m_Name": "MaskSigma",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_4E1F5F97",
     "m_OverrideReferenceName": "_masksigma",
     "m_GeneratePropertyBlock": true,
@@ -948,6 +950,8 @@
         "m_GuidSerialized": "319217a3-4966-4ac3-9dbd-1334578d7670"
     },
     "m_Name": "ChannelModulate",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_7E8EA777",
     "m_OverrideReferenceName": "_channelmodulate",
     "m_GeneratePropertyBlock": true,
@@ -1102,6 +1106,8 @@
         "m_GuidSerialized": "84b57ba0-d524-4bf9-b336-7c3f4a0194d0"
     },
     "m_Name": "MaxColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_567D6E4A",
     "m_OverrideReferenceName": "_maxcolor",
     "m_GeneratePropertyBlock": true,
@@ -1526,6 +1532,8 @@
         "m_GuidSerialized": "04e222f8-2569-4d23-9c21-113728afac38"
     },
     "m_Name": "MaskRadius",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_843109C8",
     "m_OverrideReferenceName": "_maskradius",
     "m_GeneratePropertyBlock": true,
@@ -2080,6 +2088,8 @@
         "m_GuidSerialized": "08a041f8-0cce-4ab1-b99a-3d095a3d106c"
     },
     "m_Name": "MaskType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_DCE04279",
     "m_OverrideReferenceName": "_masktype",
     "m_GeneratePropertyBlock": true,
@@ -2210,6 +2220,8 @@
         "m_GuidSerialized": "6163c2b9-9271-4bb1-9921-44d2755c71d4"
     },
     "m_Name": "Image",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_C1C3C21B",
     "m_OverrideReferenceName": "_image",
     "m_GeneratePropertyBlock": true,
@@ -2250,6 +2262,8 @@
         "m_GuidSerialized": "fcdcabcf-28d5-4086-9bfc-0dab1022b4a1"
     },
     "m_Name": "MinColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_4A31A3D",
     "m_OverrideReferenceName": "_mincolor",
     "m_GeneratePropertyBlock": true,

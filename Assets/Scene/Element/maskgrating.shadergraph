@@ -891,6 +891,8 @@
         "m_GuidSerialized": "e464de32-5354-44a7-961d-60093bfca52b"
     },
     "m_Name": "Phase",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_B84D4B57",
     "m_OverrideReferenceName": "_phase",
     "m_GeneratePropertyBlock": true,
@@ -1044,6 +1046,8 @@
         "m_GuidSerialized": "be14c93d-2ffd-41b5-a4ba-e29f2340390e"
     },
     "m_Name": "MGratingType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_D91B669",
     "m_OverrideReferenceName": "_mgratingtype",
     "m_GeneratePropertyBlock": true,
@@ -1173,6 +1177,8 @@
         "m_GuidSerialized": "c5ab33d9-8cc7-41db-a736-49a6aed28dee"
     },
     "m_Name": "Duty",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_4EEAB5A9",
     "m_OverrideReferenceName": "_duty",
     "m_GeneratePropertyBlock": true,
@@ -1254,6 +1260,8 @@
         "m_GuidSerialized": "1fbed216-de05-452e-9cc5-2260276f0898"
     },
     "m_Name": "GratingType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_298F8B12",
     "m_OverrideReferenceName": "_gratingtype",
     "m_GeneratePropertyBlock": true,
@@ -1294,6 +1302,8 @@
         "m_GuidSerialized": "faeea0a0-127b-48ff-9d68-f434b6928086"
     },
     "m_Name": "MaskSigma",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_89740247",
     "m_OverrideReferenceName": "_masksigma",
     "m_GeneratePropertyBlock": true,
@@ -2445,6 +2455,8 @@
         "m_GuidSerialized": "9e325836-a2c5-41cb-87c0-f7a875124c07"
     },
     "m_Name": "MaskRadius",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_14E2CC20",
     "m_OverrideReferenceName": "_maskradius",
     "m_GeneratePropertyBlock": true,
@@ -2529,6 +2541,8 @@
         "m_GuidSerialized": "0ecd0547-619c-4390-8b17-a161b3b9e9a9"
     },
     "m_Name": "Ori",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_F24CC29E",
     "m_OverrideReferenceName": "_ori",
     "m_GeneratePropertyBlock": true,
@@ -2587,6 +2601,8 @@
         "m_GuidSerialized": "3d708499-ff6a-45f5-8fce-dfba99a042f2"
     },
     "m_Name": "MDuty",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_11DE43A9",
     "m_OverrideReferenceName": "_mduty",
     "m_GeneratePropertyBlock": true,
@@ -3152,6 +3168,8 @@
         "m_GuidSerialized": "a1defd2d-a5d2-41ac-a733-b293994168e8"
     },
     "m_Name": "MTime",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_2CFDB2AD",
     "m_OverrideReferenceName": "_mt",
     "m_GeneratePropertyBlock": true,
@@ -3436,6 +3454,8 @@
         "m_GuidSerialized": "24257c96-062f-4951-9157-dbcf67ac6961"
     },
     "m_Name": "MPhase",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_3B142A35",
     "m_OverrideReferenceName": "_mphase",
     "m_GeneratePropertyBlock": true,
@@ -3535,6 +3555,8 @@
         "m_GuidSerialized": "b979e47a-b9e0-4dd9-9d5b-1fad34b1d507"
     },
     "m_Name": "TF",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_362232F9",
     "m_OverrideReferenceName": "_tf",
     "m_GeneratePropertyBlock": true,
@@ -3575,6 +3597,8 @@
         "m_GuidSerialized": "6e5726e8-777c-443a-9ac7-b654bc227105"
     },
     "m_Name": "SF",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_B510413A",
     "m_OverrideReferenceName": "_sf",
     "m_GeneratePropertyBlock": true,
@@ -3632,6 +3656,8 @@
         "m_GuidSerialized": "458bfbc4-93b5-4739-8f16-d5e3bad72b33"
     },
     "m_Name": "Time",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_10FE2A57",
     "m_OverrideReferenceName": "_t",
     "m_GeneratePropertyBlock": true,
@@ -3655,6 +3681,8 @@
         "m_GuidSerialized": "5a1a63e4-64a3-40d4-92c5-db508a8d7b6e"
     },
     "m_Name": "MaxColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_DA044FF5",
     "m_OverrideReferenceName": "_maxcolor",
     "m_GeneratePropertyBlock": true,
@@ -4123,6 +4151,8 @@
         "m_GuidSerialized": "cb504b88-ed00-4f71-901e-feb3b3d3b326"
     },
     "m_Name": "MTF",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_92129667",
     "m_OverrideReferenceName": "_mtf",
     "m_GeneratePropertyBlock": true,
@@ -4237,6 +4267,8 @@
         "m_GuidSerialized": "684e5931-162f-42fc-9418-86e84f431bb7"
     },
     "m_Name": "Size",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector2_4B9D0E2A",
     "m_OverrideReferenceName": "_size",
     "m_GeneratePropertyBlock": true,
@@ -4557,6 +4589,8 @@
         "m_GuidSerialized": "91cd7ed3-87fa-46f6-a064-adaa474c01ce"
     },
     "m_Name": "MinColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_6755A7B2",
     "m_OverrideReferenceName": "_mincolor",
     "m_GeneratePropertyBlock": true,
@@ -4614,6 +4648,8 @@
         "m_GuidSerialized": "14ae7871-412a-4a46-bdf7-6736072be0e7"
     },
     "m_Name": "MaskType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_602D2C27",
     "m_OverrideReferenceName": "_masktype",
     "m_GeneratePropertyBlock": true,

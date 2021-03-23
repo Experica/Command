@@ -613,6 +613,8 @@
         "m_GuidSerialized": "f0845767-b161-496b-bce8-2ffc3a9620b2"
     },
     "m_Name": "ImageIndex",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_3AC4C598",
     "m_OverrideReferenceName": "_imageindex",
     "m_GeneratePropertyBlock": true,
@@ -1722,6 +1724,8 @@
         "m_GuidSerialized": "08a041f8-0cce-4ab1-b99a-3d095a3d106c"
     },
     "m_Name": "MaskType",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_DCE04279",
     "m_OverrideReferenceName": "_masktype",
     "m_GeneratePropertyBlock": true,
@@ -2094,6 +2098,8 @@
         "m_GuidSerialized": "6074d2dd-82a2-494d-873f-be7fb4cd1e27"
     },
     "m_Name": "MaskSigma",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_4E1F5F97",
     "m_OverrideReferenceName": "_masksigma",
     "m_GeneratePropertyBlock": true,
@@ -2117,6 +2123,8 @@
         "m_GuidSerialized": "04e222f8-2569-4d23-9c21-113728afac38"
     },
     "m_Name": "MaskRadius",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_843109C8",
     "m_OverrideReferenceName": "_maskradius",
     "m_GeneratePropertyBlock": true,
@@ -2177,6 +2185,8 @@
         "m_GuidSerialized": "491c07b4-6fd6-4f1f-9b75-92f0b364bb88"
     },
     "m_Name": "ImageArray",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2DArray_F8E2E4E3",
     "m_OverrideReferenceName": "_imagearray",
     "m_GeneratePropertyBlock": true,

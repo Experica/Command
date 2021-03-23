@@ -59,6 +59,15 @@ namespace Experica
 #endif
         }
 
+        void Start()
+        {
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
+        }
+
         void onvisible(bool v)
         {
             OnVisible(v);

@@ -125,7 +125,7 @@ DKLToRGB = LMSToRGB*DKLToLMS
 RGBToDKL = LMSToDKL*RGBToLMS
 lum = 0
 huestep = 1;hueangles = 0:huestep:180-huestep
-# hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
+hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
 # rotate l+ direction around l+m axis within the `lum` Isoluminance plane
 DKLIsoLumRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=1)*[0,1,0,0], hueangles)...))
 # find Intersections of Isoluminance directions with faces of unit RGB cube
@@ -191,9 +191,15 @@ colordata = Dict{String,Any}("LMS_X"=>colorstring.([maxc_lms[:,1],minc_lms[:,1]]
                             "DKL_Hue_L0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
                             "DKL_WP_L0"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]),
                             "RGBToLMS" => vec(RGBToLMS),
+                            "LMSToRGB" => vec(LMSToRGB),
                             "RGBToXYZ" => vec(RGBToXYZ),
+                            "XYZToRGB" => vec(XYZToRGB),
                             "LMSToContrast" => vec(LMSToContrast),
-                            "LMSToDKL" => vec(LMSToDKL))
+                            "ContrastToLMS" => vec(ContrastToLMS),
+                            "LMSToDKL" => vec(LMSToDKL),
+                            "DKLToLMS" => vec(DKLToLMS),
+                            "DKLToRGB" => vec(DKLToRGB),
+                            "RGBToDKL" => vec(RGBToDKL))
 YAML.write_file(colordatapath,colordata)
 
 

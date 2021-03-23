@@ -1,5 +1,5 @@
-ID: OIMapOri8
-Name: OIMapOri8
+ID: ISICycleModulate
+Name: ISICycleModulate
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -19,51 +19,54 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 0 0 0
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 0
+  Ori@GratingQuad@GratingQuad: 154.295746
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 60
+  Size@GratingQuad@GratingQuad: 60 60 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
+  SpatialFreq@GratingQuad@GratingQuad: 0
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  PauseTime@GratingQuad@GratingQuad: false
+  SpatialPhase@GratingQuad@GratingQuad: 0.75
+  MinColor@GratingQuad@GratingQuad: 0 0.647 0.4938 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.353 0.5062 1
+  PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
-  ModulateType@GratingQuad@GratingQuad: Square
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  ModulateType@GratingQuad@GratingQuad: Sinusoidal
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
-  Visible@GratingQuad@GratingQuad: true
+  TimeSecond@GratingQuad@GratingQuad: 1.44201791
+  ModulateTimeSecond@GratingQuad@GratingQuad: 3.91189432
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori8.yaml
+CondPath: ''
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
-RecordSession: E0
-RecordSite: ''
+ExLogicPath: Experica.CycleConditionLogic
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: Manual
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 500
+CondRepeat: 10
 BlockRepeat: 1
-BlockParam: []
+BlockParam:
+- ''
 Input: false
 PreICI: 0
 CondDur: 0
@@ -74,7 +77,7 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: PREICI
+PushCondAtState: NONE
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -93,10 +96,22 @@ ExInheritParam:
 - Experimenter
 - TimerDriftSpeed
 - ResponseDelay
-EnvInheritParam: []
+- RecordSession
+- RecordSite
+- Display_ID
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- MarkOffColor@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkerSize@Marker@Marker
 Param:
-  ReverseDur: 1000
-  FullScreenSize: True
+  ColorSpace: DKL
+  Color: Y
+  ModulateParam: ModulateTime
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -104,10 +119,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ''
+Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: FULL
-SendMail: true
+CondTestShowLevel: SHORT
+SendMail: false

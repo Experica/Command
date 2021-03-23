@@ -13,23 +13,23 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
   MarkerPosition@Marker@Marker: -24.21 12.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 228.366455
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 40
+  Size@GratingQuad@GratingQuad: 40 40 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -50,7 +50,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: -1.805 -1.056 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 

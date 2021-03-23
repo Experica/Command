@@ -112,14 +112,21 @@ namespace Experica
         public float Duty = 0.5f;
         [SyncVar(hook = "onmodulateduty")]
         public float ModulateDuty = 0.5f;
+        [SyncVar(hook = "ontimesecond")]
+        public float TimeSecond = 0;
+        [SyncVar(hook = "onmodulatetimesecond")]
+        public float ModulateTimeSecond = 0;
 
-        double timeatreverse;
-        Timer timer = new Timer();
+        double timeatreverse = 0;
+        // timers are used to calculate grating visuals, so here use frame time
+        Timer timer = new Timer(true);
+        Timer mtimer = new Timer(true);
 
-        protected override void OnAwake()
+        protected override void OnStart()
         {
-            base.OnAwake();
+            base.OnStart();
             timer.Start();
+            mtimer.Start();
         }
 
         void onrotation(Vector3 r)
@@ -232,9 +239,10 @@ namespace Experica
             if (v)
             {
                 timeatreverse = 0;
-                renderer.material.SetFloat("_t", 0);
-                renderer.material.SetFloat("_mt", 0);
-                timer.Restart();
+                ontimesecond(0);
+                onmodulatetimesecond(0);
+                if (PauseTime) { timer.Reset(); }
+                else { timer.Restart(); }
             }
             base.OnVisible(v);
         }
@@ -297,11 +305,15 @@ namespace Experica
 
         void onpausetime(bool i)
         {
+            if (i) { timer.Stop(); }
+            else { timer.Start(); }
             PauseTime = i;
         }
 
         void onpausemodulatetime(bool i)
         {
+            if (i) { mtimer.Stop(); }
+            else { mtimer.Start(); }
             PauseModulateTime = i;
         }
 
@@ -331,20 +343,39 @@ namespace Experica
 
         void onreversetime(bool r)
         {
-            timeatreverse = ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond;
-            timer.Restart();
+            timeatreverse = GetTimeSecond;
+            if (PauseTime) { timer.Reset(); }
+            else { timer.Restart(); }
             ReverseTime = r;
         }
 
+        double GetTimeSecond
+        {
+            get { return ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond; }
+        }
+
+        void ontimesecond(float t)
+        {
+            renderer.material.SetFloat("_t", t);
+        }
+
+        void onmodulatetimesecond(float t)
+        {
+            renderer.material.SetFloat("_mt", t);
+        }
+
+        /// <summary>
+        /// automatically update grating time every frame
+        /// </summary>
         void LateUpdate()
         {
             if (!PauseTime)
             {
-                renderer.material.SetFloat("_t", (float)(ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond));
+                ontimesecond((float)GetTimeSecond);
             }
             if (!PauseModulateTime)
             {
-                renderer.material.SetFloat("_mt", (float)(ReverseTime ? timeatreverse - timer.ElapsedSecond : timeatreverse + timer.ElapsedSecond));
+                onmodulatetimesecond((float)mtimer.ElapsedSecond);
             }
         }
     }

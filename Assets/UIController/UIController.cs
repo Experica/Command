@@ -416,21 +416,21 @@ namespace Experica.Command
             exmanager.el.timer.IsFrameTime = false;
             if (!canvas.activeSelf)
             {
+                // FullViewport(No UI), hide cursor
                 Cursor.visible = false;
                 if (Screen.fullScreen)
                 {
                     // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
-                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
-                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
                     QualitySettings.vSyncCount = config.VSyncCount;
                     QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
+                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
                 }
             }
             Time.fixedDeltaTime = config.FixedDeltaTime;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
-            // Get Lowest GC Intrusiveness
-            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
+            GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
 
             alsmanager?.RpcNotifyStartExperiment();
         }
@@ -503,12 +503,12 @@ namespace Experica.Command
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
 
-            // Return Normal
+            // Return normal when experiment stopped
             Cursor.visible = true;
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 1;
             QualitySettings.maxQueuedFrames = 2;
-            Time.fixedDeltaTime = 0.02f;
+            Time.fixedDeltaTime = 0.016666f;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
