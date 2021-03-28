@@ -93,7 +93,7 @@
                 {
                     "name": "modifier",
                     "id": "7f8f223e-abb3-42a5-8cfb-c0e7817a532a",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -104,7 +104,7 @@
                 {
                     "name": "button",
                     "id": "20f4d5f6-05d6-4ca1-8503-9f8cf83ae013",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -126,7 +126,7 @@
                 {
                     "name": "modifier",
                     "id": "a86e52e2-472e-463d-8cd3-8194465c1c54",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -181,7 +181,7 @@
                 {
                     "name": "modifier",
                     "id": "da40c097-57c4-415f-bf90-5ea915bc3a49",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -280,7 +280,7 @@
                 {
                     "name": "modifier",
                     "id": "87c77ded-7328-489d-a80b-fbf6ac539455",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -313,7 +313,7 @@
                 {
                     "name": "modifier",
                     "id": "b6150953-b9c3-42c8-89cd-fc40e5ca550a",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",

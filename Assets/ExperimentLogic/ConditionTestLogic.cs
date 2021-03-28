@@ -24,7 +24,7 @@ using UnityEngine;
 namespace Experica
 {
     /// <summary>
-    /// Basic PreICI-Cond-SufICI Logic with Digital and ScreenMarker Event Sync
+    /// Simple PreICI-Cond-SufICI Logic with Event Sync through GPIO and Display Marker
     /// </summary>
     public class ConditionTestLogic : ExperimentLogic
     {

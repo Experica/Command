@@ -34,27 +34,28 @@ namespace Experica
     /// Present R,G,B colors and measure intensities, so that a color lookup table can
     /// be constructed to linearize R,G,B intensity.
     /// 
-    /// Then, the linearized R,G,B colors spectral can be measured, so that cone excitations
-    /// can be calculated using the spectral and cone Fundamentals.
+    /// The linearized R,G,B color spectrals can be measured, so that Cone Excitations
+    /// can be calculated using the spectrals and Cone Fundamentals.
     /// 
-    /// Required experiment custom parameters:
+    /// Required experiment parameters:
     /// 
     /// PRModel:        model name of the spectroradiometer from Photo Research, Inc. (e.g., PR701)
     /// COM:            COM port of the spectroradiometer. (e.g., COM2)
-    /// Measure:        type of measurement, "Spectral" or "Intensity".
+    /// Measure:        type of measurement. {"Spectral", "Intensity"}
+    /// N:              number of R,G,B levels to measure
     /// PlotMeasure:    if plot measurement. (Bool)
-    /// FitType:        function used to fit the intensity measurement, "Gamma", "LinearSpline" or "CubicSpline".
+    /// FitType:        function used to fit the intensity measurement. {"Gamma", "LinearSpline", "CubicSpline"}
     /// </summary>
     public class DisplayCalibration : ExperimentLogic
     {
         protected ISpectroRadioMeter spectroradiometer;
-        Dictionary<string, List<object>> imeasurement = new Dictionary<string, List<object>>();
-        Dictionary<string, List<object>> smeasurement = new Dictionary<string, List<object>>();
+        Dictionary<string, List<object>> imeasurement;
+        Dictionary<string, List<object>> smeasurement;
         IntensityMeasurementPlot iplot; SpectralMeasurementPlot splot;
 
         protected override void OnStart()
         {
-            spectroradiometer = new PR(ex.GetParam("COM").Convert<string>(), ex.GetParam("PRModel").Convert<string>());
+            spectroradiometer = new PR(GetExParam<string>("COM"), GetExParam<string>("PRModel"));
         }
 
         protected override void OnStartExperiment()
@@ -71,13 +72,13 @@ namespace Experica
                Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
             */
             spectroradiometer?.Setup("S,,,,1,1000,0,1,0,0,0,0", 1000);
-            switch ((string)ex.GetParam("Measure"))
+            switch (GetExParam<string>("Measure"))
             {
                 case "Intensity":
-                    imeasurement.Clear();
+                    imeasurement = new Dictionary<string, List<object>>();
                     break;
                 case "Spectral":
-                    smeasurement.Clear();
+                    smeasurement = new Dictionary<string, List<object>>();
                     break;
             }
             iplot?.Dispose();
@@ -104,11 +105,11 @@ namespace Experica
             {
                 if (config.Display.ContainsKey(ex.Display_ID))
                 {
-                    if (imeasurement.Count > 0)
+                    if (imeasurement != null && imeasurement.Count > 0)
                     {
                         config.Display[ex.Display_ID].IntensityMeasurement = imeasurement;
                     }
-                    if (smeasurement.Count > 0)
+                    if (smeasurement != null && smeasurement.Count > 0)
                     {
                         config.Display[ex.Display_ID].SpectralMeasurement = smeasurement;
                     }
@@ -123,8 +124,10 @@ namespace Experica
                 var path = Extension.SaveFile("Save Measurement Data ...");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    var ds = new Dictionary<string, Display>(config.Display);
-                    ds[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
+                    var ds = new Dictionary<string, Display>(config.Display)
+                    {
+                        [ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement }
+                    };
                     path.WriteYamlFile(ds);
                 }
             }
@@ -136,6 +139,13 @@ namespace Experica
             spectroradiometer?.Dispose();
             iplot?.Dispose();
             splot?.Dispose();
+        }
+
+        protected override void GenerateFinalCondition()
+        {
+            var n = GetExParam("N");
+            var cond = $"Color: [factorleveldesign, [0, 0, 0, 1], [1, 1, 1, 1], [{n}, {n}, {n}, 0], Linear, False]";
+            condmanager.FinalizeCondition(cond.DeserializeYaml<Dictionary<string, List<object>>>().FactorLevelOfDesign());
         }
 
         protected override void Logic()
@@ -158,14 +168,14 @@ namespace Experica
                     if (CondHold >= ex.CondDur)
                     {
                         // Make Measurement
-                        switch ((string)ex.GetParam("Measure"))
+                        switch (GetExParam<string>("Measure"))
                         {
                             case "Intensity":
                                 // Measure Intensity Y, CIE x, y
                                 var m1 = spectroradiometer?.Measure("1", 8000) as Dictionary<string, double>;
                                 if (m1 != null)
                                 {
-                                    foreach (var f in m1.Keys)
+                                    foreach (var f in m1.Keys.Where(i => i == "Y"))
                                     {
                                         if (imeasurement.ContainsKey(f))
                                         {
@@ -192,7 +202,7 @@ namespace Experica
                                 var m5 = spectroradiometer?.Measure("5", 10000) as Dictionary<string, object>;
                                 if (m5 != null)
                                 {
-                                    foreach (var f in m5.Keys)
+                                    foreach (var f in m5.Keys.Where(i => i == "WL" || i == "Spectral"))
                                     {
                                         if (smeasurement.ContainsKey(f))
                                         {
@@ -228,12 +238,12 @@ namespace Experica
                     if (SufICIHold >= ex.SufICI)
                     {
                         // Update Measurement Plot
-                        if (ex.GetParam("PlotMeasure").Convert<bool>())
+                        if (GetExParam<bool>("PlotMeasure"))
                         {
-                            switch ((string)ex.GetParam("Measure"))
+                            switch (GetExParam<string>("Measure"))
                             {
                                 case "Intensity":
-                                    iplot?.Visualize(imeasurement, ex.GetParam("FitType"));
+                                    iplot?.Visualize(imeasurement, GetExParam("FitType"));
                                     break;
                                 case "Spectral":
                                     splot?.Visualize(smeasurement);
