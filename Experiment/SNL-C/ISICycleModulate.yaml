@@ -50,7 +50,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 1.44201791
-  ModulateTimeSecond@GratingQuad@GratingQuad: 3.91189432
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0.0979392976
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0

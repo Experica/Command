@@ -1350,7 +1350,7 @@ namespace Experica
             return null;
         }
 
-        public static Color DKLIsoLumHue(this float hueangle, float lum, string displayid)
+        public static Color DKLIsoLum(this float angle, float lum, string displayid)
         {
             if (colormatrix.ContainsKey(displayid))
             {
@@ -1358,9 +1358,43 @@ namespace Experica
                 if (cm.ContainsKey("DKLToRGB"))
                 {
                     var DKLToRGB = cm["DKLToRGB"];
-                    var hd = Matrix4x4.Rotate(Quaternion.Euler(hueangle, 0, 0)).MultiplyVector(Vector3.up);
-                    var cd = DKLToRGB.Multiply(CreateVector.Dense(new[] { hd.x, hd.y, hd.z, 0f })).SubVector(0, 3);
+                    var d = Matrix4x4.Rotate(Quaternion.Euler(angle, 0, 0)).MultiplyVector(Vector3.up);
+                    var cd = DKLToRGB.Multiply(CreateVector.Dense(new[] { d.x, d.y, d.z, 0f })).SubVector(0, 3);
                     var c = IntersectLineUnitOriginCube(DKLToRGB.Multiply(CreateVector.Dense(new[] { lum, 0f, 0f, 1f })).SubVector(0, 3), cd);
+                    if (c != null) { return new Color(Mathf.Clamp01(c.At(0)), Mathf.Clamp01(c.At(1)), Mathf.Clamp01(c.At(2)), 1f); }
+                }
+            }
+            return Color.gray;
+        }
+
+        public static Color DKLIsoSCone(this float angle, float scone, string displayid)
+        {
+            if (colormatrix.ContainsKey(displayid))
+            {
+                var cm = colormatrix[displayid];
+                if (cm.ContainsKey("DKLToRGB"))
+                {
+                    var DKLToRGB = cm["DKLToRGB"];
+                    var d = Matrix4x4.Rotate(Quaternion.Euler(0, 0, angle)).MultiplyVector(Vector3.down);
+                    var cd = DKLToRGB.Multiply(CreateVector.Dense(new[] { d.x, d.y, d.z, 0f })).SubVector(0, 3);
+                    var c = IntersectLineUnitOriginCube(DKLToRGB.Multiply(CreateVector.Dense(new[] { 0f, 0f, scone, 1f })).SubVector(0, 3), cd);
+                    if (c != null) { return new Color(Mathf.Clamp01(c.At(0)), Mathf.Clamp01(c.At(1)), Mathf.Clamp01(c.At(2)), 1f); }
+                }
+            }
+            return Color.gray;
+        }
+
+        public static Color DKLIsoLMCone(this float angle, float lmcone, string displayid)
+        {
+            if (colormatrix.ContainsKey(displayid))
+            {
+                var cm = colormatrix[displayid];
+                if (cm.ContainsKey("DKLToRGB"))
+                {
+                    var DKLToRGB = cm["DKLToRGB"];
+                    var d = Matrix4x4.Rotate(Quaternion.Euler(0, angle, 0)).MultiplyVector(Vector3.forward);
+                    var cd = DKLToRGB.Multiply(CreateVector.Dense(new[] { d.x, d.y, d.z, 0f })).SubVector(0, 3);
+                    var c = IntersectLineUnitOriginCube(DKLToRGB.Multiply(CreateVector.Dense(new[] { 0f, lmcone, 0f, 1f })).SubVector(0, 3), cd);
                     if (c != null) { return new Color(Mathf.Clamp01(c.At(0)), Mathf.Clamp01(c.At(1)), Mathf.Clamp01(c.At(2)), 1f); }
                 }
             }

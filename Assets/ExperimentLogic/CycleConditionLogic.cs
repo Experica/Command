@@ -108,8 +108,14 @@ namespace Experica
                             case "Ori":
                                 SetEnvActiveParam("Ori", div * 360f);
                                 break;
-                            case "Color":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLumHue(GetExParam<float>("Lum"), ex.Display_ID));
+                            case "DKLIsoLum":
+                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLum(GetExParam<float>("Intercept"), ex.Display_ID));
+                                break;
+                            case "DKLIsoSCone":
+                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoSCone(GetExParam<float>("Intercept"), ex.Display_ID));
+                                break;
+                            case "DKLIsoLMCone":
+                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLMCone(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
                         }
                     }

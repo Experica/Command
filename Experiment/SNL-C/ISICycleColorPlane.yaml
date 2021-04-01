@@ -1,5 +1,5 @@
-ID: ISICycleHue
-Name: ISICycleHue
+ID: ISICycleColorPlane
+Name: ISICycleColorPlane
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -40,7 +40,7 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0 0.645 0.5066 1
+  MinColor@GratingQuad@GratingQuad: 0.4238 0.7027 0 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -50,7 +50,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 3.2188623
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -108,12 +108,11 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
-- Ori@GratingQuad@GratingQuad
 Param:
   ColorSpace: DKL
   Color: X
-  ModulateParam: Color
-  Lum: 0
+  ModulateParam: DKLIsoLMCone
+  Intercept: 0
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
