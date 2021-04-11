@@ -143,8 +143,8 @@ namespace Experica.Command
 
         void AspectRatioHandler(NetworkMessage netMsg)
         {
-            var r = netMsg.ReadMessage<FloatMessage>().value;
-            //var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
+            //var r = netMsg.ReadMessage<FloatMessage>().value;
+            var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
             if (LogFilter.logDebug)
             {
                 Debug.Log("Receive AspectRatio Message: " + r.ToString());
