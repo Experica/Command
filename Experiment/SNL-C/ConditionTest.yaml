@@ -15,11 +15,11 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.29684913
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerPosition@Marker@Marker: 18.12 -13.74 -1000
   MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -93,7 +93,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: Trinitron
 ResponseDelay: 15
 Version: 1
 Config: 

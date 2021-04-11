@@ -44,12 +44,16 @@ namespace Experica.Command
     {
         public CommandConfigManager configmanager;
         public CommandConfig config;
-        readonly string configmanagerpath = "CommandConfigManager.yaml";    // The file storing serialized CommandConfigManager object
+        /// <summary>
+        /// The file storing serialized CommandConfigManager object
+        /// </summary>
+        readonly string configmanagerpath = "CommandConfigManager.yaml";
 
         public Toggle host, server, start, pause;
         public Dropdown exs;
         public Button savedata, newex, saveex, deleteex;
         public Text startstoptext, pauseresumetext, version;
+        public Volume postprocessing;
 
         // The managers for the panels on the Scene
         public NetManager netmanager;
@@ -318,6 +322,32 @@ namespace Experica.Command
                 exmanager.LoadEL(exmanager.exfiles[idx]);
                 expanel.UpdateEx(exmanager.el.ex);
                 ServerChangeScene();
+            }
+        }
+
+        public void SyncCurrentDisplayCLUT(List<NetworkConnection> targetconns = null)
+        {
+            if (postprocessing.profile.TryGet(out Tonemapping tonemapping))
+            {
+                var cdclut = CurrentDisplayCLUT;
+                if (cdclut != null)
+                {
+                    tonemapping.lutTexture.value = cdclut;
+
+                    var envpeerconn = targetconns ?? netmanager.GetPeerTypeConnection(PeerType.Environment);
+                    if (envpeerconn.Count > 0)
+                    {
+                        var clutmsg = new CLUTMessage
+                        {
+                            clut = cdclut.GetPixelData<byte>(0).ToArray().Compress(),
+                            size = cdclut.width
+                        };
+                        foreach (var conn in envpeerconn)
+                        {
+                            conn.Send(MsgType.CLUT, clutmsg);
+                        }
+                    }
+                }
             }
         }
 

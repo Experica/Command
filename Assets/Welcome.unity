@@ -924,13 +924,13 @@ RectTransform:
   - {fileID: 1784660072}
   - {fileID: 1996178765}
   - {fileID: 386045323}
-  - {fileID: 116732423}
-  - {fileID: 713751378}
-  - {fileID: 1362274765}
-  - {fileID: 1343119229}
   - {fileID: 377719023}
-  - {fileID: 126350015}
+  - {fileID: 713751378}
+  - {fileID: 116732423}
+  - {fileID: 1362274765}
   - {fileID: 1318028122}
+  - {fileID: 126350015}
+  - {fileID: 1343119229}
   - {fileID: 1394811413}
   m_Father: {fileID: 652919583}
   m_RootOrder: 3
@@ -958,7 +958,7 @@ RectTransform:
   - {fileID: 1639226647}
   - {fileID: 387297456}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2673,6 +2673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355740904}
+  - component: {fileID: 355740907}
   - component: {fileID: 355740905}
   - component: {fileID: 355740906}
   m_Layer: 0
@@ -2720,6 +2721,7 @@ MonoBehaviour:
   startstoptext: {fileID: 508998083}
   pauseresumetext: {fileID: 1048083201}
   version: {fileID: 1996178766}
+  postprocessing: {fileID: 355740907}
   netmanager: {fileID: 652919582}
   syncmanager: {fileID: 652919584}
   exmanager: {fileID: 195929017}
@@ -2908,6 +2910,23 @@ MonoBehaviour:
   m_DefaultActionMap: Command
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &355740907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355740903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: bc3017157b016ca4698944e99ee3afb0, type: 2}
 --- !u!1 &362546893
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,7 +3071,7 @@ RectTransform:
   - {fileID: 628594741}
   - {fileID: 1839210949}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5626,7 +5645,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1045244165}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9993471
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5711,7 +5730,7 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 0
   m_PlayerSpawnMethod: 0
-  m_OfflineScene: WelcomeBack
+  m_OfflineScene: Welcomeback
   m_OnlineScene: 
   m_SpawnPrefabs: []
   m_CustomConfig: 1
@@ -5756,7 +5775,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 0a000000
+  m_Channels: 05000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -9679,7 +9698,7 @@ RectTransform:
   - {fileID: 1501899725}
   - {fileID: 320582974}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9881,7 +9900,7 @@ RectTransform:
   - {fileID: 407220476}
   - {fileID: 1319159902}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -9955,7 +9974,7 @@ RectTransform:
   - {fileID: 657639887}
   - {fileID: 788405864}
   m_Father: {fileID: 115677030}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -13864,7 +13883,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.00042888068, y: 0.0005409951}
+  m_AnchoredPosition: {x: 0.00042888068, y: 0.00024221824}
   m_SizeDelta: {x: 575, y: 287}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2007465808

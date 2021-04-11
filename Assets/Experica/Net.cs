@@ -35,14 +35,17 @@ namespace Experica
 
         public const short EndSyncFrame = BeginSyncFrame + 1;
 
-        public const short Highest = EndSyncFrame;
+        public const short CLUT = EndSyncFrame + 1;
+
+        public const short Highest = CLUT;
 
         internal static string[] msgLabels = new string[]
         {
             "PeerType",
             "AspectRatio",
             "BeginSyncFrame",
-            "EndSyncFrame"
+            "EndSyncFrame",
+            "CLUT"
         };
 
         public static string MsgTypeToString(short value)
@@ -67,16 +70,14 @@ namespace Experica
         Analysis
     }
 
+    public class CLUTMessage : MessageBase
+    {
+        public byte[] clut;
+        public int size;
+    }
+
     public class FloatMessage : MessageBase
     {
         public float value;
-
-        public FloatMessage()
-        { }
-
-        public FloatMessage(float v)
-        {
-            value = v;
-        }
     }
 }

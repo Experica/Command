@@ -23,6 +23,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using System.IO;
+using System.IO.Compression;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -798,11 +799,24 @@ namespace Experica
                     for (var b = 0; b < n; b++)
                     {
                         clut.SetPixel(r, g, b, new Color(riy[r], giy[g], biy[b]));
+                        //clut.SetPixel(r, g, b, new Color(riy[r].sRGBEncode(), giy[g].sRGBEncode(), biy[b].sRGBEncode()));
+                        //clut.SetPixel(r, g, b, new Color((float)r /(n-1), (float)g /(n-1), (float)b /(n-1)));
+                        //clut.SetPixel(r, g, b, new Color(((float)r / (n - 1)).sRGBEncode(), ((float)g / (n - 1)).sRGBEncode(), ((float)b / (n - 1)).sRGBEncode()));
                     }
                 }
             }
             clut.Apply();
             return clut;
+        }
+
+        public static float sRGBEncode(this float x)
+        {
+            return x <= 0.0031308f ? 12.92f * x : 1.055f * Mathf.Pow(x, 1f / 2.4f) - 0.055f;
+        }
+
+        public static float sRGBDecode(this float x)
+        {
+            return x <= 0.04045f ? x / 12.92f : Mathf.Pow((x + 0.055f) / 1.055f, 2.4f);
         }
 
         /// <summary>
@@ -1420,6 +1434,27 @@ namespace Experica
                 return imgset;
             }
             return null;
+        }
+
+        public static byte[] Compress(this byte[] data)
+        {
+            var output = new MemoryStream();
+            using (var dstream = new DeflateStream(output, System.IO.Compression.CompressionLevel.Optimal))
+            {
+                dstream.Write(data, 0, data.Length);
+            }
+            return output.ToArray();
+        }
+
+        public static byte[] Decompress(this byte[] data)
+        {
+            var input = new MemoryStream(data);
+            var output = new MemoryStream();
+            using (var dstream = new DeflateStream(input, CompressionMode.Decompress))
+            {
+                dstream.CopyTo(output);
+            }
+            return output.ToArray();
         }
     }
 }

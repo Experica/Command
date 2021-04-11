@@ -92,10 +92,7 @@ namespace Experica
         public Action OnCameraChange;
         Camera camera;
         HDAdditionalCameraData camerahddata;
-        Volume postprocessing;
-#if COMMAND
         NetManager netmanager;
-#endif
 
         void Awake()
         {
@@ -105,11 +102,10 @@ namespace Experica
             transform.localPosition = new Vector3(0, 0, -1001);
             camera.nearClipPlane = 1;
             camera.farClipPlane = 2001;
-#if COMMAND
             netmanager = FindObjectOfType<NetManager>();
+#if COMMAND
             OnCameraChange += netmanager.uicontroller.viewpanel.UpdateViewport;
 #endif
-            postprocessing = gameObject.GetComponent<Volume>();
         }
 
         void onscreentoeye(float d)
@@ -141,38 +137,11 @@ namespace Experica
 
         void onclut(bool isclut)
         {
-            Tonemapping tonemapping;
-            if (postprocessing.profile.TryGet(out tonemapping))
+            if (netmanager.uicontroller.postprocessing.profile.TryGet(out Tonemapping tonemapping))
             {
                 tonemapping.active = isclut;
-#if COMMAND
-                if (isclut)
-                {
-                    var cdclut = netmanager.uicontroller.CurrentDisplayCLUT;
-                    if (cdclut != null)
-                    {
-                        tonemapping.lutTexture.value = cdclut;
-                        RpcCLUT(cdclut.GetPixelData<byte>(0).ToArray(), cdclut.width);
-                    }
-                }
-#endif
             }
             CLUT = isclut;
-        }
-
-        [ClientRpc]
-        void RpcCLUT(byte[] clut, int size)
-        {
-#if ENVIRONMENT
-            Tonemapping tonemapping;
-            if (postprocessing.profile.TryGet(out tonemapping))
-            {
-                var tex = new Texture3D(size, size, size, TextureFormat.RGB24, false);
-                tex.SetPixelData(clut, 0);
-                tex.Apply();
-                tonemapping.lutTexture.value = tex;
-            }
-#endif
         }
 
 #if COMMAND

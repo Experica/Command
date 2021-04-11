@@ -177,7 +177,7 @@ MonoBehaviour:
       atlasHeight: 4096
       perChannelMask: 0
     postProcessSettings:
-      m_LutSize: 32
+      m_LutSize: 24
       lutFormat: 74
       bufferFormat: 74
     dynamicResolutionSettings:
@@ -266,10 +266,6 @@ MonoBehaviour:
       - 0.5
       - 0.25
       RTGISecondDenoise: 010101
-      RTGISecondDenoiserRadius:
-      - 0
-      - 0
-      - 0
       RTRMinSmoothness:
       - 0.6
       - 0.4

@@ -64,6 +64,7 @@ namespace Experica.Command
 
         public bool IsConnectionPeerType(NetworkConnection conn, PeerType peertype)
         {
+            if (conn == null) { return false; }
             var cid = conn.connectionId; var strkey = MsgType.MsgTypeToString(MsgType.PeerType);
             return (peerinfo.ContainsKey(cid) && peerinfo[cid].ContainsKey(strkey) && (PeerType)peerinfo[cid][strkey] == peertype);
         }
@@ -101,6 +102,7 @@ namespace Experica.Command
             if (pt == PeerType.Environment)
             {
                 envconnid.Add(connid);
+                uicontroller.SyncCurrentDisplayCLUT(new List<NetworkConnection> { netMsg.conn });
             }
 
             // if there are VLabAnalysis already connected, then VLabAnalysisManager is already there
@@ -141,8 +143,8 @@ namespace Experica.Command
 
         void AspectRatioHandler(NetworkMessage netMsg)
         {
-            //var r = netMsg.ReadMessage<FloatMessage>().value;
-            var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
+            var r = netMsg.ReadMessage<FloatMessage>().value;
+            //var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
             if (LogFilter.logDebug)
             {
                 Debug.Log("Receive AspectRatio Message: " + r.ToString());

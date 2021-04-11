@@ -365,6 +365,7 @@ namespace Experica.Command
             el.envmanager.ParseScene(scenename);
             el.envmanager.SetParams(el.ex.EnvParam);
             InheritEnv();
+            uicontroller.SyncCurrentDisplayCLUT();
         }
 
         public void InheritEnv(string toobject = null)

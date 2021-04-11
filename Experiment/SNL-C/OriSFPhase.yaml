@@ -13,23 +13,23 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -24.21 12.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.36715603
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 19.16 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 135
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -49,7 +49,9 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
-  Visible@GratingQuad@GratingQuad: false
+  TimeSecond@GratingQuad@GratingQuad: 0
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0
+  Visible@GratingQuad@GratingQuad: true
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
@@ -118,7 +120,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: Trinitron
 ResponseDelay: 15
 Version: 2
 Config: 

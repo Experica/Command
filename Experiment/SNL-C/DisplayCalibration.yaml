@@ -15,12 +15,12 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.31675005
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerPosition@Marker@Marker: 18.41 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -28,9 +28,9 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 10
-  Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 1 1 1 1
+  Diameter@Quad@Quad: 30
+  Size@Quad@Quad: 30 30 1
+  Color@Quad@Quad: 0 0.6667 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
@@ -53,7 +53,7 @@ BlockParam:
 - ''
 Input: false
 PreICI: 0
-CondDur: 500
+CondDur: 1000
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -62,7 +62,7 @@ PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: COND
-CondTestAtState: NONE
+CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
@@ -98,8 +98,8 @@ Param:
   COM: COM1
   PlotMeasure: True
   FitType: Gamma
-  Measure: Spectral
-  N: 5
+  Measure: Intensity
+  N: 10
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -107,10 +107,10 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: Trinitron
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: NONE
+CondTestShowLevel: FULL
 SendMail: false

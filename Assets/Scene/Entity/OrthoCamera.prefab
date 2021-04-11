@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3343192975444610321}
   - component: {fileID: 7262838789426105707}
   - component: {fileID: -4560970603734154846}
-  - component: {fileID: 3004982157755814285}
   - component: {fileID: -5849960182155809873}
   m_Layer: 0
   m_Name: OrthoCamera
@@ -225,23 +224,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &3004982157755814285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3076876508996715147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: bc3017157b016ca4698944e99ee3afb0, type: 2}
 --- !u!114 &-5849960182155809873
 MonoBehaviour:
   m_ObjectHideFlags: 0
