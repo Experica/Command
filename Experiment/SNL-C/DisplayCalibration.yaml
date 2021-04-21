@@ -13,32 +13,32 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.31675005
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.41 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -27.69 14.42 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.80790997
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 30
-  Size@Quad@Quad: 30 30 1
-  Color@Quad@Quad: 0 0.6667 0 1
+  Diameter@Quad@Quad: 40
+  Size@Quad@Quad: 40 40 1
+  Color@Quad@Quad: 0 0.05263 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
-CondPath: Condition\RGBLevel.yaml
+CondPath: ''
 Cond: 
 ExLogicPath: Experica.DisplayCalibration
 RecordSession: HLV1
@@ -98,8 +98,8 @@ Param:
   COM: COM1
   PlotMeasure: True
   FitType: Gamma
-  Measure: Intensity
-  N: 10
+  Measure: Spectral
+  N: 20
 TimerDriftSpeed: 3.0199999999999999E-05
 EventSyncProtocol:
   SyncMethods:
@@ -107,7 +107,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: Trinitron
+Display_ID: ROGPG279Q
 ResponseDelay: 15
 Version: 2
 Config: 

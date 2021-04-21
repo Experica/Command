@@ -13,31 +13,31 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -19.75 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.32456136
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 22
-  Size@ImageQuad@ImageQuad: 22 22 1
+  Diameter@ImageQuad@ImageQuad: 10
+  Size@ImageQuad@ImageQuad: 10 10 1
   MaskType@ImageQuad@ImageQuad: Disk
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0.3672 0.6168 0 1
-  MaxColor@ImageQuad@ImageQuad: 0.6328 0.3832 1 1
+  MinColor@ImageQuad@ImageQuad: 0.3693 0.6164 0 1
+  MaxColor@ImageQuad@ImageQuad: 0.6307 0.3836 1 1
   ChannelModulate@ImageQuad@ImageQuad: R
-  Image@ImageQuad@ImageQuad: 20875
+  Image@ImageQuad@ImageQuad: 916
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
   Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
@@ -57,7 +57,7 @@ BlockParam:
 - ''
 Input: false
 PreICI: 0
-CondDur: 20
+CondDur: 22
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -99,9 +99,9 @@ EnvInheritParam:
 - CLUT@OrthoCamera@OrthoCamera
 - MarkerSize@Marker@Marker
 Param:
-  ColorSpace: DKL
-  Color: Z
-TimerDriftSpeed: 3.0199999999999999E-05
+  ColorSpace: LMS
+  Color: Zmcc
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO

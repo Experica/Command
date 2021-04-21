@@ -98,6 +98,11 @@ namespace Experica
             get { return ElapsedSecond * 1000; }
         }
 
+        public double ElapsedMinute
+        {
+            get { return ElapsedSecond / 60; }
+        }
+
         public void TimeoutSecond(double timeout_s)
         {
             var start = Time.realtimeSinceStartupAsDouble;

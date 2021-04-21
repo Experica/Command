@@ -602,10 +602,27 @@ namespace Experica
         public static double? DisplayLatency(this string displayid, Dictionary<string, Display> displays)
         {
             var d = displayid.GetDisplay(displays);
+            if (d != null && d.Latency >= 0) { return d.Latency; }
+            return null;
+        }
+
+        public static double? DisplayResponseTime(this string displayid, Dictionary<string, Display> displays)
+        {
+            var d = displayid.GetDisplay(displays);
             if (d != null)
             {
-                if (d.Latency > 0) { return d.Latency; }
-                return Math.Max(d.RiseLag, d.FallLag);
+                var r = Math.Max(d.RiseLag, d.FallLag);
+                if (r >= 0) { return r; }
+            }
+            return null;
+        }
+
+        public static double? DisplayLatencyPlusResponseTime(this string displayid, Dictionary<string, Display> displays)
+        {
+            var d = displayid.GetDisplay(displays);
+            if (d != null)
+            {
+                return Math.Max(0, d.Latency) + Math.Max(0, Math.Max(d.RiseLag, d.FallLag));
             }
             return null;
         }

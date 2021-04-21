@@ -13,20 +13,20 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -19.75 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.32456136
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 150
+  Ori@GratingQuad@GratingQuad: 30
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,12 +36,12 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1.60000002
+  SpatialFreq@GratingQuad@GratingQuad: 0.400000006
   TemporalFreq@GratingQuad@GratingQuad: 5
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0.6462 0.4939 1
-  MaxColor@GratingQuad@GratingQuad: 1 0.3538 0.5061 1
+  MinColor@GratingQuad@GratingQuad: 0 0.6466 0.4944 1
+  MaxColor@GratingQuad@GratingQuad: 1 0.3534 0.5056 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -49,6 +49,8 @@ EnvParam:
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
+  TimeSecond@GratingQuad@GratingQuad: 0
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -61,7 +63,7 @@ DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 6
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -111,7 +113,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: Y
-TimerDriftSpeed: 3.0199999999999999E-05
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO

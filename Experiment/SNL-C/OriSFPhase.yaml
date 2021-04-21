@@ -13,34 +13,34 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.36715603
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 19.16 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -19.75 14.42 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.32456136
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 135
+  Ori@GratingQuad@GratingQuad: 75
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 20
-  Size@GratingQuad@GratingQuad: 20 20 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.100000001
+  SpatialFreq@GratingQuad@GratingQuad: 0.0500000007
   TemporalFreq@GratingQuad@GratingQuad: 2
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
-  SpatialPhase@GratingQuad@GratingQuad: 0.5
-  MinColor@GratingQuad@GratingQuad: 0 3.886E-16 5.551E-16 1
+  SpatialPhase@GratingQuad@GratingQuad: 0.75
+  MinColor@GratingQuad@GratingQuad: 0 3.886E-16 4.996E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -51,7 +51,7 @@ EnvParam:
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
@@ -69,7 +69,7 @@ BlockParam:
 - ''
 Input: false
 PreICI: 0
-CondDur: 25
+CondDur: 22
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -113,14 +113,14 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-TimerDriftSpeed: 3.0199999999999999E-05
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: Trinitron
+Display_ID: ROGPG279Q
 ResponseDelay: 15
 Version: 2
 Config: 

@@ -477,8 +477,6 @@ namespace Experica.Command
                     //alsmanager.RpcNotifyExperiment(stream.ToArray());
                 }
             }
-
-            GC.Collect();
         }
 
         public void ToggleStartStopExperiment(bool isstart)
@@ -529,7 +527,7 @@ namespace Experica.Command
             if (exmanager.el.ex.SendMail)
             {
                 var subject = "Experiment Stopped";
-                var body = $"{exmanager.el.ex.Subject_ID} finished {exmanager.el.ex.ID} in {exmanager.el.timer.Elapsed.ToString("g")}";
+                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
 
@@ -542,7 +540,6 @@ namespace Experica.Command
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
-            GC.Collect();
         }
 
         public void SaveData()
