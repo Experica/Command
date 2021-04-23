@@ -13,17 +13,17 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerDots
 EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -24.21 12.74 -1000
+  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
   Dir@Dots@Dots: 0
@@ -93,7 +93,7 @@ EnvInheritParam:
 - MarkOffColor@Marker@Marker
 - Position@Dots@Dots
 Param: {}
-TimerDriftSpeed: 3.0199999999999999E-05
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO

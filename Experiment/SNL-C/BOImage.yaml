@@ -1,5 +1,5 @@
-ID: Image
-Name: Image
+ID: BOImage
+Name: BOImage
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -30,15 +30,15 @@ EnvParam:
   OriOffset@ImageQuad@ImageQuad: 0
   Diameter@ImageQuad@ImageQuad: 10
   Size@ImageQuad@ImageQuad: 10 10 1
-  MaskType@ImageQuad@ImageQuad: Disk
+  MaskType@ImageQuad@ImageQuad: None
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0.3693 0.6164 0 1
-  MaxColor@ImageQuad@ImageQuad: 0.6307 0.3836 1 1
-  ChannelModulate@ImageQuad@ImageQuad: R
+  MinColor@ImageQuad@ImageQuad: 0 0 0 1
+  MaxColor@ImageQuad@ImageQuad: 1 1 1 1
+  ChannelModulate@ImageQuad@ImageQuad: None
   Image@ImageQuad@ImageQuad: 1
-  ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
+  ImageSet@ImageQuad@ImageQuad: ExampleImageSet
   Visible@ImageQuad@ImageQuad: true
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
@@ -51,14 +51,13 @@ DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 8
 BlockRepeat: 1
-BlockParam:
-- ''
+BlockParam: []
 Input: false
-PreICI: 0
-CondDur: 22
-SufICI: 0
+PreICI: 150
+CondDur: 500
+SufICI: 150
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -70,37 +69,34 @@ CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
-- Event
-- SyncEvent
+- CONDSTATE
+- CondRepeat
 ExInheritParam:
 - Subject_ID
-- Subject_Name
 - Subject_Species
-- Subject_Gender
 - Subject_Age
 - Subject_Size
 - Subject_Weight
 - RecordSession
 - RecordSite
 - DataDir
+- Subject_Name
+- Subject_Gender
 - Experimenter
 - TimerDriftSpeed
 - ResponseDelay
 - Display_ID
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- Diameter@ImageQuad@ImageQuad
-- Position@ImageQuad@ImageQuad
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 - MarkerSize@Marker@Marker
-Param:
-  ColorSpace: LMS
-  Color: Zmcc
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Position@ImageQuad@ImageQuad
+Param: {}
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
@@ -110,7 +106,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 2
+Version: 1
 Config: 
 CondTest: 
 CondTestShowLevel: SHORT

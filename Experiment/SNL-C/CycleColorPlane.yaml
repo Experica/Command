@@ -1,5 +1,5 @@
-ID: ISICycleColorPlane
-Name: ISICycleColorPlane
+ID: CycleColorPlane
+Name: CycleColorPlane
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -28,8 +28,8 @@ EnvParam:
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 30
-  Size@GratingQuad@GratingQuad: 30 30 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -40,12 +40,12 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 2.98E-08 0.6498 0.4969 1
+  MinColor@GratingQuad@GratingQuad: 0.8084 0.6801 1 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ModulateType@GratingQuad@GratingQuad: Sinusoidal
+  ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
@@ -61,7 +61,7 @@ RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
+CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 10
 BlockRepeat: 1
@@ -108,10 +108,11 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
+- Position@GratingQuad@GratingQuad
 Param:
   ColorSpace: DKL
   Color: X
-  ModulateParam: DKLIsoSCone
+  ModulateParam: DKLIsoLMCone
   Intercept: 0
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
@@ -126,4 +127,4 @@ Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: SHORT
-SendMail: false
+SendMail: true

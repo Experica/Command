@@ -37,7 +37,7 @@ namespace Experica
         public static MessagePackSerializer<List<int>> ListIntSerializer;
         public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
         public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListListEventSerializer;
-        public static MessagePackSerializer<Dictionary<string, List<List<Byte>>>> ImageSet8Serializer;
+        public static MessagePackSerializer<ImageSet8> ImageSet8Serializer = MessagePackSerializer.Get<ImageSet8>();
         public static MessagePackSerializer<Dictionary<string, List<List<UInt32>>>> ImageSet32Serializer;
 
         static MsgPack()
@@ -48,7 +48,6 @@ namespace Experica
             ListIntSerializer = MessagePackSerializer.Get<List<int>>();
             ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();
             ListListEventSerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
-            ImageSet8Serializer = MessagePackSerializer.Get<Dictionary<string, List<List<Byte>>>>();
             ImageSet32Serializer = MessagePackSerializer.Get<Dictionary<string, List<List<UInt32>>>>();
         }
 
@@ -73,5 +72,11 @@ namespace Experica
             }
         }
 
+    }
+
+    public class ImageSet8
+    {
+        public List<UInt16> ImageSize { get; set; } = new List<ushort>();
+        public List<List<Byte>> Images { get; set; } = new List<List<byte>>();
     }
 }

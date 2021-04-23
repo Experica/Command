@@ -1176,21 +1176,19 @@ namespace Experica
             }
         }
 
-        public static Dictionary<string, Texture2D> FillRawTextures8(this Dictionary<string, List<List<Byte>>> imgdata)
+        public static Dictionary<string, Texture2D> FillRawTextures8(this ImageSet8 imgdata)
         {
             if (imgdata == null) return null;
 
-            var imgsize = imgdata["imagesize"];
-            var h = (int)imgsize[0][0]; var w = (int)imgsize[1][0];
-            var imgs = imgdata["images"];
+            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
             var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgs.Count(); i++)
+            for (var i = 0; i < imgdata.Images.Count(); i++)
             {
                 var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
                 var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgs[i].Count(); j++)
+                for (var j = 0; j < imgdata.Images[i].Count(); j++)
                 {
-                    var c = imgs[i][j];
+                    var c = imgdata.Images[i][j];
                     ps[j] = new Color32(c, c, c, 255);
                 }
                 t.Apply();
@@ -1236,7 +1234,7 @@ namespace Experica
                 var file = files[0]; var ext = Path.GetExtension(file);
                 switch (ext)
                 {
-                    case ".mp8":
+                    case ".mpis8":
                         return MsgPack.ImageSet8Serializer.Unpack(File.OpenRead(file)).FillRawTextures8();
                     case ".mp32":
                         return MsgPack.ImageSet32Serializer.Unpack(File.OpenRead(file)).FillRawTextures32();
