@@ -15,44 +15,44 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
-  BGColor@OrthoCamera@OrthoCamera: 0.8 0.8 0.8 1
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77752602
+  BGColor@OrthoCamera@OrthoCamera: 0.3 0.6 0.3 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerPosition@Marker@Marker: -27.19 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 0
+  Ori@Quad@Quad: 225
   OriOffset@Quad@Quad: 180
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 0.3 0.3 0.3 1
+  Color@Quad@Quad: 0.6 0.3 0.7 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: true
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
-  PositionOffset@Quad@Quad: 0 5 0
+  Position@Quad@Quad: 5 5 0
+  PositionOffset@Quad@Quad: 0 10 0
 CondPath: Condition\BO.yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXCTLogic
+ExLogicPath: Experica.SpikeGLXBOLogic
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
 Input: false
 PreICI: 150
-CondDur: 500
+CondDur: 1500
 SufICI: 150
 PreITI: 0
 TrialDur: 0
@@ -92,7 +92,9 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
 - Position@Quad@Quad
-Param: {}
+Param:
+  Ori: '[0, 45, 90, 135, 180, 225, 270, 315]'
+  YOffset: '[5, 10]'
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:

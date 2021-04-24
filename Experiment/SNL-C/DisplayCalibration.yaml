@@ -28,9 +28,9 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 40
-  Size@Quad@Quad: 40 40 1
-  Color@Quad@Quad: 0 0.05263 0 1
+  Diameter@Quad@Quad: 50
+  Size@Quad@Quad: 50 50 1
+  Color@Quad@Quad: 0 0 0.7368 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
@@ -53,7 +53,7 @@ BlockParam:
 - ''
 Input: false
 PreICI: 0
-CondDur: 1000
+CondDur: 2000
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -100,7 +100,7 @@ Param:
   FitType: Gamma
   Measure: Spectral
   N: 20
-TimerDriftSpeed: 3.0199999999999999E-05
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO

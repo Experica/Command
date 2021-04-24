@@ -15,11 +15,11 @@ EnvPath: MarkerImage
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.80790997
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerPosition@Marker@Marker: -27.69 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,7 +29,7 @@ EnvParam:
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
   Diameter@ImageQuad@ImageQuad: 10
-  Size@ImageQuad@ImageQuad: 10 10 1
+  Size@ImageQuad@ImageQuad: 55 36 1
   MaskType@ImageQuad@ImageQuad: None
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
@@ -37,8 +37,8 @@ EnvParam:
   MinColor@ImageQuad@ImageQuad: 0 0 0 1
   MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 1
-  ImageSet@ImageQuad@ImageQuad: ExampleImageSet
+  Image@ImageQuad@ImageQuad: 3
+  ImageSet@ImageQuad@ImageQuad: allframes_73826967085
   Visible@ImageQuad@ImageQuad: true
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
@@ -55,9 +55,9 @@ CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
 Input: false
-PreICI: 150
+PreICI: 500
 CondDur: 500
-SufICI: 150
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -96,7 +96,9 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
 - Position@ImageQuad@ImageQuad
-Param: {}
+Param:
+  ColorSpace: DKL
+  Color: X
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
@@ -106,7 +108,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 ResponseDelay: 15
-Version: 1
+Version: 2
 Config: 
 CondTest: 
 CondTestShowLevel: SHORT
