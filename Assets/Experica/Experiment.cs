@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System;
 using Fasterflect;
-using MsgPack.Serialization;
+using MessagePack;
 
 namespace Experica
 {
@@ -97,10 +97,8 @@ namespace Experica
         public string Subject_Log { get; set; } = "";
 
         public string EnvPath { get; set; } = "";
-        [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, object> EnvParam { get; set; } = new Dictionary<string, object>();
         public string CondPath { get; set; } = "";
-        [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, IList> Cond { get; set; }
         public string ExLogicPath { get; set; } = "";
 
@@ -131,25 +129,24 @@ namespace Experica
         public List<CONDTESTPARAM> NotifyParam { get; set; }
         public List<string> ExInheritParam { get; set; } = new List<string>();
         public List<string> EnvInheritParam { get; set; } = new List<string>();
-        [MessagePackRuntimeCollectionItemType]
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public double TimerDriftSpeed { get; set; }
         public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
         public string Display_ID { get; set; } = "";
         public double ResponseDelay { get; set; }
         public uint Version { get; set; } = 2;
-        [MessagePackIgnore]
+        [IgnoreMember]
         public CommandConfig Config { get; set; }
 
-        [MessagePackIgnore]
+        [IgnoreMember]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
-        [MessagePackIgnore]
+        [IgnoreMember]
         public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
-        [MessagePackIgnore]
+        [IgnoreMember]
         public bool SendMail { get; set; } = false;
-        [MessagePackIgnore]
+        [IgnoreMember]
         public static readonly Dictionary<string, PropertyAccess> Properties;
-        [MessagePackIgnore]
+        [IgnoreMember]
         public Action<string, object> OnNotifyUI;
 
         static Experiment()

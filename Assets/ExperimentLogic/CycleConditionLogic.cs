@@ -1,5 +1,5 @@
 ﻿/*
-ConditionTestLogic.cs is part of the Experica.
+CycleConditionLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -111,11 +111,11 @@ namespace Experica
                             case "DKLIsoLum":
                                 SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLum(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
-                            case "DKLIsoSCone":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoSCone(GetExParam<float>("Intercept"), ex.Display_ID));
+                            case "DKLIsoSLM":
+                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoSLM(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
-                            case "DKLIsoLMCone":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLMCone(GetExParam<float>("Intercept"), ex.Display_ID));
+                            case "DKLIsoLM":
+                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLM(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
                         }
                     }

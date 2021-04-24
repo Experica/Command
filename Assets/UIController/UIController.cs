@@ -34,8 +34,7 @@ using System;
 using System.Runtime;
 using MathNet.Numerics;
 using MathNet.Numerics.Interpolation;
-using MsgPack;
-using MsgPack.Serialization;
+using MessagePack;
 using UnityEngine.InputSystem;
 
 namespace Experica.Command
@@ -385,34 +384,32 @@ namespace Experica.Command
             var hr = false;
             if (alsmanager != null)
             {
-                using (var stream = new MemoryStream())
+                switch (name)
                 {
-                    switch (name)
-                    {
-                        case CONDTESTPARAM.BlockRepeat:
-                        case CONDTESTPARAM.BlockIndex:
-                        case CONDTESTPARAM.TrialRepeat:
-                        case CONDTESTPARAM.TrialIndex:
-                        case CONDTESTPARAM.CondRepeat:
-                        case CONDTESTPARAM.CondIndex:
-                            MsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
-                            break;
-                        case CONDTESTPARAM.SyncEvent:
-                            MsgPack.ListListStringSerializer.Pack(stream, value.ConvertAll(i => (List<string>)i), PackerCompatibilityOptions.None);
-                            break;
-                        case CONDTESTPARAM.Event:
-                        case CONDTESTPARAM.TASKSTATE:
-                        case CONDTESTPARAM.BLOCKSTATE:
-                        case CONDTESTPARAM.TRIALSTATE:
-                        case CONDTESTPARAM.CONDSTATE:
-                            MsgPack.ListListEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
-                            break;
-                    }
-                    if (stream.Length > 0)
-                    {
-                        alsmanager.RpcNotifyCondTest(name, stream.ToArray());
-                        hr = true;
-                    }
+                    case CONDTESTPARAM.BlockRepeat:
+                    case CONDTESTPARAM.BlockIndex:
+                    case CONDTESTPARAM.TrialRepeat:
+                    case CONDTESTPARAM.TrialIndex:
+                    case CONDTESTPARAM.CondRepeat:
+                    case CONDTESTPARAM.CondIndex:
+                        //MsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+                        break;
+                    case CONDTESTPARAM.SyncEvent:
+                        //MsgPack.ListListStringSerializer.Pack(stream, value.ConvertAll(i => (List<string>)i), PackerCompatibilityOptions.None);
+                        break;
+                    case CONDTESTPARAM.Event:
+                    case CONDTESTPARAM.TASKSTATE:
+                    case CONDTESTPARAM.BLOCKSTATE:
+                    case CONDTESTPARAM.TRIALSTATE:
+                    case CONDTESTPARAM.CONDSTATE:
+                        //MsgPack.ListListEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+                        break;
+                }
+                var data = value.SerializeMsgPack();
+                if (data.Length > 0)
+                {
+                    alsmanager.RpcNotifyCondTest(name, data);
+                    hr = true;
                 }
             }
             return hr;

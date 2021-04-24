@@ -20,8 +20,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
-using MsgPack;
-using MsgPack.Serialization;
+using MessagePack;
+using System.IO;
 using System.Linq;
 using System;
 
@@ -29,54 +29,44 @@ namespace Experica
 {
     public static class MsgPack
     {
-#if COMMAND
-        // currently not needed for online analysis, and it cause bugs in build not in editor
-        // will change plugin from msgpack-cli to messagepack-for-csharp in the future
-        //public static MessagePackSerializer<Experiment> ExSerializer;
-#endif
-        public static MessagePackSerializer<List<int>> ListIntSerializer;
-        public static MessagePackSerializer<List<List<string>>> ListListStringSerializer;
-        public static MessagePackSerializer<List<List<Dictionary<string, double>>>> ListListEventSerializer;
-        public static MessagePackSerializer<ImageSet8> ImageSet8Serializer = MessagePackSerializer.Get<ImageSet8>();
-        public static MessagePackSerializer<Dictionary<string, List<List<UInt32>>>> ImageSet32Serializer;
-
         static MsgPack()
         {
-#if COMMAND
-            //ExSerializer = MessagePackSerializer.Get<Experiment>();
-#endif
-            ListIntSerializer = MessagePackSerializer.Get<List<int>>();
-            ListListStringSerializer = MessagePackSerializer.Get<List<List<string>>>();
-            ListListEventSerializer = MessagePackSerializer.Get<List<List<Dictionary<string, double>>>>();
-            ImageSet32Serializer = MessagePackSerializer.Get<Dictionary<string, List<List<UInt32>>>>();
         }
 
-        public static object MsgPackObjectToObject(this object o)
+        public static byte[] SerializeMsgPack<T>(this T obj, MessagePackSerializerOptions options = null)
         {
-            if (o.GetType() == typeof(MessagePackObject))
-            {
-                return MsgPackObjectToObject((MessagePackObject)o);
-            }
-            return o;
+            options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
+            return MessagePackSerializer.Serialize<T>(obj, options);
         }
 
-        public static object MsgPackObjectToObject(this MessagePackObject mpo)
+        public static void SerializeMsgPack<T>(this T obj, Stream data, MessagePackSerializerOptions options = null)
         {
-            if (mpo.IsArray || mpo.IsList)
-            {
-                return mpo.AsList().Select(i => i.MsgPackObjectToObject()).ToList();
-            }
-            else
-            {
-                return mpo.ToObject();
-            }
+            options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
+            MessagePackSerializer.Serialize<T>(data, obj, options);
         }
 
+        public static T DeserializeMsgPack<T>(this byte[] data, MessagePackSerializerOptions options = null)
+        {
+            options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
+            return MessagePackSerializer.Deserialize<T>(data, options);
+        }
+
+        public static T DeserializeMsgPack<T>(this Stream data, MessagePackSerializerOptions options = null)
+        {
+            options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
+            return MessagePackSerializer.Deserialize<T>(data, options);
+        }
     }
 
     public class ImageSet8
     {
         public List<UInt16> ImageSize { get; set; } = new List<ushort>();
         public List<List<Byte>> Images { get; set; } = new List<List<byte>>();
+    }
+
+    public class ImageSet32
+    {
+        public List<UInt16> ImageSize { get; set; } = new List<ushort>();
+        public List<List<UInt32>> Images { get; set; } = new List<List<uint>>();
     }
 }

@@ -97,7 +97,8 @@ mcc = contrast_michelson.(RGBToLMS*maxc_lms,RGBToLMS*minc_lms)
 # since all the maximum Cone Isolating color pairs are symmatric around `th` color, i.e. `th = (maxc+minc)/2`,
 # then the weber contrast using `maxc and th` is equivalent to michelson contrast using `maxc and minc`.
 # Here we use Weber Cone Contrast to scale to the minimum michelson contrast.
-LMSToContrast,ContrastToLMS = LMSContrastMatrix(RGBToLMS*[th;1])
+bg = RGBToLMS*[th;1]
+LMSToContrast,ContrastToLMS = LMSContrastMatrix(bg)
 maxcc = LMSToContrast*RGBToLMS*maxc_lms
 mincc = LMSToContrast*RGBToLMS*minc_lms
 pcc = [norm(maxcc[1:3,i]) for i in 1:3]
@@ -110,8 +111,6 @@ mminc_lms = clamp.(LMSToRGB*ContrastToLMS*quavectors(ccf'.*trivectors(mincc)),0,
 mmcc = contrast_michelson.(RGBToLMS*mmaxc_lms,RGBToLMS*mminc_lms)
 
 ## DKL Isolating RGBs through a background RGB color
-# bg = RGBToLMS*[0.07843, 0.05882, 0.06275,1]
-bg = RGBToLMS*[th;1]
 LMSToDKL,DKLToLMS = LMSDKLMatrix(bg,isnorm=true)
 # each column of DKLToLMS is the DKL Isolating LMS direction, then it's converted to RGB direction
 DKLIsoRGBVec = trimatrix(LMSToRGB*DKLToLMS)
@@ -124,16 +123,14 @@ minc_dkl = clamp.(quavectors(th .- 0.5DKLIsoRGBVec),0,1);maxc_dkl = clamp.(quave
 DKLToRGB = LMSToRGB*DKLToLMS
 RGBToDKL = LMSToDKL*RGBToLMS
 lum = 0
-huestep = 1;hueangles = 0:huestep:180-huestep
-hueangles = [0,30,60,75,80,83,90,95,101,105,110,120,150]
+hueangle_dkl_ilp = [0,30,60,75,80,83,90,95,101,105,110,120,150]
+append!(hueangle_dkl_ilp,hueangle_dkl_ilp .+ 180)
 # rotate l+ direction around l+m axis within the `lum` Isoluminance plane
-DKLIsoLumRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=1)*[0,1,0,0], hueangles)...))
+DKLIsoLumRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=1)*[0,1,0,0], hueangle_dkl_ilp)...))
 # find Intersections of Isoluminance directions with faces of unit RGB cube
-minmaxc = hcat(map(i->intersectlineunitorigincube((DKLToRGB*[lum,0,0,1])[1:3],DKLIsoLumRGBVec[:,i]),1:size(DKLIsoLumRGBVec,2))...)
-minc_dkl_ilp=minmaxc[:,1:2:end];maxc_dkl_ilp=minmaxc[:,2:2:end]
-hue_dkl_ilp = clamp.(quavectors([maxc_dkl_ilp minc_dkl_ilp]),0,1)
+anglec = hcat(map(i->intersectlineunitorigincube((DKLToRGB*[lum,0,0,1])[1:3],DKLIsoLumRGBVec[:,i]),1:size(DKLIsoLumRGBVec,2))...)
+hue_dkl_ilp = clamp.(quavectors(anglec),0,1)
 wp_dkl_ilp = repeat([th;1],inner=(1,size(hue_dkl_ilp,2)))
-hueangle_dkl_ilp = [hueangles;hueangles.+180]
 
 # Plot DKL Hues
 IsoLumc = [RGB(hue_dkl_ilp[1:3,i]...) for i in 1:size(hue_dkl_ilp,2)]
@@ -257,6 +254,15 @@ cm_misow = (colors=cs,notes="The M Cone Isolating colors linearly generated betw
 cs = range(S➖,RGBA(1,1,1,1.0),S➕,length=360)
 cm_sisow = (colors=cs,notes="The S Cone Isolating colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
 
+cs = range(L➖,RGBA(0,0,0,1.0),L➕,length=360)
+cm_lisob = (colors=cs,notes="The L Cone Isolating colors linearly generated between[min,black,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(M➖,RGBA(0,0,0,1.0),M➕,length=360)
+cm_misob = (colors=cs,notes="The M Cone Isolating colors linearly generated between[min,black,max], constrained by a `$displayname` LCD Display.")
+
+cs = range(S➖,RGBA(0,0,0,1.0),S➕,length=360)
+cm_sisob = (colors=cs,notes="The S Cone Isolating colors linearly generated between[min,black,max], constrained by a `$displayname` LCD Display.")
+
 ## DKL Axis Isolating colormap
 Lum➕ = RGBA(maxc_dkl[:,1]...)
 Lum➖ = RGBA(minc_dkl[:,1]...)
@@ -280,25 +286,70 @@ cm_lmisow = (colors=cs,notes="The DKL L-M Axis colors linearly generated between
 cs = range(S_LM➖,RGBA(1,1,1,1.0),S_LM➕,length=360)
 cm_slmisow = (colors=cs,notes="The DKL S-(L+M) Axis colors linearly generated between[min,white,max], constrained by a `$displayname` LCD Display.")
 
-## DKL Hues colormap
-cs = [RGBA(hue_dkl_ilp[:,i]...) for i in 1:size(hue_dkl_ilp,2)]
-cm_dkl = (colors=[cs;cs[1]],notes="The exact DKL max_cone_contrast hues angled[0,360] in lum=$lum plane, constrained by a `$displayname` LCD Display.")
-plotcolormap(cm_dkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+cs = range(L_M➖,RGBA(0,0,0,1.0),L_M➕,length=360)
+cm_lmisob = (colors=cs,notes="The DKL L-M Axis colors linearly generated between[min,black,max], constrained by a `$displayname` LCD Display.")
 
-## Linear colormap generated from DKL L-M and S-(L+M) axis colors
+cs = range(S_LM➖,RGBA(0,0,0,1.0),S_LM➕,length=360)
+cm_slmisob = (colors=cs,notes="The DKL S-(L+M) Axis colors linearly generated between[min,black,max], constrained by a `$displayname` LCD Display.")
+
+## DKL IsoLum Plane colormap
+angles = 0:360;lum=0
+DKLIsoLumRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=1)*[0,1,0,0], angles)...))
+anglec = hcat(map(i->intersectlineunitorigincube((DKLToRGB*[lum,0,0,1])[1:3],DKLIsoLumRGBVec[:,i]),1:size(DKLIsoLumRGBVec,2))...)
+dkl_ilp = clamp.(quavectors(anglec),0,1)
+
+cs = [RGBA(dkl_ilp[:,i]...) for i in 1:size(dkl_ilp,2)]
+cm_lumiso_plane = (colors=cs,notes="The exact DKL max_cone_contrast colors angled[0,360] in lum=$lum plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_lumiso_plane.colors,xlabel="L-M",ylabel="S-(L+M)")
+
+# Linear colormap generated from DKL L-M and S-(L+M) axis colors
 cs = range(L_M➕,S_LM➕,L_M➖,S_LM➖,L_M➕,length=365)
-cm_lidkl = (colors=cs,notes="The DKL hues linearly generated from max_cone_contrast hues of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `$displayname` LCD Display.")
-plotcolormap(cm_lidkl.colors,xlabel="L-M",ylabel="S-(L+M)")
+cm_lumiso_planel = (colors=cs,notes="The DKL colors linearly generated from max_cone_contrast colors of L-M and S-(L+M) axis at lum=$lum plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_lumiso_planel.colors,xlabel="L-M",ylabel="S-(L+M)")
+
+## DKL IsoLM Plane colormap
+angles = 0:360;lm=0
+DKLIsoLMRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=2)*[0,0,1,0], angles)...))
+anglec = hcat(map(i->intersectlineunitorigincube((DKLToRGB*[0,lm,0,1])[1:3],DKLIsoLMRGBVec[:,i]),1:size(DKLIsoLMRGBVec,2))...)
+dkl_ilmp = clamp.(quavectors(anglec),0,1)
+
+cs = [RGBA(dkl_ilmp[:,i]...) for i in 1:size(dkl_ilmp,2)]
+cm_lmiso_plane = (colors=cs,notes="The exact DKL max_cone_contrast colors angled[0,360] in lm=$lm plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_lmiso_plane.colors,xlabel="S-(L+M)",ylabel="Lum")
+
+# Linear colormap generated from DKL S-(L+M) and Lum axis colors
+cs = range(S_LM➕,Lum➕,S_LM➖,Lum➖,S_LM➕,length=365)
+cm_lmiso_planel = (colors=cs,notes="The DKL colors linearly generated from max_cone_contrast colors of S-(L+M) and Lum axis at lm=$lm plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_lmiso_planel.colors,xlabel="S-(L+M)",ylabel="Lum")
+
+## DKL IsoSLM Plane colormap
+angles = 0:360;slm=0
+DKLIsoSLMRGBVec = trivectors(hcat(map(i->DKLToRGB*RotateXYZMatrix(deg2rad(i),dims=3)*[0,-1,0,0], angles)...))
+anglec = hcat(map(i->intersectlineunitorigincube((DKLToRGB*[0,0,slm,1])[1:3],DKLIsoSLMRGBVec[:,i]),1:size(DKLIsoSLMRGBVec,2))...)
+dkl_islmp = clamp.(quavectors(anglec),0,1)
+
+cs = [RGBA(dkl_islmp[:,i]...) for i in 1:size(dkl_islmp,2)]
+cm_slmiso_plane = (colors=cs,notes="The exact DKL max_cone_contrast colors angled[0,360] in slm=$slm plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_slmiso_plane.colors,xlabel="M-L",ylabel="Lum")
+
+# Linear colormap generated from DKL M-L and Lum axis colors
+cs = range(L_M➖,Lum➕,L_M➕,Lum➖,L_M➖,length=365)
+cm_slmiso_planel = (colors=cs,notes="The DKL colors linearly generated from max_cone_contrast colors of M-L and Lum axis at slm=$slm plane, constrained by a `$displayname` LCD Display.")
+plotcolormap(cm_slmiso_planel.colors,xlabel="M-L",ylabel="Lum")
 
 ## HSL Hues colormap
 l=0.4
 cs = map(i->RGBA(HSLA(i,1,l,1)),0:360)
-cm_hsl = (colors=cs, notes="The HSL max_saturated hues angled[0,360] at L=$l.")
-plotcolormap(cm_hsl.colors,xlabel="S",ylabel="S")
+cm_hsl_hue = (colors=cs, notes="The HSL max_saturated hues angled[0,360] at L=$l.")
+plotcolormap(cm_hsl_hue.colors,xlabel="S",ylabel="S")
 
 ## Save Color Maps
 save(joinpath(resultdir,"colormaps.jld2"),"lms_mccliso",cm_liso,"lms_mccmiso",cm_miso,"lms_mccsiso",cm_siso,
     "lms_mcclisow",cm_lisow,"lms_mccmisow",cm_misow,"lms_mccsisow",cm_sisow,
+    "lms_mcclisob",cm_lisob,"lms_mccmisob",cm_misob,"lms_mccsisob",cm_sisob,
     "dkl_mcclumiso",cm_lumiso,"dkl_mcclmiso",cm_lmiso,"dkl_mccslmiso",cm_slmiso,
     "dkl_mcclmisow",cm_lmisow,"dkl_mccslmisow",cm_slmisow,
-    "dkl_mcchue_l$lum",cm_dkl,"lidkl_mcchue_l$lum",cm_lidkl,"hsl_mshue_l$l",cm_hsl)
+    "dkl_mcclmisob",cm_lmisob,"dkl_mccslmisob",cm_slmisob,
+    "dkl_mcchue_l$lum",cm_lumiso_plane,"lidkl_mcchue_l$lum",cm_lumiso_planel,
+    "dkl_mcchue_lm$lm",cm_lmiso_plane,"lidkl_mcchue_lm$lm",cm_lmiso_planel,
+    "dkl_mcchue_slm$slm",cm_slmiso_plane,"lidkl_mcchue_slm$slm",cm_slmiso_planel,"hsl_mshue_l$l",cm_hsl_hue)

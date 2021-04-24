@@ -113,9 +113,9 @@ function saveunityrawtexture(fn,imgset)
             push!(imgs,ps)
         end
     end
-    imgdata = Dict("imagesize"=>[map(i->[pbit == 8 ? UInt8(i) : UInt32(i)],ds)...],"images"=>imgs)
+    imgdata = Dict("ImageSize"=>[map(i->UInt16(i),ds)...],"Images"=>imgs)
     # MessagePack Binary File
-    write("$fn.mp$pbit", pack(imgdata))
+    write("$fn.mpis$pbit", pack(imgdata))
     return imgdata
 end
 

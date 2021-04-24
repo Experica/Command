@@ -1197,21 +1197,19 @@ namespace Experica
             return imgset;
         }
 
-        public static Dictionary<string, Texture2D> FillRawTextures32(this Dictionary<string, List<List<UInt32>>> imgdata)
+        public static Dictionary<string, Texture2D> FillRawTextures32(this ImageSet32 imgdata)
         {
             if (imgdata == null) return null;
 
-            var imgsize = imgdata["imagesize"];
-            var h = (int)imgsize[0][0]; var w = (int)imgsize[1][0];
-            var imgs = imgdata["images"];
+            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
             var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgs.Count(); i++)
+            for (var i = 0; i < imgdata.Images.Count(); i++)
             {
                 var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
                 var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgs[i].Count(); j++)
+                for (var j = 0; j < imgdata.Images[i].Count(); j++)
                 {
-                    var c = BitConverter.GetBytes(imgs[i][j]);
+                    var c = BitConverter.GetBytes(imgdata.Images[i][j]);
                     ps[j] = new Color32(c[3], c[2], c[1], c[0]);
                 }
                 t.Apply();
@@ -1235,11 +1233,11 @@ namespace Experica
                 switch (ext)
                 {
                     case ".mpis8":
-                        return MsgPack.ImageSet8Serializer.Unpack(File.OpenRead(file)).FillRawTextures8();
-                    case ".mp32":
-                        return MsgPack.ImageSet32Serializer.Unpack(File.OpenRead(file)).FillRawTextures32();
+                        return File.OpenRead(file).DeserializeMsgPack<ImageSet8>().FillRawTextures8();
+                    case ".mpis32":
+                        return File.OpenRead(file).DeserializeMsgPack<ImageSet32>().FillRawTextures32();
                     case ".yaml":
-                        return Yaml.ReadYamlFile<Dictionary<string, List<List<UInt32>>>>(file).FillRawTextures32();
+                        return file.ReadYamlFile<ImageSet32>().FillRawTextures32();
                 }
                 return null;
             }
@@ -1352,7 +1350,7 @@ namespace Experica
         public static Vector<float> IntersectLinePlane(Vector<float> pl, Vector<float> dl, Vector<float> pp, Vector<float> np)
         {
             var nptdl = np.PointwiseMultiply(dl).Sum(); // Nₚ'*Dₗ
-            if (nptdl == 0f) { return null; } // line on the plane
+            if (nptdl == 0f) { return null; } // line on/parallel the plane
             var lam = np.PointwiseMultiply(pp - pl).Sum() / nptdl; // λ = Nₚ'*(Pₚ - Pₗ) / NₚᵀDₗ
             if (lam < 0f) { return null; } // intersection point at opposite direction
             return pl + lam * dl;
@@ -1396,7 +1394,7 @@ namespace Experica
             return Color.gray;
         }
 
-        public static Color DKLIsoSCone(this float angle, float scone, string displayid)
+        public static Color DKLIsoSLM(this float angle, float scone, string displayid)
         {
             if (colormatrix.ContainsKey(displayid))
             {
@@ -1413,7 +1411,7 @@ namespace Experica
             return Color.gray;
         }
 
-        public static Color DKLIsoLMCone(this float angle, float lmcone, string displayid)
+        public static Color DKLIsoLM(this float angle, float lmcone, string displayid)
         {
             if (colormatrix.ContainsKey(displayid))
             {
