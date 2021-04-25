@@ -13,20 +13,20 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.75 14.42 -1000
+  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.32456136
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 200.323135
+  Ori@GratingQuad@GratingQuad: 240.255112
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,12 +36,12 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 5.75847197
+  SpatialFreq@GratingQuad@GratingQuad: 1.61245155
   TemporalFreq@GratingQuad@GratingQuad: 2
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0.125
-  MinColor@GratingQuad@GratingQuad: 0.3693 0.6164 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6307 0.3836 1 1
+  MinColor@GratingQuad@GratingQuad: 0.3712 0.6152 0 1
+  MaxColor@GratingQuad@GratingQuad: 0.6288 0.3848 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -56,7 +56,7 @@ EnvParam:
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXColorCTLogic
+ExLogicPath: Experica.SpikeGLXColorCT
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\

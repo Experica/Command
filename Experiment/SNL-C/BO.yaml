@@ -15,45 +15,45 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77752602
-  BGColor@OrthoCamera@OrthoCamera: 0.3 0.6 0.3 1
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6503067
+  BGColor@OrthoCamera@OrthoCamera: 0.3 0.3 0.3 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.19 14.42 -1000
+  MarkerPosition@Marker@Marker: -25.1 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 225
+  Ori@Quad@Quad: 45
   OriOffset@Quad@Quad: 180
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 0.6 0.3 0.7 1
+  Color@Quad@Quad: 0.8 0.8 0.8 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: true
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 5 5 0
-  PositionOffset@Quad@Quad: 0 10 0
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 5 0
 CondPath: Condition\BO.yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXBOLogic
+ExLogicPath: Experica.SpikeGLXBO
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
+CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
 BlockParam: []
 Input: false
-PreICI: 150
-CondDur: 1500
-SufICI: 150
+PreICI: 250
+CondDur: 500
+SufICI: 250
 PreITI: 0
 TrialDur: 0
 SufITI: 0

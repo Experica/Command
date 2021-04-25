@@ -68,7 +68,7 @@ namespace Experica
         /// </summary>
         public float Height
         {
-            get { return camera.orthographicSize * 2; }
+            get { return camera.orthographicSize * 2f; }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Experica
         /// </summary>
         public float Width
         {
-            get { return Height * camera.aspect; }
+            get { return camera.orthographicSize * 2f * camera.aspect; }
         }
 
         public float NearPlane

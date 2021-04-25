@@ -301,6 +301,24 @@ namespace Experica
             }
         }
 
+        public float? MainViewportHeight
+        {
+            get 
+            { 
+                if (maincamera_scene == null) { return null; }
+                return maincamera_scene.orthographicSize * 2f;
+            }
+        }
+
+        public float? MainViewportWidth
+        {
+            get 
+            {
+                if (maincamera_scene == null) { return null; }
+                return maincamera_scene.orthographicSize * 2f * maincamera_scene.aspect;
+            }
+        }
+
         public Dictionary<string, object> GetParams()
         {
             var envparam = new Dictionary<string, object>();

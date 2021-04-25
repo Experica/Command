@@ -15,11 +15,11 @@ EnvPath: MarkerImage
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.80790997
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6503067
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.69 14.42 -1000
+  MarkerPosition@Marker@Marker: -25.1 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,7 +29,7 @@ EnvParam:
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
   Diameter@ImageQuad@ImageQuad: 10
-  Size@ImageQuad@ImageQuad: 55 36 1
+  Size@ImageQuad@ImageQuad: 54.2 32.84 1
   MaskType@ImageQuad@ImageQuad: None
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
@@ -37,14 +37,14 @@ EnvParam:
   MinColor@ImageQuad@ImageQuad: 0 0 0 1
   MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 3
-  ImageSet@ImageQuad@ImageQuad: allframes_73826967085
+  Image@ImageQuad@ImageQuad: 124
+  ImageSet@ImageQuad@ImageQuad: allframes_73827068744_2
   Visible@ImageQuad@ImageQuad: true
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.SpikeGLXImageLogic
+ExLogicPath: Experica.SpikeGLXImage
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\

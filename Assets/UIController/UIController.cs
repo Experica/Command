@@ -617,6 +617,23 @@ namespace Experica.Command
             exmanager.el?.envmanager.ForcePushParams();
         }
 
+        public void ViewportSize()
+        {
+            if (exmanager.el != null)
+            {
+                var so = exmanager.el.GetEnvActiveParam("Size");
+                if (so != null)
+                {
+                    var s = so.Convert<Vector3>();
+                    var w = exmanager.el.envmanager.MainViewportWidth;
+                    if (w.HasValue) { s.x = w.Value; }
+                    var h = exmanager.el.envmanager.MainViewportHeight;
+                    if (h.HasValue) { s.y = h.Value; }
+                    exmanager.el.SetEnvActiveParam("Size", s);
+                }
+            }
+        }
+
         public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
             var ip = exmanager.el.ex.EnvInheritParam;
