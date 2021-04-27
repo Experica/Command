@@ -40,7 +40,7 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 1 0.2889 0.4566 1
+  MinColor@GratingQuad@GratingQuad: 0 0.6553 0.4396 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -112,7 +112,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-  ModulateParam: DKLIsoSLM
+  ModulateParam: DKLIsoLum
   Intercept: 0
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:

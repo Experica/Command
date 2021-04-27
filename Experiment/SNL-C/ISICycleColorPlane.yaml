@@ -15,7 +15,7 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
@@ -38,9 +38,9 @@ EnvParam:
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0
   TemporalFreq@GratingQuad@GratingQuad: 1
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.25
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 2.98E-08 0.6498 0.4969 1
+  MinColor@GratingQuad@GratingQuad: 1 0.3532 0.5056 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -111,8 +111,9 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-  ModulateParam: DKLIsoSCone
+  ModulateParam: DKLIsoLum
   Intercept: 0
+  CycleDirection: 1
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:

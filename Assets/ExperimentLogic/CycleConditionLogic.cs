@@ -86,7 +86,9 @@ namespace Experica
                     }
                     break;
                 case CONDSTATE.COND:
+                    var p = GetExParam<string>("ModulateParam");
                     var f = GetEnvActiveParam<float>("ModulateTemporalFreq");
+                    var d = GetExParam<float>("CycleDirection");
                     var div = (float)CondHold / 1000f * f;
                     var c = Mathf.FloorToInt(div);
                     if (c > 0)
@@ -100,22 +102,22 @@ namespace Experica
                     }
                     else
                     {
-                        switch (GetExParam<string>("ModulateParam"))
+                        switch (p)
                         {
                             case "ModulateTime":
-                                SetEnvActiveParam("ModulateTimeSecond", div / f);
+                                SetEnvActiveParam("ModulateTimeSecond", div / f *d);
                                 break;
                             case "Ori":
-                                SetEnvActiveParam("Ori", div * 360f);
+                                SetEnvActiveParam("Ori", div *d* 360f);
                                 break;
                             case "DKLIsoLum":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLum(GetExParam<float>("Intercept"), ex.Display_ID));
+                                SetEnvActiveParam("MinColor", (div * d*360f).DKLIsoLum(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
                             case "DKLIsoSLM":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoSLM(GetExParam<float>("Intercept"), ex.Display_ID));
+                                SetEnvActiveParam("MinColor", (div * d*360f).DKLIsoSLM(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
                             case "DKLIsoLM":
-                                SetEnvActiveParam("MinColor", (div * 360f).DKLIsoLM(GetExParam<float>("Intercept"), ex.Display_ID));
+                                SetEnvActiveParam("MinColor", (div * d*360f).DKLIsoLM(GetExParam<float>("Intercept"), ex.Display_ID));
                                 break;
                         }
                     }
