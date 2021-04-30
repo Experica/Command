@@ -164,21 +164,21 @@ namespace Experica.Command
         {
             if (context.performed)
             {
-                if (canvas.activeSelf)
-                {
-                    canvas.SetActive(false);
                     var maincamera = exmanager.el.envmanager.maincamera_scene;
                     if (maincamera != null)
                     {
+                        if(maincamera.targetTexture==null)
+                        {
+                            canvas.SetActive(true);
+                            viewpanel.UpdateViewport();
+                        }
+                        else
+                        {
+                            canvas.SetActive(false);
                         exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
                         maincamera.targetTexture = null;
+                        }
                     }
-                }
-                else
-                {
-                    canvas.SetActive(true);
-                    viewpanel.UpdateViewport();
-                }
             }
         }
 
@@ -199,12 +199,24 @@ namespace Experica.Command
                 if (Screen.fullScreen)
                 {
                     Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
+                    var maincamera = exmanager.el.envmanager.maincamera_scene;
+                    if (maincamera != null && maincamera.targetTexture == null)
+                    {
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
+                        maincamera.targetTexture = null;
+                    }
                 }
                 else
                 {
                     lastwindowwidth = Math.Max(1024, Screen.width);
                     lastwindowheight = Math.Max(768, Screen.height);
                     Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
+                    var maincamera = exmanager.el.envmanager.maincamera_scene;
+                    if (maincamera != null && maincamera.targetTexture == null)
+                    {
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
+                        maincamera.targetTexture = null;
+                    }
                 }
             }
         }

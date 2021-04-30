@@ -1,29 +1,29 @@
 ID: ISICycleColorPlane
 Name: ISICycleColorPlane
 Designer: Alex
-Experimenter: Alex
+Experimenter: PL
 Log: 
-Subject_ID: Test
+Subject_ID: AF6
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 13
+Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 11.3000002
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -40,7 +40,7 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 1
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.25
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 1 0.3532 0.5056 1
+  MinColor@GratingQuad@GratingQuad: 0 0.6467 0.4942 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -58,7 +58,7 @@ CondPath: ''
 Cond: 
 ExLogicPath: Experica.CycleConditionLogic
 RecordSession: HLV1
-RecordSite: ODL9
+RecordSite: ODL2
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
@@ -111,7 +111,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-  ModulateParam: DKLIsoLum
+  ModulateParam: DKLIsoSLM
   Intercept: 0
   CycleDirection: 1
 TimerDriftSpeed: 6.4999999999999994E-05

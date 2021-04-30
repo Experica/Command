@@ -1,5 +1,5 @@
-ID: BOImage
-Name: BOImage
+ID: DynamicAdelsonFast
+Name: DynamicAdelsonFast
 Designer: Alex
 Experimenter: Tom
 Log: 
@@ -22,7 +22,7 @@ EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
   ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5448 0.5448 0.5448 1
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
@@ -37,8 +37,8 @@ EnvParam:
   MinColor@ImageQuad@ImageQuad: 0 0 0 1
   MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 119
-  ImageSet@ImageQuad@ImageQuad: BorderOwnership
+  Image@ImageQuad@ImageQuad: 88
+  ImageSet@ImageQuad@ImageQuad: DynamicAdelson_05Hz_004
   Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
@@ -49,15 +49,15 @@ RecordSession: HLV1
 RecordSite: ODL1
 DataDir: X:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 10
 BlockRepeat: 1
 BlockParam: []
 Input: false
-PreICI: 500
-CondDur: 500
-SufICI: 500
+PreICI: 0
+CondDur: 2000
+SufICI: 0
 PreITI: 0
 TrialDur: 0
 SufITI: 0

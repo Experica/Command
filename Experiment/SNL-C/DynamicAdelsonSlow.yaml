@@ -1,5 +1,5 @@
-ID: BOImage
-Name: BOImage
+ID: DynamicAdelsonSlow
+Name: DynamicAdelsonSlow
 Designer: Alex
 Experimenter: Tom
 Log: 
@@ -14,15 +14,15 @@ Subject_Log:
 EnvPath: MarkerImage
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
+  MarkerPosition@Marker@Marker: -23.65 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5448 0.5448 0.5448 1
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.56167758
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
@@ -37,8 +37,8 @@ EnvParam:
   MinColor@ImageQuad@ImageQuad: 0 0 0 1
   MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 119
-  ImageSet@ImageQuad@ImageQuad: BorderOwnership
+  Image@ImageQuad@ImageQuad: 328
+  ImageSet@ImageQuad@ImageQuad: DynamicAdelson_0125Hz_004
   Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
@@ -49,15 +49,15 @@ RecordSession: HLV1
 RecordSite: ODL1
 DataDir: X:\
 DataPath: 
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 10
 BlockRepeat: 1
 BlockParam: []
 Input: false
-PreICI: 500
-CondDur: 500
-SufICI: 500
+PreICI: 0
+CondDur: 2000
+SufICI: 0
 PreITI: 0
 TrialDur: 0
 SufITI: 0

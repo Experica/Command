@@ -36,6 +36,7 @@ FirstTestID: ConditionTest
 ExperimenterAddress:
   Alex: 4109829463@mms.att.net
   PL: 8584056165@mms.att.net
+  Tom: 8585684497@mms.att.net
 SyncFrameTimeOut: 4
 NotifyLatency: 10
 MaxDisplayLatencyError: 20
@@ -88,8 +89,8 @@ Display:
     ID: ROGPG279Q
     Type: LCD
     Latency: 21
-    RiseLag: 1.1499999999999999
-    FallLag: 9
+    RiseLag: 1
+    FallLag: 13
     CLUTSize: 24
     FitType: LinearSpline
     IntensityMeasurement:
