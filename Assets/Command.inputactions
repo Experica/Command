@@ -76,6 +76,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ToggleGuide",
+                    "type": "Button",
+                    "id": "bca7a1e9-d871-40d3-82bf-c143a8a97334",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -329,6 +337,39 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "ToggleView",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button With One Modifier",
+                    "id": "22914750-54c3-4751-8781-598c7859e694",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleGuide",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "0c6ecd20-575e-4313-aa5c-bd860d702f23",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "ToggleGuide",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "button",
+                    "id": "316dd762-6b7d-4b0e-b1fa-80792cd0e7b6",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "ToggleGuide",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

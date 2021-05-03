@@ -164,21 +164,21 @@ namespace Experica.Command
         {
             if (context.performed)
             {
-                    var maincamera = exmanager.el.envmanager.maincamera_scene;
-                    if (maincamera != null)
+                var maincamera = exmanager.el.envmanager.maincamera_scene;
+                if (maincamera != null)
+                {
+                    if (maincamera.targetTexture == null)
                     {
-                        if(maincamera.targetTexture==null)
-                        {
-                            canvas.SetActive(true);
-                            viewpanel.UpdateViewport();
-                        }
-                        else
-                        {
-                            canvas.SetActive(false);
+                        canvas.SetActive(true);
+                        viewpanel.UpdateViewport();
+                    }
+                    else
+                    {
+                        canvas.SetActive(false);
                         exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
                         maincamera.targetTexture = null;
-                        }
                     }
+                }
             }
         }
 
@@ -218,6 +218,14 @@ namespace Experica.Command
                         maincamera.targetTexture = null;
                     }
                 }
+            }
+        }
+
+        public void OnToggleGuideAction(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                viewpanel.togglegrid.isOn = !viewpanel.togglegrid.isOn;
             }
         }
 
