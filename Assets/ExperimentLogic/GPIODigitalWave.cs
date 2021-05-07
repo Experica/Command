@@ -20,59 +20,57 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using Experica;
 
-namespace Experica
+public class GPIODigitalWave : ExperimentLogic
 {
-    public class GPIODigitalWave : ExperimentLogic
+    protected IGPIO gpio;
+    protected GPIOWave gpiowave;
+
+    protected override void OnStartExperiment()
     {
-        protected IGPIO gpio;
-        protected GPIOWave gpiowave;
-
-        protected override void OnStartExperiment()
+        var gpioname = (string)ex.GetParam("GPIO");
+        var wavetype = ex.GetParam("WaveType").Convert<DigitalWaveType>();
+        var freq = ex.GetParam("Freq").Convert<float>();
+        switch (gpioname)
         {
-            var gpioname = (string)ex.GetParam("GPIO");
-            var wavetype = ex.GetParam("WaveType").Convert<DigitalWaveType>();
-            var freq = ex.GetParam("Freq").Convert<float>();
-            switch (gpioname)
-            {
-                case "ParallelPort":
-                    // On Average 5kHz
-                    gpio = new ParallelPort(config.ParallelPort1);
-                    break;
-                case "FTDI":
-                    // On Average 2kHz
-                    gpio = new FTDIGPIO();
-                    break;
-                case "1208FS":
-                    // On Average 500Hz
-                    //gpio = new MCCDevice();
-                    break;
-            }
-            if (gpio != null)
-            {
-                gpiowave = new GPIOWave(gpio);
-                switch (wavetype)
-                {
-                    case DigitalWaveType.PWM:
-                        gpiowave.SetBitWave(0, freq);
-                        break;
-                    case DigitalWaveType.PoissonSpike:
-                        gpiowave.SetBitWave(0, 50, 2, 2, 0, 0);
-                        gpiowave.SetBitWave(1, 100, 2, 2, 0, 0);
-                        break;
-                }
-                gpiowave.StartAll();
-            }
-            else
-            {
-                Debug.LogWarning("No Valid GPIO.");
-            }
+            case "ParallelPort":
+                // On Average 5kHz
+                gpio = new ParallelPort(config.ParallelPort1);
+                break;
+            case "FTDI":
+                // On Average 2kHz
+                gpio = new FTDIGPIO();
+                break;
+            case "1208FS":
+                // On Average 500Hz
+                //gpio = new MCCDevice();
+                break;
         }
-
-        protected override void OnStopExperiment()
+        if (gpio != null)
         {
-            gpiowave?.StopAll();
-            gpio?.Dispose();
+            gpiowave = new GPIOWave(gpio);
+            switch (wavetype)
+            {
+                case DigitalWaveType.PWM:
+                    gpiowave.SetBitWave(0, freq);
+                    break;
+                case DigitalWaveType.PoissonSpike:
+                    gpiowave.SetBitWave(0, 50, 2, 2, 0, 0);
+                    gpiowave.SetBitWave(1, 100, 2, 2, 0, 0);
+                    break;
+            }
+            gpiowave.StartAll();
         }
+        else
+        {
+            Debug.LogWarning("No Valid GPIO.");
+        }
+    }
+
+    protected override void OnStopExperiment()
+    {
+        gpiowave?.StopAll();
+        gpio?.Dispose();
     }
 }

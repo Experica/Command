@@ -19,60 +19,54 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.Generic;
 using UnityEngine;
+using Experica;
+using System.Collections.Generic;
 using System.Linq;
+using ColorSpace = Experica.ColorSpace;
 
-namespace Experica
+/// <summary>
+/// Image Test with SpikeGLX Data Acquisition System, and Predefined Colors
+/// </summary>
+public class SpikeGLXImage : SpikeGLXCTLogic
 {
-    /// <summary>
-    /// Image Test with SpikeGLX Data Acquisition System, and Predefined Color
-    /// </summary>
-    public class SpikeGLXImage : SpikeGLXCTLogic
+    protected override void GenerateFinalCondition()
     {
-        protected override void GenerateFinalCondition()
+        var colorspace = GetExParam<ColorSpace>("ColorSpace");
+        var colorvar = GetExParam<string>("Color");
+        var colorname = colorspace + "_" + colorvar;
+
+        // get color
+        List<Color> color = null;
+        var data = ex.Display_ID.GetColorData();
+        if (data != null)
         {
-            var colorspace = GetExParam<ColorSpace>("ColorSpace");
-            var colorvar = GetExParam<string>("Color");
-            var colorname = colorspace + "_" + colorvar;
-
-            // get color
-            List<Color> color = null;
-            var data = ex.Display_ID.GetColorData();
-            if (data != null)
+            if (data.ContainsKey(colorname))
             {
-                if (data.ContainsKey(colorname))
-                {
-                    color = data[colorname].Convert<List<Color>>();
-                }
-                else
-                {
-                    Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
-                }
+                color = data[colorname].Convert<List<Color>>();
             }
-
-            if (color != null)
+            else
             {
-                switch (ex.ID)
-                {
-                    case "Image":
-                        SetEnvActiveParam("MaxColor", color[0]);
-                        SetEnvActiveParam("MinColor", color[1]);
-                        break;
-                }
+                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
             }
+        }
 
-            // get imageset
-            var imagesetname = GetEnvActiveParam<string>("ImageSet");
-            var imageset = imagesetname.GetImageData();
-            if (imageset != null)
+        if (color != null)
+        {
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
+        }
+
+        // get imageset
+        var imagesetname = GetEnvActiveParam<string>("ImageSet");
+        var imageset = imagesetname.GetImageData();
+        if (imageset != null)
+        {
+            var cond = new Dictionary<string, List<object>>
             {
-                var cond = new Dictionary<string, List<object>>
-                {
-                    ["Image"] = imageset.Keys.Select(i => (object)i).ToList()
-                };
-                condmanager.FinalizeCondition(cond);
-            }
+                ["Image"] = imageset.Keys.Select(i => (object)i).ToList()
+            };
+            condmanager.FinalizeCondition(cond);
         }
     }
 }

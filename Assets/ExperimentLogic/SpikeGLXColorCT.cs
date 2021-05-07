@@ -19,53 +19,43 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.Generic;
 using UnityEngine;
+using Experica;
+using System.Collections.Generic;
+using ColorSpace = Experica.ColorSpace;
 
-namespace Experica
+/// <summary>
+/// Condition Test with SpikeGLX Data Acquisition System, and Predefined Colors
+/// </summary>
+public class SpikeGLXColorCT : SpikeGLXCTLogic
 {
-    /// <summary>
-    /// Condition Test with SpikeGLX Data Acquisition System, and Predefined Color
-    /// </summary>
-    public class SpikeGLXColorCT : SpikeGLXCTLogic
+    protected override void GenerateFinalCondition()
     {
-        protected override void GenerateFinalCondition()
+        base.GenerateFinalCondition();
+
+        var colorspace = GetExParam<ColorSpace>("ColorSpace");
+        var colorvar = GetExParam<string>("Color");
+        var colorname = colorspace + "_" + colorvar;
+
+        // get color
+        List<Color> color = null;
+        var data = ex.Display_ID.GetColorData();
+        if (data != null)
         {
-            base.GenerateFinalCondition();
-
-            var colorspace = GetExParam<ColorSpace>("ColorSpace");
-            var colorvar = GetExParam<string>("Color");
-            var colorname = colorspace + "_" + colorvar;
-
-            // get color
-            List<Color> color = null;
-            var data = ex.Display_ID.GetColorData();
-            if (data != null)
+            if (data.ContainsKey(colorname))
             {
-                if (data.ContainsKey(colorname))
-                {
-                    color = data[colorname].Convert<List<Color>>();
-                }
-                else
-                {
-                    Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
-                }
+                color = data[colorname].Convert<List<Color>>();
             }
-
-            if (color != null)
+            else
             {
-                switch (ex.ID)
-                {
-                    case "HartleySubspace":
-                    case "OriSFPhase":
-                    case "OriSF":
-                    case "Contrast":
-                    case "Diameter":
-                        SetEnvActiveParam("MaxColor", color[0]);
-                        SetEnvActiveParam("MinColor", color[1]);
-                        break;
-                }
+                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
             }
+        }
+
+        if (color != null)
+        {
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
         }
     }
 }

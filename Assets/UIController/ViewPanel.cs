@@ -35,6 +35,7 @@ namespace Experica.Command
         public UIController uicontroller;
         RenderTexture rendertexture;
         public GameObject viewportcontent;
+        public Toggle togglegrid;
         public Grid grid;
         public InputField gridcenterinput;
         public Action OnViewUpdated;
@@ -136,14 +137,7 @@ namespace Experica.Command
 
         public void OnToggleGrid(bool ison)
         {
-            if (ison)
-            {
-                grid.gameObject.SetActive(true);
-            }
-            else
-            {
-                grid.gameObject.SetActive(false);
-            }
+            grid.gameObject.SetActive(ison);
         }
 
         public void OnGridCenter(string p)

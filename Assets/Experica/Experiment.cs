@@ -418,4 +418,14 @@ namespace Experica
         SHORT,
         FULL
     }
+
+    public enum EXPERIMENTSTATUS
+    {
+        NONE,
+        STARTING,
+        RUNNING,
+        STOPPING,
+        STOPPED
+    }
+
 }

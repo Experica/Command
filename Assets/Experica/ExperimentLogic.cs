@@ -455,25 +455,27 @@ namespace Experica
             if (isstart)
             {
                 OnBeginStartExperiment?.Invoke();
-                StartExperiment();
+
+                condstate = CONDSTATE.NONE;
+                trialstate = TRIALSTATE.NONE;
+                blockstate = BLOCKSTATE.NONE;
+                condtestmanager.Clear();
+
+                OnStartExperiment();
+                PrepareCondition(regeneratecond);
+                StartCoroutine(ExperimentStartSequence());
             }
             else
             {
                 OnBeginStopExperiment?.Invoke();
-                StopExperiment();
+
+                islogicactive = false;
+                OnStopExperiment();
+
+                // Push any condtest left
+                condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
+                StartCoroutine(ExperimentStopSequence());
             }
-        }
-
-        protected void StartExperiment()
-        {
-            condstate = CONDSTATE.NONE;
-            trialstate = TRIALSTATE.NONE;
-            blockstate = BLOCKSTATE.NONE;
-            condtestmanager.Clear();
-
-            OnStartExperiment();
-            PrepareCondition(regeneratecond);
-            StartCoroutine(ExperimentStartSequence());
         }
 
         protected virtual void OnStartExperiment()
@@ -509,16 +511,6 @@ namespace Experica
 
         protected virtual void OnExperimentStarted()
         {
-        }
-
-        protected void StopExperiment()
-        {
-            islogicactive = false;
-            OnStopExperiment();
-
-            // Push any condtest left
-            condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
-            StartCoroutine(ExperimentStopSequence());
         }
 
         protected virtual void OnStopExperiment()

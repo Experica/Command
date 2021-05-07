@@ -48,16 +48,17 @@ namespace Experica.Command
         /// </summary>
         readonly string configmanagerpath = "CommandConfigManager.yaml";
 
-        public Toggle host, server, start, pause;
-        public Dropdown exs;
+        public Toggle host, server, start, startsession, pause;
+        public Dropdown exs, exss;
         public Button savedata, newex, saveex, deleteex;
-        public Text startstoptext, pauseresumetext, version;
+        public Text startstoptext, startstopsessiontext, pauseresumetext, version;
         public Volume postprocessing;
 
         // The managers for the panels on the Scene
         public NetManager netmanager;
         public SyncFrameManager syncmanager;
         public ExperimentManager exmanager;
+        public ExperimentSessionManager exsmanager;
         public AnalysisManager alsmanager;
         public ControlManager ctrlmanager;
 
@@ -160,27 +161,36 @@ namespace Experica.Command
             PushConfig();
         }
 
-        public void OnToggleViewAction(InputAction.CallbackContext context)
+        public void OnToggleFullViewportAction(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                    var maincamera = exmanager.el.envmanager.maincamera_scene;
-                    if (maincamera != null)
-                    {
-                        if(maincamera.targetTexture==null)
-                        {
-                            canvas.SetActive(true);
-                            viewpanel.UpdateViewport();
-                        }
-                        else
-                        {
-                            canvas.SetActive(false);
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
-                        maincamera.targetTexture = null;
-                        }
-                    }
+                ToggleFullViewport();
             }
         }
+
+        public void ToggleFullViewport()
+        {
+            var maincamera = exmanager.el.envmanager.maincamera_scene;
+            if (maincamera != null)
+            {
+                if (maincamera.targetTexture == null)
+                {
+                    canvas.SetActive(true);
+                    viewpanel.UpdateViewport();
+                    IsFullViewport = false;
+                }
+                else
+                {
+                    canvas.SetActive(false);
+                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
+                    maincamera.targetTexture = null;
+                    IsFullViewport = true;
+                }
+            }
+        }
+
+        public bool IsFullViewport { get;private set; } = false;
 
         public void OnToggleHostAction(InputAction.CallbackContext context)
         {
@@ -192,34 +202,60 @@ namespace Experica.Command
             if (context.performed) { controlpanel.startstopexperiment.isOn = !controlpanel.startstopexperiment.isOn; }
         }
 
+        public void OnToggleExperimentSessionAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { controlpanel.startstopexperimentsession.isOn = !controlpanel.startstopexperimentsession.isOn; }
+        }
+
         public void OnToggleFullScreenAction(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                if (Screen.fullScreen)
+                ToggleFullScreen();
+            }
+        }
+
+        public void ToggleFullScreen()
+        {
+            if (Screen.fullScreen)
+            {
+                Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
+                var maincamera = exmanager.el.envmanager.maincamera_scene;
+                if (maincamera != null && maincamera.targetTexture == null)
                 {
-                    Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
-                    var maincamera = exmanager.el.envmanager.maincamera_scene;
-                    if (maincamera != null && maincamera.targetTexture == null)
-                    {
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
-                        maincamera.targetTexture = null;
-                    }
+                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
+                    maincamera.targetTexture = null;
                 }
-                else
+            }
+            else
+            {
+                lastwindowwidth = Math.Max(1024, Screen.width);
+                lastwindowheight = Math.Max(768, Screen.height);
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
+                var maincamera = exmanager.el.envmanager.maincamera_scene;
+                if (maincamera != null && maincamera.targetTexture == null)
                 {
-                    lastwindowwidth = Math.Max(1024, Screen.width);
-                    lastwindowheight = Math.Max(768, Screen.height);
-                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
-                    var maincamera = exmanager.el.envmanager.maincamera_scene;
-                    if (maincamera != null && maincamera.targetTexture == null)
-                    {
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
-                        maincamera.targetTexture = null;
-                    }
+                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
+                    maincamera.targetTexture = null;
                 }
             }
         }
+
+        public void OnToggleGuideAction(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                ToggleGuide();
+            }
+        }
+
+        public void ToggleGuide()
+        {
+            viewpanel.togglegrid.isOn = !viewpanel.togglegrid.isOn;
+            IsGuideOn = viewpanel.togglegrid.isOn;
+        }
+
+        public bool IsGuideOn { get;private set; } = true;
 
         public void OnQuitAction(InputAction.CallbackContext context)
         {
@@ -272,7 +308,9 @@ namespace Experica.Command
         {
             // Grab settings from Experiement Yaml files, and update the scene
             exmanager.GetExFiles();
+            exsmanager.GetExSessionFiles();
             UpdateExDropdown();
+            UpdateExSessionDropdown();
             savedata.interactable = !config.AutoSaveData;
             consolepanel.maxentry = config.MaxLogEntry;
         }
@@ -299,6 +337,10 @@ namespace Experica.Command
             {
                 exmanager.SaveAllEx();
             }
+            if (config.IsSaveExSessionOnQuit)
+            {
+                exsmanager.SaveAllExSession();
+            }
 
             if (string.IsNullOrEmpty(configmanager.LastConfigFilePath))
             {
@@ -307,6 +349,30 @@ namespace Experica.Command
             if (!string.IsNullOrEmpty(configmanager.LastConfigFilePath))
             {
                 configmanager.LastConfigFilePath.WriteYamlFile(config);
+            }
+        }
+
+        public void UpdateExSessionDropdown()
+        {
+            var exsn = exsmanager.exsids.Count;
+            if (exsn > 0)
+            {
+                exss.ClearOptions();
+                exss.AddOptions(exsmanager.exsids);
+                OnExSessionDropdownValueChange(Mathf.Clamp(exss.value, 0, exsn - 1));
+            }
+        }
+
+        public void OnExSessionDropdownValueChange(int i)
+        {
+            if (config.IsSaveExSessionOnQuit && exsmanager.esl != null)
+            {
+                exsmanager.SaveExSession(exsmanager.esl.exsession.ID);
+            }
+            var idx = exsmanager.exsids.FindIndex(0, id => id == exss.captionText.text);
+            if (idx >= 0)
+            {
+                exsmanager.LoadESL(exsmanager.exsfiles[idx]);
             }
         }
 
@@ -389,6 +455,7 @@ namespace Experica.Command
             exmanager.PrepareEnv(sceneName);
             envpanel.UpdateEnv(exmanager.el.envmanager);
             viewpanel.UpdateViewport();
+            exmanager.OnELReady();
         }
 
         public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
@@ -437,6 +504,20 @@ namespace Experica.Command
             return false;
         }
 
+        public void OnBeginStartExperimentSession()
+        {
+            exss.interactable = false;
+
+            exs.interactable = false;
+            newex.interactable = false;
+            saveex.interactable = false;
+            deleteex.interactable = false;
+            start.interactable = false;
+
+            startstopsessiontext.text = "StopSession";
+            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\"  Started.");
+        }
+
         public void OnBeginStartExperiment()
         {
             exs.interactable = false;
@@ -445,7 +526,7 @@ namespace Experica.Command
             deleteex.interactable = false;
             startstoptext.text = "Stop";
             pause.interactable = true;
-            consolepanel.Log("Experiment Started.");
+            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Started.");
 
             // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
             // whereas the connected Environment presenting the final stimuli.
@@ -474,6 +555,9 @@ namespace Experica.Command
             alsmanager?.RpcNotifyStartExperiment();
         }
 
+        public void OnEndStartExperimentSession()
+        { }
+
         public void OnEndStartExperiment()
         {
             if (alsmanager != null)
@@ -486,6 +570,8 @@ namespace Experica.Command
                     //alsmanager.RpcNotifyExperiment(stream.ToArray());
                 }
             }
+
+            exmanager.OnELStart();
         }
 
         public void ToggleStartStopExperiment(bool isstart)
@@ -499,6 +585,40 @@ namespace Experica.Command
             {
                 UnityEngine.Debug.LogError("No Current ExperimentLogic to Start/Stop.");
             }
+        }
+
+        public void ToggleStartStopExperimentSession(bool isstart)
+        {
+            var esl = exsmanager?.esl;
+            if (esl != null)
+            {
+                esl.StartStopExperimentSession(isstart);
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("No Current ExperimentSessionLogic to Start/Stop.");
+            }
+        }
+
+        public void OnBeginStopExperimentSession()
+        {
+            exss.interactable = true;
+
+            exs.interactable = true;
+            newex.interactable = true;
+            saveex.interactable = true;
+            deleteex.interactable = true;
+            start.interactable = true;
+
+            if (startsession.isOn)
+            {
+                var eh = startsession.onValueChanged;
+                startsession.onValueChanged = new Toggle.ToggleEvent();
+                startsession.isOn = false;
+                startsession.onValueChanged = eh;
+            }
+            startstopsessiontext.text = "StartSession";
+            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
         }
 
         public void OnBeginStopExperiment()
@@ -523,7 +643,17 @@ namespace Experica.Command
             }
             startstoptext.text = "Start";
             pause.interactable = false;
-            consolepanel.Log("Experiment Stoped.");
+            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
+        }
+
+        public void OnEndStopExperimentSession()
+        {
+            if (exsmanager.esl.exsession.SendMail)
+            {
+                var subject = "Experiment Session Stopped";
+                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.el.timer.ElapsedHour, 2):g}hour.";
+                exsmanager.esl.exsession.Experimenter.GetAddresses(config).Mail(subject, body);
+            }
         }
 
         public void OnEndStopExperiment()
@@ -539,6 +669,8 @@ namespace Experica.Command
                 var body = $"{exmanager.el.ex.Subject_ID} finished \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
             }
+
+            exmanager.OnELStop();
 
             // Return normal when experiment stopped
             Cursor.visible = true;

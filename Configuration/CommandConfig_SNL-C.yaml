@@ -1,11 +1,13 @@
 IsSaveExOnQuit: true
+IsSaveExSessionOnQuit: true
 AutoSaveData: true
 SaveConfigInData: true
 SaveConfigDisplayMeasurementInData: false
 SaveDataFormat: YAML
 ExDir: Experiment\SNL-C
+ExSessionDir: ExperimentSession\SNL-C
 DataDir: Data
-ExLogic: Experica.ConditionTestLogic
+ExLogic: ConditionTestLogic
 NotifyParams:
 - CondIndex
 - Event
@@ -57,7 +59,7 @@ SignalCh3: 2
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
-RecordHost: 10.1.51.17
+RecordHost: localhost
 RecordHostPort: 4142
 Param: {}
 EnvCrossInheritRule:
