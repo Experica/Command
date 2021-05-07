@@ -34,13 +34,15 @@ namespace Experica
     public class CommandConfig
     {
         public bool IsSaveExOnQuit { get; set; } = true;
+        public bool IsSaveExSessionOnQuit { get; set; } = true;
         public bool AutoSaveData { get; set; } = true;
         public bool SaveConfigInData { get; set; } = true;
         public bool SaveConfigDisplayMeasurementInData { get; set; } = false;
         public DataFormat SaveDataFormat { get; set; } = DataFormat.YAML;
         public string ExDir { get; set; } = "Experiment";
+        public string ExSessionDir { get; set; } = "ExperimentSession";
         public string DataDir { get; set; } = "Data";
-        public string ExLogic { get; set; } = "Experica.ConditionTestLogic";
+        public string ExLogic { get; set; } = "ConditionTestLogic";
         public List<CONDTESTPARAM> NotifyParams { get; set; } = new List<CONDTESTPARAM> { CONDTESTPARAM.CondIndex, CONDTESTPARAM.Event, CONDTESTPARAM.SyncEvent };
         public int AntiAliasing { get; set; } = 2;
         public int AnisotropicFilterLevel { get; set; } = 5;

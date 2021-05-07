@@ -3,7 +3,7 @@ Name: Flash2Color
 Designer: Alex
 Experimenter: Alex
 Log: Right Eye
-Subject_ID: AF6
+Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -13,41 +13,41 @@ Subject_Weight: 11.3000002
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 70
-  Size@Quad@Quad: 70 70 1
+  Diameter@Quad@Quad: 39.3161697
+  Size@Quad@Quad: 39.32 39.32 1
   Color@Quad@Quad: 0.3712 0.6152 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 1.855 3.102 0
+  Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.SpikeGLXColor
+ExLogicPath: SpikeGLXColor
 RecordSession: HLV1
 RecordSite: ODL5
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 100
+CondRepeat: 1
 BlockRepeat: 1
 BlockParam: []
 Input: false
@@ -83,6 +83,7 @@ ExInheritParam:
 - Display_ID
 - RecordSite
 - Log
+- SendMail
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -93,7 +94,6 @@ EnvInheritParam:
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
-- Rotation@Quad@Quad
 Param:
   ColorSpace: DKL
   Color: Z

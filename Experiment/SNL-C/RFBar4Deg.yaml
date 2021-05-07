@@ -40,7 +40,7 @@ EnvParam:
   PositionOffset@Quad@Quad: -1.4 1.8 0
 CondPath: Condition\Ori18WhiteBlackPositionOffset4Deg0.2DegStep.yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXCTLogic
+ExLogicPath: SpikeGLXCTLogic
 RecordSession: HLV1
 RecordSite: ODL1
 DataDir: X:\

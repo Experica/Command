@@ -33,10 +33,62 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
+        public Timer timer = new Timer();
 
         public List<string> exfiles = new List<string>();
         public List<string> exids = new List<string>();
         public ExperimentLogic el;
+
+        public double ELLoadTime, ELReadyTime, ELStartTime, ELStopTime;
+        public double SinceELLoad { get { return timer.ElapsedMillisecond - ELLoadTime; } }
+        public double SinceELReady { get { return timer.ElapsedMillisecond - ELReadyTime; } }
+        public double SinceELStart { get { return timer.ElapsedMillisecond - ELStartTime; } }
+        public double SinceELStop { get { return timer.ElapsedMillisecond - ELStopTime; } }
+
+        public EXPERIMENTSTATUS ExperimentStatus = EXPERIMENTSTATUS.NONE;
+        public int ELRepeat { get; private set; } = 0;
+        public string ELID = null;
+
+        public void ChangeEx(string exid)
+        {
+            if (string.IsNullOrEmpty(exid)) { return; }
+            if (exids.Contains(exid))
+            {
+                ELID = exid;
+                ExperimentStatus = EXPERIMENTSTATUS.NONE;
+                ELRepeat = 0;
+                ELLoadTime = ELReadyTime = ELStartTime = ELStopTime = timer.ElapsedMillisecond;
+                uicontroller.exs.value = exids.IndexOf(exid);
+            }
+            else
+            {
+                Debug.LogWarning($"Can Not Find {exid} in Experiment Directory: {uicontroller.config.ExDir}.");
+            }
+        }
+
+        public void StartEx()
+        {
+            ExperimentStatus = EXPERIMENTSTATUS.STARTING;
+            uicontroller.start.isOn = true;
+        }
+
+        public void OnELReady()
+        {
+            ELReadyTime = timer.ElapsedMillisecond;
+        }
+
+        public void OnELStart()
+        {
+            ELStartTime = timer.ElapsedMillisecond;
+            ExperimentStatus = EXPERIMENTSTATUS.RUNNING;
+        }
+
+        public void OnELStop()
+        {
+            ELStopTime = timer.ElapsedMillisecond;
+            ELRepeat++;
+            ExperimentStatus = EXPERIMENTSTATUS.STOPPED;
+        }
 
         public void GetExFiles()
         {
@@ -112,6 +164,7 @@ namespace Experica.Command
 
         public void LoadEL(Experiment ex)
         {
+            ELLoadTime = timer.ElapsedMillisecond;
             var elpath = ex.ExLogicPath;
             Type eltype = null;
             if (!string.IsNullOrEmpty(elpath))

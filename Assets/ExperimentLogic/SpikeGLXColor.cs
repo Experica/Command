@@ -19,114 +19,114 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.Generic;
 using UnityEngine;
+using Experica;
+using System.Collections.Generic;
 using System.Linq;
+using ColorSpace = Experica.ColorSpace;
 
-namespace Experica
+/// <summary>
+/// SpikeGLX Condition Test with Display-Confined Colors
+/// </summary>
+public class SpikeGLXColor : SpikeGLXCTLogic
 {
-    /// <summary>
-    /// SpikeGLX Condition Test with Display-Confined ColorSpace
-    /// </summary>
-    public class SpikeGLXColor : SpikeGLXCTLogic
+    protected override void GenerateFinalCondition()
     {
-        protected override void GenerateFinalCondition()
+        pushexcludefactors = new List<string>() { "HueAngle" };
+
+        var cond = new Dictionary<string, List<object>>();
+        var colorspace = GetExParam<ColorSpace>("ColorSpace");
+        var colorvar = GetExParam<string>("Color");
+        var colorname = colorspace + "_" + colorvar;
+        var ori = GetExParam<List<float>>("Ori");
+        var sf = GetExParam<List<float>>("SpatialFreq");
+
+        // get color
+        List<Color> color = null;
+        List<Color> wp = null;
+        List<float> angle = null;
+        var data = ex.Display_ID.GetColorData();
+        if (data != null)
         {
-            pushexcludefactors = new List<string>() { "HueAngle" };
-            var cond = new Dictionary<string, List<object>>();
-            var colorspace = GetExParam<ColorSpace>("ColorSpace");
-            var colorvar = GetExParam<string>("Color");
-            var colorname = colorspace + "_" + colorvar;
-            var ori = GetExParam<List<float>>("Ori");
-            var sf = GetExParam<List<float>>("SpatialFreq");
-
-            // get color
-            List<Color> color = null;
-            List<Color> wp = null;
-            List<float> angle = null;
-            var data = ex.Display_ID.GetColorData();
-            if (data != null)
+            if (data.ContainsKey(colorname))
             {
-                if (data.ContainsKey(colorname))
+                color = data[colorname].Convert<List<Color>>();
+                var huename = "Hue";
+                if (colorname.Contains(huename))
                 {
-                    color = data[colorname].Convert<List<Color>>();
-                    if (colorname.Contains("Hue"))
+                    var wpname = colorname.Replace(huename, "WP");
+                    if (data.ContainsKey(wpname))
                     {
-                        var huename = colorvar.Substring(0, colorvar.IndexOf('_'));
-                        var wpname = colorname.Replace(huename, "WP");
-                        if (data.ContainsKey(wpname))
-                        {
-                            wp = data[wpname].Convert<List<Color>>();
-                        }
-                        var anglename = colorname.Replace(huename, "HueAngle");
-                        if (data.ContainsKey(anglename))
-                        {
-                            angle = data[anglename].Convert<List<float>>();
-                        }
+                        wp = data[wpname].Convert<List<Color>>();
+                    }
+                    var anglename = colorname.Replace(huename, "HueAngle");
+                    if (data.ContainsKey(anglename))
+                    {
+                        angle = data[anglename].Convert<List<float>>();
                     }
                 }
-                else
-                {
-                    Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
-                }
             }
-
-            // combine factor levels
-            if (ori != null)
+            else
             {
-                cond["Ori"] = ori.Select(i => (object)i).ToList();
+                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
             }
-            if (sf != null)
-            {
-                cond["SpatialFreq"] = sf.Select(i => (object)i).ToList();
-            }
-            var colorcond = new Dictionary<string, List<object>>();
-            if (color != null)
-            {
-                cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList();
-                var colorvarname = "Color";
-                if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
-                {
-                }
-                else
-                {
-                    colorvarname = "MaxColor";
-                }
-                colorcond[colorvarname] = color.Select(i => (object)i).ToList();
-                if (wp != null)
-                {
-                    colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
-                    if (colorvarname == "MaxColor")
-                    {
-                        colorcond["MinColor"] = wp.Select(i => (object)i).ToList();
-                    }
-                }
-                if (angle != null)
-                {
-                    colorcond["HueAngle"] = angle.Select(i => (object)i).ToList();
-                }
-            }
-
-            var fcond = cond.OrthoCondOfFactorLevel();
-            if (fcond.ContainsKey("_colorindex"))
-            {
-                foreach (var i in fcond["_colorindex"])
-                {
-                    foreach (var f in colorcond.Keys)
-                    {
-                        if (!fcond.ContainsKey(f))
-                        {
-                            fcond[f] = new List<object> { colorcond[f][(int)i] };
-                        }
-                        else
-                        {
-                            fcond[f].Add(colorcond[f][(int)i]);
-                        }
-                    }
-                }
-                fcond.Remove("_colorindex");
-            }
-            condmanager.FinalizeCondition(fcond);
         }
+
+        // combine factor levels
+        if (ori != null)
+        {
+            cond["Ori"] = ori.Select(i => (object)i).ToList();
+        }
+        if (sf != null)
+        {
+            cond["SpatialFreq"] = sf.Select(i => (object)i).ToList();
+        }
+        var colorcond = new Dictionary<string, List<object>>();
+        if (color != null)
+        {
+            cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList();
+            var colorparam = "Color";
+            if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
+            {
+            }
+            else
+            {
+                colorparam = "MaxColor";
+            }
+            colorcond[colorparam] = color.Select(i => (object)i).ToList();
+            if (wp != null)
+            {
+                colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
+                if (colorparam == "MaxColor")
+                {
+                    colorcond["MinColor"] = wp.Select(i => (object)i).ToList();
+                }
+            }
+            if (angle != null)
+            {
+                colorcond["HueAngle"] = angle.Select(i => (object)i).ToList();
+            }
+        }
+
+        var fcond = cond.OrthoCondOfFactorLevel();
+        if (fcond.ContainsKey("_colorindex"))
+        {
+            foreach (var i in fcond["_colorindex"])
+            {
+                foreach (var f in colorcond.Keys)
+                {
+                    if (!fcond.ContainsKey(f))
+                    {
+                        fcond[f] = new List<object> { colorcond[f][(int)i] };
+                    }
+                    else
+                    {
+                        fcond[f].Add(colorcond[f][(int)i]);
+                    }
+                }
+            }
+            fcond.Remove("_colorindex");
+        }
+        condmanager.FinalizeCondition(fcond);
     }
 }

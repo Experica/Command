@@ -1,0 +1,13 @@
+ID: ColorEphys
+Name: ColorEphys
+Designer: Alex
+Experimenter: Alex
+Log: 
+ExSessionLogicPath: ColorEphys
+ReadyWait: 5000
+StopWait: 5000
+Param: {}
+SendMail: true
+IsFullScreen: false
+IsFullViewport: false
+IsGuideOn: true

@@ -3,7 +3,7 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
 Log: Right Eye
-Subject_ID: AF6
+Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -13,17 +13,17 @@ Subject_Weight: 11.3000002
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -51,12 +51,12 @@ EnvParam:
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
+ExLogicPath: ConditionTestLogic
 RecordSession: HLV1
 RecordSite: ODL5
 DataDir: X:\
@@ -99,4 +99,4 @@ Version: 1
 Config: 
 CondTest: 
 CondTestShowLevel: NONE
-SendMail: false
+SendMail: true

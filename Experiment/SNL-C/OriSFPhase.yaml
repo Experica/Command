@@ -56,7 +56,7 @@ EnvParam:
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXColorCTLogic
+ExLogicPath: SpikeGLXColorCT
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
