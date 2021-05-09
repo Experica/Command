@@ -2,7 +2,7 @@ ID: OriSF
 Name: OriSF
 Designer: Alex
 Experimenter: Alex
-Log: Left Eye
+Log: Right Eye
 Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
@@ -15,18 +15,18 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.64037561
+  BGColor@OrthoCamera@OrthoCamera: 0.07843 0.0549 0.06275 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -22.18 12.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 240
+  Ori@GratingQuad@GratingQuad: 270
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
@@ -36,15 +36,15 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1.60000002
-  TemporalFreq@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.800000012
+  TemporalFreq@GratingQuad@GratingQuad: 5
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 1 1 1 1
-  MaxColor@GratingQuad@GratingQuad: 0 4.996E-16 0 1
+  MinColor@GratingQuad@GratingQuad: 0.3137 0 0 1
+  MaxColor@GratingQuad@GratingQuad: 0 0 0.9725 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
+  GratingType@GratingQuad@GratingQuad: Sinusoidal
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
@@ -99,6 +99,8 @@ ExInheritParam:
 - TimerDriftSpeed
 - ResponseDelay
 - Display_ID
+- Log
+- SendMail
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -111,8 +113,8 @@ EnvInheritParam:
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 Param:
-  ColorSpace: DKL
-  Color: X
+  ColorSpace: HSL
+  Color: RBYm
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:

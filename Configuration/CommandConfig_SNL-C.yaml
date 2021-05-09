@@ -59,7 +59,7 @@ SignalCh3: 2
 SerialPort1: COM3
 SerialPort2: COM4
 SerialPort3: COM5
-RecordHost: localhost
+RecordHost: 10.1.51.17
 RecordHostPort: 4142
 Param: {}
 EnvCrossInheritRule:

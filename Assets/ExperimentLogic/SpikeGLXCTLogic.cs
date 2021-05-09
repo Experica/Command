@@ -28,7 +28,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
-        //recorder = Extension.GetSpikeGLXRecorder(config.RecordHost, config.RecordHostPort);
+        recorder = Extension.GetSpikeGLXRecorder(config.RecordHost, config.RecordHostPort);
         base.OnStartExperiment();
     }
 

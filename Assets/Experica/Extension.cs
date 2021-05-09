@@ -339,6 +339,30 @@ namespace Experica
             }
         }
 
+        public static void CopyDirectory(this string sourceDirectory, string targetDirectory, string excludeExt = ". ")
+        {
+            DirectoryInfo dirSource = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo dirTarget = new DirectoryInfo(targetDirectory);
+
+            CopyDirectory(dirSource, dirTarget, excludeExt);
+        }
+
+        public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target, string excludeExt = ". ")
+        {
+            Directory.CreateDirectory(target.FullName);
+
+            foreach (FileInfo fi in source.GetFiles().Where(i => !i.Extension.StartsWith(excludeExt)))
+            {
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+            }
+
+            foreach (DirectoryInfo sourceSubDir in source.GetDirectories())
+            {
+                DirectoryInfo targetSubDir = target.CreateSubdirectory(sourceSubDir.Name);
+                CopyDirectory(sourceSubDir, targetSubDir, excludeExt);
+            }
+        }
+
         //public static Dictionary<string, List<object>> ResolveConditionReference(this Dictionary<string, List<object>> cond, Dictionary<string, Param> param)
         //{
         //    return cond.ResolveCondFactorReference(param).ResolveCondLevelReference(param);

@@ -39,12 +39,25 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
 
         // get color
         List<Color> color = null;
+        List<Color> wp = null;
+        List<float> angle = null;
         var data = ex.Display_ID.GetColorData();
         if (data != null)
         {
             if (data.ContainsKey(colorname))
             {
                 color = data[colorname].Convert<List<Color>>();
+
+                var wpname = colorname + "_WP";
+                if (data.ContainsKey(wpname))
+                {
+                    wp = data[wpname].Convert<List<Color>>();
+                }
+                var anglename = colorname + "_Angle";
+                if (data.ContainsKey(anglename))
+                {
+                    angle = data[anglename].Convert<List<float>>();
+                }
             }
             else
             {
@@ -56,6 +69,10 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
         {
             SetEnvActiveParam("MinColor", color[0]);
             SetEnvActiveParam("MaxColor", color[1]);
+            if (wp != null)
+            {
+                SetEnvActiveParam("BGColor", wp[0]);
+            }
         }
     }
 }

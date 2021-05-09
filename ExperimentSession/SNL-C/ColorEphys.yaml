@@ -8,6 +8,6 @@ ReadyWait: 5000
 StopWait: 5000
 Param: {}
 SendMail: true
-IsFullScreen: false
-IsFullViewport: false
-IsGuideOn: true
+IsFullScreen: true
+IsFullViewport: true
+IsGuideOn: false

@@ -165,32 +165,34 @@ namespace Experica.Command
         {
             if (context.performed)
             {
-                ToggleFullViewport();
+                IsFullViewport = !IsFullViewport;
             }
         }
 
-        public void ToggleFullViewport()
+        bool isfullviewport = false;
+        public bool IsFullViewport
         {
-            var maincamera = exmanager.el.envmanager.maincamera_scene;
-            if (maincamera != null)
+            get { return isfullviewport; }
+            set
             {
-                if (maincamera.targetTexture == null)
+                var maincamera = exmanager.el.envmanager.maincamera_scene;
+                if (maincamera != null && isfullviewport != value)
                 {
-                    canvas.SetActive(true);
-                    viewpanel.UpdateViewport();
-                    IsFullViewport = false;
-                }
-                else
-                {
-                    canvas.SetActive(false);
-                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
-                    maincamera.targetTexture = null;
-                    IsFullViewport = true;
+                    isfullviewport = value;
+                    if (value)
+                    {
+                        canvas.SetActive(false);
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
+                        maincamera.targetTexture = null;
+                    }
+                    else
+                    {
+                        canvas.SetActive(true);
+                        viewpanel.UpdateViewport();
+                    }
                 }
             }
         }
-
-        public bool IsFullViewport { get;private set; } = false;
 
         public void OnToggleHostAction(InputAction.CallbackContext context)
         {
@@ -211,32 +213,37 @@ namespace Experica.Command
         {
             if (context.performed)
             {
-                ToggleFullScreen();
+                FullScreen = !FullScreen;
             }
         }
 
-        public void ToggleFullScreen()
+        public bool FullScreen
         {
-            if (Screen.fullScreen)
+            get { return Screen.fullScreen; }
+            set
             {
-                Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
-                var maincamera = exmanager.el.envmanager.maincamera_scene;
-                if (maincamera != null && maincamera.targetTexture == null)
+                if (Screen.fullScreen == value) { return; }
+                if (value)
                 {
-                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
-                    maincamera.targetTexture = null;
+                    lastwindowwidth = Math.Max(1024, Screen.width);
+                    lastwindowheight = Math.Max(768, Screen.height);
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
+                    var maincamera = exmanager.el.envmanager.maincamera_scene;
+                    if (maincamera != null && maincamera.targetTexture == null)
+                    {
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
+                        maincamera.targetTexture = null;
+                    }
                 }
-            }
-            else
-            {
-                lastwindowwidth = Math.Max(1024, Screen.width);
-                lastwindowheight = Math.Max(768, Screen.height);
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
-                var maincamera = exmanager.el.envmanager.maincamera_scene;
-                if (maincamera != null && maincamera.targetTexture == null)
+                else
                 {
-                    exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
-                    maincamera.targetTexture = null;
+                    Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
+                    var maincamera = exmanager.el.envmanager.maincamera_scene;
+                    if (maincamera != null && maincamera.targetTexture == null)
+                    {
+                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
+                        maincamera.targetTexture = null;
+                    }
                 }
             }
         }
@@ -245,17 +252,21 @@ namespace Experica.Command
         {
             if (context.performed)
             {
-                ToggleGuide();
+                IsGuideOn = !IsGuideOn;
             }
         }
 
-        public void ToggleGuide()
+        bool isguideon = true;
+        public bool IsGuideOn
         {
-            viewpanel.togglegrid.isOn = !viewpanel.togglegrid.isOn;
-            IsGuideOn = viewpanel.togglegrid.isOn;
+            get { return isguideon; }
+            set
+            {
+                if (isguideon == value) { return; }
+                isguideon = value;
+                viewpanel.togglegrid.isOn = value;
+            }
         }
-
-        public bool IsGuideOn { get;private set; } = true;
 
         public void OnQuitAction(InputAction.CallbackContext context)
         {

@@ -32,7 +32,7 @@ public class SpikeGLXColor : SpikeGLXCTLogic
 {
     protected override void GenerateFinalCondition()
     {
-        pushexcludefactors = new List<string>() { "HueAngle" };
+        pushexcludefactors = new List<string>() { "Angle" };
 
         var cond = new Dictionary<string, List<object>>();
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
@@ -51,19 +51,16 @@ public class SpikeGLXColor : SpikeGLXCTLogic
             if (data.ContainsKey(colorname))
             {
                 color = data[colorname].Convert<List<Color>>();
-                var huename = "Hue";
-                if (colorname.Contains(huename))
+
+                var wpname = colorname + "_WP";
+                if (data.ContainsKey(wpname))
                 {
-                    var wpname = colorname.Replace(huename, "WP");
-                    if (data.ContainsKey(wpname))
-                    {
-                        wp = data[wpname].Convert<List<Color>>();
-                    }
-                    var anglename = colorname.Replace(huename, "HueAngle");
-                    if (data.ContainsKey(anglename))
-                    {
-                        angle = data[anglename].Convert<List<float>>();
-                    }
+                    wp = data[wpname].Convert<List<Color>>();
+                }
+                var anglename = colorname + "_Angle";
+                if (data.ContainsKey(anglename))
+                {
+                    angle = data[anglename].Convert<List<float>>();
                 }
             }
             else
@@ -104,7 +101,7 @@ public class SpikeGLXColor : SpikeGLXCTLogic
             }
             if (angle != null)
             {
-                colorcond["HueAngle"] = angle.Select(i => (object)i).ToList();
+                colorcond["Angle"] = angle.Select(i => (object)i).ToList();
             }
         }
 

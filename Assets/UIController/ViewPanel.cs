@@ -96,6 +96,7 @@ namespace Experica.Command
 
         public void UpdateViewport()
         {
+            if (uicontroller.IsFullViewport) { return; }
             var envmanager = uicontroller.exmanager.el.envmanager;
             var maincamera = envmanager.maincamera_scene;
             if (maincamera != null)
