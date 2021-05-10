@@ -662,7 +662,7 @@ namespace Experica.Command
             if (exsmanager.esl.exsession.SendMail)
             {
                 var subject = "Experiment Session Stopped";
-                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.el.timer.ElapsedHour, 2):g}hour.";
+                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
                 exsmanager.esl.exsession.Experimenter.GetAddresses(config).Mail(subject, body);
             }
         }
