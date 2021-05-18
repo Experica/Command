@@ -1,29 +1,29 @@
 ID: OriSFPhase
 Name: OriSFPhase
 Designer: Alex
-Experimenter: Alex
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AF6
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 13
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.75 14.42 -1000
+  MarkerPosition@Marker@Marker: -17.66 12.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.32456136
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 75
@@ -52,13 +52,13 @@ EnvParam:
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 0 0 0
+  Position@GratingQuad@GratingQuad: 0.03432 1.819 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
 Cond: 
 ExLogicPath: SpikeGLXColorCT
 RecordSession: HLV1
-RecordSite: ODL9
+RecordSite: ODR6
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -120,7 +120,7 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: ''
 ResponseDelay: 15
 Version: 2
 Config: 

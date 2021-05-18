@@ -3,41 +3,41 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: Alex
 Log: Right Eye
-Subject_ID: Test
-Subject_Name: AF6
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 11.3000002
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -17.74 12.74 -1000
+  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33891213
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 0
+  Ori@GratingQuad@GratingQuad: 240.979355
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 3
+  Size@GratingQuad@GratingQuad: 1.837 1.798 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
-  TemporalFreq@GratingQuad@GratingQuad: 5
+  SpatialFreq@GratingQuad@GratingQuad: 0.5
+  TemporalFreq@GratingQuad@GratingQuad: 1.5
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
   MinColor@GratingQuad@GratingQuad: 0 0 0 1
@@ -47,18 +47,18 @@ EnvParam:
   GratingType@GratingQuad@GratingQuad: Square
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.5
+  Duty@GratingQuad@GratingQuad: 0.100000001
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 0 0 0
+  Visible@GratingQuad@GratingQuad: true
+  Position@GratingQuad@GratingQuad: 0.1415 2.074 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: ConditionTestLogic
 RecordSession: HLV1
-RecordSite: ODL5
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement

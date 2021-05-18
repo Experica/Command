@@ -3,51 +3,51 @@ Name: Flash2Color
 Designer: Alex
 Experimenter: Alex
 Log: 
-Subject_ID: Test
-Subject_Name: AF6
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 11.3000002
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -17.74 12.74 -1000
+  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33891213
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 39.4806709
-  Size@Quad@Quad: 39.48 39.48 1
-  Color@Quad@Quad: 0.6311 0.3833 1 1
+  Diameter@Quad@Quad: 58.5315018
+  Size@Quad@Quad: 58.53 58.53 1
+  Color@Quad@Quad: 0.3689 0.6167 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0.1415 2.074 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: SpikeGLXColor
 RecordSession: HLV1
-RecordSite: ODL5
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 1
+CondRepeat: 120
 BlockRepeat: 1
 BlockParam: []
 Input: false
@@ -81,20 +81,18 @@ ExInheritParam:
 - TimerDriftSpeed
 - ResponseDelay
 - Display_ID
-- RecordSite
-- Log
 - SendMail
+- RecordSite
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
 - MarkerSize@Marker@Marker
-- Position@Quad@Quad
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
-- Diameter@Quad@Quad
+- Position@Quad@Quad
 Param:
   ColorSpace: DKL
   Color: Z

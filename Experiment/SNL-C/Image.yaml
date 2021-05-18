@@ -2,51 +2,51 @@ ID: Image
 Name: Image
 Designer: Alex
 Experimenter: Alex
-Log: Right Eye
-Subject_ID: Test
-Subject_Name: AF6
+Log: 
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 11.3000002
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.64037561
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -22.18 12.74 -1000
+  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 10
-  Size@ImageQuad@ImageQuad: 10 10 1
+  Diameter@ImageQuad@ImageQuad: 3
+  Size@ImageQuad@ImageQuad: 3 3 1
   MaskType@ImageQuad@ImageQuad: Disk
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0.3689 0.6167 0 1
-  MaxColor@ImageQuad@ImageQuad: 0.6311 0.3833 1 1
+  MinColor@ImageQuad@ImageQuad: 0 2.776E-16 3.886E-16 1
+  MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: R
-  Image@ImageQuad@ImageQuad: 2455
+  Image@ImageQuad@ImageQuad: 14247
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
   Visible@ImageQuad@ImageQuad: false
-  Position@ImageQuad@ImageQuad: 0 0 0
+  Position@ImageQuad@ImageQuad: 0.1415 2.074 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
 ExLogicPath: SpikeGLXImage
 RecordSession: HLV1
-RecordSite: ODL5
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -101,8 +101,8 @@ EnvInheritParam:
 - CLUT@OrthoCamera@OrthoCamera
 - MarkerSize@Marker@Marker
 Param:
-  ColorSpace: LMS
-  Color: Zmcc
+  ColorSpace: DKL
+  Color: X
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:

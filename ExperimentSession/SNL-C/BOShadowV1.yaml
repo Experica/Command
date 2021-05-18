@@ -1,9 +1,9 @@
-ID: ColorEphys
-Name: ColorEphys
+ID: BOShadowV1
+Name: BOShadowV1
 Designer: Tom
 Experimenter: Tom
 Log: 
-ExSessionLogicPath: ColorEphys
+ExSessionLogicPath: BOShadowV1
 ReadyWait: 5000
 StopWait: 5000
 Param: {}

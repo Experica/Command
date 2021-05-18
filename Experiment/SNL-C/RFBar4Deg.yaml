@@ -1,15 +1,15 @@
 ID: RFBar4Deg
 Name: RFBar4Deg
 Designer: Alex
-Experimenter: Tom
+Experimenter: Alex
 Log: 
-Subject_ID: AF6
-Subject_Name: AF6
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 11.3000002
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
@@ -26,33 +26,34 @@ EnvParam:
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 50
+  Ori@Quad@Quad: 40
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 3 0.2 1
-  Color@Quad@Quad: 0 0 0 1
+  Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0.461 6.781 0
-  PositionOffset@Quad@Quad: -1.4 1.8 0
+  Position@Quad@Quad: 0.301 1.057 0
+  PositionOffset@Quad@Quad: -0.8 -2 0
 CondPath: Condition\Ori18WhiteBlackPositionOffset4Deg0.2DegStep.yaml
 Cond: 
 ExLogicPath: SpikeGLXCTLogic
 RecordSession: HLV1
-RecordSite: ODL1
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 5
+CondRepeat: 3
 BlockRepeat: 1
-BlockParam: []
+BlockParam:
+- ''
 Input: false
 PreICI: 0
-CondDur: 43
+CondDur: 28
 SufICI: 0
 PreITI: 0
 TrialDur: 0

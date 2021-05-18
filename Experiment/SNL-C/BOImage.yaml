@@ -3,13 +3,13 @@ Name: BOImage
 Designer: Alex
 Experimenter: Tom
 Log: 
-Subject_ID: AF6
-Subject_Name: AF6
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Age: 9
 Subject_Size: 0 0 0
-Subject_Weight: 11.3000002
+Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
@@ -22,7 +22,7 @@ EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
   ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5448 0.5448 0.5448 1
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@ImageQuad@ImageQuad: 0 0 0
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
@@ -34,19 +34,19 @@ EnvParam:
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0 0 0 1
+  MinColor@ImageQuad@ImageQuad: 0 2.776E-16 3.886E-16 1
   MaxColor@ImageQuad@ImageQuad: 1 1 1 1
   ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 119
+  Image@ImageQuad@ImageQuad: 114
   ImageSet@ImageQuad@ImageQuad: BorderOwnership
   Visible@ImageQuad@ImageQuad: false
   Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.SpikeGLXImage
+ExLogicPath: SpikeGLXImage
 RecordSession: HLV1
-RecordSite: ODL1
+RecordSite: ODR7
 DataDir: X:\
 DataPath: 
 CondSampling: UniformWithoutReplacement
@@ -95,7 +95,6 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
 - MarkOffColor@Marker@Marker
-- Position@ImageQuad@ImageQuad
 Param:
   ColorSpace: DKL
   Color: X
