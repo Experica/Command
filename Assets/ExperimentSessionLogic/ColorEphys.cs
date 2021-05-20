@@ -28,7 +28,7 @@ using Experica.Command;
 public class ColorEphys : ExperimentSessionLogic
 {
     float diameter = 3;
-    string log = "";
+    Eye eye = Eye.Right;
 
     protected override void Logic()
     {
@@ -43,9 +43,9 @@ public class ColorEphys : ExperimentSessionLogic
                     exmanager.uicontroller.IsGuideOn = exsession.IsGuideOn;
                     exmanager.uicontroller.FullScreen = exsession.IsFullScreen;
                     exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
-                    EL.SetExParam("SendMail", exsession.SendMail);
+                    EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
+                    eye = EL.GetExParam<Eye>("Eye");
                     diameter = EL.GetEnvActiveParam<float>("Diameter");
-                    log = EL.GetEnvActiveParam<string>("Log");
 
                     ExperimentID = "Flash2Color";
                 }
@@ -59,13 +59,10 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
-                                    EL.SetExParam("Log", log);
+                                    EL.SetExParam("Eye", eye);
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.ViewportSize();
-                                    var size = EL.GetEnvActiveParam<Vector3>("Size");
-                                    var pos = EL.GetEnvActiveParam<Vector3>("Position");
-                                    EL.SetEnvActiveParam("Diameter", Mathf.Max(size.x + Mathf.Abs(pos.x), size.y + Mathf.Abs(pos.y)));
+                                    exmanager.uicontroller.FullViewportSize();
                                     break;
                                 case 1:
                                     EL.SetExParam("Color", "Y");

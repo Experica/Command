@@ -1,7 +1,7 @@
 ID: OriSFSquareGrating
 Name: OriSFSquareGrating
 Designer: Alex
-Experimenter: Tom
+Experimenter: Alex
 Log: 
 Subject_ID: AF8
 Subject_Name: AF8
@@ -13,23 +13,23 @@ Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 20.9 -15.42 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 330
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 2
-  Size@GratingQuad@GratingQuad: 2 2 1
+  Diameter@GratingQuad@GratingQuad: 20
+  Size@GratingQuad@GratingQuad: 20 20 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -52,22 +52,24 @@ EnvParam:
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: -0.3131 1.014 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Ori[12]_SF[0.4,1.6].yaml
 Cond: 
-ExLogicPath: SpikeGLXColorCT
-RecordSession: HLV1
-RecordSite: ODR7
+LogicPath: SpikeGLXColorCT
+Hemisphere: Left
+Eye: Right
+RecordSession: V1
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
+Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 10
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: false
 PreICI: 250
 CondDur: 500
 SufICI: 250
@@ -84,7 +86,8 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
+InheritParam:
+- Experimenter
 - Subject_ID
 - Subject_Name
 - Subject_Species
@@ -92,15 +95,14 @@ ExInheritParam:
 - Subject_Age
 - Subject_Size
 - Subject_Weight
+- Hemisphere
+- Eye
 - RecordSession
 - RecordSite
 - DataDir
-- Experimenter
 - TimerDriftSpeed
-- ResponseDelay
 - Display_ID
-- Log
-- SendMail
+- NotifyExperimenter
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -123,9 +125,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-ResponseDelay: 15
+CondTestShowLevel: SHORT
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: SHORT
-SendMail: true

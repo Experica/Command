@@ -14,19 +14,19 @@ Subject_Log:
 EnvPath: MarkerDots
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
-  Dir@Dots@Dots: 0
+  Dir@Dots@Dots: 45
   DirOffset@Dots@Dots: 0
   Speed@Dots@Dots: 5
   Diameter@Dots@Dots: 20
@@ -34,23 +34,25 @@ EnvParam:
   NDots@Dots@Dots: 30
   DotColor@Dots@Dots: 1 0 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0.5
-  Visible@Dots@Dots: false
+  Coherence@Dots@Dots: 0.200000003
+  Visible@Dots@Dots: true
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
+LogicPath: ConditionTestLogic
+Hemisphere: None
+Eye: None
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
+Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 0
 BlockRepeat: 0
 BlockParam: []
-Input: false
 PreICI: 150
 CondDur: 500
 SufICI: 0
@@ -67,21 +69,7 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
-- Experimenter
-- Subject_ID
-- Subject_Name
-- Subject_Species
-- Subject_Gender
-- Subject_Age
-- Subject_Size
-- Subject_Weight
-- RecordSession
-- RecordSite
-- DataDir
-- TimerDriftSpeed
-- Display_ID
-- ResponseDelay
+InheritParam: []
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
@@ -101,9 +89,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-ResponseDelay: 15
+CondTestShowLevel: NONE
+NotifyExperimenter: false
 Version: 1
 Config: 
 CondTest: 
-CondTestShowLevel: NONE
-SendMail: false

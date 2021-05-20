@@ -36,7 +36,7 @@ public class GPIODigitalWave : ExperimentLogic
         {
             case "ParallelPort":
                 // On Average 5kHz
-                gpio = new ParallelPort(config.ParallelPort1);
+                gpio = new ParallelPort(Config.ParallelPort1);
                 break;
             case "FTDI":
                 // On Average 2kHz

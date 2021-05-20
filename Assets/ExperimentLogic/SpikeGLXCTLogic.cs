@@ -28,7 +28,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
-        recorder = Extension.GetSpikeGLXRecorder(config.RecordHost, config.RecordHostPort);
+        //recorder = Extension.GetSpikeGLXRecorder(config.RecordHost, config.RecordHostPort);
         base.OnStartExperiment();
     }
 
@@ -50,7 +50,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
                 message and change file path, all of which need time to complete.
                 Start recording before file path change completion may not save to correct file path.
                 */
-                timer.TimeoutMillisecond(config.NotifyLatency);
+                timer.TimeoutMillisecond(Config.NotifyLatency);
 
                 recorder.RecordStatus = RecordStatus.Recording;
                 /* 
@@ -58,7 +58,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
                 message and change record state, all of which need time to complete.
                 Begin experiment before record started may lose information.
                 */
-                timer.TimeoutMillisecond(config.NotifyLatency);
+                timer.TimeoutMillisecond(Config.NotifyLatency);
             }
         }
         base.StartExperimentTimeSync();
@@ -74,7 +74,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
             message and change record state, all of which need time to complete.
             Here wait recording ended before further processing.
             */
-            timer.TimeoutMillisecond(config.NotifyLatency);
+            timer.TimeoutMillisecond(Config.NotifyLatency);
         }
         base.StopExperimentTimeSync();
     }

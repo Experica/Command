@@ -32,24 +32,24 @@ namespace Experica
             pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
             // get laser conditions
-            laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
+            laser = ex.GetParam("Laser").Convert<string>().GetLaser(Config);
             switch (laser?.Type)
             {
                 case Laser.Omicron:
-                    lasersignalch = config.SignalCh1;
+                    lasersignalch = Config.SignalCh1;
                     break;
                 case Laser.Cobolt:
-                    lasersignalch = config.SignalCh2;
+                    lasersignalch = Config.SignalCh2;
                     break;
             }
-            laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(config);
+            laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(Config);
             switch (laser2?.Type)
             {
                 case Laser.Omicron:
-                    laser2signalch = config.SignalCh1;
+                    laser2signalch = Config.SignalCh1;
                     break;
                 case Laser.Cobolt:
-                    laser2signalch = config.SignalCh2;
+                    laser2signalch = Config.SignalCh2;
                     break;
             }
 

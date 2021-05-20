@@ -31,25 +31,30 @@ namespace Experica.Command
     public class ExperimentSessionManager : MonoBehaviour
     {
         public UIController uicontroller;
-        public List<string> exsfiles = new List<string>();
-        public List<string> exsids = new List<string>();
         public ExperimentSessionLogic esl;
+        public Dictionary<string, string> idfile = new Dictionary<string, string>();
 
-        public void GetExSessionFiles()
+        public void RefreshIDFile()
         {
-            var exsfiledir = uicontroller.config.ExSessionDir;
-            if (Directory.Exists(exsfiledir))
+            var exsdir = uicontroller.config.ExSessionDir;
+            if (Directory.Exists(exsdir))
             {
-                exsfiles = Directory.GetFiles(exsfiledir, "*.yaml", SearchOption.TopDirectoryOnly).ToList();
-                exsids.Clear();
+                var exsfiles = Directory.GetFiles(exsdir, "*.yaml", SearchOption.TopDirectoryOnly);
+                if (exsfiles.Length == 0)
+                {
+                    Debug.Log($"ExperimentSession Defination Directory \"{exsdir}\" Is Empty, Skip Refreshing.");
+                    return;
+                }
+                idfile.Clear();
                 foreach (var f in exsfiles)
                 {
-                    exsids.Add(Path.GetFileNameWithoutExtension(f));
+                    idfile[Path.GetFileNameWithoutExtension(f)] = f;
                 }
             }
             else
             {
-                Directory.CreateDirectory(exsfiledir);
+                Directory.CreateDirectory(exsdir);
+                Debug.Log($"Create Directory \"{exsdir}\" For ExperimentSession Defination.");
             }
         }
 
@@ -79,18 +84,17 @@ namespace Experica.Command
 
         public void LoadESL(ExperimentSession exs)
         {
-            var eslpath = exs.ExSessionLogicPath;
             Type esltype = null;
-            if (!string.IsNullOrEmpty(eslpath))
+            if (!string.IsNullOrEmpty(exs.LogicPath))
             {
-                if (File.Exists(eslpath))
+                if (File.Exists(exs.LogicPath))
                 {
-                    var assembly = eslpath.CompileFile();
+                    var assembly = exs.LogicPath.CompileFile();
                     esltype = assembly.GetExportedTypes()[0];
                 }
                 else
                 {
-                    esltype = Type.GetType(eslpath);
+                    esltype = Type.GetType(exs.LogicPath);
                 }
             }
 
@@ -101,6 +105,7 @@ namespace Experica.Command
             esl = gameObject.AddComponent(esltype) as ExperimentSessionLogic;
             esl.exsession = exs;
             esl.exmanager = uicontroller.exmanager;
+
             esl.OnBeginStartExperimentSession = uicontroller.OnBeginStartExperimentSession;
             esl.OnEndStartExperimentSession = uicontroller.OnEndStartExperimentSession;
             esl.OnBeginStopExperimentSession = uicontroller.OnBeginStopExperimentSession;
@@ -109,18 +114,15 @@ namespace Experica.Command
 
         public void SaveExSession(string id)
         {
-            if (exsids.Contains(id))
+            if (idfile.ContainsKey(id))
             {
-                exsfiles[exsids.IndexOf(id)].WriteYamlFile(esl.exsession);
+                idfile[id].WriteYamlFile(esl.exsession);
             }
         }
 
-        public void SaveAllExSession()
+        public void SaveExSession()
         {
-            foreach (var n in exsids)
-            {
-                SaveExSession(n);
-            }
+            SaveExSession(esl.exsession.ID);
         }
     }
 }

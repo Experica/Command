@@ -13,45 +13,47 @@ Subject_Weight: 8.69999981
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -27.2 14.42 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 20.9 -15.42 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 40
+  Ori@Quad@Quad: 80
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 10
   Size@Quad@Quad: 3 0.2 1
-  Color@Quad@Quad: 1 1 1 1
+  Color@Quad@Quad: 0 0 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 0.301 1.057 0
-  PositionOffset@Quad@Quad: -0.8 -2 0
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 1.8 -0.2 0
 CondPath: Condition\Ori18WhiteBlackPositionOffset4Deg0.2DegStep.yaml
 Cond: 
-ExLogicPath: SpikeGLXCTLogic
-RecordSession: HLV1
+LogicPath: SpikeGLXCTLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: V1
 RecordSite: ODR8
 DataDir: X:\
 DataPath: 
+Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 3
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: false
 PreICI: 0
 CondDur: 28
 SufICI: 0
@@ -68,7 +70,8 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
+InheritParam:
+- Experimenter
 - Subject_ID
 - Subject_Name
 - Subject_Species
@@ -76,13 +79,14 @@ ExInheritParam:
 - Subject_Age
 - Subject_Size
 - Subject_Weight
+- Hemisphere
+- Eye
 - RecordSession
 - RecordSite
 - DataDir
-- Experimenter
 - TimerDriftSpeed
-- ResponseDelay
 - Display_ID
+- NotifyExperimenter
 EnvInheritParam:
 - MarkerSize@Marker@Marker
 - MarkerCorner@Marker@Marker
@@ -102,9 +106,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-ResponseDelay: 15
+CondTestShowLevel: SHORT
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: SHORT
-SendMail: true

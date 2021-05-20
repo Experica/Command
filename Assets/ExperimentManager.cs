@@ -32,12 +32,10 @@ namespace Experica.Command
     public class ExperimentManager : MonoBehaviour
     {
         public UIController uicontroller;
+        public ExperimentLogic el;
         public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
         public Timer timer = new Timer();
-
-        public List<string> exfiles = new List<string>();
-        public List<string> exids = new List<string>();
-        public ExperimentLogic el;
+        public Dictionary<string, string> idfile = new Dictionary<string, string>();
 
         public double ELLoadTime, ELReadyTime, ELStartTime, ELStopTime;
         public double SinceELLoad { get { return timer.ElapsedMillisecond - ELLoadTime; } }
@@ -49,20 +47,20 @@ namespace Experica.Command
         public int ELRepeat { get; private set; } = 0;
         public string ELID = null;
 
-        public void ChangeEx(string exid)
+        public void ChangeEx(string id)
         {
-            if (string.IsNullOrEmpty(exid)) { return; }
-            if (exids.Contains(exid))
+            if (string.IsNullOrEmpty(id)) { return; }
+            if (idfile.ContainsKey(id))
             {
-                ELID = exid;
+                ELID = id;
                 ExperimentStatus = EXPERIMENTSTATUS.NONE;
                 ELRepeat = 0;
                 ELLoadTime = ELReadyTime = ELStartTime = ELStopTime = timer.ElapsedMillisecond;
-                uicontroller.exs.value = exids.IndexOf(exid);
+                uicontroller.exs.value = uicontroller.exs.options.FindIndex(i => i.text == id);
             }
             else
             {
-                Debug.LogWarning($"Can Not Find {exid} in Experiment Directory: {uicontroller.config.ExDir}.");
+                Debug.LogWarning($"Can Not Find {id} in Experiment Directory: {uicontroller.config.ExDir}.");
             }
         }
 
@@ -90,30 +88,27 @@ namespace Experica.Command
             ExperimentStatus = EXPERIMENTSTATUS.STOPPED;
         }
 
-        public void GetExFiles()
+        public void RefreshIDFile()
         {
-            var exfiledir = uicontroller.config.ExDir;
-            if (Directory.Exists(exfiledir))
+            var exdir = uicontroller.config.ExDir;
+            if (Directory.Exists(exdir))
             {
-                exfiles = Directory.GetFiles(exfiledir, "*.yaml", SearchOption.TopDirectoryOnly).ToList();
-                exids.Clear();
+                var exfiles = Directory.GetFiles(exdir, "*.yaml", SearchOption.TopDirectoryOnly);
+                if (exfiles.Length == 0)
+                {
+                    Debug.Log($"Experiment Defination Directory \"{exdir}\" Is Empty, Skip Refreshing.");
+                    return;
+                }
+                idfile.Clear();
                 foreach (var f in exfiles)
                 {
-                    exids.Add(Path.GetFileNameWithoutExtension(f));
-                }
-                var firsttestid = uicontroller.config.FirstTestID;
-                if (exids.Contains(firsttestid))
-                {
-                    var i = exids.IndexOf(firsttestid);
-                    exids.RemoveAt(i);
-                    exfiles.RemoveAt(i);
-                    exids.Insert(0, firsttestid);
-                    exfiles.Insert(0, Path.Combine(exfiledir, firsttestid + ".yaml"));
+                    idfile[Path.GetFileNameWithoutExtension(f)] = f;
                 }
             }
             else
             {
-                Directory.CreateDirectory(exfiledir);
+                Directory.CreateDirectory(exdir);
+                Debug.Log($"Create Directory \"{exdir}\" For Experiment Defination.");
             }
         }
 
@@ -139,12 +134,12 @@ namespace Experica.Command
             }
             if (string.IsNullOrEmpty(ex.DataDir))
             {
-                var datadir = uicontroller.config.DataDir;
-                if (!Directory.Exists(datadir))
+                ex.DataDir = uicontroller.config.DataDir;
+                if (!Directory.Exists(ex.DataDir))
                 {
-                    Directory.CreateDirectory(datadir);
+                    Directory.CreateDirectory(ex.DataDir);
+                    Debug.Log($"Create Data Directory \"{ex.DataDir}\".");
                 }
-                ex.DataDir = datadir;
             }
             if (ex.CondTest != null)
             {
@@ -154,6 +149,7 @@ namespace Experica.Command
             {
                 ex.NotifyParam = uicontroller.config.NotifyParams;
             }
+            ex.Config = uicontroller.config;
             return ex;
         }
 
@@ -165,28 +161,26 @@ namespace Experica.Command
         public void LoadEL(Experiment ex)
         {
             ELLoadTime = timer.ElapsedMillisecond;
-            var elpath = ex.ExLogicPath;
             Type eltype = null;
-            if (!string.IsNullOrEmpty(elpath))
+            if (!string.IsNullOrEmpty(ex.LogicPath))
             {
-                if (File.Exists(elpath))
+                if (File.Exists(ex.LogicPath))
                 {
-                    var assembly = elpath.CompileFile();
+                    var assembly = ex.LogicPath.CompileFile();
                     eltype = assembly.GetExportedTypes()[0];
                 }
                 else
                 {
-                    eltype = Type.GetType(elpath);
+                    eltype = Type.GetType(ex.LogicPath);
                 }
             }
             if (eltype == null)
             {
-                elpath = uicontroller.config.ExLogic;
-                eltype = Type.GetType(elpath);
-                ex.ExLogicPath = elpath;
+                ex.LogicPath = uicontroller.config.ExLogic;
+                eltype = Type.GetType(ex.LogicPath);
+                Debug.LogWarning($"No Valid ExperimentLogc For {ex.ID}, Use {ex.LogicPath} Instead.");
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
-            el.config = uicontroller.config;
             el.ex = ex;
             uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
             AddEL(el);
@@ -200,15 +194,14 @@ namespace Experica.Command
             }
             else
             {
-                if (!exids.Contains(id) && exids.Contains(idcopyfrom))
+                if (!idfile.ContainsKey(id) && idfile.ContainsKey(idcopyfrom))
                 {
-                    var ex = exfiles[exids.IndexOf(idcopyfrom)].ReadYamlFile<Experiment>();
+                    var ex = idfile[idcopyfrom].ReadYamlFile<Experiment>();
                     ex.ID = id;
                     ex.Name = id;
                     LoadEL(ValidateExperiment(ex));
 
-                    exids.Add(id);
-                    exfiles.Add(Path.Combine(uicontroller.config.ExDir, id + ".yaml"));
+                    idfile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
                     SaveEx(id);
                     return true;
                 }
@@ -218,7 +211,7 @@ namespace Experica.Command
 
         public bool NewEx(string id)
         {
-            if (exids.Contains(id))
+            if (idfile.ContainsKey(id))
             {
                 return false;
             }
@@ -230,8 +223,7 @@ namespace Experica.Command
                 };
                 LoadEL(ValidateExperiment(ex));
 
-                exids.Add(id);
-                exfiles.Add(Path.Combine(uicontroller.config.ExDir, id + ".yaml"));
+                idfile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
                 SaveEx(id);
                 return true;
             }
@@ -239,13 +231,13 @@ namespace Experica.Command
 
         public void SaveEx(string id)
         {
-            if (exids.Contains(id))
+            if (idfile.ContainsKey(id))
             {
                 var i = FindFirstInELHistory(id);
                 if (i >= 0)
                 {
                     var ex = elhistory[i].ex;
-                    // Exclude data and config, only save experiment definition
+                    // Exclude data and config for saving experiment definition
                     var datapath = ex.DataPath;
                     var condtest = ex.CondTest;
                     var config = ex.Config;
@@ -257,7 +249,7 @@ namespace Experica.Command
                     ex.EnvParam = elhistory[i].envmanager.GetParams();
                     try
                     {
-                        exfiles[exids.IndexOf(id)].WriteYamlFile(ex);
+                        idfile[id].WriteYamlFile(ex);
                     }
                     finally
                     {
@@ -272,15 +264,15 @@ namespace Experica.Command
 
         public void SaveAllEx()
         {
-            foreach (var n in exids)
+            foreach (var id in idfile.Keys)
             {
-                SaveEx(n);
+                SaveEx(id);
             }
         }
 
-        public int DeleteEx(string id)
+        public bool DeleteEx(string id)
         {
-            if (exids.Contains(id))
+            if (idfile.ContainsKey(id))
             {
                 var i = FindFirstInELHistory(id);
                 if (i >= 0)
@@ -288,23 +280,21 @@ namespace Experica.Command
                     Destroy(elhistory[i]);
                     elhistory.RemoveAt(i);
                 }
-                var idi = exids.IndexOf(id);
-                File.Delete(exfiles[idi]);
-                exfiles.RemoveAt(idi);
-                exids.RemoveAt(idi);
-                return idi;
+                File.Delete(idfile[id]);
+                idfile.Remove(id);
+                return true;
             }
             else
             {
-                return -1;
+                return false;
             }
         }
 
         public void DeleteAllEx()
         {
-            foreach (var n in exids.ToArray())
+            foreach (var id in idfile.Keys.ToArray())
             {
-                DeleteEx(n);
+                DeleteEx(id);
             }
         }
 
@@ -376,7 +366,7 @@ namespace Experica.Command
         public void InheritEx()
         {
             var ellex = elhistory.Last().ex;
-            var ellexip = ellex.ExInheritParam;
+            var ellexip = ellex.InheritParam;
             foreach (var ip in ellexip.ToArray())
             {
                 if (Experiment.Properties.ContainsKey(ip) || ellex.Param.ContainsKey(ip))

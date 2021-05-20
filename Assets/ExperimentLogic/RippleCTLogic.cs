@@ -27,7 +27,7 @@ namespace Experica
 
         protected override void OnStart()
         {
-            gpio = new ParallelPort(dataaddress: config.ParallelPort1);
+            gpio = new ParallelPort(dataaddress: Config.ParallelPort1);
             recorder = new RippleRecorder();
         }
 
@@ -47,8 +47,8 @@ namespace Experica
                 otherwise the delayed action may clear the start TTL pluse which is
                 needed to mark the timer zero.
                 */
-                timer.TimeoutMillisecond(config.NotifyLatency);
-                gpio.BitPulse(bit: config.StartSyncCh, duration_ms: 5);
+                timer.TimeoutMillisecond(Config.NotifyLatency);
+                gpio.BitPulse(bit: Config.StartSyncCh, duration_ms: 5);
             }
             /*
             Immediately after the TTL falling edge triggering ripple recording, we reset timer, 
@@ -60,10 +60,10 @@ namespace Experica
         protected override void StopExperimentTimeSync()
         {
             // Tail period to make sure lagged effect data is recorded before trigger recording stop
-            timer.TimeoutMillisecond(ex.Display_ID.DisplayLatency(config.Display) ?? 0 + config.MaxDisplayLatencyError + config.OnlineSignalLatency);
+            timer.TimeoutMillisecond(ex.Display_ID.DisplayLatency(Config.Display) ?? 0 + Config.MaxDisplayLatencyError + Config.OnlineSignalLatency);
             if (isrippletriggered)
             {
-                gpio.BitPulse(bit: config.StopSyncCh, duration_ms: 5);
+                gpio.BitPulse(bit: Config.StopSyncCh, duration_ms: 5);
             }
             timer.Stop();
         }

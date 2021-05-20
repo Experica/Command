@@ -42,15 +42,14 @@ namespace Experica.Command
 
         public void UpdateCopyFrom()
         {
-            var os = new List<string>();
-            os.Add("");
-            os.AddRange(uicontroller.exmanager.exids);
+            var os = uicontroller.exmanager.idfile.Keys.ToList();
+            os.Insert(0, "");
             copyfromname.AddOptions(os);
         }
 
         public void OnNewExNameEndEdit(string name)
         {
-            if (uicontroller.exmanager.exids.Contains(name))
+            if (uicontroller.exmanager.idfile.ContainsKey(name))
             {
                 namecheck.text = "Name Already Exists";
                 confirm.interactable = false;

@@ -64,7 +64,7 @@ namespace Experica
 
     public static class Extension
     {
-        public const uint ExDataVersion = 2;
+        public const uint ExperimentDataVersion = 2;
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();
         static Dictionary<string, Dictionary<string, Texture2D>> imagedata = new Dictionary<string, Dictionary<string, Texture2D>>();
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new Dictionary<string, Dictionary<string, Matrix<float>>>();
@@ -1157,7 +1157,7 @@ namespace Experica
             return rule.ContainsKey(to);
         }
 
-        public static void Mail(this string to, string subject, string body)
+        public static void Mail(this string to, string subject = "", string body = "")
         {
             if (string.IsNullOrEmpty(to)) return;
             var smtp = new SmtpClient() { Host = "smtp.gmail.com", Port = 587, EnableSsl = true, Credentials = new NetworkCredential("vlabsys@gmail.com", "Experica$y$tem") };

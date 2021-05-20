@@ -64,7 +64,7 @@ namespace Experica.Command
                 if (IsShowParam(p))
                 {
                     var pa = Experiment.Properties[p];
-                    AddParamUI(p, pa.Type, ex.GetProperty(p), ex.ExInheritParam.Contains(p),
+                    AddParamUI(p, pa.Type, ex.GetProperty(p), ex.InheritParam.Contains(p),
                         p.GetPrefab(pa.Type), content.transform);
                 }
             }
@@ -78,7 +78,7 @@ namespace Experica.Command
             {
                 if (IsShowParam(p))
                 {
-                    inherittoggle[p].isOn = ex.ExInheritParam.Contains(p);
+                    inherittoggle[p].isOn = ex.InheritParam.Contains(p);
                     var v = ex.GetProperty(p);
                     if (dropdown.ContainsKey(p))
                     {
@@ -122,7 +122,7 @@ namespace Experica.Command
             exparamtoggle.Clear();
             foreach (var p in ex.Param.Keys)
             {
-                AddExParamUI(p, ex.Param[p], ex.ExInheritParam.Contains(p));
+                AddExParamUI(p, ex.Param[p], ex.InheritParam.Contains(p));
             }
         }
 
@@ -239,7 +239,7 @@ namespace Experica.Command
                 if (exparamtoggle[s].isOn)
                 {
                     uicontroller.exmanager.el.ex.Param.Remove(s);
-                    uicontroller.exmanager.el.ex.ExInheritParam.Remove(s);
+                    uicontroller.exmanager.el.ex.InheritParam.Remove(s);
 
                     exparamtoggle.Remove(s);
                     Destroy(exparamgo[s]);

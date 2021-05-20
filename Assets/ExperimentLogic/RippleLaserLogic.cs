@@ -36,7 +36,7 @@ namespace Experica
         protected override void OnStart()
         {
             base.OnStart();
-            pport2 = new ParallelPort(config.ParallelPort2);
+            pport2 = new ParallelPort(Config.ParallelPort2);
             ppw = new GPIOWave(pport2);
         }
 
@@ -44,24 +44,24 @@ namespace Experica
         {
             pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
-            laser = ex.GetParam("Laser").Convert<string>().GetLaser(config);
+            laser = ex.GetParam("Laser").Convert<string>().GetLaser(Config);
             switch (laser?.Type)
             {
                 case Laser.Omicron:
-                    lasersignalch = config.SignalCh1;
+                    lasersignalch = Config.SignalCh1;
                     break;
                 case Laser.Cobolt:
-                    lasersignalch = config.SignalCh2;
+                    lasersignalch = Config.SignalCh2;
                     break;
             }
-            laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(config);
+            laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(Config);
             switch (laser2?.Type)
             {
                 case Laser.Omicron:
-                    laser2signalch = config.SignalCh1;
+                    laser2signalch = Config.SignalCh1;
                     break;
                 case Laser.Cobolt:
-                    laser2signalch = config.SignalCh2;
+                    laser2signalch = Config.SignalCh2;
                     break;
             }
 
@@ -161,15 +161,15 @@ namespace Experica
                         var freq = (Vector4)condmanager.finalcond["LaserFreq"][condmanager.condidx];
                         if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                         }
                         else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                         }
                         else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
                         {
-                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq.x);
+                            ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                         }
                     }
                 }
@@ -185,15 +185,15 @@ namespace Experica
                         var freq2 = (Vector4)condmanager.finalcond["LaserFreq2"][condmanager.condidx];
                         if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                         }
                         else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                         }
                         else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
                         {
-                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(config.Display) ?? 0, freq2.x);
+                            ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                         }
                     }
                 }

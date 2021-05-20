@@ -57,8 +57,7 @@ namespace Experica
             }
         }
         #endregion
-        public CommandConfig config;
-        public Experiment ex = new Experiment();
+        public Experiment ex;
         public Timer timer = new Timer();
         public EnvironmentManager envmanager = new EnvironmentManager();
         public ConditionManager condmanager = new ConditionManager();
@@ -91,6 +90,7 @@ namespace Experica
         public double PreIBIHold { get { return timer.ElapsedMillisecond - PreIBIOnTime; } }
         public double BlockHold { get { return timer.ElapsedMillisecond - BlockOnTime; } }
         public double SufIBIHold { get { return timer.ElapsedMillisecond - SufIBIOnTime; } }
+        public CommandConfig Config { get { return ex.Config; } }
 
         CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState
@@ -314,53 +314,62 @@ namespace Experica
 
         public virtual void SaveData()
         {
-            var ct = condtestmanager.condtest;
-            if (ct.Count > 0)
+            if (condtestmanager.condtest.Count > 0)
             {
-                ex.CondTest = ct;
+                ex.CondTest = condtestmanager.condtest;
+                ex.EnvParam = envmanager.GetActiveParams();
+                ex.Version = Extension.ExperimentDataVersion;
+                // Hold references to data that may not need to save
                 Dictionary<string, Dictionary<string, List<object>>[]> m = null;
-                if (config.SaveConfigInData)
+                CommandConfig cfg = ex.Config;
+                if (!cfg.SaveConfigInData)
                 {
-                    if (!config.SaveConfigDisplayMeasurementInData)
+                    ex.Config = null;
+                }
+                else
+                {
+                    if (!cfg.SaveConfigDisplayMeasurementInData)
                     {
-                        m = config.Display.ToDictionary(kv => kv.Key, kv => new[] { kv.Value.IntensityMeasurement, kv.Value.SpectralMeasurement });
-                        foreach (var d in config.Display.Values)
+                        m = cfg.Display.ToDictionary(kv => kv.Key, kv => new[] { kv.Value.IntensityMeasurement, kv.Value.SpectralMeasurement });
+                        foreach (var d in cfg.Display.Values)
                         {
                             d.IntensityMeasurement = null;
                             d.SpectralMeasurement = null;
                         }
                     }
-                    ex.Config = config;
                 }
-
-                ex.EnvParam = envmanager.GetActiveParams();
-                ex.Version = Extension.ExDataVersion;
-                switch (config.SaveDataFormat)
+                // Save Data
+                switch (cfg.SaveDataFormat)
                 {
                     case DataFormat.EXPERICA:
                         DataPath(DataFormat.EXPERICA).Save(ex);
                         break;
-                    default:
+                    case DataFormat.YAML:
                         DataPath(DataFormat.YAML).WriteYamlFile(ex);
                         break;
                 }
-                ex.DataPath = null;
-
-                if (config.SaveConfigInData)
+                ex.CondTest = null;
+                ex.DataPath = null; // Clear DataPath, so it will be safely generated next time
+                // Restore data that may not be saved
+                if (!cfg.SaveConfigInData)
                 {
-                    if (!config.SaveConfigDisplayMeasurementInData)
+                    ex.Config = cfg;
+                }
+                else
+                {
+                    if (!cfg.SaveConfigDisplayMeasurementInData)
                     {
-                        foreach (var d in config.Display.Keys)
+                        foreach (var d in cfg.Display.Keys)
                         {
-                            config.Display[d].IntensityMeasurement = m[d][0];
-                            config.Display[d].SpectralMeasurement = m[d][1];
+                            cfg.Display[d].IntensityMeasurement = m[d][0];
+                            cfg.Display[d].SpectralMeasurement = m[d][1];
                         }
                     }
                 }
             }
             else
             {
-                Debug.LogWarning("No Data to Save.");
+                Debug.Log("CondTest Empty, Skip Saving Data.");
             }
         }
 
@@ -496,7 +505,7 @@ namespace Experica
                 }
             }
             // wait until the synced same start frame have completed being presented on display.
-            var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(config.Display) ?? config.NotifyLatency;
+            var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
             yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StartExperimentTimeSync();
             OnExperimentStarted();
@@ -531,7 +540,7 @@ namespace Experica
                 }
             }
             // wait until the synced same stop frame have completed being presented on display.
-            var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(config.Display) ?? config.NotifyLatency;
+            var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
             yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StopExperimentTimeSync();
             OnExperimentStopped();
@@ -568,9 +577,9 @@ namespace Experica
             OnUpdate();
             if (issyncingframe)
             {
-                if (Time.realtimeSinceStartupAsDouble - SyncFrameOnTime >= config.SyncFrameTimeOut)
+                if (Time.realtimeSinceStartupAsDouble - SyncFrameOnTime >= Config.SyncFrameTimeOut)
                 {
-                    Debug.Log($"SyncFrame Timeout({config.SyncFrameTimeOut}s), Stop Waiting.");
+                    Debug.Log($"SyncFrame Timeout({Config.SyncFrameTimeOut}s), Stop Waiting.");
                     issyncingframe = false;
                 }
             }

@@ -20,7 +20,6 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
@@ -31,6 +30,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System;
+using System.Linq;
 using System.Runtime;
 using MathNet.Numerics;
 using MathNet.Numerics.Interpolation;
@@ -94,15 +94,10 @@ namespace Experica.Command
         public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
         {
             CommandConfig cfg = null;
-
-            // Check if the file exists at the specified path, if so, load it.
             if (File.Exists(configfilepath))
             {
-                // Deserialize the text using extension method.
                 cfg = configfilepath.ReadYamlFile<CommandConfig>();
             }
-
-            // Use default config settings
             if (cfg == null)
             {
                 configmanager.LastConfigFilePath = null;
@@ -111,7 +106,6 @@ namespace Experica.Command
                     cfg = new CommandConfig();
                 }
             }
-
             if (cfg != null)
             {
                 if (cfg.EnvCrossInheritRule == null)
@@ -318,8 +312,8 @@ namespace Experica.Command
         public void PushConfig()
         {
             // Grab settings from Experiement Yaml files, and update the scene
-            exmanager.GetExFiles();
-            exsmanager.GetExSessionFiles();
+            exmanager.RefreshIDFile();
+            exsmanager.RefreshIDFile();
             UpdateExDropdown();
             UpdateExSessionDropdown();
             savedata.interactable = !config.AutoSaveData;
@@ -350,7 +344,7 @@ namespace Experica.Command
             }
             if (config.IsSaveExSessionOnQuit)
             {
-                exsmanager.SaveAllExSession();
+                exsmanager.SaveExSession();
             }
 
             if (string.IsNullOrEmpty(configmanager.LastConfigFilePath))
@@ -365,11 +359,13 @@ namespace Experica.Command
 
         public void UpdateExSessionDropdown()
         {
-            var exsn = exsmanager.exsids.Count;
+            var exsn = exsmanager.idfile.Count;
             if (exsn > 0)
             {
                 exss.ClearOptions();
-                exss.AddOptions(exsmanager.exsids);
+                var exsids = exsmanager.idfile.Keys.ToList();
+                exsids.Sort();
+                exss.AddOptions(exsids);
                 OnExSessionDropdownValueChange(Mathf.Clamp(exss.value, 0, exsn - 1));
             }
         }
@@ -380,20 +376,29 @@ namespace Experica.Command
             {
                 exsmanager.SaveExSession(exsmanager.esl.exsession.ID);
             }
-            var idx = exsmanager.exsids.FindIndex(0, id => id == exss.captionText.text);
-            if (idx >= 0)
+            var id = exss.captionText.text;
+            if (exsmanager.idfile.ContainsKey(id))
             {
-                exsmanager.LoadESL(exsmanager.exsfiles[idx]);
+                exsmanager.LoadESL(exsmanager.idfile[id]);
             }
         }
 
         public void UpdateExDropdown()
         {
-            var exn = exmanager.exids.Count;
+            var exn = exmanager.idfile.Count;
             if (exn > 0)
             {
                 exs.ClearOptions();
-                exs.AddOptions(exmanager.exids);
+                var exids = exmanager.idfile.Keys.ToList();
+                exids.Sort();
+                var firsttestid = config.FirstTestID;
+                if (exids.Contains(firsttestid))
+                {
+                    var i = exids.IndexOf(firsttestid);
+                    exids.RemoveAt(i);
+                    exids.Insert(0, firsttestid);
+                }
+                exs.AddOptions(exids);
                 OnExDropdownValueChange(Mathf.Clamp(exs.value, 0, exn - 1));
             }
         }
@@ -404,10 +409,10 @@ namespace Experica.Command
             {
                 exmanager.SaveEx(exmanager.el.ex.ID);
             }
-            var idx = exmanager.exids.FindIndex(0, id => id == exs.captionText.text);
-            if (idx >= 0)
+            var id = exs.captionText.text;
+            if (exmanager.idfile.ContainsKey(id))
             {
-                exmanager.LoadEL(exmanager.exfiles[idx]);
+                exmanager.LoadEL(exmanager.idfile[id]);
                 expanel.UpdateEx(exmanager.el.ex);
                 ServerChangeScene();
             }
@@ -526,7 +531,12 @@ namespace Experica.Command
             start.interactable = false;
 
             startstopsessiontext.text = "StopSession";
-            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\"  Started.");
+            var msg = $"Experiment Session \"{exsmanager.esl.exsession.ID}\" Started.";
+            consolepanel.Log(msg);
+            if (exsmanager.esl.exsession.NotifyExperimenter)
+            {
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+            }
         }
 
         public void OnBeginStartExperiment()
@@ -537,7 +547,12 @@ namespace Experica.Command
             deleteex.interactable = false;
             startstoptext.text = "Stop";
             pause.interactable = true;
-            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Started.");
+            var msg = $"Experiment \"{exmanager.el.ex.ID}\" Started.";
+            consolepanel.Log(msg);
+            if (exmanager.el.ex.NotifyExperimenter)
+            {
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+            }
 
             // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
             // whereas the connected Environment presenting the final stimuli.
@@ -575,7 +590,6 @@ namespace Experica.Command
             {
                 using (var stream = new MemoryStream())
                 {
-                    exmanager.el.ex.Config = config;
                     exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
                     //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
                     //alsmanager.RpcNotifyExperiment(stream.ToArray());
@@ -629,7 +643,6 @@ namespace Experica.Command
                 startsession.onValueChanged = eh;
             }
             startstopsessiontext.text = "StartSession";
-            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
         }
 
         public void OnBeginStopExperiment()
@@ -654,16 +667,15 @@ namespace Experica.Command
             }
             startstoptext.text = "Start";
             pause.interactable = false;
-            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
         }
 
         public void OnEndStopExperimentSession()
         {
-            if (exsmanager.esl.exsession.SendMail)
+            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
+            if (exsmanager.esl.exsession.NotifyExperimenter)
             {
-                var subject = "Experiment Session Stopped";
-                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
-                exsmanager.esl.exsession.Experimenter.GetAddresses(config).Mail(subject, body);
+                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment Session \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
             }
         }
 
@@ -674,11 +686,11 @@ namespace Experica.Command
             {
                 exmanager.el.SaveData();
             }
-            if (exmanager.el.ex.SendMail)
+            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
+            if (exmanager.el.ex.NotifyExperimenter)
             {
-                var subject = "Experiment Stopped";
-                var body = $"{exmanager.el.ex.Subject_ID} finished \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(subject, body);
+                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
             }
 
             exmanager.OnELStop();
@@ -740,7 +752,7 @@ namespace Experica.Command
 
         public void ToggleExInherit(string name, bool isinherit)
         {
-            var ip = exmanager.el.ex.ExInheritParam;
+            var ip = exmanager.el.ex.InheritParam;
             if (isinherit)
             {
                 if (!ip.Contains(name))
@@ -789,6 +801,33 @@ namespace Experica.Command
             }
         }
 
+        public void FullViewportSize()
+        {
+            if (exmanager.el != null)
+            {
+                var so = exmanager.el.GetEnvActiveParam("Size");
+                if (so != null)
+                {
+                    var s = so.Convert<Vector3>();
+                    var w = exmanager.el.envmanager.MainViewportWidth;
+                    if (w.HasValue) { s.x = w.Value; }
+                    var h = exmanager.el.envmanager.MainViewportHeight;
+                    if (h.HasValue) { s.y = h.Value; }
+
+                    var po = exmanager.el.GetEnvActiveParam("Position");
+                    var poff = exmanager.el.GetEnvActiveParam("PositionOffset");
+                    if (po != null && poff != null)
+                    {
+                        var p = po.Convert<Vector3>();
+                        var pf = poff.Convert<Vector3>();
+                        s.x += 2 * Mathf.Abs(p.x + pf.x);
+                        s.y += 2 * Mathf.Abs(p.y + pf.y);
+                    }
+                    exmanager.el.SetEnvActiveParam("Size", s);
+                }
+            }
+        }
+
         public void ToggleEnvInherit(string fullname, string paramname, bool isinherit)
         {
             var ip = exmanager.el.ex.EnvInheritParam;
@@ -825,27 +864,9 @@ namespace Experica.Command
 
         public void DeleteEx()
         {
-            // Delete the file
-            var i = exmanager.DeleteEx(exs.captionText.text);
-
-            // If sucessfully deleted
-            if (i >= 0)
+            if (exmanager.DeleteEx(exs.captionText.text))
             {
-                // Remove option from dropdown and update dropdown
-                exs.options.RemoveAt(i);
-                var exn = exs.options.Count;
-                if (exn > 0)
-                {
-                    i = Mathf.Clamp(i, 0, exn - 1);
-                    exs.value = i;
-                    exs.captionText.text = exs.options[i].text;
-                    OnExDropdownValueChange(i);
-                }
-                else
-                {
-                    exs.value = 0;
-                    exs.captionText.text = "";
-                }
+                UpdateExDropdown();
             }
         }
 

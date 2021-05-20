@@ -89,9 +89,9 @@ public class DisplayCalibration : ExperimentLogic
     {
         SetEnvActiveParam("Visible", false);
         spectroradiometer?.Close();
-        if (config.Display == null)
+        if (Config.Display == null)
         {
-            config.Display = new Dictionary<string, Display>();
+            Config.Display = new Dictionary<string, Display>();
         }
         if (string.IsNullOrEmpty(ex.Display_ID))
         {
@@ -101,20 +101,20 @@ public class DisplayCalibration : ExperimentLogic
 
         if (Extension.YesNoDialog("Save Measurement to Configuration?"))
         {
-            if (config.Display.ContainsKey(ex.Display_ID))
+            if (Config.Display.ContainsKey(ex.Display_ID))
             {
                 if (imeasurement != null && imeasurement.Count > 0)
                 {
-                    config.Display[ex.Display_ID].IntensityMeasurement = imeasurement;
+                    Config.Display[ex.Display_ID].IntensityMeasurement = imeasurement;
                 }
                 if (smeasurement != null && smeasurement.Count > 0)
                 {
-                    config.Display[ex.Display_ID].SpectralMeasurement = smeasurement;
+                    Config.Display[ex.Display_ID].SpectralMeasurement = smeasurement;
                 }
             }
             else
             {
-                config.Display[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
+                Config.Display[ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement };
             }
         }
         if (Extension.YesNoDialog("Save Measurement Data?"))
@@ -122,7 +122,7 @@ public class DisplayCalibration : ExperimentLogic
             var path = Extension.SaveFile("Save Measurement Data ...");
             if (!string.IsNullOrEmpty(path))
             {
-                var ds = new Dictionary<string, Display>(config.Display)
+                var ds = new Dictionary<string, Display>(Config.Display)
                 {
                     [ex.Display_ID] = new Display() { ID = ex.Display_ID, IntensityMeasurement = imeasurement, SpectralMeasurement = smeasurement }
                 };

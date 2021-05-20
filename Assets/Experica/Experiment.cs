@@ -90,60 +90,61 @@ namespace Experica
         public string Subject_ID { get; set; } = "";
         public string Subject_Name { get; set; } = "";
         public string Subject_Species { get; set; } = "";
-        public Gender Subject_Gender { get; set; }
-        public float Subject_Age { get; set; }
-        public Vector3 Subject_Size { get; set; }
-        public float Subject_Weight { get; set; }
+        public Gender Subject_Gender { get; set; } = Gender.None;
+        public float Subject_Age { get; set; } = 0;
+        public Vector3 Subject_Size { get; set; } = Vector3.zero;
+        public float Subject_Weight { get; set; } = 0;
         public string Subject_Log { get; set; } = "";
 
         public string EnvPath { get; set; } = "";
         public Dictionary<string, object> EnvParam { get; set; } = new Dictionary<string, object>();
         public string CondPath { get; set; } = "";
-        public Dictionary<string, IList> Cond { get; set; }
-        public string ExLogicPath { get; set; } = "";
+        public Dictionary<string, IList> Cond { get; set; } = new Dictionary<string, IList>();
+        public string LogicPath { get; set; } = "";
 
+        public Hemisphere Hemisphere { get; set; } = Hemisphere.None;
+        public Eye Eye { get; set; } = Eye.None;
         public string RecordSession { get; set; } = "";
         public string RecordSite { get; set; } = "";
         public string DataDir { get; set; } = "";
         public string DataPath { get; set; } = "";
-        public SampleMethod CondSampling { get; set; }
-        public SampleMethod BlockSampling { get; set; }
-        public int CondRepeat { get; set; }
-        public int BlockRepeat { get; set; }
+        public bool Input { get; set; } = false;
+
+        public SampleMethod CondSampling { get; set; } = SampleMethod.UniformWithoutReplacement;
+        public SampleMethod BlockSampling { get; set; } = SampleMethod.UniformWithoutReplacement;
+        public int CondRepeat { get; set; } = 1;
+        public int BlockRepeat { get; set; } = 1;
         public List<string> BlockParam { get; set; } = new List<string>();
-        public bool Input { get; set; }
 
-        public double PreICI { get; set; }
-        public double CondDur { get; set; }
-        public double SufICI { get; set; }
-        public double PreITI { get; set; }
-        public double TrialDur { get; set; }
-        public double SufITI { get; set; }
-        public double PreIBI { get; set; }
-        public double BlockDur { get; set; }
-        public double SufIBI { get; set; }
+        public double PreICI { get; set; } = 0;
+        public double CondDur { get; set; } = 1000;
+        public double SufICI { get; set; } = 0;
+        public double PreITI { get; set; } = 0;
+        public double TrialDur { get; set; } = 0;
+        public double SufITI { get; set; } = 0;
+        public double PreIBI { get; set; } = 0;
+        public double BlockDur { get; set; } = 0;
+        public double SufIBI { get; set; } = 0;
 
-        public PUSHCONDATSTATE PushCondAtState { get; set; }
-        public CONDTESTATSTATE CondTestAtState { get; set; }
-        public int NotifyPerCondTest { get; set; }
-        public List<CONDTESTPARAM> NotifyParam { get; set; }
-        public List<string> ExInheritParam { get; set; } = new List<string>();
+        public PUSHCONDATSTATE PushCondAtState { get; set; } = PUSHCONDATSTATE.COND;
+        public CONDTESTATSTATE CondTestAtState { get; set; } = CONDTESTATSTATE.PREICI;
+        public int NotifyPerCondTest { get; set; } = 0;
+        public List<CONDTESTPARAM> NotifyParam { get; set; } = new List<CONDTESTPARAM>();
+        public List<string> InheritParam { get; set; } = new List<string>();
         public List<string> EnvInheritParam { get; set; } = new List<string>();
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
-        public double TimerDriftSpeed { get; set; }
+        public double TimerDriftSpeed { get; set; } = 6e-5;
         public EventSyncProtocol EventSyncProtocol { get; set; } = new EventSyncProtocol();
         public string Display_ID { get; set; } = "";
-        public double ResponseDelay { get; set; }
-        public uint Version { get; set; } = 2;
-        [IgnoreMember]
-        public CommandConfig Config { get; set; }
+        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; } = CONDTESTSHOWLEVEL.FULL;
+        public bool NotifyExperimenter { get; set; } = false;
+        public uint Version { get; set; } = Extension.ExperimentDataVersion;
+
 
         [IgnoreMember]
+        public CommandConfig Config { get; set; }
+        [IgnoreMember]
         public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
-        [IgnoreMember]
-        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; }
-        [IgnoreMember]
-        public bool SendMail { get; set; } = false;
         [IgnoreMember]
         public static readonly Dictionary<string, PropertyAccess> Properties;
         [IgnoreMember]
@@ -285,9 +286,26 @@ namespace Experica
 
     public enum Gender
     {
+        None,
         Male,
         Female,
         Others
+    }
+
+    public enum Eye
+    {
+        None,
+        Left,
+        Right,
+        Both
+    }
+
+    public enum Hemisphere
+    {
+        None,
+        Left,
+        Right,
+        Both
     }
 
     public enum DisplayType
@@ -427,5 +445,4 @@ namespace Experica
         STOPPING,
         STOPPED
     }
-
 }

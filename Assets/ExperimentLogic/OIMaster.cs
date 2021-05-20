@@ -76,9 +76,9 @@ namespace Experica
         {
             Dictionary<int, List<double>> dt; Dictionary<int, List<int>> dv;
             var isdin = recorder.ReadDigitalInput(out dt, out dv);
-            if (isdin && dt.ContainsKey(config.Bits16Ch) && dt[config.Bits16Ch] != null && dt[config.Bits16Ch].Count > 0)
+            if (isdin && dt.ContainsKey(Config.Bits16Ch) && dt[Config.Bits16Ch] != null && dt[Config.Bits16Ch].Count > 0)
             {
-                int msg = dv[config.Bits16Ch].Last();
+                int msg = dv[Config.Bits16Ch].Last();
                 if (msg > 127)
                 {
                     go = true;

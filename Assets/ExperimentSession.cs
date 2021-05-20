@@ -36,12 +36,12 @@ namespace Experica.Command
         public string Experimenter { get; set; } = "";
         public string Log { get; set; } = "";
 
-        public string ExSessionLogicPath { get; set; } = "";
+        public string LogicPath { get; set; } = "";
         public double ReadyWait { get; set; } = 5000;
         public double StopWait { get; set; } = 5000;
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
 
-        public bool SendMail { get; set; } = true;
+        public bool NotifyExperimenter { get; set; } = true;
         public bool IsFullScreen { get; set; } = false;
         public bool IsFullViewport { get; set; } = false;
         public bool IsGuideOn { get; set; } = true;

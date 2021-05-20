@@ -27,9 +27,10 @@ ExHideParams:
 - CondTest
 - EnvParam
 - Param
+- Log
 - Subject_Log
 - DataPath
-- ExInheritParam
+- InheritParam
 - EnvInheritParam
 - Version
 - EventSyncProtocol

@@ -54,7 +54,7 @@ namespace Experica
         public bool IsShowInactiveEnvParam { get; set; } = false;
         public bool IsShowEnvParamFullName { get; set; } = false;
         public int MaxLogEntry { get; set; } = 999;
-        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Subject_Log", "DataPath", "ExInheritParam", "EnvInheritParam", "Version", "EventSyncProtocol", "Config" };
+        public List<string> ExHideParams { get; set; } = new List<string> { "Cond", "CondTest", "EnvParam", "Param", "Log", "Subject_Log", "DataPath", "InheritParam", "EnvInheritParam", "Version", "EventSyncProtocol", "Config" };
         public string FirstTestID { get; set; } = "ConditionTest";
         public Dictionary<string, string> ExperimenterAddress { get; set; } = new Dictionary<string, string> { { "Alex", "4109829463@mms.att.net" } };
 

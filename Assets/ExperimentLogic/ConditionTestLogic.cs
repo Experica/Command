@@ -34,7 +34,7 @@ public class ConditionTestLogic : ExperimentLogic
     {
         if (ex.EventSyncProtocol.SyncMethods.Contains(SyncMethod.GPIO))
         {
-            gpio = new ParallelPort(dataaddress: config.ParallelPort1);
+            gpio = new ParallelPort(dataaddress: Config.ParallelPort1);
             if (!gpio.Found)
             {
                 gpio = new FTDIGPIO();
@@ -86,7 +86,7 @@ public class ConditionTestLogic : ExperimentLogic
                         SetEnvActiveParam("Mark", syncvalue);
                         break;
                     case SyncMethod.GPIO:
-                        gpio?.BitOut(bit: config.EventSyncCh, value: syncvalue);
+                        gpio?.BitOut(bit: Config.EventSyncCh, value: syncvalue);
                         break;
                 }
             }
