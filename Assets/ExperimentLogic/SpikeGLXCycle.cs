@@ -100,8 +100,9 @@ public class SpikeGLXCycle : SpikeGLXCTLogic
                 var phase = div - nc;
                 if (nc >= ex.CondRepeat)
                 {
-                    StartStopExperiment(false);
-                    return;
+                    EnterCondState(CONDSTATE.SUFICI);
+                    SyncEvent(CONDSTATE.SUFICI.ToString());
+                    SetEnvActiveParam("Visible", false);
                 }
                 else
                 {
@@ -125,6 +126,13 @@ public class SpikeGLXCycle : SpikeGLXCTLogic
                     }
                 }
                 SyncFrame();
+                break;
+            case CONDSTATE.SUFICI:
+                if (SufICIHold >= ex.SufICI)
+                {
+                    StartStopExperiment(false);
+                    return;
+                }
                 break;
         }
     }
