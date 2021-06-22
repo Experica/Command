@@ -46,22 +46,26 @@ MaxDisplayLatencyError: 20
 OnlineSignalLatency: 50
 MCCDevice: 1208FS
 MCCDPort: 10
-ParallelPort1: 45072
+ParallelPort0: 45072
+ParallelPort1: 53264
 ParallelPort2: 53264
-ParallelPort3: 53264
 EventSyncCh: 0
 EventMeasureCh: 1
 StartSyncCh: 2
 StopSyncCh: 3
 Bits16Ch: 5
-SignalCh1: 0
-SignalCh2: 1
-SignalCh3: 2
-SerialPort1: COM3
-SerialPort2: COM4
-SerialPort3: COM5
-RecordHost: 10.1.51.17
-RecordHostPort: 4142
+SignalCh0: 0
+SignalCh1: 1
+SignalCh2: 2
+SerialPort0: COM3
+SerialPort1: COM4
+SerialPort2: COM5
+RecordHost0: 10.1.51.17
+RecordHostPort0: 4142
+RecordHost1: LocalHost
+RecordHostPort1: 10000
+RecordHost2: LocalHost
+RecordHostPort2: 10000
 Param: {}
 EnvCrossInheritRule:
   GratingQuad:

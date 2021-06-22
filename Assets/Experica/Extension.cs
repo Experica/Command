@@ -461,6 +461,39 @@ namespace Experica
             }
         }
 
+        public static IRecorder GetImagerRecorder(string host = "localhost", int port = 10000)
+        {
+            if (recorder == null)
+            {
+                var r = new ImagerRecorder(host, port);
+                if (r.IsConnected) { recorder = r; }
+                return recorder;
+            }
+            else
+            {
+                if (recorder.GetType() == typeof(ImagerRecorder))
+                {
+                    var r = recorder as ImagerRecorder;
+                    if (r.IsConnected)
+                    {
+                        if (r.Host == host && r.Port == port)
+                        {
+                            return recorder;
+                        }
+                        r.Disconnect();
+                    }
+                    if (!r.Connect(host, port)) { recorder = null; }
+                    return recorder;
+                }
+                else
+                {
+                    recorder.Dispose();
+                    recorder = null;
+                    return GetImagerRecorder(host, port);
+                }
+            }
+        }
+
         public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
         {
             foreach (var f in conddesign.Keys.ToArray())
@@ -523,9 +556,9 @@ namespace Experica
             switch (lasername)
             {
                 case "luxx473":
-                    return new Omicron(config.SerialPort1);
+                    return new Omicron(config.SerialPort0);
                 case "mambo594":
-                    return new Cobolt(config.SerialPort2);
+                    return new Cobolt(config.SerialPort1);
             }
             return null;
         }

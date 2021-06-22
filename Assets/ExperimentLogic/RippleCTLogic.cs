@@ -27,7 +27,7 @@ namespace Experica
 
         protected override void OnStart()
         {
-            gpio = new ParallelPort(dataaddress: Config.ParallelPort1);
+            gpio = new ParallelPort(dataaddress: Config.ParallelPort0);
             recorder = new RippleRecorder();
         }
 

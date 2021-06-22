@@ -15,11 +15,11 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6503067
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -25.1 14.42 -1000
+  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -40,12 +40,12 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 0
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.25
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0 0.6466 0.4946 1
+  MinColor@GratingQuad@GratingQuad: 1 0.1817 0.374 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ModulateType@GratingQuad@GratingQuad: Square
+  ModulateType@GratingQuad@GratingQuad: Sinusoidal
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5

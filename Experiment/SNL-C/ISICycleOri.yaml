@@ -4,12 +4,12 @@ Designer: Alex
 Experimenter: Alex
 Log: 
 Subject_ID: Test
-Subject_Name: AF6
+Subject_Name: AF8
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 13
+Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
@@ -26,10 +26,10 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 111.720581
+  Ori@GratingQuad@GratingQuad: 359.866394
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 20
-  Size@GratingQuad@GratingQuad: 20 20 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 43.79 32.84 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -40,14 +40,14 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 5
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 4.996E-16 0 1
+  MinColor@GratingQuad@GratingQuad: 0 2.776E-16 3.886E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Square
-  ModulateType@GratingQuad@GratingQuad: Square
+  ModulateType@GratingQuad@GratingQuad: Sinusoidal
   ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.200000003
+  Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
@@ -56,21 +56,23 @@ EnvParam:
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
-ExLogicPath: Experica.CycleConditionLogic
-RecordSession: HLV1
-RecordSite: ODL9
+LogicPath: ImagerCycle
+Hemisphere: Left
+Eye: Right
+RecordSession: V1
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
+Input: false
+CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: false
 PreICI: 0
 CondDur: 0
-SufICI: 0
+SufICI: 500
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -84,7 +86,8 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
+InheritParam:
+- Experimenter
 - Subject_ID
 - Subject_Name
 - Subject_Species
@@ -92,13 +95,14 @@ ExInheritParam:
 - Subject_Age
 - Subject_Size
 - Subject_Weight
-- DataDir
-- Experimenter
-- TimerDriftSpeed
-- ResponseDelay
+- Hemisphere
+- Eye
 - RecordSession
 - RecordSite
+- DataDir
+- TimerDriftSpeed
 - Display_ID
+- NotifyExperimenter
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
@@ -112,6 +116,7 @@ Param:
   ColorSpace: DKL
   Color: X
   ModulateParam: Ori
+  Intercept: 0
   CycleDirection: 1
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
@@ -121,9 +126,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-ResponseDelay: 15
+CondTestShowLevel: FULL
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: SHORT
-SendMail: false

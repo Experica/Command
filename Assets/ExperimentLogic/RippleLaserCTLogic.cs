@@ -36,20 +36,20 @@ namespace Experica
             switch (laser?.Type)
             {
                 case Laser.Omicron:
-                    lasersignalch = Config.SignalCh1;
+                    lasersignalch = Config.SignalCh0;
                     break;
                 case Laser.Cobolt:
-                    lasersignalch = Config.SignalCh2;
+                    lasersignalch = Config.SignalCh1;
                     break;
             }
             laser2 = ex.GetParam("Laser2").Convert<string>().GetLaser(Config);
             switch (laser2?.Type)
             {
                 case Laser.Omicron:
-                    laser2signalch = Config.SignalCh1;
+                    laser2signalch = Config.SignalCh0;
                     break;
                 case Laser.Cobolt:
-                    laser2signalch = Config.SignalCh2;
+                    laser2signalch = Config.SignalCh1;
                     break;
             }
 

@@ -65,23 +65,27 @@ namespace Experica
 
         public string MCCDevice { get; set; } = "1208FS";
         public int MCCDPort { get; set; } = 10;
-        public int ParallelPort1 { get; set; } = 45072;
+        public int ParallelPort0 { get; set; } = 45072;
+        public int ParallelPort1 { get; set; } = 53264;
         public int ParallelPort2 { get; set; } = 53264;
-        public int ParallelPort3 { get; set; } = 53264;
         public int EventSyncCh { get; set; } = 0;
         public int EventMeasureCh { get; set; } = 1;
         public int StartSyncCh { get; set; } = 2;
         public int StopSyncCh { get; set; } = 3;
         public int Bits16Ch { get; set; } = 5;
-        public int SignalCh1 { get; set; } = 0;
-        public int SignalCh2 { get; set; } = 1;
-        public int SignalCh3 { get; set; } = 2;
-        public string SerialPort1 { get; set; } = "COM3";
-        public string SerialPort2 { get; set; } = "COM4";
-        public string SerialPort3 { get; set; } = "COM5";
+        public int SignalCh0 { get; set; } = 0;
+        public int SignalCh1 { get; set; } = 1;
+        public int SignalCh2 { get; set; } = 2;
+        public string SerialPort0 { get; set; } = "COM3";
+        public string SerialPort1 { get; set; } = "COM4";
+        public string SerialPort2 { get; set; } = "COM5";
 
-        public string RecordHost { get; set; } = "LocalHost";
-        public int RecordHostPort { get; set; } = 4142;
+        public string RecordHost0 { get; set; } = "LocalHost";
+        public int RecordHostPort0 { get; set; } = 4142;
+        public string RecordHost1 { get; set; } = "LocalHost";
+        public int RecordHostPort1 { get; set; } = 10000;
+        public string RecordHost2 { get; set; } = "LocalHost";
+        public int RecordHostPort2 { get; set; } = 10000;
 
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();

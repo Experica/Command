@@ -24,11 +24,11 @@ using Experica;
 /// <summary>
 /// Condition Test with SpikeGLX Data Acquisition System
 /// </summary>
-public class SpikeGLXCTLogic : ConditionTestLogic
+public class ImagerCTLogic : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
-        //recorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
+        recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         base.OnStartExperiment();
     }
 
