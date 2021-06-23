@@ -227,8 +227,23 @@ namespace Experica
             return p.Getter(ex);
         }
 
-        public virtual string GetDataPath(string ext = "", string searchext = "yaml")
+        /// <summary>
+        /// Prepare data path if DataPath already been set,
+        /// otherwise get a new unique data path for the experiment
+        /// </summary>
+        /// <param name="ext">Data file extension</param>
+        /// <param name="searchext">File extension with which the files were found that the new data path is unique from</param>
+        /// <returns></returns>
+        public virtual string GetDataPath(string ext = "", string searchext = ".yaml")
         {
+            if (!string.IsNullOrEmpty(ext) && !ext.StartsWith("."))
+            {
+                ext = "." + ext;
+            }
+            if (!string.IsNullOrEmpty(searchext) && !searchext.StartsWith("."))
+            {
+                searchext = "." + searchext;
+            }
             if (string.IsNullOrEmpty(DataPath))
             {
                 var subjectsessionsite = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
@@ -254,8 +269,8 @@ namespace Experica
                 {
                     Directory.CreateDirectory(subjectsessionsitedir);
                 }
-                var fs = Directory.GetFiles(subjectsessionsitedir, $"{filename}*.{ searchext}", SearchOption.TopDirectoryOnly);
-                var filenameincrement = 1;
+                var fs = Directory.GetFiles(subjectsessionsitedir, $"{filename}_*{searchext}", SearchOption.TopDirectoryOnly);
+                var filenameindex = 0;
                 if (fs.Length > 0)
                 {
                     var ns = new List<int>();
@@ -263,22 +278,25 @@ namespace Experica
                     {
                         var s = f.LastIndexOf('_') + 1;
                         var e = f.LastIndexOf('.') - 1;
-                        ns.Add(int.Parse(f.Substring(s, e - s + 1)));
+                        if (int.TryParse(f.Substring(s, e - s + 1), out int n))
+                        {
+                            ns.Add(n);
+                        }
                     }
-                    filenameincrement = ns.Max() + 1;
+                    filenameindex = ns.Max() + 1;
                 }
-                filename = $"{filename}_{filenameincrement}" + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
+                filename = $"{filename}_{filenameindex}" + (string.IsNullOrEmpty(ext) ? "" : ext);
                 DataPath = Path.Combine(subjectsessionsitedir, filename);
             }
             else
             {
-                var ddir = Path.GetDirectoryName(DataPath);
-                if (!Directory.Exists(ddir))
+                var datadir = Path.GetDirectoryName(DataPath);
+                if (!Directory.Exists(datadir))
                 {
-                    Directory.CreateDirectory(ddir);
+                    Directory.CreateDirectory(datadir);
                 }
-                var fname = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : $".{ext}");
-                DataPath = Path.Combine(ddir, fname);
+                var filename = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : ext);
+                DataPath = Path.Combine(datadir, filename);
             }
             return DataPath;
         }

@@ -15,11 +15,11 @@ EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6503067
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -25.1 14.42 -1000
+  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -29,7 +29,7 @@ EnvParam:
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 5
-  Size@Quad@Quad: 64.2 42.84 1
+  Size@Quad@Quad: 5 5 1
   Color@Quad@Quad: 0.6311 0.3833 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5

@@ -70,7 +70,7 @@ CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 0
+PreICI: 500
 CondDur: 0
 SufICI: 500
 PreITI: 0

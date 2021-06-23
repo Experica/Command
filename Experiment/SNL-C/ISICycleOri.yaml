@@ -26,7 +26,7 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 359.866394
+  Ori@GratingQuad@GratingQuad: 359.718781
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 43.79 32.84 1
@@ -70,7 +70,7 @@ CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 0
+PreICI: 500
 CondDur: 0
 SufICI: 500
 PreITI: 0

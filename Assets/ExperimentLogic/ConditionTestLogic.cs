@@ -23,7 +23,7 @@ using UnityEngine;
 using Experica;
 
 /// <summary>
-/// Simple PreICI-Cond-SufICI Logic with Event Sync through GPIO and Display Marker
+/// Simple Condition Test Logic with Event Sync through GPIO and Display Marker
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {

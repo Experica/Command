@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXRecorder.cs is part of the Experica.
+ImagerRecorder.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -157,6 +157,27 @@ namespace Experica
                     {
                         imager.IsRecording = false;
                     }
+                }
+                catch (Exception e) { Debug.LogException(e); }
+            }
+        }
+
+        public string RecordEpoch
+        {
+            get
+            {
+                try
+                {
+                    return imager.RecordEpoch;
+                }
+                catch (Exception e) { Debug.LogException(e); }
+                return null;
+            }
+            set
+            {
+                try
+                {
+                    imager.RecordEpoch = value;
                 }
                 catch (Exception e) { Debug.LogException(e); }
             }

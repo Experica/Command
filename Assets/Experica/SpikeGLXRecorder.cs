@@ -174,5 +174,7 @@ namespace Experica
                 catch (Exception e) { Debug.LogException(e); }
             }
         }
+
+        public string RecordEpoch { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

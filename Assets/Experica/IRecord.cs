@@ -33,6 +33,7 @@ namespace Experica
     public interface IRecord : IDisposable
     {
         string RecordPath { get; set; }
+        string RecordEpoch { get; set; }
         RecordStatus RecordStatus { get; set; }
     }
 

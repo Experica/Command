@@ -4,23 +4,23 @@ Designer: Alex
 Experimenter: Alex
 Log: 
 Subject_ID: Test
-Subject_Name: AF6
+Subject_Name: AF8
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 13
+Subject_Age: 0
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -29,7 +29,7 @@ EnvParam:
   Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 50
-  Size@GratingQuad@GratingQuad: 50 50 1
+  Size@GratingQuad@GratingQuad: 43.79 32.84 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -47,44 +47,47 @@ EnvParam:
   GratingType@GratingQuad@GratingQuad: Square
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.200000003
+  Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori4.yaml
+CondPath: Condition\Ori90DegStep.yaml
 Cond: 
-ExLogicPath: Experica.ConditionTestLogic
-RecordSession: HLV1
-RecordSite: ODL9
+LogicPath: ImagerCTLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: V1
+RecordSite: ODR8
 DataDir: X:\
 DataPath: 
-CondSampling: Ascending
+Input: false
+CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 1
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: false
-PreICI: 4000
+PreICI: 500
 CondDur: 6000
-SufICI: 4000
-PreITI: 0
+SufICI: 500
+PreITI: 4000
 TrialDur: 0
-SufITI: 0
+SufITI: 4000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: COND
-CondTestAtState: PREICI
+CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
+InheritParam:
+- Experimenter
 - Subject_ID
 - Subject_Name
 - Subject_Species
@@ -92,13 +95,14 @@ ExInheritParam:
 - Subject_Age
 - Subject_Size
 - Subject_Weight
-- DataDir
-- Experimenter
-- TimerDriftSpeed
-- ResponseDelay
+- Hemisphere
+- Eye
 - RecordSession
 - RecordSite
+- DataDir
+- TimerDriftSpeed
 - Display_ID
+- NotifyExperimenter
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
@@ -111,7 +115,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-TimerDriftSpeed: 3.0199999999999999E-05
+TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
@@ -119,9 +123,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-ResponseDelay: 15
+CondTestShowLevel: FULL
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: SHORT
-SendMail: false

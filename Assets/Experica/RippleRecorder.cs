@@ -190,5 +190,7 @@ namespace Experica
                 throw new NotImplementedException();
             }
         }
+
+        public string RecordEpoch { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

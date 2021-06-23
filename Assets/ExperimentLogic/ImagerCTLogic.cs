@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXCTLogic.cs is part of the Experica.
+ImagerCTLogic.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -22,7 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using Experica;
 
 /// <summary>
-/// Condition Test with SpikeGLX Data Acquisition System
+/// Episodic Condition Test(PreITI-{PreICI-Cond-SufICI}-SufITI) with Imager Data Acquisition System
 /// </summary>
 public class ImagerCTLogic : ConditionTestLogic
 {
@@ -38,44 +38,87 @@ public class ImagerCTLogic : ConditionTestLogic
         base.OnExperimentStopped();
     }
 
-    protected override void StartExperimentTimeSync()
+    protected void StartEpochRecord()
     {
         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
         {
             if (recorder != null)
             {
                 recorder.RecordPath = ex.GetDataPath();
-                /* 
-                SpikeGLX recorder set path through network and remote server receive
-                message and change file path, all of which need time to complete.
-                Start recording before file path change completion may not save to correct file path.
-                */
-                timer.TimeoutMillisecond(Config.NotifyLatency);
-
+                recorder.RecordEpoch = condtestmanager.CondTestIndex.ToString();
                 recorder.RecordStatus = RecordStatus.Recording;
-                /* 
-                SpikeGLX recorder set record status through network and remote server receive
-                message and change record state, all of which need time to complete.
-                Begin experiment before record started may lose information.
-                */
-                timer.TimeoutMillisecond(Config.NotifyLatency);
             }
         }
-        base.StartExperimentTimeSync();
     }
 
-    protected override void StopExperimentTimeSync()
+    protected void StopEpochRecord()
     {
         if (recorder != null)
         {
             recorder.RecordStatus = RecordStatus.Stopped;
-            /* 
-            SpikeGLX recorder set record status through network and remote server receive
-            message and change record state, all of which need time to complete.
-            Here wait recording ended before further processing.
-            */
-            timer.TimeoutMillisecond(Config.NotifyLatency);
         }
-        base.StopExperimentTimeSync();
+    }
+
+    protected override void Logic()
+    {
+        switch (TrialState)
+        {
+            case TRIALSTATE.NONE:
+                if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
+                SyncFrame();
+                break;
+            case TRIALSTATE.PREITI:
+                if (PreITIHold >= ex.PreITI)
+                {
+                    EnterTrialState(TRIALSTATE.TRIAL);
+                    SyncEvent(TRIALSTATE.TRIAL.ToString());
+                    SyncFrame();
+                }
+                break;
+            case TRIALSTATE.TRIAL:
+                switch (CondState)
+                {
+                    case CONDSTATE.NONE:
+                        EnterCondState(CONDSTATE.PREICI);
+                        StartEpochRecord();
+                        SyncFrame();
+                        break;
+                    case CONDSTATE.PREICI:
+                        if (PreICIHold >= ex.PreICI)
+                        {
+                            EnterCondState(CONDSTATE.COND);
+                            SyncEvent(CONDSTATE.COND.ToString());
+                            SetEnvActiveParam("Visible", true);
+                            SyncFrame();
+                        }
+                        break;
+                    case CONDSTATE.COND:
+                        if (CondHold >= ex.CondDur)
+                        {
+                            EnterCondState(CONDSTATE.SUFICI);
+                            SyncEvent(CONDSTATE.SUFICI.ToString());
+                            SetEnvActiveParam("Visible", false);
+                            SyncFrame();
+                        }
+                        break;
+                    case CONDSTATE.SUFICI:
+                        if (SufICIHold >= ex.SufICI)
+                        {
+                            StopEpochRecord();
+                            EnterCondState(CONDSTATE.NONE);
+                            EnterTrialState(TRIALSTATE.SUFITI);
+                            SyncEvent(TRIALSTATE.SUFITI.ToString());
+                            SyncFrame();
+                        }
+                        break;
+                }
+                break;
+            case TRIALSTATE.SUFITI:
+                if (SufITIHold >= ex.SufITI)
+                {
+                    EnterTrialState(TRIALSTATE.NONE);
+                }
+                break;
+        }
     }
 }
