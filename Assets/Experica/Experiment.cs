@@ -233,8 +233,16 @@ namespace Experica
         /// </summary>
         /// <param name="ext">Data file extension</param>
         /// <param name="searchext">File extension with which the files were found that the new data path is unique from</param>
+
+        /// <summary>
+        /// Prepare data path if DataPath already been set,
+        /// otherwise get a new unique data path for the experiment
+        /// </summary>
+        /// <param name="ext">Data file extension</param>
+        /// <param name="searchext">File extension with which the files were found that the new data path is unique from</param>
+        /// <param name="createdatadir">Whether add a same name dir in datapath</param>
         /// <returns></returns>
-        public virtual string GetDataPath(string ext = "", string searchext = ".yaml")
+        public virtual string GetDataPath(string ext = "", string searchext = ".yaml", bool createdatadir = false)
         {
             if (!string.IsNullOrEmpty(ext) && !ext.StartsWith("."))
             {
@@ -247,7 +255,8 @@ namespace Experica
             if (string.IsNullOrEmpty(DataPath))
             {
                 var subjectsessionsite = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
-                var filename = string.Join("_", new[] { subjectsessionsite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                var dataname = string.Join("_", new[] { subjectsessionsite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                // Prepare Data Root Dir
                 if (string.IsNullOrEmpty(DataDir))
                 {
                     DataDir = Directory.GetCurrentDirectory();
@@ -269,7 +278,7 @@ namespace Experica
                 {
                     Directory.CreateDirectory(subjectsessionsitedir);
                 }
-                var fs = Directory.GetFiles(subjectsessionsitedir, $"{filename}_*{searchext}", SearchOption.TopDirectoryOnly);
+                var fs = Directory.GetFiles(subjectsessionsitedir, $"{dataname}_*{searchext}", SearchOption.TopDirectoryOnly);
                 var filenameindex = 0;
                 if (fs.Length > 0)
                 {
@@ -285,8 +294,21 @@ namespace Experica
                     }
                     filenameindex = ns.Max() + 1;
                 }
-                filename = $"{filename}_{filenameindex}" + (string.IsNullOrEmpty(ext) ? "" : ext);
-                DataPath = Path.Combine(subjectsessionsitedir, filename);
+                if (createdatadir)
+                {
+                    dataname = $"{dataname}_{filenameindex}";
+                    var subjectsessionsitedatadir = Path.Combine(subjectsessionsitedir, dataname);
+                    if (!Directory.Exists(subjectsessionsitedatadir))
+                    {
+                        Directory.CreateDirectory(subjectsessionsitedatadir);
+                    }
+                    DataPath = Path.Combine(subjectsessionsitedatadir, dataname + (string.IsNullOrEmpty(ext) ? "" : ext));
+                }
+                else
+                {
+                    dataname = $"{dataname}_{filenameindex}" + (string.IsNullOrEmpty(ext) ? "" : ext);
+                    DataPath = Path.Combine(subjectsessionsitedir, dataname);
+                }
             }
             else
             {
@@ -295,8 +317,8 @@ namespace Experica
                 {
                     Directory.CreateDirectory(datadir);
                 }
-                var filename = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : ext);
-                DataPath = Path.Combine(datadir, filename);
+                var dataname = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : ext);
+                DataPath = Path.Combine(datadir, dataname);
             }
             return DataPath;
         }

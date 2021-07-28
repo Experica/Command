@@ -85,8 +85,7 @@ public class SpikeGLXCycle : SpikeGLXCTLogic
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    EnterCondState(CONDSTATE.COND);
-                    SyncEvent(CONDSTATE.COND.ToString());
+                    EnterCondState(CONDSTATE.COND,true);
                     SetEnvActiveParam("Visible", true);
                     SyncFrame();
                 }
@@ -100,8 +99,7 @@ public class SpikeGLXCycle : SpikeGLXCTLogic
                 var phase = div - nc;
                 if (nc >= ex.CondRepeat)
                 {
-                    EnterCondState(CONDSTATE.SUFICI);
-                    SyncEvent(CONDSTATE.SUFICI.ToString());
+                    EnterCondState(CONDSTATE.SUFICI,true);
                     SetEnvActiveParam("Visible", false);
                 }
                 else

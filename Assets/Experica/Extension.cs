@@ -53,7 +53,8 @@ namespace Experica
         CONDSTATE,
         TRIALSTATE,
         BLOCKSTATE,
-        TASKSTATE
+        TASKSTATE,
+        CYCLE
     }
 
     public enum DataFormat

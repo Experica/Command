@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using System;
 using Experica;
 
 /// <summary>
@@ -59,11 +60,43 @@ public class ConditionTestLogic : ExperimentLogic
         gpio?.Dispose();
     }
 
+    protected EnterCode EnterCondState(CONDSTATE value, bool syncenter = false)
+    {
+        var c = base.EnterCondState(value);
+        if (syncenter && c == EnterCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
+    protected EnterCode EnterTrialState(TRIALSTATE value, bool syncenter = false)
+    {
+        var c = base.EnterTrialState(value);
+        if (syncenter && c == EnterCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
+    protected EnterCode EnterBlockState(BLOCKSTATE value, bool syncenter = false)
+    {
+        var c = base.EnterBlockState(value);
+        if (syncenter && c == EnterCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
     /// <summary>
-    /// Sync and Register Event with External Device through EventSyncProtocol
+    /// Sync and Register Event Name and Value with External Device through EventSyncProtocol
     /// </summary>
     /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state without event register</param>
-    protected virtual void SyncEvent(string e = null)
+    /// <param name="et">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
+    /// <param name="ev">Event Value, Non-Null value will register in new `CONDTESTPARAM`, if event is a valid `CONDTESTPARAM`</param>
+    protected virtual void SyncEvent(string e = null, double et = double.NaN, object ev = null)
     {
         var esp = ex.EventSyncProtocol;
         if (esp.SyncMethods == null || esp.SyncMethods.Count == 0)
@@ -93,7 +126,22 @@ public class ConditionTestLogic : ExperimentLogic
         }
         if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
         {
+            if (!double.IsNaN(et))
+            {
+                condtestmanager.AddInList(CONDTESTPARAM.Event, e, et);
+            }
             condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
+            if (ev != null)
+            {
+                if (Enum.TryParse(e, out CONDTESTPARAM cte))
+                {
+                    condtestmanager.AddInList(cte, ev);
+                }
+                else
+                {
+                    Debug.Log($"Skip Adding Event Value, {e} is not a valid CONDTESTPARAM.");
+                }
+            }
         }
     }
 
@@ -108,8 +156,7 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    EnterCondState(CONDSTATE.COND);
-                    SyncEvent(CONDSTATE.COND.ToString());
+                    EnterCondState(CONDSTATE.COND, true);
                     SetEnvActiveParam("Visible", true);
                     SyncFrame();
                 }
@@ -125,13 +172,11 @@ public class ConditionTestLogic : ExperimentLogic
                     {
                         // new condtest starts at PreICI
                         if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
-                        EnterCondState(CONDSTATE.COND);
-                        SyncEvent(CONDSTATE.COND.ToString());
+                        EnterCondState(CONDSTATE.COND, true);
                     }
                     else
                     {
-                        EnterCondState(CONDSTATE.SUFICI);
-                        SyncEvent(CONDSTATE.SUFICI.ToString());
+                        EnterCondState(CONDSTATE.SUFICI, true);
                         SetEnvActiveParam("Visible", false);
                     }
                     SyncFrame();

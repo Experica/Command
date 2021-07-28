@@ -40,7 +40,7 @@ EnvParam:
   TemporalFreq@GratingQuad@GratingQuad: 0
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.25
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 1 0.3537 0.5056 1
+  MinColor@GratingQuad@GratingQuad: 1 0.3538 0.505 1
   MaxColor@GratingQuad@GratingQuad: 0.6311 0.3833 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -70,7 +70,7 @@ CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 500
+PreICI: 1000
 CondDur: 0
 SufICI: 500
 PreITI: 0
@@ -118,6 +118,7 @@ Param:
   ModulateParam: DKLIsoLum
   Intercept: 0
   CycleDirection: 1
+  CycleSyncFreq: 1
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:

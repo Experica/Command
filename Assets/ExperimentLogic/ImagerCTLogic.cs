@@ -44,7 +44,7 @@ public class ImagerCTLogic : ConditionTestLogic
         {
             if (recorder != null)
             {
-                recorder.RecordPath = ex.GetDataPath();
+                recorder.RecordPath = ex.GetDataPath(createdatadir: true);
                 recorder.RecordEpoch = condtestmanager.CondTestIndex.ToString();
                 recorder.RecordStatus = RecordStatus.Recording;
             }
@@ -70,8 +70,7 @@ public class ImagerCTLogic : ConditionTestLogic
             case TRIALSTATE.PREITI:
                 if (PreITIHold >= ex.PreITI)
                 {
-                    EnterTrialState(TRIALSTATE.TRIAL);
-                    SyncEvent(TRIALSTATE.TRIAL.ToString());
+                    EnterTrialState(TRIALSTATE.TRIAL, true);
                     SyncFrame();
                 }
                 break;
@@ -86,8 +85,7 @@ public class ImagerCTLogic : ConditionTestLogic
                     case CONDSTATE.PREICI:
                         if (PreICIHold >= ex.PreICI)
                         {
-                            EnterCondState(CONDSTATE.COND);
-                            SyncEvent(CONDSTATE.COND.ToString());
+                            EnterCondState(CONDSTATE.COND, true);
                             SetEnvActiveParam("Visible", true);
                             SyncFrame();
                         }
@@ -95,8 +93,7 @@ public class ImagerCTLogic : ConditionTestLogic
                     case CONDSTATE.COND:
                         if (CondHold >= ex.CondDur)
                         {
-                            EnterCondState(CONDSTATE.SUFICI);
-                            SyncEvent(CONDSTATE.SUFICI.ToString());
+                            EnterCondState(CONDSTATE.SUFICI, true);
                             SetEnvActiveParam("Visible", false);
                             SyncFrame();
                         }
@@ -106,8 +103,7 @@ public class ImagerCTLogic : ConditionTestLogic
                         {
                             StopEpochRecord();
                             EnterCondState(CONDSTATE.NONE);
-                            EnterTrialState(TRIALSTATE.SUFITI);
-                            SyncEvent(TRIALSTATE.SUFITI.ToString());
+                            EnterTrialState(TRIALSTATE.SUFITI, true);
                             SyncFrame();
                         }
                         break;

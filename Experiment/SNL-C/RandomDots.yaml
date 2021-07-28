@@ -34,7 +34,7 @@ EnvParam:
   NDots@Dots@Dots: 30
   DotColor@Dots@Dots: 1 0 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0.200000003
+  Coherence@Dots@Dots: 0.5
   Visible@Dots@Dots: true
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0

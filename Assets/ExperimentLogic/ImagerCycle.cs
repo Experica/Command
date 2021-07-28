@@ -29,8 +29,10 @@ using ColorSpace = Experica.ColorSpace;
 /// </summary>
 public class ImagerCycle : ConditionTestLogic
 {
+    protected int nsc;
     protected override void OnStartExperiment()
     {
+        nsc = 0;
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         base.OnStartExperiment();
     }
@@ -47,7 +49,7 @@ public class ImagerCycle : ConditionTestLogic
         {
             if (recorder != null)
             {
-                recorder.RecordPath = ex.GetDataPath();
+                recorder.RecordPath = ex.GetDataPath(createdatadir: true);
                 recorder.RecordStatus = RecordStatus.Recording;
             }
         }
@@ -119,8 +121,7 @@ public class ImagerCycle : ConditionTestLogic
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
-                    EnterCondState(CONDSTATE.COND);
-                    SyncEvent(CONDSTATE.COND.ToString());
+                    EnterCondState(CONDSTATE.COND, true);
                     SetEnvActiveParam("Visible", true);
                     SyncFrame();
                 }
@@ -129,17 +130,24 @@ public class ImagerCycle : ConditionTestLogic
                 var param = GetExParam<string>("ModulateParam");
                 var freq = GetEnvActiveParam<float>("ModulateTemporalFreq");
                 var cycledir = GetExParam<float>("CycleDirection");
-                var div = (float)CondHold / 1000f * freq;
-                var nc = Mathf.Floor(div);
-                var phase = div - nc;
-                if (nc >= ex.CondRepeat)
+                var cyclesyncfreq = GetExParam<float>("CycleSyncFreq");
+                var cycle = (float)CondHold / 1000f * freq;
+                var synccycle = (float)CondHold / 1000f * cyclesyncfreq;
+                var c = Mathf.Floor(cycle);
+                var phase = cycle - c;
+                if (c >= ex.CondRepeat)
                 {
-                    EnterCondState(CONDSTATE.SUFICI);
-                    SyncEvent(CONDSTATE.SUFICI.ToString());
+                    EnterCondState(CONDSTATE.SUFICI, true);
                     SetEnvActiveParam("Visible", false);
                 }
                 else
                 {
+                    var sc = Mathf.FloorToInt(synccycle);
+                    if (sc > nsc)
+                    {
+                        nsc = sc;
+                        SyncEvent(CONDTESTPARAM.CYCLE.ToString(), timer.ElapsedMillisecond, cycle * cycledir);
+                    }
                     switch (param)
                     {
                         case "ModulateTime":

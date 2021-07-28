@@ -1,0 +1,13 @@
+ID: ColorISI
+Name: ColorISI
+Designer: Alex
+Experimenter: 
+Log: 
+LogicPath: ColorISI
+ReadyWait: 5000
+StopWait: 5000
+Param: {}
+NotifyExperimenter: true
+IsFullScreen: true
+IsFullViewport: true
+IsGuideOn: false

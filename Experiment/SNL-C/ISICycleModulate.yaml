@@ -50,7 +50,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 3.99745655
+  ModulateTimeSecond@GratingQuad@GratingQuad: 3.99833155
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -70,7 +70,7 @@ CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 500
+PreICI: 1000
 CondDur: 0
 SufICI: 500
 PreITI: 0
@@ -118,6 +118,7 @@ Param:
   ModulateParam: ModulateTime
   Intercept: 0
   CycleDirection: 1
+  CycleSyncFreq: 1
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
