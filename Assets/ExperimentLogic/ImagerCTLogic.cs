@@ -38,14 +38,14 @@ public class ImagerCTLogic : ConditionTestLogic
         base.OnExperimentStopped();
     }
 
-    protected void StartEpochRecord()
+    protected void StartEpochRecord(int epoch = 0)
     {
         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
         {
             if (recorder != null)
             {
                 recorder.RecordPath = ex.GetDataPath(createdatadir: true);
-                recorder.RecordEpoch = condtestmanager.CondTestIndex.ToString();
+                recorder.RecordEpoch = epoch.ToString();
                 recorder.RecordStatus = RecordStatus.Recording;
             }
         }
@@ -78,8 +78,8 @@ public class ImagerCTLogic : ConditionTestLogic
                 switch (CondState)
                 {
                     case CONDSTATE.NONE:
+                        StartEpochRecord(condtestmanager.CondTestIndex);
                         EnterCondState(CONDSTATE.PREICI);
-                        StartEpochRecord();
                         SyncFrame();
                         break;
                     case CONDSTATE.PREICI:
