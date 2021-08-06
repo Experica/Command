@@ -30,11 +30,20 @@ namespace Experica
         Paused
     }
 
+    public enum AcqusitionStatus
+    {
+        Stopped,
+        Acqusiting,
+        Paused
+    }
+
     public interface IRecord : IDisposable
     {
+        string DataFormat { get; set; }
         string RecordPath { get; set; }
         string RecordEpoch { get; set; }
         RecordStatus RecordStatus { get; set; }
+        AcqusitionStatus AcqusitionStatus { get; set; }
     }
 
     public interface IRecorder : IRecord, ISignal

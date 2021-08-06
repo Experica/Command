@@ -34,6 +34,10 @@ public class ImagerCycle : ConditionTestLogic
     {
         nsc = 0;
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
+        if (recorder != null)
+        {
+            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
+        }
         base.OnStartExperiment();
     }
 
@@ -50,6 +54,7 @@ public class ImagerCycle : ConditionTestLogic
             if (recorder != null)
             {
                 recorder.RecordPath = ex.GetDataPath(createdatadir: true);
+                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
                 recorder.RecordStatus = RecordStatus.Recording;
             }
         }
@@ -60,6 +65,7 @@ public class ImagerCycle : ConditionTestLogic
     {
         if (recorder != null)
         {
+            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
             recorder.RecordStatus = RecordStatus.Stopped;
         }
         base.StopExperimentTimeSync();

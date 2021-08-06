@@ -83,6 +83,8 @@ namespace Experica
         public float TemporalFreq = 1f;
         [SyncVar(hook = "onmodulatetemporalfreq")]
         public float ModulateTemporalFreq = 0.2f;
+        [SyncVar(hook ="onmodulatetemporalphase")]
+        public float ModulateTemporalPhase = 0f;
         /// <summary>
         /// Spatial Phase in [0, 1] scale
         /// </summary>
@@ -283,6 +285,12 @@ namespace Experica
         {
             renderer.material.SetFloat("_mtf", mtf);
             ModulateTemporalFreq = mtf;
+        }
+
+        void onmodulatetemporalphase(float mphase)
+        {
+            renderer.material.SetFloat("_mphase", mphase);
+            ModulateTemporalPhase = mphase;
         }
 
         void onspatialphase(float p)

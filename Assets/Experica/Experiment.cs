@@ -278,7 +278,7 @@ namespace Experica
                 {
                     Directory.CreateDirectory(subjectsessionsitedir);
                 }
-                var fs = Directory.GetFiles(subjectsessionsitedir, $"{dataname}_*{searchext}", SearchOption.TopDirectoryOnly);
+                var fs = Directory.GetFiles(subjectsessionsitedir, $"{dataname}_*{searchext}", SearchOption.AllDirectories);
                 var filenameindex = 0;
                 if (fs.Length > 0)
                 {

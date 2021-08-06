@@ -60,9 +60,9 @@ SignalCh2: 2
 SerialPort0: COM3
 SerialPort1: COM4
 SerialPort2: COM5
-RecordHost0: 10.1.51.17
+RecordHost0: 10.1.51.93
 RecordHostPort0: 4142
-RecordHost1: LocalHost
+RecordHost1: 10.1.51.93
 RecordHostPort1: 10000
 RecordHost2: LocalHost
 RecordHostPort2: 10000

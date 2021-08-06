@@ -29,6 +29,10 @@ public class ImagerCTLogic : ConditionTestLogic
     protected override void OnStartExperiment()
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
+        if (recorder != null)
+        {
+            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
+        }
         base.OnStartExperiment();
     }
 
@@ -46,6 +50,7 @@ public class ImagerCTLogic : ConditionTestLogic
             {
                 recorder.RecordPath = ex.GetDataPath(createdatadir: true);
                 recorder.RecordEpoch = condtestmanager.CondTestIndex.ToString();
+                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
                 recorder.RecordStatus = RecordStatus.Recording;
             }
         }
@@ -55,6 +60,7 @@ public class ImagerCTLogic : ConditionTestLogic
     {
         if (recorder != null)
         {
+            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
             recorder.RecordStatus = RecordStatus.Stopped;
         }
     }

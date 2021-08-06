@@ -127,6 +127,41 @@ namespace Experica
             }
         }
 
+        public AcqusitionStatus AcqusitionStatus
+        {
+            get
+            {
+                try
+                {
+                    if (imager.IsAcqusiting)
+                    {
+                        return AcqusitionStatus.Acqusiting;
+                    }
+                    else
+                    {
+                        return AcqusitionStatus.Stopped;
+                    }
+                }
+                catch (Exception e) { Debug.LogException(e); }
+                return AcqusitionStatus.Stopped;
+            }
+            set
+            {
+                try
+                {
+                    if (value == AcqusitionStatus.Acqusiting)
+                    {
+                        imager.IsAcqusiting = true;
+                    }
+                    else if (value == AcqusitionStatus.Stopped)
+                    {
+                        imager.IsAcqusiting = false;
+                    }
+                }
+                catch (Exception e) { Debug.LogException(e); }
+            }
+        }
+
         public RecordStatus RecordStatus
         {
             get
@@ -178,6 +213,27 @@ namespace Experica
                 try
                 {
                     imager.RecordEpoch = value;
+                }
+                catch (Exception e) { Debug.LogException(e); }
+            }
+        }
+
+        public string DataFormat
+        {
+            get
+            {
+                try
+                {
+                    return imager.DataFormat;
+                }
+                catch (Exception e) { Debug.LogException(e); }
+                return null;
+            }
+            set
+            {
+                try
+                {
+                    imager.DataFormat = value;
                 }
                 catch (Exception e) { Debug.LogException(e); }
             }
