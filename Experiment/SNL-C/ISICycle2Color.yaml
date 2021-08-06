@@ -1,5 +1,5 @@
-ID: ISICycleModulate
-Name: ISICycleModulate
+ID: ISICycle2Color
+Name: ISICycle2Color
 Designer: Alex
 Experimenter: Alex
 Log: 
@@ -36,24 +36,23 @@ EnvParam:
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0
-  TemporalFreq@GratingQuad@GratingQuad: 0
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
-  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
-  SpatialPhase@GratingQuad@GratingQuad: 0.25
-  MinColor@GratingQuad@GratingQuad: 0 0.6463 0.4944 1
-  MaxColor@GratingQuad@GratingQuad: 1 0.3537 0.5056 1
-  PauseTime@GratingQuad@GratingQuad: true
+  SpatialFreq@GratingQuad@GratingQuad: 0.200000003
+  TemporalFreq@GratingQuad@GratingQuad: 1
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
+  SpatialPhase@GratingQuad@GratingQuad: 0
+  MinColor@GratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ModulateType@GratingQuad@GratingQuad: Sinusoidal
+  GratingType@GratingQuad@GratingQuad: Square
+  ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.9943848
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 0.01696 -8.841 0
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0
+  Visible@GratingQuad@GratingQuad: true
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 

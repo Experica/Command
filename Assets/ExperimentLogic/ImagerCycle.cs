@@ -27,48 +27,13 @@ using ColorSpace = Experica.ColorSpace;
 /// <summary>
 /// Periodic modulation of parameters with Imager Data Acquisition System, and Predefined Colors
 /// </summary>
-public class ImagerCycle : ConditionTestLogic
+public class ImagerCycle : ImagerCTLogic
 {
     protected int nsc;
     protected override void OnStartExperiment()
     {
         nsc = 0;
-        recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
-        if (recorder != null)
-        {
-            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
-        }
         base.OnStartExperiment();
-    }
-
-    protected override void OnExperimentStopped()
-    {
-        recorder = null;
-        base.OnExperimentStopped();
-    }
-
-    protected override void StartExperimentTimeSync()
-    {
-        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
-        {
-            if (recorder != null)
-            {
-                recorder.RecordPath = ex.GetDataPath(createdatadir: true);
-                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
-                recorder.RecordStatus = RecordStatus.Recording;
-            }
-        }
-        base.StartExperimentTimeSync();
-    }
-
-    protected override void StopExperimentTimeSync()
-    {
-        if (recorder != null)
-        {
-            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
-            recorder.RecordStatus = RecordStatus.Stopped;
-        }
-        base.StopExperimentTimeSync();
     }
 
     protected override void GenerateFinalCondition()
@@ -121,6 +86,7 @@ public class ImagerCycle : ConditionTestLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
+                StartEpochRecord();
                 EnterCondState(CONDSTATE.PREICI);
                 SyncFrame();
                 break;
@@ -178,6 +144,7 @@ public class ImagerCycle : ConditionTestLogic
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
+                    StopEpochRecord();
                     StartStopExperiment(false);
                     return;
                 }
