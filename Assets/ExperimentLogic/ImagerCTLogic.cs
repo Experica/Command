@@ -19,25 +19,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
+using System.Collections.Generic;
 using Experica;
+using ColorSpace = Experica.ColorSpace;
 
 /// <summary>
-/// Episodic Condition Test(PreITI-{PreICI-Cond-SufICI}-SufITI) with Imager Data Acquisition System
+/// Episodic Condition Test(PreITI-{PreICI-Cond-SufICI}-SufITI) with Imager Data Acquisition System, and Predefined Colors
 /// </summary>
 public class ImagerCTLogic : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
-        if (recorder != null)
-        {
-            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
-        }
+        StopEpochRecord();
         base.OnStartExperiment();
     }
 
     protected override void OnExperimentStopped()
     {
+        StopEpochRecord();
         recorder = null;
         base.OnExperimentStopped();
     }
@@ -50,8 +51,8 @@ public class ImagerCTLogic : ConditionTestLogic
             {
                 recorder.RecordPath = ex.GetDataPath(createdatadir: true);
                 recorder.RecordEpoch = epoch.ToString();
-                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
                 recorder.RecordStatus = RecordStatus.Recording;
+                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
             }
         }
     }
@@ -63,6 +64,53 @@ public class ImagerCTLogic : ConditionTestLogic
             recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
             recorder.RecordStatus = RecordStatus.Stopped;
         }
+    }
+
+    protected override void GenerateFinalCondition()
+    {
+        var colorspace = GetExParam<ColorSpace>("ColorSpace");
+        var colorvar = GetExParam<string>("Color");
+        var colorname = colorspace + "_" + colorvar;
+
+        // get color
+        List<Color> color = null;
+        List<Color> wp = null;
+        List<float> angle = null;
+        var data = ex.Display_ID.GetColorData();
+        if (data != null)
+        {
+            if (data.ContainsKey(colorname))
+            {
+                color = data[colorname].Convert<List<Color>>();
+
+                var wpname = colorname + "_WP";
+                if (data.ContainsKey(wpname))
+                {
+                    wp = data[wpname].Convert<List<Color>>();
+                }
+                var anglename = colorname + "_Angle";
+                if (data.ContainsKey(anglename))
+                {
+                    angle = data[anglename].Convert<List<float>>();
+                }
+            }
+            else
+            {
+                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
+            }
+        }
+
+        if (color != null)
+        {
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
+            if (wp != null)
+            {
+                SetEnvActiveParam("BGColor", wp[0]);
+            }
+        }
+
+        base.GenerateFinalCondition();
     }
 
     protected override void Logic()

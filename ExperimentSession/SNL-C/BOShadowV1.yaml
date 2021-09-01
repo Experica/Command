@@ -4,8 +4,8 @@ Designer: Tom
 Experimenter: 
 Log: 
 LogicPath: BOShadowV1
-ReadyWait: 5000
-StopWait: 5000
+ReadyWait: 10000
+StopWait: 10000
 Param: {}
 NotifyExperimenter: true
 IsFullScreen: true

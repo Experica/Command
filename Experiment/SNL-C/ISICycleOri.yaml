@@ -1,10 +1,10 @@
 ID: ISICycleOri
 Name: ISICycleOri
 Designer: Alex
-Experimenter: Alex
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AF8
+Subject_ID: AG1
+Subject_Name: AG1
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,35 +13,35 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -26.7 14.14 -1000
+  MarkerSize@Marker@Marker: 3.5
+  MarkerPosition@Marker@Marker: -27.36 14.63 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 359.944031
+  Ori@GratingQuad@GratingQuad: 359.894257
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 57.4 32.29 1
+  Size@GratingQuad@GratingQuad: 58.23 32.75 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1
-  TemporalFreq@GratingQuad@GratingQuad: 5
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.0199999996
+  SpatialFreq@GratingQuad@GratingQuad: 1.5
+  TemporalFreq@GratingQuad@GratingQuad: 6
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 2.776E-16 3.886E-16 1
+  MinColor@GratingQuad@GratingQuad: 0 8.882E-16 5.551E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -59,9 +59,9 @@ CondPath: ''
 Cond: 
 LogicPath: ImagerCycle
 Hemisphere: Left
-Eye: Right
-RecordSession: V1
-RecordSite: ODR8
+Eye: Left
+RecordSession: V1V2
+RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
@@ -71,7 +71,7 @@ CondRepeat: 10
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 1000
+PreICI: 2000
 CondDur: 0
 SufICI: 1000
 PreITI: 0

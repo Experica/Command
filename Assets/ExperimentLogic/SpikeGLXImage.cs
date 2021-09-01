@@ -60,7 +60,7 @@ public class SpikeGLXImage : SpikeGLXCTLogic
             }
             else
             {
-                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
+                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
             }
         }
 

@@ -1,11 +1,11 @@
-ID: ColorEphys
-Name: ColorEphys
+ID: ColorEPhys
+Name: ColorEPhys
 Designer: Alex
 Experimenter: 
 Log: 
-LogicPath: ColorEphys
-ReadyWait: 5000
-StopWait: 5000
+LogicPath: ColorEPhys
+ReadyWait: 10000
+StopWait: 10000
 Param: {}
 NotifyExperimenter: true
 IsFullScreen: true

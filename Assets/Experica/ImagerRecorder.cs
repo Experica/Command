@@ -21,7 +21,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using UnityEngine;
-using MathWorks.MATLAB.NET.Arrays;
 using System.Threading;
 using System;
 
@@ -133,7 +132,7 @@ namespace Experica
             {
                 try
                 {
-                    if (imager.IsAcqusiting)
+                    if (imager.IsAcquisiting)
                     {
                         return AcqusitionStatus.Acqusiting;
                     }
@@ -151,11 +150,11 @@ namespace Experica
                 {
                     if (value == AcqusitionStatus.Acqusiting)
                     {
-                        imager.IsAcqusiting = true;
+                        imager.IsAcquisiting = true;
                     }
                     else if (value == AcqusitionStatus.Stopped)
                     {
-                        imager.IsAcqusiting = false;
+                        imager.IsAcquisiting = false;
                     }
                 }
                 catch (Exception e) { Debug.LogException(e); }

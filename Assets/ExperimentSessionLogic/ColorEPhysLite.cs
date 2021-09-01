@@ -1,5 +1,5 @@
 /*
-ColorISI.cs is part of the Experica.
+ColorEPhysLite.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,12 +19,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
 using Experica;
 using Experica.Command;
 
-public class ColorISI : ExperimentSessionLogic
+public class ColorEPhysLite : ExperimentSessionLogic
 {
-    Eye eye = Eye.Both;
+    float diameter = 3;
+    Vector3 position = Vector3.zero;
+    Eye eye = Eye.Right;
 
     protected override void Logic()
     {
@@ -41,11 +44,13 @@ public class ColorISI : ExperimentSessionLogic
                     exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
                     eye = EL.GetExParam<Eye>("Eye");
+                    diameter = EL.GetEnvActiveParam<float>("Diameter");
+                    position = EL.GetEnvActiveParam<Vector3>("Position");
 
-                    ExperimentID = "ISICycleOri";
+                    ExperimentID = "Flash2Color";
                 }
                 break;
-            case "ISICycleOri":
+            case "Flash2Color":
                 switch (ExperimentStatus)
                 {
                     case EXPERIMENTSTATUS.NONE:
@@ -54,42 +59,17 @@ public class ColorISI : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    exmanager.uicontroller.FullViewportSize();
                                     EL.SetExParam("Eye", eye);
+                                    EL.SetExParam("CondRepeat", 100);
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.FullViewportSize();
                                     break;
-                            }
-                            StartExperiment();
-                        }
-                        break;
-                    case EXPERIMENTSTATUS.STOPPED:
-                        if (SinceExStop > exsession.StopWait)
-                        {
-                            if (ExRepeat < 1)
-                            {
-                                ExperimentStatus = EXPERIMENTSTATUS.NONE;
-                            }
-                            else
-                            {
-                                ExperimentID = "ISIEpochOri8";
-                            }
-                        }
-                        break;
-                }
-                break;
-            case "ISIEpochOri8":
-                switch (ExperimentStatus)
-                {
-                    case EXPERIMENTSTATUS.NONE:
-                        if (SinceExReady > exsession.ReadyWait)
-                        {
-                            switch (ExRepeat)
-                            {
-                                case 0:
-                                    EL.SetExParam("ColorSpace", "DKL");
-                                    EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.FullViewportSize();
+                                case 1:
+                                    EL.SetExParam("Color", "Y");
+                                    break;
+                                case 2:
+                                    EL.SetExParam("Color", "Z");
                                     break;
 
                             }
@@ -99,19 +79,19 @@ public class ColorISI : ExperimentSessionLogic
                     case EXPERIMENTSTATUS.STOPPED:
                         if (SinceExStop > exsession.StopWait)
                         {
-                            if (ExRepeat < 1)
+                            if (ExRepeat < 3)
                             {
                                 ExperimentStatus = EXPERIMENTSTATUS.NONE;
                             }
                             else
                             {
-                                ExperimentID = "ISICycle2Color";
+                                ExperimentID = "Color";
                             }
                         }
                         break;
                 }
                 break;
-            case "ISICycle2Color":
+            case "Color":
                 switch (ExperimentStatus)
                 {
                     case EXPERIMENTSTATUS.NONE:
@@ -120,26 +100,105 @@ public class ColorISI : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 8);
+                                    EL.SetExParam("ColorSpace", "HSL");
+                                    EL.SetExParam("Color", "HueYm");
+                                    break;
+                                case 1:
+                                    EL.SetExParam("ColorSpace", "DKL");
+                                    EL.SetExParam("Color", "HueL0");
+                                    break;
+                            }
+                            StartExperiment();
+                        }
+                        break;
+                    case EXPERIMENTSTATUS.STOPPED:
+                        if (SinceExStop > exsession.StopWait)
+                        {
+                            if (ExRepeat < 2)
+                            {
+                                ExperimentStatus = EXPERIMENTSTATUS.NONE;
+                            }
+                            else
+                            {
+                                ExperimentID = "HartleySubspace";
+                            }
+                        }
+                        break;
+                }
+                break;
+            case "HartleySubspace":
+                switch (ExperimentStatus)
+                {
+                    case EXPERIMENTSTATUS.NONE:
+                        if (SinceExReady > exsession.ReadyWait)
+                        {
+                            switch (ExRepeat)
+                            {
+                                case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 5);
+                                    EL.SetExParam("CondDur", 30.0.GetCondDur(Screen.currentResolution.refreshRate));
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    EL.SetExParam("ModulateParam", "ModulateTime");
-                                    EL.SetExParam("CycleDirection", 1f);
-                                    exmanager.uicontroller.FullViewportSize();
-                                    EL.SetEnvActiveParam("GratingType", "Sinusoidal");
-                                    EL.SetEnvActiveParam("ModulateGratingType", "Sinusoidal");
-                                    EL.SetEnvActiveParam("SpatialPhase", 0.75);
                                     break;
                                 case 1:
                                     EL.SetExParam("ColorSpace", "LMS");
-                                    EL.SetExParam("Color", "X");
+                                    EL.SetExParam("Color", "Xmcc");
                                     break;
                                 case 2:
-                                    EL.SetExParam("ColorSpace", "LMS");
-                                    EL.SetExParam("Color", "Y");
+                                    EL.SetExParam("Color", "Ymcc");
                                     break;
                                 case 3:
+                                    EL.SetExParam("Color", "Zmcc");
+                                    break;
+                            }
+                            StartExperiment();
+                        }
+                        break;
+                    case EXPERIMENTSTATUS.STOPPED:
+                        if (SinceExStop > exsession.StopWait)
+                        {
+                            if (ExRepeat < 4)
+                            {
+                                ExperimentStatus = EXPERIMENTSTATUS.NONE;
+                            }
+                            else
+                            {
+                                ExperimentID = "OriSF";
+                            }
+                        }
+                        break;
+                }
+                break;
+            case "OriSF":
+                switch (ExperimentStatus)
+                {
+                    case EXPERIMENTSTATUS.NONE:
+                        if (SinceExReady > exsession.ReadyWait)
+                        {
+                            switch (ExRepeat)
+                            {
+                                case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 6);
+                                    EL.SetEnvActiveParam("GratingType", "Sinusoidal");
+                                    EL.SetExParam("ColorSpace", "DKL");
+                                    EL.SetExParam("Color", "X");
+                                    break;
+                                case 1:
                                     EL.SetExParam("ColorSpace", "LMS");
-                                    EL.SetExParam("Color", "Z");
+                                    EL.SetExParam("Color", "Xmcc");
+                                    break;
+                                case 2:
+                                    EL.SetExParam("Color", "Ymcc");
+                                    break;
+                                case 3:
+                                    EL.SetExParam("Color", "Zmcc");
                                     break;
 
                             }
@@ -158,6 +217,7 @@ public class ColorISI : ExperimentSessionLogic
                                 StartStopExperimentSession(false);
                                 exmanager.uicontroller.IsFullViewport = false;
                                 exmanager.uicontroller.IsGuideOn = true;
+                                return;
                             }
                         }
                         break;

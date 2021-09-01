@@ -87,7 +87,7 @@ namespace Experica
         };
 
 #if COMMAND
-        static IRecorder recorder = null;
+        static IRecorder spikeglxrecorder, ripplerecorder, imagerrecorder = null;
 #endif
 
         static Extension()
@@ -429,34 +429,27 @@ namespace Experica
 #if COMMAND
         public static IRecorder GetSpikeGLXRecorder(string host = "localhost", int port = 4142)
         {
-            if (recorder == null)
+            if (spikeglxrecorder == null)
             {
                 var r = new SpikeGLXRecorder(host, port);
-                if (r.IsConnected) { r.SetRecordingBeep(); recorder = r; }
-                return recorder;
+                if (r.IsConnected) { r.SetRecordingBeep(); spikeglxrecorder = r; }
+                return spikeglxrecorder;
             }
             else
             {
-                if (recorder.GetType() == typeof(SpikeGLXRecorder))
+                if (spikeglxrecorder.GetType() == typeof(SpikeGLXRecorder))
                 {
-                    var r = recorder as SpikeGLXRecorder;
-                    if (r.IsConnected)
-                    {
-                        if (r.Host == host && r.Port == port)
-                        {
-                            return recorder;
-                        }
-                        r.Disconnect();
-                    }
+                    var r = spikeglxrecorder as SpikeGLXRecorder;
+                    r.Disconnect();
                     if (r.Connect(host, port))
                     { r.SetRecordingBeep(); }
-                    else { recorder = null; }
-                    return recorder;
+                    else { spikeglxrecorder = null; }
+                    return spikeglxrecorder;
                 }
                 else
                 {
-                    recorder.Dispose();
-                    recorder = null;
+                    spikeglxrecorder.Dispose();
+                    spikeglxrecorder = null;
                     return GetSpikeGLXRecorder(host, port);
                 }
             }
@@ -464,32 +457,25 @@ namespace Experica
 
         public static IRecorder GetImagerRecorder(string host = "localhost", int port = 10000)
         {
-            if (recorder == null)
+            if (imagerrecorder == null)
             {
                 var r = new ImagerRecorder(host, port);
-                if (r.IsConnected) { recorder = r; }
-                return recorder;
+                if (r.IsConnected) { imagerrecorder = r; }
+                return imagerrecorder;
             }
             else
             {
-                if (recorder.GetType() == typeof(ImagerRecorder))
+                if (imagerrecorder.GetType() == typeof(ImagerRecorder))
                 {
-                    var r = recorder as ImagerRecorder;
-                    if (r.IsConnected)
-                    {
-                        if (r.Host == host && r.Port == port)
-                        {
-                            return recorder;
-                        }
-                        r.Disconnect();
-                    }
-                    if (!r.Connect(host, port)) { recorder = null; }
-                    return recorder;
+                    var r = imagerrecorder as ImagerRecorder;
+                    r.Disconnect();
+                    if (!r.Connect(host, port)) { imagerrecorder = null; }
+                    return imagerrecorder;
                 }
                 else
                 {
-                    recorder.Dispose();
-                    recorder = null;
+                    imagerrecorder.Dispose();
+                    imagerrecorder = null;
                     return GetImagerRecorder(host, port);
                 }
             }
@@ -1526,6 +1512,21 @@ namespace Experica
                 dstream.CopyTo(output);
             }
             return output.ToArray();
+        }
+
+        /// <summary>
+        /// Get Condition Duration(ms) for constant number of frames, if frame rate is fixed.
+        /// </summary>
+        /// <param name="targetdur_ms">duration to be closest to with constant number of frames</param>
+        /// <param name="framerate"></param>
+        /// <param name="isint">if integer duration millisecond</param>
+        /// <returns></returns>
+        public static double GetCondDur(this double targetdur_ms, double framerate, bool isint = true)
+        {
+            var t = 1000.0 / framerate;
+            var d = (Math.Round(targetdur_ms / t) - 0.8) * t;
+            if (isint) { d = Math.Round(d); }
+            return d;
         }
     }
 }

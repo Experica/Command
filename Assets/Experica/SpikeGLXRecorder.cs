@@ -21,7 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using UnityEngine;
-using HHMI;
+using SpikeGLX;
 using MathWorks.MATLAB.NET.Arrays;
 using System.Threading;
 using System;

@@ -1,10 +1,10 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: Alex
+Experimenter: PCL
 Log: 
 Subject_ID: Test
-Subject_Name: AF8
+Subject_Name: AG1
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,44 +13,44 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 3.5
+  MarkerPosition@Marker@Marker: -27.36 14.63 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 5
-  Size@Quad@Quad: 5 5 1
-  Color@Quad@Quad: 0.6311 0.3833 1 1
+  Diameter@Quad@Quad: 2.20000005
+  Size@Quad@Quad: 60.57 49.97 1
+  Color@Quad@Quad: 0.3676 0.6176 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
-  Position@Quad@Quad: 5 5 0
+  Visible@Quad@Quad: true
+  Position@Quad@Quad: -1.171 8.611 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
 Hemisphere: Left
-Eye: Right
+Eye: Left
 RecordSession: V1
-RecordSite: ODR8
+RecordSite: ODL17
 DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 2
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 PreICI: 0

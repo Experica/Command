@@ -91,11 +91,11 @@ public class ConditionTestLogic : ExperimentLogic
     }
 
     /// <summary>
-    /// Sync and Register Event Name and Value with External Device through EventSyncProtocol
+    /// Sync and Register Event Name/Value with External Device through EventSyncProtocol
     /// </summary>
-    /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to low/false state without event register</param>
+    /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
     /// <param name="et">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
-    /// <param name="ev">Event Value, Non-Null value will register in new `CONDTESTPARAM`, if event is a valid `CONDTESTPARAM`</param>
+    /// <param name="ev">Event Value, Non-Null value will register in new `CONDTESTPARAM` if event is a valid `CONDTESTPARAM`</param>
     protected virtual void SyncEvent(string e = null, double et = double.NaN, object ev = null)
     {
         var esp = ex.EventSyncProtocol;
@@ -105,12 +105,12 @@ public class ConditionTestLogic : ExperimentLogic
             return;
         }
         bool addtosynclist = false;
-        bool syncreset = string.IsNullOrEmpty(e) ? true : false;
+        bool syncreset = string.IsNullOrEmpty(e);
 
         if (esp.nSyncChannel == 1 && esp.nSyncpEvent == 1)
         {
-            syncvalue = syncreset ? false : !syncvalue;
-            addtosynclist = syncreset ? false : true;
+            syncvalue = !syncreset && !syncvalue;
+            addtosynclist = !syncreset;
             for (var i = 0; i < esp.SyncMethods.Count; i++)
             {
                 switch (esp.SyncMethods[i])
@@ -139,7 +139,7 @@ public class ConditionTestLogic : ExperimentLogic
                 }
                 else
                 {
-                    Debug.Log($"Skip Adding Event Value, {e} is not a valid CONDTESTPARAM.");
+                    Debug.LogWarning($"Skip Adding Event Value, {e} is not a valid CONDTESTPARAM.");
                 }
             }
         }

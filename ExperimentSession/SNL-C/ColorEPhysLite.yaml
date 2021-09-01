@@ -1,9 +1,9 @@
-ID: ColorISI
-Name: ColorISI
+ID: ColorEPhysLite
+Name: ColorEPhysLite
 Designer: Alex
 Experimenter: 
 Log: 
-LogicPath: ColorISI
+LogicPath: ColorEPhysLite
 ReadyWait: 10000
 StopWait: 10000
 Param: {}

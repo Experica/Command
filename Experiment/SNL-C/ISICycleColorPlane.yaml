@@ -1,10 +1,10 @@
 ID: ISICycleColorPlane
 Name: ISICycleColorPlane
 Designer: Alex
-Experimenter: Alex
+Experimenter: ''
 Log: 
-Subject_ID: Test
-Subject_Name: AF8
+Subject_ID: AG1
+Subject_Name: AG1
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,17 +13,17 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerSize@Marker@Marker: 3.5
+  MarkerPosition@Marker@Marker: -27.36 14.63 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -38,10 +38,11 @@ EnvParam:
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0
   TemporalFreq@GratingQuad@GratingQuad: 0
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.25
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
+  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 1 0.3538 0.505 1
-  MaxColor@GratingQuad@GratingQuad: 0.6311 0.3833 1 1
+  MinColor@GratingQuad@GratingQuad: 1 0.3538 0.5058 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -58,21 +59,21 @@ CondPath: ''
 Cond: 
 LogicPath: ImagerCycle
 Hemisphere: Left
-Eye: Right
-RecordSession: V1
-RecordSite: ODR8
-DataDir: X:\
+Eye: Both
+RecordSession: V1V2
+RecordSite: Full
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 2
+CondRepeat: 10
 BlockRepeat: 1
 BlockParam:
 - ''
-PreICI: 1000
+PreICI: 2000
 CondDur: 0
-SufICI: 500
+SufICI: 1000
 PreITI: 0
 TrialDur: 0
 SufITI: 0
@@ -114,11 +115,11 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 Param:
   ColorSpace: DKL
-  Color: Z
+  Color: X
   ModulateParam: DKLIsoLum
   Intercept: 0
-  CycleDirection: 1
-  CycleSyncFreq: 1
+  CycleDirection: -1
+  CycleSyncFreq: 0
 TimerDriftSpeed: 6.4999999999999994E-05
 EventSyncProtocol:
   SyncMethods:
@@ -127,7 +128,7 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: FULL
+CondTestShowLevel: NONE
 NotifyExperimenter: true
 Version: 2
 Config: 

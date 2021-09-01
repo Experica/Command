@@ -697,5 +697,17 @@ namespace Experica
             }
         }
 
+        public virtual void OnFunction1Action()
+        { }
+
+        public virtual void OnFunction2Action()
+        { }
+
+        public virtual void OnFunction3Action()
+        { }
+
+        public virtual void OnFunction4Action()
+        { }
+
     }
 }
