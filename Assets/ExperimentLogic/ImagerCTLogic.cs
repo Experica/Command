@@ -29,10 +29,12 @@ using ColorSpace = Experica.ColorSpace;
 /// </summary>
 public class ImagerCTLogic : ConditionTestLogic
 {
+    IRecorder markrecorder;
     protected override void OnStartExperiment()
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         StopEpochRecord();
+        markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();
     }
 
@@ -40,6 +42,7 @@ public class ImagerCTLogic : ConditionTestLogic
     {
         StopEpochRecord();
         recorder = null;
+        markrecorder = null;
         base.OnExperimentStopped();
     }
 
@@ -111,6 +114,32 @@ public class ImagerCTLogic : ConditionTestLogic
         }
 
         base.GenerateFinalCondition();
+    }
+
+    protected override void StartExperimentTimeSync()
+    {
+        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        {
+            if (markrecorder != null)
+            {
+                markrecorder.RecordPath = ex.GetDataPath(createdatadir: true);
+                timer.TimeoutMillisecond(Config.NotifyLatency);
+
+                markrecorder.RecordStatus = RecordStatus.Recording;
+                timer.TimeoutMillisecond(Config.NotifyLatency);
+            }
+        }
+        base.StartExperimentTimeSync();
+    }
+
+    protected override void StopExperimentTimeSync()
+    {
+        if (markrecorder != null)
+        {
+            markrecorder.RecordStatus = RecordStatus.Stopped;
+            timer.TimeoutMillisecond(Config.NotifyLatency);
+        }
+        base.StopExperimentTimeSync();
     }
 
     protected override void Logic()
