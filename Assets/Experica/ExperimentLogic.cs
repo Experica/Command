@@ -478,8 +478,8 @@ namespace Experica
             {
                 OnBeginStopExperiment?.Invoke();
 
-                islogicactive = false;
                 OnStopExperiment();
+                islogicactive = false;
 
                 // Push any condtest left
                 condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
@@ -504,10 +504,12 @@ namespace Experica
                     yield return null;
                 }
             }
-            // wait until the synced same start frame have completed being presented on display.
+            // wait until the synced same start frame have been presented on display.
             var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
             yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StartExperimentTimeSync();
+            // wait for all timelines have been started and synced.
+            yield return new WaitForSecondsRealtime(Config.NotifyLatency / 1000f);
             OnExperimentStarted();
             OnEndStartExperiment?.Invoke();
             islogicactive = true;
@@ -539,10 +541,12 @@ namespace Experica
                     yield return null;
                 }
             }
-            // wait until the synced same stop frame have completed being presented on display.
+            // wait until the synced same stop frame have been presented on display.
             var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
             yield return new WaitForSecondsRealtime((float)dur / 1000f);
             StopExperimentTimeSync();
+            // wait for all timelines have been synced and stopped.
+            yield return new WaitForSecondsRealtime(Config.NotifyLatency / 1000f);
             OnExperimentStopped();
             OnEndStopExperiment?.Invoke();
         }

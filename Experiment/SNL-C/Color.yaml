@@ -3,8 +3,8 @@ Name: Color
 Designer: Alex
 Experimenter: PCL
 Log: 
-Subject_ID: AG1
-Subject_Name: AG1
+Subject_ID: AG2
+Subject_Name: AG2
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -14,12 +14,12 @@ Subject_Log:
 EnvPath: MarkerQuad
 EnvParam:
   MarkerSize@Marker@Marker: 3.5
-  MarkerPosition@Marker@Marker: -27.36 14.63 -1000
+  MarkerPosition@Marker@Marker: -31.18 16.77 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenToEye@OrthoCamera@OrthoCamera: 50
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
   ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
@@ -28,23 +28,23 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 2.20000005
-  Size@Quad@Quad: 2.2 2.2 1
-  Color@Quad@Quad: 0.6324 0.3824 1 1
+  Diameter@Quad@Quad: 2
+  Size@Quad@Quad: 2 2 1
+  Color@Quad@Quad: 0 0.7044 0.1286 1
   MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.150000006
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: -1.171 8.611 0
+  Position@Quad@Quad: -3.02 10.01 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
 Hemisphere: Left
-Eye: Left
+Eye: Right
 RecordSession: V1
-RecordSite: ODL17
+RecordSite: ODL18
 DataDir: X:\
 DataPath: 
 Input: false

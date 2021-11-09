@@ -1,9 +1,9 @@
 ID: ISICycleColorPlane
 Name: ISICycleColorPlane
 Designer: Alex
-Experimenter: ''
+Experimenter: PCL
 Log: 
-Subject_ID: AG1
+Subject_ID: Test
 Subject_Name: AG1
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -29,7 +29,7 @@ EnvParam:
   Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 43.79 32.84 1
+  Size@GratingQuad@GratingQuad: 58.23 32.75 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
@@ -52,17 +52,17 @@ EnvParam:
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: false
+  Visible@GratingQuad@GratingQuad: true
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: ImagerCycle
 Hemisphere: Left
-Eye: Both
-RecordSession: V1V2
-RecordSite: Full
-DataDir: I:\
+Eye: Left
+RecordSession: V1
+RecordSite: ODL17
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
