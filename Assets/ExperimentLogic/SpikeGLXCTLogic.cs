@@ -28,7 +28,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
-        //recorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
+        recorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();
     }
 
@@ -46,16 +46,14 @@ public class SpikeGLXCTLogic : ConditionTestLogic
             {
                 recorder.RecordPath = ex.GetDataPath();
                 /* 
-                SpikeGLX recorder set path through network and remote server receive
-                message and change file path, all of which need time to complete.
+                SpikeGLX command server receive network message and change file path, all of which need time to complete.
                 Start recording before file path change completion may not save to correct file path.
                 */
                 timer.TimeoutMillisecond(Config.NotifyLatency);
 
                 recorder.RecordStatus = RecordStatus.Recording;
                 /* 
-                SpikeGLX recorder set record status through network and remote server receive
-                message and change record state, all of which need time to complete.
+                SpikeGLX command server receive network message and change record state, all of which need time to complete.
                 Begin experiment before record started may lose information.
                 */
                 timer.TimeoutMillisecond(Config.NotifyLatency);
@@ -69,9 +67,8 @@ public class SpikeGLXCTLogic : ConditionTestLogic
         if (recorder != null)
         {
             recorder.RecordStatus = RecordStatus.Stopped;
-            /* 
-            SpikeGLX recorder set record status through network and remote server receive
-            message and change record state, all of which need time to complete.
+            /*
+            SpikeGLX command server receive network message and change record state, all of which need time to complete.
             Here wait recording ended before further processing.
             */
             timer.TimeoutMillisecond(Config.NotifyLatency);

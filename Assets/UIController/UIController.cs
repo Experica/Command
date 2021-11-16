@@ -309,6 +309,28 @@ namespace Experica.Command
             { exmanager.el.OnTemporalFreqAction(context.ReadValue<float>()); }
         }
 
+        public void OnFunction1Action(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnFunction1Action(); }
+        }
+
+        public void OnFunction2Action(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnFunction2Action(); }
+        }
+        public void OnFunction3Action(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnFunction3Action(); }
+        }
+        public void OnFunction4Action(InputAction.CallbackContext context)
+        {
+            if (context.performed && exmanager.el != null)
+            { exmanager.el.OnFunction4Action(); }
+        }
+
         public void PushConfig()
         {
             // Grab settings from Experiement Yaml files, and update the scene

@@ -31,8 +31,6 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
 {
     protected override void GenerateFinalCondition()
     {
-        base.GenerateFinalCondition();
-
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
         var colorname = colorspace + "_" + colorvar;
@@ -61,7 +59,7 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
             }
             else
             {
-                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
+                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
             }
         }
 
@@ -74,5 +72,7 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
                 SetEnvActiveParam("BGColor", wp[0]);
             }
         }
+
+        base.GenerateFinalCondition();
     }
 }

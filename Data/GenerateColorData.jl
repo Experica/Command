@@ -83,21 +83,29 @@ markerstrokewidth=0,legend=false,xlabel="L-M",ylabel="S-(L+M)",title=title)
 p
 foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
-
 ## HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance in CIE [x,y,Y] coordinates
+# Name:     R:1           Y:3           G:5                         B:9                         WP
+hslhues =  [0.63   0.54   0.42   0.34   0.3    0.27   0.22   0.17   0.15   0.2    0.32   0.5    0.33;
+            0.34   0.41   0.5    0.57   0.6    0.5    0.33   0.15   0.07   0.1    0.16   0.27   0.33;
+            1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0]
+
+# Computed RGBAs
+hslhues[3,:] .= 0.2
+hues_hsl = XYZToRGB*quavectors(xyY2XYZ(hslhues))
+hues_hsl = clamp.(hues_hsl,0,1)
+
+# Mannual adjusted RGBAs
+hues_hsl = [0.360  0.216  0.086  0.027  0.006  0.000  0.001  0.004  0.000  0.120  0.259  0.340  0.096;
+            0.009  0.049  0.088  0.105  0.112  0.110  0.101  0.077  0.025  0.027  0.014  0.009  0.0762;
+            0.002  0.004  0.001  0.002  0.001  0.030  0.110  0.360  1.000  0.550  0.265  0.067  0.081;
+            1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0    1.0]
+
 hueangle_hsl = 0:30:330
-hslhuewp = [0.63  0.54  0.42  0.34  0.3  0.27  0.22  0.17  0.15  0.2  0.32  0.5   0.33;
-            0.34  0.41  0.5   0.57  0.6  0.5   0.33  0.15  0.07  0.1  0.16  0.27  0.33;
-            1.0   1.0   1.0   1.0   1.0  1.0   1.0   1.0   1.0   1.0  1.0   1.0   1.0]
-hslhuewp[3,:] .= 0.2
-huewp_hsl = XYZToRGB*quavectors(xyY2XYZ(hslhuewp))
-huewp_hsl = clamp.(huewp_hsl,0,1)
-huewpc = [RGB(huewp_hsl[1:3,i]...) for i in 1:size(huewp_hsl,2)]
-hue_hsl = huewp_hsl[:,1:end-1]
-wp_hsl = repeat(huewp_hsl[:,end],inner=(1,size(hue_hsl,2)))
+hue_hsl = hues_hsl[:,1:end-1]
+wp_hsl = repeat(hues_hsl[:,end],inner=(1,size(hue_hsl,2)))
 
 # Plot HSL Hues
-IsoLumc = huewpc[1:end-1]
+IsoLumc = [RGB(hue_hsl[1:3,i]...) for i in 1:size(hue_hsl,2)]
 IsoLumhsl = [cos.(deg2rad.(hueangle_hsl)) sin.(deg2rad.(hueangle_hsl))]'
 
 title="HSL_$(length(hueangle_hsl))Hue_Ym"
@@ -132,6 +140,14 @@ colordata = Dict{String,Any}("LMS_X"=>colorstring.([minc_lms[:,1],maxc_lms[:,1]]
                             "HSL_HueYm_Angle" => hueangle_hsl,
                             "HSL_HueYm" => colorstring.([hue_hsl[:,i] for i in 1:size(hue_hsl,2)]),
                             "HSL_HueYm_WP" => colorstring.([wp_hsl[:,i] for i in 1:size(wp_hsl,2)]),
+                            "HSL_RGYm" => colorstring.([hue_hsl[:,i] for i in (1,5)]),
+                            "HSL_RGYm_WP" => colorstring.([wp_hsl[:,i] for i in (1,5)]),
+                            "HSL_YBYm" => colorstring.([hue_hsl[:,i] for i in (3,9)]),
+                            "HSL_YBYm_WP" => colorstring.([wp_hsl[:,i] for i in (3,9)]),
+                            "HSL_RBYm" => colorstring.([hue_hsl[:,i] for i in (1,9)]),
+                            "HSL_RBYm_WP" => colorstring.([wp_hsl[:,i] for i in (1,9)]),
+                            "HSL_YGYm" => colorstring.([hue_hsl[:,i] for i in (3,5)]),
+                            "HSL_YGYm_WP" => colorstring.([wp_hsl[:,i] for i in (3,5)]),
                             "DKL_HueL0_Angle"=>hueangle_dkl_ilp,
                             "DKL_HueL0"=>colorstring.([hue_dkl_ilp[:,i] for i in 1:size(hue_dkl_ilp,2)]),
                             "DKL_HueL0_WP"=>colorstring.([wp_dkl_ilp[:,i] for i in 1:size(wp_dkl_ilp,2)]),
@@ -209,7 +225,7 @@ p
 
 
 ## HSL hues in DKL
-huewp_hsl=[0.3137 0 0 1;
+hues_hsl=[0.3137 0 0 1;
            0.1922 0.03137 0 1;
            0.07059 0.07059 0 1;
            0.01569 0.08627 0 1;
@@ -222,7 +238,7 @@ huewp_hsl=[0.3137 0 0 1;
            0.2314 0 0.2353 1;
            0.2902 0 0.05882 1;
            0.07843 0.05882 0.06275 1]'
-huewp_hsl_dkl = trivectors(RGBToDKL*huewp_hsl)
+huewp_hsl_dkl = trivectors(RGBToDKL*hues_hsl)
 
 plot(huewp_hsl_dkl[2,1:end-1],huewp_hsl_dkl[3,1:end-1],markersize=9,marker=:circle,color=cm_hsl.colors[1:30:331],xlabel="L-M",ylabel="S-(L+M)",frame=:origin,
 annotations=[(huewp_hsl_dkl[2,i]+0.05,huewp_hsl_dkl[3,i],text(hueangle_hsl[i],7,:gray5,:bottom,:left)) for i in eachindex(hueangle_hsl)])

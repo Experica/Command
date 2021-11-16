@@ -126,7 +126,7 @@ namespace Experica
 
         public bool Connect(double timeout_ms)
         {
-            return cmdresp(model, timeout_ms) == " REMOTE MODE";
+            return cmdresp(model, timeout_ms).EndsWith("REMOTE MODE");
         }
 
         public void Close()
@@ -137,7 +137,7 @@ namespace Experica
 
         public bool Setup(string setupfields, double timeout_ms)
         {
-            return cmdresp(setupfields, timeout_ms) == "0000";
+            return cmdresp(setupfields, timeout_ms).EndsWith("0000");
         }
 
         public IDictionary Measure(string datareportformat, double timeout_ms)
@@ -147,15 +147,15 @@ namespace Experica
                 // ErrorCode, UnitCode, Intensity Y, CIE x, y
                 case "1":
                     sp.receiveddata = "";
-                        sp.DiscardInBuffer();
-                        sp.WriteLine("M" + datareportformat);
+                    sp.DiscardInBuffer();
+                    sp.WriteLine("M" + datareportformat);
 
                     Thread.Sleep(timeout_ms.Convert<int>());
 
 
                     var r = sp.Read();
-                    var hr =  string.Join(",", r.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
-                    
+                    var hr = string.Join(",", r.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
+
 
 
                     //var hr = cmdresp("M" + datareportformat, timeout_ms); // need at least 6s at BaudRate:9600
@@ -177,7 +177,7 @@ namespace Experica
                 // ErrorCode, UnitCode, Peak λ, Integrated Spectral, Integrated Photon, λs, λ Intensities
                 case "5":
                     cmdresp("M" + datareportformat, 0); // cmd and return, without reading response
-                     timer = new Timer();
+                    timer = new Timer();
                     timer.TimeoutMillisecond(timeout_ms); // need at least 8s at BaudRate:9600
                     hr = cmdresp("", timeout_ms, false); // now the full response should be returned
                     if (!string.IsNullOrEmpty(hr))

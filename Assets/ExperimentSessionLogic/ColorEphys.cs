@@ -1,5 +1,5 @@
 /*
-ColorEphys.cs is part of the Experica.
+ColorEPhys.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,15 +19,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Experica;
 using Experica.Command;
 
-public class ColorEphys : ExperimentSessionLogic
+public class ColorEPhys : ExperimentSessionLogic
 {
     float diameter = 3;
+    Vector3 position = Vector3.zero;
     Eye eye = Eye.Right;
 
     protected override void Logic()
@@ -46,6 +45,7 @@ public class ColorEphys : ExperimentSessionLogic
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
                     eye = EL.GetExParam<Eye>("Eye");
                     diameter = EL.GetEnvActiveParam<float>("Diameter");
+                    position = EL.GetEnvActiveParam<Vector3>("Position");
 
                     ExperimentID = "Flash2Color";
                 }
@@ -59,10 +59,11 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    exmanager.uicontroller.FullViewportSize();
                                     EL.SetExParam("Eye", eye);
+                                    EL.SetExParam("CondRepeat", 100);
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.FullViewportSize();
                                     break;
                                 case 1:
                                     EL.SetExParam("Color", "Y");
@@ -99,15 +100,16 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
-                                    EL.SetExParam("ColorSpace", "DKL");
-                                    EL.SetExParam("Color", "HueL0");
+                                    EL.SetEnvActiveParam("Position", position);
                                     EL.SetEnvActiveParam("Diameter", diameter);
-                                    break;
-                                case 1:
+                                    EL.SetExParam("CondRepeat", 8);
                                     EL.SetExParam("ColorSpace", "HSL");
                                     EL.SetExParam("Color", "HueYm");
                                     break;
-
+                                case 1:
+                                    EL.SetExParam("ColorSpace", "DKL");
+                                    EL.SetExParam("Color", "HueL0");
+                                    break;
                             }
                             StartExperiment();
                         }
@@ -136,12 +138,11 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 10);
                                     EL.SetExParam("ModulateParam", "DKLIsoLum");
                                     EL.SetExParam("CycleDirection", 1f);
-                                    EL.SetEnvActiveParam("Diameter", diameter);
-                                    EL.SetEnvActiveParam("ModulateTemporalFreq", 0.25);
-                                    EL.SetEnvActiveParam("GratingType", "Sinusoidal");
-                                    EL.SetEnvActiveParam("SpatialPhase", 0.75);
                                     break;
                                 case 1:
                                     EL.SetExParam("CycleDirection", -1f);
@@ -158,7 +159,6 @@ public class ColorEphys : ExperimentSessionLogic
                                 case 5:
                                     EL.SetExParam("CycleDirection", -1f);
                                     break;
-
                             }
                             StartExperiment();
                         }
@@ -187,10 +187,12 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 5);
+                                    EL.SetExParam("CondDur", 30.0.GetCondDur(Screen.currentResolution.refreshRate));
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    EL.SetEnvActiveParam("Diameter", diameter);
-                                    EL.SetEnvActiveParam("PauseTime", true);
                                     break;
                                 case 1:
                                     EL.SetExParam("ColorSpace", "LMS");
@@ -202,7 +204,6 @@ public class ColorEphys : ExperimentSessionLogic
                                 case 3:
                                     EL.SetExParam("Color", "Zmcc");
                                     break;
-
                             }
                             StartExperiment();
                         }
@@ -231,10 +232,12 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 1);
+                                    EL.SetExParam("CondDur", 30.0.GetCondDur(Screen.currentResolution.refreshRate));
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    EL.SetEnvActiveParam("Diameter", diameter);
-                                    EL.SetEnvActiveParam("ChannelModulate", "R");
                                     break;
                                 case 1:
                                     EL.SetExParam("ColorSpace", "LMS");
@@ -275,10 +278,12 @@ public class ColorEphys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetExParam("CondRepeat", 6);
+                                    EL.SetEnvActiveParam("GratingType", "Sinusoidal");
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    EL.SetEnvActiveParam("Diameter", diameter);
-                                    EL.SetEnvActiveParam("GratingType", "Sinusoidal");
                                     break;
                                 case 1:
                                     EL.SetExParam("ColorSpace", "LMS");

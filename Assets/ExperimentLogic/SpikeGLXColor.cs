@@ -32,8 +32,6 @@ public class SpikeGLXColor : SpikeGLXCTLogic
 {
     protected override void GenerateFinalCondition()
     {
-        pushexcludefactors = new List<string>() { "Angle" };
-
         var cond = new Dictionary<string, List<object>>();
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
@@ -65,7 +63,7 @@ public class SpikeGLXColor : SpikeGLXCTLogic
             }
             else
             {
-                Debug.Log(colorname + " is not found in colordata of " + ex.Display_ID);
+                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
             }
         }
 
@@ -124,6 +122,8 @@ public class SpikeGLXColor : SpikeGLXCTLogic
             }
             fcond.Remove("_colorindex");
         }
+
+        pushexcludefactors = new List<string>() { "Angle" };
         condmanager.FinalizeCondition(fcond);
     }
 }

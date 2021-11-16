@@ -19,6 +19,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
@@ -27,6 +28,7 @@ using OxyPlot.Series;
 using MathNet.Numerics;
 using MathNet.Numerics.Interpolation;
 using Experica;
+using Display = Experica.Display;
 
 /// <summary>
 /// Present R,G,B colors and measure intensities, so that a color lookup table can
@@ -38,11 +40,18 @@ using Experica;
 /// Required experiment parameters:
 /// 
 /// PRModel:        model name of the spectroradiometer from Photo Research, Inc. (e.g., PR701)
-/// COM:            COM port of the spectroradiometer. (e.g., COM2)
+/// COM:            COM port of the spectroradiometer. (e.g., COM1)
 /// Measure:        type of measurement. {"Spectral", "Intensity"}
 /// N:              number of R,G,B levels to measure
 /// PlotMeasure:    if plot measurement. (Bool)
 /// FitType:        function used to fit the intensity measurement. {"Gamma", "LinearSpline", "CubicSpline"}
+/// 
+/// 
+/// 
+/// Interactive measurement can be enabled throught `Input`.
+/// 
+/// Function1Action: initailize spectroradiometer
+/// Function2Action: measure
 /// </summary>
 public class DisplayCalibration : ExperimentLogic
 {
@@ -56,6 +65,26 @@ public class DisplayCalibration : ExperimentLogic
         spectroradiometer = new PR(GetExParam<string>("COM"), GetExParam<string>("PRModel"));
     }
 
+    bool PrepareSpectroradiometer()
+    {
+        spectroradiometer?.Close();
+        /* Setup Measurement: 
+           Primary Lens, AddOn Lens 1, AddOn Lens 2, Aperture, Photometric Units(1=Metric), 
+           Detector Exposure Time(1000ms), Capture Mode(0=Single Capture), Number of Measure to Average(1=No Average), 
+           Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
+        */
+        var hr = (spectroradiometer?.Connect(1000) ?? false) && (spectroradiometer?.Setup("S,,,,1,1000,0,1,0,0,0,0", 1000) ?? false);
+        if (hr)
+        {
+            Debug.Log("Spectroradiometer Ready.");
+        }
+        else
+        {
+            Debug.LogWarning("Spectroradiometer Initailization Failed.");
+        }
+        return hr;
+    }
+
     protected override void OnStartExperiment()
     {
         if (string.IsNullOrEmpty(ex.Display_ID))
@@ -63,13 +92,7 @@ public class DisplayCalibration : ExperimentLogic
             Extension.WarningDialog("Display_ID is not set!");
         }
         SetEnvActiveParam("Visible", false);
-        spectroradiometer?.Connect(1000);
-        /* Setup Measurement: 
-           Primary Lens, AddOn Lens 1, AddOn Lens 2, Aperture, Photometric Units(1=Metric), 
-           Detector Exposure Time(1000ms), Capture Mode(0=Single Capture), Number of Measure to Average(1=No Average), 
-           Power or Energy(0=Power), Trigger Mode(0=Internal Trigger), View Shutter(0=Open), CIE Observer(0=2°)
-        */
-        spectroradiometer?.Setup("S,,,,1,1000,0,1,0,0,0,0", 1000);
+        PrepareSpectroradiometer();
         switch (GetExParam<string>("Measure"))
         {
             case "Intensity":
@@ -253,6 +276,47 @@ public class DisplayCalibration : ExperimentLogic
                     SyncFrame();
                 }
                 break;
+        }
+    }
+
+    public override void OnFunction1Action()
+    {
+        if (ex.Input)
+        {
+            PrepareSpectroradiometer();
+        }
+        else
+        {
+            Debug.LogWarning("Input Disabled.");
+        }
+    }
+
+    public override void OnFunction2Action()
+    {
+        if (ex.Input)
+        {
+            var measuretype = GetExParam<string>("Measure");
+            switch (measuretype)
+            {
+                case "Intensity":
+                    // Measure Intensity Y, CIE x, y
+                    if (spectroradiometer?.Measure("1", 8000) is Dictionary<string, double> m1)
+                    {
+                        Debug.Log($"x: {m1["x"]},    y: {m1["y"]},    Y: {m1["Y"]}");
+                    }
+                    else
+                    {
+                        Debug.Log("No Measurement Data.");
+                    }
+                    break;
+                default:
+                    Debug.LogWarning($"{measuretype} Measurement Not Implemented.");
+                    break;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Input Disabled.");
         }
     }
 }
