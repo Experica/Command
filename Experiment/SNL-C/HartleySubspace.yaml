@@ -3,8 +3,8 @@ Name: HartleySubspace
 Designer: Alex
 Experimenter: PCL
 Log: 
-Subject_ID: AG2
-Subject_Name: AG2
+Subject_ID: Test
+Subject_Name: AG3
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,30 +13,30 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 3.5
-  MarkerPosition@Marker@Marker: -31.18 16.77 -1000
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 50
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
   ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 268.025055
+  Ori@GratingQuad@GratingQuad: 67.7509766
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 2
-  Size@GratingQuad@GratingQuad: 2 2 1
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.150000006
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 5.80344725
+  SpatialFreq@GratingQuad@GratingQuad: 4.75394583
   TemporalFreq@GratingQuad@GratingQuad: 0
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
@@ -53,21 +53,21 @@ EnvParam:
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: -3.02 10.01 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: SpikeGLXColorCT
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: ODL18
+RecordSession: ISI
+RecordSite: Full
 DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 5
+CondRepeat: 1
 BlockRepeat: 1
 BlockParam:
 - ''
