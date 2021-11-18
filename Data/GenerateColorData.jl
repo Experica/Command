@@ -18,9 +18,9 @@ colordatapath = joinpath(resultdir,"colordata.yaml")
 figfmt = [".png",".svg"]
 
 config = YAML.load_file("../Configuration/CommandConfig_SNL-C.yaml")
-RGBToLMS,LMSToRGB = RGBLMSMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
-RGBToXYZ,XYZToRGB = RGBXYZMatrix(RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])...)
-
+C,λ,I = RGBSpectral(config["Display"][displayname]["SpectralMeasurement"])
+RGBToLMS,LMSToRGB = RGBLMSMatrix(C,λ,I,observer=2)
+RGBToXYZ,XYZToRGB = RGBXYZMatrix(C,λ,I,observer=2)
 
 ## Maximum Cone Isolating RGBs through a RGB color
 th = [0.5,0.5,0.5]
@@ -84,13 +84,13 @@ p
 foreach(ext->savefig(joinpath(resultdir,"$title$ext")),figfmt)
 
 ## HSL equal angular distance hue[0:30:330] and equal energy white with matched luminance in CIE [x,y,Y] coordinates
-# Name:     R:1           Y:3           G:5                         B:9                         WP
+# Name:     R:1             Y:3             G:5                             B:9                             WP
 hslhues =  [0.63    0.54    0.42    0.34    0.3     0.27    0.22    0.17    0.15    0.2     0.32    0.5     0.33;
             0.34    0.41    0.5     0.57    0.6     0.5     0.33    0.15    0.07    0.1     0.16    0.27    0.33;
             1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0]
 
 # Computed RGBAs
-hslhues[3,:] .= 0.2
+hslhues[3,:] .= 14.5
 hues_hsl = XYZToRGB*quavectors(xyY2XYZ(hslhues))
 hues_hsl = clamp.(hues_hsl,0,1)
 
@@ -103,27 +103,6 @@ hues_hsl = [0.370   0.225   0.087   0.028   0.006   0.000   0.000   0.000   0.00
             0.010   0.051   0.089   0.108   0.115   0.113   0.103   0.078   0.025   0.030   0.012   0.010   0.078;
             0.000   0.000   0.001   0.003   0.001   0.030   0.110   0.410   1.000   0.550   0.280   0.067   0.083;
             1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0     1.0]
-
-XYZ = RGBToXYZ* hues_hsl
-
-XYZ2xyY(m̄)
-
-m̂ = xyY2XYZ(hues_xyY) / trivectors( hue_hsl)
-m̄ = λ * trivectors( XYZ)
-
-
-m̄ = trimatrix( RGBToXYZ)
-
-a=xyY2XYZ(hues_xyY)
-b=trivectors(hues_hsl)
-m̂ = a/b
-
-
-λ = m̂ / m̄
-
-M = λ*m̄
-
-Colors.XYZ.(RGB(b[1],b[2],b[3]))
 
 hueangle_hsl = 0:30:330
 hue_hsl = hues_hsl[:,1:end-1]

@@ -141,7 +141,7 @@ public class ColorEPhysLite : ExperimentSessionLogic
                                     EL.SetEnvActiveParam("Position", position);
                                     EL.SetEnvActiveParam("Diameter", diameter);
                                     EL.SetExParam("CondRepeat", 5);
-                                    EL.SetExParam("CondDur", 30.0.GetCondDur(Screen.currentResolution.refreshRate));
+                                    EL.SetExParam("CondDur", 35.0.GetCondDur(Screen.currentResolution.refreshRate));
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
                                     break;
