@@ -3,8 +3,8 @@ Name: ISICycle2Color
 Designer: Alex
 Experimenter: PCL
 Log: 
-Subject_ID: AG2
-Subject_Name: AG2
+Subject_ID: Test
+Subject_Name: AG3
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,17 +13,17 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -28.69 15.7 -1000
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 50
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -32,7 +32,7 @@ EnvParam:
   Size@GratingQuad@GratingQuad: 65.85 37.04 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.150000006
+  MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
@@ -41,17 +41,17 @@ EnvParam:
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0 4.996E-16 4.996E-16 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  MinColor@GratingQuad@GratingQuad: 0.3673 0.618 0 1
+  MaxColor@GratingQuad@GratingQuad: 0.6327 0.382 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ModulateType@GratingQuad@GratingQuad: Square
+  ModulateType@GratingQuad@GratingQuad: Sinusoidal
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.977478
+  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99699
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -59,15 +59,15 @@ CondPath: ''
 Cond: 
 LogicPath: ImagerCycle
 Hemisphere: Left
-Eye: Both
-RecordSession: ''
-RecordSite: ''
-DataDir: I:\
+Eye: Right
+RecordSession: ISI
+RecordSite: Full
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 3
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -115,12 +115,12 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 Param:
   ColorSpace: DKL
-  Color: X
+  Color: Z
   ModulateParam: ModulateTime
   Intercept: 0
   CycleDirection: 1
   CycleSyncFreq: 0
-TimerDriftSpeed: 6.4999999999999994E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO

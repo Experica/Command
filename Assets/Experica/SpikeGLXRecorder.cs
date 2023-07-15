@@ -113,11 +113,6 @@ namespace Experica
             return r;
         }
 
-        public bool Connect()
-        {
-            return Connect("localhost", 4142);
-        }
-
         public void Disconnect()
         {
             try
@@ -177,6 +172,6 @@ namespace Experica
 
         public string RecordEpoch { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string DataFormat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public AcqusitionStatus AcqusitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public AcquisitionStatus AcquisitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

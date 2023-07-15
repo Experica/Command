@@ -1,10 +1,10 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: Alex
+Experimenter: PCL
 Log: 
-Subject_ID: AG2
-Subject_Name: AG2
+Subject_ID: Test
+Subject_Name: AG3
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Age: 0
@@ -13,13 +13,13 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerImage
 EnvParam:
-  MarkerSize@Marker@Marker: 3.5
-  MarkerPosition@Marker@Marker: -31.18 16.77 -1000
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 50
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
   ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
@@ -28,27 +28,27 @@ EnvParam:
   RotationOffset@ImageQuad@ImageQuad: 0 0 0
   Ori@ImageQuad@ImageQuad: 0
   OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 2.29999995
-  Size@ImageQuad@ImageQuad: 2.3 2.3 1
+  Diameter@ImageQuad@ImageQuad: 30
+  Size@ImageQuad@ImageQuad: 30 30 1
   MaskType@ImageQuad@ImageQuad: Disk
   MaskRadius@ImageQuad@ImageQuad: 0.5
   MaskSigma@ImageQuad@ImageQuad: 0.150000006
   OriPositionOffset@ImageQuad@ImageQuad: false
   MinColor@ImageQuad@ImageQuad: 0.3673 0.618 0 1
   MaxColor@ImageQuad@ImageQuad: 0.6327 0.382 1 1
-  ChannelModulate@ImageQuad@ImageQuad: R
-  Image@ImageQuad@ImageQuad: 22146
+  ChannelModulate@ImageQuad@ImageQuad: None
+  Image@ImageQuad@ImageQuad: 5
   ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
-  Visible@ImageQuad@ImageQuad: false
-  Position@ImageQuad@ImageQuad: 0.8779 8.762 0
+  Visible@ImageQuad@ImageQuad: true
+  Position@ImageQuad@ImageQuad: 0 0 0
   PositionOffset@ImageQuad@ImageQuad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXImage
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: ODR1
+RecordSession: ISI
+RecordSite: Full
 DataDir: X:\
 DataPath: 
 Input: false

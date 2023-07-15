@@ -13,28 +13,28 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: MarkerDots
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -19.9 14.42 -1000
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333302
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
-  Dir@Dots@Dots: 45
+  Dir@Dots@Dots: 0
   DirOffset@Dots@Dots: 0
-  Speed@Dots@Dots: 5
+  Speed@Dots@Dots: 10
   Diameter@Dots@Dots: 20
   Size@Dots@Dots: 20 20 1
   NDots@Dots@Dots: 30
-  DotColor@Dots@Dots: 1 0 1 1
+  DotColor@Dots@Dots: 0 0 1 1
   DotSize@Dots@Dots: 1 1
-  Coherence@Dots@Dots: 0.5
+  Coherence@Dots@Dots: 1
   Visible@Dots@Dots: true
   Position@Dots@Dots: 0 0 0
   PositionOffset@Dots@Dots: 0 0 0

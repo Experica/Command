@@ -34,7 +34,6 @@ namespace Experica
 
     public interface ISignal : IDisposable
     {
-        bool Connect();
         bool Connect(string host, int port);
         void Disconnect();
         bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue);

@@ -98,7 +98,7 @@ Display:
     ID: ROGPG279Q
     Type: LCD
     Latency: 21
-    RiseLag: 1.1000000000000001
+    RiseLag: 1.1
     FallLag: 15
     CLUTSize: 24
     FitType: LinearSpline
@@ -23843,8 +23843,8 @@ Display:
     ID: ROGPG259QN
     Type: LCD
     Latency: 21
-    RiseLag: 0.90000000000000002
-    FallLag: 4.7000000000000002
+    RiseLag: 0.9
+    FallLag: 4.7
     CLUTSize: 24
     FitType: LinearSpline
     IntensityMeasurement: 

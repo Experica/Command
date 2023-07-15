@@ -22,6 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System.Collections.Generic;
 using Experica;
+using System.IO;
 using ColorSpace = Experica.ColorSpace;
 
 /// <summary>
@@ -30,6 +31,7 @@ using ColorSpace = Experica.ColorSpace;
 public class ImagerCTLogic : ConditionTestLogic
 {
     IRecorder markrecorder;
+
     protected override void OnStartExperiment()
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
@@ -52,10 +54,16 @@ public class ImagerCTLogic : ConditionTestLogic
         {
             if (recorder != null)
             {
-                recorder.RecordPath = ex.GetDataPath(createdatadir: true);
-                recorder.RecordEpoch = epoch.ToString();
+                // create data folder for Imager recording
+                var datapath = ex.GetDataPath(addfiledir: true);
+                var datadir = Path.GetDirectoryName(datapath);
+                var dataname = Path.GetFileNameWithoutExtension(datapath);
+                // save Imager frames in Epoch subfolder
+                datadir = Path.Combine(datadir, $"Epoch{epoch}");
+                Directory.CreateDirectory(datadir);
+                recorder.RecordPath = Path.Combine(datadir, dataname);
                 recorder.RecordStatus = RecordStatus.Recording;
-                recorder.AcqusitionStatus = AcqusitionStatus.Acqusiting;
+                recorder.AcquisitionStatus = AcquisitionStatus.Acquisiting;
             }
         }
     }
@@ -64,7 +72,7 @@ public class ImagerCTLogic : ConditionTestLogic
     {
         if (recorder != null)
         {
-            recorder.AcqusitionStatus = AcqusitionStatus.Stopped;
+            recorder.AcquisitionStatus = AcquisitionStatus.Stopped;
             recorder.RecordStatus = RecordStatus.Stopped;
         }
     }
@@ -122,7 +130,7 @@ public class ImagerCTLogic : ConditionTestLogic
         {
             if (markrecorder != null)
             {
-                markrecorder.RecordPath = ex.GetDataPath(createdatadir: true);
+                markrecorder.RecordPath = ex.GetDataPath(addfiledir: true);
                 timer.TimeoutMillisecond(Config.NotifyLatency);
 
                 markrecorder.RecordStatus = RecordStatus.Recording;

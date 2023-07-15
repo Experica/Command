@@ -1020,6 +1020,38 @@ namespace Experica
             return final;
         }
 
+        /// <summary>
+        /// Get a unique file incremental index that fits in the file name pattern within a dir.
+        /// Index is supposed to be the last part before file extension in pattern: *_{index}.*
+        /// </summary>
+        /// <param name="filepattern"></param>
+        /// <param name="indir"></param>
+        /// <param name="searchoption"></param>
+        /// <returns></returns>
+        public static int SearchIndexForNewFile(this string filepattern, string indir, SearchOption searchoption = SearchOption.AllDirectories)
+        {
+            int i = 0;
+            if (Directory.Exists(indir))
+            {
+                var fs = Directory.GetFiles(indir, filepattern, searchoption);
+                if (fs.Length > 0)
+                {
+                    var ns = new List<int>();
+                    foreach (var f in fs)
+                    {
+                        var s = f.LastIndexOf('_') + 1;
+                        var e = f.LastIndexOf('.') - 1;
+                        if (int.TryParse(f.Substring(s, e - s + 1), out int n))
+                        {
+                            ns.Add(n);
+                        }
+                    }
+                    if (ns.Count > 0) { i = ns.Max() + 1; }
+                }
+            }
+            return i;
+        }
+
         public static void FirstSplit(this string name, out string head, out string tail, string del = "@")
         {
             head = null; tail = null;

@@ -21,26 +21,20 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
 using System;
 
 namespace Experica
 {
     public class ImagerRecorder : IRecorder
     {
-        int disposecount = 0;
         ImagerCommand.Command imager = new ImagerCommand.Command();
-        readonly object apilock = new object();
 
         public ImagerRecorder(string host = "localhost", int port = 10000)
         {
             if (!Connect(host, port))
             {
-                Debug.LogWarning($"Can't connect to Imager, make sure Imager command server is started and the Host: {host} / Port: {port} match the server.");
-                return;
+                Debug.LogWarning($"Can't connect to Imager, make sure Imager command server is running and the Host: {host} / Port: {port} match the server.");
             }
-            Host = host;
-            Port = port;
         }
 
         ~ImagerRecorder()
@@ -56,15 +50,8 @@ namespace Experica
 
         protected virtual void Dispose(bool disposing)
         {
-            if (1 == Interlocked.Exchange(ref disposecount, 1))
-            {
-                return;
-            }
-            lock (apilock)
-            {
-                Disconnect();
-                imager = null;
-            }
+            Disconnect();
+            imager = null;
         }
 
         public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)
@@ -80,20 +67,16 @@ namespace Experica
 
         public bool Connect(string host = "localhost", int port = 10000)
         {
-            bool r = false;
             try
             {
                 imager.Connect(host, (uint)port);
-                r = true;
+                Host = host; Port = port;
+                IsConnected = true;
+                return true;
             }
             catch (Exception e) { Debug.LogException(e); }
-            IsConnected = r;
-            return r;
-        }
-
-        public bool Connect()
-        {
-            return Connect("localhost", 10000);
+            IsConnected = false;
+            return false;
         }
 
         public void Disconnect()
@@ -126,33 +109,26 @@ namespace Experica
             }
         }
 
-        public AcqusitionStatus AcqusitionStatus
+        public AcquisitionStatus AcquisitionStatus
         {
             get
             {
                 try
                 {
-                    if (imager.IsAcquisiting)
-                    {
-                        return AcqusitionStatus.Acqusiting;
-                    }
-                    else
-                    {
-                        return AcqusitionStatus.Stopped;
-                    }
+                    return imager.IsAcquisiting ? AcquisitionStatus.Acquisiting : AcquisitionStatus.Stopped;
                 }
                 catch (Exception e) { Debug.LogException(e); }
-                return AcqusitionStatus.Stopped;
+                return AcquisitionStatus.None;
             }
             set
             {
                 try
                 {
-                    if (value == AcqusitionStatus.Acqusiting)
+                    if (value == AcquisitionStatus.Acquisiting)
                     {
                         imager.IsAcquisiting = true;
                     }
-                    else if (value == AcqusitionStatus.Stopped)
+                    else if (value == AcquisitionStatus.Stopped)
                     {
                         imager.IsAcquisiting = false;
                     }
@@ -167,17 +143,10 @@ namespace Experica
             {
                 try
                 {
-                    if (imager.IsRecording)
-                    {
-                        return RecordStatus.Recording;
-                    }
-                    else
-                    {
-                        return RecordStatus.Stopped;
-                    }
+                    return imager.IsRecording ? RecordStatus.Recording : RecordStatus.Stopped;
                 }
                 catch (Exception e) { Debug.LogException(e); }
-                return RecordStatus.Stopped;
+                return RecordStatus.None;
             }
             set
             {
@@ -191,27 +160,6 @@ namespace Experica
                     {
                         imager.IsRecording = false;
                     }
-                }
-                catch (Exception e) { Debug.LogException(e); }
-            }
-        }
-
-        public string RecordEpoch
-        {
-            get
-            {
-                try
-                {
-                    return imager.RecordEpoch;
-                }
-                catch (Exception e) { Debug.LogException(e); }
-                return null;
-            }
-            set
-            {
-                try
-                {
-                    imager.RecordEpoch = value;
                 }
                 catch (Exception e) { Debug.LogException(e); }
             }

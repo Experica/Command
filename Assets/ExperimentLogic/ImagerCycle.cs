@@ -29,7 +29,8 @@ using ColorSpace = Experica.ColorSpace;
 /// </summary>
 public class ImagerCycle : ImagerCTLogic
 {
-    protected int nsc;
+    int nsc;
+
     protected override void OnStartExperiment()
     {
         nsc = 0;

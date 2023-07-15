@@ -132,7 +132,15 @@ namespace Experica
             return isdin;
         }
 
-        public bool Connect()
+        public void Disconnect()
+        {
+            lock (xippmexlock)
+            {
+                xippmexdotnet.xippmex("close");
+            }
+        }
+
+        public bool Connect(string host = "localhost", int port=0)
         {
             bool r = false;
             try
@@ -144,19 +152,6 @@ namespace Experica
             }
             catch (Exception e) { Debug.LogException(e); }
             return r;
-        }
-
-        public void Disconnect()
-        {
-            lock (xippmexlock)
-            {
-                xippmexdotnet.xippmex("close");
-            }
-        }
-
-        public bool Connect(string host, int port)
-        {
-            return Connect();
         }
 
         public string RecordPath
@@ -193,6 +188,6 @@ namespace Experica
 
         public string RecordEpoch { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string DataFormat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public AcqusitionStatus AcqusitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public AcquisitionStatus AcquisitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

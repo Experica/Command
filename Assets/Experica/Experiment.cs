@@ -228,22 +228,15 @@ namespace Experica
         }
 
         /// <summary>
-        /// Prepare data path if DataPath already been set,
-        /// otherwise get a new unique data path for the experiment
+        /// Prepare data path if `DataPath` is valid, otherwise create a new unique data path based on experiment parameters.
         /// </summary>
         /// <param name="ext">Data file extension</param>
-        /// <param name="searchext">File extension with which the files were found that the new data path is unique from</param>
-
-        /// <summary>
-        /// Prepare data path if DataPath already been set,
-        /// otherwise get a new unique data path for the experiment
-        /// </summary>
-        /// <param name="ext">Data file extension</param>
-        /// <param name="searchext">File extension with which the files were found that the new data path is unique from</param>
-        /// <param name="createdatadir">Whether add a same name dir in datapath</param>
+        /// <param name="searchext">File extension with which the files were searched to get unique index of the new data name</param>
+        /// <param name="addfiledir">Whether add a same name dir in data path</param>
         /// <returns></returns>
-        public virtual string GetDataPath(string ext = "", string searchext = ".yaml", bool createdatadir = false)
+        public string GetDataPath(string ext = "", string searchext = ".yaml", bool addfiledir = false)
         {
+            // make sure if ext and/or searchext, then it is in .* format
             if (!string.IsNullOrEmpty(ext) && !ext.StartsWith("."))
             {
                 ext = "." + ext;
@@ -254,74 +247,33 @@ namespace Experica
             }
             if (string.IsNullOrEmpty(DataPath))
             {
-                var subjectsessionsite = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
-                var dataname = string.Join("_", new[] { subjectsessionsite, ID }.Where(i => !string.IsNullOrEmpty(i)).ToArray());
+                var subjectsessionsite = string.Join("_", new[] { Subject_ID, RecordSession, RecordSite }.Where(i => !string.IsNullOrEmpty(i)));
+                var dataname = string.Join("_", new[] { subjectsessionsite, ID }.Where(i => !string.IsNullOrEmpty(i)));
+                if (string.IsNullOrEmpty(dataname)) { return DataPath; }
                 // Prepare Data Root Dir
                 if (string.IsNullOrEmpty(DataDir))
                 {
                     DataDir = Directory.GetCurrentDirectory();
                 }
-                else
-                {
-                    if (!Directory.Exists(DataDir))
-                    {
-                        Directory.CreateDirectory(DataDir);
-                    }
-                }
                 var subjectdir = Path.Combine(DataDir, Subject_ID);
-                if (!Directory.Exists(subjectdir))
-                {
-                    Directory.CreateDirectory(subjectdir);
-                }
                 var subjectsessionsitedir = Path.Combine(subjectdir, subjectsessionsite);
-                if (!Directory.Exists(subjectsessionsitedir))
-                {
-                    Directory.CreateDirectory(subjectsessionsitedir);
-                }
-                var fs = Directory.GetFiles(subjectsessionsitedir, $"{dataname}_*{searchext}", SearchOption.AllDirectories);
-                var filenameindex = 0;
-                if (fs.Length > 0)
-                {
-                    var ns = new List<int>();
-                    foreach (var f in fs)
-                    {
-                        var s = f.LastIndexOf('_') + 1;
-                        var e = f.LastIndexOf('.') - 1;
-                        if (int.TryParse(f.Substring(s, e - s + 1), out int n))
-                        {
-                            ns.Add(n);
-                        }
-                    }
-                    filenameindex = ns.Max() + 1;
-                }
-                if (createdatadir)
-                {
-                    dataname = $"{dataname}_{filenameindex}";
-                    var subjectsessionsitedatadir = Path.Combine(subjectsessionsitedir, dataname);
-                    if (!Directory.Exists(subjectsessionsitedatadir))
-                    {
-                        Directory.CreateDirectory(subjectsessionsitedatadir);
-                    }
-                    DataPath = Path.Combine(subjectsessionsitedatadir, dataname + (string.IsNullOrEmpty(ext) ? "" : ext));
-                }
-                else
-                {
-                    dataname = $"{dataname}_{filenameindex}" + (string.IsNullOrEmpty(ext) ? "" : ext);
-                    DataPath = Path.Combine(subjectsessionsitedir, dataname);
-                }
+                // Prepare a new unique data file name
+                var newindex = $"{dataname}_*{searchext}".SearchIndexForNewFile(subjectsessionsitedir, SearchOption.AllDirectories);
+                var datafilename = $"{dataname}_{newindex}";
+                var datadir = addfiledir ? Path.Combine(subjectsessionsitedir, datafilename) : subjectsessionsitedir;
+                Directory.CreateDirectory(datadir);
+                DataPath = Path.Combine(datadir, datafilename + (string.IsNullOrEmpty(ext) ? "" : ext));
             }
             else
             {
                 var datadir = Path.GetDirectoryName(DataPath);
-                if (!Directory.Exists(datadir))
-                {
-                    Directory.CreateDirectory(datadir);
-                }
-                var dataname = Path.GetFileNameWithoutExtension(DataPath) + (string.IsNullOrEmpty(ext) ? "" : ext);
-                DataPath = Path.Combine(datadir, dataname);
+                var datafilename = Path.GetFileNameWithoutExtension(DataPath);
+                Directory.CreateDirectory(datadir);
+                DataPath = Path.Combine(datadir, datafilename + (string.IsNullOrEmpty(ext) ? "" : ext));
             }
             return DataPath;
         }
+
     }
 
     public enum Gender

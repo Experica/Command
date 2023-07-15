@@ -25,15 +25,17 @@ namespace Experica
 {
     public enum RecordStatus
     {
+        None,
         Stopped,
         Recording,
         Paused
     }
 
-    public enum AcqusitionStatus
+    public enum AcquisitionStatus
     {
+        None,
         Stopped,
-        Acqusiting,
+        Acquisiting,
         Paused
     }
 
@@ -41,9 +43,8 @@ namespace Experica
     {
         string DataFormat { get; set; }
         string RecordPath { get; set; }
-        string RecordEpoch { get; set; }
         RecordStatus RecordStatus { get; set; }
-        AcqusitionStatus AcqusitionStatus { get; set; }
+        AcquisitionStatus AcquisitionStatus { get; set; }
     }
 
     public interface IRecorder : IRecord, ISignal
