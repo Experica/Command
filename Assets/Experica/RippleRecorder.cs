@@ -154,6 +154,16 @@ namespace Experica
             return r;
         }
 
+        public bool StartRecordAndAcquisite()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StopAcquisiteAndRecord()
+        {
+            throw new NotImplementedException();
+        }
+
         public string RecordPath
         {
             set

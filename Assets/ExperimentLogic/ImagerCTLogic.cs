@@ -62,8 +62,7 @@ public class ImagerCTLogic : ConditionTestLogic
                 datadir = Path.Combine(datadir, $"Epoch{epoch}");
                 Directory.CreateDirectory(datadir);
                 recorder.RecordPath = Path.Combine(datadir, dataname);
-                recorder.RecordStatus = RecordStatus.Recording;
-                recorder.AcquisitionStatus = AcquisitionStatus.Acquisiting;
+                recorder.StartRecordAndAcquisite();
             }
         }
     }
@@ -72,8 +71,7 @@ public class ImagerCTLogic : ConditionTestLogic
     {
         if (recorder != null)
         {
-            recorder.AcquisitionStatus = AcquisitionStatus.Stopped;
-            recorder.RecordStatus = RecordStatus.Stopped;
+            recorder.StopAcquisiteAndRecord();
         }
     }
 

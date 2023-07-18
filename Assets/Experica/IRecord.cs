@@ -45,6 +45,8 @@ namespace Experica
         string RecordPath { get; set; }
         RecordStatus RecordStatus { get; set; }
         AcquisitionStatus AcquisitionStatus { get; set; }
+        bool StartRecordAndAcquisite();
+        bool StopAcquisiteAndRecord();
     }
 
     public interface IRecorder : IRecord, ISignal

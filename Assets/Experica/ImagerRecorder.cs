@@ -185,5 +185,25 @@ namespace Experica
                 catch (Exception e) { Debug.LogException(e); }
             }
         }
+
+        public bool StartRecordAndAcquisite()
+        {
+            try
+            {
+                return imager.StartRecordAndAcquisite();
+            }
+            catch (Exception e) { Debug.LogException(e); }
+            return false;
+        }
+
+        public bool StopAcquisiteAndRecord()
+        {
+            try
+            {
+                return imager.StopAcquisiteAndRecord();
+            }
+            catch (Exception e) { Debug.LogException(e); }
+            return false;
+        }
     }
 }

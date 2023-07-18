@@ -125,6 +125,16 @@ namespace Experica
             catch (Exception e) { Debug.LogException(e); }
         }
 
+        public bool StartRecordAndAcquisite()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StopAcquisiteAndRecord()
+        {
+            throw new NotImplementedException();
+        }
+
         public string RecordPath
         {
             get

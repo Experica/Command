@@ -26,7 +26,7 @@ EnvParam:
   MarkOffColor@Marker@Marker: 0 0 0 1
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 270
+  Ori@GratingQuad@GratingQuad: 90
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 95.68 53.82 1
@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ISI
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

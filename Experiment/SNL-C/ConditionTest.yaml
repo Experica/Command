@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ISI
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement

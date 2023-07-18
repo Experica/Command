@@ -51,7 +51,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99699
+  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99489
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ISI
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
