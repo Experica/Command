@@ -90,5 +90,38 @@ namespace Experica
         public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
         public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
         public Dictionary<string, Display> Display { get; set; } = new Dictionary<string, Display>();
+
+        public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(Dictionary<string, Dictionary<string, List<string>>> rule)
+        {
+            if (!rule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
+            {
+                var gratingquadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" },
+                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position", "Diameter" }
+                };
+                rule[EnvironmentObject.GratingQuad.ToString()] = gratingquadinheritfrom;
+            }
+            if (!rule.ContainsKey(EnvironmentObject.Quad.ToString()))
+            {
+                var quadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" },
+                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" }
+                };
+                rule[EnvironmentObject.Quad.ToString()] = quadinheritfrom;
+            }
+            if (!rule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
+            {
+                var imagequadinheritfrom = new Dictionary<string, List<string>>
+                {
+                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Position", "Diameter" },
+                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Position" }
+                };
+                rule[EnvironmentObject.ImageQuad.ToString()] = imagequadinheritfrom;
+            }
+            return rule;
+        }
+
     }
 }

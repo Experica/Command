@@ -43,10 +43,6 @@ namespace Experica.Command
     {
         public CommandConfigManager configmanager;
         public CommandConfig config;
-        /// <summary>
-        /// The file storing serialized CommandConfigManager object
-        /// </summary>
-        readonly string configmanagerpath = "CommandConfigManager.yaml";
 
         public Toggle host, server, start, startsession, pause;
         public Dropdown exs, exss;
@@ -70,6 +66,8 @@ namespace Experica.Command
         public ConsolePanel consolepanel;
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
+
+        const string configmanagerpath = "CommandConfigManager.yaml";
         int lastwindowwidth = 1024, lastwindowheight = 768;
 
         void Awake()
@@ -84,7 +82,7 @@ namespace Experica.Command
                 configmanager = new CommandConfigManager();
             }
 
-            // Load the config file if there is a path in configmanager
+            // Load the config file according to configmanager
             if (configmanager.AutoLoadSaveLastConfig)
             {
                 config = LoadConfig(configmanager.LastConfigFilePath);
@@ -100,7 +98,7 @@ namespace Experica.Command
             }
             if (cfg == null)
             {
-                configmanager.LastConfigFilePath = null;
+                configmanager.LastConfigFilePath = null; // forgot why add this line
                 if (otherwisedefault)
                 {
                     cfg = new CommandConfig();
@@ -112,41 +110,9 @@ namespace Experica.Command
                 {
                     cfg.EnvCrossInheritRule = new Dictionary<string, Dictionary<string, List<string>>>();
                 }
-                cfg.EnvCrossInheritRule = ValidateEnvCrossInheritRule(cfg.EnvCrossInheritRule);
+                cfg.EnvCrossInheritRule = CommandConfig.ValidateEnvCrossInheritRule(cfg.EnvCrossInheritRule);
             }
             return cfg;
-        }
-
-        public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(Dictionary<string, Dictionary<string, List<string>>> rule)
-        {
-            if (!rule.ContainsKey(EnvironmentObject.GratingQuad.ToString()))
-            {
-                var gratingquadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Ori", "Position" },
-                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position", "Diameter" }
-                };
-                rule[EnvironmentObject.GratingQuad.ToString()] = gratingquadinheritfrom;
-            }
-            if (!rule.ContainsKey(EnvironmentObject.Quad.ToString()))
-            {
-                var quadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" },
-                    [EnvironmentObject.ImageQuad.ToString()] = new List<string> { "Position" }
-                };
-                rule[EnvironmentObject.Quad.ToString()] = quadinheritfrom;
-            }
-            if (!rule.ContainsKey(EnvironmentObject.ImageQuad.ToString()))
-            {
-                var imagequadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [EnvironmentObject.GratingQuad.ToString()] = new List<string> { "Position", "Diameter" },
-                    [EnvironmentObject.Quad.ToString()] = new List<string> { "Position" }
-                };
-                rule[EnvironmentObject.ImageQuad.ToString()] = imagequadinheritfrom;
-            }
-            return rule;
         }
 
         void Start()
@@ -563,6 +529,7 @@ namespace Experica.Command
 
         public void OnBeginStartExperiment()
         {
+            // de-activate related UIs
             exs.interactable = false;
             newex.interactable = false;
             saveex.interactable = false;
@@ -669,6 +636,42 @@ namespace Experica.Command
 
         public void OnBeginStopExperiment()
         {
+        }
+
+        public void OnEndStopExperimentSession()
+        {
+            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
+            if (exsmanager.esl.exsession.NotifyExperimenter)
+            {
+                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment Session \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+            }
+        }
+
+        public void OnEndStopExperiment()
+        {
+            alsmanager?.RpcNotifyStopExperiment();
+            exmanager.el.AutoSaveData();
+            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
+            if (exmanager.el.ex.NotifyExperimenter)
+            {
+                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+            }
+
+            exmanager.OnELStop();
+
+            // Return normal when experiment stopped
+            Cursor.visible = true;
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+            QualitySettings.vSyncCount = 1;
+            QualitySettings.maxQueuedFrames = 2;
+            Time.fixedDeltaTime = 0.016666f;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
+            GCSettings.LatencyMode = GCLatencyMode.Interactive;
+
+            // re-activate UIs that's been de-activated in experiment starting process
             exs.interactable = true;
             newex.interactable = true;
             saveex.interactable = true;
@@ -689,51 +692,6 @@ namespace Experica.Command
             }
             startstoptext.text = "Start";
             pause.interactable = false;
-        }
-
-        public void OnEndStopExperimentSession()
-        {
-            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
-            if (exsmanager.esl.exsession.NotifyExperimenter)
-            {
-                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment Session \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
-            }
-        }
-
-        public void OnEndStopExperiment()
-        {
-            alsmanager?.RpcNotifyStopExperiment();
-            if (config.AutoSaveData)
-            {
-                exmanager.el.SaveData();
-            }
-            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
-            if (exmanager.el.ex.NotifyExperimenter)
-            {
-                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
-            }
-
-            exmanager.OnELStop();
-
-            // Return normal when experiment stopped
-            Cursor.visible = true;
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-            QualitySettings.vSyncCount = 1;
-            QualitySettings.maxQueuedFrames = 2;
-            Time.fixedDeltaTime = 0.016666f;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
-            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
-            GCSettings.LatencyMode = GCLatencyMode.Interactive;
-        }
-
-        public void SaveData()
-        {
-            if (exmanager.el != null)
-            {
-                exmanager.el.SaveData();
-            }
         }
 
         public void OnBeginPauseExperiment()

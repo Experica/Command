@@ -145,7 +145,8 @@ public class ImagerCycle : ImagerCTLogic
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
-                    StopEpochRecord();
+                    // no need to save epoch `CondTest` for single epoch periodic modulation
+                    StopEpochRecord(saveepoch: false);
                     StartStopExperiment(false);
                     return;
                 }

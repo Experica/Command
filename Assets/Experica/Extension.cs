@@ -60,7 +60,7 @@ namespace Experica
     public enum DataFormat
     {
         YAML,
-        EXPERICA
+        EX
     }
 
     public static class Extension
@@ -1559,6 +1559,26 @@ namespace Experica
             var d = (Math.Round(targetdur_ms / t) - 0.8) * t;
             if (isint) { d = Math.Round(d); }
             return d;
+        }
+
+        public static void Save(this string filepath, object obj, bool rmext = false)
+        {
+            var ext = Path.GetExtension(filepath);
+            var file = rmext ? Path.ChangeExtension(filepath, null) : filepath;
+            switch (ext)
+            {
+                case ".EX":
+                case ".ex":
+                    throw new NotImplementedException();
+                    break;
+                case ".YAML":
+                case ".yaml":
+                    file.WriteYamlFile(obj);
+                    break;
+                default:
+                    Debug.LogWarning($"Saving format: \"{ext}\" not supported.");
+                    break;
+            }
         }
     }
 }

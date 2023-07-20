@@ -31,6 +31,9 @@ public class ConditionTestLogic : ExperimentLogic
     protected IGPIO gpio;
     protected bool syncvalue;
 
+    /// <summary>
+    /// init gpio and sync states
+    /// </summary>
     protected override void OnStartExperiment()
     {
         if (ex.EventSyncProtocol.SyncMethods.Contains(SyncMethod.GPIO))
@@ -53,6 +56,9 @@ public class ConditionTestLogic : ExperimentLogic
         SyncEvent();
     }
 
+    /// <summary>
+    /// release gpio and sync states
+    /// </summary>
     protected override void OnExperimentStopped()
     {
         SetEnvActiveParam("Visible", false);
@@ -91,7 +97,7 @@ public class ConditionTestLogic : ExperimentLogic
     }
 
     /// <summary>
-    /// Sync and Register Event Name/Value with External Device through EventSyncProtocol
+    /// Sync and Register Event Name/Time/Value with External Device according to EventSyncProtocol
     /// </summary>
     /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
     /// <param name="et">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>

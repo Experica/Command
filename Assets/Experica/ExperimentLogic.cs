@@ -57,6 +57,7 @@ namespace Experica
             }
         }
         #endregion
+
         public Experiment ex;
         public Timer timer = new Timer();
         public EnvironmentManager envmanager = new EnvironmentManager();
@@ -90,6 +91,9 @@ namespace Experica
         public double PreIBIHold { get { return timer.ElapsedMillisecond - PreIBIOnTime; } }
         public double BlockHold { get { return timer.ElapsedMillisecond - BlockOnTime; } }
         public double SufIBIHold { get { return timer.ElapsedMillisecond - SufIBIOnTime; } }
+        /// <summary>
+        /// Get the CommandConfig in the Experiment of the ExperimentLogic
+        /// </summary>
         public CommandConfig Config { get { return ex.Config; } }
 
         CONDSTATE condstate = CONDSTATE.NONE;
@@ -306,70 +310,62 @@ namespace Experica
             condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockidx), envmanager, pushexcludefactors);
         }
 
-        public virtual string DataPath(DataFormat dataFormat)
+        /// <summary>
+        /// user function for preparing `DataPath` for saving experiment data
+        /// </summary>
+        /// <param name="dataFormat"></param>
+        /// <returns></returns>
+        protected virtual string GetDataPath(DataFormat dataFormat)
         {
             var extension = dataFormat.ToString().ToLower();
             return ex.GetDataPath(ext: extension, searchext: extension);
         }
 
-        public virtual void SaveData()
+        public void AutoSaveData(bool force = false)
         {
-            if (condtestmanager.condtest.Count > 0)
+            if (!force && !ex.Config.AutoSaveData) { return; }
+
+            ex.CondTest = condtestmanager.condtest;
+            ex.EnvParam = envmanager.GetActiveParams();
+            ex.Version = Extension.ExperimentDataVersion;
+            // Hold references to data that may not need to save
+            Dictionary<string, Dictionary<string, List<object>>[]> m = null;
+            CommandConfig cfg = ex.Config;
+            if (!cfg.SaveConfigInData)
             {
-                ex.CondTest = condtestmanager.condtest;
-                ex.EnvParam = envmanager.GetActiveParams();
-                ex.Version = Extension.ExperimentDataVersion;
-                // Hold references to data that may not need to save
-                Dictionary<string, Dictionary<string, List<object>>[]> m = null;
-                CommandConfig cfg = ex.Config;
-                if (!cfg.SaveConfigInData)
-                {
-                    ex.Config = null;
-                }
-                else
-                {
-                    if (!cfg.SaveConfigDisplayMeasurementInData)
-                    {
-                        m = cfg.Display.ToDictionary(kv => kv.Key, kv => new[] { kv.Value.IntensityMeasurement, kv.Value.SpectralMeasurement });
-                        foreach (var d in cfg.Display.Values)
-                        {
-                            d.IntensityMeasurement = null;
-                            d.SpectralMeasurement = null;
-                        }
-                    }
-                }
-                // Save Data
-                switch (cfg.SaveDataFormat)
-                {
-                    case DataFormat.EXPERICA:
-                        DataPath(DataFormat.EXPERICA).Save(ex);
-                        break;
-                    case DataFormat.YAML:
-                        DataPath(DataFormat.YAML).WriteYamlFile(ex);
-                        break;
-                }
-                ex.CondTest = null;
-                ex.DataPath = null; // Clear DataPath, so it will be safely generated next time
-                // Restore data that may not be saved
-                if (!cfg.SaveConfigInData)
-                {
-                    ex.Config = cfg;
-                }
-                else
-                {
-                    if (!cfg.SaveConfigDisplayMeasurementInData)
-                    {
-                        foreach (var d in cfg.Display.Keys)
-                        {
-                            cfg.Display[d].IntensityMeasurement = m[d][0];
-                            cfg.Display[d].SpectralMeasurement = m[d][1];
-                        }
-                    }
-                }
+                ex.Config = null;
             }
             else
             {
-                Debug.Log("CondTest Empty, Skip Saving Data.");
+                if (!cfg.SaveConfigDisplayMeasurementInData)
+                {
+                    m = cfg.Display.ToDictionary(kv => kv.Key, kv => new[] { kv.Value.IntensityMeasurement, kv.Value.SpectralMeasurement });
+                    foreach (var d in cfg.Display.Values)
+                    {
+                        d.IntensityMeasurement = null;
+                        d.SpectralMeasurement = null;
+                    }
+                }
+            }
+
+            GetDataPath(cfg.SaveDataFormat).Save(ex);
+
+            ex.CondTest = null;
+            // Restore data that may not be saved
+            if (!cfg.SaveConfigInData)
+            {
+                ex.Config = cfg;
+            }
+            else
+            {
+                if (!cfg.SaveConfigDisplayMeasurementInData)
+                {
+                    foreach (var d in cfg.Display.Keys)
+                    {
+                        cfg.Display[d].IntensityMeasurement = m[d][0];
+                        cfg.Display[d].SpectralMeasurement = m[d][1];
+                    }
+                }
             }
         }
 
@@ -429,7 +425,8 @@ namespace Experica
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
         }
 
-        public virtual void PauseResumeExperiment(bool ispause)
+        #region Experiment Control
+        public void PauseResumeExperiment(bool ispause)
         {
             if (ispause)
             {
@@ -459,16 +456,25 @@ namespace Experica
             islogicactive = true;
         }
 
+        /// <summary>
+        /// main function to control experiment start/stop, following various steps in the starting/stopping process.
+        /// </summary>
+        /// <param name="isstart"></param>
         public void StartStopExperiment(bool isstart)
         {
             if (isstart)
             {
                 OnBeginStartExperiment?.Invoke();
 
+                // clean for new experiment
                 condstate = CONDSTATE.NONE;
                 trialstate = TRIALSTATE.NONE;
                 blockstate = BLOCKSTATE.NONE;
                 condtestmanager.Clear();
+                // clear `DataPath` for new experiment, 
+                // so that new `DataPath` could be generated later, 
+                // preventing overwriting existing files.
+                ex.DataPath = null;
 
                 OnStartExperiment();
                 PrepareCondition(regeneratecond);
@@ -487,6 +493,9 @@ namespace Experica
             }
         }
 
+        /// <summary>
+        /// empty user function for clean/init of new experiment
+        /// </summary>
         protected virtual void OnStartExperiment()
         {
         }
@@ -515,15 +524,24 @@ namespace Experica
             islogicactive = true;
         }
 
+        /// <summary>
+        /// user function for starting timeline sync of all hardware/software systems involved in experiment
+        /// </summary>
         protected virtual void StartExperimentTimeSync()
         {
             timer.Restart();
         }
 
+        /// <summary>
+        /// empty user function when experiment started
+        /// </summary>
         protected virtual void OnExperimentStarted()
         {
         }
 
+        /// <summary>
+        /// empty user function before experiment stop
+        /// </summary>
         protected virtual void OnStopExperiment()
         {
         }
@@ -551,14 +569,21 @@ namespace Experica
             OnEndStopExperiment?.Invoke();
         }
 
+        /// <summary>
+        /// user function for stopping timeline sync of all hardware/software systems involved in experiment
+        /// </summary>
         protected virtual void StopExperimentTimeSync()
         {
             timer.Stop();
         }
 
+        /// <summary>
+        /// empty user function after experiment stopped
+        /// </summary>
         protected virtual void OnExperimentStopped()
         {
         }
+        #endregion
 
         void Awake()
         {

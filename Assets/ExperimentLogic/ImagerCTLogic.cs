@@ -31,23 +31,51 @@ using ColorSpace = Experica.ColorSpace;
 public class ImagerCTLogic : ConditionTestLogic
 {
     IRecorder markrecorder;
+    bool online;
+    string dataroot;
+    string currentepoch;
 
+    /// <summary>
+    /// init Imager and mark recorders
+    /// </summary>
     protected override void OnStartExperiment()
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
-        StopEpochRecord();
+        recorder?.StopAcquisiteAndRecord();
         markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();
     }
 
+    /// <summary>
+    /// save experiment at the beginning for online analysis
+    /// </summary>
+    protected override void OnExperimentStarted()
+    {
+        online = GetExParam<bool>("OnLine");
+        if (online)
+        {
+            // create data folder for Imager recording
+            var datapath = ex.GetDataPath(addfiledir: true);
+            dataroot = Path.GetDirectoryName(datapath);
+            AutoSaveData();
+        }
+    }
+
+    /// <summary>
+    /// release all recorders
+    /// </summary>
     protected override void OnExperimentStopped()
     {
-        StopEpochRecord();
+        recorder?.StopAcquisiteAndRecord();
         recorder = null;
         markrecorder = null;
         base.OnExperimentStopped();
     }
 
+    /// <summary>
+    /// prepare epoch file path for Imager and start recording
+    /// </summary>
+    /// <param name="epoch"></param>
     protected void StartEpochRecord(int epoch = 0)
     {
         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
@@ -59,7 +87,8 @@ public class ImagerCTLogic : ConditionTestLogic
                 var datadir = Path.GetDirectoryName(datapath);
                 var dataname = Path.GetFileNameWithoutExtension(datapath);
                 // save Imager frames in Epoch subfolder
-                datadir = Path.Combine(datadir, $"Epoch{epoch}");
+                currentepoch = $"Epoch{epoch}";
+                datadir = Path.Combine(datadir, currentepoch);
                 Directory.CreateDirectory(datadir);
                 recorder.RecordPath = Path.Combine(datadir, dataname);
                 recorder.StartRecordAndAcquisite();
@@ -67,11 +96,18 @@ public class ImagerCTLogic : ConditionTestLogic
         }
     }
 
-    protected void StopEpochRecord()
+    /// <summary>
+    /// stop Imager recording
+    /// </summary>
+    /// <param name="saveepoch">save epoch's `CondTest` for online analysis</param>
+    protected void StopEpochRecord(bool saveepoch = true)
     {
-        if (recorder != null)
+        recorder?.StopAcquisiteAndRecord();
+        if (online && saveepoch)
         {
-            recorder.StopAcquisiteAndRecord();
+            var epochpath = Path.Combine(dataroot, $".{currentepoch}.{Config.SaveDataFormat.ToString().ToLower()}");
+            var ct = condtestmanager.CurrentCondTest;
+            epochpath.Save(ct, rmext: true);
         }
     }
 

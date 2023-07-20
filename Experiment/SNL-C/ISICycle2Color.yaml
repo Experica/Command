@@ -51,7 +51,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99489
+  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99895
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -67,7 +67,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 3
+CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -120,6 +120,7 @@ Param:
   Intercept: 0
   CycleDirection: 1
   CycleSyncFreq: 0
+  OnLine: True
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:

@@ -42,6 +42,7 @@ namespace Experica
         int condtestidx = -1;
         public int CondTestIndex { get { return condtestidx; } }
 
+
         public void Clear()
         {
             condtest.Clear();
@@ -111,6 +112,11 @@ namespace Experica
         bool NotifyCondTestAndEnd(int startidx, List<CONDTESTPARAM> notifyparam, double notifytime)
         {
             return NotifyCondTest(startidx, notifyparam) && OnNotifyCondTestEnd != null && OnNotifyCondTestEnd(notifytime);
+        }
+
+        public Dictionary<CONDTESTPARAM, object> CurrentCondTest
+        {
+            get { return condtest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestidx]); }
         }
 
         public void Add(CONDTESTPARAM paramname, object paramvalue)
@@ -200,6 +206,7 @@ namespace Experica
                 condtest[paramname] = vs;
             }
         }
+
     }
 
 }
