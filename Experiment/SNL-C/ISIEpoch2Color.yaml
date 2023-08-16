@@ -48,7 +48,7 @@ RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 3
 BlockRepeat: 1
@@ -59,7 +59,7 @@ CondDur: 4000
 SufICI: 1000
 PreITI: 2000
 TrialDur: 0
-SufITI: 3000
+SufITI: 1000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0

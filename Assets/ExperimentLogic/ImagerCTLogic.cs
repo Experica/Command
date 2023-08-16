@@ -31,7 +31,7 @@ using ColorSpace = Experica.ColorSpace;
 /// </summary>
 public class ImagerCTLogic : ConditionTestLogic
 {
-    IRecorder markrecorder;
+    IRecorder markrecorder; // for camera shutter signals of each frame
     bool online;
     string dataroot;
     string currentepoch;
@@ -146,6 +146,9 @@ public class ImagerCTLogic : ConditionTestLogic
             }
         }
 
+        // get conditions from file
+        base.GenerateFinalCondition();
+
         if (color != null)
         {
             SetEnvActiveParam("MinColor", color[0]);
@@ -154,13 +157,11 @@ public class ImagerCTLogic : ConditionTestLogic
             {
                 SetEnvActiveParam("BGColor", wp[0]);
             }
-        }
 
-        base.GenerateFinalCondition();
-
-        if (ex.ID == "ISIEpoch2Color")
-        {
-            condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
+            if (ex.ID == "ISIEpoch2Color")
+            {
+                condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
+            }
         }
     }
 
