@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
@@ -70,8 +70,8 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
 BlockParam: []
-PreICI: 0
-CondDur: 50
+PreICI: 200
+CondDur: 100
 SufICI: 0
 PreITI: 0
 TrialDur: 0

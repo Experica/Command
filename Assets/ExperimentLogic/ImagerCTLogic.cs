@@ -43,7 +43,7 @@ public class ImagerCTLogic : ConditionTestLogic
     {
         recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         recorder?.StopAcquisiteAndRecord();
-        markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
+        //markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();
     }
 

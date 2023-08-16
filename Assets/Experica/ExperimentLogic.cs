@@ -323,7 +323,14 @@ namespace Experica
 
         public void AutoSaveData(bool force = false)
         {
-            if (!force && !ex.Config.AutoSaveData) { return; }
+            if (!force)
+            {
+                if (ex.Config.AutoSaveData)
+                {
+                    if (ex.CondTestAtState == CONDTESTATSTATE.NONE) { return; }
+                }
+                else { return; }
+            }
 
             ex.CondTest = condtestmanager.condtest;
             ex.EnvParam = envmanager.GetActiveParams();
