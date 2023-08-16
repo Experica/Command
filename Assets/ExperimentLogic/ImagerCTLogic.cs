@@ -21,6 +21,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Experica;
 using System.IO;
 using ColorSpace = Experica.ColorSpace;
@@ -156,6 +157,11 @@ public class ImagerCTLogic : ConditionTestLogic
         }
 
         base.GenerateFinalCondition();
+
+        if (ex.ID == "ISIEpoch2Color")
+        {
+            condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
+        }
     }
 
     protected override void StartExperimentTimeSync()

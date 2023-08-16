@@ -14,13 +14,13 @@ Subject_Log:
 EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -45,14 +45,14 @@ EnvParam:
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
+  GratingType@GratingQuad@GratingQuad: Square
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: true
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
@@ -60,7 +60,7 @@ Cond:
 LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
-RecordSession: ISI
+RecordSession: ''
 RecordSite: Full
 DataDir: I:\
 DataPath: 
@@ -99,6 +99,6 @@ EventSyncProtocol:
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
 NotifyExperimenter: true
-Version: 1
+Version: 2
 Config: 
 CondTest: 

@@ -3,7 +3,7 @@ Name: Flash2Color
 Designer: Alex
 Experimenter: PCL
 Log: 
-Subject_ID: AG3
+Subject_ID: Test
 Subject_Name: AG3
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -13,27 +13,27 @@ Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 3.5
-  MarkerPosition@Marker@Marker: -31.18 16.77 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 33
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Diameter@Quad@Quad: 10
-  Size@Quad@Quad: 71.89 57.06 1
+  Size@Quad@Quad: 10 10 1
   Color@Quad@Quad: 0.6327 0.382 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
-  MaskSigma@Quad@Quad: 0.150000006
+  MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
   Position@Quad@Quad: 0 0 0
@@ -43,14 +43,14 @@ Cond:
 LogicPath: SpikeGLXColor
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: ODL18
-DataDir: X:\
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 100
+CondRepeat: 5
 BlockRepeat: 1
 BlockParam: []
 PreICI: 0
@@ -100,7 +100,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: Z
-TimerDriftSpeed: 6.4999999999999994E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
