@@ -7,7 +7,7 @@ Subject_ID: Test
 Subject_Name: AG3
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 0
+Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 0
 Subject_Log: 
@@ -15,11 +15,11 @@ EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
+  MarkerSize@Marker@Marker: 10
+  MarkerPosition@Marker@Marker: -16.83 11.38 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -93,7 +93,6 @@ InheritParam:
 - Subject_Name
 - Subject_Species
 - Subject_Gender
-- Subject_Age
 - Subject_Size
 - Subject_Weight
 - Hemisphere
@@ -104,6 +103,7 @@ InheritParam:
 - TimerDriftSpeed
 - Display_ID
 - NotifyExperimenter
+- Subject_Birth
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera

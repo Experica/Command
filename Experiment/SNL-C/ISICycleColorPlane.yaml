@@ -1,29 +1,29 @@
 ID: ISICycleColorPlane
 Name: ISICycleColorPlane
 Designer: Alex
-Experimenter: PCL
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AG1
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 8.7
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 3.5
-  MarkerPosition@Marker@Marker: -27.36 14.63 -1000
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 10
+  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777803
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -32,7 +32,7 @@ EnvParam:
   Size@GratingQuad@GratingQuad: 58.23 32.75 1
   MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.150000006
+  MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
@@ -58,10 +58,10 @@ EnvParam:
 CondPath: ''
 Cond: 
 LogicPath: ImagerCycle
-Hemisphere: Left
-Eye: Left
-RecordSession: V1
-RecordSite: ODL17
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODR6
 DataDir: X:\
 DataPath: 
 Input: false
@@ -93,7 +93,6 @@ InheritParam:
 - Subject_Name
 - Subject_Species
 - Subject_Gender
-- Subject_Age
 - Subject_Size
 - Subject_Weight
 - Hemisphere
@@ -104,6 +103,7 @@ InheritParam:
 - TimerDriftSpeed
 - Display_ID
 - NotifyExperimenter
+- Subject_Birth
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
@@ -120,16 +120,16 @@ Param:
   Intercept: 0
   CycleDirection: -1
   CycleSyncFreq: 0
-TimerDriftSpeed: 6.4999999999999994E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: ''
 CondTestShowLevel: NONE
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

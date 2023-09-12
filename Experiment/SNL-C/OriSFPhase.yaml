@@ -7,23 +7,23 @@ Subject_ID: AF8
 Subject_Name: AF8
 Subject_Species: Macaque
 Subject_Gender: Female
-Subject_Age: 9
+Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 8.69999981
+Subject_Weight: 8.7
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -17.66 12.74 -1000
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 10
+  MarkerPosition@Marker@Marker: -16.83 11.38 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333337
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 75
@@ -32,13 +32,14 @@ EnvParam:
   Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.150000006
+  MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.0500000007
+  SpatialFreq@GratingQuad@GratingQuad: 0.05
   TemporalFreq@GratingQuad@GratingQuad: 2
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
+  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
   MinColor@GratingQuad@GratingQuad: 0 3.886E-16 4.996E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
@@ -52,22 +53,24 @@ EnvParam:
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 0.03432 1.819 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: Condition\OriSFPhase.yaml
 Cond: 
-ExLogicPath: SpikeGLXColorCT
+LogicPath: ConditionTestLogic
+Hemisphere: None
+Eye: None
 RecordSession: HLV1
 RecordSite: ODR6
 DataDir: X:\
 DataPath: 
+Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 2
 BlockRepeat: 1
 BlockParam:
 - ''
-Input: false
 PreICI: 0
 CondDur: 22
 SufICI: 0
@@ -84,21 +87,7 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
-- Subject_ID
-- Subject_Name
-- Subject_Species
-- Subject_Gender
-- Subject_Age
-- Subject_Size
-- Subject_Weight
-- RecordSession
-- RecordSite
-- DataDir
-- Experimenter
-- TimerDriftSpeed
-- ResponseDelay
-- Display_ID
+InheritParam: []
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -113,7 +102,7 @@ EnvInheritParam:
 Param:
   ColorSpace: DKL
   Color: X
-TimerDriftSpeed: 6.4999999999999994E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
@@ -121,9 +110,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ''
-ResponseDelay: 15
+CondTestShowLevel: SHORT
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 
-CondTestShowLevel: SHORT
-SendMail: true
