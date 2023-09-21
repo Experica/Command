@@ -1,44 +1,44 @@
 ID: HartleySubspace
 Name: HartleySubspace
 Designer: Alex
-Experimenter: PCL
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AG3
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 8.7
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 10
+  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77777779
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 67.7509766
+  Ori@GratingQuad@GratingQuad: 67.75098
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 10 10 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.150000006
+  MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 4.75394583
+  SpatialFreq@GratingQuad@GratingQuad: 4.753946
   TemporalFreq@GratingQuad@GratingQuad: 0
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.200000003
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.625
   MinColor@GratingQuad@GratingQuad: 0.3673 0.618 0 1
@@ -58,10 +58,10 @@ EnvParam:
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: SpikeGLXColorCT
-Hemisphere: Left
-Eye: Right
-RecordSession: ISI
-RecordSite: Full
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODR6
 DataDir: X:\
 DataPath: 
 Input: false
@@ -94,7 +94,6 @@ InheritParam:
 - Subject_Gender
 - Subject_Size
 - Subject_Species
-- Subject_Age
 - Subject_Weight
 - Hemisphere
 - Eye
@@ -104,6 +103,7 @@ InheritParam:
 - TimerDriftSpeed
 - Display_ID
 - NotifyExperimenter
+- Subject_Birth
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -118,16 +118,16 @@ EnvInheritParam:
 Param:
   ColorSpace: LMS
   Color: Zmcc
-TimerDriftSpeed: 6.4999999999999994E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: ''
 CondTestShowLevel: SHORT
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

@@ -91,7 +91,7 @@ namespace Experica
         public string Subject_Name { get; set; } = "";
         public string Subject_Species { get; set; } = "";
         public Gender Subject_Gender { get; set; } = Gender.None;
-        public float Subject_Age { get; set; } = 0;
+        public string Subject_Birth { get; set; } = "";
         public Vector3 Subject_Size { get; set; } = Vector3.zero;
         public float Subject_Weight { get; set; } = 0;
         public string Subject_Log { get; set; } = "";

@@ -1,15 +1,15 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: PCL
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AG3
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 8.7
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
@@ -41,10 +41,10 @@ EnvParam:
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
-Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODR6
 DataDir: X:\
 DataPath: 
 Input: false
@@ -75,7 +75,6 @@ InheritParam:
 - Subject_Name
 - Subject_Species
 - Subject_Gender
-- Subject_Age
 - Subject_Size
 - Subject_Weight
 - Hemisphere
@@ -86,6 +85,7 @@ InheritParam:
 - Display_ID
 - NotifyExperimenter
 - Eye
+- Subject_Birth
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -107,9 +107,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: ''
 CondTestShowLevel: FULL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

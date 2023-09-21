@@ -1,15 +1,15 @@
 ID: ISIEpoch2Color
 Name: ISIEpoch2Color
 Designer: Alex
-Experimenter: PCL
+Experimenter: PL
 Log: 
-Subject_ID: Test
-Subject_Name: AG3
+Subject_ID: AF8
+Subject_Name: AF8
 Subject_Species: Macaque
-Subject_Gender: Male
-Subject_Age: 0
+Subject_Gender: Female
+Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 8.7
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
@@ -18,9 +18,9 @@ EnvParam:
   ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerSize@Marker@Marker: 10
+  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -41,11 +41,11 @@ EnvParam:
 CondPath: ''
 Cond: 
 LogicPath: ImagerCTLogic
-Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: I:\
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODR6
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: Ascending
@@ -76,7 +76,6 @@ InheritParam:
 - Subject_Name
 - Subject_Species
 - Subject_Gender
-- Subject_Age
 - Subject_Size
 - Subject_Weight
 - Hemisphere
@@ -87,6 +86,7 @@ InheritParam:
 - TimerDriftSpeed
 - Display_ID
 - NotifyExperimenter
+- Subject_Birth
 EnvInheritParam:
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
@@ -106,9 +106,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ROGPG279Q
+Display_ID: ''
 CondTestShowLevel: FULL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 
