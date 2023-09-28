@@ -20,7 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using UnityEngine.Networking;
+using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Reflection;
@@ -99,21 +99,21 @@ namespace Experica
 
         public void ParseNetworkBehaviour(NetworkBehaviour nb, string nbname)
         {
-            var nbtype = nb.GetType();
-            foreach (var f in nbtype.GetFields())
-            {
-                if (f.IsDefined(typeof(SyncVarAttribute), true))
-                {
-                    syncvar_nb_so[f.Name + "@" + nbname] = new PropertyAccess(nbtype, "Network" + f.Name);
-                }
-            }
-            foreach (var m in nbtype.GetMethods())
-            {
-                if (m.Name.StartsWith("CallRpc"))
-                {
-                    clientrpc_nb_so[m.Name.Substring(4) + "@" + nbname] = new MethodAccess(nbtype, m.Name);
-                }
-            }
+            // var nbtype = nb.GetType();
+            // foreach (var f in nbtype.GetFields())
+            // {
+            //     if (f.IsDefined(typeof(SyncVarAttribute), true))
+            //     {
+            //         syncvar_nb_so[f.Name + "@" + nbname] = new PropertyAccess(nbtype, "Network" + f.Name);
+            //     }
+            // }
+            // foreach (var m in nbtype.GetMethods())
+            // {
+            //     if (m.Name.StartsWith("CallRpc"))
+            //     {
+            //         clientrpc_nb_so[m.Name.Substring(4) + "@" + nbname] = new MethodAccess(nbtype, m.Name);
+            //     }
+            // }
         }
 
         public void UpdateActiveNetworkBehaviour()
@@ -285,7 +285,7 @@ namespace Experica
         {
             foreach (var nb in networkbehaviour_sceneobject.Values)
             {
-                nb.SetDirtyBit(uint.MaxValue);
+                // nb.SetDirtyBit(uint.MaxValue);
             }
         }
 
@@ -296,7 +296,7 @@ namespace Experica
                 var tail = nbname.FirstSplitTail();
                 if (tail != null && tail == forsceneobjectname)
                 {
-                    networkbehaviour_sceneobject[nbname].SetDirtyBit(uint.MaxValue);
+                    // networkbehaviour_sceneobject[nbname].SetDirtyBit(uint.MaxValue);
                 }
             }
         }

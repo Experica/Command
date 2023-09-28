@@ -20,7 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using UnityEngine.Networking;
+using Unity.Netcode;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
@@ -51,12 +51,12 @@ namespace Experica.Command
         public Volume postprocessing;
 
         // The managers for the panels on the Scene
-        public NetManager netmanager;
-        public SyncFrameManager syncmanager;
+        // public NetManager netmanager;
+        // public SyncFrameManager syncmanager;
         public ExperimentManager exmanager;
         public ExperimentSessionManager exsmanager;
-        public AnalysisManager alsmanager;
-        public ControlManager ctrlmanager;
+        // public AnalysisManager alsmanager;
+        // public ControlManager ctrlmanager;
 
         public GameObject canvas;
         public ControlPanel controlpanel;
@@ -406,31 +406,31 @@ namespace Experica.Command
             }
         }
 
-        public void SyncCurrentDisplayCLUT(List<NetworkConnection> targetconns = null)
-        {
-            if (postprocessing.profile.TryGet(out Tonemapping tonemapping))
-            {
-                var cdclut = CurrentDisplayCLUT;
-                if (cdclut != null)
-                {
-                    tonemapping.lutTexture.value = cdclut;
+        // public void SyncCurrentDisplayCLUT(List<NetworkConnection> targetconns = null)
+        // {
+        //     if (postprocessing.profile.TryGet(out Tonemapping tonemapping))
+        //     {
+        //         var cdclut = CurrentDisplayCLUT;
+        //         if (cdclut != null)
+        //         {
+        //             tonemapping.lutTexture.value = cdclut;
 
-                    var envpeerconn = targetconns ?? netmanager.GetPeerTypeConnection(PeerType.Environment);
-                    if (envpeerconn.Count > 0)
-                    {
-                        var clutmsg = new CLUTMessage
-                        {
-                            clut = cdclut.GetPixelData<byte>(0).ToArray().Compress(),
-                            size = cdclut.width
-                        };
-                        foreach (var conn in envpeerconn)
-                        {
-                            conn.Send(MsgType.CLUT, clutmsg);
-                        }
-                    }
-                }
-            }
-        }
+        //             var envpeerconn = targetconns ?? netmanager.GetPeerTypeConnection(PeerType.Environment);
+        //             if (envpeerconn.Count > 0)
+        //             {
+        //                 var clutmsg = new CLUTMessage
+        //                 {
+        //                     clut = cdclut.GetPixelData<byte>(0).ToArray().Compress(),
+        //                     size = cdclut.width
+        //                 };
+        //                 foreach (var conn in envpeerconn)
+        //                 {
+        //                     conn.Send(MsgType.CLUT, clutmsg);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         public Texture3D CurrentDisplayCLUT
         {
@@ -465,46 +465,46 @@ namespace Experica.Command
         public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
         {
             var hr = false;
-            if (alsmanager != null)
-            {
-                switch (name)
-                {
-                    case CONDTESTPARAM.BlockRepeat:
-                    case CONDTESTPARAM.BlockIndex:
-                    case CONDTESTPARAM.TrialRepeat:
-                    case CONDTESTPARAM.TrialIndex:
-                    case CONDTESTPARAM.CondRepeat:
-                    case CONDTESTPARAM.CondIndex:
-                        //MsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
-                        break;
-                    case CONDTESTPARAM.SyncEvent:
-                        //MsgPack.ListListStringSerializer.Pack(stream, value.ConvertAll(i => (List<string>)i), PackerCompatibilityOptions.None);
-                        break;
-                    case CONDTESTPARAM.Event:
-                    case CONDTESTPARAM.TASKSTATE:
-                    case CONDTESTPARAM.BLOCKSTATE:
-                    case CONDTESTPARAM.TRIALSTATE:
-                    case CONDTESTPARAM.CONDSTATE:
-                        //MsgPack.ListListEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
-                        break;
-                }
-                var data = value.SerializeMsgPack();
-                if (data.Length > 0)
-                {
-                    alsmanager.RpcNotifyCondTest(name, data);
-                    hr = true;
-                }
-            }
+            // if (alsmanager != null)
+            // {
+            //     switch (name)
+            //     {
+            //         case CONDTESTPARAM.BlockRepeat:
+            //         case CONDTESTPARAM.BlockIndex:
+            //         case CONDTESTPARAM.TrialRepeat:
+            //         case CONDTESTPARAM.TrialIndex:
+            //         case CONDTESTPARAM.CondRepeat:
+            //         case CONDTESTPARAM.CondIndex:
+            //             //MsgPack.ListIntSerializer.Pack(stream, value.ConvertAll(i => (int)i), PackerCompatibilityOptions.None);
+            //             break;
+            //         case CONDTESTPARAM.SyncEvent:
+            //             //MsgPack.ListListStringSerializer.Pack(stream, value.ConvertAll(i => (List<string>)i), PackerCompatibilityOptions.None);
+            //             break;
+            //         case CONDTESTPARAM.Event:
+            //         case CONDTESTPARAM.TASKSTATE:
+            //         case CONDTESTPARAM.BLOCKSTATE:
+            //         case CONDTESTPARAM.TRIALSTATE:
+            //         case CONDTESTPARAM.CONDSTATE:
+            //             //MsgPack.ListListEventSerializer.Pack(stream, value.ConvertAll(i => (List<Dictionary<string, double>>)i), PackerCompatibilityOptions.None);
+            //             break;
+            //     }
+            //     var data = value.SerializeMsgPack();
+            //     if (data.Length > 0)
+            //     {
+            //         alsmanager.RpcNotifyCondTest(name, data);
+            //         hr = true;
+            //     }
+            // }
             return hr;
         }
 
         public bool OnNotifyCondTestEnd(double time)
         {
-            if (alsmanager != null)
-            {
-                alsmanager.RpcNotifyCondTestEnd(time);
-                return true;
-            }
+            // if (alsmanager != null)
+            // {
+            //     alsmanager.RpcNotifyCondTestEnd(time);
+            //     return true;
+            // }
             return false;
         }
 
@@ -567,7 +567,7 @@ namespace Experica.Command
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
             GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
 
-            alsmanager?.RpcNotifyStartExperiment();
+            // alsmanager?.RpcNotifyStartExperiment();
         }
 
         public void OnEndStartExperimentSession()
@@ -575,15 +575,15 @@ namespace Experica.Command
 
         public void OnEndStartExperiment()
         {
-            if (alsmanager != null)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
-                    //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
-                    //alsmanager.RpcNotifyExperiment(stream.ToArray());
-                }
-            }
+            // if (alsmanager != null)
+            // {
+            //     using (var stream = new MemoryStream())
+            //     {
+            //         exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
+            //         //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
+            //         //alsmanager.RpcNotifyExperiment(stream.ToArray());
+            //     }
+            // }
 
             exmanager.OnELStart();
         }
@@ -650,7 +650,7 @@ namespace Experica.Command
 
         public void OnEndStopExperiment()
         {
-            alsmanager?.RpcNotifyStopExperiment();
+            // alsmanager?.RpcNotifyStopExperiment();
             exmanager.el.AutoSaveData();
             consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
             if (exmanager.el.ex.NotifyExperimenter)
@@ -702,10 +702,10 @@ namespace Experica.Command
 
         public void OnEndPauseExperiment()
         {
-            if (alsmanager != null)
-            {
-                alsmanager.RpcNotifyPauseExperiment();
-            }
+            // if (alsmanager != null)
+            // {
+            //     alsmanager.RpcNotifyPauseExperiment();
+            // }
         }
 
         public void TogglePauseResumeExperiment(bool ispause)
@@ -724,10 +724,10 @@ namespace Experica.Command
 
         public void OnEndResumeExpeirment()
         {
-            if (alsmanager != null)
-            {
-                alsmanager.RpcNotifyResumeExperiment();
-            }
+            // if (alsmanager != null)
+            // {
+            //     alsmanager.RpcNotifyResumeExperiment();
+            // }
         }
 
         public void ToggleExInherit(string name, bool isinherit)
@@ -854,7 +854,7 @@ namespace Experica.Command
         {
             if (ison)
             {
-                netmanager.StartHost();
+                // netmanager.StartHost();
                 ServerChangeScene();
             }
             else
@@ -864,7 +864,7 @@ namespace Experica.Command
                     ToggleStartStopExperiment(false);
                     start.isOn = false;
                 }
-                netmanager.StopHost();
+                // netmanager.StopHost();
             }
             server.interactable = !ison;
             start.interactable = ison;
@@ -874,7 +874,7 @@ namespace Experica.Command
         {
             if (ison)
             {
-                netmanager.StartServer();
+                // netmanager.StartServer();
                 ServerChangeScene();
             }
             else
@@ -884,7 +884,7 @@ namespace Experica.Command
                     ToggleStartStopExperiment(false);
                     start.isOn = false;
                 }
-                netmanager.StopServer();
+                // netmanager.StopServer();
             }
             host.interactable = !ison;
             start.interactable = ison;
@@ -902,10 +902,10 @@ namespace Experica.Command
 
         public void ServerChangeScene(string scene)
         {
-            if (NetworkServer.active)
-            {
-                netmanager.ServerChangeScene(scene);
-            }
+            // if (NetworkServer.active)
+            // {
+            //     netmanager.ServerChangeScene(scene);
+            // }
         }
     }
 }

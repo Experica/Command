@@ -338,7 +338,7 @@ namespace Experica.Command
             el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
             el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
             el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
-            el.SyncFrame = uicontroller.netmanager.BeginSyncFrame;
+            // el.SyncFrame = uicontroller.netmanager.BeginSyncFrame;
         }
 
         public int FindDuplicateOfLast()
@@ -408,7 +408,7 @@ namespace Experica.Command
             el.envmanager.ParseScene(scenename);
             el.envmanager.SetParams(el.ex.EnvParam);
             InheritEnv();
-            uicontroller.SyncCurrentDisplayCLUT();
+            // uicontroller.SyncCurrentDisplayCLUT();
         }
 
         public void InheritEnv(string toobject = null)
