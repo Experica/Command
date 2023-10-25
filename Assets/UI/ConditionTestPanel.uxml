@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Root" class="Panel" style="flex-grow: 1; align-self: stretch;">
+        <ui:Label text="ConditionTest" name="Title" style="justify-content: space-between; min-height: 40px; max-height: 50px; height: auto; flex-direction: row; -unity-font-style: bold; -unity-text-align: middle-left; font-size: 36px; background-color: rgb(153, 153, 153);" />
+        <ui:VisualElement name="Content" style="flex-grow: 1;" />
+        <ui:VisualElement name="StatusBar" style="flex-grow: 1; width: auto; min-height: 30px; max-height: 40px; height: auto;" />
+    </ui:VisualElement>
+</ui:UXML>

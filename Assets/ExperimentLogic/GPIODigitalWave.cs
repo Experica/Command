@@ -40,7 +40,7 @@ public class GPIODigitalWave : ExperimentLogic
                 break;
             case "FTDI":
                 // On Average 2kHz
-                gpio = new FTDIGPIO();
+                //gpio = new FTDIGPIO();
                 break;
             case "1208FS":
                 // On Average 500Hz

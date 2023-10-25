@@ -22,8 +22,10 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Experica;
+using Experica.NetEnv;
 
-namespace Experica
+namespace Experica.Command
 {
     public class RippleLaserImageLogic : RippleLaserCTLogic
     {

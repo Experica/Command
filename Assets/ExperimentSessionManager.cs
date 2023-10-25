@@ -32,30 +32,12 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public ExperimentSessionLogic esl;
-        public Dictionary<string, string> idfile = new Dictionary<string, string>();
+        public Dictionary<string, string> deffile = new ();
 
-        public void RefreshIDFile()
+        public void CollectDefination(string indir)
         {
-            var exsdir = uicontroller.config.ExSessionDir;
-            if (Directory.Exists(exsdir))
-            {
-                var exsfiles = Directory.GetFiles(exsdir, "*.yaml", SearchOption.TopDirectoryOnly);
-                if (exsfiles.Length == 0)
-                {
-                    Debug.Log($"ExperimentSession Defination Directory \"{exsdir}\" Is Empty, Skip Refreshing.");
-                    return;
-                }
-                idfile.Clear();
-                foreach (var f in exsfiles)
-                {
-                    idfile[Path.GetFileNameWithoutExtension(f)] = f;
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory(exsdir);
-                Debug.Log($"Create Directory \"{exsdir}\" For ExperimentSession Defination.");
-            }
+            var defs = indir.GetDefinationFiles("ExperimentSession");
+            if (defs != null) { deffile = defs; }
         }
 
         public ExperimentSession LoadExSession(string exsfilepath)
@@ -114,9 +96,9 @@ namespace Experica.Command
 
         public void SaveExSession(string id)
         {
-            if (idfile.ContainsKey(id))
+            if (deffile.ContainsKey(id))
             {
-                idfile[id].WriteYamlFile(esl.exsession);
+                deffile[id].WriteYamlFile(esl.exsession);
             }
         }
 

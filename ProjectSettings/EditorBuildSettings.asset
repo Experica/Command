@@ -9,28 +9,28 @@ EditorBuildSettings:
     path: Assets/Welcome.unity
     guid: 59d3a86ca0186ee4d82c5383dba137aa
   - enabled: 1
-    path: Assets/Environment/Scene/Showroom.unity
+    path: Assets/NetEnv/Scene/Showroom.unity
     guid: 0f82f7db04c8f5f4fb2b9466a19b2952
   - enabled: 1
     path: Assets/Welcomeback.unity
     guid: 99d61bf686617074f9f26bd6f313846a
   - enabled: 1
-    path: Assets/Environment/Scene/DynamicShowroom.unity
+    path: Assets/NetEnv/Scene/DynamicShowroom.unity
     guid: e2b066d5ee3be2c4e99e83f19bd6bf42
   - enabled: 1
-    path: Assets/Environment/Scene/Marker.unity
+    path: Assets/NetEnv/Scene/Marker.unity
     guid: b1fd280602c504e4a8a0321b31886c5f
   - enabled: 1
-    path: Assets/Environment/Scene/MarkerQuad.unity
+    path: Assets/NetEnv/Scene/MarkerQuad.unity
     guid: 5a5b6206aecbd48438fb1df8683922c3
   - enabled: 1
-    path: Assets/Environment/Scene/MarkerGrating.unity
+    path: Assets/NetEnv/Scene/MarkerGrating.unity
     guid: b8daedbbdd0bb234ba1366bb1cc3fb39
   - enabled: 1
-    path: Assets/Environment/Scene/MarkerImage.unity
+    path: Assets/NetEnv/Scene/MarkerImage.unity
     guid: 4c0004b8d9f7c1b4593c4a8453c052c6
   - enabled: 1
-    path: Assets/Environment/Scene/MarkerDots.unity
+    path: Assets/NetEnv/Scene/MarkerDots.unity
     guid: ae69a12622de0f84cacbc33be6414456
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 49825b072e596014da1ce543779c1ee1,

@@ -22,6 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System;
 using Experica;
+using Experica.Command;
 
 /// <summary>
 /// Simple Condition Test Logic with Event Sync through GPIO and Display Marker
@@ -39,10 +40,10 @@ public class ConditionTestLogic : ExperimentLogic
         if (ex.EventSyncProtocol.SyncMethods.Contains(SyncMethod.GPIO))
         {
             gpio = new ParallelPort(dataaddress: Config.ParallelPort0);
-            if (!gpio.Found)
-            {
-                gpio = new FTDIGPIO();
-            }
+            //if (!gpio.Found)
+            //{
+            //    gpio = new FTDIGPIO();
+            //}
             if (!gpio.Found)
             {
                 // gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);

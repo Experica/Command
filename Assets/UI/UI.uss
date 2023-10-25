@@ -1,0 +1,118 @@
+.ToggleButton VisualElement {
+    display: none;
+}
+
+.ToggleButton Label {
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+    background-color: rgb(188, 188, 188);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(149, 149, 149);
+    border-right-color: rgb(149, 149, 149);
+    border-top-color: rgb(149, 149, 149);
+    border-bottom-color: rgb(149, 149, 149);
+    align-self: center;
+}
+
+.ToggleButtonOrange:hover Label {
+    background-color: rgb(178, 155, 71);
+}
+
+.ToggleButtonOrange:checked Label {
+    background-color: rgb(217, 182, 54);
+}
+
+.ToggleButtonPurple:hover Label {
+    background-color: rgb(125, 72, 204);
+}
+
+.ToggleButtonPurple:checked Label {
+    background-color: rgb(140, 64, 255);
+}
+
+.ToggleButtonRed:hover Label {
+    background-color: rgb(191, 76, 76);
+}
+
+.ToggleButtonRed:checked Label {
+    background-color: rgb(229, 57, 57);
+}
+
+.ToggleButtonGreen:hover Label {
+    background-color: rgb(105, 178, 62);
+}
+
+.ToggleButtonGreen:checked Label {
+    background-color: rgb(108, 204, 51);
+}
+
+.ToggleButtonBlue:hover Label {
+    background-color: rgb(67, 96, 191);
+}
+
+.ToggleButtonBlue:checked Label {
+    background-color: rgb(38, 90, 255);
+}
+
+.ToggleButtonBool:hover Label {
+    background-color: rgb(229, 229, 229);
+}
+
+.Panel {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(77, 77, 77);
+    border-right-color: rgb(77, 77, 77);
+    border-top-color: rgb(77, 77, 77);
+    border-bottom-color: rgb(77, 77, 77);
+}
+
+.Panel .unity-scroll-view__content-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.Vector Label {
+    display: none;
+}
+
+.Vector VisualElement {
+    flex-direction: row;
+}
+
+.unity-base-text-field__input {
+    padding-top: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+    padding-left: 1px;
+}
+
+.unity-enum-field__input {
+    padding-top: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+    padding-left: 1px;
+}
+
+.unity-composite-field__field {
+    flex-grow: 1;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.ParamInput Button:hover {
+    -unity-font-style: bold;
+}

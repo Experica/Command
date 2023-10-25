@@ -1,0 +1,27 @@
+{
+    "name": "Experica.Test",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:e4c71244f0d032f4cb157a559be2835f",
+        "GUID:cba34830ceff69746982c5a36918b1fa",
+        "GUID:2d35caf2072944b47af6bcd5f5e4b7b9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Ripple.dll",
+        "MWArray.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

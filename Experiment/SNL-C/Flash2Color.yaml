@@ -1,50 +1,45 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: PL
+Experimenter: PCL
 Log: 
-Subject_ID: AF8
-Subject_Name: AF8
+Subject_ID: Test
+Subject_Name: AG3
 Subject_Species: Macaque
-Subject_Gender: Female
+Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 8.7
+Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 10
-  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  Rotation@Quad@Quad: 0 0 0
-  RotationOffset@Quad@Quad: 0 0 0
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 10 10 10
   Diameter@Quad@Quad: 10
-  Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 0.6327 0.382 1 1
+  Color@Quad@Quad: 1 0 0 1
   MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0.5
-  MaskSigma@Quad@Quad: 0.15
+  MaskRadius@Quad@Quad: 0
+  MaskSigma@Quad@Quad: 0
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
-  Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0 0 0
+  Visible@Quad@Quad: true
 CondPath: ''
 Cond: 
-LogicPath: SpikeGLXColor
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODR6
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
 DataDir: X:\
 DataPath: 
 Input: false
@@ -87,19 +82,13 @@ InheritParam:
 - Eye
 - Subject_Birth
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- MarkerSize@Marker@Marker
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 - Position@Quad@Quad
 - Diameter@Quad@Quad
-Param:
-  ColorSpace: DKL
-  Color: Z
+ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
@@ -107,9 +96,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ''
+Display_ID: ROGPG279Q
 CondTestShowLevel: FULL
-NotifyExperimenter: false
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 

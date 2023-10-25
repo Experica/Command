@@ -23,7 +23,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.IO;
-using System.IO.Ports;
+//using System.IO.Ports;
 using System.Text;
 using System.Linq;
 using System.Threading;

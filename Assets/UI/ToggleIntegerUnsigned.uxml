@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
+    <ui:VisualElement name="Root" class="ParamInput" style="flex-direction: row; justify-content: space-around; height: 45px; width: 580px;">
+        <ui:Toggle label="ParamName" name="Name" class="ToggleButton ToggleButtonGreen" style="font-size: 30px; max-width: 300px; min-width: 280px;" />
+        <ui:UnsignedIntegerField name="Value" style="width: 270px; font-size: 30px; -unity-text-align: middle-left;" />
+    </ui:VisualElement>
+</ui:UXML>

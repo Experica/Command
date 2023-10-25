@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Experica
+namespace Experica.Command
 {
     public class RippleLaserLogic : RippleCTLogic
     {

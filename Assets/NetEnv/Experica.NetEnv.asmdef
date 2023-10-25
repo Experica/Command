@@ -1,0 +1,26 @@
+{
+    "name": "Experica.NetEnv",
+    "rootNamespace": "",
+    "references": [
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:69257879134bba646869b21467b3338d",
+        "GUID:46a67ded66a63de48b9329c593fc08de",
+        "GUID:de1079f91ae5b43499b7c7e4f1269884",
+        "GUID:457756d89b35d2941b3e7b37b4ece6f1",
+        "GUID:a075b55b404a34748ac14ea9b6039911",
+        "GUID:d04eb9c554ad44ceab303cecf0c0cf82",
+        "GUID:1491147abca9d7d4bb7105af628b223e",
+        "GUID:3b8ed52f1b5c64994af4c4e0aa4b6c4b",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:e4c71244f0d032f4cb157a559be2835f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

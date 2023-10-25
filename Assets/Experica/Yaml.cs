@@ -28,12 +28,21 @@ using YamlDotNet.Core.Events;
 
 namespace Experica
 {
+    /// <summary>
+    /// for object, the runtime type should be serialized also in tags,
+    /// however the consuming library usually lacks tag support(YAML.jl),
+    /// so tags not serialized yet.
+    /// 
+    /// without type info, object will be deserialized as string, but it is 
+    /// reasonable to parse string to conventional types, such as int, float or bool, etc.
+    /// </summary>
     public class YamlTypeConverter : IYamlTypeConverter
     {
         Type TVector2 = typeof(Vector2);
         Type TVector3 = typeof(Vector3);
         Type TVector4 = typeof(Vector4);
         Type TColor = typeof(Color);
+        Type TString = typeof(string);
 
         public bool Accepts(Type type)
         {
@@ -46,14 +55,14 @@ namespace Experica
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var o = ((Scalar)parser.Current).Value.Convert(type);
+            var v = ((Scalar)parser.Current).Value.Convert(TString,type);
             parser.MoveNext();
-            return o;
+            return v;
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            emitter.Emit(new Scalar(value.Convert<string>()));
+            emitter.Emit(new Scalar(value.Convert<string>(type)));
         }
     }
 
@@ -64,9 +73,10 @@ namespace Experica
 
         static Yaml()
         {
-            var yamlexpericaconverter = new YamlTypeConverter();
-            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(yamlexpericaconverter).Build();
-            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(yamlexpericaconverter).Build();
+            var c = new YamlTypeConverter();
+            // The default behaviour is to emit public fields and public properties, here we exclude fields and use explicit [YamlIgnore] to exclude specific property.
+            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(c).Build();
+            deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(c).Build();
         }
 
         public static void WriteYamlFile<T>(this string path, T data)

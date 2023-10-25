@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702559470653124}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114698666410329306
 MonoBehaviour:
@@ -43,10 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90550d910c9b2fe4f92edd3e29cedefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xaxisprefab: {fileID: 1449412502885166, guid: 4fa967afa9e5b704782460b250c3c507, type: 3}
-  yaxisprefab: {fileID: 1537421374253846, guid: 781138eedb3e6a44f91be4f41b8073e7, type: 3}
-  xtickprefab: {fileID: 1008957377280776, guid: ab6ec2a13a3439048970a2a696d6290a, type: 3}
-  ytickprefab: {fileID: 1758416786983846, guid: 1e14941e0c205a0499b3aa17a7712009, type: 3}
+  xaxisprefab: {fileID: 1449412502885166, guid: 4fa967afa9e5b704782460b250c3c507,
+    type: 3}
+  yaxisprefab: {fileID: 1537421374253846, guid: 781138eedb3e6a44f91be4f41b8073e7,
+    type: 3}
+  xtickprefab: {fileID: 1008957377280776, guid: ab6ec2a13a3439048970a2a696d6290a,
+    type: 3}
+  ytickprefab: {fileID: 1758416786983846, guid: 1e14941e0c205a0499b3aa17a7712009,
+    type: 3}
   xaxis: {fileID: 0}
   yaxis: {fileID: 0}
   xticks: []

@@ -1,54 +1,25 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: PL
+Experimenter: PCL
 Log: 
-Subject_ID: AF8
-Subject_Name: AF8
+Subject_ID: Test
+Subject_Name: AG3
 Subject_Species: Macaque
-Subject_Gender: Female
+Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 8.7
+Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerImage
-EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 10
-  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  Rotation@ImageQuad@ImageQuad: 0 0 0
-  RotationOffset@ImageQuad@ImageQuad: 0 0 0
-  Ori@ImageQuad@ImageQuad: 0
-  OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 10
-  Size@ImageQuad@ImageQuad: 10 10 1
-  MaskType@ImageQuad@ImageQuad: Disk
-  MaskRadius@ImageQuad@ImageQuad: 0.5
-  MaskSigma@ImageQuad@ImageQuad: 0.15
-  OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 0.3673 0.618 0 1
-  MaxColor@ImageQuad@ImageQuad: 0.6327 0.382 1 1
-  ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 1
-  ImageSet@ImageQuad@ImageQuad: n24000_sizedeg(3, 3)_c0.5_r0.5_sd[0.23, 0.33]
-  Visible@ImageQuad@ImageQuad: true
-  Position@ImageQuad@ImageQuad: 0 0 0
-  PositionOffset@ImageQuad@ImageQuad: 0 0 0
+EnvParam: {}
 CondPath: ''
 Cond: 
-LogicPath: SpikeGLXImage
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODR6
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
 DataDir: X:\
 DataPath: 
 Input: false
@@ -102,9 +73,7 @@ EnvInheritParam:
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 - MarkerSize@Marker@Marker
-Param:
-  ColorSpace: LMS
-  Color: Zmcc
+ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
@@ -112,9 +81,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ''
+Display_ID: ROGPG279Q
 CondTestShowLevel: SHORT
-NotifyExperimenter: false
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 

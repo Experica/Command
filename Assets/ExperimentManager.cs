@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System;
+using Experica;
+
 
 namespace Experica.Command
 {
@@ -33,9 +35,9 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public ExperimentLogic el;
-        public List<ExperimentLogic> elhistory = new List<ExperimentLogic>();
-        public Timer timer = new Timer();
-        public Dictionary<string, string> idfile = new Dictionary<string, string>();
+        public List<ExperimentLogic> elhistory = new ();
+        public Timer timer = new ();
+        public Dictionary<string, string> deffile = new ();
 
         public double ELLoadTime, ELReadyTime, ELStartTime, ELStopTime;
         public double SinceELLoad { get { return timer.ElapsedMillisecond - ELLoadTime; } }
@@ -50,7 +52,7 @@ namespace Experica.Command
         public void ChangeEx(string id)
         {
             if (string.IsNullOrEmpty(id)) { return; }
-            if (idfile.ContainsKey(id))
+            if (deffile.ContainsKey(id))
             {
                 ELID = id;
                 ExperimentStatus = EXPERIMENTSTATUS.NONE;
@@ -88,41 +90,24 @@ namespace Experica.Command
             ExperimentStatus = EXPERIMENTSTATUS.STOPPED;
         }
 
-        public void RefreshIDFile()
+        public void CollectDefination(string indir)
         {
-            var exdir = uicontroller.config.ExDir;
-            if (Directory.Exists(exdir))
-            {
-                var exfiles = Directory.GetFiles(exdir, "*.yaml", SearchOption.TopDirectoryOnly);
-                if (exfiles.Length == 0)
-                {
-                    Debug.Log($"Experiment Defination Directory \"{exdir}\" Is Empty, Skip Refreshing.");
-                    return;
-                }
-                idfile.Clear();
-                foreach (var f in exfiles)
-                {
-                    idfile[Path.GetFileNameWithoutExtension(f)] = f;
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory(exdir);
-                Debug.Log($"Create Directory \"{exdir}\" For Experiment Defination.");
-            }
+            var defs = indir.GetDefinationFiles("Experiment");
+            if (defs != null) { deffile = defs; }
         }
 
         public Experiment LoadEx(string exfilepath)
         {
             var ex = exfilepath.ReadYamlFile<Experiment>();
-            if (string.IsNullOrEmpty(ex.ID))
+            var exfilename = Path.GetFileNameWithoutExtension(exfilepath);
+            if (string.IsNullOrEmpty(ex.ID) || ex.ID!=exfilename)
             {
-                ex.ID = Path.GetFileNameWithoutExtension(exfilepath);
+                ex.ID = exfilename;
             }
-            return ValidateExperiment(ex);
+            return PrepareExperiment(ex);
         }
 
-        Experiment ValidateExperiment(Experiment ex)
+        Experiment PrepareExperiment(Experiment ex)
         {
             if (string.IsNullOrEmpty(ex.Name))
             {
@@ -149,7 +134,9 @@ namespace Experica.Command
             {
                 ex.NotifyParam = uicontroller.config.NotifyParams;
             }
+
             ex.Config = uicontroller.config;
+            ex.InitializeDataSource();
             return ex;
         }
 
@@ -182,7 +169,7 @@ namespace Experica.Command
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.ex = ex;
-            uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
+            //uicontroller.condpanel.forceprepare.isOn = el.regeneratecond;
             AddEL(el);
         }
 
@@ -194,14 +181,14 @@ namespace Experica.Command
             }
             else
             {
-                if (!idfile.ContainsKey(id) && idfile.ContainsKey(idcopyfrom))
+                if (!deffile.ContainsKey(id) && deffile.ContainsKey(idcopyfrom))
                 {
-                    var ex = idfile[idcopyfrom].ReadYamlFile<Experiment>();
+                    var ex = deffile[idcopyfrom].ReadYamlFile<Experiment>();
                     ex.ID = id;
                     ex.Name = id;
-                    LoadEL(ValidateExperiment(ex));
+                    LoadEL(PrepareExperiment(ex));
 
-                    idfile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
+                    deffile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
                     SaveEx(id);
                     return true;
                 }
@@ -211,7 +198,7 @@ namespace Experica.Command
 
         public bool NewEx(string id)
         {
-            if (idfile.ContainsKey(id))
+            if (deffile.ContainsKey(id))
             {
                 return false;
             }
@@ -221,9 +208,9 @@ namespace Experica.Command
                 {
                     ID = id
                 };
-                LoadEL(ValidateExperiment(ex));
+                LoadEL(PrepareExperiment(ex));
 
-                idfile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
+                deffile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
                 SaveEx(id);
                 return true;
             }
@@ -231,40 +218,18 @@ namespace Experica.Command
 
         public void SaveEx(string id)
         {
-            if (idfile.ContainsKey(id))
-            {
-                var i = FindFirstInELHistory(id);
-                if (i >= 0)
-                {
-                    var ex = elhistory[i].ex;
-                    // Exclude data and config for saving experiment definition
-                    var datapath = ex.DataPath;
-                    var condtest = ex.CondTest;
-                    var config = ex.Config;
-                    var cond = ex.Cond;
-                    ex.DataPath = null;
-                    ex.CondTest = null;
-                    ex.Config = null;
-                    ex.Cond = null;
-                    ex.EnvParam = elhistory[i].envmanager.GetParams();
-                    try
-                    {
-                        idfile[id].WriteYamlFile(ex);
-                    }
-                    finally
-                    {
-                        ex.DataPath = datapath;
-                        ex.CondTest = condtest;
-                        ex.Config = config;
-                        ex.Cond = cond;
-                    }
-                }
-            }
+            if (!deffile.ContainsKey(id)) { return; }
+            var i = FindFirstInELHistory(id);
+            if (i < 0) { return; }
+
+            var el = elhistory[i];
+            el.ex.EnvParam = el.envmanager.GetParams();
+            el.ex.SaveDefinition(deffile[id]);
         }
 
         public void SaveAllEx()
         {
-            foreach (var id in idfile.Keys)
+            foreach (var id in elhistory.Select(i=>i.ex.ID))
             {
                 SaveEx(id);
             }
@@ -272,27 +237,23 @@ namespace Experica.Command
 
         public bool DeleteEx(string id)
         {
-            if (idfile.ContainsKey(id))
+            if (!deffile.ContainsKey(id)) { return false; }
+
+            var i = FindFirstInELHistory(id);
+            if (i >= 0)
             {
-                var i = FindFirstInELHistory(id);
-                if (i >= 0)
-                {
-                    Destroy(elhistory[i]);
-                    elhistory.RemoveAt(i);
-                }
-                File.Delete(idfile[id]);
-                idfile.Remove(id);
-                return true;
+                elhistory[i].Dispose();
+                Destroy(elhistory[i]);
+                elhistory.RemoveAt(i);
             }
-            else
-            {
-                return false;
-            }
+            File.Delete(deffile[id]);
+            deffile.Remove(id);
+            return true;
         }
 
         public void DeleteAllEx()
         {
-            foreach (var id in idfile.Keys.ToArray())
+            foreach (var id in deffile.Keys.ToArray())
             {
                 DeleteEx(id);
             }
@@ -300,28 +261,34 @@ namespace Experica.Command
 
         public void AddEL(ExperimentLogic el)
         {
-            if (elhistory.Count > 0)
+            RegisterELCallback();
+            if (elhistory.Count == 0)
             {
-                elhistory.Last().enabled = false;
+                elhistory.Add(el);
             }
-            elhistory.Add(el);
-            InheritEx();
-            RemoveDuplicateEx();
-            AddELCallback();
+            else
+            {
+                var preel = elhistory.Last();
+                preel.enabled = false;
+                elhistory.Add(el);
+                // Inherit params
+                foreach (var ip in el.ex.InheritParam.ToArray())
+                {
+                    if (el.ex.ContainsProperty(ip)) { el.ex.SetProperty(ip,preel.ex.GetProperty(ip)); }
+                    else { InheritExExtendProperty(ip); }
+                }
+                // Remove duplicate of the current el
+                var i = FindDuplicateOfLast();
+                if (i >= 0)
+                {
+                    elhistory[i].Dispose();
+                    Destroy(elhistory[i]);
+                    elhistory.RemoveAt(i);
+                }
+            }
         }
 
-        void RemoveDuplicateEx()
-        {
-            var idx = FindDuplicateOfLast();
-            if (idx >= 0)
-            {
-                elhistory[idx].Dispose();
-                Destroy(elhistory[idx]);
-                elhistory.RemoveAt(idx);
-            }
-        }
-
-        void AddELCallback()
+        void RegisterELCallback()
         {
             el.OnBeginStartExperiment = uicontroller.OnBeginStartExperiment;
             el.OnEndStartExperiment = uicontroller.OnEndStartExperiment;
@@ -336,18 +303,15 @@ namespace Experica.Command
             el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
             el.condtestmanager.PushUICondTest = uicontroller.ctpanel.PushCondTest;
             el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
-            el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
-            el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
+            //el.envmanager.OnNotifyUI = uicontroller.envpanel.UpdateParamUI;
+            //el.ex.OnNotifyUI = uicontroller.expanel.UpdateParamUI;
             // el.SyncFrame = uicontroller.netmanager.BeginSyncFrame;
         }
 
         public int FindDuplicateOfLast()
         {
             var i = FindFirstInELHistory(elhistory.Last().ex.ID);
-            if (i == elhistory.Count - 1)
-            {
-                i = -1;
-            }
+            if (i == elhistory.Count - 1) { i = -1; }
             return i;
         }
 
@@ -363,148 +327,148 @@ namespace Experica.Command
             return -1;
         }
 
-        public void InheritEx()
+
+        void InheritExExtendProperty(string name)
         {
-            var ellex = elhistory.Last().ex;
-            var ellexip = ellex.InheritParam;
-            foreach (var ip in ellexip.ToArray())
+            if(!el.ex.ContainsExtendProperty(name)) { /* delete? */;return; }
+            for (var i = elhistory.Count - 2; i > -1; i--)
             {
-                if (Experiment.Properties.ContainsKey(ip) || ellex.Param.ContainsKey(ip))
+                if (elhistory[i].ex.ContainsExtendProperty(name))
                 {
-                    InheritExParam(ip);
-                }
-                else
-                {
-                    ellexip.Remove(ip);
+                    el.ex.SetExtendProperty(name, elhistory[i].ex.GetExtendProperty(name));
+                    break;
                 }
             }
         }
 
         public void InheritExParam(string name)
         {
-            var hn = elhistory.Count;
-            if (hn > 1)
+            var n = elhistory.Count;
+            if (n < 2) { return; }
+            if (el.ex.ContainsProperty(name)) { el.ex.SetProperty(name, elhistory[n-2].ex.GetProperty(name)); }
+            else { InheritExExtendProperty(name); }
+        }
+
+        public void InheritEnv(string byobj = null)
+        {
+            if (elhistory.Count <2) { return; }
+            foreach (var ip in el.ex.EnvInheritParam.ToArray())
             {
-                if (Experiment.Properties.ContainsKey(name))
+                if(!ip.SplitEnvParamFullName(out var ns)) { Debug.LogError($"EnvParam: {ip} not a valid fullname, skip inherit search.");continue; };
+                if (!string.IsNullOrEmpty(byobj) && byobj != ns[2]) { continue; }
+                if (!el.envmanager.ContainsParamByFullName(ns[0], ns[1], ns[2]))                { /* delete? */;continue; }
+                InheritEnvParam(ns[0], ns[1], ns[2],ip);
+            }
+        }
+
+        public void InheritEnvParam(string FullName)
+        {
+            if (elhistory.Count < 2) { return; }
+            if (!FullName.SplitEnvParamFullName(out var ns)) { Debug.LogError($"EnvParam: {FullName} not a valid fullname, skip inherit search."); return; };
+            if (!el.envmanager.ContainsParamByFullName(ns[0], ns[1], ns[2])) { /* delete? */; return; }
+            InheritEnvParam(ns[0], ns[1], ns[2], FullName);
+        }
+
+        void InheritEnvParam(string nvName,string nbName,string goName,string FullName)
+        {
+            for (var i = elhistory.Count - 2; i > -1; i--)
+            {
+                var envparam = elhistory[i].ex.EnvParam; // config.IsSaveExOnQuit=true will update EnvParam whenever an experiment unselected
+                object v = null;
+                if (envparam.ContainsKey(FullName))
                 {
-                    elhistory.Last().ex.SetProperty(name, elhistory[hn - 2].ex.GetProperty(name));
+                    v = envparam[FullName];
                 }
-                else
+                else if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(goName))
                 {
-                    for (var i = hn - 2; i > -1; i--)
+                    foreach (var p in envparam.Keys)
                     {
-                        if (elhistory[i].ex.Param.ContainsKey(name))
+                        string paramfrom = p.FirstSplitHead();
+                        string objectfrom = p.LastSplitTail();
+                        if (nvName == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(goName, objectfrom, nvName))
                         {
-                            elhistory.Last().ex.Param[name] = elhistory[i].ex.Param[name];
+                            v = envparam[p];
                             break;
                         }
                     }
                 }
-            }
-        }
 
-        public void PrepareEnv(string scenename)
-        {
-            el.envmanager.ParseScene(scenename);
-            el.envmanager.SetParams(el.ex.EnvParam);
-            InheritEnv();
-            // uicontroller.SyncCurrentDisplayCLUT();
-        }
-
-        public void InheritEnv(string toobject = null)
-        {
-            var ell = elhistory.Last();
-            var eip = ell.ex.EnvInheritParam;
-            foreach (var ip in eip.ToArray())
-            {
-                if (ell.envmanager.ContainsParam(ip, out string fullname))
+                if (v != null)
                 {
-                    if (string.IsNullOrEmpty(toobject))
-                    {
-                        InheritEnvParam(fullname);
-                    }
-                    else
-                    {
-                        if (fullname.LastSplitTail() == toobject)
-                        {
-                            InheritEnvParam(fullname);
-                        }
-                    }
-                }
-                else
-                {
-                    eip.Remove(ip);
+                    el.envmanager.SetParamByFullName(nvName, nbName, goName, v);
+                    break;
                 }
             }
         }
 
-        public void InheritEnvParam(string fullname)
-        {
-            string paramname = fullname.FirstSplitHead();
-            string objectname = fullname.LastSplitTail();
+        //public void InheritEnvParam(string fullname)
+        //{
+        //    if (!fullname.SplitEnvParamFullName(out var ns)) { return; }
+        //    string paramname = fullname.FirstSplitHead();
+        //    string objectname = fullname.LastSplitTail();
 
-            var hn = elhistory.Count;
-            if (hn > 1)
-            {
-                object v = null;
-                for (var i = hn - 2; i > -1; i--)
-                {
-                    var hp = elhistory[i].ex.EnvParam;
-                    if (hp.ContainsKey("Show@Showroom@ShowroomManager"))
-                    {
-                        var showobj = hp["Show@Showroom@ShowroomManager"].ToString();
-                        if (showobj == objectname && hp.ContainsKey(fullname))
-                        {
-                            v = hp[fullname];
-                        }
-                        else
-                        {
-                            if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
-                            {
-                                if (uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
-                                {
-                                    foreach (var hpk in hp.Keys.ToArray())
-                                    {
-                                        if (hpk.FirstSplitHead() == paramname && hpk.LastSplitTail() == showobj)
-                                        {
-                                            v = hp[hpk];
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (hp.ContainsKey(fullname))
-                            {
-                                v = hp[fullname];
-                            }
-                        }
-                    }
-                    else if (hp.ContainsKey(fullname))
-                    {
-                        v = hp[fullname];
-                    }
-                    else if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
-                    {
-                        foreach (var hpn in hp.Keys.ToArray())
-                        {
-                            string paramfrom = hpn.FirstSplitHead();
-                            string objectfrom = hpn.LastSplitTail();
-                            if (paramname == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
-                            {
-                                v = hp[hpn];
-                                break;
-                            }
-                        }
-                    }
+        //    var hn = elhistory.Count;
+        //    if (hn > 1)
+        //    {
+        //        object v = null;
+        //        for (var i = hn - 2; i > -1; i--)
+        //        {
+        //            var hp = elhistory[i].ex.EnvParam;
+        //            if (hp.ContainsKey("Show@Showroom@ShowroomManager"))
+        //            {
+        //                var showobj = hp["Show@Showroom@ShowroomManager"].ToString();
+        //                if (showobj == objectname && hp.ContainsKey(fullname))
+        //                {
+        //                    v = hp[fullname];
+        //                }
+        //                else
+        //                {
+        //                    if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
+        //                    {
+        //                        if (uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, showobj, paramname))
+        //                        {
+        //                            foreach (var hpk in hp.Keys.ToArray())
+        //                            {
+        //                                if (hpk.FirstSplitHead() == paramname && hpk.LastSplitTail() == showobj)
+        //                                {
+        //                                    v = hp[hpk];
+        //                                    break;
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                    else if (hp.ContainsKey(fullname))
+        //                    {
+        //                        v = hp[fullname];
+        //                    }
+        //                }
+        //            }
+        //            else if (hp.ContainsKey(fullname))
+        //            {
+        //                v = hp[fullname];
+        //            }
+        //            else if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(objectname))
+        //            {
+        //                foreach (var hpn in hp.Keys.ToArray())
+        //                {
+        //                    string paramfrom = hpn.FirstSplitHead();
+        //                    string objectfrom = hpn.LastSplitTail();
+        //                    if (paramname == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(objectname, objectfrom, paramname))
+        //                    {
+        //                        v = hp[hpn];
+        //                        break;
+        //                    }
+        //                }
+        //            }
 
-                    if (v != null)
-                    {
-                        elhistory.Last().envmanager.SetParam(fullname, v);
-                        break;
-                    }
-                }
-            }
-        }
+        //            if (v != null)
+        //            {
+        //                elhistory.Last().envmanager.SetParam(fullname, v);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
     }
 }

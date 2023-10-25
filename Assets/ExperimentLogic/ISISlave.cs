@@ -46,8 +46,8 @@ namespace Experica
             {
                 issizeadjusted = true;
                 sizebeforeadjust = (Vector3)GetEnvActiveParam("Size");
-                var hh = envmanager.maincamera_scene.orthographicSize;
-                var hw = hh * envmanager.maincamera_scene.aspect;
+                var hh = envmanager.MainCamera.First().Height/2;
+                var hw = envmanager.MainCamera.First().Width/2;
                 SetEnvActiveParam("Size", new Vector3(2.1f * hw, 2.1f * hh, 1));
             }
         }

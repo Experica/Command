@@ -23,8 +23,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Experica;
+using Experica.Command;
 using System.IO;
-using ColorSpace = Experica.ColorSpace;
+using ColorSpace = Experica.NetEnv.ColorSpace;
 
 /// <summary>
 /// Episodic Condition Test(PreITI-{PreICI-Cond-SufICI}-SufITI) with Imager Data Acquisition System, and Predefined Colors
@@ -41,7 +42,7 @@ public class ImagerCTLogic : ConditionTestLogic
     /// </summary>
     protected override void OnStartExperiment()
     {
-        recorder = Extension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
+        recorder = ExpericaExtension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         recorder?.StopAcquisiteAndRecord();
         //markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();

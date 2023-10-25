@@ -1,4 +1,4 @@
-using FileIO,MAT,NeuroAnalysis,Images,Statistics,StatsBase,Plots,ProgressMeter,Interact,MsgPack,YAML
+using FileIO,JLD2,MAT,NeuroAnalysis,Images,Interpolations,Random,StatsBase,StatsPlots,ProgressMeter,MsgPack,YAML
 
 function imagepatch(img,ppd,sizedeg;topleftdeg=nothing)
     sizepx = round.(Int,sizedeg.*ppd)
@@ -10,7 +10,7 @@ function imagepatch(img,ppd,sizedeg;topleftdeg=nothing)
     if isnothing(topleftdeg)
         topleftpx = rand.(map(i->1:i,maxtopleftpx))
     end
-    ppx = map((i,j)->i:i+j-1,topleftpx,sizepx)
+    ppx = map((i,j)->(0:j-1).+i,topleftpx,sizepx)
     if length(isize)==2
         patch = img[ppx...]
     else
@@ -19,7 +19,7 @@ function imagepatch(img,ppd,sizedeg;topleftdeg=nothing)
     return patch
 end
 
-function newimageset(imgdbroot,imgfile,ppd;n=100,sizedeg=(3,3),sizepx=(32,32))
+function newimageset(imgdbroot,imgfile,ppd;n=100,sizedeg=(3,3),sizepx=(32,32),s=ones(1,1,3),isnorm=true)
     imgfiles=[]
     for (root,dirs,files) in walkdir(imgdbroot)
         append!(imgfiles,joinpath.(root,filter(f->occursin(imgfile,f),files)))
@@ -27,70 +27,58 @@ function newimageset(imgdbroot,imgfile,ppd;n=100,sizedeg=(3,3),sizepx=(32,32))
     isempty(imgfiles) && error("No valid image file found in the image database.")
 
     imgpatchs=[]
-    p = Progress(n,desc="Sampling Images ... ")
-    for i in 1:n
+    @showprogress desc="Sampling Images ... " for i in 1:n
         file = rand(imgfiles)
         ext = splitext(file)[2]
         if ext == ".mat"
             img = first(matread(file)).second
         end
-        push!(imgpatchs,imresize_antialiasing(imagepatch(img,ppd,sizedeg),sizepx))
-        next!(p)
+        # ip = s.*imresize(imagepatch(img,ppd,sizedeg),sizepx,method=Lanczos()) # same contrast, but noisy
+        ip = s.*imresize_antialiasing(imagepatch(img,ppd,sizedeg),sizepx) # smooth, but reduce contrast
+        any(isnan.(ip)) || push!(imgpatchs,ip)
+    end
+    if isnorm
+        lim = mapreduce(i->maximum(i),max,imgpatchs)
+        imgpatchs = map(i->i/lim,imgpatchs)
     end
     return imgpatchs
 end
 
-function combineimageset(imgsets...;ps=fill(1.0/length(imgsets),length(imgsets)),n=100,c=nothing,normfun=x->clampscale(x,3))
+function sampleimageset(imgsets...;ps=fill(1.0/length(imgsets),length(imgsets)),n=100)
     ns = round.(Int,ps.*n)
     imgs = []
-    p = Progress(sum(ns),desc="Picking Images ... ")
-    for j in eachindex(ns)
+    @showprogress desc="Picking Images ... " for j in eachindex(ns)
         is = sample(1:length(imgsets[j]),ns[j],replace=false)
-        if isnothing(c)
-            for i in is
-                t = imgsets[j][i][:,:,rand(1:3)]
-                any(isnan.(t)) && continue
-                push!(imgs,normfun(t))
-                next!(p)
-            end
-        end
+        append!(imgs,imgsets[j][is])
     end
-    finish!(p)
+    shuffle!(imgs)
     return imgs
 end
 
-function checkimageset!(imgset;alpha=0.8,n=Inf,sdrange=[0.23,0.33],unique=true)
+lumlms(lms;w=[0.68990272;;;0.34832189;;;0])=dropdims(sum(lms.*w,dims=3),dims=3)
+
+function excludesimilarimage!(imgset;alpha=0.8,lumfun=lumlms,simfun=MSSSIM())
     di = []
     for i in eachindex(imgset)
-        any(isnan.(imgset[i])) && push!(di,i)
-    end
-    deleteat!(imgset,di);di=[]
-    for i in eachindex(imgset)
-        any(isinf.(imgset[i])) && push!(di,i)
-    end
-    deleteat!(imgset,di);di=[]
-    for i in eachindex(imgset)
-        sdrange[1] < std(imgset[i]) < sdrange[2] || push!(di,i)
+        (any(isnan.(imgset[i])) || any(isinf.(imgset[i]))) && push!(di,i)
     end
     deleteat!(imgset,di)
-    if unique
-        l=length(imgset);di=falses(l)
-        p = Progress(l-1,desc="Checking Images ... ")
-        for i in 1:(l-1)
-            di[i] && continue
-            Threads.@threads for j in (i+1):l
-                di[j] && continue
-                cor(vec(imgset[i]),vec(imgset[j])) > alpha && (di[j]=true)
-            end
-            next!(p)
-        end
-        deleteat!(imgset,findall(di));finish!(p)
-    end
 
-    l = length(imgset)
-    l > n && deleteat!(imgset,(n+1):l)
-    imgset
+    l=length(imgset);di=falses(l);lumimgset=lumfun.(imgset)
+    lumlim = mapreduce(i->maximum(i),max,lumimgset)
+    lumimgset = map(i->i/lumlim,lumimgset)
+    @showprogress desc="Checking Images ... " for i in 1:(l-1)
+        di[i] && continue
+        Threads.@threads for j in (i+1):l
+            di[j] && continue
+            simfun(lumimgset[j],lumimgset[i]) > alpha && (di[j]=true)
+        end
+    end
+    deleteat!(imgset,di);deleteat!(lumimgset,di)
+    imgset,lumimgset
 end
+
+
 
 function saveunityrawtexture(fn,imgset)
     ds = size(imgset[1]);imgs=[]
@@ -119,9 +107,16 @@ function saveunityrawtexture(fn,imgset)
     return imgdata
 end
 
+t=first(values(matread(raw"S:\McGillCCIDB\Animals\merry_mexico0125_LMS.mat")))
 
 
-stimuliroot = "../NaturalStimuli"
+ti=colorview(RGB,(clampscale(i,3) for i in eachslice(t,dims=3))...)
+
+ti=colorview(RGB,rand(3,128,128))
+
+
+
+stimuliroot = "S:/"
 ## Imageset from McGillCCIDB
 idb = "McGillCCIDB"
 itype = "LMS"
@@ -130,8 +125,9 @@ n = 60000
 sizedeg = (3,3)
 sizepx = (64,64)
 imgset_MG = newimageset(joinpath(stimuliroot,idb),Regex("\\w*$itype.mat"),ppd;n,sizedeg,sizepx)
-save(joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2"),"imgset",imgset_MG)
-imgset_MG = load(joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2"),"imgset")
+imgsetpath = joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2")
+save(imgsetpath,"imgset",imgset_MG)
+imgset_MG = load(imgsetpath,"imgset")
 
 ## Imageset from UPennNIDB
 idb = "UPennNIDB"
@@ -140,16 +136,119 @@ ppd = 92
 n = 60000
 sizedeg = (3,3)
 sizepx = (64,64)
-imgset_UP = newimageset(joinpath(stimuliroot,idb),Regex("\\w*$itype.mat"),ppd;n,sizedeg,sizepx)
-save(joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2"),"imgset",imgset_UP)
-imgset_UP = load(joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2"),"imgset")
+s = [1/1.75e5;;;1/1.6e5;;;1/3.49e4] # isomerization rate used in "UPennNIDB" L, M, S = 1.75e5, 1.6e5, 3.49e4
+imgset_UP = newimageset(joinpath(stimuliroot,idb),Regex("\\w*$itype.mat"),ppd;n,sizedeg,sizepx,s)
+imgsetpath = joinpath(stimuliroot,"$(idb)_$(itype)_n$(n)_sizedeg$(sizedeg)_sizepx$(sizepx).jld2")
+save(imgsetpath,"imgset",imgset_UP)
+imgset_UP = load(imgsetpath,"imgset")
 
-timgset = imgset_UP
-@manipulate for ii in 1:length(timgset), ci in 1:size(timgset[1],3)
-    t = timgset[ii][:,:,ci]
-    f = scaleminmax(extrema(t)...)
-    Gray.(f.(t))
+
+colorview(RGB,(clampscale(i,3) for i in eachslice(imgset_UP[3],dims=3))...)
+
+
+## Sample from Imagesets, and check for similar images
+imgset = sampleimageset(imgset_MG,imgset_UP;ps=[0.7,0.3],n=40000)
+# imgset,lumimgset = excludesimilarimage!(imgset)
+imgset,lumimgset = excludesimilarimage!(imgset;simfun=(i,j)->cor(vec(i),vec(j)))
+
+
+## Imageset
+imgsetname = "$(itype)_n$(length(imgset))_sizedeg$(sizedeg)_sizepx$(sizepx)"
+imgsetdir = joinpath(stimuliroot,"ImageSets",imgsetname);mkpath(imgsetdir)
+jldsave(joinpath(imgsetdir,"$imgsetname.jld2");imgset)
+
+
+l = mapreduce(i->vec(i[:,:,3]),append!,imgset[1:30])
+extrema(l)
+l = mapreduce(i->vec(i[3,:,:]),append!,imgset_rgb[120:240])
+extrema(l)
+
+extrema(imgset_rgb[1])
+
+density(vec(imgset_rgb[1][1,:,:]))
+
+divmax=i->i/maximum(i)
+
+colorview(RGB,divmax(imgset_rgb[12336]))
+colorview(RGB,imgset_rgb[12336]/0.04)
+
+extrema(imgset_rgb[12336])
+
+
+
+imgset_UP = newimageset(joinpath(stimuliroot,idb),Regex("\\w*$itype.mat"),ppd;n=100,sizedeg,sizepx)
+
+imgset_UP_rgb=map(i->tt(LMSToRGB,i),imgset_UP[1:100])
+colorview(RGB,divmax(imgset_UP_rgb[51]))
+
+
+
+
+maxlim = mapreduce(maximum,max,lumimgset)
+
+qualim = mapreduce(i->quantile(vec(i),0.9),max,lumimgset)
+
+newlumimgset = map(i->clamp.(i,0,qualim)/qualim,lumimgset)
+
+using  ColorLab
+
+colorview(Gray,lumimgset[12287])
+colorview(Gray,newlumimgset[12287])
+
+[0;0;;1;1]
+
+
+RGBToLMS*[0.5,0.5,0.5]
+RGBToXYZ*[0.5;0.5;0.5;;]
+XYZ2xyY(RGBToXYZ*[0.5;0.5;0.5;;])
+subimgset = imgset[1:50]
+meanlms = mapreduce(i->mean(i,dims=(1,2)),(i,j)->(i.+j)/2,subimgset)
+
+imgnormfun = (x;m=0,c=0.5,r=0.5)->begin
+    xx = x.-m
+    rr = maximum(abs.(xx),dims=(2,3))
+    r*xx./rr .+ c
 end
+
+normimgset = map(i->imgnormfun(i,m=meanlum),subimgset)
+
+
+colorview(RGB,normimgset[40])
+
+# equal luminance
+meanlumimgset = mapreduce(mean,mean,lumimgset)
+sdrange=[0.23,0.33]
+checkimageset!(imgset;sdrange)
+
+imgsetname = "n$(length(imgset))_sizedeg$(sizedeg)_c$(c)_r$(r)_sd$(sdrange)"
+
+saveunityrawtexture(joinpath(stimuliroot,imgsetname),imgset)
+matwrite(joinpath(stimuliroot,"$imgsetname.mat"),Dict("imgset"=>imgset))
+imgset = load(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset")
+
+
+t=(m,img)->mapslices(s->[m].*s,img,dims=(1,2))
+
+b=t(LMSToRGB,imgset[1])
+
+colordata = YAML.load_file(raw"C:\Users\fff00\Command\Data\ROGPG279Q\colordata.yaml")
+LMSToRGB=reshape(colordata["LMSToRGB"],4,4)[1:3,1:3]
+RGBToLMS=reshape(colordata["RGBToLMS"],4,4)[1:3,1:3]
+RGBToXYZ=reshape(colordata["RGBToXYZ"],4,4)[1:3,1:3]
+
+rand(3,10,10)
+colorview(RGB,tt(LMSToRGB,imgset[1]))
+colorview(RGB,eachslice(b,dims=1)...)
+
+tt=(M,img)->reshape(M*reshape(permutedims(img,(3,1,2)),3,:),3,size(img)[1:2]...)
+
+imgset_rgb=map(i->tt(LMSToRGB,i),imgset)
+
+colorview(RGB,permutedims(imgset[27],(3,1,2)))
+colorview(RGB,imgset_rgb[13505])
+
+
+
 
 ## Combine Imageset
 normfun = (x;c=0.5,r=0.5,low=0.1,high=0.9)->begin
@@ -192,6 +291,19 @@ imgset = load(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset")
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Gaussian Noise Imageset
 gnormfun = x->begin
     xx = clamp.(x,-2.5,2.5)
@@ -230,3 +342,15 @@ end
 
 plotmeanpowerspectrum()
 foreach(ext->savefig(joinpath(@__DIR__,"ImageSets_Mean_PowerSpectrum.$ext")),[".png",".svg"])
+
+
+
+
+
+
+
+
+
+
+
+

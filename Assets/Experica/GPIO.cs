@@ -28,7 +28,7 @@ using System.Collections.Concurrent;
 using MathNet.Numerics.Random;
 using MathNet.Numerics.Distributions;
 using System;
-using FTD2XX_NET;
+//using FTD2XX_NET;
 
 namespace Experica
 {
@@ -183,146 +183,146 @@ namespace Experica
 
     }
 
-    public class FTDIGPIO : IGPIO
-    {
-        #region IDisposable
-        int disposecount = 0;
+    //public class FTDIGPIO : IGPIO
+    //{
+    //    #region IDisposable
+    //    int disposecount = 0;
 
-        ~FTDIGPIO()
-        {
-            Dispose(false);
-        }
+    //    ~FTDIGPIO()
+    //    {
+    //        Dispose(false);
+    //    }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    //    public void Dispose()
+    //    {
+    //        Dispose(true);
+    //        GC.SuppressFinalize(this);
+    //    }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (1 == Interlocked.Exchange(ref disposecount, 1))
-            {
-                return;
-            }
-            if (disposing)
-            {
-                FTD2XX?.Close();
-            }
-        }
-        #endregion
-        FTDI FTD2XX;
-        FTDI.FT_STATUS FTSTATUS;
-        uint ndevice;
-        FTDI.FT_DEVICE_INFO_NODE[] devices;
+    //    protected virtual void Dispose(bool disposing)
+    //    {
+    //        if (1 == Interlocked.Exchange(ref disposecount, 1))
+    //        {
+    //            return;
+    //        }
+    //        if (disposing)
+    //        {
+    //            FTD2XX?.Close();
+    //        }
+    //    }
+    //    #endregion
+    //    FTDI FTD2XX;
+    //    FTDI.FT_STATUS FTSTATUS;
+    //    uint ndevice;
+    //    FTDI.FT_DEVICE_INFO_NODE[] devices;
 
-        uint NumBytesToWrite = 0;
-        uint NumBytesToRead = 0;
-        uint NumBytesWrite = 0;
-        uint NumBytesRead = 0;
-        byte[] outputbuffer;
-        byte[] inputbuffer;
+    //    uint NumBytesToWrite = 0;
+    //    uint NumBytesToRead = 0;
+    //    uint NumBytesWrite = 0;
+    //    uint NumBytesRead = 0;
+    //    byte[] outputbuffer;
+    //    byte[] inputbuffer;
 
-        public bool Found { get; }
+    //    public bool Found { get; }
 
-        public FTDIGPIO()
-        {
-            FTD2XX = new FTDI();
-            outputbuffer = new byte[8];
-            inputbuffer = new byte[8];
+    //    public FTDIGPIO()
+    //    {
+    //        FTD2XX = new FTDI();
+    //        outputbuffer = new byte[8];
+    //        inputbuffer = new byte[8];
 
-            if (FTD2XX.GetNumberOfDevices(ref ndevice) == FTDI.FT_STATUS.FT_OK)
-            {
-                if (ndevice > 0)
-                {
-                    devices = new FTDI.FT_DEVICE_INFO_NODE[ndevice];
-                    FTSTATUS = FTD2XX.GetDeviceList(devices);
-                    if (FTD2XX.OpenByDescription(devices[0].Description) == FTDI.FT_STATUS.FT_OK)
-                    {
-                        Config();
-                        Found = true;
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Can Not Open Device: {devices[0].Description}.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("No FTDI Device Detected.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Can Not Detect FTDI Devices.");
-            }
-        }
+    //        if (FTD2XX.GetNumberOfDevices(ref ndevice) == FTDI.FT_STATUS.FT_OK)
+    //        {
+    //            if (ndevice > 0)
+    //            {
+    //                devices = new FTDI.FT_DEVICE_INFO_NODE[ndevice];
+    //                FTSTATUS = FTD2XX.GetDeviceList(devices);
+    //                if (FTD2XX.OpenByDescription(devices[0].Description) == FTDI.FT_STATUS.FT_OK)
+    //                {
+    //                    Config();
+    //                    Found = true;
+    //                }
+    //                else
+    //                {
+    //                    Debug.LogWarning($"Can Not Open Device: {devices[0].Description}.");
+    //                }
+    //            }
+    //            else
+    //            {
+    //                Debug.LogWarning("No FTDI Device Detected.");
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning("Can Not Detect FTDI Devices.");
+    //        }
+    //    }
 
-        void Config(byte direction = 0xFF)
-        {
-            FTSTATUS |= FTD2XX.ResetDevice();
-            FTSTATUS |= FTD2XX.SetTimeouts(5000, 5000);
-            FTSTATUS |= FTD2XX.SetLatency(0);
-            FTSTATUS |= FTD2XX.SetFlowControl(FTDI.FT_FLOW_CONTROL.FT_FLOW_RTS_CTS, 0x00, 0x00);
-            FTSTATUS |= FTD2XX.SetBitMode(0x00, 0x00); // Reset
-            FTSTATUS |= FTD2XX.SetBitMode(direction, 0x01); // Asyc Bit-Bang Mode    
-            FTSTATUS |= FTD2XX.SetBaudRate(3000000);
+    //    void Config(byte direction = 0xFF)
+    //    {
+    //        FTSTATUS |= FTD2XX.ResetDevice();
+    //        FTSTATUS |= FTD2XX.SetTimeouts(5000, 5000);
+    //        FTSTATUS |= FTD2XX.SetLatency(0);
+    //        FTSTATUS |= FTD2XX.SetFlowControl(FTDI.FT_FLOW_CONTROL.FT_FLOW_RTS_CTS, 0x00, 0x00);
+    //        FTSTATUS |= FTD2XX.SetBitMode(0x00, 0x00); // Reset
+    //        FTSTATUS |= FTD2XX.SetBitMode(direction, 0x01); // Asyc Bit-Bang Mode    
+    //        FTSTATUS |= FTD2XX.SetBaudRate(3000000);
 
-            // Enable internal loop-back
-            //Outputbuffer[NumBytesToSend++] = 0x84;
-            //ftStatus = FTDIGPIO.Write(Outputbuffer, NumBytesToSend, ref NumBytesSent);
-            //NumBytesToSend = 0; // Reset output buffer pointer
+    //        // Enable internal loop-back
+    //        //Outputbuffer[NumBytesToSend++] = 0x84;
+    //        //ftStatus = FTDIGPIO.Write(Outputbuffer, NumBytesToSend, ref NumBytesSent);
+    //        //NumBytesToSend = 0; // Reset output buffer pointer
 
-            //ftStatus = FTDIGPIO.GetRxBytesAvailable(ref NumBytesToRead);
-            //if (NumBytesToRead!=0)
-            //{
-            //    Debug.LogError("Error - MPSSE receive buffer should be empty");
-            //    FTDIGPIO.SetBitMode(0x00, 0x00);
-            //    FTDIGPIO.Close();
-            //}
+    //        //ftStatus = FTDIGPIO.GetRxBytesAvailable(ref NumBytesToRead);
+    //        //if (NumBytesToRead!=0)
+    //        //{
+    //        //    Debug.LogError("Error - MPSSE receive buffer should be empty");
+    //        //    FTDIGPIO.SetBitMode(0x00, 0x00);
+    //        //    FTDIGPIO.Close();
+    //        //}
 
-            //    // Use 60MHz master clock (disable divide by 5)
-            //    NumBytesToWrite = 0;
-            //    outputbuffer[NumBytesToWrite++] = 0x8A;
-            //    // Turn off adaptive clocking (may be needed for ARM)
-            //    outputbuffer[NumBytesToWrite++] = 0x97;
-            //    // Disable three-phase clocking
-            //    outputbuffer[NumBytesToWrite++] = 0x8D;
+    //        //    // Use 60MHz master clock (disable divide by 5)
+    //        //    NumBytesToWrite = 0;
+    //        //    outputbuffer[NumBytesToWrite++] = 0x8A;
+    //        //    // Turn off adaptive clocking (may be needed for ARM)
+    //        //    outputbuffer[NumBytesToWrite++] = 0x97;
+    //        //    // Disable three-phase clocking
+    //        //    outputbuffer[NumBytesToWrite++] = 0x8D;
 
-            //    FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
+    //        //    FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
 
-            //    // Configure data bits low-byte of MPSSE port
-            //    NumBytesToWrite = 0;
-            //    outputbuffer[NumBytesToWrite++] = 0x82;
-            //    // Initial state all low
-            //    outputbuffer[NumBytesToWrite++] = 0x00;
-            //    // Direction all output 
-            //    outputbuffer[NumBytesToWrite++] = 0xFF;
-            //    FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
-        }
+    //        //    // Configure data bits low-byte of MPSSE port
+    //        //    NumBytesToWrite = 0;
+    //        //    outputbuffer[NumBytesToWrite++] = 0x82;
+    //        //    // Initial state all low
+    //        //    outputbuffer[NumBytesToWrite++] = 0x00;
+    //        //    // Direction all output 
+    //        //    outputbuffer[NumBytesToWrite++] = 0xFF;
+    //        //    FTSTATUS = FTD2XX.Write(outputbuffer, NumBytesToWrite, ref NumBytesWrite);
+    //    }
 
-        public void Out(byte v)
-        {
-            outputbuffer[0] = v;
-            FTD2XX.Write(outputbuffer, 1, ref NumBytesWrite);
-        }
+    //    public void Out(byte v)
+    //    {
+    //        outputbuffer[0] = v;
+    //        FTD2XX.Write(outputbuffer, 1, ref NumBytesWrite);
+    //    }
 
-        public byte In()
-        {
-            FTD2XX.Read(inputbuffer, 1, ref NumBytesRead);
-            return inputbuffer[0];
-        }
+    //    public byte In()
+    //    {
+    //        FTD2XX.Read(inputbuffer, 1, ref NumBytesRead);
+    //        return inputbuffer[0];
+    //    }
 
-        public void BitOut(int bit, bool value)
-        {
-            Out(value ? byte.MaxValue : byte.MinValue);
-        }
+    //    public void BitOut(int bit, bool value)
+    //    {
+    //        Out(value ? byte.MaxValue : byte.MinValue);
+    //    }
 
-        public void BitPulse(int bit, double duration_ms)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public void BitPulse(int bit, double duration_ms)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
     public class GPIOWave
     {
