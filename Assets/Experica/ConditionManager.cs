@@ -27,31 +27,41 @@ using System;
 using System.Linq;
 using MathNet.Numerics.Random;
 using MathNet.Numerics;
-using Experica.NetEnv;
+using System.Runtime.Remoting.Messaging;
+using System.Numerics;
+using System.Drawing;
 
-namespace Experica.Command
+namespace Experica
 {
     public class ConditionManager
     {
         public Dictionary<string, List<object>> cond = new Dictionary<string, List<object>>();
-        public Dictionary<string, IList> finalcond = new Dictionary<string, IList>();
-        public int ncond = 0;
+        public Dictionary<string, IList> FinalCond { get; private set; } = new();
+        public int NCond
+        {
+            get
+            {
+                if (FinalCond.Count == 0) { return 0; }
+                return FinalCond.Values.First().Count;
+            }
+        }
+        int ncond = 0;
         public int nblock = 0;
 
         public Dictionary<string, IList> finalblockcond = new Dictionary<string, IList>();
         public List<List<int>> condsamplespaces = new List<List<int>>();
         public List<int> blocksamplespace = new List<int>();
         public Dictionary<int, Dictionary<int, int>> condsamplespacerepeat = new Dictionary<int, Dictionary<int, int>>();
-        public Dictionary<int, int> blockrepeat = new Dictionary<int, int>();
-        public Dictionary<int, int> condrepeat = new Dictionary<int, int>();
+        public Dictionary<int, int> blockrepeat = new();
+        public Dictionary<int, int> condrepeat = new();
 
-        public System.Random rng = new MersenneTwister();
-        public SampleMethod condsamplemethod = SampleMethod.Ascending;
-        public SampleMethod blocksamplemethod = SampleMethod.Ascending;
+        public System.Random RNG = new MersenneTwister();
+        public SampleMethod CondSampleMethod { get; private set; } = SampleMethod.Ascending;
+        public SampleMethod BlockSampleMethod { get; private set; } = SampleMethod.Ascending;
 
         public int scendingstep = 1;
         public int blockidx = -1;
-        public int condidx = -1;
+        public int CondIndex { get; private set; } = -1;
         public int condsampleidx = -1;
         public int blocksampleidx = -1;
         public int nsampleignore = 0;
@@ -60,7 +70,7 @@ namespace Experica.Command
         {
             if (!File.Exists(path))
             {
-                Debug.LogWarning($"Condition File: {path} not found.");
+                Debug.LogError($"Condition File: {path} not found.");
                 return null;
             }
             return path.ReadYamlFile<Dictionary<string, List<object>>>();
@@ -68,88 +78,101 @@ namespace Experica.Command
 
         public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond)
         {
-            if (cond != null)
+            if (cond != null && cond.Count > 0)
             {
-                cond = cond.FactorLevelOfDesign();
-                if (cond.ContainsKey("orthofactorlevel") && cond["orthofactorlevel"].Count == 0)
-                {
-                    cond = cond.OrthoCondOfFactorLevel();
-                }
+                cond.ProcessFactorDesign();
+                cond.ProcessOrthoCombineFactor();
             }
             return cond;
         }
 
         public void FinalizeCondition(Dictionary<string, List<object>> cond)
         {
-            if (cond == null)
+            if (cond == null || cond.Count == 0)
             {
-                ncond = 0;
-                this.cond = new Dictionary<string, List<object>>();
-                finalcond = new Dictionary<string, IList>();
+                FinalCond.Clear();
             }
             else
             {
-                var nfactor = cond.Keys.Count;
-                if (nfactor > 0)
+                var fln = cond.Values.Select(i => i.Count).ToArray();
+                var minfln = fln.Min();
+                var maxfln = fln.Max();
+                if (minfln != maxfln)
                 {
-                    var fvn = new int[nfactor];
-                    for (var i = 0; i < nfactor; i++)
+                    foreach (var f in cond.Keys)
                     {
-                        fvn[i] = cond.Values.ElementAt(i).Count;
+                        cond[f] = cond[f].GetRange(0, minfln);
                     }
-                    var minfvn = fvn.Min();
-                    var maxfvn = fvn.Max();
-                    if (minfvn != maxfvn)
-                    {
-                        foreach (var k in cond.Keys)
-                        {
-                            cond[k] = cond[k].GetRange(0, minfvn);
-                        }
-                    }
-                    ncond = minfvn;
-                    this.cond = cond;
-                    finalcond = cond.FinalizeFactorValues();
                 }
-                else
-                {
-                    ncond = 0;
-                    this.cond = new Dictionary<string, List<object>>();
-                    finalcond = new Dictionary<string, IList>();
-                }
+                FinalCond = cond.FinalizeFactorValues();
             }
         }
 
-        public Dictionary<string, IList> GenerateFinalCondition(string path)
+        public void FinalizeCondition(string path) { FinalizeCondition(ProcessCondition(ReadConditionFile(path))); }
+
+
+        public List<int> GetSampleSpace(List<int> space, SampleMethod samplemethod)
         {
-            FinalizeCondition(ProcessCondition(ReadConditionFile(path)));
-            return finalcond;
+            switch (samplemethod)
+            {
+                case SampleMethod.Ascending:
+                    space.Sort();
+                    break;
+                case SampleMethod.Descending:
+                    space.Sort();
+                    space.Reverse();
+                    break;
+                case SampleMethod.UniformWithoutReplacement:
+                    space = space.SelectPermutation(RNG).ToList();
+                    break;
+            }
+            return space;
         }
 
-        public void UpdateSampleSpace(SampleMethod condsamplemethod, List<string> blockparams, SampleMethod blocksamplemethod)
+        public List<int> GetSampleSpace(int spacesize, SampleMethod samplemethod)
         {
-            this.condsamplemethod = condsamplemethod;
-            this.blocksamplemethod = blocksamplemethod;
+            return samplemethod switch
+            {
+                SampleMethod.Descending => Enumerable.Range(0, spacesize).Reverse().ToList(),
+                SampleMethod.UniformWithoutReplacement => Enumerable.Range(0, spacesize).SelectPermutation(RNG).ToList(),
+                _ => Enumerable.Range(0, spacesize).ToList(),
+            };
+        }
+
+        public void InitializeSampleSpaces(SampleMethod condsamplemethod, List<string> blockfactors, SampleMethod blocksamplemethod)
+        {
+            if (NCond == 0) { return; }
+            CondSampleMethod = condsamplemethod;
+            BlockSampleMethod = blocksamplemethod;
+            condrepeat.Clear();
+            blockrepeat.Clear();
+
+
+
+            for (var i = 0; i < ncond; i++)
+            {
+                condrepeat[i] = 0;
+            }
+
             finalblockcond.Clear();
             blocksamplespace.Clear();
             condsamplespaces.Clear();
-            blockrepeat.Clear();
+
             condsamplespacerepeat.Clear();
-            condrepeat.Clear();
             blocksampleidx = -1;
             condsampleidx = -1;
             blockidx = -1;
-            condidx = -1;
+            CondIndex = -1;
             nblock = 0;
 
-            if (ncond <= 0) return;
 
-            var vbp = cond.Keys.Intersect(blockparams).ToList();
+            var vbf = FinalCond.Keys.Intersect(blockfactors).ToList();
             Dictionary<string, List<object>> blockorthofactorlevel = null, blockcond = new Dictionary<string, List<object>>();
             int bn = 0;
-            if (vbp.Count > 0)
+            if (vbf.Count > 0)
             {
                 var bpfl = new Dictionary<string, List<object>>();
-                foreach (var p in vbp)
+                foreach (var p in vbf)
                 {
                     bpfl[p] = cond[p].Distinct().ToList();
                 }
@@ -159,7 +182,7 @@ namespace Experica.Command
             if (bn < 2)
             {
                 blocksamplespace.Add(0);
-                condsamplespaces.Add(PrepareSampleSpace(ncond, condsamplemethod));
+                condsamplespaces.Add(GetSampleSpace(ncond, condsamplemethod));
                 ResetCondSampleSpace(0);
             }
             else
@@ -179,7 +202,7 @@ namespace Experica.Command
                     var space = Enumerable.Range(0, ncond).Where(i => l[i] == true).ToList();
                     if (space.Count > 0)
                     {
-                        condsamplespaces.Add(PrepareSampleSpace(space, condsamplemethod));
+                        condsamplespaces.Add(GetSampleSpace(space, condsamplemethod));
                         ResetCondSampleSpace(condsamplespaces.Count - 1);
                         foreach (var bp in blockorthofactorlevel.Keys)
                         {
@@ -189,53 +212,21 @@ namespace Experica.Command
                     }
                 }
                 finalblockcond = blockcond.FinalizeFactorValues();
-                blocksamplespace = PrepareSampleSpace(condsamplespaces.Count, blocksamplemethod);
+                blocksamplespace = GetSampleSpace(condsamplespaces.Count, blocksamplemethod);
             }
             foreach (var i in blocksamplespace)
             {
                 blockrepeat[i] = 0;
             }
-            for (var i = 0; i < ncond; i++)
-            {
-                condrepeat[i] = 0;
-            }
+
             nblock = blocksamplespace.Count;
-        }
-
-        public List<int> PrepareSampleSpace(List<int> space, SampleMethod samplemethod)
-        {
-            switch (samplemethod)
-            {
-                case SampleMethod.Descending:
-                    space.Reverse();
-                    break;
-                case SampleMethod.UniformWithoutReplacement:
-                    space = rng.Shuffle(space);
-                    break;
-                default:
-                    break;
-            }
-            return space;
-        }
-
-        public List<int> PrepareSampleSpace(int spacesize, SampleMethod samplemethod)
-        {
-            switch (samplemethod)
-            {
-                case SampleMethod.Descending:
-                    return Enumerable.Range(0, spacesize).Reverse().ToList();
-                case SampleMethod.UniformWithoutReplacement:
-                    return rng.Permutation(spacesize);
-                default:
-                    return Enumerable.Range(0, spacesize).ToList();
-            }
         }
 
         public int SampleBlockSpace(int manualblockidx = 0)
         {
             if (ncond > 0)
             {
-                switch (blocksamplemethod)
+                switch (BlockSampleMethod)
                 {
                     case SampleMethod.Ascending:
                     case SampleMethod.Descending:
@@ -247,14 +238,14 @@ namespace Experica.Command
                         blockidx = blocksamplespace[blocksampleidx];
                         break;
                     case SampleMethod.UniformWithReplacement:
-                        blocksampleidx = rng.Next(blocksamplespace.Count);
+                        blocksampleidx = RNG.Next(blocksamplespace.Count);
                         blockidx = blocksamplespace[blocksampleidx];
                         break;
                     case SampleMethod.UniformWithoutReplacement:
                         blocksampleidx++;
                         if (blocksampleidx > blocksamplespace.Count - 1)
                         {
-                            blocksamplespace = PrepareSampleSpace(blocksamplespace, blocksamplemethod);
+                            blocksamplespace = GetSampleSpace(blocksamplespace, BlockSampleMethod);
                             blocksampleidx = 0;
                         }
                         blockidx = blocksamplespace[blocksampleidx];
@@ -269,42 +260,42 @@ namespace Experica.Command
             return blockidx;
         }
 
-        public int SampleCondSpace(int manualcondidx = 0)
+        public int SampleCondSpace(int manualcondidx = -1)
         {
-            if (ncond > 0)
+            if (NCond == 0) { return -1; }
+
+            switch (CondSampleMethod)
             {
-                switch (condsamplemethod)
-                {
-                    case SampleMethod.Ascending:
-                    case SampleMethod.Descending:
-                        condsampleidx += scendingstep;
-                        if (condsampleidx > condsamplespaces[blockidx].Count - 1)
-                        {
-                            condsampleidx = 0;
-                        }
-                        condidx = condsamplespaces[blockidx][condsampleidx];
-                        break;
-                    case SampleMethod.UniformWithReplacement:
-                        condsampleidx = rng.Next(condsamplespaces[blockidx].Count);
-                        condidx = condsamplespaces[blockidx][condsampleidx];
-                        break;
-                    case SampleMethod.UniformWithoutReplacement:
-                        condsampleidx++;
-                        if (condsampleidx > condsamplespaces[blockidx].Count - 1)
-                        {
-                            condsamplespaces[blockidx] = PrepareSampleSpace(condsamplespaces[blockidx], condsamplemethod);
-                            condsampleidx = 0;
-                        }
-                        condidx = condsamplespaces[blockidx][condsampleidx];
-                        break;
-                    case SampleMethod.Manual:
-                        condidx = manualcondidx;
-                        break;
-                }
-                condsamplespacerepeat[blockidx][condidx] += 1;
-                condrepeat[condidx] += 1;
+                case SampleMethod.Ascending:
+                case SampleMethod.Descending:
+                    condsampleidx += scendingstep;
+                    if (condsampleidx > condsamplespaces[blockidx].Count - 1)
+                    {
+                        condsampleidx = 0;
+                    }
+                    CondIndex = condsamplespaces[blockidx][condsampleidx];
+                    break;
+                case SampleMethod.UniformWithReplacement:
+                    condsampleidx = RNG.Next(condsamplespaces[blockidx].Count);
+                    CondIndex = condsamplespaces[blockidx][condsampleidx];
+                    break;
+                case SampleMethod.UniformWithoutReplacement:
+                    condsampleidx++;
+                    if (condsampleidx > condsamplespaces[blockidx].Count - 1)
+                    {
+                        condsamplespaces[blockidx] = GetSampleSpace(condsamplespaces[blockidx], CondSampleMethod);
+                        condsampleidx = 0;
+                    }
+                    CondIndex = condsamplespaces[blockidx][condsampleidx];
+                    break;
+                case SampleMethod.Manual:
+                    CondIndex = manualcondidx;
+                    break;
             }
-            return condidx;
+            condsamplespacerepeat[blockidx][CondIndex] += 1;
+            condrepeat[CondIndex] += 1;
+
+            return CondIndex;
         }
 
         public int SampleCondition(int condrepeat, int blockrepeat, int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
@@ -331,26 +322,26 @@ namespace Experica.Command
                     nsampleignore--;
                 }
             }
-            return condidx;
+            return CondIndex;
         }
 
-        public void PushCondition(int condidx, NetEnvManager envmanager, List<string> excludefactors = null, bool notifyui = true)
+        public void PushCondition(int condidx, INetEnv envmanager, List<string> excludefactors = null)
         {
-            if (ncond <= 0 || condidx < 0) return;
-            var factors = excludefactors == null ? finalcond.Keys : finalcond.Keys.Except(excludefactors);
-            foreach (var k in factors)
+            if (ncond <= 0 || condidx < 0) { return; }
+            var factors = (excludefactors == null || excludefactors.Count == 0) ? FinalCond.Keys : FinalCond.Keys.Except(excludefactors);
+            foreach (var f in factors)
             {
-                envmanager.SetParam(k, finalcond[k][condidx], notifyui);
+                envmanager.SetParam(f, FinalCond[f][condidx]);
             }
         }
 
-        public void PushBlock(int blockidx, NetEnvManager envmanager, List<string> excludefactors = null, bool notifyui = true)
+        public void PushBlock(int blockidx, INetEnv envmanager, List<string> excludefactors = null)
         {
-            if (blockidx < 0 || finalblockcond.Count == 0 || finalblockcond.Values.First().Count == 0) return;
+            if (blockidx < 0 || finalblockcond.Count == 0 || finalblockcond.Values.First().Count == 0) { return; }
             var factors = excludefactors == null ? finalblockcond.Keys : finalblockcond.Keys.Except(excludefactors);
             foreach (var k in factors)
             {
-                envmanager.SetParam(k, finalblockcond[k][blockidx], notifyui);
+                envmanager.SetParam(k, finalblockcond[k][blockidx]);
             }
         }
 
@@ -414,5 +405,46 @@ namespace Experica.Command
 
         public List<int> CurrentCondSampleSpace
         { get { return condsamplespaces[blockidx]; } }
+
+
+
+        //public static List<object> LinearSpacedMap<T>(int[] n, T b, T e, bool? isortho) where T : List<>
+        //{
+        //    var ls = new List<object>();
+        //    var lms = new List<float[]>();
+        //    Enumerable.Range(0, n.Length).Select(i =>
+        //    {
+        //        lms.Add(Generate.LinearSpacedMap(n[i], b[i], e[i], v => (float)v));
+        //    });
+        //    if(isortho.HasValue)
+        //    {
+        //        if(isortho.Value)
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            foreach(var i in lms)
+        //            {
+        //                if(i.Length > 0)
+        //                {
+        //                    foreach (var v in i)
+        //                    {
+        //                        var cb = Copy(b); cb[j] = v;
+        //                        ls.Add(cb);
+        //                    }
+        //                }
+        //            }
+        //            ls=ls.Distinct().ToList();
+        //        }
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //    return ls;
+        //}
+
     }
+
 }

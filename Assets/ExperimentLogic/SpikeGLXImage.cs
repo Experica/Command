@@ -75,6 +75,20 @@
 //        }
 
 //        // get imageset
+
+//var imagesetname = GetEnvActiveParam<string>("ImageSet");
+//if (imagesetname.QueryImageSet(out ImageSet imgset))
+//{
+//    var cond = new Dictionary<string, List<object>>
+//    {
+//        ["Image"] = Enumerable.Range(0, imgset.Images.Length).Select(i => (object)i).ToList()
+//    };
+//    condmanager.FinalizeCondition(cond);
+//    if (GetEnvActiveParam<ColorChannel>("ChannelModulate") == ColorChannel.None)
+//    {
+//        SetEnvActiveParam("BGColor", imgset.MeanColor);
+//    }
+//}
 //        var imagesetname = GetEnvActiveParam<string>("ImageSet");
 //        var imageset = imagesetname.GetImageData();
 //        if (imageset != null)

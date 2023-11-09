@@ -143,51 +143,6 @@ namespace Experica.Command
 #if COMMAND
 
 
-        public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
-        {
-            foreach (var f in conddesign.Keys.ToArray())
-            {
-                if (conddesign[f].Count >= 5 && conddesign[f][0].GetType() == typeof(string) && (string)conddesign[f][0] == "factorleveldesign")
-                {
-                    var start = conddesign[f][1];
-                    var end = conddesign[f][2];
-                    var n = conddesign[f][3];
-                    var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
-                    var isortho = true;
-                    if (conddesign[f].Count > 5)
-                    {
-                        isortho = conddesign[f][5].Convert<bool>();
-                    }
-
-                    object so, eo; int[] no;
-                    if (start.GetType() == typeof(List<object>))
-                    {
-                        if (((List<object>)start).Count < 4)
-                        {
-                            so = start.Convert<Vector3>();
-                            eo = end.Convert<Vector3>();
-                        }
-                        else
-                        {
-                            so = start.Convert<Color>();
-                            eo = end.Convert<Color>();
-                        }
-                        no = ((List<object>)n).Select(i => i.Convert<int>()).ToArray();
-                    }
-                    else
-                    {
-                        so = start.Convert<float>();
-                        eo = end.Convert<float>();
-                        no = new int[] { n.Convert<int>() };
-                    }
-
-                    var fld = new FactorLevelDesign(f, so, eo, no, method, isortho);
-                    conddesign[f] = fld.FactorLevel().Value;
-                }
-            }
-            return conddesign;
-        }
-
         public static string GetAddresses(this string experimenter, CommandConfig config)
         {
             string addresses = null;
@@ -916,121 +871,11 @@ namespace Experica.Command
             }
         }
 
-        public static Dictionary<string, Texture2D> FillRawTextures8(this ImageSet8 imgdata)
-        {
-            if (imgdata == null) return null;
 
-            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
-            var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgdata.Images.Count(); i++)
-            {
-                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
-                var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgdata.Images[i].Count(); j++)
-                {
-                    var c = imgdata.Images[i][j];
-                    ps[j] = new Color32(c, c, c, 255);
-                }
-                t.Apply();
-                imgset[(i + 1).ToString()] = t;
-            }
-            return imgset;
-        }
 
-        public static Dictionary<string, Texture2D> FillRawTextures32(this ImageSet32 imgdata)
-        {
-            if (imgdata == null) return null;
 
-            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
-            var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgdata.Images.Count(); i++)
-            {
-                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
-                var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgdata.Images[i].Count(); j++)
-                {
-                    var c = BitConverter.GetBytes(imgdata.Images[i][j]);
-                    ps[j] = new Color32(c[3], c[2], c[1], c[0]);
-                }
-                t.Apply();
-                imgset[(i + 1).ToString()] = t;
-            }
-            return imgset;
-        }
 
-        /// <summary>
-        /// Load raw textures from a file
-        /// </summary>
-        /// <param name="imagesetname"></param>
-        /// <returns></returns>
-        public static Dictionary<string, Texture2D> LoadRawTextures(this string imagesetname)
-        {
-            if (string.IsNullOrEmpty(imagesetname)) return null;
-            var files = Directory.GetFiles("Data", imagesetname + ".*", SearchOption.TopDirectoryOnly);
-            if (files.Length > 0)
-            {
-                var file = files[0]; var ext = Path.GetExtension(file);
-                switch (ext)
-                {
-                    case ".mpis8":
-                        return File.OpenRead(file).DeserializeMsgPack<ImageSet8>().FillRawTextures8();
-                    case ".mpis32":
-                        return File.OpenRead(file).DeserializeMsgPack<ImageSet32>().FillRawTextures32();
-                    case ".yaml":
-                        return file.ReadYamlFile<ImageSet32>().FillRawTextures32();
-                }
-                return null;
-            }
-            else
-            {
-                Debug.LogWarning($"Image Data: {Path.Combine("Data", imagesetname)} Not Found.");
-                return null;
-            }
-        }
 
-        public static Dictionary<string, Texture2D> Load(this string imageset, int startidx = 0, int numofimg = 10)
-        {
-            if (string.IsNullOrEmpty(imageset)) return null;
-            var imgs = new Dictionary<string, Texture2D>();
-
-            //Addressables.LoadAssetsAsync
-
-            for (var i = startidx; i < numofimg + startidx; i++)
-            {
-                var img = Resources.Load<Texture2D>(imageset + "/" + i);
-                if (img != null)
-                {
-                    imgs[i.ToString()] = img;
-                }
-            }
-            return imgs;
-        }
-
-        public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10, bool forcereload = false)
-        {
-            if (string.IsNullOrEmpty(imgsetdir)) return null;
-            Texture2DArray imgarray;
-            if (!forcereload)
-            {
-                imgarray = Resources.Load<Texture2DArray>(imgsetdir + ".asset");
-                if (imgarray != null) return imgarray;
-            }
-            var img = Resources.Load<Texture2D>(imgsetdir + "/" + startidx);
-            if (img == null) return null;
-
-            imgarray = new Texture2DArray(img.width, img.height, numofimg + startidx, img.format, false);
-            imgarray.SetPixels(img.GetPixels(), startidx);
-            for (var i = startidx + 1; i < numofimg + startidx; i++)
-            {
-                img = Resources.Load<Texture2D>(imgsetdir + "/" + i);
-                if (img != null)
-                {
-                    imgarray.SetPixels(img.GetPixels(), i);
-                }
-            }
-            imgarray.Apply();
-            return imgarray;
-        }
 
         //public static Dictionary<string, List<object>> GetColorData(this string Display_ID, bool forceload = false)
         //{
@@ -1168,26 +1013,6 @@ namespace Experica.Command
         //    return Color.gray;
         //}
 
-        public static Dictionary<string, Texture2D> GetImageData(this string imagesetname, bool forceload = false)
-        {
-            if (!forceload && imagedata.ContainsKey(imagesetname))
-            {
-                return imagedata[imagesetname];
-            }
-            var imgset = imagesetname.LoadTextures();
-            if (imgset != null)
-            {
-                imagedata[imagesetname] = imgset;
-                return imgset;
-            }
-            imgset = imagesetname.LoadRawTextures();
-            if (imgset != null)
-            {
-                imagedata[imagesetname] = imgset;
-                return imgset;
-            }
-            return null;
-        }
 
         public static byte[] Compress(this byte[] data)
         {

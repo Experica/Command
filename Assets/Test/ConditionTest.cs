@@ -1,5 +1,5 @@
-/*
-RunTimeTextureTest.cs is part of the Experica.
+﻿/*
+YamlTests.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -19,32 +19,38 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using NUnit.Framework;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Experica.Command;
+using static UnityEngine.Analytics.IAnalytic;
 
 namespace Experica.Test
 {
-    public class RunTimeTextureTest
+    public class ConditionTest
     {
-        // A Test behaves as an ordinary method
+        static ConditionManager cm=new();
+        static string condstring;
+        static Dictionary<string, List<object>> cond;
+
         [Test]
-        public void RunTimeTextureTestSimplePasses()
+        public void ReadCondition()
         {
-            var imagesetname = "test";
-            imagesetname.GetImageData();
+            //var filepath = @"C:\Users\fff00\Command\Condition\Ori30DegStep.yaml";
+            //var filepath = @"C:\Users\fff00\Command\Condition\OriSF.yaml";
+            var filepath = @"C:\Users\fff00\Command\Condition\PositionOffset8Deg1DegStep.yaml";
+            cond = cm.ReadConditionFile(filepath);
+            condstring = cond.SerializeYaml();
+            Debug.Log($"{cond.Values.First()[0].GetType()}\n\n{condstring}");
         }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator RunTimeTextureTestWithEnumeratorPasses()
+        [Test]
+        public void ProcessCond()
         {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
+            cond = cm.ProcessCondition(cond);
         }
     }
 }

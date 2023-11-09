@@ -12,7 +12,46 @@ Subject_Size: 0 0 0
 Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerGrating
-EnvParam: {}
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@GratingQuad@GratingQuad: 0 0 0
+  RotationOffset@GratingQuad@GratingQuad: 0 0 0
+  Ori@GratingQuad@GratingQuad: 0
+  OriOffset@GratingQuad@GratingQuad: 0
+  Size@GratingQuad@GratingQuad: 10 10 10
+  Diameter@GratingQuad@GratingQuad: 10
+  MaskType@GratingQuad@GratingQuad: None
+  MaskRadius@GratingQuad@GratingQuad: 0.5
+  MaskSigma@GratingQuad@GratingQuad: 0.15
+  Luminance@GratingQuad@GratingQuad: 0.5
+  Contrast@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.2
+  TemporalFreq@GratingQuad@GratingQuad: 1
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
+  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
+  SpatialPhase@GratingQuad@GratingQuad: 0
+  MinColor@GratingQuad@GratingQuad: 0 0 0 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
+  PauseTime@GratingQuad@GratingQuad: false
+  PauseModulateTime@GratingQuad@GratingQuad: true
+  GratingType@GratingQuad@GratingQuad: Square
+  ModulateType@GratingQuad@GratingQuad: Square
+  ReverseTime@GratingQuad@GratingQuad: false
+  Duty@GratingQuad@GratingQuad: 0.5
+  ModulateDuty@GratingQuad@GratingQuad: 0.5
+  TimeSecond@GratingQuad@GratingQuad: 0
+  ModulateTimeSecond@GratingQuad@GratingQuad: 0
+  OriPositionOffset@GratingQuad@GratingQuad: false
+  PositionOffset@GratingQuad@GratingQuad: 0 0 0
+  Position@GratingQuad@GratingQuad: 0 0 0
+  Visible@GratingQuad@GratingQuad: true
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: ConditionTestLogic
@@ -76,7 +115,7 @@ EnvInheritParam:
 ExtendParam:
   ColorSpace: LMS
   Color: X
-  Test: 2
+  Test: 3
   ps: true
   online: false
 TimerDriftSpeed: 6.5E-05

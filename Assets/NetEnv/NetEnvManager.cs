@@ -31,7 +31,7 @@ using Fasterflect;
 
 namespace Experica.NetEnv
 {
-    public class NetEnvManager
+    public class NetEnvManager:INetEnv
     {
         public List<INetEnvCamera> MainCamera { get; private set; } = new();
         Dictionary<string, Dictionary<string, Dictionary<string, NetworkVariableSource>>> go_nb_nv = new();

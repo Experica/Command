@@ -12,7 +12,29 @@ Subject_Size: 0 0 0
 Subject_Weight: 0
 Subject_Log: 
 EnvPath: MarkerImage
-EnvParam: {}
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Ori@ImageQuad@ImageQuad: 0
+  OriOffset@ImageQuad@ImageQuad: 0
+  Size@ImageQuad@ImageQuad: 20 20 20
+  Diameter@ImageQuad@ImageQuad: 20
+  MaskType@ImageQuad@ImageQuad: None
+  MaskRadius@ImageQuad@ImageQuad: 0
+  MaskSigma@ImageQuad@ImageQuad: 0
+  MinColor@ImageQuad@ImageQuad: 0 0 0 1
+  MaxColor@ImageQuad@ImageQuad: 1 1 1 1
+  ImageSet@ImageQuad@ImageQuad: TestImageSet.UInt8
+  Image@ImageQuad@ImageQuad: 0
+  ChannelModulate@ImageQuad@ImageQuad: None
+  Position@ImageQuad@ImageQuad: 0 0 0
+  Visible@ImageQuad@ImageQuad: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic

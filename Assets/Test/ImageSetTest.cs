@@ -1,5 +1,5 @@
 ﻿/*
-ConvertTests.cs is part of the Experica.
+YamlTests.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -22,30 +22,20 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Experica.Command;
 
 namespace Experica.Test
 {
-    public class ConvertTests
+    public class ImageSetTest
     {
         [Test]
-        public void Convert()
+        public void LoadImageSet()
         {
-            object x = null;
-            x.Convert(typeof(float));
-            x.Convert<List<float>>();
-            //x.Convert<float>();
-        }
-
-        // A UnityTest behaves like a coroutine in PlayMode
-        // and allows you to yield null to skip a frame in EditMode
-        [UnityTest]
-        public IEnumerator NewTestScriptWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // yield to skip a frame
-            yield return null;
+            var imagesetname = "test";
+            var imgset = imagesetname.LoadImageSet();
         }
     }
 }

@@ -38,11 +38,11 @@ namespace Experica.NetEnv
         public NetworkVariable<float> MaskSigma = new(0.15f);
         public NetworkVariable<Color> MinColor = new(Color.black);
         public NetworkVariable<Color> MaxColor = new(Color.white);
-        public NetworkVariable<FixedString128Bytes> ImageSet = new("ExampleImageSet");
-        public NetworkVariable<FixedString128Bytes> Image = new("1");
+        public NetworkVariable<FixedString512Bytes> ImageSet = new("TestImageSet.UInt8");
+        public NetworkVariable<uint> Image = new(0);
         public NetworkVariable<ColorChannel> ChannelModulate = new(ColorChannel.None);
 
-        Dictionary<FixedString128Bytes, Texture2D> imagesetcache = new();
+        ImageSet imgset = new();
 
         public override void OnNetworkSpawn()
         {
@@ -128,19 +128,20 @@ namespace Experica.NetEnv
             renderer.material.SetInt("_Channel", (int)c);
         }
 
-        void OnImage(FixedString128Bytes p, FixedString128Bytes c)
+        void OnImage(uint p, uint c)
         {
-            if (imagesetcache.ContainsKey(c))
+            if (c < imgset.Images.Length)
             {
-                renderer.material.SetTexture("_Image", imagesetcache[c]);
+                renderer.material.SetTexture("_Image", imgset.Images[c]);
             }
         }
 
-        void OnImageSet(FixedString128Bytes p, FixedString128Bytes c)
+        void OnImageSet(FixedString512Bytes p, FixedString512Bytes c)
         {
-            
-            //imagesetcache = c.GetImageData();
-            OnImage(new(), imagesetcache.Keys.First());
+            if (c.ToString().QueryImageSet(out imgset))
+            {
+                OnImage(0, 0);
+            }
         }
 
     }

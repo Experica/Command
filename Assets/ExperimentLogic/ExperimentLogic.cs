@@ -26,11 +26,10 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Linq;
-using Experica;
 using Experica.NetEnv;
-using Experica.Command;
 
-
+namespace Experica.Command
+{
     public class ExperimentLogic : MonoBehaviour, IDisposable
     {
         #region Disposable
@@ -62,9 +61,9 @@ using Experica.Command;
 
         public Experiment ex;
         public Experica.Timer timer = new();
-        public NetEnvManager envmanager = new ();
-        public ConditionManager condmanager = new ();
-        public ConditionTestManager condtestmanager = new ();
+        public NetEnvManager envmanager = new();
+        public ConditionManager condmanager = new();
+        public ConditionTestManager condtestmanager = new();
         public IRecorder recorder;
         public List<string> pushexcludefactors;
 
@@ -130,8 +129,8 @@ using Experica.Command;
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
                             if (condmanager.nblock > 1)
                             {
                                 condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
@@ -151,8 +150,8 @@ using Experica.Command;
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
                             if (condmanager.nblock > 1)
                             {
                                 condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
@@ -205,8 +204,8 @@ using Experica.Command;
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
                             if (condmanager.nblock > 1)
                             {
                                 condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
@@ -226,8 +225,8 @@ using Experica.Command;
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.condidx);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.condidx]);
+                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
                             if (condmanager.nblock > 1)
                             {
                                 condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
@@ -288,17 +287,17 @@ using Experica.Command;
 
         protected virtual void GenerateFinalCondition()
         {
-            condmanager.GenerateFinalCondition(ex.CondPath);
+            condmanager.FinalizeCondition(ex.CondPath);
         }
 
         public void PrepareCondition(bool forceprepare = true)
         {
-            if (forceprepare == true || condmanager.finalcond == null)
+            if (forceprepare == true || condmanager.FinalCond == null)
             {
                 GenerateFinalCondition();
             }
-            ex.Cond = condmanager.finalcond;
-            condmanager.UpdateSampleSpace(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            ex.Cond = condmanager.FinalCond;
+            condmanager.InitializeSampleSpaces(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
             OnConditionPrepared?.Invoke();
         }
 
@@ -334,7 +333,7 @@ using Experica.Command;
                 else { return; }
             }
 
-            ex.CondTest = condtestmanager.condtest;
+            ex.CondTest = condtestmanager.CondTest;
             ex.EnvParam = envmanager.GetActiveParams();
             ex.Version = ExpericaExtension.ExperimentDataVersion;
             // Hold references to data that may not need to save
@@ -471,6 +470,7 @@ using Experica.Command;
         /// <param name="isstart"></param>
         public void StartStopExperiment(bool isstart)
         {
+            if (isstart == islogicactive) { return; }
             if (isstart)
             {
                 OnBeginStartExperiment?.Invoke();
@@ -640,7 +640,7 @@ using Experica.Command;
 
         public virtual void OnPositionAction(Vector2 position)
         {
-            if (ex.Input && envmanager.MainCamera.Count>0)
+            if (ex.Input && envmanager.MainCamera.Count > 0)
             {
                 var po = envmanager.GetActiveParam("Position");
                 if (po != null)
@@ -648,8 +648,8 @@ using Experica.Command;
                     var so = envmanager.GetActiveParam("Size");
                     var p = (Vector3)po;
                     var s = so == null ? Vector3.zero : (Vector3)so;
-                    var hh = (envmanager.MainCamera.First().Height + s.y )/ 2;
-                    var hw = (envmanager.MainCamera.First().Width + s.x )/ 2;
+                    var hh = (envmanager.MainCamera.First().Height + s.y) / 2;
+                    var hw = (envmanager.MainCamera.First().Width + s.x) / 2;
                     envmanager.SetActiveParam("Position", new Vector3(
                     Mathf.Clamp(p.x + position.x * hw * Time.deltaTime, -hw, hw),
                     Mathf.Clamp(p.y + position.y * hh * Time.deltaTime, -hh, hh),
@@ -748,3 +748,4 @@ using Experica.Command;
         { }
 
     }
+}

@@ -9,7 +9,7 @@ using System.Linq;
 using Experica.NetEnv;
 using UnityEngine.Rendering;
 using Unity.Properties;
-using UnityEngine.Windows;
+using Unity.Collections;
 
 namespace Experica.Command
 {
@@ -22,8 +22,8 @@ namespace Experica.Command
 
         VisualElement root, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
         public Toggle server, host, start, pause, startsession;
-        Button newex,saveex,deleteex,addexextendparam;
-        DropdownField experimentlist, experimentsessionlist;
+        public Button newex, saveex, deleteex, addexextendparam;
+        public DropdownField experimentlist, experimentsessionlist;
         ScrollView excontent, envcontent;
 
 
@@ -47,8 +47,8 @@ namespace Experica.Command
             experimentsessionlist.RegisterValueChangedCallback(e => uicontroller.OnExSessionChoiceChanged(e.newValue));
             server.RegisterValueChangedCallback(e => uicontroller.ToggleServer(e.newValue));
             host.RegisterValueChangedCallback(e => uicontroller.ToggleHost(e.newValue));
-            start.RegisterValueChangedCallback(e => uicontroller.ToggleStartStopExperiment(e.newValue));
-            pause.RegisterValueChangedCallback(e => uicontroller.ToggleStartStopExperimentSession(e.newValue));
+            start.RegisterValueChangedCallback(e => uicontroller.exmanager.el?.StartStopExperiment(e.newValue));
+            pause.RegisterValueChangedCallback(e => uicontroller.exmanager.el?.PauseResumeExperiment(e.newValue));
             start.SetEnabled(false);
             pause.SetEnabled(false);
             saveex.RegisterCallback<ClickEvent>(e => uicontroller.exmanager.SaveEx(experimentlist.value));
@@ -74,10 +74,6 @@ namespace Experica.Command
             condpanel = root.Q("ConditionPanel");
             // ConditionTest Panel
             condtestpanel = root.Q("ConditionTestPanel");
-
-            // this is a hack, because we don't use vector4 in our datasource yet, so here we use it to represent color
-            ConverterGroups.RegisterGlobalConverter((ref object c) => { var cc = (Color)c; return new Vector4(cc.r, cc.g, cc.b, cc.a); });
-            ConverterGroups.RegisterGlobalConverter((ref Vector4 v) => { var c = new Color(v.x, v.y, v.z, v.w); return (object)c; });
         }
 
         public void UpdateExperimentList(List<string> list, string first = null)
@@ -140,23 +136,23 @@ namespace Experica.Command
             {
                 foreach (var p in addui)
                 {
-                    AddParamUI(p,p, ex.Properties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent);
+                    AddParamUI(p, p, ex.Properties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent);
                 }
             }
-            
-            foreach(var p in ex.ExtendProperties.Keys.Except(uicontroller.config.ExHideParams).ToArray())
+
+            foreach (var p in ex.ExtendProperties.Keys.Except(uicontroller.config.ExHideParams).ToArray())
             {
-                AddParamUI(p, p, ex.ExtendProperties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent,true);
+                AddParamUI(p, p, ex.ExtendProperties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent, true);
             }
-            
+
         }
 
-        void AddParamUI<T>(string id, string name, IDataSource<T> source, bool isinherit, Action<string, bool> inherithandler, VisualElement parent,bool isextendparam=false)
+        void AddParamUI<T>(string id, string name, IDataSource<T> source, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, bool isextendparam = false)
         {
-            AddParamUI(id,name, source.Type, source.Value, isinherit, inherithandler, parent, source, "Value",isextendparam);
+            AddParamUI(id, name, source.Type, source.Value, isinherit, inherithandler, parent, source, "Value", isextendparam);
         }
 
-        void AddParamUI(string id,string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, object datasource = null, string datapath = "Value", bool isextendparam = false)
+        void AddParamUI(string id, string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, object datasource = null, string datapath = "Value", bool isextendparam = false)
         {
             TemplateContainer ui;
             VisualElement input;
@@ -270,17 +266,28 @@ namespace Experica.Command
 
             if (datasource != null)
             {
-                input.SetBinding("value", new DataBinding
+                var binding = new DataBinding
                 {
                     dataSource = datasource,
                     dataSourcePath = new PropertyPath(datapath),
-                });
+                };
+                if (T == typeof(Color))
+                {
+                    binding.sourceToUiConverters.AddConverter((ref object s) => { var c = (Color)s; return new Vector4(c.r, c.g, c.b, c.a); });
+                    binding.uiToSourceConverters.AddConverter((ref Vector4 v) => (object)new Color(v.x, v.y, v.z, v.w));
+                }
+                else if (T == typeof(FixedString512Bytes))
+                {
+                    binding.sourceToUiConverters.AddConverter((ref object s) => s.ToString());
+                    binding.uiToSourceConverters.AddConverter((ref string v) => (object)new FixedString512Bytes(v));
+                }
+                input.SetBinding("value", binding);
             }
-            if(isextendparam)
+            if (isextendparam)
             {
                 var deletebutton = ExtendButton.Instantiate().Q<Button>("Delete");
-                deletebutton.RegisterCallback<ClickEvent>(e=>DeleteExExtendParam(ui));
-                ui.Q("Root").Insert(0,deletebutton);
+                deletebutton.RegisterCallback<ClickEvent>(e => DeleteExExtendParam(ui));
+                ui.Q("Root").Insert(0, deletebutton);
             }
             parent.Add(ui);
         }
@@ -292,7 +299,7 @@ namespace Experica.Command
 
         void DeleteExExtendParam(VisualElement ui)
         {
-            var name=ui.name;
+            var name = ui.name;
             Debug.Log($"delete ExExtendParam: {name}");
             //excontent.Remove(ui);
             //uicontroller.exmanager.el.ex.RemoveExtendProperty(name);
@@ -306,7 +313,7 @@ namespace Experica.Command
             //var envps = uicontroller.exmanager.el.envmanager.GetParamSources(!uicontroller.config.IsShowEnvParamFullName, !uicontroller.config.IsShowInactiveEnvParam);
             foreach (var name in envps.Keys)
             {
-                AddParamUI(name,name.FirstSplitHead(), envps[name],uicontroller.exmanager. el.ex.EnvInheritParam.Contains(name), uicontroller.ToggleEnvInherit, envcontent);
+                AddParamUI(name, name.FirstSplitHead(), envps[name], uicontroller.exmanager.el.ex.EnvInheritParam.Contains(name), uicontroller.ToggleEnvInherit, envcontent);
             }
         }
 
@@ -328,7 +335,7 @@ namespace Experica.Command
                     var ui = currentui[currentuiname.IndexOf(p)];
                     var vp = ui.Q<Image>("Viewport");
                     var camera = currentcamera[currentcameraname.IndexOf(p)];
-                     var rt= GetRenderTexture(viewcontent.layout.size, camera.Aspect, (RenderTexture)vp.image);
+                    var rt = GetRenderTexture(viewcontent.layout.size, camera.Aspect, (RenderTexture)vp.image);
                     vp.style.height = rt.height;
                     vp.style.width = rt.width;
                     camera.Camera.targetTexture = rt;

@@ -20,6 +20,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using Unity.Collections;
 using System;
 using System.IO;
 using YamlDotNet.Serialization;
@@ -29,12 +30,15 @@ using YamlDotNet.Core.Events;
 namespace Experica
 {
     /// <summary>
-    /// for object, the runtime type should be serialized also in tags,
-    /// however the consuming library usually lacks tag support(YAML.jl),
-    /// so tags not serialized yet.
+    /// Convert between value and its text representation of Types which don't have built-in support in YamlDotNet.
     /// 
-    /// without type info, object will be deserialized as string, but it is 
-    /// reasonable to parse string to conventional types, such as int, float or bool, etc.
+    /// For `typeof(object)`, serialization would use runtime type of value, but deserialization don't know which specific
+    /// type to use except `typeof(object)`. So the runtime type should be serialized in tag along with value,
+    /// however it would add noise in the Yaml file, and the deserialization, probably in other languages, may not support tag
+    /// or need extra work, so here Type tag is not serialized yet.
+    /// 
+    /// Without type info, value remains in string for `typeof(object)`, but it is 
+    /// reasonable to try parsing string to conventional types such as bool, float or Vector3, etc.
     /// </summary>
     public class YamlTypeConverter : IYamlTypeConverter
     {
@@ -42,11 +46,13 @@ namespace Experica
         Type TVector3 = typeof(Vector3);
         Type TVector4 = typeof(Vector4);
         Type TColor = typeof(Color);
+        Type TObject = typeof(object);
         Type TString = typeof(string);
+        Type TFixString512 = typeof(FixedString512Bytes);
 
         public bool Accepts(Type type)
         {
-            if (type == TVector2 || type == TVector3 || type == TVector4 || type == TColor)
+            if (type == TVector2 || type == TVector3 || type == TVector4 || type == TColor || type == TFixString512 || type == TObject)
             {
                 return true;
             }
@@ -55,9 +61,9 @@ namespace Experica
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var v = ((Scalar)parser.Current).Value.Convert(TString,type);
+            var value = ((Scalar)parser.Current).Value;
             parser.MoveNext();
-            return v;
+            return type == TObject ? value.TryParse() : value.Convert(TString, type);
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)

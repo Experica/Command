@@ -433,10 +433,10 @@ namespace Experica.Command
 
         public void OnSceneLoadEventCompleted(string scene)
         {
-            exmanager. el.envmanager.ParseScene(scene);
-            exmanager. el.envmanager.SetParams(exmanager. el.ex.EnvParam);
-            exmanager. InheritEnv();
-            exmanager. el.envmanager.RefreshParams();
+            exmanager.el.envmanager.ParseScene(scene);
+            exmanager.el.envmanager.SetParams(exmanager.el.ex.EnvParam);
+            exmanager.InheritEnv();
+            exmanager.el.envmanager.RefreshParams();
             // uicontroller.SyncCurrentDisplayCLUT();
 
 
@@ -493,6 +493,7 @@ namespace Experica.Command
             return false;
         }
 
+        #region ExperimentSession Control Callback
         public void OnBeginStartExperimentSession()
         {
             exss.interactable = false;
@@ -512,79 +513,7 @@ namespace Experica.Command
             }
         }
 
-        public void OnBeginStartExperiment()
-        {
-            // de-activate related UIs
-            exs.interactable = false;
-            newex.interactable = false;
-            saveex.interactable = false;
-            deleteex.interactable = false;
-            startstoptext.text = "Stop";
-            pause.interactable = true;
-            var msg = $"Experiment \"{exmanager.el.ex.ID}\" Started.";
-            consolepanel.Log(msg);
-            if (exmanager.el.ex.NotifyExperimenter)
-            {
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
-            }
-
-            // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
-            // whereas the connected Environment presenting the final stimuli.
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-            QualitySettings.vSyncCount = 0;
-            QualitySettings.maxQueuedFrames = 2;
-            exmanager.el.timer.IsFrameTime = false;
-            if (!canvas.activeSelf)
-            {
-                // FullViewport(No UI), hide cursor
-                Cursor.visible = false;
-                if (Screen.fullScreen)
-                {
-                    // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
-                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-                    QualitySettings.vSyncCount = config.VSyncCount;
-                    QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
-                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
-                }
-            }
-            Time.fixedDeltaTime = config.FixedDeltaTime;
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
-            GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
-
-            // alsmanager?.RpcNotifyStartExperiment();
-        }
-
-        public void OnEndStartExperimentSession()
-        { }
-
-        public void OnEndStartExperiment()
-        {
-            // if (alsmanager != null)
-            // {
-            //     using (var stream = new MemoryStream())
-            //     {
-            //         exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
-            //         //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
-            //         //alsmanager.RpcNotifyExperiment(stream.ToArray());
-            //     }
-            // }
-
-            exmanager.OnELStart();
-        }
-
-        public void ToggleStartStopExperiment(bool isstart)
-        {
-            var el = exmanager?.el;
-            if (el != null)
-            {
-                el.StartStopExperiment(isstart);
-            }
-            else
-            {
-                UnityEngine.Debug.LogError("No Current ExperimentLogic to Start/Stop.");
-            }
-        }
+        public void OnEndStartExperimentSession() { }
 
         public void ToggleStartStopExperimentSession(bool isstart)
         {
@@ -619,10 +548,6 @@ namespace Experica.Command
             startstopsessiontext.text = "StartSession";
         }
 
-        public void OnBeginStopExperiment()
-        {
-        }
-
         public void OnEndStopExperimentSession()
         {
             consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
@@ -632,6 +557,69 @@ namespace Experica.Command
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
             }
         }
+        #endregion
+
+        #region Experiment Control Callback
+        public void OnBeginStartExperiment()
+        {
+            ui.start.SetValueWithoutNotify(true);
+            ui.start.label = "Stop";
+            ui.pause.SetEnabled(true);
+            ui.experimentlist.SetEnabled(false);
+            ui.newex.SetEnabled(false);
+            ui.saveex.SetEnabled(false);
+            ui.deleteex.SetEnabled(false);
+
+            var msg = $"Experiment \"{exmanager.el.ex.ID}\" Started.";
+            consolepanel.Log(msg);
+            if (exmanager.el.ex.NotifyExperimenter)
+            {
+                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+            }
+
+            // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
+            // whereas the connected Environment presenting the final stimuli.
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+            QualitySettings.vSyncCount = 0;
+            QualitySettings.maxQueuedFrames = 2;
+            exmanager.el.timer.IsFrameTime = false;
+            if (!canvas.activeSelf)
+            {
+                // FullViewport(No UI), hide cursor
+                Cursor.visible = false;
+                if (Screen.fullScreen)
+                {
+                    // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+                    QualitySettings.vSyncCount = config.VSyncCount;
+                    QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
+                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
+                }
+            }
+            Time.fixedDeltaTime = config.FixedDeltaTime;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+            Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
+            GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
+
+            // alsmanager?.RpcNotifyStartExperiment();
+        }
+
+        public void OnEndStartExperiment()
+        {
+            // if (alsmanager != null)
+            // {
+            //     using (var stream = new MemoryStream())
+            //     {
+            //         exmanager.el.ex.EnvParam = exmanager.el.envmanager.GetActiveParams(true);
+            //         //MsgPack.ExSerializer.Pack(stream, exmanager.el.ex, PackerCompatibilityOptions.None);
+            //         //alsmanager.RpcNotifyExperiment(stream.ToArray());
+            //     }
+            // }
+
+            exmanager.OnELStart();
+        }
+
+        public void OnBeginStopExperiment() { }
 
         public void OnEndStopExperiment()
         {
@@ -656,32 +644,21 @@ namespace Experica.Command
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Normal;
             GCSettings.LatencyMode = GCLatencyMode.Interactive;
 
-            // re-activate UIs that's been de-activated in experiment starting process
-            exs.interactable = true;
-            newex.interactable = true;
-            saveex.interactable = true;
-            deleteex.interactable = true;
-            if (pause.isOn)
-            {
-                var eh = pause.onValueChanged;
-                pause.onValueChanged = new Toggle.ToggleEvent();
-                pause.isOn = false;
-                pause.onValueChanged = eh;
-            }
-            if (start.isOn)
-            {
-                var eh = start.onValueChanged;
-                start.onValueChanged = new Toggle.ToggleEvent();
-                start.isOn = false;
-                start.onValueChanged = eh;
-            }
-            startstoptext.text = "Start";
-            pause.interactable = false;
+            ui.deleteex.SetEnabled(true);
+            ui.saveex.SetEnabled(true);
+            ui.newex.SetEnabled(true);
+            ui.experimentlist.SetEnabled(true);
+            ui.pause.label = "Pause";
+            ui.pause.SetValueWithoutNotify(false);
+            ui.pause.SetEnabled(false);
+            ui.start.label = "Start";
+            ui.start.SetValueWithoutNotify(false);
         }
 
         public void OnBeginPauseExperiment()
         {
-            pauseresumetext.text = "Resume";
+            ui.pause.SetValueWithoutNotify(true);
+            ui.pause.label = "Resume";
             consolepanel.LogWarn("Experiment Paused.");
         }
 
@@ -693,17 +670,8 @@ namespace Experica.Command
             // }
         }
 
-        public void TogglePauseResumeExperiment(bool ispause)
-        {
-            if (exmanager.el != null)
-            {
-                exmanager.el.PauseResumeExperiment(ispause);
-            }
-        }
-
         public void OnBeginResumeExperiment()
         {
-            pauseresumetext.text = "Pause";
             consolepanel.LogWarn("Experiment Resumed.");
         }
 
@@ -713,9 +681,11 @@ namespace Experica.Command
             // {
             //     alsmanager.RpcNotifyResumeExperiment();
             // }
+            ui.pause.label = "Pause";
+            ui.pause.SetValueWithoutNotify(false);
         }
+        #endregion
 
-       
 
         public void ToggleExInherit(string name, bool isinherit)
         {
@@ -814,13 +784,10 @@ namespace Experica.Command
             }
             else
             {
-                if (start.isOn)
-                {
-                    ToggleStartStopExperiment(false);
-                    start.isOn = false;
-                }
+                exmanager.el?.StartStopExperiment(false);
                 networkcontroller.Shutdown();
             }
+            ui.host.label = newValue ? "Shutdown" : "Host";
             ui.server.SetEnabled(!newValue);
             ui.start.SetEnabled(newValue);
         }
@@ -834,13 +801,10 @@ namespace Experica.Command
             }
             else
             {
-                if (start.isOn)
-                {
-                    ToggleStartStopExperiment(false);
-                    start.isOn = false;
-                }
+                exmanager.el?.StartStopExperiment(false);
                 networkcontroller.Shutdown();
             }
+            ui.server.label = newValue ? "Shutdown" : "Server";
             ui.host.SetEnabled(!newValue);
             ui.start.SetEnabled(newValue);
         }
@@ -852,7 +816,7 @@ namespace Experica.Command
             {
                 networkcontroller.LoadScene(scene);
             }
-            
+
         }
 
     }

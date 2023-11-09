@@ -32,21 +32,20 @@ namespace Experica
 {
     public class ConditionTestManager
     {
-        public Dictionary<CONDTESTPARAM, List<object>> condtest = new Dictionary<CONDTESTPARAM, List<object>>();
+        public Dictionary<CONDTESTPARAM, IList> CondTest { get; } = new();
         public Func<CONDTESTPARAM, List<object>, bool> OnNotifyCondTest;
         public Func<double, bool> OnNotifyCondTestEnd;
         public Action PushUICondTest, OnClearCondTest;
 
         int notifiedidx = -1;
         public int NotifiedIndex { get { return notifiedidx; } }
-        int condtestidx = -1;
-        public int CondTestIndex { get { return condtestidx; } }
+        public int CondTestIndex { get; private set; } = -1;
 
 
         public void Clear()
         {
-            condtest.Clear();
-            condtestidx = -1;
+            CondTest.Clear();
+            CondTestIndex = -1;
             notifiedidx = -1;
             OnClearCondTest?.Invoke();
         }
@@ -54,23 +53,23 @@ namespace Experica
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
             PushCondTest(starttime, notifyparam, notifypercondtest, pushall, notifyui);
-            condtestidx++;
+            CondTestIndex++;
         }
 
         public void PushCondTest(double pushtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
-            if (condtestidx >= 0)
+            if (CondTestIndex >= 0)
             {
                 if (notifyui && PushUICondTest != null) PushUICondTest();
                 if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
                 {
                     if (!pushall)
                     {
-                        if (((condtestidx - notifiedidx) / notifypercondtest) >= 1)
+                        if (((CondTestIndex - notifiedidx) / notifypercondtest) >= 1)
                         {
                             if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
                             {
-                                notifiedidx = condtestidx;
+                                notifiedidx = CondTestIndex;
                             }
                         }
                     }
@@ -78,7 +77,7 @@ namespace Experica
                     {
                         if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
                         {
-                            notifiedidx = condtestidx;
+                            notifiedidx = CondTestIndex;
                         }
                     }
                 }
@@ -88,24 +87,24 @@ namespace Experica
         bool NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
         {
             var hr = false;
-            if (startidx >= 0 && startidx <= condtestidx && OnNotifyCondTest != null)
-            {
-                var t = new List<bool>();
-                foreach (var p in notifyparam)
-                {
-                    if (condtest.ContainsKey(p))
-                    {
-                        var vs = condtest[p];
-                        // notify condtest range should have rectangle shape
-                        for (var i = vs.Count; i <= condtestidx; i++)
-                        {
-                            vs.Add(null);
-                        }
-                        t.Add(OnNotifyCondTest(p, vs.GetRange(startidx, condtestidx - startidx + 1)));
-                    }
-                }
-                hr = t.Count == 0 ? false : t.All(i => i);
-            }
+            //if (startidx >= 0 && startidx <= CondTestIndex && OnNotifyCondTest != null)
+            //{
+            //    var t = new List<bool>();
+            //    foreach (var p in notifyparam)
+            //    {
+            //        if (CondTest.ContainsKey(p))
+            //        {
+            //            var vs = CondTest[p];
+            //            // notify condtest range should have rectangle shape
+            //            for (var i = vs.Count; i <= CondTestIndex; i++)
+            //            {
+            //                vs.Add(null);
+            //            }
+            //            t.Add(OnNotifyCondTest(p, vs.GetRange(startidx, CondTestIndex - startidx + 1)));
+            //        }
+            //    }
+            //    hr = t.Count == 0 ? false : t.All(i => i);
+            //}
             return hr;
         }
 
@@ -114,18 +113,22 @@ namespace Experica
             return NotifyCondTest(startidx, notifyparam) && OnNotifyCondTestEnd != null && OnNotifyCondTestEnd(notifytime);
         }
 
-        public Dictionary<CONDTESTPARAM, object> CurrentCondTest
+        public Dictionary<CONDTESTPARAM, object> this[int condtestindex]
         {
-            get { return condtest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestidx]); }
+            get => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
         }
+
+        public Dictionary<CONDTESTPARAM, object> CurrentCondTest => this[CondTestIndex];
+
+        public void Initialize<T>(CONDTESTPARAM paramname) { CondTest[paramname] = new List<T>(); }
 
         public void Add(CONDTESTPARAM paramname, object paramvalue)
         {
-            if (condtestidx < 0) return;
-            if (condtest.ContainsKey(paramname))
+            if (CondTestIndex < 0) { return; }
+            if (CondTest.ContainsKey(paramname))
             {
-                var vs = condtest[paramname];
-                for (var i = vs.Count; i < condtestidx; i++)
+                var vs = CondTest[paramname];
+                for (var i = vs.Count; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
@@ -134,76 +137,76 @@ namespace Experica
             else
             {
                 var vs = new List<object>();
-                for (var i = 0; i < condtestidx; i++)
+                for (var i = 0; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
                 vs.Add(paramvalue);
-                condtest[paramname] = vs;
+                CondTest[paramname] = vs;
             }
         }
 
         public void AddInList<T>(CONDTESTPARAM paramname, T listvalue)
         {
-            if (condtestidx < 0) return;
-            if (condtest.ContainsKey(paramname))
+            if (CondTestIndex < 0) { return; }
+            if (CondTest.ContainsKey(paramname))
             {
-                var vs = condtest[paramname];
-                for (var i = vs.Count; i < condtestidx; i++)
+                var vs = CondTest[paramname];
+                for (var i = vs.Count; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
-                if (vs.Count < (condtestidx + 1))
+                if (vs.Count < (CondTestIndex + 1))
                 {
                     vs.Add(new List<T>() { listvalue });
                 }
                 else
                 {
-                    var lvs = (List<T>)vs[condtestidx];
+                    var lvs = (List<T>)vs[CondTestIndex];
                     lvs.Add(listvalue);
                 }
             }
             else
             {
                 var vs = new List<object>();
-                for (var i = 0; i < condtestidx; i++)
+                for (var i = 0; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
                 vs.Add(new List<T>() { listvalue });
-                condtest[paramname] = vs;
+                CondTest[paramname] = vs;
             }
         }
 
         public void AddInList<TKey, TValue>(CONDTESTPARAM paramname, TKey listkey, TValue listvalue)
         {
-            if (condtestidx < 0) return;
-            if (condtest.ContainsKey(paramname))
+            if (CondTestIndex < 0) { return; }
+            if (CondTest.ContainsKey(paramname))
             {
-                var vs = condtest[paramname];
-                for (var i = vs.Count; i < condtestidx; i++)
+                var vs = CondTest[paramname];
+                for (var i = vs.Count; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
-                if (vs.Count < (condtestidx + 1))
+                if (vs.Count < (CondTestIndex + 1))
                 {
                     vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
                 }
                 else
                 {
-                    var lvs = (List<Dictionary<TKey, TValue>>)vs[condtestidx];
+                    var lvs = (List<Dictionary<TKey, TValue>>)vs[CondTestIndex];
                     lvs.Add(new Dictionary<TKey, TValue>() { [listkey] = listvalue });
                 }
             }
             else
             {
                 var vs = new List<object>();
-                for (var i = 0; i < condtestidx; i++)
+                for (var i = 0; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
                 }
                 vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
-                condtest[paramname] = vs;
+                CondTest[paramname] = vs;
             }
         }
 

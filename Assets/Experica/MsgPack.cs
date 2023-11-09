@@ -29,20 +29,16 @@ namespace Experica
 {
     public static class MsgPack
     {
-        static MsgPack()
-        {
-        }
-
-        public static byte[] SerializeMsgPack<T>(this T obj, MessagePackSerializerOptions options = null)
+        public static byte[] SerializeMsgPack<T>(this T value, MessagePackSerializerOptions options = null)
         {
             options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
-            return MessagePackSerializer.Serialize<T>(obj, options);
+            return MessagePackSerializer.Serialize(value, options);
         }
 
-        public static void SerializeMsgPack<T>(this T obj, Stream data, MessagePackSerializerOptions options = null)
+        public static void SerializeMsgPack<T>(this T value, Stream data, MessagePackSerializerOptions options = null)
         {
             options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
-            MessagePackSerializer.Serialize<T>(data, obj, options);
+            MessagePackSerializer.Serialize(data, value, options);
         }
 
         public static T DeserializeMsgPack<T>(this byte[] data, MessagePackSerializerOptions options = null)
@@ -56,17 +52,5 @@ namespace Experica
             options ??= MessagePack.Resolvers.ContractlessStandardResolver.Options;
             return MessagePackSerializer.Deserialize<T>(data, options);
         }
-    }
-
-    public class ImageSet8
-    {
-        public List<UInt16> ImageSize { get; set; } = new List<ushort>();
-        public List<List<Byte>> Images { get; set; } = new List<List<byte>>();
-    }
-
-    public class ImageSet32
-    {
-        public List<UInt16> ImageSize { get; set; } = new List<ushort>();
-        public List<List<UInt32>> Images { get; set; } = new List<List<uint>>();
     }
 }

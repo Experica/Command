@@ -36,6 +36,9 @@ using Fasterflect;
 using Unity.Properties;
 using UnityEngine.UIElements;
 using System.Runtime.CompilerServices;
+using UnityEngine.SceneManagement;
+using Unity.Collections;
+using System.Threading.Tasks;
 #if COMMAND
 using System.Windows.Forms;
 using MethodInvoker = Fasterflect.MethodInvoker;
@@ -56,7 +59,7 @@ namespace Experica
         {
             Type = type; Name = name; Getter = getter; Setter = setter;
         }
-        public Property(PropertyInfo p) 
+        public Property(PropertyInfo p)
         {
             Type = p.PropertyType;
             Name = p.Name;
@@ -77,7 +80,7 @@ namespace Experica
         }
     }
 
-    public class PropertySource<TContainer>:INotifyBindablePropertyChanged,IDataSource<object>
+    public class PropertySource<TContainer> : INotifyBindablePropertyChanged, IDataSource<object>
     {
         public string Name => Property.Name;
         public Type Type => Property.Type;
@@ -86,7 +89,7 @@ namespace Experica
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        public PropertySource(TContainer container,Property property) { Container = container;Property = property; }
+        public PropertySource(TContainer container, Property property) { Container = container; Property = property; }
 
         public PropertySource(TContainer container, Type propertytype, string propertyname)
         {
@@ -112,33 +115,33 @@ namespace Experica
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
 
-        public void NotifyValue()        {            Notify("Value");        }
+        public void NotifyValue() { Notify("Value"); }
 
         public T GetValue<T>() { return Value.Convert<T>(Type); }
         public void SetValue<T>(T value) { Value = value.Convert(typeof(T), Type); }
     }
 
-    public class DictSource<TValue>:INotifyBindablePropertyChanged,IDataSource<TValue>
+    public class DictSource<TValue> : INotifyBindablePropertyChanged, IDataSource<TValue>
     {
-        public string Name { get;}
+        public string Name { get; }
         public Type Type => Value.GetType();
         Dictionary<string, TValue> Container;
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        public DictSource(Dictionary<string,TValue> container,string name)
+        public DictSource(Dictionary<string, TValue> container, string name)
         {
-            Container= container;Name = name;
+            Container = container; Name = name;
         }
 
         [CreateProperty]
         public TValue Value
         {
             get { return Container[Name]; }
-            set { Container[Name]=value;Notify(); }
+            set { Container[Name] = value; Notify(); }
         }
 
-        public void NotifyValue()        {            Notify("Value");        }
+        public void NotifyValue() { Notify("Value"); }
 
         void Notify([CallerMemberName] string property = "")
         {
@@ -149,7 +152,7 @@ namespace Experica
         public void SetValue<T>(T value) { Value = value.Convert<TValue>(typeof(T)); }
     }
 
-    public class PropertySource: INotifyBindablePropertyChanged,IDataSource<object>
+    public class PropertySource : INotifyBindablePropertyChanged, IDataSource<object>
     {
         public string Name => Property.Name;
         public Type Type => Property.Type;
@@ -158,7 +161,7 @@ namespace Experica
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        public PropertySource(Type containertype, object container,Type propertytype,string propertyname)
+        public PropertySource(Type containertype, object container, Type propertytype, string propertyname)
         {
             Container = container;
             var containertypename = containertype.ToString();
@@ -166,7 +169,7 @@ namespace Experica
             if (!containertypename.QueryProperty(propertyname, out Property))
             {
                 Property = new Property(propertytype, propertyname, containertype.DelegateForGetPropertyValue(propertyname), containertype.DelegateForSetPropertyValue(propertyname));
-                containertypename.StoreProperty(propertyname, Property );
+                containertypename.StoreProperty(propertyname, Property);
             }
         }
 
@@ -191,7 +194,7 @@ namespace Experica
         public string Name { get; }
         public Type Type { get; }
         public T Value { get; set; }
-        public void NotifyValue( );
+        public void NotifyValue();
     }
 
     public class MethodAccess
@@ -245,12 +248,37 @@ namespace Experica
         EX
     }
 
+    public interface INetEnv
+    {
+        public Scene Scene { get; }
+        public void SetParam(string nvORfullName, object value, bool active=false);
+    }
+
+    public enum FactorDesignMethod
+    {
+        Linear,
+        Logarithm
+    }
+
+    public class ImageSet
+    {
+        public Texture2D[] Images = Array.Empty<Texture2D>();
+        public Color MeanColor=Color.gray;
+    }
+
+    public class MPIS<T> where T : struct
+    {
+        public int[] ImageSize;
+        public float[] MeanColor;
+        public T[][] Images;
+    }
+
     public static class ExpericaExtension
     {
         public const uint ExperimentDataVersion = 3;
-        static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();
-        static Dictionary<string, Dictionary<string, Texture2D>> imagedata = new Dictionary<string, Dictionary<string, Texture2D>>();
-        static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new Dictionary<string, Dictionary<string, Matrix<float>>>();
+        static Dictionary<string, Dictionary<string, List<object>>> colordata = new ();
+        
+        static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new ();
 
         // Plants of the Unit Cube defined by a point and a corresponding normal, used for intersection of line and six faces of the Unit Cube
         static Vector<float>[] UnitOriginCubePoints = new[] { CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f),
@@ -258,23 +286,94 @@ namespace Experica
         static Vector<float>[] UnitOriginCubeNormals = new[] { CreateVector.Dense(new[] { 1f, 0f, 0f }), CreateVector.Dense(new[] { 0f, 1f, 0f }), CreateVector.Dense(new[] { 0f, 0f, 1f }),
                                                                CreateVector.Dense(new[] { 1f, 0f, 0f }), CreateVector.Dense(new[] { 0f, 1f, 0f }), CreateVector.Dense(new[] { 0f, 0f, 1f })};
 
-        static Type TObject, TString, TBool, TInt, TFloat, TDouble, TVector2, TVector3, TVector4, TColor, TListT;
         static readonly object apilock = new object();
 
-        static HashSet<Type> NumericTypes = new HashSet<Type>
+        static HashSet<Type> NumericTypes = new()
         {
             typeof(byte),typeof(sbyte),typeof(short),typeof(ushort),
             typeof(int),typeof(uint),typeof(long),typeof(ulong),
             typeof(float),typeof(double),typeof(decimal)
         };
+        static Type TObject=typeof(object), TString=typeof(string), TBool=typeof(bool), TInt=typeof(int), TFloat=typeof(float), TDouble=typeof(double), 
+            TVector2=typeof(Vector2), TVector3=typeof(Vector3), TVector4=typeof(Vector4), TColor=typeof(Color), 
+            TListT=typeof(List<>),TArray=typeof(Array),TFixString512=typeof(FixedString512Bytes);
+
+        #region ImageSets
+        static Dictionary<string, ImageSet> imagesets = new();
+        public static bool QueryImageSet(this string imagesetname,out ImageSet imgset, bool reload = false)
+        {
+            if (!reload && imagesets.ContainsKey(imagesetname))
+            {
+                imgset= imagesets[imagesetname];
+                return true;
+            }
+            imgset =  imagesetname.LoadImageSet();
+            if (imgset == null)
+            {
+                imgset = new();
+                return false;
+            }
+            else
+            {
+                imagesets[imagesetname] = imgset;
+                return true;
+            }
+        }
+
+        public static ImageSet LoadImageSet(this string imagesetname, string rootdir = "Data", string ext = ".mpis")
+        {
+            if (string.IsNullOrEmpty(imagesetname)) { return null; }
+            var file = Path.Combine(rootdir, imagesetname + ext);
+            if (!File.Exists(file)) { Debug.LogError($"ImageSet File: {file} Not Exist."); return null; }
+            var eltype = Path.GetExtension(imagesetname);
+            if (string.IsNullOrEmpty(eltype)) { Debug.LogError($"Incomplete ImageSet Name: {imagesetname}, with no data format extension."); return null; }
+
+            if (eltype == ".UInt8")
+            {
+                MPIS<byte> data;
+                using (var fs = File.OpenRead(file))
+                {
+                    data = fs.DeserializeMsgPack<MPIS<byte>>();
+                }
+
+                int w, h, nch; int[] ci;
+                if (data.ImageSize.Length == 2)
+                {
+                    nch = 1; h = data.ImageSize[0]; w = data.ImageSize[1]; ci = new int[3] { 0, 0, 0 };
+                }
+                else
+                {
+                    nch = data.ImageSize[0]; h = data.ImageSize[1]; w = data.ImageSize[2]; ci = new int[3] { 0, 1, 2 };
+                }
+
+                var mcolor = new Color(data.MeanColor[0], data.MeanColor[1], data.MeanColor[2], 1);
+                var imgset = new Texture2D[data.Images.Length];
+                for (var i = 0; i < data.Images.Length; i++)
+                {
+                    var img = data.Images[i];
+                    var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true, true);
+                    var ps = t.GetRawTextureData<Color32>();
+                    for (var j = 0; j < w * h; j++)
+                    {
+                        ps[j] = new(img[ci[0] + nch * j], img[ci[1] + nch * j], img[ci[2] + nch * j], 255);
+                    }
+                    t.Apply();
+                    imgset[i] = t;
+                }
+                return new() { Images = imgset, MeanColor = mcolor };
+            }
+
+            return null;
+        }
+        #endregion
 
         #region Registry of reflections for property and method of a type
         static Dictionary<string, Dictionary<string, Property>> Properties = new();
         static Dictionary<string, Dictionary<string, Method>> Methods = new();
         public static bool QueryProperties(this string containertypename, out Dictionary<string, Property> properties)
         {
-            if (Properties.TryGetValue(containertypename, out properties))            { return true; }
-            else { properties = null;return false; }
+            if (Properties.TryGetValue(containertypename, out properties)) { return true; }
+            else { properties = null; return false; }
         }
         public static bool QueryProperty(this string containertypename, string propertyname, out Property property)
         {
@@ -291,7 +390,7 @@ namespace Experica
             else
             {
                 Properties[containertypename] = new();
-                property = null;                return false;
+                property = null; return false;
             }
         }
         public static bool ContainsProperty(this string containertypename, string propertyname)
@@ -313,7 +412,7 @@ namespace Experica
             else
             {
                 Methods[containertypename] = new();
-                method = null;                return false;
+                method = null; return false;
             }
         }
         public static bool ContainsMethod(this string containertypename, string methodname)
@@ -324,7 +423,7 @@ namespace Experica
         {
             if (!Properties.ContainsKey(containertypename))
             {
-               Properties[containertypename] = new();
+                Properties[containertypename] = new();
             }
             Properties[containertypename][propertyname] = property;
         }
@@ -342,21 +441,6 @@ namespace Experica
         static IRecorder spikeglxrecorder, ripplerecorder, imagerrecorder = null;
 #endif
 
-        static ExpericaExtension()
-        {
-            TObject = typeof(object);
-            TString = typeof(string);
-            TBool = typeof(bool);
-            TInt = typeof(int);
-            TFloat = typeof(float);
-            TDouble = typeof(double);
-            TVector2 = typeof(Vector2);
-            TVector3 = typeof(Vector3);
-            TVector4 = typeof(Vector4);
-            TColor = typeof(Color);
-            TListT = typeof(List<>);
-        }
-
         public static bool IsNumeric(this Type type)
         {
             return NumericTypes.Contains(Nullable.GetUnderlyingType(type) ?? type);
@@ -367,29 +451,60 @@ namespace Experica
 
         #region Convert between Types
 
-        public static T Convert<T>(this object value)
+        public static object TryParse(this string value)
         {
-            return (T)Convert(value,value.GetType(), typeof(T));
+            if (float.TryParse(value, out float fr)) { return fr; }
+            if (bool.TryParse(value, out bool br)) { return br; }
+            var vs = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var n = vs.Length;
+            if (n > 1)
+            {
+                var fvs = new float[n];
+                if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
+                {
+                    switch (n)
+                    {
+                        case 2:
+                            return new Vector2(fvs[0], fvs[1]);
+                        case 3:
+                            return new Vector3(fvs[0], fvs[1], fvs[2]);
+                        case 4:
+                            return new Color(fvs[0], fvs[1], fvs[2], fvs[3]);
+                    };
+
+                };
+            }
+            return value;
         }
 
-        public static T Convert<T>(this object value,Type TValue)
+        public static T Convert<T>(this object value)
         {
-            return (T)Convert(value,TValue, typeof(T));
+            return (T)Convert(value, value.GetType(), typeof(T));
+        }
+
+        public static T Convert<T>(this object value, Type TValue)
+        {
+            return (T)Convert(value, TValue, typeof(T));
         }
 
         public static object Convert(this object value, Type T)
         {
             if (value == null) { return value; }
-            return Convert(value,value.GetType(), T);
+            return Convert(value, value.GetType(), T);
         }
 
-        public static object Convert(this object value,Type TValue, Type T)
+        public static object Convert(this object value, Type TValue, Type T)
         {
             lock (apilock)
             {
                 if (TValue == T) { return value; }
 
-                if (TValue == TFloat)
+                if (TValue == TFixString512)
+                {
+                    var v = (FixedString512Bytes)value;
+                    return v.ToString().Convert(TString, T);
+                }
+                else if (TValue == TFloat)
                 {
                     var v = (float)value;
                     if (T == TString)
@@ -472,13 +587,27 @@ namespace Experica
                     {
                         return v.x.ToString("G4") + " " + v.y.ToString("G4");
                     }
+                    else if (T.IsSubclassOf(TArray))
+                    {
+                        var et = T.GetElementType();
+                        var tv = Array.CreateInstance(et, 2);
+                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1);
+                        return tv;
+                    }
                 }
                 else if (TValue == TVector3)
                 {
                     var v = (Vector3)value;
                     if (T == TString)
                     {
-                        return String.Join(" ", Enumerable.Range(0, 3).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 3).Select(i => v[i].ToString("G4")));
+                    }
+                    else if (T.IsSubclassOf(TArray))
+                    {
+                        var et = T.GetElementType();
+                        var tv = Array.CreateInstance(et, 3);
+                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1); tv.SetValue(v.z.Convert(TFloat, et), 2);
+                        return tv;
                     }
                 }
                 else if (TValue == TVector4)
@@ -486,7 +615,18 @@ namespace Experica
                     var v = (Vector4)value;
                     if (T == TString)
                     {
-                        return String.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                    }
+                    else if (T == TColor)
+                    {
+                        return new Color(v.x, v.y, v.z, v.w);
+                    }
+                    else if (T.IsSubclassOf(TArray))
+                    {
+                        var et = T.GetElementType();
+                        var tv = Array.CreateInstance(et, 4);
+                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1); tv.SetValue(v.z.Convert(TFloat, et), 2); tv.SetValue(v.w.Convert(TFloat, et), 3);
+                        return tv;
                     }
                 }
                 else if (TValue == TColor)
@@ -494,11 +634,18 @@ namespace Experica
                     var v = (Color)value;
                     if (T == TString)
                     {
-                        return String.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
                     }
-                    else if(T==TVector4)
+                    else if (T == TVector4)
                     {
-                        return new Vector4(v.r,v.g,v.b,v.a);
+                        return new Vector4(v.r, v.g, v.b, v.a);
+                    }
+                    else if (T.IsSubclassOf(TArray))
+                    {
+                        var et = T.GetElementType();
+                        var tv = Array.CreateInstance(et, 4);
+                        tv.SetValue(v.r.Convert(TFloat, et), 0); tv.SetValue(v.g.Convert(TFloat, et), 1); tv.SetValue(v.b.Convert(TFloat, et), 2); tv.SetValue(v.a.Convert(TFloat, et), 3);
+                        return tv;
                     }
                 }
                 else if (TValue == TString)
@@ -544,6 +691,10 @@ namespace Experica
                     {
                         return Enum.Parse(T, vstr);
                     }
+                    else if (T == TFixString512)
+                    {
+                        return new FixedString512Bytes(vstr);
+                    }
                     else if (T.IsGenericType && T.GetGenericTypeDefinition() == TListT)
                     {
                         var CTT = T.GetGenericArguments()[0];
@@ -557,7 +708,7 @@ namespace Experica
                         return v;
                     }
                 }
-                else
+                else // Value Type not handled
                 {
                     if (T == TString)
                     {
@@ -770,51 +921,221 @@ namespace Experica
             }
         }
 
-        public static Dictionary<string, List<object>> FactorLevelOfDesign(this Dictionary<string, List<object>> conddesign)
+        #region Condition
+        public static bool ValidateFactorDesign(this Dictionary<string, object> design)
         {
-            foreach (var f in conddesign.Keys.ToArray())
+            if (design.ContainsKey("Start") && design["Start"] != null && design.ContainsKey("N") && design["N"] != null && design.ContainsKey("Method") && design["Method"] != null)
             {
-                if (conddesign[f].Count >= 5 && conddesign[f][0].GetType() == typeof(string) && (string)conddesign[f][0] == "factorleveldesign")
+                var T = design["Start"].GetType();
+                if ((design.ContainsKey("Step") && design["Step"] != null && T == design["Step"].GetType()) || (design.ContainsKey("Stop") && design["Stop"] != null && T == design["Stop"].GetType()))
                 {
-                    var start = conddesign[f][1];
-                    var end = conddesign[f][2];
-                    var n = conddesign[f][3];
-                    var method = conddesign[f][4].Convert<FactorLevelDesignMethod>();
-                    var isortho = true;
-                    if (conddesign[f].Count > 5)
-                    {
-                        isortho = conddesign[f][5].Convert<bool>();
-                    }
-
-                    object so, eo; int[] no;
-                    if (start.GetType() == typeof(List<object>))
-                    {
-                        if (((List<object>)start).Count < 4)
-                        {
-                            so = start.Convert<Vector3>();
-                            eo = end.Convert<Vector3>();
-                        }
-                        else
-                        {
-                            so = start.Convert<Color>();
-                            eo = end.Convert<Color>();
-                        }
-                        no = ((List<object>)n).Select(i => i.Convert<int>()).ToArray();
-                    }
-                    else
-                    {
-                        so = start.Convert<float>();
-                        eo = end.Convert<float>();
-                        no = new int[] { n.Convert<int>() };
-                    }
-
-                    var fld = new FactorLevelDesign(f, so, eo, no, method, isortho);
-                    conddesign[f] = fld.FactorLevel().Value;
+                    design["Method"] = design["Method"].Convert<FactorDesignMethod>();
+                    return true;
                 }
             }
-            return conddesign;
+            return false;
         }
 
+        public static void ProcessFactorDesign(this Dictionary<string, List<object>> conddesign)
+        {
+            foreach (var f in conddesign.Keys)
+            {
+                var fd = conddesign[f];
+                if (fd.Count == 2 && fd[0].GetType() == typeof(string) && (string)fd[0] == "FactorDesign" && fd[1].GetType()==typeof(Dictionary<object,object>))
+                {
+                    var design = ((Dictionary<object,object>)fd[1]).ToDictionary(kv=>(string)kv.Key,kv=>kv.Value);
+                    if (design.ValidateFactorDesign())
+                    {
+                        conddesign[f] = design.FactorLevelOfDesign();
+                    }
+                }
+            }
+        }
+
+        public static List<object> FactorLevelOfDesign(this Dictionary<string,object> design)
+        {
+            var Start = design["Start"];var N = design["N"];var T = Start.GetType();
+            var Method = (FactorDesignMethod)design["Method"];
+            bool? OrthoCombine = design.ContainsKey("OrthoCombine") ? design["OrthoCombine"].Convert<bool>() : null;
+            List<object> ls = new();
+            if(design.ContainsKey("Stop"))
+            {
+                var Stop = design["Stop"];
+                switch (Method)
+                {
+                    case FactorDesignMethod.Linear:
+                        if (T.IsNumeric())
+                        {
+                            var b = Start.Convert<float>(T);
+                            var e = Stop.Convert<float>(T);
+                            var n = N.Convert<int>();
+                            if (e > b)
+                            {
+                                ls = Generate.LinearSpacedMap(n, b, e, i => (object)(float)i).ToList();
+                            }
+                        }
+                        else if (T == typeof(Vector3))
+                        {
+                            var isortho = false;
+                            
+                            var b = (Vector3)Start;
+                            var e = (Vector3)Stop;
+                            var n = N.Convert<int[]>();
+
+                            float[] xl = new float[] { b.x }, yl = new float[] { b.y }, zl = new float[] { b.z };
+                            bool isx = false, isy = false, isz = false;
+                            if (e.x > b.x)
+                            {
+                                isx = true;
+                                xl = Generate.LinearSpacedMap(n[0], b.x, e.x, i => (float)i);
+                            }
+                            if (e.y > b.y && n.Length > 1)
+                            {
+                                isy = true;
+                                yl = Generate.LinearSpacedMap(n[1], b.y, e.y, i => (float)i);
+                            }
+                            if (e.z > b.z && n.Length > 2)
+                            {
+                                isz = true;
+                                zl = Generate.LinearSpacedMap(n[2], b.z, e.z, i => (float)i);
+                            }
+                            if (isortho)
+                            {
+                                for (var xi = 0; xi < xl.Length; xi++)
+                                {
+                                    for (var yi = 0; yi < yl.Length; yi++)
+                                    {
+                                        for (var zi = 0; zi < zl.Length; zi++)
+                                        {
+                                            ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (isx)
+                                {
+                                    for (var xi = 0; xi < xl.Length; xi++)
+                                    {
+                                        ls.Add(new Vector3(xl[xi], yl[0], zl[0]));
+                                    }
+                                }
+                                if (isy)
+                                {
+                                    for (var yi = 0; yi < yl.Length; yi++)
+                                    {
+                                        ls.Add(new Vector3(xl[0], yl[yi], zl[0]));
+                                    }
+                                }
+                                if (isz)
+                                {
+                                    for (var zi = 0; zi < zl.Length; zi++)
+                                    {
+                                        ls.Add(new Vector3(xl[0], yl[0], zl[zi]));
+                                    }
+                                }
+                                ls = ls.Distinct().ToList();
+                            }
+                        }
+                        else if (T == typeof(Color))
+                        {
+                            var isortho = false;
+                            var s = (Color)Start;
+                            var e = (Color)Stop;
+                            var n = N.Convert<int[]>();
+                            float[] rl = new float[] { s.r }, gl = new float[] { s.g }, bl = new float[] { s.b }, al = new float[] { s.a };
+                            bool isr = false, isg = false, isb = false, isa = false;
+                            if (e.r > s.r)
+                            {
+                                isr = true;
+                                rl = Generate.LinearSpacedMap(n[0], s.r, e.r, i => (float)i);
+                            }
+                            if (e.g > s.g && n.Length > 1)
+                            {
+                                isg = true;
+                                gl = Generate.LinearSpacedMap(n[1], s.g, e.g, i => (float)i);
+                            }
+                            if (e.b > s.b && n.Length > 2)
+                            {
+                                isb = true;
+                                bl = Generate.LinearSpacedMap(n[2], s.b, e.b, i => (float)i);
+                            }
+                            if (e.a > s.a && n.Length > 3)
+                            {
+                                isa = true;
+                                al = Generate.LinearSpacedMap(n[3], s.a, e.a, i => (float)i);
+                            }
+                            if (isortho)
+                            {
+                                for (var ri = 0; ri < rl.Length; ri++)
+                                {
+                                    for (var gi = 0; gi < gl.Length; gi++)
+                                    {
+                                        for (var bi = 0; bi < bl.Length; bi++)
+                                        {
+                                            for (var ai = 0; ai < al.Length; ai++)
+                                            {
+                                                ls.Add(new Color(rl[ri], gl[gi], bl[bi], al[ai]));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (isr)
+                                {
+                                    for (var ri = 0; ri < rl.Length; ri++)
+                                    {
+                                        ls.Add(new Color(rl[ri], gl[0], bl[0], al[0]));
+                                    }
+                                }
+                                if (isg)
+                                {
+                                    for (var gi = 0; gi < gl.Length; gi++)
+                                    {
+                                        ls.Add(new Color(rl[0], gl[gi], bl[0], al[0]));
+                                    }
+                                }
+                                if (isb)
+                                {
+                                    for (var bi = 0; bi < bl.Length; bi++)
+                                    {
+                                        ls.Add(new Color(rl[0], gl[0], bl[bi], al[0]));
+                                    }
+                                }
+                                if (isa)
+                                {
+                                    for (var ai = 0; ai < al.Length; ai++)
+                                    {
+                                        ls.Add(new Color(rl[0], gl[0], bl[0], al[ai]));
+                                    }
+                                }
+                                ls = ls.Distinct().ToList();
+                            }
+                        }
+                        break;
+                    case FactorDesignMethod.Logarithm:
+                        throw new NotImplementedException();
+                }
+            }
+            else if(design.ContainsKey("Step"))
+            {
+                var Step = design["Step"];
+            }
+            
+            return  ls;
+        }
+
+        public static void ProcessOrthoCombineFactor(this Dictionary<string,List<object>> cond)
+        {
+            if (cond.ContainsKey("OrthoCombineFactor") && cond["OrthoCombineFactor"].Count == 0)
+            {
+                cond.OrthoCondOfFactorLevel();
+            }
+        }
+        #endregion
         //public static string GetAddresses(this string experimenter, CommandConfig config)
         //{
         //    string addresses = null;
@@ -1209,6 +1530,18 @@ namespace Experica
         //}
 #endif
 
+        public static void GroupCond(Dictionary<string,IList> cond)
+        {
+            var nf = cond.Count;
+            var n = cond.Values.First().Count;
+            var rows = new List<object>();
+            for( var i = 0; i < n; i++)
+            {
+                rows.Add(cond.Values.Select(v => v[i]).ToArray());
+            }
+            var ucond = rows.Distinct().ToArray();
+        }
+
         public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
         {
             foreach (var f in fsls.Keys.ToArray())
@@ -1342,12 +1675,11 @@ namespace Experica
         }
 
         #region NetEnv ParamName Parsing
-        public static bool SplitEnvParamFullName(this string fullName,out string[] ns,char separator='@',int count=3)
+        public static bool SplitEnvParamFullName(this string fullName, out string[] ns, char separator = '@', int count = 3)
         {
             ns = fullName.Split(separator, count, StringSplitOptions.RemoveEmptyEntries);
             if (ns.Length < count)
             {
-                Debug.LogError($"Invalid FullName: {fullName}.");
                 return false;
             }
             return true;
@@ -1535,78 +1867,9 @@ namespace Experica
             }
         }
 
-        public static Dictionary<string, Texture2D> FillRawTextures8(this ImageSet8 imgdata)
-        {
-            if (imgdata == null) return null;
 
-            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
-            var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgdata.Images.Count(); i++)
-            {
-                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
-                var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgdata.Images[i].Count(); j++)
-                {
-                    var c = imgdata.Images[i][j];
-                    ps[j] = new Color32(c, c, c, 255);
-                }
-                t.Apply();
-                imgset[(i + 1).ToString()] = t;
-            }
-            return imgset;
-        }
 
-        public static Dictionary<string, Texture2D> FillRawTextures32(this ImageSet32 imgdata)
-        {
-            if (imgdata == null) return null;
-
-            var h = imgdata.ImageSize[0]; var w = imgdata.ImageSize[1];
-            var imgset = new Dictionary<string, Texture2D>();
-            for (var i = 0; i < imgdata.Images.Count(); i++)
-            {
-                var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
-                var ps = t.GetRawTextureData<Color32>();
-                for (var j = 0; j < imgdata.Images[i].Count(); j++)
-                {
-                    var c = BitConverter.GetBytes(imgdata.Images[i][j]);
-                    ps[j] = new Color32(c[3], c[2], c[1], c[0]);
-                }
-                t.Apply();
-                imgset[(i + 1).ToString()] = t;
-            }
-            return imgset;
-        }
-
-        /// <summary>
-        /// Load raw textures from a file
-        /// </summary>
-        /// <param name="imagesetname"></param>
-        /// <returns></returns>
-        public static Dictionary<string, Texture2D> LoadRawTextures(this string imagesetname)
-        {
-            if (string.IsNullOrEmpty(imagesetname)) return null;
-            var files = Directory.GetFiles("Data", imagesetname + ".*", SearchOption.TopDirectoryOnly);
-            if (files.Length > 0)
-            {
-                var file = files[0]; var ext = Path.GetExtension(file);
-                switch (ext)
-                {
-                    case ".mpis8":
-                        return File.OpenRead(file).DeserializeMsgPack<ImageSet8>().FillRawTextures8();
-                    case ".mpis32":
-                        return File.OpenRead(file).DeserializeMsgPack<ImageSet32>().FillRawTextures32();
-                    case ".yaml":
-                        return file.ReadYamlFile<ImageSet32>().FillRawTextures32();
-                }
-                return null;
-            }
-            else
-            {
-                Debug.LogWarning($"Image Data: {Path.Combine("Data", imagesetname)} Not Found.");
-                return null;
-            }
-        }
-
+       
         public static Dictionary<string, Texture2D> Load(this string imageset, int startidx = 0, int numofimg = 10)
         {
             if (string.IsNullOrEmpty(imageset)) return null;
@@ -1625,7 +1888,7 @@ namespace Experica
             return imgs;
         }
 
-        public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10, bool forcereload = false)
+        public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx, int numofimg, bool forcereload = false)
         {
             if (string.IsNullOrEmpty(imgsetdir)) return null;
             Texture2DArray imgarray;
@@ -1787,26 +2050,7 @@ namespace Experica
             return Color.gray;
         }
 
-        public static Dictionary<string, Texture2D> GetImageData(this string imagesetname, bool forceload = false)
-        {
-            if (!forceload && imagedata.ContainsKey(imagesetname))
-            {
-                return imagedata[imagesetname];
-            }
-            var imgset = imagesetname.LoadTextures();
-            if (imgset != null)
-            {
-                imagedata[imagesetname] = imgset;
-                return imgset;
-            }
-            imgset = imagesetname.LoadRawTextures();
-            if (imgset != null)
-            {
-                imagedata[imagesetname] = imgset;
-                return imgset;
-            }
-            return null;
-        }
+        
 
         public static byte[] Compress(this byte[] data)
         {

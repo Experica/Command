@@ -158,14 +158,14 @@ public class ConditionTestLogic : ExperimentLogic
         {
             case CONDSTATE.NONE:
                 if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
-                SyncFrame();
+                SyncFrame?.Invoke();
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     EnterCondState(CONDSTATE.COND, true);
                     SetEnvActiveParam("Visible", true);
-                    SyncFrame();
+                    SyncFrame?.Invoke();
                 }
                 break;
             case CONDSTATE.COND:
@@ -186,14 +186,14 @@ public class ConditionTestLogic : ExperimentLogic
                         EnterCondState(CONDSTATE.SUFICI, true);
                         SetEnvActiveParam("Visible", false);
                     }
-                    SyncFrame();
+                    SyncFrame?.Invoke();
                 }
                 break;
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
                     if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
-                    SyncFrame();
+                    SyncFrame?.Invoke();
                 }
                 break;
         }

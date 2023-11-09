@@ -104,7 +104,7 @@ namespace Experica.Command
         [IgnoreMember]
         public CommandConfig Config { get; set; }
         [IgnoreMember]
-        public Dictionary<CONDTESTPARAM, List<object>> CondTest { get; set; }
+        public Dictionary<CONDTESTPARAM, IList> CondTest { get; set; }
 
         [IgnoreMember]
         public Dictionary<string, PropertySource<Experiment>> Properties  = new();

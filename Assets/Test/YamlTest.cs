@@ -26,7 +26,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Experica.Command;
-using static UnityEngine.Analytics.IAnalytic;
 
 namespace Experica.Test
 {
@@ -34,18 +33,21 @@ namespace Experica.Test
     {
         string yaml = "Ori: [0, 45, 90, 135]\n" +
              "SpatialPhase: [0, 0.25, 0.5, 0.75]";
-        static string datastring,exstring;
+        static string datastring, exstring;
 
         [Test]
         public void YamlWrite()
         {
             var data = new Dictionary<string, object>
             {
-                ["Color"] = Color.white,
+                ["Color"] = Color.black,
                 ["Vector4"] = Vector4.one,
+                ["Vector3"] = Vector3.right,
+                ["Vector2"] = Vector2.left,
                 ["Bool"] = true,
                 ["Int"] = 3,
-                ["Float"]=4.5
+                ["Float"] = 4.5f,
+                ["Double"] = 3.142
             };
             datastring = data.SerializeYaml();
             Debug.Log(datastring);
@@ -73,7 +75,7 @@ namespace Experica.Test
         [Test]
         public void ExRead()
         {
-            var ex = exstring.DeserializeYaml< Experiment>();
+            var ex = exstring.DeserializeYaml<Experiment>();
             ex.InitializeDataSource();
             Debug.Log(ex);
         }

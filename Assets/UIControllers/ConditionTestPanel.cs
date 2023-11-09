@@ -93,26 +93,26 @@ namespace Experica.Command
             {
                 case CONDTESTSHOWLEVEL.FULL:
                     cti.text = cti.text + condtestidx.ToString() + "\n";
-                    if (ctm.condtest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.condtest[CONDTESTPARAM.CondIndex].Count > condtestidx)
+                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
                     {
-                        condindexstr = ctm.condtest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
+                        condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
                     }
                     ci.text = ci.text + condindexstr + "\n";
-                    if (ctm.condtest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.condtest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
+                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
                     {
-                        condrepeatstr = ctm.condtest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
+                        condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
                     }
                     cr.text = cr.text + condrepeatstr + "\n";
                     if (uicontroller.exmanager.el.condmanager.nblock > 1)
                     {
-                        if (ctm.condtest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.condtest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
+                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
                         {
-                            blockindexstr = ctm.condtest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
+                            blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
                         }
                         bi.text = bi.text + blockindexstr + "\n";
-                        if (ctm.condtest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.condtest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
+                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
                         {
-                            blockrepeatstr = ctm.condtest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
+                            blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
                         }
                         br.text = br.text + blockrepeatstr + "\n";
                     }
@@ -120,26 +120,26 @@ namespace Experica.Command
                     return;
                 case CONDTESTSHOWLEVEL.SHORT:
                     cti.text = condtestidx.ToString();
-                    if (ctm.condtest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.condtest[CONDTESTPARAM.CondIndex].Count > condtestidx)
+                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
                     {
-                        condindexstr = ctm.condtest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
+                        condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
                     }
                     ci.text = condindexstr;
-                    if (ctm.condtest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.condtest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
+                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
                     {
-                        condrepeatstr = ctm.condtest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
+                        condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
                     }
                     cr.text = condrepeatstr;
                     if (uicontroller.exmanager.el.condmanager.nblock > 1)
                     {
-                        if (ctm.condtest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.condtest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
+                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
                         {
-                            blockindexstr = ctm.condtest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
+                            blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
                         }
                         bi.text = blockindexstr;
-                        if (ctm.condtest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.condtest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
+                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
                         {
-                            blockrepeatstr = ctm.condtest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
+                            blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
                         }
                         br.text = blockrepeatstr;
                     }

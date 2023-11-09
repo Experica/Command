@@ -1,4 +1,4 @@
-using FileIO,JLD2,MAT,NeuroAnalysis,Images,Interpolations,Random,StatsBase,StatsPlots,ProgressMeter,MsgPack,YAML
+using FileIO,JLD2,MAT,NeuroAnalysis,Images,Interpolations,Random,StatsBase,StatsPlots,ProgressMeter,MsgPack,YAML,ColorLab
 
 function imagepatch(img,ppd,sizedeg;topleftdeg=nothing)
     sizepx = round.(Int,sizedeg.*ppd)
@@ -38,7 +38,7 @@ function newimageset(imgdbroot,imgfile,ppd;n=100,sizedeg=(3,3),sizepx=(32,32),s=
         any(isnan.(ip)) || push!(imgpatchs,ip)
     end
     if isnorm
-        lim = mapreduce(i->maximum(i),max,imgpatchs)
+        lim = mapreduce(maximum,max,imgpatchs)
         imgpatchs = map(i->i/lim,imgpatchs)
     end
     return imgpatchs
@@ -57,7 +57,7 @@ end
 
 lumlms(lms;w=[0.68990272;;;0.34832189;;;0])=dropdims(sum(lms.*w,dims=3),dims=3)
 
-function excludesimilarimage!(imgset;alpha=0.8,lumfun=lumlms,simfun=MSSSIM())
+function excludesimilarimage!(imgset;alpha=0.7,lumfun=lumlms,simfun=MSSSIM(),n=nothing)
     di = []
     for i in eachindex(imgset)
         (any(isnan.(imgset[i])) || any(isinf.(imgset[i]))) && push!(di,i)
@@ -65,7 +65,7 @@ function excludesimilarimage!(imgset;alpha=0.8,lumfun=lumlms,simfun=MSSSIM())
     deleteat!(imgset,di)
 
     l=length(imgset);di=falses(l);lumimgset=lumfun.(imgset)
-    lumlim = mapreduce(i->maximum(i),max,lumimgset)
+    lumlim = mapreduce(maximum,max,lumimgset)
     lumimgset = map(i->i/lumlim,lumimgset)
     @showprogress desc="Checking Images ... " for i in 1:(l-1)
         di[i] && continue
@@ -75,44 +75,46 @@ function excludesimilarimage!(imgset;alpha=0.8,lumfun=lumlms,simfun=MSSSIM())
         end
     end
     deleteat!(imgset,di);deleteat!(lumimgset,di)
+    if !isnothing(n)
+        imgset=imgset[1:n];lumimgset=lumimgset[1:n]
+    end
     imgset,lumimgset
 end
 
-
-
-function saveunityrawtexture(fn,imgset)
-    ds = size(imgset[1]);imgs=[]
-    if length(ds) < 3
-        pbit = 8
-        for i in imgset
-            # Unity Texture2D RawData unfold from left->right, then bottom->up
-            ps = vec(reverse(permutedims(i),dims=2))
-            # Pack Gray in UInt8
-            ps = [reinterpret(N0f8(p)) for p in ps]
-            push!(imgs,ps)
-        end
-    else
-        pbit = 32
-        for i in imgset
-            # Unity Texture2D RawData unfold from left->right, then bottom->up
-            ps = vec(reverse(permutedims(i),dims=2))
-            # Pack RGBA32 in UInt32
-            ps = [parse(UInt32,"0x"*hex(RGBA{N0f8}(p,p,p,1),:rrggbbaa)) for p in ps]
-            push!(imgs,ps)
-        end
-    end
-    imgdata = Dict("ImageSize"=>[map(i->UInt16(i),ds)...],"Images"=>imgs)
-    # MessagePack Binary File
-    write("$fn.mpis$pbit", pack(imgdata))
-    return imgdata
+function normlum(x;m=0.5,mad=0.5,pc=(1,99))
+    xx = clampscale(x,pc)
+    xx .-= mean(xx)
+    mad*xx/maximum(abs.(xx)) .+ m
 end
 
-t=first(values(matread(raw"S:\McGillCCIDB\Animals\merry_mexico0125_LMS.mat")))
+function changespace(M,img)
+    ds = size(img)
+    if ds[1] == 3
+        t = img;sdims=ds[2:3]
+    else
+        t=permutedims(img,(3,1,2));sdims=ds[1:2]
+    end
+    reshape(M*reshape(t,3,:),3,sdims...)
+end
 
+function msgpackunitytexture(filename,imgset;meancolor=nothing,eltype=UInt8)
+    imgsize=size(imgset[1])
+    # Unity Texture2D pixels unfold from left->right, then bottom->up
+    if length(imgsize) == 2
+        isnothing(meancolor) && (meancolor = mapreduce(mean,(i,j)->(i+j)/2,imgset))
+        meancolor = fill(meancolor,3)
+        ips = map(i->vec(reverse!(permutedims(i),dims=2)),imgset)
+    else
+        isnothing(meancolor) && (meancolor = mapreduce(i->dropdims(mean(i,dims=(2,3)),dims=(2,3)),(i,j)->(i.+j)/2,imgset))
+        ips = map(i->vec(reverse!(permutedims(i,(1,3,2)),dims=3)),imgset)
+    end
+    if eltype==UInt8
+        ips = map(i->reinterpret.(N0f8.(i)),ips)
+    end
+    data = Dict("ImageSize"=>[Int32.(imgsize)...],"Images"=>ips,"MeanColor"=>Float32.(meancolor))
+    write("$filename.$eltype.mpis", pack(data))
+end
 
-ti=colorview(RGB,(clampscale(i,3) for i in eachslice(t,dims=3))...)
-
-ti=colorview(RGB,rand(3,128,128))
 
 
 
@@ -143,122 +145,148 @@ save(imgsetpath,"imgset",imgset_UP)
 imgset_UP = load(imgsetpath,"imgset")
 
 
-colorview(RGB,(clampscale(i,3) for i in eachslice(imgset_UP[3],dims=3))...)
-
-
 ## Sample from Imagesets, and check for similar images
 imgset = sampleimageset(imgset_MG,imgset_UP;ps=[0.7,0.3],n=40000)
 # imgset,lumimgset = excludesimilarimage!(imgset)
 imgset,lumimgset = excludesimilarimage!(imgset;simfun=(i,j)->cor(vec(i),vec(j)))
 
-
 ## Imageset
 imgsetname = "$(itype)_n$(length(imgset))_sizedeg$(sizedeg)_sizepx$(sizepx)"
 imgsetdir = joinpath(stimuliroot,"ImageSets",imgsetname);mkpath(imgsetdir)
-jldsave(joinpath(imgsetdir,"$imgsetname.jld2");imgset)
-
-
-l = mapreduce(i->vec(i[:,:,3]),append!,imgset[1:30])
-extrema(l)
-l = mapreduce(i->vec(i[3,:,:]),append!,imgset_rgb[120:240])
-extrema(l)
-
-extrema(imgset_rgb[1])
-
-density(vec(imgset_rgb[1][1,:,:]))
-
-divmax=i->i/maximum(i)
-
-colorview(RGB,divmax(imgset_rgb[12336]))
-colorview(RGB,imgset_rgb[12336]/0.04)
-
-extrema(imgset_rgb[12336])
-
-
-
-imgset_UP = newimageset(joinpath(stimuliroot,idb),Regex("\\w*$itype.mat"),ppd;n=100,sizedeg,sizepx)
-
-imgset_UP_rgb=map(i->tt(LMSToRGB,i),imgset_UP[1:100])
-colorview(RGB,divmax(imgset_UP_rgb[51]))
+imgsetpath = joinpath(stimuliroot,"ImageSets","$imgsetname.jld2")
+jldsave(imgsetpath;imgset)
+imgset = load(imgsetpath,"imgset")
 
 
 
 
-maxlim = mapreduce(maximum,max,lumimgset)
+## LMS luminance clamp and scale in [0, 1], and mean luminance shifted to 0.5 to get balanced range
+pc=(5,95)
+imgset_lum = map(i->normlum(i;pc),lumimgset)
 
-qualim = mapreduce(i->quantile(vec(i),0.9),max,lumimgset)
+# Confine contrast range and save luminance imageset
+sdrange=(0.2,0.35)
+n=24000
+imgset_lum_c = filter(i->begin
+    sd = std(i)
+    !isnan(sd) && sdrange[1]<sd<sdrange[2]
+end,imgset_lum)[1:n]
 
-newlumimgset = map(i->clamp.(i,0,qualim)/qualim,lumimgset)
+colorview(Gray,imgset_lum_c[190])
 
-using  ColorLab
-
-colorview(Gray,lumimgset[12287])
-colorview(Gray,newlumimgset[12287])
-
-[0;0;;1;1]
+lumimgsetname = "Lum_n$(length(imgset_lum_c))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)_sd$(sdrange)"
+save(joinpath(imgsetdir,"$lumimgsetname.jld2"),"imgset",imgset_lum_c)
+msgpackunitytexture(joinpath(imgsetdir,lumimgsetname),imgset_lum_c)
 
 
-RGBToLMS*[0.5,0.5,0.5]
-RGBToXYZ*[0.5;0.5;0.5;;]
-XYZ2xyY(RGBToXYZ*[0.5;0.5;0.5;;])
-subimgset = imgset[1:50]
-meanlms = mapreduce(i->mean(i,dims=(1,2)),(i,j)->(i.+j)/2,subimgset)
 
-imgnormfun = (x;m=0,c=0.5,r=0.5)->begin
-    xx = x.-m
-    rr = maximum(abs.(xx),dims=(2,3))
-    r*xx./rr .+ c
+
+## L,M,S clamp and scale in [0, 1] to modulate Cones
+pc=(1,99)
+imgset_lms_cm = map(i->stack(s->clampscale(s,pc),eachslice(i,dims=3)),imgset)
+filter!(i->!(any(isnan.(i)) || any(isinf.(i))),imgset_lms_cm)
+imgset_lms_cm = imgset_lms_cm[1:24000]
+
+colorview(LMS,eachslice(imgset_lms_cm[218],dims=3)...)
+
+lmsimgsetname = "LMS_n$(length(imgset_lms_cm))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)_cm"
+save(joinpath(imgsetdir,"$lmsimgsetname.jld2"),"imgset",imgset_lms_cm)
+msgpackunitytexture(joinpath(imgsetdir,lmsimgsetname),map(i->permutedims(i,(3,1,2)),imgset_lms_cm))
+
+
+
+
+## Prepare Imageset in RGB of the Presenting Display
+displayname = "ROGPG279Q"
+colordata = YAML.load_file(joinpath(@__DIR__,displayname,"colordata.yaml"))
+LMSToRGB= dehomomatrix(reshape(colordata["LMSToRGB"],4,4))
+RGBToLMS= dehomomatrix(reshape(colordata["RGBToLMS"],4,4))
+
+imgset_rgb = map(i->changespace(LMSToRGB,i),imgset)
+# The RGB color and luminance that had be captured by the camera of natural image database(converted to LMS)
+# may not be reproduced on the presenting display, so we clamp and scale them into the display RGB space and luminance range.
+pc=(1,99)
+imgset_rgb_pc = map(i->clampscale(i,pc),imgset_rgb)
+imgset_lms_pc = map(i->changespace(RGBToLMS,i),imgset_rgb_pc)
+
+colorview(RGB,imgset_rgb_pc[193])
+
+# Save
+displayimgsetname = "$(displayname)_RGB_n$(length(imgset_rgb_pc))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)"
+save(joinpath(imgsetdir,"$displayimgsetname.jld2"),"imgset",map(i->permutedims(Float32.(i),(2,3,1)),imgset_rgb_pc))
+
+msgpackunitytexture(joinpath(imgsetdir,displayimgsetname),imgset_rgb_pc)
+
+displayimgsetname = "$(displayname)_LMS_n$(length(imgset_rgb_pc))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)"
+save(joinpath(imgsetdir,"$displayimgsetname.jld2"),"imgset",map(i->permutedims(Float32.(i),(2,3,1)),imgset_lms_pc))
+
+
+
+
+## Try to move mean luminance to around 0.5, and maximize contrast
+normcolor = (x;m=0.5,mad=0.5)->begin
+    xx = x.-mean(x)
+    mad*xx/maximum(abs.(xx)) .+ m
+end
+normcolor1 = (x;m=0.5,mad=0.5)->begin
+    xx = x.-mean(x,dims=(2,3))
+    mad*xx/maximum(abs.(xx)) .+ m
+end
+normcolor2 = (x;m=0.5,mad=0.5)->begin
+    xx = x.-mean(x)
+    mad*xx./maximum(abs.(xx),dims=(2,3)) .+ m
+end
+normcolor3 = (x;m=0.5,mad=0.5)->begin
+    xx = x.-mean(x,dims=(2,3))
+    mad*xx./maximum(abs.(xx),dims=(2,3)) .+ m
 end
 
-normimgset = map(i->imgnormfun(i,m=meanlum),subimgset)
+i = 195
+plot(hcat(
+colorview(RGB,imgset_rgb_pc[i]),
+colorview(RGB,normcolor(imgset_rgb_pc[i])),
+colorview(RGB,normcolor1(imgset_rgb_pc[i])),
+colorview(RGB,normcolor2(imgset_rgb_pc[i])),
+colorview(RGB,normcolor3(imgset_rgb_pc[i]))),
+frame=:none,size=(1000,200))
 
+p = "bl"
+imgset_rgb_pc_p = map(i->normcolor(i),imgset_rgb_pc)
+imgset_lms_pc_p = map(i->changespace(RGBToLMS,i),imgset_rgb_pc_p)
 
-colorview(RGB,normimgset[40])
+# Save
+displayimgsetname = "$(displayname)_RGB_n$(length(imgset_rgb_pc_p))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)_$p"
+save(joinpath(imgsetdir,"$displayimgsetname.jld2"),"imgset",map(i->permutedims(Float32.(i),(2,3,1)),imgset_rgb_pc_p))
 
-# equal luminance
-meanlumimgset = mapreduce(mean,mean,lumimgset)
-sdrange=[0.23,0.33]
-checkimageset!(imgset;sdrange)
+msgpackunitytexture(joinpath(imgsetdir,displayimgsetname),imgset_rgb_pc_p)
 
-imgsetname = "n$(length(imgset))_sizedeg$(sizedeg)_c$(c)_r$(r)_sd$(sdrange)"
-
-saveunityrawtexture(joinpath(stimuliroot,imgsetname),imgset)
-matwrite(joinpath(stimuliroot,"$imgsetname.mat"),Dict("imgset"=>imgset))
-imgset = load(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset")
-
-
-t=(m,img)->mapslices(s->[m].*s,img,dims=(1,2))
-
-b=t(LMSToRGB,imgset[1])
-
-colordata = YAML.load_file(raw"C:\Users\fff00\Command\Data\ROGPG279Q\colordata.yaml")
-LMSToRGB=reshape(colordata["LMSToRGB"],4,4)[1:3,1:3]
-RGBToLMS=reshape(colordata["RGBToLMS"],4,4)[1:3,1:3]
-RGBToXYZ=reshape(colordata["RGBToXYZ"],4,4)[1:3,1:3]
-
-rand(3,10,10)
-colorview(RGB,tt(LMSToRGB,imgset[1]))
-colorview(RGB,eachslice(b,dims=1)...)
-
-tt=(M,img)->reshape(M*reshape(permutedims(img,(3,1,2)),3,:),3,size(img)[1:2]...)
-
-imgset_rgb=map(i->tt(LMSToRGB,i),imgset)
-
-colorview(RGB,permutedims(imgset[27],(3,1,2)))
-colorview(RGB,imgset_rgb[13505])
+displayimgsetname = "$(displayname)_LMS_n$(length(imgset_rgb_pc_p))_sizedeg$(sizedeg)_sizepx$(sizepx)_pc$(pc)_$p"
+save(joinpath(imgsetdir,"$displayimgsetname.jld2"),"imgset",map(i->permutedims(Float32.(i),(2,3,1)),imgset_lms_pc_p))
 
 
 
 
-## Combine Imageset
-normfun = (x;c=0.5,r=0.5,low=0.1,high=0.9)->begin
-    xx = clamp.(x,quantile(vec(x),low),quantile(vec(x),high))
-    xx .-= mean(xx)
-    r*xx/maximum(abs.(xx)) .+ c
+## Gaussian Noise ImageSet
+gnorm = x->begin
+    xx = clamp.(x,-2.5,2.5)
+    0.5*xx/2.5 .+ 0.5
 end
-c=0.5 # mean luminance
-r=0.5 # max extrema relative to c
-imgset = combineimageset(imgset_MG,imgset_UP;ps=[0.7,0.3],n=40000,normfun=x->normfun(x;c,r))
+sizepx = (32,32)
+gimgset = [gnorm(randn(sizepx...,3)) for _ in 1:36000]
+
+colorview(RGB,eachslice(gimgset[222],dims=3)...)
+
+# Save
+imgsetname = "RGB_n$(length(gimgset))_sizepx$(sizepx)_Gaussian"
+imgsetdir = joinpath(stimuliroot,"ImageSets",imgsetname);mkpath(imgsetdir)
+imgsetpath = joinpath(stimuliroot,"ImageSets","$imgsetname.jld2")
+save(imgsetpath,"imgset",gimgset)
+msgpackunitytexture(joinpath(imgsetdir,imgsetname),map(i->permutedims(i,(3,1,2)),gimgset))
+
+
+
+
+
 
 timgset=imgset
 @manipulate for ii in 1:length(timgset), ci in 1:size(timgset[1],3)
@@ -279,45 +307,15 @@ timgset=imgset
     heatmap!(p[3,2],f2,f1,psa,aspect_ratio=:equal,frame=:semi,color=:plasma,clims=plims)
 end
 
-## Check and Save Imageset
-sdrange=[0.23,0.33]
-checkimageset!(imgset;sdrange)
 
-imgsetname = "n$(length(imgset))_sizedeg$(sizedeg)_c$(c)_r$(r)_sd$(sdrange)"
-save(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset",imgset)
-saveunityrawtexture(joinpath(stimuliroot,imgsetname),imgset)
-matwrite(joinpath(stimuliroot,"$imgsetname.mat"),Dict("imgset"=>imgset))
-imgset = load(joinpath(stimuliroot,"$imgsetname.jld2"),"imgset")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Gaussian Noise Imageset
-gnormfun = x->begin
-    xx = clamp.(x,-2.5,2.5)
-    xx .-= mean(xx)
-    0.5*xx/maximum(abs.(xx)) .+ 0.5
-end
-gimgset = [gnormfun(randn(sizepx)) for _ in 1:10000]
 
 ## Hartley Subspace Imageset
 hs = hartleysubspace(kbegin=0.2,kend=5.0,dk=0.2,addhalfcycle=true,shape=:circle)
 himgset = map(i -> begin
-          ss = cas2sin(i...)
-          grating(θ = ss.θ, sf = ss.f, phase = ss.phase, size = sizedeg, ppd = 30)
-          end, hs)
+    ss = cas2sin(i...)
+    grating(θ = ss.θ, sf = ss.f, phase = ss.phase, size = sizedeg, ppd = 30)
+end, hs)
+
 
 ## Imageset Mean Spectrum
 pss,f1,f2 = powerspectrums2(imgset,sizepx[1]/sizedeg[1],freqrange=[-6,6])
