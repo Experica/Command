@@ -55,11 +55,11 @@ namespace Experica
         [SyncVar(hook = "onchannelmodulate")]
         public ColorChannel ChannelModulate = ColorChannel.None;
         [SyncVar(hook = "onimage")]
-        public string Image = "1";
+        public uint Image = 0;
         [SyncVar(hook = "onimageset")]
         public string ImageSet = "ExampleImageSet";
 
-        Dictionary<string, Texture2D> imagesetcache = null;
+        ImageSet imgset = new ImageSet();
 
 
         void onrotation(Vector3 r)
@@ -181,21 +181,20 @@ namespace Experica
             ChannelModulate = c;
         }
 
-        void onimage(string i)
+        void onimage(uint i)
         {
-            if (imagesetcache != null && imagesetcache.ContainsKey(i))
+            if (i < imgset.Images.Length)
             {
-                renderer.material.SetTexture("_image", imagesetcache[i]);
+                renderer.material.SetTexture("_image", imgset.Images[i]);
             }
             Image = i;
         }
 
         void onimageset(string imageset)
         {
-            imagesetcache = imageset.GetImageData();
-            if (imagesetcache != null)
+            if (imageset.QueryImageSet(out imgset))
             {
-                onimage(imagesetcache.Keys.First());
+                onimage(0);
             }
             ImageSet = imageset;
         }

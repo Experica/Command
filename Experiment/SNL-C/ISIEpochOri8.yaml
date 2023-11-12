@@ -3,23 +3,23 @@ Name: ISIEpochOri8
 Designer: Alex
 Experimenter: PCL
 Log: 
-Subject_ID: Test
-Subject_Name: AG3
+Subject_ID: AG5
+Subject_Name: AG5
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 7.4
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 10
-  MarkerPosition@Marker@Marker: -16.83 11.38 -1000
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -76,7 +76,7 @@ CondDur: 4000
 SufICI: 1000
 PreITI: 2000
 TrialDur: 0
-SufITI: 3000
+SufITI: 1000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -112,6 +112,7 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
+- ScreenHeight@OrthoCamera@OrthoCamera
 Param:
   ColorSpace: DKL
   Color: X

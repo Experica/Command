@@ -23,7 +23,7 @@ using UnityEngine;
 using Experica;
 using Experica.Command;
 
-public class ColorEPhysLite : ExperimentSessionLogic
+public class ColorEPhys_v1 : ExperimentSessionLogic
 {
     float diameter = 3;
     Vector3 position = Vector3.zero;
@@ -177,6 +177,46 @@ public class ColorEPhysLite : ExperimentSessionLogic
                         if (SinceExStop > exsession.StopWait)
                         {
                             if (ExRepeat < 4)
+                            {
+                                ExperimentStatus = EXPERIMENTSTATUS.NONE;
+                            }
+                            else
+                            {
+                                ExperimentID = "Image";
+                            }
+                        }
+                        break;
+                }
+                break;
+            case "Image":
+                switch (ExperimentStatus)
+                {
+                    case EXPERIMENTSTATUS.NONE:
+                        if (SinceExReady > exsession.ReadyWait)
+                        {
+                            switch (ExRepeat)
+                            {
+                                case 0:
+                                    EL.SetEnvActiveParam("Position", position);
+                                    EL.SetEnvActiveParam("Diameter", diameter);
+                                    EL.SetEnvActiveParam("ChannelModulate", "None");
+                                    EL.SetEnvActiveParam("MaskType", "Disk");
+                                    EL.SetEnvActiveParam("MaskRadius", 0.5);
+                                    EL.SetExParam("CondRepeat", 1);
+                                    EL.SetExParam("PreICI", 0);
+                                    EL.SetExParam("SufICI", 0);
+                                    EL.SetExParam("CondDur", 35.0.GetCondDur(Screen.currentResolution.refreshRate));
+                                    EL.SetExParam("ColorSpace", "DKL");
+                                    EL.SetExParam("Color", "X");
+                                    break;
+                            }
+                            StartExperiment();
+                        }
+                        break;
+                    case EXPERIMENTSTATUS.STOPPED:
+                        if (SinceExStop > exsession.StopWait)
+                        {
+                            if (ExRepeat < 1)
                             {
                                 ExperimentStatus = EXPERIMENTSTATUS.NONE;
                             }

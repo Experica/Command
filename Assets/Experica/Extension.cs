@@ -63,12 +63,94 @@ namespace Experica
         EX
     }
 
+    public class ImageSet
+    {
+        public Texture2D[] Images = Array.Empty<Texture2D>();
+        public Color MeanColor = Color.gray;
+    }
+
+    public class MPIS<T> where T:struct
+    {
+        public int[] ImageSize;
+        public float[] MeanColor;
+        public T[][] Images;
+    }
+
     public static class Extension
     {
         public const uint ExperimentDataVersion = 2;
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();
         static Dictionary<string, Dictionary<string, Texture2D>> imagedata = new Dictionary<string, Dictionary<string, Texture2D>>();
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new Dictionary<string, Dictionary<string, Matrix<float>>>();
+
+        #region ImageSets
+        static Dictionary<string, ImageSet> imagesets = new Dictionary<string, ImageSet>();
+        public static bool QueryImageSet(this string imagesetname, out ImageSet imgset, bool reload = false)
+        {
+            if (!reload && imagesets.ContainsKey(imagesetname))
+            {
+                imgset = imagesets[imagesetname];
+                return true;
+            }
+            imgset = imagesetname.LoadImageSet();
+            if (imgset == null)
+            {
+                imgset = new ImageSet();
+                return false;
+            }
+            else
+            {
+                imagesets[imagesetname] = imgset;
+                return true;
+            }
+        }
+
+        public static ImageSet LoadImageSet(this string imagesetname, string rootdir = "Data", string ext = ".mpis")
+        {
+            if (string.IsNullOrEmpty(imagesetname)) { return null; }
+            var file = Path.Combine(rootdir, imagesetname + ext);
+            if (!File.Exists(file)) { Debug.LogError($"ImageSet File: {file} Not Exist."); return null; }
+            var eltype = Path.GetExtension(imagesetname);
+            if (string.IsNullOrEmpty(eltype)) { Debug.LogError($"Incomplete ImageSet Name: {imagesetname}, without data format extension."); return null; }
+
+            if (eltype == ".UInt8")
+            {
+                MPIS<byte> data;
+                using (var fs = File.OpenRead(file))
+                {
+                    data = fs.DeserializeMsgPack<MPIS<byte>>();
+                }
+
+                int w, h, nch; int[] ci;
+                if (data.ImageSize.Length == 2)
+                {
+                    nch = 1; h = data.ImageSize[0]; w = data.ImageSize[1]; ci = new int[3] { 0, 0, 0 };
+                }
+                else
+                {
+                    nch = data.ImageSize[0]; h = data.ImageSize[1]; w = data.ImageSize[2]; ci = new int[3] { 0, 1, 2 };
+                }
+
+                var mcolor = new Color(data.MeanColor[0], data.MeanColor[1], data.MeanColor[2], 1);
+                var imgset = new Texture2D[data.Images.Length];
+                for (var i = 0; i < data.Images.Length; i++)
+                {
+                    var img = data.Images[i];
+                    var t = new Texture2D(w, h, TextureFormat.RGBA32, false, true);
+                    var ps = t.GetRawTextureData<Color32>();
+                    for (var j = 0; j < w * h; j++)
+                    {
+                        ps[j] = new Color32(img[ci[0] + nch * j], img[ci[1] + nch * j], img[ci[2] + nch * j], 255);
+                    }
+                    t.Apply();
+                    imgset[i] = t;
+                }
+                return new ImageSet() { Images = imgset, MeanColor = mcolor };
+            }
+
+            return null;
+        }
+        #endregion
 
         // Plants of the Unit Cube defined by a point and a corresponding normal, used for intersection of line and six faces of the Unit Cube
         static Vector<float>[] UnitOriginCubePoints = new[] { CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f),
@@ -1342,7 +1424,7 @@ namespace Experica
             return imgs;
         }
 
-        public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx = 0, int numofimg = 10, bool forcereload = false)
+        public static Texture2DArray LoadImageSet(this string imgsetdir, int startidx , int numofimg , bool forcereload=false)
         {
             if (string.IsNullOrEmpty(imgsetdir)) return null;
             Texture2DArray imgarray;

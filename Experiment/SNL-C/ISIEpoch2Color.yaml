@@ -1,25 +1,25 @@
 ID: ISIEpoch2Color
 Name: ISIEpoch2Color
 Designer: Alex
-Experimenter: PL
+Experimenter: PCL
 Log: 
-Subject_ID: AF8
-Subject_Name: AF8
+Subject_ID: AG5
+Subject_Name: AG5
 Subject_Species: Macaque
-Subject_Gender: Female
+Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 8.7
+Subject_Weight: 7.4
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 10
-  MarkerPosition@Marker@Marker: -14.66 9.744 -1000
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -35,17 +35,17 @@ EnvParam:
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
+  Visible@Quad@Quad: true
   Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: ImagerCTLogic
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODR6
-DataDir: X:\
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: Ascending
@@ -95,6 +95,7 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
+- ScreenHeight@OrthoCamera@OrthoCamera
 Param:
   ColorSpace: LMS
   Color: X
@@ -106,9 +107,9 @@ EventSyncProtocol:
   - Display
   nSyncChannel: 1
   nSyncpEvent: 1
-Display_ID: ''
+Display_ID: ROGPG279Q
 CondTestShowLevel: FULL
-NotifyExperimenter: false
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 
