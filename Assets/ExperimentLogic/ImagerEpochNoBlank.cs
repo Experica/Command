@@ -1,5 +1,5 @@
 ﻿/*
-ImagerCTLogic.cs is part of the Experica.
+ImagerEpoch.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -29,7 +29,7 @@ using ColorSpace = Experica.ColorSpace;
 /// <summary>
 /// Episodic Condition Test(PreITI-{PreICI-Cond-SufICI}-SufITI) with Imager Data Acquisition System, and Predefined Colors
 /// </summary>
-public class ImagerCTLogic : ConditionTestLogic
+public class ImagerEpochNoBlank : ConditionTestLogic
 {
     IRecorder markrecorder; // for camera shutter signals of each frame
     bool online;
@@ -103,7 +103,12 @@ public class ImagerCTLogic : ConditionTestLogic
     /// <param name="saveepoch">save epoch's `CondTest` for online analysis</param>
     protected void StopEpochRecord(bool saveepoch = true)
     {
-        recorder?.StopAcquisiteAndRecord();
+        if (recorder != null)
+        {
+            recorder.AcquisitionStatus = AcquisitionStatus.Stopped;
+            recorder.RecordStatus = RecordStatus.Stopped;
+        }
+        //recorder?.StopAcquisiteAndRecord();
         if (online && saveepoch)
         {
             var epochpath = Path.Combine(dataroot, $".{currentepoch}.{Config.SaveDataFormat.ToString().ToLower()}");
@@ -158,7 +163,7 @@ public class ImagerCTLogic : ConditionTestLogic
                 SetEnvActiveParam("BGColor", wp[0]);
             }
 
-            if (ex.ID == "ISIEpoch2Color")
+            if (ex.ID == "ISIEpochFlash2Color")
             {
                 condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
             }
@@ -225,8 +230,7 @@ public class ImagerCTLogic : ConditionTestLogic
                     case CONDSTATE.COND:
                         if (CondHold >= ex.CondDur)
                         {
-                            EnterCondState(CONDSTATE.SUFICI, true);
-                            SetEnvActiveParam("Visible", false);
+                            EnterCondState(CONDSTATE.SUFICI);
                             SyncFrame();
                         }
                         break;
@@ -235,7 +239,7 @@ public class ImagerCTLogic : ConditionTestLogic
                         {
                             StopEpochRecord();
                             EnterCondState(CONDSTATE.NONE);
-                            EnterTrialState(TRIALSTATE.SUFITI, true);
+                            EnterTrialState(TRIALSTATE.SUFITI);
                             SyncFrame();
                         }
                         break;

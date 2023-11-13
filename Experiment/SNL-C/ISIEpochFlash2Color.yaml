@@ -1,5 +1,5 @@
-ID: ISIEpochOri8
-Name: ISIEpochOri8
+ID: ISIEpochFlash2Color
+Name: ISIEpochFlash2Color
 Designer: Alex
 Experimenter: LZ
 Log: 
@@ -11,11 +11,11 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 7.4
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: MarkerQuad
 EnvParam:
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
+  MarkerPosition@Marker@Marker: -18.66 13.74 -1000
+  MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
@@ -24,40 +24,23 @@ EnvParam:
   ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  Rotation@GratingQuad@GratingQuad: 0 0 0
-  RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 315
-  OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 95.68 53.82 1
-  MaskType@GratingQuad@GratingQuad: None
-  MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.15
-  OriPositionOffset@GratingQuad@GratingQuad: false
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 1.5
-  TemporalFreq@GratingQuad@GratingQuad: 6
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
-  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 1.998E-15 0 4.996E-16 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  PauseTime@GratingQuad@GratingQuad: false
-  PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
-  ModulateType@GratingQuad@GratingQuad: Square
-  ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.2
-  ModulateDuty@GratingQuad@GratingQuad: 0.5
-  TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 0 0 0
-  PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori45DegStep.yaml
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Diameter@Quad@Quad: 10
+  Size@Quad@Quad: 39.32 29.49 1
+  Color@Quad@Quad: 1 0.4442 0.4996 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  MaskSigma@Quad@Quad: 0.15
+  OriPositionOffset@Quad@Quad: false
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 0 0
+CondPath: ''
 Cond: 
-LogicPath: ImagerEpoch
+LogicPath: ImagerEpochNoBlank
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
@@ -65,7 +48,7 @@ RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
-CondSampling: UniformWithoutReplacement
+CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 3
 BlockRepeat: 1
@@ -73,10 +56,10 @@ BlockParam:
 - ''
 PreICI: 2000
 CondDur: 4000
-SufICI: 1000
-PreITI: 2000
+SufICI: 0
+PreITI: 0
 TrialDur: 0
-SufITI: 1000
+SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -114,7 +97,7 @@ EnvInheritParam:
 - MarkerSize@Marker@Marker
 - ScreenHeight@OrthoCamera@OrthoCamera
 Param:
-  ColorSpace: DKL
+  ColorSpace: LMS
   Color: X
   OnLine: True
 TimerDriftSpeed: 6.5E-05

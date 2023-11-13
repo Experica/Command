@@ -1,11 +1,11 @@
 ID: ISICycle2Color
 Name: ISICycle2Color
 Designer: Alex
-Experimenter: PCL
+Experimenter: LZ
 Log: 
 Subject_ID: AG5
 Subject_Name: AG5
-Subject_Species: Macaque
+Subject_Species: M. F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -13,17 +13,17 @@ Subject_Weight: 7.4
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -25.21 13.74 -1000
-  MarkerCorner@Marker@Marker: TopLeft
+  MarkerPosition@Marker@Marker: 18.66 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomRight
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -41,8 +41,8 @@ EnvParam:
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0.3673 0.618 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6327 0.382 1 1
+  MinColor@GratingQuad@GratingQuad: 0.3701 0.6156 0 1
+  MaxColor@GratingQuad@GratingQuad: 0.6299 0.3844 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -51,8 +51,8 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99553
-  Visible@GratingQuad@GratingQuad: true
+  ModulateTimeSecond@GratingQuad@GratingQuad: 20.27014
+  Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
 CondPath: ''
@@ -130,7 +130,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

@@ -27,7 +27,7 @@ using ColorSpace = Experica.ColorSpace;
 /// <summary>
 /// Periodic modulation of parameters with Imager Data Acquisition System, and Predefined Colors
 /// </summary>
-public class ImagerCycle : ImagerCTLogic
+public class ImagerCycle : ImagerEpoch
 {
     int nsc;
 
