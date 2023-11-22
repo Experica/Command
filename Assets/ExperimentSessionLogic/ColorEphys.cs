@@ -1,5 +1,5 @@
 /*
-ColorEPhys.cs is part of the Experica.
+ColorEphys.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -314,6 +314,7 @@ public class ColorEPhys : ExperimentSessionLogic
                             }
                             else
                             {
+                                ExperimentID = "ConditionTest";
                                 StartStopExperimentSession(false);
                                 exmanager.uicontroller.IsFullViewport = false;
                                 exmanager.uicontroller.IsGuideOn = true;

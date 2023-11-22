@@ -158,7 +158,7 @@ public class ImagerEpoch : ConditionTestLogic
                 SetEnvActiveParam("BGColor", wp[0]);
             }
 
-            if (ex.ID == "ISIEpoch2Color")
+            if (ex.ID == "ISIEpoch2Color" || ex.ID == "ISIEpochFlash2Color")
             {
                 condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
             }
