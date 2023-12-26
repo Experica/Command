@@ -1,51 +1,56 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: PCL
+Experimenter: LZ
 Log: 
-Subject_ID: Test
-Subject_Name: AG3
-Subject_Species: Macaque
+Subject_ID: AG5
+Subject_Name: AG5
+Subject_Species: M. F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 0
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
-  Mark@Marker@Marker~OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: false
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 10 10 10
-  Diameter@Quad@Quad: 10
-  Color@Quad@Quad: 1 0 0 1
+  Diameter@Quad@Quad: 5
+  Size@Quad@Quad: 85.12 51.12 1
+  Color@Quad@Quad: 0.6299 0.3844 1 1
   MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0
-  MaskSigma@Quad@Quad: 0
+  MaskRadius@Quad@Quad: 0.5
+  MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
+  Visible@Quad@Quad: false
+  Position@Quad@Quad: 2.167 2.838 0
   PositionOffset@Quad@Quad: 0 0 0
-  Position@Quad@Quad: 0 0 0
-  Visible@Quad@Quad: true
 CondPath: ''
 Cond: 
-LogicPath: ConditionTestLogic
+LogicPath: SpikeGLXColor
 Hemisphere: Left
 Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: X:\
+RecordSession: V1
+RecordSite: 17R
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 5
+CondRepeat: 100
 BlockRepeat: 1
 BlockParam: []
 PreICI: 0
@@ -82,13 +87,19 @@ InheritParam:
 - Eye
 - Subject_Birth
 EnvInheritParam:
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- MarkerSize@Marker@Marker
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 - Position@Quad@Quad
 - Diameter@Quad@Quad
-ExtendParam: {}
+Param:
+  ColorSpace: DKL
+  Color: Z
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:

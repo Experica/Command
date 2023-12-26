@@ -1035,20 +1035,6 @@ namespace Experica.Command
             return output.ToArray();
         }
 
-        /// <summary>
-        /// Get Condition Duration(ms) for constant number of frames, if frame rate is fixed.
-        /// </summary>
-        /// <param name="targetdur_ms">duration to be closest to with constant number of frames</param>
-        /// <param name="framerate"></param>
-        /// <param name="isint">if integer duration millisecond</param>
-        /// <returns></returns>
-        public static double GetCondDur(this double targetdur_ms, double framerate, bool isint = true)
-        {
-            var t = 1000.0 / framerate;
-            var d = (Math.Round(targetdur_ms / t) - 0.8) * t;
-            if (isint) { d = Math.Round(d); }
-            return d;
-        }
 
         //public static void Save(this string filepath, object obj, bool rmext = false)
         //{

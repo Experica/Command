@@ -113,7 +113,7 @@ namespace Experica.Command
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
+                        if (condmanager.IsCondAndBlockRepeat(ex.CondRepeat,ex.BlockRepeat))
                         {
                             StartStopExperiment(false);
                             return EnterCode.NoNeed;
@@ -130,11 +130,11 @@ namespace Experica.Command
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
-                            if (condmanager.nblock > 1)
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
+                            if (condmanager.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -151,11 +151,11 @@ namespace Experica.Command
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
-                            if (condmanager.nblock > 1)
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
+                            if (condmanager.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -188,7 +188,7 @@ namespace Experica.Command
                     PreITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREITI)
                     {
-                        if (condmanager.IsCondRepeat(ex.CondRepeat))
+                        if (condmanager.IsCondAndBlockRepeat(ex.CondRepeat, ex.BlockRepeat))
                         {
                             StartStopExperiment(false);
                             return EnterCode.NoNeed;
@@ -205,11 +205,11 @@ namespace Experica.Command
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
-                            if (condmanager.nblock > 1)
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
+                            if (condmanager.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -226,11 +226,11 @@ namespace Experica.Command
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
                             condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.condrepeat[condmanager.CondIndex]);
-                            if (condmanager.nblock > 1)
+                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
+                            if (condmanager.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.blockidx);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.blockrepeat[condmanager.blockidx]);
+                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
+                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -292,18 +292,18 @@ namespace Experica.Command
 
         public void PrepareCondition(bool forceprepare = true)
         {
-            if (forceprepare == true || condmanager.FinalCond == null)
+            if (forceprepare == true || condmanager.Cond == null)
             {
                 GenerateFinalCondition();
             }
-            ex.Cond = condmanager.FinalCond;
-            condmanager.InitializeSampleSpaces(ex.CondSampling, ex.BlockParam, ex.BlockSampling);
+            ex.Cond = condmanager.Cond;
+            condmanager.InitializeSampling(ex.CondSampling, ex.BlockSampling, ex.BlockParam);
             OnConditionPrepared?.Invoke();
         }
 
         protected virtual void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, ex.BlockRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager, pushexcludefactors);
+            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, manualcondidx, manualblockidx, istrysampleblock), envmanager,true, pushexcludefactors);
         }
 
         protected virtual void SamplePushBlock(int manualblockidx = 0)

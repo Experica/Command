@@ -1,6 +1,1 @@
-PositionOffset:
-- FactorDesign
-- Start: -4 -4 0
-  Step: 1 1 0
-  N: 9 9 0
-  Method: Linear
+PositionOffset: [FactorDesign, {Start: -4 -4 0, Step: 1 1 0, N: 9 9 1, OrthoCombine: True, Method: Linear}]

@@ -150,15 +150,15 @@ namespace Experica.Command
         {
             base.SamplePushCondition(manualcondidx, manualblockidx, istrysampleblock);
             // Push laser conditions
-            if (condmanager.FinalCond.ContainsKey("LaserPower"))
+            if (condmanager.Cond.ContainsKey("LaserPower"))
             {
-                power = (float)condmanager.FinalCond["LaserPower"][condmanager.CondIndex];
+                power = (float)condmanager.Cond["LaserPower"][condmanager.CondIndex];
                 if (lasersignalch != null)
                 {
                     laser.PowerRatio = power;
-                    if (power > 0 && condmanager.FinalCond.ContainsKey("LaserFreq"))
+                    if (power > 0 && condmanager.Cond.ContainsKey("LaserFreq"))
                     {
-                        var freq = (Vector4)condmanager.FinalCond["LaserFreq"][condmanager.CondIndex];
+                        var freq = (Vector4)condmanager.Cond["LaserFreq"][condmanager.CondIndex];
                         if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                         {
                             ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
@@ -174,15 +174,15 @@ namespace Experica.Command
                     }
                 }
             }
-            if (condmanager.FinalCond.ContainsKey("LaserPower2"))
+            if (condmanager.Cond.ContainsKey("LaserPower2"))
             {
-                power2 = (float)condmanager.FinalCond["LaserPower2"][condmanager.CondIndex];
+                power2 = (float)condmanager.Cond["LaserPower2"][condmanager.CondIndex];
                 if (laser2signalch != null)
                 {
                     laser2.PowerRatio = power2;
-                    if (power2 > 0 && condmanager.FinalCond.ContainsKey("LaserFreq2"))
+                    if (power2 > 0 && condmanager.Cond.ContainsKey("LaserFreq2"))
                     {
-                        var freq2 = (Vector4)condmanager.FinalCond["LaserFreq2"][condmanager.CondIndex];
+                        var freq2 = (Vector4)condmanager.Cond["LaserFreq2"][condmanager.CondIndex];
                         if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                         {
                             ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);

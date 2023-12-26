@@ -41,16 +41,35 @@ namespace Experica.Test
         {
             //var filepath = @"C:\Users\fff00\Command\Condition\Ori30DegStep.yaml";
             //var filepath = @"C:\Users\fff00\Command\Condition\OriSF.yaml";
-            var filepath = @"C:\Users\fff00\Command\Condition\PositionOffset8Deg1DegStep.yaml";
+            var filepath = @"C:\Users\fff00\Command\Condition\Ori4SFTF2.yaml";
+            //var filepath = @"C:\Users\fff00\Command\Condition\Contrast.yaml";
+            //var filepath = @"C:\Users\fff00\Command\Condition\PositionOffset8Deg1DegStep.yaml";
+            //var filepath = @"C:\Users\fff00\Command\Condition\RGBLevel.yaml";
+            //var filepath = @"C:\Users\fff00\Command\Condition\RGBColor.yaml";
             cond = cm.ReadConditionFile(filepath);
             condstring = cond.SerializeYaml();
-            Debug.Log($"{cond.Values.First()[0].GetType()}\n\n{condstring}");
+            Debug.Log($"{cond.Values.First().GetType()}\n{cond.Values.First()[0].GetType()}\n\n{condstring}");
         }
 
         [Test]
         public void ProcessCond()
         {
             cond = cm.ProcessCondition(cond);
+            Debug.Log($"{condstring}\n\n{cond.SerializeYaml()}");
+        }
+
+        [Test]
+        public void FinalizeCond()
+        {
+            cm.FinalizeCondition(cond);
+            Debug.Log($"{cm.Cond.Values.First().GetType()}\n{cm.Cond.Values.First()[0].GetType()}\n\n{cm.Cond.SerializeYaml()}");
+        }
+
+        [Test]
+        public void InitializeSampling()
+        {
+            cm.InitializeSampling( SampleMethod.Ascending,SampleMethod.Ascending, new List<string>() { "Ori"});
+            Debug.Log($"{cm.Cond.SerializeYaml()}\n\n{cm.BlockCond.SerializeYaml()}");
         }
     }
 }

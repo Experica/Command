@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 98
+  controlID: 109
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,8 +215,8 @@ MonoBehaviour:
     y: 0
     width: 1590
     height: 941
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 17}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -248,14 +248,14 @@ MonoBehaviour:
     y: 941
     width: 1882
     height: 366
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 15}
   - {fileID: 22}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -275,8 +275,8 @@ MonoBehaviour:
     y: 0
     width: 678
     height: 1307
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 23}
@@ -343,8 +343,8 @@ MonoBehaviour:
     oldMaxSizes: 
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
-  m_PlayModeTestListGUI:
-    m_Window: {fileID: 0}
+  m_TestListGUIs:
+  - m_Window: {fileID: 0}
     m_NewResultList: []
     m_ResultText: 
     m_ResultStacktrace: 
@@ -376,383 +376,17 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategoryMask: 0
+      selectedCategories: []
       availableCategories: []
-    m_SelectedOption: 0
-  m_EditModeTestListGUI:
-    m_Window: {fileID: 12}
-    m_NewResultList:
-    - id: 1000
-      uniqueId: '[Command][suite]'
-      name: Command
-      fullName: Command
-      resultStatus: 1
-      duration: 45.46784
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 
-      parentUniqueId: 
-    - id: 1019
-      uniqueId: '[Experica.Test.dll][suite]'
-      name: Experica.Test.dll
-      fullName: C:/Users/fff00/Command/Library/ScriptAssemblies/Experica.Test.dll
-      resultStatus: 1
-      duration: 45.465416
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[Command][suite]'
-    - id: 1020
-      uniqueId: 'Experica.Test.dll/[Experica][suite]'
-      name: Experica
-      fullName: Experica
-      resultStatus: 1
-      duration: 45.461025
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1019
-      parentUniqueId: '[Experica.Test.dll][suite]'
-    - id: 1021
-      uniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-      name: Test
-      fullName: Experica.Test
-      resultStatus: 1
-      duration: 45.4571
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1020
-      parentUniqueId: 'Experica.Test.dll/[Experica][suite]'
-    - id: 1001
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ConditionTest][suite]'
-      name: ConditionTest
-      fullName: Experica.Test.ConditionTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1003
-      uniqueId: 'Experica.Test.dll/Experica/Test/ConditionTest/[Experica.Test][Experica.Test.ConditionTest.ProcessCond]'
-      name: ProcessCond
-      fullName: Experica.Test.ConditionTest.ProcessCond
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ConditionTest][suite]'
-    - id: 1002
-      uniqueId: 'Experica.Test.dll/Experica/Test/ConditionTest/[Experica.Test][Experica.Test.ConditionTest.ReadCondition]'
-      name: ReadCondition
-      fullName: Experica.Test.ConditionTest.ReadCondition
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ConditionTest][suite]'
-    - id: 1004
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ConvertTest][suite]'
-      name: ConvertTest
-      fullName: Experica.Test.ConvertTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1005
-      uniqueId: 'Experica.Test.dll/Experica/Test/ConvertTest/[Experica.Test][Experica.Test.ConvertTest.Convert]'
-      name: Convert
-      fullName: Experica.Test.ConvertTest.Convert
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ConvertTest][suite]'
-    - id: 1006
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ImageSetTest][suite]'
-      name: ImageSetTest
-      fullName: Experica.Test.ImageSetTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1007
-      uniqueId: 'Experica.Test.dll/Experica/Test/ImageSetTest/[Experica.Test][Experica.Test.ImageSetTest.LoadImageSet]'
-      name: LoadImageSet
-      fullName: Experica.Test.ImageSetTest.LoadImageSet
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.ImageSetTest][suite]'
-    - id: 1006
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.JuliaTests][suite]'
-      name: JuliaTests
-      fullName: Experica.Test.JuliaTests
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1008
-      uniqueId: 'Experica.Test.dll/Experica/Test/JuliaTests/[Experica.Test][Experica.Test.JuliaTests.NewTestScriptWithEnumeratorPasses]'
-      name: NewTestScriptWithEnumeratorPasses
-      fullName: Experica.Test.JuliaTests.NewTestScriptWithEnumeratorPasses
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.JuliaTests][suite]'
-    - id: 1007
-      uniqueId: 'Experica.Test.dll/Experica/Test/JuliaTests/[Experica.Test][Experica.Test.JuliaTests.RunJuliaScript]'
-      name: RunJuliaScript
-      fullName: Experica.Test.JuliaTests.RunJuliaScript
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1006
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.JuliaTests][suite]'
-    - id: 1011
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.XippmexDotnetTests][suite]'
-      name: XippmexDotnetTests
-      fullName: Experica.Test.XippmexDotnetTests
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1012
-      uniqueId: 'Experica.Test.dll/Experica/Test/XippmexDotnetTests/[Experica.Test][Experica.Test.XippmexDotnetTests.TrellisTest]'
-      name: TrellisTest
-      fullName: Experica.Test.XippmexDotnetTests.TrellisTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1011
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.XippmexDotnetTests][suite]'
-    - id: 1013
-      uniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-      name: YamlTest
-      fullName: Experica.Test.YamlTest
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1021
-      parentUniqueId: 'Experica.Test.dll/Experica/[Experica.Test][Experica.Test][suite]'
-    - id: 1017
-      uniqueId: 'Experica.Test.dll/Experica/Test/YamlTest/[Experica.Test][Experica.Test.YamlTest.ExRead]'
-      name: ExRead
-      fullName: Experica.Test.YamlTest.ExRead
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-    - id: 1015
-      uniqueId: 'Experica.Test.dll/Experica/Test/YamlTest/[Experica.Test][Experica.Test.YamlTest.ExWrite]'
-      name: ExWrite
-      fullName: Experica.Test.YamlTest.ExWrite
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-    - id: 1018
-      uniqueId: 'Experica.Test.dll/Experica/Test/YamlTest/[Experica.Test][Experica.Test.YamlTest.NewTestScriptWithEnumeratorPasses]'
-      name: NewTestScriptWithEnumeratorPasses
-      fullName: Experica.Test.YamlTest.NewTestScriptWithEnumeratorPasses
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-    - id: 1016
-      uniqueId: 'Experica.Test.dll/Experica/Test/YamlTest/[Experica.Test][Experica.Test.YamlTest.YamlRead]'
-      name: YamlRead
-      fullName: Experica.Test.YamlTest.YamlRead
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-    - id: 1014
-      uniqueId: 'Experica.Test.dll/Experica/Test/YamlTest/[Experica.Test][Experica.Test.YamlTest.YamlWrite]'
-      name: YamlWrite
-      fullName: Experica.Test.YamlTest.YamlWrite
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: 'Experica.Test.dll/Experica/Test/[Experica.Test][Experica.Test.YamlTest][suite]'
-    m_ResultText: LoadImageSet (45.450s)
+  - m_Window: {fileID: 0}
+    m_NewResultList: []
+    m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 1b085808
-      m_LastClickedID: 139986971
-      m_ExpandedIDs: 01aa4797db6acda0666b2ba550049bab1b3b60c5bda0a0cc5d9644d2327f2bd8721d6b3c1a72c83f2bf85d6d7cf81476ffffff7f
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -776,9 +410,42 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories:
-      - Uncategorized
+      selectedCategories: []
+      availableCategories: []
+  - m_Window: {fileID: 0}
+    m_NewResultList: []
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_TrimLeadingAndTrailingWhitespace: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategories: []
+      availableCategories: []
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -910,7 +577,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Plugins
+    - Assets/ExperimentLogic
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -920,16 +587,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Plugins
+  - Assets/ExperimentLogic
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\fff00\Command
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 63}
-    m_SelectedIDs: 78bc0000
-    m_LastClickedID: 48248
-    m_ExpandedIDs: 000000001eb3000020b3000022b3000024b3000000ca9a3b
+    m_SelectedIDs: e2b70000
+    m_LastClickedID: 47074
+    m_ExpandedIDs: 0000000056d2000058d200005ad200005cd20000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -958,7 +625,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001eb3000020b3000022b3000024b30000
+    m_ExpandedIDs: 0000000056d2000058d200005ad200005cd20000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1039,7 +706,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 73
+    y: 19
     width: 291
     height: 920
   m_SerializedDataModeController:
@@ -1058,7 +725,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: f8faffff
+      m_ExpandedIDs: 5af4ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1608,6 +1275,20 @@ MonoBehaviour:
       layout: 4
       size: {x: 0, y: 0}
       sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--left
+      displayed: 1
+      id: Overlays/OverlayMenu
+      index: 1
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 24, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 1
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
     m_ContainerData:
     - containerId: overlay-toolbar__top
       scrollOffset: 0
@@ -1779,8 +1460,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 292
-    y: 73
+    x: 293
+    y: 19
     width: 1588
     height: 920
   m_SerializedDataModeController:
@@ -2011,7 +1692,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 1014
+    y: 960
     width: 1881
     height: 345
   m_SerializedDataModeController:
@@ -2047,8 +1728,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1882
-    y: 73
+    x: 1883
+    y: 19
     width: 677
     height: 1286
   m_SerializedDataModeController:

@@ -108,7 +108,7 @@ namespace Experica.Command
 
             // get base conditions
             condmanager.FinalizeCondition(ex.CondPath);
-            var bcond = condmanager.FinalCond;
+            var bcond = condmanager.Cond;
 
             // combine laser and base conditions
             var fcond = new Dictionary<string, List<object>>()

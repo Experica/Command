@@ -120,8 +120,6 @@ namespace Experica
 
         public Dictionary<CONDTESTPARAM, object> CurrentCondTest => this[CondTestIndex];
 
-        public void Initialize<T>(CONDTESTPARAM paramname) { CondTest[paramname] = new List<T>(); }
-
         public void Add(CONDTESTPARAM paramname, object paramvalue)
         {
             if (CondTestIndex < 0) { return; }
@@ -168,7 +166,7 @@ namespace Experica
             }
             else
             {
-                var vs = new List<object>();
+                var vs = new List<List<T>>();
                 for (var i = 0; i < CondTestIndex; i++)
                 {
                     vs.Add(null);
@@ -200,7 +198,7 @@ namespace Experica
             }
             else
             {
-                var vs = new List<object>();
+                var vs = new List<List<Dictionary<TKey, TValue>>>();
                 for (var i = 0; i < CondTestIndex; i++)
                 {
                     vs.Add(null);

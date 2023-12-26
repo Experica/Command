@@ -1,60 +1,65 @@
 ID: ISIEpoch2Color
 Name: ISIEpoch2Color
 Designer: Alex
-Experimenter: PCL
+Experimenter: LZ
 Log: 
 Subject_ID: Test
-Subject_Name: AG3
-Subject_Species: Macaque
+Subject_Name: AG5
+Subject_Species: M. F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
-  Mark@Marker@Marker~OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  Rotation@Quad@Quad: 0 0 0
+  RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 10 10 10
   Diameter@Quad@Quad: 10
-  Color@Quad@Quad: 0 0.5562 0.5005 1
+  Size@Quad@Quad: 80.79 45.44 1
+  Color@Quad@Quad: 0.3701 0.6156 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
-  PositionOffset@Quad@Quad: 0 0 0
-  Position@Quad@Quad: 0 0 0
   Visible@Quad@Quad: false
+  Position@Quad@Quad: 0 0 0
+  PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
-LogicPath: ImagerCTLogic
+LogicPath: ImagerEpoch
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 3
+CondRepeat: 60
 BlockRepeat: 1
 BlockParam:
 - ''
 PreICI: 2000
 CondDur: 4000
-SufICI: 1000
+SufICI: 2000
 PreITI: 2000
 TrialDur: 0
-SufITI: 1000
+SufITI: 2000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -90,7 +95,11 @@ EnvInheritParam:
 - MarkOnColor@Marker@Marker
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
-ExtendParam: {}
+- ScreenHeight@OrthoCamera@OrthoCamera
+Param:
+  ColorSpace: LMS
+  Color: Z
+  OnLine: True
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:

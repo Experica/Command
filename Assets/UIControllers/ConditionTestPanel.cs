@@ -103,7 +103,7 @@ namespace Experica.Command
                         condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
                     }
                     cr.text = cr.text + condrepeatstr + "\n";
-                    if (uicontroller.exmanager.el.condmanager.nblock > 1)
+                    if (uicontroller.exmanager.el.condmanager.NBlock > 1)
                     {
                         if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
                         {
@@ -130,7 +130,7 @@ namespace Experica.Command
                         condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
                     }
                     cr.text = condrepeatstr;
-                    if (uicontroller.exmanager.el.condmanager.nblock > 1)
+                    if (uicontroller.exmanager.el.condmanager.NBlock > 1)
                     {
                         if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
                         {

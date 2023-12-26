@@ -39,6 +39,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System.Threading.Tasks;
+using NUnit.Framework;
 #if COMMAND
 using System.Windows.Forms;
 using MethodInvoker = Fasterflect.MethodInvoker;
@@ -257,7 +258,9 @@ namespace Experica
     public enum FactorDesignMethod
     {
         Linear,
-        Logarithm
+        Power,
+        Log10,
+        Log2
     }
 
     public class ImageSet
@@ -929,16 +932,19 @@ namespace Experica
                 var T = design["Start"].GetType();
                 if ((design.ContainsKey("Step") && design["Step"] != null && T == design["Step"].GetType()) || (design.ContainsKey("Stop") && design["Stop"] != null && T == design["Stop"].GetType()))
                 {
-                    design["Method"] = design["Method"].Convert<FactorDesignMethod>();
-                    return true;
+                    if (design["Method"].GetType() == typeof(string) && Enum.TryParse((string)design["Method"], out FactorDesignMethod method))
+                    {
+                        design["Method"] = method;
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        public static void ProcessFactorDesign(this Dictionary<string, List<object>> conddesign)
+        public static Dictionary<string, List<object>> ProcessFactorDesign(this Dictionary<string, List<object>> conddesign)
         {
-            foreach (var f in conddesign.Keys)
+            foreach (var f in conddesign.Keys.ToArray())
             {
                 var fd = conddesign[f];
                 if (fd.Count == 2 && fd[0].GetType() == typeof(string) && (string)fd[0] == "FactorDesign" && fd[1].GetType()==typeof(Dictionary<object,object>))
@@ -950,190 +956,279 @@ namespace Experica
                     }
                 }
             }
+            return conddesign;
         }
 
-        public static List<object> FactorLevelOfDesign(this Dictionary<string,object> design)
+        public static float[] Range(this FactorDesignMethod method,float start,int n, float? step,float? stop)
         {
-            var Start = design["Start"];var N = design["N"];var T = Start.GetType();
+            if (step.HasValue)
+            {
+                var s = step.Value;
+                return method switch
+                {
+                    FactorDesignMethod.Power => Enumerable.Range(0, n).Select(i=>1+i*s).Select(i => Mathf.Pow(start,i)).ToArray(),
+                    _ => Enumerable.Range(0, n).Select(i => start + i * s).ToArray(),
+                };
+            }
+            else if(stop.HasValue)
+            {
+                var s = stop.Value;
+                return method switch
+                {
+                    FactorDesignMethod.Log10 => Generate.LogSpacedMap(n, start, s, i => (float)i).ToArray(),
+                    _ => Generate.LinearSpacedMap(n, start, s, i => (float)i).ToArray(),
+                };
+            }
+            return null;
+        }
+
+        public static List<object> FactorLevelOfDesign(this Dictionary<string, object> design)
+        {
+            var Start = design["Start"]; var N = design["N"]; var T = Start.GetType();
             var Method = (FactorDesignMethod)design["Method"];
             bool? OrthoCombine = design.ContainsKey("OrthoCombine") ? design["OrthoCombine"].Convert<bool>() : null;
+            var Stop = design.ContainsKey("Stop") ? design["Stop"] : null;
+            var Step = design.ContainsKey("Step") ? design["Step"] : null;
             List<object> ls = new();
-            if(design.ContainsKey("Stop"))
-            {
-                var Stop = design["Stop"];
-                switch (Method)
-                {
-                    case FactorDesignMethod.Linear:
-                        if (T.IsNumeric())
-                        {
-                            var b = Start.Convert<float>(T);
-                            var e = Stop.Convert<float>(T);
-                            var n = N.Convert<int>();
-                            if (e > b)
-                            {
-                                ls = Generate.LinearSpacedMap(n, b, e, i => (object)(float)i).ToList();
-                            }
-                        }
-                        else if (T == typeof(Vector3))
-                        {
-                            var isortho = false;
-                            
-                            var b = (Vector3)Start;
-                            var e = (Vector3)Stop;
-                            var n = N.Convert<int[]>();
 
-                            float[] xl = new float[] { b.x }, yl = new float[] { b.y }, zl = new float[] { b.z };
-                            bool isx = false, isy = false, isz = false;
-                            if (e.x > b.x)
-                            {
-                                isx = true;
-                                xl = Generate.LinearSpacedMap(n[0], b.x, e.x, i => (float)i);
-                            }
-                            if (e.y > b.y && n.Length > 1)
-                            {
-                                isy = true;
-                                yl = Generate.LinearSpacedMap(n[1], b.y, e.y, i => (float)i);
-                            }
-                            if (e.z > b.z && n.Length > 2)
-                            {
-                                isz = true;
-                                zl = Generate.LinearSpacedMap(n[2], b.z, e.z, i => (float)i);
-                            }
-                            if (isortho)
-                            {
-                                for (var xi = 0; xi < xl.Length; xi++)
-                                {
-                                    for (var yi = 0; yi < yl.Length; yi++)
-                                    {
-                                        for (var zi = 0; zi < zl.Length; zi++)
-                                        {
-                                            ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (isx)
-                                {
-                                    for (var xi = 0; xi < xl.Length; xi++)
-                                    {
-                                        ls.Add(new Vector3(xl[xi], yl[0], zl[0]));
-                                    }
-                                }
-                                if (isy)
-                                {
-                                    for (var yi = 0; yi < yl.Length; yi++)
-                                    {
-                                        ls.Add(new Vector3(xl[0], yl[yi], zl[0]));
-                                    }
-                                }
-                                if (isz)
-                                {
-                                    for (var zi = 0; zi < zl.Length; zi++)
-                                    {
-                                        ls.Add(new Vector3(xl[0], yl[0], zl[zi]));
-                                    }
-                                }
-                                ls = ls.Distinct().ToList();
-                            }
-                        }
-                        else if (T == typeof(Color))
+            if (T.IsNumeric())
+            {
+                ls = Method.Range(Start.Convert<float>(T), N.Convert<int>(), Step?.Convert<float>(T), Stop?.Convert<float>(T)).Select(i => (object)i).ToList();
+            }
+            else if (T == typeof(Vector3))
+            {
+                var b = (Vector3)Start;
+                var n = N.Convert<int[]>();
+                var s = Step?.Convert<Vector3>(T);
+                var e = Stop?.Convert<Vector3>(T);
+
+                var xl = Method.Range(b.x, n[0], s?.x, e?.x);
+                var yl = Method.Range(b.y, n[1], s?.y, e?.y);
+                var zl = Method.Range(b.z, n[2], s?.z, e?.z);
+
+                if (OrthoCombine.HasValue && OrthoCombine.Value)
+                {
+                    for (var xi = 0; xi < xl.Length; xi++)
+                    {
+                        for (var yi = 0; yi < yl.Length; yi++)
                         {
-                            var isortho = false;
-                            var s = (Color)Start;
-                            var e = (Color)Stop;
-                            var n = N.Convert<int[]>();
-                            float[] rl = new float[] { s.r }, gl = new float[] { s.g }, bl = new float[] { s.b }, al = new float[] { s.a };
-                            bool isr = false, isg = false, isb = false, isa = false;
-                            if (e.r > s.r)
+                            for (var zi = 0; zi < zl.Length; zi++)
                             {
-                                isr = true;
-                                rl = Generate.LinearSpacedMap(n[0], s.r, e.r, i => (float)i);
-                            }
-                            if (e.g > s.g && n.Length > 1)
-                            {
-                                isg = true;
-                                gl = Generate.LinearSpacedMap(n[1], s.g, e.g, i => (float)i);
-                            }
-                            if (e.b > s.b && n.Length > 2)
-                            {
-                                isb = true;
-                                bl = Generate.LinearSpacedMap(n[2], s.b, e.b, i => (float)i);
-                            }
-                            if (e.a > s.a && n.Length > 3)
-                            {
-                                isa = true;
-                                al = Generate.LinearSpacedMap(n[3], s.a, e.a, i => (float)i);
-                            }
-                            if (isortho)
-                            {
-                                for (var ri = 0; ri < rl.Length; ri++)
-                                {
-                                    for (var gi = 0; gi < gl.Length; gi++)
-                                    {
-                                        for (var bi = 0; bi < bl.Length; bi++)
-                                        {
-                                            for (var ai = 0; ai < al.Length; ai++)
-                                            {
-                                                ls.Add(new Color(rl[ri], gl[gi], bl[bi], al[ai]));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (isr)
-                                {
-                                    for (var ri = 0; ri < rl.Length; ri++)
-                                    {
-                                        ls.Add(new Color(rl[ri], gl[0], bl[0], al[0]));
-                                    }
-                                }
-                                if (isg)
-                                {
-                                    for (var gi = 0; gi < gl.Length; gi++)
-                                    {
-                                        ls.Add(new Color(rl[0], gl[gi], bl[0], al[0]));
-                                    }
-                                }
-                                if (isb)
-                                {
-                                    for (var bi = 0; bi < bl.Length; bi++)
-                                    {
-                                        ls.Add(new Color(rl[0], gl[0], bl[bi], al[0]));
-                                    }
-                                }
-                                if (isa)
-                                {
-                                    for (var ai = 0; ai < al.Length; ai++)
-                                    {
-                                        ls.Add(new Color(rl[0], gl[0], bl[0], al[ai]));
-                                    }
-                                }
-                                ls = ls.Distinct().ToList();
+                                ls.Add(new Vector3(xl[xi], yl[yi], zl[zi]));
                             }
                         }
-                        break;
-                    case FactorDesignMethod.Logarithm:
-                        throw new NotImplementedException();
+                    }
+                }
+                else
+                {
+                    for (var xi = 0; xi < xl.Length; xi++)
+                    {
+                        ls.Add(new Vector3(xl[xi], yl[0], zl[0]));
+                    }
+                    for (var yi = 0; yi < yl.Length; yi++)
+                    {
+                        ls.Add(new Vector3(xl[0], yl[yi], zl[0]));
+                    }
+                    for (var zi = 0; zi < zl.Length; zi++)
+                    {
+                        ls.Add(new Vector3(xl[0], yl[0], zl[zi]));
+                    }
+                    ls = ls.Distinct().ToList();
                 }
             }
-            else if(design.ContainsKey("Step"))
+            else if (T == typeof(Color))
             {
-                var Step = design["Step"];
+                var b = (Color)Start;
+                var n = N.Convert<int[]>();
+                var s = Step?.Convert<Color>(T);
+                var e = Stop?.Convert<Color>(T);
+
+                var rl = Method.Range(b.r, n[0], s?.r, e?.r);
+                var gl = Method.Range(b.g, n[1], s?.g, e?.g);
+                var bl = Method.Range(b.b, n[2], s?.b, e?.b);
+                var al = Method.Range(b.a, n[3], s?.a, e?.a);
+
+                if (OrthoCombine.HasValue && OrthoCombine.Value)
+                {
+                    for (var ri = 0; ri < rl.Length; ri++)
+                    {
+                        for (var gi = 0; gi < gl.Length; gi++)
+                        {
+                            for (var bi = 0; bi < bl.Length; bi++)
+                            {
+                                for (var ai = 0; ai < al.Length; ai++)
+                                {
+                                    ls.Add(new Color(rl[ri], gl[gi], bl[bi], al[ai]));
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (var ri = 0; ri < rl.Length; ri++)
+                    {
+                        ls.Add(new Color(rl[ri], gl[0], bl[0], al[0]));
+                    }
+                    for (var gi = 0; gi < gl.Length; gi++)
+                    {
+                        ls.Add(new Color(rl[0], gl[gi], bl[0], al[0]));
+                    }
+                    for (var bi = 0; bi < bl.Length; bi++)
+                    {
+                        ls.Add(new Color(rl[0], gl[0], bl[bi], al[0]));
+                    }
+                    for (var ai = 0; ai < al.Length; ai++)
+                    {
+                        ls.Add(new Color(rl[0], gl[0], bl[0], al[ai]));
+                    }
+                    ls = ls.Distinct().ToList();
+                }
             }
-            
-            return  ls;
+
+            return ls;
         }
 
-        public static void ProcessOrthoCombineFactor(this Dictionary<string,List<object>> cond)
+        public static Dictionary<string, List<object>> ProcessOrthoCombineFactor(this Dictionary<string,List<object>> cond)
         {
             if (cond.ContainsKey("OrthoCombineFactor") && cond["OrthoCombineFactor"].Count == 0)
             {
-                cond.OrthoCondOfFactorLevel();
+               return cond.OrthoCombineFactor();
             }
+            return cond;
+        }
+
+        public static Dictionary<string, List<object>> OrthoCombineFactor(this Dictionary<string, List<object>> fsls)
+        {
+            foreach (var f in fsls.Keys.ToArray())
+            {
+                if (fsls[f].Count == 0)
+                {
+                    fsls.Remove(f);
+                }
+            }
+
+            var fn = fsls.Count;
+            if (fn < 2) { Debug.LogWarning($"Only {fn} Factor, Skip OrthoCombineFactor ..."); return fsls; }
+
+            var cond = new Dictionary<string, List<object>>();
+            var fs = fsls.Keys.ToArray();
+            int[] irn = new int[fn];
+            int[] fln = new int[fn];
+            int cn = 1;
+            for (var i = 0; i < fn; i++)
+            {
+                var n = fsls[fs[i]].Count;
+                fln[i] = n;
+                cn *= n;
+                if (i == 0) { irn[i] = 1; }
+                else { irn[i] = fln[i - 1] * irn[i - 1]; }
+            }
+
+            for (var i = 0; i < fn; i++)
+            {
+                List<object> ir = new();
+                for (var l = 0; l < fln[i]; l++)
+                {
+                    for (var r = 0; r < irn[i]; r++)
+                    {
+                        ir.Add(fsls[fs[i]][l]);
+                    }
+                }
+                var orn = cn / ir.Count;
+                List<object> or = new();
+                for (var r = 0; r < orn; r++)
+                {
+                    or.AddRange(ir);
+                }
+                cond[fs[i]] = or;
+            }
+            return cond;
+        }
+
+        //public static Type GetFactorValueType(this string factorname)
+        //{
+        //    switch (factorname)
+        //    {
+        //        case "Luminance":
+        //        case "Contrast":
+        //        case "Diameter":
+        //        case "SpatialFreq":
+        //        case "SpatialPhase":
+        //        case "TemporalFreq":
+        //        case "Ori":
+        //        case "OriOffset":
+        //        case "Ori_Final":
+        //        case "Speed":
+        //            return typeof(float);
+        //        case "Rotation":
+        //        case "RotationOffset":
+        //        case "Rotation_Final":
+        //        case "Position":
+        //        case "PositionOffset":
+        //        case "Position_Final":
+        //            return typeof(Vector3);
+        //        case "Color":
+        //        case "BGColor":
+        //            return typeof(Color);
+        //        default:
+        //            return null;
+        //    }
+        //}
+
+        public static Dictionary<string, IList> FinalizeFactorValue(this Dictionary<string, List<object>> cond)
+        {
+            if (cond == null) { return null; }
+            var final = new Dictionary<string, IList>();
+            foreach (var f in cond.Keys)
+            {
+                var fvt = cond[f][0].GetType();
+                var fvs = Activator.CreateInstance(typeof(List<>).MakeGenericType(fvt)).AsList();
+                cond[f].ForEach(i => fvs.Add(i.Convert(fvt)));
+                final[f] = fvs;
+            }
+            return final;
+        }
+
+        public static Dictionary<string, IList> CondGroup(this Dictionary<string, IList> cond, List<string> groupingfactor, out List<List<int>> gi)
+        {
+            var n = cond.Values.First().Count;
+            var group = new Dictionary<string, IList>();
+            foreach (var f in groupingfactor)
+            {
+                var t = cond[f][0].GetType();
+
+                var l = Activator.CreateInstance(typeof(List<>).MakeGenericType(t)).AsList();
+                l.Add(cond[f][0]);
+                group[f] = l;
+            }
+            gi = new List<List<int>>() { new List<int>() { 0 } };
+
+            bool isequal=true;
+            for (var i = 1; i < n; i++)
+            {
+                for (var j = 0; j < gi.Count; j++)
+                {
+                    isequal = true;
+                    foreach (var f in groupingfactor)
+                    {
+                        isequal &= Equals(cond[f][i], group[f][j]); // compare value, instead of ref (==)
+                    }
+                    if (isequal)
+                    {
+                        gi[j].Add(i); break;
+                    }
+                }
+                if (!isequal)
+                {
+                    gi.Add(new List<int>() { i });
+                    foreach (var f in groupingfactor)
+                    {
+                        group[f].Add(cond[f][i]);
+                    }
+                }
+            }
+            return group;
         }
         #endregion
         //public static string GetAddresses(this string experimenter, CommandConfig config)
@@ -1530,118 +1625,7 @@ namespace Experica
         //}
 #endif
 
-        public static void GroupCond(Dictionary<string,IList> cond)
-        {
-            var nf = cond.Count;
-            var n = cond.Values.First().Count;
-            var rows = new List<object>();
-            for( var i = 0; i < n; i++)
-            {
-                rows.Add(cond.Values.Select(v => v[i]).ToArray());
-            }
-            var ucond = rows.Distinct().ToArray();
-        }
-
-        public static Dictionary<string, List<object>> OrthoCondOfFactorLevel(this Dictionary<string, List<object>> fsls)
-        {
-            foreach (var f in fsls.Keys.ToArray())
-            {
-                if (fsls[f].Count == 0)
-                {
-                    fsls.Remove(f);
-                }
-            }
-
-            var fs = fsls.Keys.ToArray();
-            var fn = fs.Length;
-            if (fn > 1)
-            {
-                var cond = new Dictionary<string, List<object>>();
-                int[] irn = new int[fn];
-                int[] ln = new int[fn];
-                irn[0] = 1;
-                int cn = 1;
-                for (var i = 0; i < fn; i++)
-                {
-                    var n = fsls[fs[i]].Count;
-                    ln[i] = n;
-                    cn *= n;
-                    if (i > 0)
-                    {
-                        irn[i] = ln[i - 1] * irn[i - 1];
-                    }
-                }
-
-                for (var fi = 0; fi < fn; fi++)
-                {
-                    List<object> ir = new List<object>();
-                    for (var l = 0; l < ln[fi]; l++)
-                    {
-                        for (var r = 0; r < irn[fi]; r++)
-                        {
-                            ir.Add(fsls[fs[fi]][l]);
-                        }
-                    }
-                    var orn = cn / ir.Count;
-                    List<object> or = new List<object>();
-                    for (var r = 0; r < orn; r++)
-                    {
-                        or.AddRange(ir);
-                    }
-                    cond[fs[fi]] = or;
-                }
-                return cond;
-            }
-            else
-            {
-                return fsls;
-            }
-        }
-
-        public static Type GetFactorValueType(this string factorname)
-        {
-            switch (factorname)
-            {
-                case "Luminance":
-                case "Contrast":
-                case "Diameter":
-                case "SpatialFreq":
-                case "SpatialPhase":
-                case "TemporalFreq":
-                case "Ori":
-                case "OriOffset":
-                case "Ori_Final":
-                case "Speed":
-                    return typeof(float);
-                case "Rotation":
-                case "RotationOffset":
-                case "Rotation_Final":
-                case "Position":
-                case "PositionOffset":
-                case "Position_Final":
-                    return typeof(Vector3);
-                case "Color":
-                case "BGColor":
-                    return typeof(Color);
-                default:
-                    return null;
-            }
-        }
-
-        public static Dictionary<string, IList> FinalizeFactorValues(this Dictionary<string, List<object>> cond)
-        {
-            if (cond == null) return null;
-            var final = new Dictionary<string, IList>();
-            foreach (var f in cond.Keys.ToArray())
-            {
-                var fvt = f.GetFactorValueType() ?? cond[f][0].GetType();
-                var fvs = Activator.CreateInstance(typeof(List<>).MakeGenericType(fvt)).AsList();
-                cond[f].ForEach(i => fvs.Add(i.Convert(fvt)));
-                final[f] = fvs;
-            }
-            return final;
-        }
-
+        
         /// <summary>
         /// Get a unique file incremental index that fits in the file name pattern within a dir.
         /// Index is supposed to be the last part before file extension in pattern: *_{index}.*

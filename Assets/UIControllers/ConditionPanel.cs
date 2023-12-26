@@ -74,7 +74,7 @@ namespace Experica.Command
 
         void CreateConditionUI()
         {
-            var cond = uicontroller.exmanager.el.condmanager.cond;
+            var cond = uicontroller.exmanager.el.condmanager.Cond;
             var grid = condcontent.GetComponent<GridLayoutGroup>();
             var fn = cond.Keys.Count;
             if (fn > 0)
@@ -84,14 +84,14 @@ namespace Experica.Command
                 grid.constraintCount = rn;
                 AddCondIndex(rn);
 
-                if (uicontroller.exmanager.el.condmanager.nblock > 1)
+                if (uicontroller.exmanager.el.condmanager.NBlock > 1)
                 {
                     AddBlockIndex(rn);
                 }
 
                 foreach (var f in cond.Keys)
                 {
-                    AddCondFactorLevels(f, cond[f]);
+                    AddCondFactorLevels(f, (List<object>)cond[f]);
                 }
                 UpdateViewRect(rn, fn + 1);
             }
@@ -128,7 +128,7 @@ namespace Experica.Command
             headertext.GetComponentInChildren<Text>().text = "BlockIndex";
             headertext.transform.SetParent(condheadcontent.transform, false);
 
-            var condsamplesapces = uicontroller.exmanager.el.condmanager.condsamplespaces;
+            var condsamplesapces = uicontroller.exmanager.el.condmanager.CondSampleSpace;
             for (var i = 0; i < condn; i++)
             {
                 var textvalue = Instantiate(textprefab);

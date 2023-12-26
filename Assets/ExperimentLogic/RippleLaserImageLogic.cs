@@ -186,54 +186,51 @@ namespace Experica.Command
             {
                 case BLOCKSTATE.NONE:
                     EnterBlockState(BLOCKSTATE.PREIBI);
-                    if (condmanager.blockidx < 0)
+                    condmanager.SampleBlockSpace();
+                    if (condmanager.BlockCond.ContainsKey("LaserPower"))
                     {
-                        condmanager.SampleBlockSpace();
-                        if (condmanager.finalblockcond.ContainsKey("LaserPower"))
+                        power = (float)condmanager.BlockCond["LaserPower"][condmanager.BlockIndex];
+                        if (lasersignalch != null)
                         {
-                            power = (float)condmanager.finalblockcond["LaserPower"][condmanager.blockidx];
-                            if (lasersignalch != null)
+                            laser.PowerRatio = power;
+                            if (power > 0 && condmanager.BlockCond.ContainsKey("LaserFreq"))
                             {
-                                laser.PowerRatio = power;
-                                if (power > 0 && condmanager.finalblockcond.ContainsKey("LaserFreq"))
+                                var freq = (Vector4)condmanager.BlockCond["LaserFreq"][condmanager.BlockIndex];
+                                if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                                 {
-                                    var freq = (Vector4)condmanager.finalblockcond["LaserFreq"][condmanager.blockidx];
-                                    if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
-                                    {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
-                                    }
-                                    else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
-                                    {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
-                                    }
-                                    else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
-                                    {
-                                        ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
-                                    }
+                                    ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
+                                }
+                                else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
+                                {
+                                    ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
+                                }
+                                else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
+                                {
+                                    ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                                 }
                             }
                         }
-                        if (condmanager.finalblockcond.ContainsKey("LaserPower2"))
+                    }
+                    if (condmanager.BlockCond.ContainsKey("LaserPower2"))
+                    {
+                        power2 = (float)condmanager.BlockCond["LaserPower2"][condmanager.BlockIndex];
+                        if (laser2signalch != null)
                         {
-                            power2 = (float)condmanager.finalblockcond["LaserPower2"][condmanager.blockidx];
-                            if (laser2signalch != null)
+                            laser2.PowerRatio = power2;
+                            if (power2 > 0 && condmanager.BlockCond.ContainsKey("LaserFreq2"))
                             {
-                                laser2.PowerRatio = power2;
-                                if (power2 > 0 && condmanager.finalblockcond.ContainsKey("LaserFreq2"))
+                                var freq2 = (Vector4)condmanager.BlockCond["LaserFreq2"][condmanager.BlockIndex];
+                                if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                                 {
-                                    var freq2 = (Vector4)condmanager.finalblockcond["LaserFreq2"][condmanager.blockidx];
-                                    if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
-                                    {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
-                                    }
-                                    else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
-                                    {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
-                                    }
-                                    else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
-                                    {
-                                        ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
-                                    }
+                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
+                                }
+                                else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
+                                {
+                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
+                                }
+                                else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
+                                {
+                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                                 }
                             }
                         }
@@ -302,7 +299,7 @@ namespace Experica.Command
                                     if (SufICIHold >= ex.SufICI)
                                     {
                                         if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
-                                        if (TrialHold >= ex.TrialDur || condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
+                                        if (TrialHold >= ex.TrialDur || condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
                                         {
                                             EnterTrialState(TRIALSTATE.SUFITI);
                                             if (ex.GetParam("WithVisible").Convert<bool>())
@@ -328,7 +325,7 @@ namespace Experica.Command
                             if (SufITIHold >= ex.SufITI + power * ex.TrialDur * ex.GetParam("ITIFactor").Convert<float>())
                             {
                                 if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
-                                if (condmanager.IsCondRepeatInBlock(ex.CondRepeat, ex.BlockRepeat))
+                                if (condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
                                 {
                                     EnterBlockState(BLOCKSTATE.SUFIBI);
                                 }
@@ -339,7 +336,6 @@ namespace Experica.Command
                 case BLOCKSTATE.SUFIBI:
                     if (SufIBIHold >= ex.SufIBI)
                     {
-                        condmanager.blockidx = -1;
                         EnterBlockState(BLOCKSTATE.NONE);
                     }
                     break;

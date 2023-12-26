@@ -1,1 +1,1 @@
-Contrast: [factorleveldesign, 0, 1, 11, Linear]
+Contrast: [FactorDesign, {Start: 0, Stop: 1, N: 11, Method: Linear}]
