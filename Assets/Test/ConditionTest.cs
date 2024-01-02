@@ -26,7 +26,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Experica.Command;
-using static UnityEngine.Analytics.IAnalytic;
 
 namespace Experica.Test
 {

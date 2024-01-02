@@ -26,7 +26,8 @@ using UnityEngine;
 namespace Experica.Command
 {
     /// <summary>
-    /// Holds all information that define an experiment session
+    /// Holds all information that define an experiment session,
+    /// in which several experiments are sequenced in certain way.
     /// </summary>
     public class ExperimentSession
     {
@@ -39,11 +40,26 @@ namespace Experica.Command
         public string LogicPath { get; set; } = "";
         public double ReadyWait { get; set; } = 5000;
         public double StopWait { get; set; } = 5000;
-        public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> ExtendParam { get; set; } = new();
 
         public bool NotifyExperimenter { get; set; } = true;
         public bool IsFullScreen { get; set; } = false;
         public bool IsFullViewport { get; set; } = false;
         public bool IsGuideOn { get; set; } = true;
+
+
+        public ExperimentSession PrepareDefinition()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                Name = ID;
+            }
+            return this;
+        }
+
+        public void SaveDefinition(string filepath)
+        {
+            filepath.WriteYamlFile(this);
+        }
     }
 }

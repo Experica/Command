@@ -24,7 +24,7 @@ using Unity.Netcode;
 
 namespace Experica.NetEnv
 {
-    public class GratingQuad : NetEnvVisual
+    public class Grating : NetEnvVisual
     {
         /// <summary>
         /// Rotation of Quad(degree)

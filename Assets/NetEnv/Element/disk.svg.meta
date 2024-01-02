@@ -27,7 +27,7 @@ ScriptedImporter:
   maxCordDeviation: 0.1
   maxTangentAngleEnabled: 1
   maxTangentAngle: 0.1
-  keepTextureAspectRatio: 0
+  keepTextureAspectRatio: 1
   textureSize: 256
   textureWidth: 256
   textureHeight: 256
@@ -44,6 +44,7 @@ ScriptedImporter:
       pivot: {x: 0, y: 0}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       rect:
         serializedVersion: 2
         x: 0

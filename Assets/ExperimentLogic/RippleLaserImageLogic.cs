@@ -55,9 +55,9 @@ namespace Experica.Command
             }
         }
 
-        protected override void GenerateFinalCondition()
+        protected override void GenerateCondition()
         {
-            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
+            pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
             // get laser conditions
             laser = ex.GetParam("Laser").Convert<string>().GetLaser(Config);
@@ -246,7 +246,7 @@ namespace Experica.Command
                     switch (TrialState)
                     {
                         case TRIALSTATE.NONE:
-                            if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
+                            if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
                             break;
                         case TRIALSTATE.PREITI:
                             if (PreITIHold >= ex.PreITI)
@@ -268,7 +268,7 @@ namespace Experica.Command
                             switch (CondState)
                             {
                                 case CONDSTATE.NONE:
-                                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                                     break;
                                 case CONDSTATE.PREICI:
                                     if (PreICIHold >= ex.PreICI)
@@ -298,7 +298,7 @@ namespace Experica.Command
                                 case CONDSTATE.SUFICI:
                                     if (SufICIHold >= ex.SufICI)
                                     {
-                                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                                         if (TrialHold >= ex.TrialDur || condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
                                         {
                                             EnterTrialState(TRIALSTATE.SUFITI);
@@ -324,7 +324,7 @@ namespace Experica.Command
                         case TRIALSTATE.SUFITI:
                             if (SufITIHold >= ex.SufITI + power * ex.TrialDur * ex.GetParam("ITIFactor").Convert<float>())
                             {
-                                if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
+                                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
                                 if (condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
                                 {
                                     EnterBlockState(BLOCKSTATE.SUFIBI);

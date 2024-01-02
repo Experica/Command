@@ -3,7 +3,7 @@ Name: HartleySubspace
 Designer: Alex
 Experimenter: LZ
 Log: 
-Subject_ID: AG5
+Subject_ID: Test
 Subject_Name: AG5
 Subject_Species: M. F.
 Subject_Gender: Male
@@ -11,57 +11,54 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: MaskGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 0
+  ScreenHeight@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
   CLUT@OrthoCamera@OrthoCamera: false
-  Rotation@GratingQuad@GratingQuad: 0 0 0
-  RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 104.0362
-  OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 5
-  Size@GratingQuad@GratingQuad: 5 5 1
-  MaskType@GratingQuad@GratingQuad: Disk
-  MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.15
-  OriPositionOffset@GratingQuad@GratingQuad: false
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 5.772348
-  TemporalFreq@GratingQuad@GratingQuad: 0
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
-  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
-  SpatialPhase@GratingQuad@GratingQuad: 0.125
-  MinColor@GratingQuad@GratingQuad: 0.3701 0.6156 3.501E-17 1
-  MaxColor@GratingQuad@GratingQuad: 0.6299 0.3844 1 1
-  PauseTime@GratingQuad@GratingQuad: true
-  PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Sinusoidal
-  ModulateType@GratingQuad@GratingQuad: Square
-  ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.5
-  ModulateDuty@GratingQuad@GratingQuad: 0.5
-  TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 2.167 2.838 0
-  PositionOffset@GratingQuad@GratingQuad: 0 0 0
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@MaskGrating@MaskGrating: 0 0 0
+  RotationOffset@MaskGrating@MaskGrating: 0 0 0
+  Ori@MaskGrating@MaskGrating: 0
+  OriOffset@MaskGrating@MaskGrating: 0
+  Size@MaskGrating@MaskGrating: 0 0 0
+  Diameter@MaskGrating@MaskGrating: 0
+  MaskType@MaskGrating@MaskGrating: None
+  MaskRadius@MaskGrating@MaskGrating: 0
+  MaskSigma@MaskGrating@MaskGrating: 0
+  Luminance@MaskGrating@MaskGrating: 0
+  Contrast@MaskGrating@MaskGrating: 0
+  SpatialFreq@MaskGrating@MaskGrating: 0
+  TemporalFreq@MaskGrating@MaskGrating: 0
+  ModulateTemporalFreq@MaskGrating@MaskGrating: 0
+  ModulateTemporalPhase@MaskGrating@MaskGrating: 0
+  SpatialPhase@MaskGrating@MaskGrating: 0
+  MinColor@MaskGrating@MaskGrating: 0 0 0 0
+  MaxColor@MaskGrating@MaskGrating: 0 0 0 0
+  PauseTime@MaskGrating@MaskGrating: false
+  PauseModulateTime@MaskGrating@MaskGrating: false
+  GratingType@MaskGrating@MaskGrating: Square
+  ModulateType@MaskGrating@MaskGrating: Square
+  ReverseTime@MaskGrating@MaskGrating: false
+  Duty@MaskGrating@MaskGrating: 0
+  ModulateDuty@MaskGrating@MaskGrating: 0
+  TimeSecond@MaskGrating@MaskGrating: 0
+  ModulateTimeSecond@MaskGrating@MaskGrating: 0
+  OriPositionOffset@MaskGrating@MaskGrating: false
+  PositionOffset@MaskGrating@MaskGrating: 0 0 0
+  Position@MaskGrating@MaskGrating: 0 0 0
+  Visible@MaskGrating@MaskGrating: false
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
-LogicPath: SpikeGLXColorCT
+LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: 17R
+RecordSession: ''
+RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
@@ -69,8 +66,7 @@ CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 5
 BlockRepeat: 1
-BlockParam:
-- ''
+BlockFactor: []
 PreICI: 0
 CondDur: 29
 SufICI: 0
@@ -105,29 +101,21 @@ InheritParam:
 - NotifyExperimenter
 - Subject_Birth
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- Position@GratingQuad@GratingQuad
-- MarkerSize@Marker@Marker
 - ScreenAspect@OrthoCamera@OrthoCamera
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
-- Diameter@GratingQuad@GratingQuad
-Param:
-  ColorSpace: LMS
-  Color: Zmcc
+ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
+  Routes:
+  - DigitalOut
   - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: SHORT
 NotifyExperimenter: true
-Version: 2
+Version: 3
 Config: 
 CondTest: 

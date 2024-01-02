@@ -19,8 +19,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Experica;
 using Experica.Command;
@@ -29,13 +27,20 @@ public class BOShadowV1 : ExperimentSessionLogic
 {
     float diameter = 3;
 
+    protected override void OnExperimentSessionStarted()
+    {
+        ExperimentID = "ConditionTest";
+    }
+
+    protected override void OnExperimentSessionStopped()
+    {
+        ExperimentID = "ConditionTest";
+    }
+
     protected override void Logic()
     {
         switch (ExperimentID)
         {
-            case null:
-                ExperimentID = "ConditionTest";
-                break;
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
@@ -153,7 +158,6 @@ public class BOShadowV1 : ExperimentSessionLogic
                             StartStopExperimentSession(false);
                             exmanager.uicontroller.IsFullViewport = false;
                             exmanager.uicontroller.IsGuideOn = true;
-                            return;
                         }
                         break;
                 }

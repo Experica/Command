@@ -3,7 +3,7 @@ Name: Image
 Designer: Alex
 Experimenter: LZ
 Log: 
-Subject_ID: AG5
+Subject_ID: Test
 Subject_Name: AG5
 Subject_Species: M. F.
 Subject_Gender: Male
@@ -11,53 +11,45 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
-EnvPath: MarkerImage
+EnvPath: ImageList
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
-  BGColor@OrthoCamera@OrthoCamera: 0.2016 0.2922 0.3793 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  Rotation@ImageQuad@ImageQuad: 0 0 0
-  RotationOffset@ImageQuad@ImageQuad: 0 0 0
-  Ori@ImageQuad@ImageQuad: 0
-  OriOffset@ImageQuad@ImageQuad: 0
-  Diameter@ImageQuad@ImageQuad: 5
-  Size@ImageQuad@ImageQuad: 5 5 1
-  MaskType@ImageQuad@ImageQuad: Disk
-  MaskRadius@ImageQuad@ImageQuad: 0.5
-  MaskSigma@ImageQuad@ImageQuad: 0.15
-  OriPositionOffset@ImageQuad@ImageQuad: false
-  MinColor@ImageQuad@ImageQuad: 1.998E-15 0 4.996E-16 1
-  MaxColor@ImageQuad@ImageQuad: 1 1 1 1
-  ChannelModulate@ImageQuad@ImageQuad: None
-  Image@ImageQuad@ImageQuad: 9382
-  ImageSet@ImageQuad@ImageQuad: ROGPG279Q_RGB_n32170_sizedeg(3, 3)_sizepx(64, 64)_pc(1, 99).UInt8
-  Visible@ImageQuad@ImageQuad: false
-  Position@ImageQuad@ImageQuad: 2.53 3.431 0
-  PositionOffset@ImageQuad@ImageQuad: 0 0 0
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Ori@ImageList@ImageList: 0
+  OriOffset@ImageList@ImageList: 0
+  Size@ImageList@ImageList: 20 20 20
+  Diameter@ImageList@ImageList: 20
+  MaskType@ImageList@ImageList: None
+  MaskRadius@ImageList@ImageList: 0.5
+  MaskSigma@ImageList@ImageList: 0.15
+  MinColor@ImageList@ImageList: 0 0 0 1
+  MaxColor@ImageList@ImageList: 1 1 1 1
+  ImageSet@ImageList@ImageList: TestImageSet.UInt8
+  Image@ImageList@ImageList: 3
+  ChannelModulate@ImageList@ImageList: None
+  Position@ImageList@ImageList: 0 0 0
+  Visible@ImageList@ImageList: true
 CondPath: ''
 Cond: 
-LogicPath: SpikeGLXImage
+LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: 16R
-DataDir: X:\
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
-BlockParam:
-- ''
+BlockFactor: []
 PreICI: 0
 CondDur: 29
 SufICI: 0
@@ -92,29 +84,21 @@ InheritParam:
 - NotifyExperimenter
 - Subject_Birth
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- Diameter@ImageQuad@ImageQuad
-- Position@ImageQuad@ImageQuad
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
-- MarkerSize@Marker@Marker
-Param:
-  ColorSpace: DKL
-  Color: X
+ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
+  Routes:
+  - DigitalOut
   - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: SHORT
 NotifyExperimenter: true
-Version: 2
+Version: 3
 Config: 
 CondTest: 

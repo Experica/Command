@@ -30,7 +30,7 @@ namespace Experica.Command
         protected float diameterbeforeadjust;
         protected bool isdiameteradjusted;
 
-        protected override void GenerateFinalCondition()
+        protected override void GenerateCondition()
         {
             var cond = new Dictionary<string, List<object>>
             {

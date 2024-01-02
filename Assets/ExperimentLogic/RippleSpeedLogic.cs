@@ -26,9 +26,9 @@ namespace Experica.Command
 {
     public class RippleSpeedLogic : RippleCTLogic
     {
-        protected override void GenerateFinalCondition()
+        protected override void GenerateCondition()
         {
-            pushexcludefactors = new List<string>() { "Speed" };
+            pushexcludefactor = new List<string>() { "Speed" };
             float sf = GetEnvActiveParam("SpatialFreq").Convert<float>();
 
             // convert speed to temporal frequency

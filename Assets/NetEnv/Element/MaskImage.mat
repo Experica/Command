@@ -88,6 +88,7 @@ Material:
     - _DstBlend2: 10
     - _EnableBlendModePreserveSpecularLighting: 0
     - _EnableFogOnTransparent: 0
+    - _ExcludeFromTUAndAA: 0
     - _MaskRadius: 0.5
     - _MaskSigma: 0.15
     - _MaskType: 0

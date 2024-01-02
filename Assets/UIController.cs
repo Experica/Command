@@ -325,11 +325,7 @@ namespace Experica.Command
                 SaveConfig();
             }
             configmanagerpath.WriteYamlFile(configmanager);
-
-            foreach (var el in exmanager.elhistory)
-            {
-                el?.Dispose();
-            }
+            exmanager.Clear();
         }
 
         public void SaveConfig()
@@ -444,7 +440,7 @@ namespace Experica.Command
             ui.UpdateEnv();
             //viewpanel.UpdateViewport();
             ui.UpdateView();
-            exmanager.OnELReady();
+            exmanager.OnReady();
         }
 
         public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
@@ -616,15 +612,16 @@ namespace Experica.Command
             //     }
             // }
 
-            exmanager.OnELStart();
+            exmanager.OnStart();
         }
 
         public void OnBeginStopExperiment() { }
 
         public void OnEndStopExperiment()
         {
+            exmanager.OnStop();
             // alsmanager?.RpcNotifyStopExperiment();
-            exmanager.el.AutoSaveData();
+            exmanager.el.SaveData();
             consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
             if (exmanager.el.ex.NotifyExperimenter)
             {
@@ -632,7 +629,7 @@ namespace Experica.Command
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
             }
 
-            exmanager.OnELStop();
+            
 
             // Return normal when experiment stopped
             Cursor.visible = true;

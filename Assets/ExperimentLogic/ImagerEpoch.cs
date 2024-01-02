@@ -59,7 +59,7 @@ public class ImagerEpoch : ConditionTestLogic
             // create data folder for Imager recording
             var datapath = ex.GetDataPath(addfiledir: true);
             dataroot = Path.GetDirectoryName(datapath);
-            AutoSaveData();
+            SaveData();
         }
     }
 
@@ -113,7 +113,7 @@ public class ImagerEpoch : ConditionTestLogic
         }
     }
 
-    protected override void GenerateFinalCondition()
+    protected override void GenerateCondition()
     {
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
@@ -148,7 +148,7 @@ public class ImagerEpoch : ConditionTestLogic
         }
 
         // get conditions from file
-        base.GenerateFinalCondition();
+        base.GenerateCondition();
 
         if (color != null)
         {
@@ -197,7 +197,7 @@ public class ImagerEpoch : ConditionTestLogic
         switch (TrialState)
         {
             case TRIALSTATE.NONE:
-                if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
+                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
                 SyncFrame();
                 break;
             case TRIALSTATE.PREITI:

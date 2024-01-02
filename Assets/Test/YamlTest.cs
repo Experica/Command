@@ -57,7 +57,7 @@ namespace Experica.Test
         public void ExWrite()
         {
             var ex = new Experiment();
-            ex.InitializeDataSource();
+            //ex.InitializeDataSource();
             exstring = ex.SerializeYaml();
             Debug.Log(exstring);
         }
@@ -76,7 +76,7 @@ namespace Experica.Test
         public void ExRead()
         {
             var ex = exstring.DeserializeYaml<Experiment>();
-            ex.InitializeDataSource();
+            //ex.InitializeDataSource();
             Debug.Log(ex);
         }
 

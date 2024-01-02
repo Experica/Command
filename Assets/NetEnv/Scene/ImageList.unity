@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -193,7 +193,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b33d2f12d189fe441b23e508917f00ef, type: 3}
---- !u!1001 &2089118986
+--- !u!1001 &2140508772
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -201,15 +201,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 751866911859756665, guid: 7a62624996309bc49b8c163e35f46b0b,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3088712927
+      objectReference: {fileID: 0}
     - target: {fileID: 6353058844521458904, guid: 7a62624996309bc49b8c163e35f46b0b,
         type: 3}
       propertyPath: m_Name
-      value: ImageQuad
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403589273623334193, guid: 7a62624996309bc49b8c163e35f46b0b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
+      value: ImageList
       objectReference: {fileID: 0}
     - target: {fileID: 7403589273623334193, guid: 7a62624996309bc49b8c163e35f46b0b,
         type: 3}
@@ -271,4 +271,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1449431887}
-  - {fileID: 2089118986}
+  - {fileID: 2140508772}

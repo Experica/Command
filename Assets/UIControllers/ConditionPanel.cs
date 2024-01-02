@@ -128,7 +128,7 @@ namespace Experica.Command
             headertext.GetComponentInChildren<Text>().text = "BlockIndex";
             headertext.transform.SetParent(condheadcontent.transform, false);
 
-            var condsamplesapces = uicontroller.exmanager.el.condmanager.CondSampleSpace;
+            var condsamplesapces = uicontroller.exmanager.el.condmanager.CondSampleSpaces;
             for (var i = 0; i < condn; i++)
             {
                 var textvalue = Instantiate(textprefab);

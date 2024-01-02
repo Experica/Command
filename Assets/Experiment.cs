@@ -22,26 +22,20 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using System.IO;
 using System.Linq;
 using System;
-using Fasterflect;
 using MessagePack;
-using Experica.NetEnv;
-using UnityEditor;
-using IceInternal;
-using Unity.Properties;
 using System.Runtime.CompilerServices;
-using YamlDotNet.Serialization;
 
 namespace Experica.Command
 {
     /// <summary>
-    /// Holds all information that define an experiment
+    /// Holds all information that define an experiment,
+    /// with reflection for properties warpped for UI DataSource Binding
     /// </summary>
     public class Experiment
-    { 
+    {
         public string ID { get; set; } = "";
         public string Name { get; set; } = "";
         public string Designer { get; set; } = "";
@@ -58,10 +52,10 @@ namespace Experica.Command
         public string Subject_Log { get; set; } = "";
 
         public string EnvPath { get; set; } = "";
-        public Dictionary<string, object> EnvParam { get; set; } = new  ();
+        public Dictionary<string, object> EnvParam { get; set; } = new();
         public string CondPath { get; set; } = "";
-        public Dictionary<string, IList> Cond { get; set; } = new ();
-            public string LogicPath { get; set; } = "";
+        public Dictionary<string, IList> Cond { get; set; } = new();
+        public string LogicPath { get; set; } = "";
 
         public Hemisphere Hemisphere { get; set; } = Hemisphere.None;
         public Eye Eye { get; set; } = Eye.None;
@@ -75,7 +69,7 @@ namespace Experica.Command
         public SampleMethod BlockSampling { get; set; } = SampleMethod.UniformWithoutReplacement;
         public int CondRepeat { get; set; } = 1;
         public int BlockRepeat { get; set; } = 1;
-        public List<string> BlockParam { get; set; } = new();
+        public List<string> BlockFactor { get; set; } = new();
 
         public double PreICI { get; set; } = 0;
         public double CondDur { get; set; } = 1000;
@@ -92,7 +86,7 @@ namespace Experica.Command
         public int NotifyPerCondTest { get; set; } = 0;
         public List<CONDTESTPARAM> NotifyParam { get; set; } = new();
         public List<string> InheritParam { get; set; } = new();
-        public List<string> EnvInheritParam { get; set; } = new ();
+        public List<string> EnvInheritParam { get; set; } = new();
         public Dictionary<string, object> ExtendParam { get; set; } = new();
         public double TimerDriftSpeed { get; set; } = 6e-5;
         public EventSyncProtocol EventSyncProtocol { get; set; } = new();
@@ -106,10 +100,12 @@ namespace Experica.Command
         [IgnoreMember]
         public Dictionary<CONDTESTPARAM, IList> CondTest { get; set; }
 
+
         [IgnoreMember]
-        public Dictionary<string, PropertySource<Experiment>> Properties  = new();
+        public Dictionary<string, PropertySource<Experiment>> Properties = new();
         [IgnoreMember]
-        public Dictionary<string, DictSource<object>> ExtendProperties= new();
+        public Dictionary<string, DictSource<object>> ExtendProperties = new();
+
 
         static Experiment()
         {
@@ -117,20 +113,19 @@ namespace Experica.Command
             var extypename = extype.ToString();
             foreach (var p in extype.GetProperties())
             {
-                extypename.StoreProperty(p.Name, new Property(p));             
+                extypename.StoreProperty(p.Name, new Property(p));
             }
         }
 
-        public void InitializeDataSource() 
+        public Experiment()
         {
             var extype = typeof(Experiment);
             var extypename = extype.ToString();
-            if(extypename.QueryProperties(out var properties))
+            if (extypename.QueryProperties(out var properties))
             {
-                Properties = properties.ToDictionary(kv => kv.Key, kv =>new PropertySource<Experiment>(this,kv.Value));
+                Properties = properties.ToDictionary(kv => kv.Key, kv => new PropertySource<Experiment>(this, kv.Value));
             }
-            else { Debug.LogError($"Property Reflections of {extype} Not Initialized") ; }
-            ExtendProperties = ExtendParam.ToDictionary(kv => kv.Key, kv => new DictSource<object>(ExtendParam, kv.Key));
+            else { Debug.LogError($"Property Reflections of {extype} Not Initialized"); }
         }
 
         public bool SetParam(string name, object value)
@@ -166,7 +161,7 @@ namespace Experica.Command
             if (Properties.ContainsKey(name))
             {
                 var p = Properties[name];
-                p.Value=value.Convert(p.Type);
+                p.Value = value.Convert(p.Type);
                 return true;
             }
             Debug.LogError($"Property: {name} not defined in Experiment");
@@ -241,9 +236,9 @@ namespace Experica.Command
             return null;
         }
 
-        public bool ContainsParam(string name) {  return Properties.ContainsKey(name) || ExtendProperties.ContainsKey(name); }
-        public bool ContainsExtendProperty(string name) {  return ExtendProperties.ContainsKey(name); }
-        public bool ContainsProperty(string name)        {            return  Properties.ContainsKey(name);        }
+        public bool ContainsParam(string name) { return Properties.ContainsKey(name) || ExtendProperties.ContainsKey(name); }
+        public bool ContainsExtendProperty(string name) { return ExtendProperties.ContainsKey(name); }
+        public bool ContainsProperty(string name) { return Properties.ContainsKey(name); }
 
         public void RemoveExtendProperty(string name)
         {
@@ -259,6 +254,8 @@ namespace Experica.Command
             ExtendProperties[name] = source;
             return source;
         }
+
+        public void RefreshExtendProperties() => ExtendProperties = ExtendParam.ToDictionary(kv => kv.Key, kv => new DictSource<object>(ExtendParam, kv.Key));
 
         /// <summary>
         /// Prepare data path if `DataPath` is valid, otherwise create a new unique data path based on experiment parameters.
@@ -313,6 +310,7 @@ namespace Experica.Command
         /// <param name="filepath"></param>
         public void SaveDefinition(string filepath)
         {
+            Version = ExpericaExtension.ExperimentDataVersion;
             var config = Config;
             var cond = Cond;
             var condtest = CondTest;
@@ -330,6 +328,35 @@ namespace Experica.Command
                 CondTest = condtest;
                 DataPath = datapath;
             }
+        }
+
+        public Experiment PrepareDefinition(CommandConfig cfg = null)
+        {
+            if (cfg != null) { Config = cfg; }
+            if (string.IsNullOrEmpty(Name))
+            {
+                Name = ID;
+            }
+            if (string.IsNullOrEmpty(Subject_Name))
+            {
+                Subject_Name = Subject_ID;
+            }
+            if (string.IsNullOrEmpty(DataDir))
+            {
+                DataDir = Config.DataDir;
+                if (!Directory.Exists(DataDir))
+                {
+                    Directory.CreateDirectory(DataDir);
+                    Debug.Log($"Create Data Directory \"{DataDir}\".");
+                }
+            }
+            if (CondTest != null)
+            {
+                CondTest = null;
+            }
+            NotifyParam ??= Config.NotifyParams;
+            RefreshExtendProperties();
+            return this;
         }
 
     }
@@ -360,14 +387,14 @@ namespace Experica.Command
 
     public class EventSyncProtocol
     {
-        public List<SyncMethod> SyncMethods { get; set; } = new List<SyncMethod>() { SyncMethod.GPIO, SyncMethod.Display };
-        public uint nSyncChannel { get; set; } = 1;
-        public uint nSyncpEvent { get; set; } = 1;
+        public EventSyncRoute[] Routes { get; set; } = new[] { EventSyncRoute.DigitalOut, EventSyncRoute.Display };
+        public uint NChannel { get; set; } = 1;
+        public uint NEdgePEvent { get; set; } = 1;
     }
 
-    public enum SyncMethod
+    public enum EventSyncRoute
     {
-        GPIO,
+        DigitalOut,
         Display
     }
 
@@ -376,7 +403,8 @@ namespace Experica.Command
         NONE = 1,
         PREICI,
         COND,
-        SUFICI
+        SUFICI,
+        ICI
     }
 
     public enum TRIALSTATE
@@ -384,7 +412,8 @@ namespace Experica.Command
         NONE = 101,
         PREITI,
         TRIAL,
-        SUFITI
+        SUFITI,
+        ITI
     }
 
     public enum BLOCKSTATE
@@ -392,22 +421,23 @@ namespace Experica.Command
         NONE = 201,
         PREIBI,
         BLOCK,
-        SUFIBI
+        SUFIBI,
+        IBI
     }
 
-    public enum TASKSTATE
-    {
-        NONE = 301,
-        FIXTARGET_ON,
-        FIX_ACQUIRED,
-        TARGET_ON,
-        TARGET_CHANGE,
-        AXISFORCED,
-        REACTIONALLOWED,
-        FIGARRAY_ON,
-        FIGFIX_ACQUIRED,
-        FIGFIX_LOST
-    }
+    //public enum TASKSTATE
+    //{
+    //    NONE = 301,
+    //    FIXTARGET_ON,
+    //    FIX_ACQUIRED,
+    //    TARGET_ON,
+    //    TARGET_CHANGE,
+    //    AXISFORCED,
+    //    REACTIONALLOWED,
+    //    FIGARRAY_ON,
+    //    FIGFIX_ACQUIRED,
+    //    FIGFIX_LOST
+    //}
 
     public enum PUSHCONDATSTATE
     {
@@ -425,7 +455,7 @@ namespace Experica.Command
         PREITI = TRIALSTATE.PREITI,
     }
 
-    public enum EnterCode
+    public enum EnterStateCode
     {
         Success = 0,
         Failure,
@@ -443,9 +473,7 @@ namespace Experica.Command
     public enum EXPERIMENTSTATUS
     {
         NONE,
-        STARTING,
         RUNNING,
-        STOPPING,
         STOPPED
     }
 }

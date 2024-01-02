@@ -23,19 +23,12 @@ using UnityEngine;
 using Experica;
 using Experica.Command;
 
-public class ColorEPhys_v1 : ExperimentSessionLogic
+public class ColorEPhys_v1 : ColorEPhys
 {
-    float diameter = 3;
-    Vector3 position = Vector3.zero;
-    Eye eye = Eye.Right;
-
     protected override void Logic()
     {
         switch (ExperimentID)
         {
-            case null:
-                ExperimentID = "ConditionTest";
-                break;
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
@@ -273,11 +266,9 @@ public class ColorEPhys_v1 : ExperimentSessionLogic
                             }
                             else
                             {
-                                ExperimentID = "ConditionTest";
                                 StartStopExperimentSession(false);
                                 exmanager.uicontroller.IsFullViewport = false;
                                 exmanager.uicontroller.IsGuideOn = true;
-                                return;
                             }
                         }
                         break;

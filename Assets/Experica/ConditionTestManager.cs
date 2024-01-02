@@ -33,13 +33,13 @@ namespace Experica
     public class ConditionTestManager
     {
         public Dictionary<CONDTESTPARAM, IList> CondTest { get; } = new();
+        public int CondTestIndex { get; private set; } = -1;
+        public Action OnNotifyUI, OnClear;
+
         public Func<CONDTESTPARAM, List<object>, bool> OnNotifyCondTest;
         public Func<double, bool> OnNotifyCondTestEnd;
-        public Action PushUICondTest, OnClearCondTest;
-
         int notifiedidx = -1;
         public int NotifiedIndex { get { return notifiedidx; } }
-        public int CondTestIndex { get; private set; } = -1;
 
 
         public void Clear()
@@ -47,7 +47,7 @@ namespace Experica
             CondTest.Clear();
             CondTestIndex = -1;
             notifiedidx = -1;
-            OnClearCondTest?.Invoke();
+            OnClear?.Invoke();
         }
 
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
@@ -56,29 +56,27 @@ namespace Experica
             CondTestIndex++;
         }
 
-        public void PushCondTest(double pushtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
+        public void PushCondTest(double pushtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyUI = true)
         {
-            if (CondTestIndex >= 0)
+            if (CondTestIndex < 0) { return; }
+            if (notifyUI && OnNotifyUI != null) { OnNotifyUI(); }
+            if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
             {
-                if (notifyui && PushUICondTest != null) PushUICondTest();
-                if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
+                if (!pushall)
                 {
-                    if (!pushall)
-                    {
-                        if (((CondTestIndex - notifiedidx) / notifypercondtest) >= 1)
-                        {
-                            if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
-                            {
-                                notifiedidx = CondTestIndex;
-                            }
-                        }
-                    }
-                    else
+                    if (((CondTestIndex - notifiedidx) / notifypercondtest) >= 1)
                     {
                         if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
                         {
                             notifiedidx = CondTestIndex;
                         }
+                    }
+                }
+                else
+                {
+                    if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
+                    {
+                        notifiedidx = CondTestIndex;
                     }
                 }
             }
@@ -113,10 +111,7 @@ namespace Experica
             return NotifyCondTest(startidx, notifyparam) && OnNotifyCondTestEnd != null && OnNotifyCondTestEnd(notifytime);
         }
 
-        public Dictionary<CONDTESTPARAM, object> this[int condtestindex]
-        {
-            get => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
-        }
+        public Dictionary<CONDTESTPARAM, object> this[int condtestindex] => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
 
         public Dictionary<CONDTESTPARAM, object> CurrentCondTest => this[CondTestIndex];
 

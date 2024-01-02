@@ -6,7 +6,7 @@ Log:
 LogicPath: BOShadowV1
 ReadyWait: 10000
 StopWait: 10000
-Param: {}
+ExtendParam: {}
 NotifyExperimenter: true
 IsFullScreen: true
 IsFullViewport: true

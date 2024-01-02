@@ -38,7 +38,7 @@ public class ImagerCycle : ImagerEpoch
         base.OnStartExperiment();
     }
 
-    protected override void GenerateFinalCondition()
+    protected override void GenerateCondition()
     {
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");

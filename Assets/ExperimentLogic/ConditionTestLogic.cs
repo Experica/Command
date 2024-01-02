@@ -23,9 +23,10 @@ using UnityEngine;
 using System;
 using Experica;
 using Experica.Command;
+using System.Linq;
 
 /// <summary>
-/// Simple Condition Test Logic with Event Sync through GPIO and Display Marker
+/// Condition Test Logic with EventSyncRoute through GPIO and Display Marker
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {
@@ -33,11 +34,11 @@ public class ConditionTestLogic : ExperimentLogic
     protected bool syncvalue;
 
     /// <summary>
-    /// init gpio and sync states
+    /// init gpio and inactive sync state
     /// </summary>
     protected override void OnStartExperiment()
     {
-        if (ex.EventSyncProtocol.SyncMethods.Contains(SyncMethod.GPIO))
+        if (ex.EventSyncProtocol.Routes.Contains(EventSyncRoute.DigitalOut))
         {
             gpio = new ParallelPort(dataaddress: Config.ParallelPort0);
             //if (!gpio.Found)
@@ -50,7 +51,7 @@ public class ConditionTestLogic : ExperimentLogic
             }
             if (!gpio.Found)
             {
-                Debug.LogWarning("No GPIO Sync Channel.");
+                Debug.LogWarning("No GPIO for DigitalOut EventSyncRoute.");
             }
         }
         SetEnvActiveParam("Visible", false);
@@ -58,7 +59,7 @@ public class ConditionTestLogic : ExperimentLogic
     }
 
     /// <summary>
-    /// release gpio and sync states
+    /// return to inactive sync state and release gpio
     /// </summary>
     protected override void OnExperimentStopped()
     {
@@ -67,65 +68,36 @@ public class ConditionTestLogic : ExperimentLogic
         gpio?.Dispose();
     }
 
-    protected EnterCode EnterCondState(CONDSTATE value, bool syncenter = false)
-    {
-        var c = base.EnterCondState(value);
-        if (syncenter && c == EnterCode.Success)
-        {
-            SyncEvent(value.ToString());
-        }
-        return c;
-    }
-
-    protected EnterCode EnterTrialState(TRIALSTATE value, bool syncenter = false)
-    {
-        var c = base.EnterTrialState(value);
-        if (syncenter && c == EnterCode.Success)
-        {
-            SyncEvent(value.ToString());
-        }
-        return c;
-    }
-
-    protected EnterCode EnterBlockState(BLOCKSTATE value, bool syncenter = false)
-    {
-        var c = base.EnterBlockState(value);
-        if (syncenter && c == EnterCode.Success)
-        {
-            SyncEvent(value.ToString());
-        }
-        return c;
-    }
-
     /// <summary>
-    /// Sync and Register Event Name/Time/Value with External Device according to EventSyncProtocol
+    /// Sync to External Device and Register Event Name/Time/Value according to EventSyncProtocol
     /// </summary>
-    /// <param name="e">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
-    /// <param name="et">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
-    /// <param name="ev">Event Value, Non-Null value will register in new `CONDTESTPARAM` if event is a valid `CONDTESTPARAM`</param>
-    protected virtual void SyncEvent(string e = null, double et = double.NaN, object ev = null)
+    /// <param name="name">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
+    /// <param name="time">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
+    /// <param name="value">Event Value, Non-Null value will register in `CONDTESTPARAM` if event name is a valid `CONDTESTPARAM`</param>
+    protected virtual void SyncEvent(string name = null, double time = double.NaN, object value = null)
     {
         var esp = ex.EventSyncProtocol;
-        if (esp.SyncMethods == null || esp.SyncMethods.Count == 0)
+        if (esp.Routes == null || esp.Routes.Length == 0)
         {
-            Debug.LogWarning("No SyncMethod in EventSyncProtocol, Skip SyncEvent ...");
+            Debug.LogWarning("No SyncRoute in EventSyncProtocol, Skip SyncEvent ...");
             return;
         }
         bool addtosynclist = false;
-        bool syncreset = string.IsNullOrEmpty(e);
+        bool syncreset = string.IsNullOrEmpty(name);
 
-        if (esp.nSyncChannel == 1 && esp.nSyncpEvent == 1)
+        if (esp.NChannel == 1 && esp.NEdgePEvent == 1)
         {
-            syncvalue = !syncreset && !syncvalue;
             addtosynclist = !syncreset;
-            for (var i = 0; i < esp.SyncMethods.Count; i++)
+            syncvalue = addtosynclist && !syncvalue;
+
+            for (var i = 0; i < esp.Routes.Length; i++)
             {
-                switch (esp.SyncMethods[i])
+                switch (esp.Routes[i])
                 {
-                    case SyncMethod.Display:
+                    case EventSyncRoute.Display:
                         SetEnvActiveParam("Mark", syncvalue);
                         break;
-                    case SyncMethod.GPIO:
+                    case EventSyncRoute.DigitalOut:
                         gpio?.BitOut(bit: Config.EventSyncCh, value: syncvalue);
                         break;
                 }
@@ -133,31 +105,62 @@ public class ConditionTestLogic : ExperimentLogic
         }
         if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
         {
-            if (!double.IsNaN(et))
+            if (!double.IsNaN(time))
             {
-                condtestmanager.AddInList(CONDTESTPARAM.Event, e, et);
+                condtestmanager.AddInList(CONDTESTPARAM.Event, name, time);
             }
-            condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, e);
-            if (ev != null)
+            condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, name);
+            if (value != null)
             {
-                if (Enum.TryParse(e, out CONDTESTPARAM cte))
+                if (Enum.TryParse(name, out CONDTESTPARAM ctp))
                 {
-                    condtestmanager.AddInList(cte, ev);
+                    condtestmanager.AddInList(ctp, value);
                 }
                 else
                 {
-                    Debug.LogWarning($"Skip Adding Event Value, {e} is not a valid CONDTESTPARAM.");
+                    Debug.LogWarning($"Skip Adding Event Value: {value}, because \"{name}\" is not a valid CONDTESTPARAM.");
                 }
             }
         }
     }
+
+    protected EnterStateCode EnterCondState(CONDSTATE value, bool sync = false)
+    {
+        var c = base.EnterCondState(value);
+        if (sync && c == EnterStateCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
+    protected EnterStateCode EnterTrialState(TRIALSTATE value, bool sync = false)
+    {
+        var c = base.EnterTrialState(value);
+        if (sync && c == EnterStateCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
+    protected EnterStateCode EnterBlockState(BLOCKSTATE value, bool sync = false)
+    {
+        var c = base.EnterBlockState(value);
+        if (sync && c == EnterStateCode.Success)
+        {
+            SyncEvent(value.ToString());
+        }
+        return c;
+    }
+
 
     protected override void Logic()
     {
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                 SyncFrame?.Invoke();
                 break;
             case CONDSTATE.PREICI:
@@ -178,7 +181,7 @@ public class ConditionTestLogic : ExperimentLogic
                     if (ex.PreICI <= 0 && ex.SufICI <= 0)
                     {
                         // new condtest starts at PreICI
-                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                         EnterCondState(CONDSTATE.COND, true);
                     }
                     else
@@ -192,7 +195,7 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
-                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                     SyncFrame?.Invoke();
                 }
                 break;

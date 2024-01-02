@@ -11,47 +11,47 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
-EnvPath: MarkerGrating
+EnvPath: Grating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
   Mark@Marker@Marker~OrthoCamera: false
-  Rotation@GratingQuad@GratingQuad: 0 0 0
-  RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 200.0792
-  OriOffset@GratingQuad@GratingQuad: 0
-  Size@GratingQuad@GratingQuad: 5 5 5
-  Diameter@GratingQuad@GratingQuad: 5
-  MaskType@GratingQuad@GratingQuad: Disk
-  MaskRadius@GratingQuad@GratingQuad: 0.5
-  MaskSigma@GratingQuad@GratingQuad: 0.15
-  Luminance@GratingQuad@GratingQuad: 0.5
-  Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.7
-  TemporalFreq@GratingQuad@GratingQuad: 3
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
-  ModulateTemporalPhase@GratingQuad@GratingQuad: 0
-  SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
-  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
-  PauseTime@GratingQuad@GratingQuad: false
-  PauseModulateTime@GratingQuad@GratingQuad: true
-  GratingType@GratingQuad@GratingQuad: Square
-  ModulateType@GratingQuad@GratingQuad: Square
-  ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.5
-  ModulateDuty@GratingQuad@GratingQuad: 0.5
-  TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 0
-  OriPositionOffset@GratingQuad@GratingQuad: false
-  PositionOffset@GratingQuad@GratingQuad: 0 0 0
-  Position@GratingQuad@GratingQuad: 2.167 2.838 0
-  Visible@GratingQuad@GratingQuad: true
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 0
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 10 10 10
+  Diameter@Grating@Grating: 10
+  MaskType@Grating@Grating: None
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
+  PauseTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Square
+  ModulateType@Grating@Grating: Square
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 0
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 0 0 0
+  Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
@@ -66,7 +66,7 @@ CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
-BlockParam: []
+BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
@@ -88,14 +88,14 @@ EnvInheritParam: []
 ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
+  Routes:
+  - DigitalOut
   - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
 NotifyExperimenter: true
-Version: 2
+Version: 3
 Config: 
 CondTest: 

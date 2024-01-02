@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace Experica.NetEnv
 {
-    public class ImageQuad : NetEnvVisual
+    public class ImageList : NetEnvVisual
     {
         public NetworkVariable<float> Ori = new(0f);
         public NetworkVariable<float> OriOffset = new(0f);

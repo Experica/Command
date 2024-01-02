@@ -28,11 +28,15 @@ using System.IO;
 
 namespace Experica.Command
 {
+    /// <summary>
+    /// Manage ExperimentSession Query, Load/UnLoad, Save
+    /// </summary>
     public class ExperimentSessionManager : MonoBehaviour
     {
         public UIController uicontroller;
+        public Dictionary<string, string> deffile = new();
         public ExperimentSessionLogic esl;
-        public Dictionary<string, string> deffile = new ();
+
 
         public void CollectDefination(string indir)
         {
@@ -43,26 +47,15 @@ namespace Experica.Command
         public ExperimentSession LoadExSession(string exsfilepath)
         {
             var exs = exsfilepath.ReadYamlFile<ExperimentSession>();
-            if (string.IsNullOrEmpty(exs.ID))
+            var exsfilename = Path.GetFileNameWithoutExtension(exsfilepath);
+            if (string.IsNullOrEmpty(exs.ID) || exs.ID != exsfilename)
             {
-                exs.ID = Path.GetFileNameWithoutExtension(exsfilepath);
+                exs.ID = exsfilename;
             }
-            return ValidateExperimentSession(exs);
+            return exs.PrepareDefinition();
         }
 
-        ExperimentSession ValidateExperimentSession(ExperimentSession exs)
-        {
-            if (string.IsNullOrEmpty(exs.Name))
-            {
-                exs.Name = exs.ID;
-            }
-            return exs;
-        }
-
-        public void LoadESL(string exsfilepath)
-        {
-            LoadESL(LoadExSession(exsfilepath));
-        }
+        public void LoadESL(string exsfilepath) { LoadESL(LoadExSession(exsfilepath)); }
 
         public void LoadESL(ExperimentSession exs)
         {
@@ -79,6 +72,10 @@ namespace Experica.Command
                     esltype = Type.GetType(exs.LogicPath);
                 }
             }
+            if (esltype == null)
+            {
+                Debug.LogError($"No Valid ExperimentSessionLogic For {exs.ID}."); return;
+            }
 
             if (esl != null)
             {
@@ -87,7 +84,11 @@ namespace Experica.Command
             esl = gameObject.AddComponent(esltype) as ExperimentSessionLogic;
             esl.exsession = exs;
             esl.exmanager = uicontroller.exmanager;
+            RegisterESLCallback();
+        }
 
+        void RegisterESLCallback()
+        {
             esl.OnBeginStartExperimentSession = uicontroller.OnBeginStartExperimentSession;
             esl.OnEndStartExperimentSession = uicontroller.OnEndStartExperimentSession;
             esl.OnBeginStopExperimentSession = uicontroller.OnBeginStopExperimentSession;
@@ -96,9 +97,9 @@ namespace Experica.Command
 
         public void SaveExSession(string id)
         {
-            if (deffile.ContainsKey(id))
+            if (deffile.ContainsKey(id) && id == esl.exsession.ID)
             {
-                deffile[id].WriteYamlFile(esl.exsession);
+                esl.exsession.SaveDefinition(deffile[id]);
             }
         }
 

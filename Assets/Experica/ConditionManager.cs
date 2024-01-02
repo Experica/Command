@@ -41,25 +41,26 @@ namespace Experica
                 return Cond.Values.First().Count;
             }
         }
-        public List<string> BlockFactor { get; private set; }=new();
+        public List<string> BlockFactor { get; private set; } = new();
         public List<string> NonBlockFactor { get; private set; } = new();
         public Dictionary<string, IList> BlockCond { get; private set; } = new();
-        public int NBlock => CondSampleSpace.Count;
-        public List<List<int>> CondSampleSpace { get; private set; } = new();
+        public int NBlock => BlockSampleSpace.Count;
+        public List<List<int>> CondSampleSpaces { get; private set; } = new();
         public List<int> BlockSampleSpace { get; private set; } = new();
-        
+
         public System.Random RNG = new MersenneTwister();
         public SampleMethod CondSampleMethod { get; private set; } = SampleMethod.Ascending;
         public SampleMethod BlockSampleMethod { get; private set; } = SampleMethod.Ascending;
+        public Action OnCondFinalized, OnSamplingInitialized;
 
         public int NSampleSkip = 0;
-        public int ScendingStep  = 1;
+        public int ScendingStep = 1;
         public int BlockIndex { get; private set; } = -1;
         public int CondIndex { get; private set; } = -1;
         int condsampleindex = -1;
         int blocksampleindex = -1;
-        List<int> blockrepeat  = new();
-        List<int> condrepeat  = new();
+        List<int> blockrepeat = new();
+        List<int> condrepeat = new();
         List<List<int>> condofblockrepeat = new();
 
 
@@ -96,12 +97,14 @@ namespace Experica
                 var maxfln = fln.Max();
                 if (minfln != maxfln)
                 {
-                    foreach (var f in cond.Keys)
+                    foreach (var f in cond.Keys.ToArray())
                     {
                         cond[f] = cond[f].GetRange(0, minfln);
                     }
                 }
+                if (cond.Count == 0) { Debug.LogWarning("Finalized Condition Is Empty."); Cond.Clear(); return; }
                 Cond = cond.FinalizeFactorValue();
+                OnCondFinalized?.Invoke();
             }
         }
 
@@ -142,26 +145,23 @@ namespace Experica
             BlockSampleMethod = blocksamplemethod;
             BlockCond.Clear();
             BlockSampleSpace.Clear();
-            CondSampleSpace.Clear();
+            CondSampleSpaces.Clear();
             if (NCond == 0) { Debug.LogWarning("Empty Condition, Skip Init Sampling Space ..."); return; }
 
-            if(blockfactor==null || blockfactor.Count==0) { BlockFactor.Clear(); }
+            if (blockfactor == null || blockfactor.Count == 0) { BlockFactor.Clear(); }
             else { BlockFactor = Cond.Keys.Intersect(blockfactor).ToList(); }
             NonBlockFactor = Cond.Keys.Except(BlockFactor).ToList();
             var bfn = BlockFactor.Count;
-            if (bfn==0 || bfn==Cond.Count || NCond==1)
+            if (bfn == 0 || bfn == Cond.Count || NCond == 1)
             {
                 BlockSampleSpace.Add(0);
-                CondSampleSpace.Add(GetSampleSpace(NCond, CondSampleMethod));
+                CondSampleSpaces.Add(GetSampleSpace(NCond, CondSampleMethod));
             }
             else
             {
-                BlockCond = Cond.CondGroup(BlockFactor, out List<List<int>> CondSampleSpace);
+                BlockCond = Cond.CondGroup(BlockFactor, out List<List<int>> gi);
                 BlockSampleSpace = GetSampleSpace(NBlock, BlockSampleMethod);
-                for(var i = 0;i < NBlock; i++)
-                {
-                    CondSampleSpace[i] = GetSampleSpace(CondSampleSpace[i], CondSampleMethod);
-                }
+                gi.ForEach(i => CondSampleSpaces.Add(GetSampleSpace(i, CondSampleMethod)));
             }
         }
 
@@ -172,11 +172,11 @@ namespace Experica
             condofblockrepeat.Clear();
 
             condrepeat.AddRange(Enumerable.Repeat(0, NCond));
-            blockrepeat.AddRange(Enumerable.Repeat(0,NBlock));
-            for(var i = 0; i < NBlock; i++)
+            blockrepeat.AddRange(Enumerable.Repeat(0, NBlock));
+            for (var i = 0; i < NBlock; i++)
             {
                 var cobr = new List<int>();
-                cobr.AddRange(Enumerable.Repeat(0, CondSampleSpace[i].Count));
+                cobr.AddRange(Enumerable.Repeat(0, CondSampleSpaces[i].Count));
                 condofblockrepeat.Add(cobr);
             }
 
@@ -192,13 +192,14 @@ namespace Experica
         {
             InitializeSampleSpace(condsamplemethod, blocksamplemethod, blockfactor);
             ResetSampling();
+            OnSamplingInitialized?.Invoke();
         }
 
-        public void ResetCondOfBlockSampling(int blockidx)
+        public void ResetCondOfBlockSampling(int blockindex)
         {
-            for(var i = 0;i < condofblockrepeat[blockidx].Count;i++)
+            for (var i = 0; i < condofblockrepeat[blockindex].Count; i++)
             {
-                condofblockrepeat[blockidx][i]=0;
+                condofblockrepeat[blockindex][i] = 0;
             }
             condsampleindex = -1;
         }
@@ -234,13 +235,12 @@ namespace Experica
                     BlockIndex = manualblockindex;
                     break;
             }
-
             blockrepeat[BlockIndex] += 1;
             ResetCondOfBlockSampling(BlockIndex);
             return BlockIndex;
         }
 
-        public int SampleCondSpace(int manualcondidx = 0)
+        public int SampleCondSpace(int manualcondindex = 0)
         {
             if (NCond == 0) { return -1; }
             switch (CondSampleMethod)
@@ -248,30 +248,30 @@ namespace Experica
                 case SampleMethod.Ascending:
                 case SampleMethod.Descending:
                     condsampleindex += ScendingStep;
-                    if (condsampleindex > CondSampleSpace[BlockIndex].Count - 1)
+                    if (condsampleindex > CondSampleSpaces[BlockIndex].Count - 1)
                     {
                         condsampleindex = 0;
                     }
-                    CondIndex = CondSampleSpace[BlockIndex][condsampleindex];
+                    CondIndex = CondSampleSpaces[BlockIndex][condsampleindex];
                     break;
                 case SampleMethod.UniformWithReplacement:
-                    condsampleindex = RNG.Next(CondSampleSpace[BlockIndex].Count);
-                    CondIndex = CondSampleSpace[BlockIndex][condsampleindex];
+                    condsampleindex = RNG.Next(CondSampleSpaces[BlockIndex].Count);
+                    CondIndex = CondSampleSpaces[BlockIndex][condsampleindex];
                     break;
                 case SampleMethod.UniformWithoutReplacement:
                     condsampleindex++;
-                    if (condsampleindex > CondSampleSpace[BlockIndex].Count - 1)
+                    if (condsampleindex > CondSampleSpaces[BlockIndex].Count - 1)
                     {
-                        CondSampleSpace[BlockIndex] = GetSampleSpace(CondSampleSpace[BlockIndex], CondSampleMethod);
+                        CondSampleSpaces[BlockIndex] = GetSampleSpace(CondSampleSpaces[BlockIndex], CondSampleMethod);
                         condsampleindex = 0;
                     }
-                    CondIndex = CondSampleSpace[BlockIndex][condsampleindex];
+                    CondIndex = CondSampleSpaces[BlockIndex][condsampleindex];
                     break;
                 case SampleMethod.Manual:
-                    CondIndex = manualcondidx;
+                    CondIndex = manualcondindex;
                     break;
             }
-            condofblockrepeat[BlockIndex][CondIndex] += 1;
+            condofblockrepeat[BlockIndex][condsampleindex] += 1;
             condrepeat[CondIndex] += 1;
             return CondIndex;
         }
@@ -279,7 +279,7 @@ namespace Experica
         public int SampleCondition(int condofblockrepeat, int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
         {
             if (NCond == 0) { return -1; }
-            if (NSampleSkip <= 0)
+            if (NSampleSkip < 1)
             {
                 if (BlockIndex < 0) { SampleBlockSpace(manualblockindex); }
                 if (autosampleblock) { if (IsCondOfBlockRepeat(BlockIndex, condofblockrepeat)) { SampleBlockSpace(manualblockindex); } }
@@ -292,7 +292,7 @@ namespace Experica
             return CondIndex;
         }
 
-        public void PushCondition(int condindex, INetEnv envmanager,bool includeblockfactor=false, List<string> excludefactor = null)
+        public void PushCondition(int condindex, INetEnv envmanager, bool includeblockfactor = false, List<string> excludefactor = null)
         {
             if (NCond == 0 || condindex < 0) { return; }
             var condfactors = includeblockfactor ? Cond.Keys.ToList() : NonBlockFactor;
@@ -313,7 +313,7 @@ namespace Experica
             }
         }
 
-        public bool IsCondRepeat(int condindex,int n) { return condrepeat[condindex] >= n; }
+        public bool IsCondRepeat(int condindex, int n) { return condrepeat[condindex] >= n; }
         public bool IsBlockRepeat(int blockindex, int n) { return blockrepeat[blockindex] >= n; }
         public bool IsCondOfBlockRepeat(int blockindex, int n)
         {
@@ -334,13 +334,13 @@ namespace Experica
             return true;
         }
 
-        public bool IsCondAndBlockRepeat(int condofblockrepeat,int blockrepeat)
+        public bool IsCondAndBlockRepeat(int condofblockrepeat, int blockrepeat)
         {
             var total = Math.Max(0, condofblockrepeat) * Math.Max(1, blockrepeat);
             return IsAllCondRepeat(total);
         }
 
-        public List<int> CurrentCondSampleSpace=> CondSampleSpace[BlockIndex];
+        public List<int> CurrentCondSampleSpace => CondSampleSpaces[BlockIndex];
         public int CurrentCondRepeat => condrepeat[CondIndex];
         public int CurrentBlockRepeat => blockrepeat[BlockIndex];
     }

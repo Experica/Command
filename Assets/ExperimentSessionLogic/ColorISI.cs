@@ -24,15 +24,22 @@ using Experica.Command;
 
 public class ColorISI : ExperimentSessionLogic
 {
-    Eye eye = Eye.Both;
+    protected Eye eye = Eye.Right;
+
+    protected override void OnExperimentSessionStarted()
+    {
+        ExperimentID = "ConditionTest";
+    }
+
+    protected override void OnExperimentSessionStopped()
+    {
+        ExperimentID = "ConditionTest";
+    }
 
     protected override void Logic()
     {
         switch (ExperimentID)
         {
-            case null:
-                ExperimentID = "ConditionTest";
-                break;
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {

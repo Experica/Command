@@ -73,7 +73,7 @@ namespace Experica.Command
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
@@ -97,7 +97,7 @@ namespace Experica.Command
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI)
                     {
-                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                     }
                     break;
             }

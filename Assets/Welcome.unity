@@ -923,14 +923,14 @@ RectTransform:
   - {fileID: 1784660072}
   - {fileID: 1996178765}
   - {fileID: 386045323}
-  - {fileID: 1318028122}
-  - {fileID: 126350015}
-  - {fileID: 713751378}
   - {fileID: 1343119229}
-  - {fileID: 377719023}
-  - {fileID: 116732423}
+  - {fileID: 713751378}
+  - {fileID: 126350015}
   - {fileID: 1394811413}
+  - {fileID: 377719023}
+  - {fileID: 1318028122}
   - {fileID: 1362274765}
+  - {fileID: 116732423}
   m_Father: {fileID: 652919583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1715,7 +1715,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &195929017
 MonoBehaviour:
@@ -1731,13 +1731,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uicontroller: {fileID: 355740905}
   el: {fileID: 0}
-  elhistory: []
-  ELLoadTime: 0
-  ELReadyTime: 0
-  ELStartTime: 0
-  ELStopTime: 0
   ExperimentStatus: 0
-  ELID: 
+  ReadyTime: 0
+  StartTime: 0
+  StopTime: 0
 --- !u!4 &195929019
 Transform:
   m_ObjectHideFlags: 0
@@ -5269,7 +5266,7 @@ GameObject:
   - component: {fileID: 570668881}
   - component: {fileID: 570668883}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6301,7 +6298,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &652919583
 Transform:
@@ -8265,6 +8262,13 @@ MonoBehaviour:
   deepLearningSuperSamplingUseCustomAttributes: 0
   deepLearningSuperSamplingUseOptimalSettings: 1
   deepLearningSuperSamplingSharpening: 0
+  allowFidelityFX2SuperResolution: 1
+  fidelityFX2SuperResolutionUseCustomQualitySettings: 0
+  fidelityFX2SuperResolutionQuality: 0
+  fidelityFX2SuperResolutionUseCustomAttributes: 0
+  fidelityFX2SuperResolutionUseOptimalSettings: 1
+  fidelityFX2SuperResolutionEnableSharpening: 0
+  fidelityFX2SuperResolutionSharpening: 0
   fsrOverrideSharpness: 0
   fsrSharpness: 0.92
   exposureTarget: {fileID: 0}
@@ -10376,6 +10380,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 652919583}
     m_Modifications:
+    - target: {fileID: 1702559470653124, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -11690,7 +11698,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1423087641
 Transform:

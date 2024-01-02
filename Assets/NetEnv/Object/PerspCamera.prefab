@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 465644}
   - component: {fileID: 2070478}
   - component: {fileID: -6964299793054386605}
-  - component: {fileID: 4968112241830705720}
   - component: {fileID: 3813347993484028329}
+  - component: {fileID: 4968112241830705720}
   m_Layer: 0
   m_Name: PerspCamera
   m_TagString: Untagged
@@ -146,6 +146,13 @@ MonoBehaviour:
   deepLearningSuperSamplingUseCustomAttributes: 0
   deepLearningSuperSamplingUseOptimalSettings: 1
   deepLearningSuperSamplingSharpening: 0
+  allowFidelityFX2SuperResolution: 1
+  fidelityFX2SuperResolutionUseCustomQualitySettings: 0
+  fidelityFX2SuperResolutionQuality: 0
+  fidelityFX2SuperResolutionUseCustomAttributes: 0
+  fidelityFX2SuperResolutionUseOptimalSettings: 1
+  fidelityFX2SuperResolutionEnableSharpening: 0
+  fidelityFX2SuperResolutionSharpening: 0
   fsrOverrideSharpness: 0
   fsrSharpness: 0.92
   exposureTarget: {fileID: 0}
@@ -218,30 +225,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!114 &4968112241830705720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4be8357f4e0e44145a740ffea7e77f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScreenToEye:
-    m_InternalValue: 57
-  ScreenHeight:
-    m_InternalValue: 30
-  ScreenAspect:
-    m_InternalValue: 1.3333334
-  BGColor:
-    m_InternalValue: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  CLUT:
-    m_InternalValue: 1
-  camera: {fileID: 0}
-  cameraHD: {fileID: 0}
 --- !u!114 &3813347993484028329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
+  GlobalObjectIdHash: 1582694505
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
   ActiveSceneSynchronization: 0
@@ -262,3 +245,15 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &4968112241830705720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be8357f4e0e44145a740ffea7e77f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

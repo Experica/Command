@@ -26,55 +26,59 @@ using System;
 
 namespace Experica.Command
 {
+    /// <summary>
+    /// Define and Control the Running for a Sequence of Experiments
+    /// </summary>
     public class ExperimentSessionLogic : MonoBehaviour
     {
-        public bool islogicactive = false;
+        bool islogicactive = false;
         public ExperimentSession exsession;
         public ExperimentManager exmanager;
         public Action OnBeginStartExperimentSession, OnEndStartExperimentSession,
             OnBeginStopExperimentSession, OnEndStopExperimentSession;
 
-        public ExperimentLogic EL { get { return exmanager.el; } }
-        public int ExRepeat { get { return exmanager.ELRepeat; } }
-        public double SinceExReady { get { return exmanager.SinceELReady; } }
-        public double SinceExStop { get { return exmanager.SinceELStop; } }
+        public ExperimentLogic EL => exmanager.el;
+        public int ExRepeat => exmanager.Repeat;
+        public double SinceExReady => exmanager.SinceReady;
+        public double SinceExStop => exmanager.SinceStop;
         public EXPERIMENTSTATUS ExperimentStatus
         {
-            get { return exmanager.ExperimentStatus; }
-            set { exmanager.ExperimentStatus = value; }
+            get => exmanager.ExperimentStatus;
+            set => exmanager.ExperimentStatus = value;
         }
 
         public string ExperimentID
         {
-            get { return exmanager.ELID; }
+            get => exmanager.el?.ex.ID;
             set
             {
-                exmanager.ChangeEx(value);
+                if (ExperimentID != value) { exmanager.ChangeEx(value); }
             }
         }
 
-        public void StartExperiment()
-        {
-            exmanager.StartEx();
-        }
+        public void StartExperiment() { exmanager.StartEx(); }
 
         public void StartStopExperimentSession(bool isstart)
         {
+            if (isstart == islogicactive) { return; }
             if (isstart)
             {
                 OnBeginStartExperimentSession?.Invoke();
-                exmanager.ELID = null;
+
                 OnStartExperimentSession();
-                exmanager.timer.Restart();
+                StartExperimentSessionTimeSync();
+                OnExperimentSessionStarted();
                 OnEndStartExperimentSession?.Invoke();
                 islogicactive = true;
             }
             else
             {
                 OnBeginStopExperimentSession?.Invoke();
-                islogicactive = false;
+
                 OnStopExperimentSession();
-                exmanager.timer.Stop();
+                islogicactive = false;
+                StopExperimentSessionTimeSync();
+                OnExperimentSessionStopped();
                 OnEndStopExperimentSession?.Invoke();
             }
         }
@@ -83,9 +87,26 @@ namespace Experica.Command
         {
         }
 
+        protected virtual void StartExperimentSessionTimeSync()
+        {
+            exmanager.timer.Restart();
+        }
+
+        protected virtual void OnExperimentSessionStarted()
+        { }
+
         protected virtual void OnStopExperimentSession()
         {
         }
+
+        protected virtual void StopExperimentSessionTimeSync()
+        {
+            exmanager.timer.Stop();
+        }
+
+        protected virtual void OnExperimentSessionStopped()
+        { }
+
 
         void Awake()
         {
@@ -106,10 +127,7 @@ namespace Experica.Command
         void Update()
         {
             OnUpdate();
-            if (islogicactive)
-            {
-                Logic();
-            }
+            if (islogicactive) { Logic(); }
         }
 
         protected virtual void OnUpdate()

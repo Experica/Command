@@ -7,50 +7,27 @@ Subject_ID: Test
 Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
-Subject_Age: 13
+Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.75
 Subject_Log: 
-EnvPath: MarkerQuad
-EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: 19.16 -13.74 -1000
-  MarkerCorner@Marker@Marker: BottomRight
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.36715603
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  Rotation@Quad@Quad: 0 0 0
-  RotationOffset@Quad@Quad: 0 0 0
-  Ori@Quad@Quad: 0
-  OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 10
-  Size@Quad@Quad: 10 10 1
-  Color@Quad@Quad: 1 1 1 1
-  MaskType@Quad@Quad: Disk
-  MaskRadius@Quad@Quad: 0.5
-  MaskSigma@Quad@Quad: 0.150000006
-  OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: true
-  Position@Quad@Quad: 0 0 0
-  PositionOffset@Quad@Quad: 0 0 0
+EnvPath: Quad
+EnvParam: {}
 CondPath: Condition\WhiteBlack.yaml
 Cond: 
-ExLogicPath: Experica.SpikeGLXCTLogic
+LogicPath: ConditionTestLogic
+Hemisphere: None
+Eye: None
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: X:\
 DataPath: 
+Input: false
 CondSampling: Ascending
 BlockSampling: Ascending
 CondRepeat: 120
 BlockRepeat: 1
-BlockParam: []
-Input: false
+BlockFactor: []
 PreICI: 0
 CondDur: 300
 SufICI: 0
@@ -67,21 +44,7 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-ExInheritParam:
-- Subject_ID
-- Subject_Species
-- Subject_Age
-- Subject_Size
-- Subject_Weight
-- RecordSession
-- RecordSite
-- DataDir
-- Subject_Name
-- Subject_Gender
-- Experimenter
-- TimerDriftSpeed
-- ResponseDelay
-- Display_ID
+InheritParam: []
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -92,8 +55,8 @@ EnvInheritParam:
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
-Param: {}
-TimerDriftSpeed: 3.0199999999999999E-05
+ExtendParam: {}
+TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
   SyncMethods:
   - GPIO
@@ -101,9 +64,8 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: Trinitron
-ResponseDelay: 15
-Version: 2
+CondTestShowLevel: FULL
+NotifyExperimenter: false
+Version: 3
 Config: 
 CondTest: 
-CondTestShowLevel: FULL
-SendMail: false

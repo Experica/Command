@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace Experica.NetEnv
 {
-    public class ImageArrayQuad : NetEnvVisual
+    public class ImageArray : NetEnvVisual
     {
         //[SyncVar(hook = "onstartindex")]
         //public int StartIndex = 1;

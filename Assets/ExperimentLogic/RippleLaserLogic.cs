@@ -40,9 +40,9 @@ namespace Experica.Command
             ppw = new GPIOWave(pport2);
         }
 
-        protected override void GenerateFinalCondition()
+        protected override void GenerateCondition()
         {
-            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
+            pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
             laser = ex.GetParam("Laser").Convert<string>().GetLaser(Config);
             switch (laser?.Type)
@@ -205,7 +205,7 @@ namespace Experica.Command
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
@@ -255,7 +255,7 @@ namespace Experica.Command
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI + power * ex.CondDur * ex.GetParam("ICIFactor").Convert<float>())
                     {
-                        if (EnterCondState(CONDSTATE.PREICI) == EnterCode.NoNeed) { return; }
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
                     }
                     break;
             }

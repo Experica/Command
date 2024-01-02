@@ -27,9 +27,9 @@ namespace Experica.Command
 {
     public class RippleLaserCTLogic : RippleLaserLogic
     {
-        protected override void GenerateFinalCondition()
+        protected override void GenerateCondition()
         {
-            pushexcludefactors = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
+            pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
             // get laser conditions
             laser = ex.GetParam("Laser").Convert<string>().GetLaser(Config);

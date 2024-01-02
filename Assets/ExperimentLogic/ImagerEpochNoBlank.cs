@@ -38,7 +38,7 @@ public class ImagerEpochNoBlank : ImagerEpoch
         switch (TrialState)
         {
             case TRIALSTATE.NONE:
-                if (EnterTrialState(TRIALSTATE.PREITI) == EnterCode.NoNeed) { return; }
+                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
                 SyncFrame();
                 break;
             case TRIALSTATE.PREITI:

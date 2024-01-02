@@ -3,7 +3,7 @@ Name: Color
 Designer: Alex
 Experimenter: LZ
 Log: 
-Subject_ID: AG5
+Subject_ID: Test
 Subject_Name: AG5
 Subject_Species: M. F.
 Subject_Gender: Male
@@ -13,38 +13,33 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
-  MarkerCorner@Marker@Marker: TopLeft
-  Mark@Marker@Marker: false
-  MarkOnColor@Marker@Marker: 1 1 1 1
-  MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 40
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  Rotation@Quad@Quad: 0 0 0
-  RotationOffset@Quad@Quad: 0 0 0
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 5 5 5
   Diameter@Quad@Quad: 5
-  Size@Quad@Quad: 5 5 1
   Color@Quad@Quad: 1 0.3931 0.256 1
   MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
-  Visible@Quad@Quad: false
-  Position@Quad@Quad: 2.167 2.838 0
   PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 2.167 2.838 0
+  Visible@Quad@Quad: true
 CondPath: ''
 Cond: 
-LogicPath: SpikeGLXColor
+LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: 17R
+RecordSession: ''
+RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
@@ -87,19 +82,13 @@ InheritParam:
 - NotifyExperimenter
 - Subject_Birth
 EnvInheritParam:
-- MarkerSize@Marker@Marker
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
 - Position@Quad@Quad
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
 - ScreenAspect@OrthoCamera@OrthoCamera
 - CLUT@OrthoCamera@OrthoCamera
 - Diameter@Quad@Quad
-Param:
-  ColorSpace: DKL
-  Color: HueL0
+ExtendParam: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
