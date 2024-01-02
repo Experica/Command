@@ -19,7 +19,7 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
@@ -51,7 +51,7 @@ EnvParam:
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: true
+  Visible@Grating@Grating: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic

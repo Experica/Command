@@ -70,6 +70,9 @@ namespace Experica.Command
         public System.Random RNG = new MersenneTwister();
         public bool regeneratecond = true;
 
+        protected IGPIO gpio;
+        protected bool syncstate;
+
         public Action OnBeginStartExperiment, OnEndStartExperiment,
             OnBeginStopExperiment, OnEndStopExperiment,
             OnBeginPauseExperiment, OnEndPauseExperiment,
@@ -100,7 +103,7 @@ namespace Experica.Command
 
         CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState => condstate;
-        protected virtual EnterStateCode EnterCondState(CONDSTATE value)
+        protected virtual EnterStateCode EnterCondState(CONDSTATE value,bool sync=false)
         {
             if (value == condstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
@@ -165,12 +168,13 @@ namespace Experica.Command
                     break;
             }
             condstate = value;
+            if (sync) { SyncEvent(value.ToString()); }
             return EnterStateCode.Success;
         }
 
         TRIALSTATE trialstate = TRIALSTATE.NONE;
         public TRIALSTATE TrialState => trialstate;
-        protected virtual EnterStateCode EnterTrialState(TRIALSTATE value)
+        protected virtual EnterStateCode EnterTrialState(TRIALSTATE value,bool sync=false)
         {
             if (value == trialstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
@@ -235,12 +239,13 @@ namespace Experica.Command
                     break;
             }
             trialstate = value;
+            if (sync) { SyncEvent(value.ToString()); }
             return EnterStateCode.Success;
         }
 
         BLOCKSTATE blockstate = BLOCKSTATE.NONE;
         public BLOCKSTATE BlockState => blockstate;
-        protected virtual EnterStateCode EnterBlockState(BLOCKSTATE value)
+        protected virtual EnterStateCode EnterBlockState(BLOCKSTATE value, bool sync = false)
         {
             if (value == blockstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
@@ -268,6 +273,7 @@ namespace Experica.Command
                     break;
             }
             blockstate = value;
+            if (sync) { SyncEvent(value.ToString()); }
             return EnterStateCode.Success;
         }
 
@@ -494,10 +500,28 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// empty user function for clean/init of new experiment
+        /// user function for clean/init of new experiment,
+        /// here init gpio and inactive sync state.
         /// </summary>
         protected virtual void OnStartExperiment()
         {
+            if (ex.EventSyncProtocol.Routes.Contains(EventSyncRoute.DigitalOut))
+            {
+                gpio = new ParallelPort(dataaddress: Config.ParallelPort0);
+                //if (!gpio.Found)
+                //{
+                //    gpio = new FTDIGPIO();
+                //}
+                if (!gpio.Found)
+                {
+                    // gpio = new MCCDevice(config.MCCDevice, config.MCCDPort);
+                }
+                if (!gpio.Found)
+                {
+                    Debug.LogWarning("No GPIO for DigitalOut EventSyncRoute.");
+                }
+            }
+            SyncEvent();
         }
 
         protected IEnumerator ExperimentStartSequence()
@@ -580,10 +604,13 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// empty user function after experiment stopped(time synced)
+        /// user function after experiment stopped(time synced),
+        /// here return to inactive sync state and release gpio
         /// </summary>
         protected virtual void OnExperimentStopped()
         {
+            SyncEvent();
+            if (gpio != null) { gpio.Dispose(); gpio = null; }
         }
         #endregion
 
@@ -631,6 +658,62 @@ namespace Experica.Command
 
 
         #region IO Functions
+        /// <summary>
+        /// Sync to External Device and Register Event Name/Time/Value according to EventSyncProtocol
+        /// </summary>
+        /// <param name="name">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
+        /// <param name="time">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
+        /// <param name="value">Event Value, Non-Null value will register in `CONDTESTPARAM` if event name is a valid `CONDTESTPARAM`</param>
+        protected virtual void SyncEvent(string name = null, double time = double.NaN, object value = null)
+        {
+            var esp = ex.EventSyncProtocol;
+            if (esp.Routes == null || esp.Routes.Length == 0)
+            {
+                Debug.LogWarning("No SyncRoute in EventSyncProtocol, Skip SyncEvent ...");
+                return;
+            }
+            bool addtosynclist = false;
+            bool syncreset = string.IsNullOrEmpty(name);
+
+            if (esp.NChannel == 1 && esp.NEdgePEvent == 1)
+            {
+                addtosynclist = !syncreset;
+                syncstate = addtosynclist && !syncstate;
+
+                for (var i = 0; i < esp.Routes.Length; i++)
+                {
+                    switch (esp.Routes[i])
+                    {
+                        case EventSyncRoute.Display:
+                            SetEnvActiveParam("Mark", syncstate);
+                            break;
+                        case EventSyncRoute.DigitalOut:
+                            gpio?.BitOut(bit: Config.EventSyncCh, value: syncstate);
+                            break;
+                    }
+                }
+            }
+            if (addtosynclist && ex.CondTestAtState != CONDTESTATSTATE.NONE)
+            {
+                if (!double.IsNaN(time))
+                {
+                    condtestmanager.AddInList(CONDTESTPARAM.Event, name, time);
+                }
+                condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, name);
+                if (value != null)
+                {
+                    if (Enum.TryParse(name, out CONDTESTPARAM ctp))
+                    {
+                        condtestmanager.AddInList(ctp, value);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Skip Adding Event Value: {value}, because \"{name}\" is not a valid CONDTESTPARAM.");
+                    }
+                }
+            }
+        }
+
         public virtual void OnPositionAction(Vector2 position)
         {
             if (ex.Input && envmanager.MainCamera.Count > 0)

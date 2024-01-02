@@ -28,7 +28,7 @@ using System.Linq;
 /// <summary>
 /// Eye Fixation Task
 /// </summary>
-public class Fixation : ConditionTestLogic
+public class Fixation : ExperimentLogic
 {
     public double FixOnTime, FixTargetOnTime, FixDur, WaitForFixTimeOut;
     public double FixHold => TimeMS - FixOnTime;
@@ -88,7 +88,7 @@ public class Fixation : ConditionTestLogic
     protected override void OnStartExperiment()
     {
         base.OnStartExperiment();
-
+        SetEnvActiveParam("FixDotVisible", false);
         ex.PreITI = RandPreITIDur;
     }
 
