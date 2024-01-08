@@ -20,13 +20,14 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
 using Experica;
 using Experica.Command;
 using System.Linq;
 
 /// <summary>
-/// Eye Fixation Task
+/// Eye Fixation Task, with User Input Action mimicking eye movement
 /// </summary>
 public class Fixation : ExperimentLogic
 {
@@ -37,6 +38,9 @@ public class Fixation : ExperimentLogic
     public double RandSufITIDur => RNG.Next(GetExParam<int>("MinSufITIDur"), GetExParam<int>("MaxSufITIDur"));
     public double RandFixDur => RNG.Next(GetExParam<int>("MinFixDur"), GetExParam<int>("MaxFixDur"));
 
+    public InputAction EyeMoveAction;
+    public Vector2 FixPosition;
+    public float FixDotDiameter;
 
     public enum TASKSTATE
     {
@@ -59,39 +63,67 @@ public class Fixation : ExperimentLogic
             case TASKSTATE.FIX_ACQUIRED:
                 FixDur = RandFixDur;
                 FixOnTime = TimeMS;
+                // scale FixDot when fix on dot
+                SetEnvActiveParam("FixDotDiameter", FixDotDiameter * GetExParam<float>("DotScaleOnFix"));
                 break;
         }
         TaskState = value;
         return EnterStateCode.Success;
     }
 
-    bool FixOnTarget()
+    protected virtual bool FixOnTarget
     {
-        return true;
+        get
+        {
+            var fixradius = GetExParam<float>("FixRadius");
+            var fixdotposition = GetEnvActiveParam<Vector3>("FixDotPosition");
+            if (Vector2.Distance(fixdotposition, FixPosition) < fixradius) { return true; }
+            else { return false; }
+        }
     }
 
-    void OnEarly()
+    protected virtual void OnEarly()
     {
         ex.SufITI = RandSufITIDur;
+        Debug.LogError("Early");
     }
 
-    void OnTimeOut()
+    protected virtual void OnTimeOut()
     {
         ex.PreITI = RandPreITIDur;
+        Debug.LogWarning("TimeOut");
     }
 
-    void OnHit()
+    protected virtual void OnHit()
     {
+        Debug.Log("Hit");
+    }
 
+
+    protected override void Enable()
+    {
+        EyeMoveAction = InputSystem.actions.FindActionMap("Logic").FindAction("Move");
+    }
+
+    protected override void OnUpdate()
+    {
+        FixPosition += EyeMoveAction.ReadValue<Vector2>();
     }
 
     protected override void OnStartExperiment()
     {
         base.OnStartExperiment();
         SetEnvActiveParam("FixDotVisible", false);
+        FixDotDiameter = GetEnvActiveParam<float>("FixDotDiameter");
         ex.PreITI = RandPreITIDur;
     }
 
+    protected override void OnExperimentStopped()
+    {
+        base.OnExperimentStopped();
+        SetEnvActiveParam("FixDotVisible", false);
+        SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
+    }
 
     protected override void Logic()
     {
@@ -111,7 +143,7 @@ public class Fixation : ExperimentLogic
                 switch (TaskState)
                 {
                     case TASKSTATE.FIX_TARGET_ON:
-                        if (FixOnTarget())
+                        if (FixOnTarget)
                         {
                             EnterTaskState(TASKSTATE.FIX_ACQUIRED);
                         }
@@ -120,22 +152,27 @@ public class Fixation : ExperimentLogic
                             // Failed to acquire fixation
                             SetEnvActiveParam("FixDotVisible", false);
                             OnTimeOut();
+                            EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.PREITI);
                         }
                         break;
                     case TASKSTATE.FIX_ACQUIRED:
-                        if (!FixOnTarget())
+                        if (!FixOnTarget)
                         {
                             // Fixation breaks in required period
                             SetEnvActiveParam("FixDotVisible", false);
+                            SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
                             OnEarly();
+                            EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.SUFITI);
                         }
                         else if (FixHold >= FixDur)
                         {
                             // Successfully hold fixation in required period
                             SetEnvActiveParam("FixDotVisible", false);
+                            SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
                             OnHit();
+                            EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.PREITI);
                         }
                         break;

@@ -103,7 +103,7 @@ namespace Experica.Command
 
         CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState => condstate;
-        protected virtual EnterStateCode EnterCondState(CONDSTATE value,bool sync=false)
+        protected virtual EnterStateCode EnterCondState(CONDSTATE value, bool sync = false)
         {
             if (value == condstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
@@ -174,7 +174,7 @@ namespace Experica.Command
 
         TRIALSTATE trialstate = TRIALSTATE.NONE;
         public TRIALSTATE TrialState => trialstate;
-        protected virtual EnterStateCode EnterTrialState(TRIALSTATE value,bool sync=false)
+        protected virtual EnterStateCode EnterTrialState(TRIALSTATE value, bool sync = false)
         {
             if (value == trialstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
@@ -619,7 +619,21 @@ namespace Experica.Command
         {
             OnAwake();
         }
+        /// <summary>
+        /// empty user virtual "Awake"
+        /// </summary>
         protected virtual void OnAwake()
+        {
+        }
+
+        void OnEnable()
+        {
+            Enable();
+        }
+        /// <summary>
+        /// empty user virtual "OnEnable"
+        /// </summary>
+        protected virtual void Enable()
         {
         }
 
@@ -627,6 +641,9 @@ namespace Experica.Command
         {
             OnStart();
         }
+        /// <summary>
+        /// empty user virtual "Start"
+        /// </summary>
         protected virtual void OnStart()
         {
         }
@@ -647,12 +664,27 @@ namespace Experica.Command
                 if (islogicactive) { Logic(); }
             }
         }
-
+        /// <summary>
+        /// empty user virtual "Update"
+        /// </summary>
         protected virtual void OnUpdate()
         {
         }
-
+        /// <summary>
+        /// empty user virtual Logic for experiment control
+        /// </summary>
         protected virtual void Logic()
+        {
+        }
+
+        void OnDisable()
+        {
+            Disable();
+        }
+        /// <summary>
+        /// empty user virtual "OnDisable"
+        /// </summary>
+        protected virtual void Disable()
         {
         }
 
@@ -713,115 +745,6 @@ namespace Experica.Command
                 }
             }
         }
-
-        public virtual void OnPositionAction(Vector2 position)
-        {
-            if (ex.Input && envmanager.MainCamera.Count > 0)
-            {
-                var po = envmanager.GetActiveParam("Position");
-                if (po != null)
-                {
-                    var so = envmanager.GetActiveParam("Size");
-                    var p = (Vector3)po;
-                    var s = so == null ? Vector3.zero : (Vector3)so;
-                    var hh = (envmanager.MainCamera.First().Height + s.y) / 2;
-                    var hw = (envmanager.MainCamera.First().Width + s.x) / 2;
-                    envmanager.SetActiveParam("Position", new Vector3(
-                    Mathf.Clamp(p.x + position.x * hw * Time.deltaTime, -hw, hw),
-                    Mathf.Clamp(p.y + position.y * hh * Time.deltaTime, -hh, hh),
-                    p.z));
-                }
-            }
-        }
-
-        public virtual void OnSizeAction(Vector2 size)
-        {
-            if (ex.Input)
-            {
-                var so = envmanager.GetActiveParam("Size");
-                if (so != null)
-                {
-                    var s = (Vector3)so;
-                    envmanager.SetActiveParam("Size", new Vector3(
-                        Mathf.Max(0, s.x + size.x * s.x * Time.deltaTime),
-                        Mathf.Max(0, s.y + size.y * s.y * Time.deltaTime),
-                        s.z));
-                }
-            }
-        }
-
-        public virtual void OnVisibleAction(float v)
-        {
-            if (ex.Input)
-            {
-                envmanager.SetActiveParam("Visible", v > 0);
-            }
-        }
-
-        public virtual void OnOriAction(float v)
-        {
-            if (ex.Input)
-            {
-                var oo = envmanager.GetActiveParam("Ori");
-                if (oo != null)
-                {
-                    var o = (float)oo;
-                    o = (o + v * 180 * Time.deltaTime) % 360f;
-                    envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o);
-                }
-            }
-        }
-
-        public virtual void OnDiameterAction(float diameter)
-        {
-            if (ex.Input)
-            {
-                var dio = envmanager.GetActiveParam("Diameter");
-                if (dio != null)
-                {
-                    var d = (float)dio;
-                    envmanager.SetActiveParam("Diameter", Mathf.Max(0, d + Mathf.Pow(diameter * d * Time.deltaTime, 1)));
-                }
-            }
-        }
-
-        public virtual void OnSpatialFreqAction(float sf)
-        {
-            if (ex.Input)
-            {
-                var sfo = envmanager.GetActiveParam("SpatialFreq");
-                if (sfo != null)
-                {
-                    var s = (float)sfo;
-                    envmanager.SetActiveParam("SpatialFreq", Mathf.Clamp(s + sf * s * Time.deltaTime, 0, 20f));
-                }
-            }
-        }
-
-        public virtual void OnTemporalFreqAction(float tf)
-        {
-            if (ex.Input)
-            {
-                var tfo = envmanager.GetActiveParam("TemporalFreq");
-                if (tfo != null)
-                {
-                    var t = (float)tfo;
-                    envmanager.SetActiveParam("TemporalFreq", Mathf.Clamp(t + tf * t * Time.deltaTime, 0, 20f));
-                }
-            }
-        }
-
-        public virtual void OnFunction1Action()
-        { }
-
-        public virtual void OnFunction2Action()
-        { }
-
-        public virtual void OnFunction3Action()
-        { }
-
-        public virtual void OnFunction4Action()
-        { }
         #endregion
     }
 }

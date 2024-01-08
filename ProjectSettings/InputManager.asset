@@ -14,6 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
+--- !u!114 &-8294346571054359402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Ori
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 644b1fc3-9053-4dc6-87fe-a831717d2ad5
 --- !u!114 &-7974207038224477055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,6 +42,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
+--- !u!114 &-7824909899459280159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Function1
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: c2c4ef12-4001-466f-bdc3-826ff5cb9dab
 --- !u!114 &-7783664671124905164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +70,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
+--- !u!114 &-6996920971393315363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleGuide
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 4bdc1a79-11e9-41b6-bc95-df5be984da64
+--- !u!114 &-6905265761627102719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/Quit
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 8166f686-0ef2-41e0-b428-f772a88b3564
 --- !u!114 &-6259283354085760240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,6 +112,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
+--- !u!114 &-5687535887766036474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleFullView
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 880f76ad-ff10-41cf-93fd-36e6e851a9a6
+--- !u!114 &-5683121376312955190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Function3
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: ca415f1a-1108-4c7a-b9a9-750c26d3ac0d
 --- !u!114 &-4885782987694352787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +154,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
+--- !u!114 &-4817928827491031626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleHost
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 6155f914-a379-49ef-9be9-96b83d2a3060
+--- !u!114 &-4756136853489512210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleExperiment
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: b5cc222d-9136-40cf-8e5b-cfcaaf893678
 --- !u!114 &-4598779086313414778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,6 +941,536 @@ MonoBehaviour:
       m_Groups: XR
       m_Action: TrackedDeviceOrientation
       m_Flags: 0
+  - m_Name: Command
+    m_Id: 1469436b-66e0-4980-ab19-e1d2b6f1a0a7
+    m_Asset: {fileID: -4598779086313414778}
+    m_Actions:
+    - m_Name: ToggleHost
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 6155f914-a379-49ef-9be9-96b83d2a3060
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: ToggleFullScreen
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: ab33bdd6-f19f-461a-bc01-d5abfc3e3372
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: ToggleFullView
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 880f76ad-ff10-41cf-93fd-36e6e851a9a6
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: ToggleGuide
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 4bdc1a79-11e9-41b6-bc95-df5be984da64
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: ToggleExperiment
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: b5cc222d-9136-40cf-8e5b-cfcaaf893678
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: ToggleExperimentSession
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 131dedf9-7b8c-4e52-92fb-a39435e033d6
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Quit
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 8166f686-0ef2-41e0-b428-f772a88b3564
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: One Modifier
+      m_Id: e77ef41b-8bdc-4788-87b3-5e5ab0060c82
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleHost
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 4ea2667f-e64e-4c1c-a68e-7db52d46e301
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleHost
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 5d66d8d6-f430-474b-aac1-f4e1235a5079
+      m_Path: <Keyboard>/h
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleHost
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: c57ba994-20b8-446d-a6d3-6375fcc70cd4
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Quit
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 53f4a507-0b8e-4b67-8d58-95053958b921
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Quit
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: a9d2db43-fda8-4f72-b0da-3c05c77fd6a9
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Quit
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: ba14fb24-a273-4a87-902c-86c57a178ff7
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleExperimentSession
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: adb9092b-bb13-4084-81a8-397e8e7b3aff
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleExperimentSession
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: f8390342-57ed-4460-8bd8-4a0732b0533c
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleExperimentSession
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: 31571f98-ec02-47c6-a154-f1961351bf90
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleExperiment
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 4217ef53-4d62-430f-8587-e0ad939c7b10
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleExperiment
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: e9f0cf77-c947-450f-ac4b-d180f6fcee03
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleExperiment
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: f874b336-8c54-43a1-8a7c-3aaf0c39e810
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleGuide
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 9a99822e-bcec-4817-8f06-e7710beed651
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleGuide
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 7f18b4e0-363a-4f8e-a49c-13eab029753c
+      m_Path: <Keyboard>/g
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleGuide
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: 2b0de68a-30ed-4bfa-8450-484a7a9d3de7
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleFullView
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 04a13d60-2b96-49c1-bd55-fbcc276ceb1e
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleFullView
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 2aee2c58-b499-47bb-b8a9-f251d69e5b97
+      m_Path: <Keyboard>/v
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleFullView
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: b229d7bd-dc19-4d6c-9430-15f74d2e8300
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: ToggleFullScreen
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 38dbdcdb-f74b-4dcf-a19c-24afa4cb8831
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleFullScreen
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 7c9e5c60-c947-4a8f-bf14-06d656a148a7
+      m_Path: <Keyboard>/f
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: ToggleFullScreen
+      m_Flags: 8
+  - m_Name: Logic
+    m_Id: 7be46b97-bf78-488f-a4bd-51c93cfdf9ef
+    m_Asset: {fileID: -4598779086313414778}
+    m_Actions:
+    - m_Name: Move
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 20b4458b-3952-4eaa-8a1b-769562b8003c
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Scale
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 6350bc70-e58d-4f79-bec8-c025489f86b9
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Visible
+      m_Type: 0
+      m_ExpectedControlType: Axis
+      m_Id: 7b6b3e0f-fc26-4880-9895-4cf2123200e3
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Ori
+      m_Type: 0
+      m_ExpectedControlType: Axis
+      m_Id: 644b1fc3-9053-4dc6-87fe-a831717d2ad5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Function0
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: cdd2d653-8c94-486f-b42c-294269078444
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Function1
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: c2c4ef12-4001-466f-bdc3-826ff5cb9dab
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Function2
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: d05ab127-331c-419a-9ed3-0634ff5eb69f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Function3
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: ca415f1a-1108-4c7a-b9a9-750c26d3ac0d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: 
+      m_Id: b2b7c5c6-d160-45ff-abc2-c2b05dba700c
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Move
+      m_Flags: 0
+    - m_Name: WSAD
+      m_Id: d8a8bf5b-1766-4f99-803c-23a11a150421
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 8025d16b-2e09-45f0-8b0d-e70064fcf742
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: up
+      m_Id: a47e1179-ef13-4ff5-aac3-2e12b6f4c8c8
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: down
+      m_Id: c5c3f655-cd6d-4875-89aa-67b8b7a10e65
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 88215df4-9f5b-4a47-9614-92be2482754f
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 919a17d9-15e4-43c4-8b0c-bb899ff09106
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 80ec8a1b-370c-40c8-803b-cc6d6a352cd6
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 7f6f6109-cbf2-4663-a2ee-01c74b34b467
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 65823019-24e7-4650-9701-36c9db61ea6a
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: 
+      m_Id: 986881a0-ed4b-4bd6-888e-9730542f0c1d
+      m_Path: <Gamepad>/rightStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Scale
+      m_Flags: 0
+    - m_Name: 1D Axis
+      m_Id: 9c94ad01-df2c-4063-bd7c-e9f3c212c762
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Visible
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 0ff0b514-f28f-44dd-a103-ed2e168cd39b
+      m_Path: <Gamepad>/leftShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Visible
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 13d80b74-dcf9-4f29-a152-223eaebe6166
+      m_Path: <Gamepad>/rightShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Visible
+      m_Flags: 8
+    - m_Name: 1D Axis
+      m_Id: 387d83c5-f669-4678-88cb-d376927339d8
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Ori
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 6dc0dee5-1057-482b-8bd4-a737c35bc05b
+      m_Path: <Gamepad>/leftTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Ori
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: fa435bf3-df0e-4e70-9cef-d1a55e613815
+      m_Path: <Gamepad>/rightTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Gamepad
+      m_Action: Ori
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: e623a7e7-fdef-4b8c-bcb9-471d49bca62e
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Function0
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 366a13a7-e82a-4662-88ec-74e71cda5625
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function0
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 05b41c9c-e575-4e79-bbf9-00ce25fea94b
+      m_Path: <Keyboard>/0
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function0
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: c38e4601-55ba-46aa-ae0e-e725b02d9a8d
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Function1
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 0a2bdc43-7f31-4fed-962e-829a94609c5e
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function1
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 21758c66-1fc6-40c1-8a9a-874b28a40418
+      m_Path: <Keyboard>/1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function1
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: 9effbd1f-5750-4e55-b95d-31db5e492384
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Function2
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: 429de3dd-30d3-4273-bf44-7cf21031427b
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function2
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 7a55dd8a-70f4-42c6-92f6-c567792b0331
+      m_Path: <Keyboard>/2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function2
+      m_Flags: 8
+    - m_Name: One Modifier
+      m_Id: c6620d74-423b-4ee7-8baa-10ff36e33e62
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Function3
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: af6da413-dd77-4ecc-a28a-a7609f89ee80
+      m_Path: <Keyboard>/alt
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function3
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 2b8ceb56-8745-4730-b1fb-0168f3ed90c1
+      m_Path: <Keyboard>/3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: ;Keyboard&Mouse
+      m_Action: Function3
+      m_Flags: 8
   m_ControlSchemes:
   - m_Name: Keyboard&Mouse
     m_BindingGroup: Keyboard&Mouse
@@ -1551,6 +2193,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+--- !u!114 &1080991958754381888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleExperimentSession
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 131dedf9-7b8c-4e52-92fb-a39435e033d6
 --- !u!114 &1439130401700266480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,6 +2221,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
+--- !u!114 &1750912637693298469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Function0
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: cdd2d653-8c94-486f-b42c-294269078444
+--- !u!114 &2339650532486057817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Move
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 20b4458b-3952-4eaa-8a1b-769562b8003c
 --- !u!114 &3375360746009620453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +2277,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
+--- !u!114 &4419724549424853486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Command/ToggleFullScreen
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: ab33bdd6-f19f-461a-bc01-d5abfc3e3372
+--- !u!114 &4902361479012375001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Visible
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 7b6b3e0f-fc26-4880-9895-4cf2123200e3
 --- !u!114 &5388661829584891741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1607,6 +2319,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
+--- !u!114 &5815744425787365717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Function2
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: d05ab127-331c-419a-9ed3-0634ff5eb69f
 --- !u!114 &6609898246805511393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,6 +2347,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -4598779086313414778}
   m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
+--- !u!114 &6777653280830510248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Logic/Scale
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 6350bc70-e58d-4f79-bec8-c025489f86b9
+--- !u!114 &7116151297943411237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Attack
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -4598779086313414778}
+  m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
 --- !u!114 &8011404971176301762
 MonoBehaviour:
   m_ObjectHideFlags: 0

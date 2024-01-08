@@ -19,11 +19,11 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
-  FixDotPosition@FixDot@FixDot: -10 10 0
-  FixDotDiameter@FixDot@FixDot: 1
-  FixDotVisible@FixDot@FixDot: true
+  FixDotPosition@FixDot@FixDot: 0 2 0
+  FixDotDiameter@FixDot@FixDot: 3
+  FixDotVisible@FixDot@FixDot: false
 CondPath: ''
 Cond: 
 LogicPath: Fixation
@@ -42,9 +42,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 273
+PreITI: 484
 TrialDur: 0
-SufITI: 0
+SufITI: 755
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -82,6 +82,8 @@ ExtendParam:
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
+  FixRadius: 2
+  DotScaleOnFix: 0.7
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:

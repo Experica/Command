@@ -128,6 +128,7 @@ namespace Experica.Command
             Initialize();
         }
 
+        #region Command Action Callback
         public void OnToggleFullViewportAction(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -239,70 +240,7 @@ namespace Experica.Command
         {
             if (context.performed) { Application.Quit(); }
         }
-
-        public void OnPositionAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnPositionAction(context.ReadValue<Vector2>()); }
-        }
-
-        public void OnSizeAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnSizeAction(context.ReadValue<Vector2>()); }
-        }
-
-        public void OnDiameterAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnDiameterAction(context.ReadValue<float>()); }
-        }
-
-        public void OnVisibleAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnVisibleAction(context.ReadValue<float>()); }
-        }
-
-        public void OnOriAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnOriAction(context.ReadValue<float>()); }
-        }
-
-        public void OnSpatialFreqAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnSpatialFreqAction(context.ReadValue<float>()); }
-        }
-
-        public void OnTemporalFreqAction(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnTemporalFreqAction(context.ReadValue<float>()); }
-        }
-
-        public void OnFunction1Action(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnFunction1Action(); }
-        }
-
-        public void OnFunction2Action(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnFunction2Action(); }
-        }
-        public void OnFunction3Action(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnFunction3Action(); }
-        }
-        public void OnFunction4Action(InputAction.CallbackContext context)
-        {
-            if (context.performed && exmanager.el != null)
-            { exmanager.el.OnFunction4Action(); }
-        }
+        #endregion
 
         public void Initialize()
         {
