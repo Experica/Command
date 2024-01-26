@@ -328,7 +328,7 @@ namespace Experica.Command
 
             ex.CondTest = condtestmanager.CondTest;
             ex.EnvParam = envmanager.GetActiveParams();
-            ex.Version = ExpericaExtension.ExperimentDataVersion;
+            ex.Version = Experica.ExperimentDataVersion;
             // Hold references to data that may not need to save
             Dictionary<string, Dictionary<string, List<object>>[]> m = null;
             CommandConfig cfg = ex.Config;
@@ -427,6 +427,14 @@ namespace Experica.Command
         {
             envmanager.SetActiveParam(name1, value1);
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
+        }
+
+
+        /// <summary>
+        /// empty user function called when Experiment ready to start(scene loaded)
+        /// </summary>
+        public virtual void OnReady()
+        {
         }
 
 
@@ -746,5 +754,6 @@ namespace Experica.Command
             }
         }
         #endregion
+
     }
 }

@@ -73,6 +73,7 @@ namespace Experica.Command
             ReadyTime = timer.ElapsedMillisecond;
             ExperimentStatus = EXPERIMENTSTATUS.NONE;
             Repeat = 0;
+            el?.OnReady();
         }
 
         public void OnStart()

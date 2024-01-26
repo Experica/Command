@@ -13,39 +13,39 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
+  ScreenToEye@OrthoCamera@OrthoCamera: 0
+  ScreenHeight@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
-  Diameter@Grating@Grating: 10
+  Size@Grating@Grating: 0 0 0
+  Diameter@Grating@Grating: 0
   MaskType@Grating@Grating: None
-  MaskRadius@Grating@Grating: 0.5
-  MaskSigma@Grating@Grating: 0.15
-  Luminance@Grating@Grating: 0.5
-  Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 0.2
-  TemporalFreq@Grating@Grating: 1
-  ModulateTemporalFreq@Grating@Grating: 0.2
+  MaskRadius@Grating@Grating: 0
+  MaskSigma@Grating@Grating: 0
+  Luminance@Grating@Grating: 0
+  Contrast@Grating@Grating: 0
+  SpatialFreq@Grating@Grating: 0
+  TemporalFreq@Grating@Grating: 0
+  ModulateTemporalFreq@Grating@Grating: 0
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
-  MinColor@Grating@Grating: 0 0 0 1
-  MaxColor@Grating@Grating: 1 1 1 1
+  MinColor@Grating@Grating: 0 0 0 0
+  MaxColor@Grating@Grating: 0 0 0 0
   PauseTime@Grating@Grating: false
-  PauseModulateTime@Grating@Grating: true
+  PauseModulateTime@Grating@Grating: false
   GratingType@Grating@Grating: Square
   ModulateType@Grating@Grating: Square
   ReverseTime@Grating@Grating: false
-  Duty@Grating@Grating: 0.5
-  ModulateDuty@Grating@Grating: 0.5
+  Duty@Grating@Grating: 0
+  ModulateDuty@Grating@Grating: 0
   TimeSecond@Grating@Grating: 0
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
@@ -95,7 +95,7 @@ EventSyncProtocol:
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 

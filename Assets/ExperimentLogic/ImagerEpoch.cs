@@ -42,7 +42,7 @@ public class ImagerEpoch : ConditionTestLogic
     /// </summary>
     protected override void OnStartExperiment()
     {
-        recorder = ExpericaExtension.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
+        recorder = Experica.Experica.GetImagerRecorder(Config.RecordHost1, Config.RecordHostPort1);
         recorder?.StopAcquisiteAndRecord();
         //markrecorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();

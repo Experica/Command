@@ -2,7 +2,6 @@
     "name": "Experica.Command",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:e4c71244f0d032f4cb157a559be2835f",
         "GUID:cba34830ceff69746982c5a36918b1fa",
         "GUID:bbde805d927e795439d7a746d1749cab",
@@ -12,6 +11,7 @@
         "GUID:3b8ed52f1b5c64994af4c4e0aa4b6c4b",
         "GUID:1491147abca9d7d4bb7105af628b223e",
         "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:e0cd26848372d4e5c891c569017e11f1"
     ],
     "includePlatforms": [],

@@ -187,6 +187,7 @@ MonoBehaviour:
       - rid: 5376348425393274902
       - rid: 970017901043515392
       - rid: 970017901043515393
+      - rid: 970018175442485248
     m_RuntimeSettings:
       m_List: []
   renderingLayerNames:
@@ -257,6 +258,11 @@ MonoBehaviour:
         m_version: 0
         m_EnableCompilationCaching: 1
         m_EnableValidityChecks: 1
+    - rid: 970018175442485248
+      type: {class: HDRenderingLayersLimitSettings, ns: UnityEditor.Rendering.HighDefinition,
+        asm: Unity.RenderPipelines.HighDefinition.Editor}
+      data:
+        m_Version: 0
     - rid: 1024916452897193984
       type: {class: HDRenderPipelineRuntimeTextures, ns: UnityEngine.Rendering.HighDefinition,
         asm: Unity.RenderPipelines.HighDefinition.Runtime}

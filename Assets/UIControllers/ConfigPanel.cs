@@ -47,12 +47,12 @@ namespace Experica.Command
 
         public void ChooseConfigFile()
         {
-            if (ExpericaExtension.YesNoDialog("Save Current State of Experica.Command?"))
+            if (Experica.YesNoDialog("Save Current State of Experica.Command?"))
             {
                 uicontroller.SaveConfig();
             }
 
-            var configfilepath = ExpericaExtension.OpenFile("Choose Config File ...");
+            var configfilepath = Experica.OpenFile("Choose Config File ...");
             var config = uicontroller.LoadConfig(configfilepath, false);
             if (config != null)
             {
@@ -62,7 +62,7 @@ namespace Experica.Command
             }
             else
             {
-                ExpericaExtension.WarningDialog("Invalid Experica.Command Configuration.");
+                Experica.WarningDialog("Invalid Experica.Command Configuration.");
             }
         }
 

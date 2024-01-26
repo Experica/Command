@@ -40,6 +40,8 @@ using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 #if COMMAND
 using System.Windows.Forms;
 using MethodInvoker = Fasterflect.MethodInvoker;
@@ -276,7 +278,7 @@ namespace Experica
         public T[][] Images;
     }
 
-    public static class ExpericaExtension
+    public static class Experica
     {
         public const uint ExperimentDataVersion = 3;
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new ();
@@ -439,6 +441,78 @@ namespace Experica
             Methods[containertypename][methodname] = method;
         }
         #endregion
+
+        #region Addressable Assets
+        public static Dictionary<string, AsyncOperationHandle<GameObject>> addressprefab = new();
+
+        public static bool QueryPrefab(this string address, out GameObject go)
+        {
+            if (addressprefab.ContainsKey(address))
+            {
+                var handle = addressprefab[address];
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    go = handle.Result; return true;
+                }
+                else
+                {
+                    addressprefab.Remove(address); Addressables.Release(handle);
+                    Debug.LogError($"Failed to Load Prefab: {address}.");
+                    go = null; return false;
+                }
+            }
+            else
+            {
+                var handle = Addressables.LoadAssetAsync<GameObject>(address);
+                handle.WaitForCompletion();
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    addressprefab[address] = handle;
+                    go = handle.Result; return true;
+                }
+                else
+                {
+                    Addressables.Release(handle); Debug.LogError($"Failed to Load Prefab: {address}.");
+                    go = null; return false;
+                }
+            }
+        }
+
+        public static LineRenderer AddLine(this Vector3[] positions,string name=null, Transform parent=null,bool loop=false)
+        {
+            if (!"Assets/NetEnv/Object/Line.prefab".QueryPrefab(out GameObject lineprefab)) { return null; }
+            var go = parent ==null ? GameObject.Instantiate(lineprefab) : GameObject.Instantiate(lineprefab, parent);
+            if (!string.IsNullOrEmpty(name)) { go.name = name; }
+            var lr = go.GetComponent<LineRenderer>();
+            lr.positionCount = positions.Length;
+            lr.loop = loop;
+            lr.SetPositions(positions);
+            return lr;
+        }
+
+        public static LineRenderer AddXLine(float radius = 0.5f, string name = null, Transform parent = null)
+        {
+           return AddLine(new[] { new Vector3(-radius, 0, 0), new Vector3(radius, 0, 0) }, name, parent);
+        }
+
+        public static LineRenderer AddYLine(float radius = 0.5f, string name = null, Transform parent = null)
+        {
+            return AddLine(new[] { new Vector3(0,-radius, 0), new Vector3(0,radius, 0) }, name, parent);
+        }
+
+        public static LineRenderer AddCircle(float radius=0.5f,float deltadegree=2f, string name = null, Transform parent = null)
+        {
+            var ps = new Vector3[Mathf.FloorToInt(360 / deltadegree)];
+            for (int i = 0; i < ps.Length; i++)
+            {
+                var d = Mathf.Deg2Rad* i * deltadegree;
+                ps[i] = new Vector3(radius * Mathf.Cos(d), radius * Mathf.Sin(d), 0);
+            }
+            return AddLine(ps,name,parent,true);
+        }
+
+        #endregion
+
 
 #if COMMAND
         static IRecorder spikeglxrecorder, ripplerecorder, imagerrecorder = null;

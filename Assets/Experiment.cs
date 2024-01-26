@@ -93,7 +93,7 @@ namespace Experica.Command
         public string Display_ID { get; set; } = "";
         public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; } = CONDTESTSHOWLEVEL.FULL;
         public bool NotifyExperimenter { get; set; } = false;
-        public uint Version { get; set; } = ExpericaExtension.ExperimentDataVersion;
+        public uint Version { get; set; } = Experica.ExperimentDataVersion;
 
         [IgnoreMember]
         public CommandConfig Config { get; set; }
@@ -310,7 +310,7 @@ namespace Experica.Command
         /// <param name="filepath"></param>
         public void SaveDefinition(string filepath)
         {
-            Version = ExpericaExtension.ExperimentDataVersion;
+            Version = Experica.ExperimentDataVersion;
             var config = Config;
             var cond = Cond;
             var condtest = CondTest;

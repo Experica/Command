@@ -29,7 +29,6 @@ using UnityEngine.Rendering.HighDefinition;
 using Unity.Properties;
 using UnityEngine.UIElements;
 using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 
 namespace Experica.NetEnv
 {
@@ -180,6 +179,7 @@ namespace Experica.NetEnv
 
     public interface INetEnvCamera
     {
+        public GameObject gameObject { get; }
         public float Height { get; }
         public float Width { get; }
         public float Aspect { get; }
@@ -190,5 +190,4 @@ namespace Experica.NetEnv
         public Camera Camera { get; }
         public HDAdditionalCameraData CameraHD { get; }
     }
-
 }

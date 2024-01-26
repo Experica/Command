@@ -32,7 +32,7 @@ public class ColorEPhys_v1 : ColorEPhys
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
-                    exmanager.uicontroller.IsGuideOn = exsession.IsGuideOn;
+                    exmanager.uicontroller.GuideActive = exsession.IsGuideOn;
                     exmanager.uicontroller.FullScreen = exsession.IsFullScreen;
                     exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
@@ -268,7 +268,7 @@ public class ColorEPhys_v1 : ColorEPhys
                             {
                                 StartStopExperimentSession(false);
                                 exmanager.uicontroller.IsFullViewport = false;
-                                exmanager.uicontroller.IsGuideOn = true;
+                                exmanager.uicontroller.GuideActive = true;
                             }
                         }
                         break;

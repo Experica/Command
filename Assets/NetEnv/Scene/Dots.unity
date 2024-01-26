@@ -128,25 +128,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2376174946873593486, guid: 2fce1e473a3088145b7a7c40ab28b20c,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3460231128
+      objectReference: {fileID: 0}
     - target: {fileID: 4940241983149454122, guid: 2fce1e473a3088145b7a7c40ab28b20c,
         type: 3}
       propertyPath: m_Name
       value: Dots
-      objectReference: {fileID: 0}
-    - target: {fileID: 6876288634040105133, guid: 2fce1e473a3088145b7a7c40ab28b20c,
-        type: 3}
-      propertyPath: m_MotionVectors
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6876288634040105133, guid: 2fce1e473a3088145b7a7c40ab28b20c,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7311959740249957552, guid: 2fce1e473a3088145b7a7c40ab28b20c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7311959740249957552, guid: 2fce1e473a3088145b7a7c40ab28b20c,
         type: 3}

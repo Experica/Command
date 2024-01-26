@@ -25,9 +25,10 @@ using System;
 using Experica;
 using Experica.Command;
 using System.Linq;
+using Experica.NetEnv;
 
 /// <summary>
-/// Eye Fixation Task, with User Input Action mimicking eye movement
+/// Eye Fixation Task, with User Input Action mimicking eye movement, and helpful visual guides.
 /// </summary>
 public class Fixation : ExperimentLogic
 {
@@ -41,6 +42,7 @@ public class Fixation : ExperimentLogic
     public InputAction EyeMoveAction;
     public Vector2 FixPosition;
     public float FixDotDiameter;
+    DotTrail fixpoint;
 
     public enum TASKSTATE
     {
@@ -63,7 +65,7 @@ public class Fixation : ExperimentLogic
             case TASKSTATE.FIX_ACQUIRED:
                 FixDur = RandFixDur;
                 FixOnTime = TimeMS;
-                // scale FixDot when fix on dot
+                // scale FixDot when fix acquired
                 SetEnvActiveParam("FixDotDiameter", FixDotDiameter * GetExParam<float>("DotScaleOnFix"));
                 break;
         }
@@ -76,8 +78,8 @@ public class Fixation : ExperimentLogic
         get
         {
             var fixradius = GetExParam<float>("FixRadius");
-            var fixdotposition = GetEnvActiveParam<Vector3>("FixDotPosition");
-            if (Vector2.Distance(fixdotposition, FixPosition) < fixradius) { return true; }
+            var targetposition = GetEnvActiveParam<Vector3>("FixDotPosition");
+            if (Vector2.Distance(targetposition, FixPosition) < fixradius) { return true; }
             else { return false; }
         }
     }
@@ -99,6 +101,28 @@ public class Fixation : ExperimentLogic
         Debug.Log("Hit");
     }
 
+    /// <summary>
+    /// add visual guides when sence loaded
+    /// </summary>
+    public override void OnReady()
+    {
+        var fixdotposition = envmanager.GetNetworkVariable<Vector3>("FixDotPosition");
+        Action<NetEnvVisual, Vector3> upxy = (o, p) => o.Position.Value = new(p.x, p.y, o.Position.Value.z); // hook function to update only x/y positions
+
+        var fixradius = GetExParam<float>("FixRadius");
+        var fixcircle = envmanager.SpawnCircle(color: new(0.1f, 0.8f, 0.1f), size: new(2 * fixradius, 2 * fixradius, 1));
+        fixdotposition.OnValueChanged += (p, c) => upxy(fixcircle, c);
+        upxy(fixcircle, fixdotposition.Value);
+
+        foreach (var c in envmanager.MainCamera)
+        {
+            var sg = envmanager.SpawnScaleGrid(c);
+            fixdotposition.OnValueChanged += (p, c) => upxy(sg, c);
+            upxy(sg, fixdotposition.Value);
+        }
+
+        fixpoint = envmanager.SpawnDotTrail(position: Vector3.back, size: new(0.25f, 0.25f, 1), color: new(1, 0.1f, 0.1f));
+    }
 
     protected override void Enable()
     {
@@ -107,7 +131,11 @@ public class Fixation : ExperimentLogic
 
     protected override void OnUpdate()
     {
-        FixPosition += EyeMoveAction.ReadValue<Vector2>();
+        if (EyeMoveAction.WasPerformedThisFrame())
+        {
+            FixPosition += EyeMoveAction.ReadValue<Vector2>();
+            fixpoint.Position.Value = FixPosition;
+        }
     }
 
     protected override void OnStartExperiment()

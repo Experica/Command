@@ -147,6 +147,14 @@ public class ConditionTestLogic : ExperimentLogic
     }
 
 
+    public override void OnReady()
+    {
+        foreach(var c in envmanager.MainCamera)
+        {
+           envmanager.SpawnScaleGrid(c);
+        }
+    }
+
     protected override void OnStartExperiment()
     {
         base.OnStartExperiment();

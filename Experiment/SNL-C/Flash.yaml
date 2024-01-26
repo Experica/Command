@@ -12,7 +12,27 @@ Subject_Size: 0 0 0
 Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Quad
-EnvParam: {}
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 0
+  ScreenHeight@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 0 0 0
+  Diameter@Quad@Quad: 0
+  Color@Quad@Quad: 0 0 0 0
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0
+  MaskSigma@Quad@Quad: 0
+  OriPositionOffset@Quad@Quad: false
+  PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0 0 0
+  Visible@Quad@Quad: false
 CondPath: Condition\WhiteBlack.yaml
 Cond: 
 LogicPath: ConditionTestLogic
@@ -46,10 +66,6 @@ NotifyParam:
 - SyncEvent
 InheritParam: []
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- MarkerSize@Marker@Marker
 - Position@Quad@Quad
 - ScreenToEye@OrthoCamera@OrthoCamera
 - ScreenHeight@OrthoCamera@OrthoCamera
@@ -58,11 +74,11 @@ EnvInheritParam:
 ExtendParam: {}
 TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
+  Routes:
+  - DigitalOut
   - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: Trinitron
 CondTestShowLevel: FULL
 NotifyExperimenter: false

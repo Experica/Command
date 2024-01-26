@@ -23,7 +23,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fixation_Dark
+  m_Name: Disk_BW
   m_Shader: {fileID: -6465566751694194690, guid: ed72205402c49534795ede29235f8116,
     type: 3}
   m_Parent: {fileID: 2100000, guid: ff2cb8c1d974d444c8d4201105941167, type: 2}

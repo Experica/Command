@@ -167,28 +167,28 @@ MonoBehaviour:
     m_InternalValue: {r: 1, g: 1, b: 1, a: 1}
   ImageSet:
     m_InternalValue:
-      utf8LengthInBytes: 15
+      utf8LengthInBytes: 18
       bytes:
         offset0000:
-          byte0000: 69
-          byte0001: 120
-          byte0002: 97
-          byte0003: 109
-          byte0004: 112
-          byte0005: 108
-          byte0006: 101
-          byte0007: 73
-          byte0008: 109
-          byte0009: 97
-          byte0010: 103
-          byte0011: 101
-          byte0012: 83
-          byte0013: 101
-          byte0014: 116
-          byte0015: 0
+          byte0000: 84
+          byte0001: 101
+          byte0002: 115
+          byte0003: 116
+          byte0004: 73
+          byte0005: 109
+          byte0006: 97
+          byte0007: 103
+          byte0008: 101
+          byte0009: 83
+          byte0010: 101
+          byte0011: 116
+          byte0012: 46
+          byte0013: 85
+          byte0014: 73
+          byte0015: 110
         offset0016:
-          byte0000: 0
-          byte0001: 0
+          byte0000: 116
+          byte0001: 56
           byte0002: 0
           byte0003: 0
           byte0004: 0

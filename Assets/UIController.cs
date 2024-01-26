@@ -38,8 +38,7 @@ using MathNet.Numerics.Interpolation;
 using MessagePack;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using System.Data.SqlTypes;
-using System.Drawing;
+using Experica.NetEnv;
 
 namespace Experica.Command
 {
@@ -218,21 +217,34 @@ namespace Experica.Command
 
         public void OnToggleGuideAction(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.performed) { GuideActive = !GuideActive; }
+        }
+
+        bool guideactive = true;
+        public bool GuideActive
+        {
+            get => guideactive;
+            set
             {
-                IsGuideOn = !IsGuideOn;
+                if (guideactive == value) { return; }
+                guideactive = value;
+                viewpanel.togglegrid.isOn = value;
             }
         }
 
-        bool isguideon = true;
-        public bool IsGuideOn
+        public void showhidescalegrid(INetEnvCamera camera, bool isshow)
         {
-            get { return isguideon; }
-            set
+            var sg = camera.gameObject.GetComponentInChildren<ScaleGrid>(true);
+            if (isshow)
             {
-                if (isguideon == value) { return; }
-                isguideon = value;
-                viewpanel.togglegrid.isOn = value;
+                if (sg == null)
+                {
+                }
+                else { sg.gameObject.SetActive(true); }
+            }
+            else
+            {
+                if (sg != null) { sg.gameObject.SetActive(false); }
             }
         }
 
@@ -279,7 +291,7 @@ namespace Experica.Command
 
             if (string.IsNullOrEmpty(configmanager.LastConfigFilePath))
             {
-                configmanager.LastConfigFilePath = ExpericaExtension.SaveFile("Save Config File");
+                configmanager.LastConfigFilePath = Experica.SaveFile("Save Config File");
             }
             if (!string.IsNullOrEmpty(configmanager.LastConfigFilePath))
             {
@@ -377,6 +389,7 @@ namespace Experica.Command
             //envpanel.UpdateEnv(exmanager.el.envmanager);
             ui.UpdateEnv();
             //viewpanel.UpdateViewport();
+            //showhidescalegrid(exmanager.el.envmanager.MainCamera[0], true);
             ui.UpdateView();
             exmanager.OnReady();
         }

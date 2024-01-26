@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9.6764174mm"
-   height="9.6764164mm"
-   viewBox="0 0 9.6764174 9.6764164"
+   width="26.5mm"
+   height="26.5mm"
+   viewBox="0 0 26.5 26.5"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
-   sodipodi:docname="light.svg"
+   sodipodi:docname="fixation_dark.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -20,13 +20,13 @@
      borderopacity="1.0"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.9224607"
-     inkscape:cx="-140.70509"
-     inkscape:cy="-68.141834"
+     inkscape:zoom="7.6898428"
+     inkscape:cx="20.351521"
+     inkscape:cy="51.756585"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
@@ -39,12 +39,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-44.473807,-85.486781)">
+     transform="translate(-55.553322,-106.15832)">
     <circle
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
-       id="path972"
-       cx="49.312016"
-       cy="90.324989"
-       r="3.8382084" />
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:6.5;stroke-dasharray:none;stroke-opacity:1"
+       id="path972-7"
+       cx="68.803322"
+       cy="119.40832"
+       r="10" />
   </g>
 </svg>

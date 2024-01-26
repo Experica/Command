@@ -14,14 +14,14 @@ Subject_Log:
 EnvPath: Fixation
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.3333
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
-  FixDotPosition@FixDot@FixDot: 0 2 0
+  FixDotPosition@FixDot@FixDot: -5 5 0
   FixDotDiameter@FixDot@FixDot: 3
   FixDotVisible@FixDot@FixDot: false
 CondPath: ''
@@ -42,9 +42,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 484
+PreITI: 426
 TrialDur: 0
-SufITI: 755
+SufITI: 778
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -82,7 +82,7 @@ ExtendParam:
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
-  FixRadius: 2
+  FixRadius: 1
   DotScaleOnFix: 0.7
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:

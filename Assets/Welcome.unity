@@ -923,14 +923,14 @@ RectTransform:
   - {fileID: 1784660072}
   - {fileID: 1996178765}
   - {fileID: 386045323}
-  - {fileID: 116732423}
   - {fileID: 713751378}
+  - {fileID: 126350015}
+  - {fileID: 1362274765}
+  - {fileID: 116732423}
   - {fileID: 377719023}
-  - {fileID: 1394811413}
   - {fileID: 1318028122}
   - {fileID: 1343119229}
-  - {fileID: 1362274765}
-  - {fileID: 126350015}
+  - {fileID: 1394811413}
   m_Father: {fileID: 652919583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1120,7 +1120,7 @@ MonoBehaviour:
   uicontroller: {fileID: 355740905}
   viewportcontent: {fileID: 41474199}
   togglegrid: {fileID: 2129602388}
-  grid: {fileID: 172115882}
+  grid: {fileID: 0}
   gridcenterinput: {fileID: 1377900779}
 --- !u!114 &126350020
 MonoBehaviour:
@@ -1195,24 +1195,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1394811412}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &172115881 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757,
-    type: 3}
-  m_PrefabInstance: {fileID: 1266013480}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &172115882 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114698666410329306, guid: bcabdfdc34a5fa64e9349d9d3a084757,
-    type: 3}
-  m_PrefabInstance: {fileID: 1266013480}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90550d910c9b2fe4f92edd3e29cedefe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &176277177
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,6 +2919,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8166f686-0ef2-41e0-b428-f772a88b3564
     m_ActionName: 'Command/Quit[/Keyboard/alt,/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 20b4458b-3952-4eaa-8a1b-769562b8003c
+    m_ActionName: 'Logic/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6350bc70-e58d-4f79-bec8-c025489f86b9
+    m_ActionName: Logic/Scale
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b6b3e0f-fc26-4880-9895-4cf2123200e3
+    m_ActionName: Logic/Visible
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 644b1fc3-9053-4dc6-87fe-a831717d2ad5
+    m_ActionName: Logic/Ori
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cdd2d653-8c94-486f-b42c-294269078444
+    m_ActionName: 'Logic/Function0[/Keyboard/alt,/Keyboard/0]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c2c4ef12-4001-466f-bdc3-826ff5cb9dab
+    m_ActionName: 'Logic/Function1[/Keyboard/alt,/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d05ab127-331c-419a-9ed3-0634ff5eb69f
+    m_ActionName: 'Logic/Function2[/Keyboard/alt,/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca415f1a-1108-4c7a-b9a9-750c26d3ac0d
+    m_ActionName: 'Logic/Function3[/Keyboard/alt,/Keyboard/3]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Command
@@ -6261,7 +6275,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 172115881}
   - {fileID: 195929019}
   - {fileID: 1423087641}
   - {fileID: 355740904}
@@ -6316,7 +6329,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 652919584}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: cb21b4149bf2e77448a4d3aed5d758ae, type: 2}
     TickRate: 1000
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -10320,55 +10334,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223785607}
   m_CullTransparentMesh: 0
---- !u!1001 &1266013480
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 652919583}
-    m_Modifications:
-    - target: {fileID: 1702559470653124, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688649844721492, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: bcabdfdc34a5fa64e9349d9d3a084757, type: 3}
 --- !u!1 &1286808834
 GameObject:
   m_ObjectHideFlags: 0

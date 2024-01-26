@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/NetEnv/Scene/Fixation.unity
     guid: 9253c1ef231bdaf40932c130e723fc18
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: 49825b072e596014da1ce543779c1ee1,
+    com.unity.addressableassets: {fileID: 11400000, guid: 1aa0d92f72f6a0c438cc237989f52627,
       type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: c395dafd414098b4cb0b474c07716e37,
       type: 2}

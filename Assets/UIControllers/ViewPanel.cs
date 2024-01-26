@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 using System.Linq;
+using Experica.NetEnv;
 
 namespace Experica.Command
 {
@@ -37,7 +38,7 @@ namespace Experica.Command
         RenderTexture rendertexture;
         public GameObject viewportcontent;
         public Toggle togglegrid;
-        public Grid grid;
+        public ScaleGrid grid;
         public InputField gridcenterinput;
         public Action OnViewUpdated;
         RenderTextureDescriptor RenderTextureDescriptor;
@@ -68,31 +69,31 @@ namespace Experica.Command
 
         void SetGridCenter(Vector3 c, bool notifyui = true)
         {
-            grid.Center = c;
-            if (notifyui)
-            {
-                gridcenterinput.text = c.Convert<string>();
-            }
+            //grid.Position = c;
+            //if (notifyui)
+            //{
+            //    gridcenterinput.text = c.Convert<string>();
+            //}
         }
 
         void UpdateGridSize(bool isupdatetick = true)
         {
-            var maincamera = uicontroller.exmanager.el.envmanager.MainCamera.First().Camera;
-            grid.Size = new Vector3
-                    (maincamera.aspect * maincamera.orthographicSize + Mathf.Abs(grid.Center.x),
-                    maincamera.orthographicSize + Mathf.Abs(grid.Center.y), 1);
-            if (isupdatetick)
-            {
-                grid.UpdateTick(grid.TickInterval);
-                grid.TickSize = grid.Size;
-            }
+            //var maincamera = uicontroller.exmanager.el.envmanager.MainCamera.First().Camera;
+            //grid.Size = new Vector3
+            //        (maincamera.aspect * maincamera.orthographicSize + Mathf.Abs(grid.Position.x),
+            //        maincamera.orthographicSize + Mathf.Abs(grid.Position.y), 1);
+            //if (isupdatetick)
+            //{
+            //    grid.UpdateTick(grid.TickInterval);
+            //    grid.TickSize = grid.Size;
+            //}
         }
 
         void UpdateGridLineWidth()
         {
             var maincamera = uicontroller.exmanager.el.envmanager.MainCamera.First().Camera;
-            grid.UpdateAxisLineWidth(maincamera.orthographicSize);
-            grid.UpdateTickLineWidth(maincamera.orthographicSize);
+            //grid.UpdateAxisLineWidth(maincamera.orthographicSize);
+            //grid.UpdateTickLineWidth(maincamera.orthographicSize);
         }
 
         public void UpdateViewport()
@@ -144,8 +145,8 @@ namespace Experica.Command
 
         public void OnGridCenter(string p)
         {
-            grid.Center = p.Convert<Vector3>();
-            UpdateGridSize();
+            //grid.Position = p.Convert<Vector3>();
+            //UpdateGridSize();
         }
 
     }
