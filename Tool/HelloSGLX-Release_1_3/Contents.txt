@@ -1,0 +1,39 @@
+
+========
+Contents
+========
+
+HelloSGLX-win
+=============
+
+Keep the contents of this folder together:
+
+    + HelloSGLX.exe     // API Application
+    + ReadMe.txt        // Command reference
+    + ...               // Supporting libraries
+
+Build folder
+============
+
+Note: Building is optional: the API components are prebuilt.
+
+Build contains the Qt project that generates API components.
+
+Demos
+=====
+
+Examples calling HelloSGLX.exe:
+
+    + Python/hello.py   // How to call from Python
+    + C#/hello.cs       // How to call from C#
+
+Help docs
+=========
+
+- Contents.txt
+- GettingStarted.txt
+- Help.txt
+- LICENSE.txt
+- WhatsNew.txt
+
+

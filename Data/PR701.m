@@ -6,7 +6,7 @@ if ~isempty(port)
     clear port;
 end
 
-port = serial('COM1','BaudRate',9600,'DataBits',8,'Parity','none','StopBits',1,'FlowControl','hardware','InputBufferSize',4096);
+port = serial('COM4','BaudRate',9600,'DataBits',8,'Parity','none','StopBits',1,'FlowControl','hardware','InputBufferSize',4096);
 fopen(port);
 fprintf(port,['PR701']);   % Initiate Remote Control
 pause(3)

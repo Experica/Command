@@ -3,41 +3,41 @@ Name: OriGrating
 Designer: Alex
 Experimenter: PL
 Log: 
-Subject_ID: AF8
-Subject_Name: AF8
-Subject_Species: Macaque
-Subject_Gender: Female
+Subject_ID: AG6
+Subject_Name: Brooks
+Subject_Species: Macaca F.
+Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 8.7
+Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -17.66 12.74 -1000
+  MarkerPosition@Marker@Marker: -38.05 20.72 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 337.5
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 10
-  Size@GratingQuad@GratingQuad: 10 10 1
+  Diameter@GratingQuad@GratingQuad: 5
+  Size@GratingQuad@GratingQuad: 5 5 1
   MaskType@GratingQuad@GratingQuad: Disk
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.2
-  TemporalFreq@GratingQuad@GratingQuad: 1
+  SpatialFreq@GratingQuad@GratingQuad: 0.7
+  TemporalFreq@GratingQuad@GratingQuad: 3
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0
@@ -53,13 +53,13 @@ EnvParam:
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 5.037 -1.539 0
+  Position@GratingQuad@GratingQuad: 2.167 2.838 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Orientation22.5DegStep.yaml
+CondPath: Condition\Ori_Step=22.5.yaml
 Cond: 
 LogicPath: ConditionTestLogic
-Hemisphere: None
-Eye: None
+Hemisphere: Left
+Eye: Right
 RecordSession: HLV1
 RecordSite: ODR6
 DataDir: X:\
@@ -86,7 +86,16 @@ NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-InheritParam: []
+InheritParam:
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Size
+- Subject_Birth
+- Subject_Weight
+- Hemisphere
+- Eye
 EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkOnColor@Marker@Marker
@@ -96,6 +105,9 @@ EnvInheritParam:
 - Diameter@GratingQuad@GratingQuad
 - Position@GratingQuad@GratingQuad
 - MarkerSize@Marker@Marker
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
 Param: {}
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:

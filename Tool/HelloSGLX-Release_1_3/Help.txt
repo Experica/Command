@@ -1,0 +1,58 @@
+========
+SYNOPSIS
+========
+
+HelloSGLX accesses the SpikeGLX program via TCP/IP. SpikeGLX and the API can run on the same machine (via loopback socket address 127.0.0.1 and port 4142) or across a network.
+
+The API provides extensive control over a running SpikeGLX process: starting and stopping a run, setting parameters, and so on.
+
+For each command you wish to send and for each question you wish to ask, you will launch HelloSGLX.exe and send it command-line arguments. HelloSGLX automatically quits after handling each transaction. There is no 'session' involved in this mode of communication.
+
+HelloSGLX returns query data and error messages to you (the calling application) using stdout.
+
+=============================
+(js, ip) in command arguments
+=============================
+
+The two integer values (js, ip) select a data stream.
+js: stream type: {0=nidq, 1=obx, 2=imec-probe}.
+ip: substream:   {0=nidq (if js=0), 0+=which OneBox or imec probe}.
+Examples (js, ip):
+(0, 0) = nidq.	// for nidq, ip is arbitrary but zero by convention
+(1, 4) = obx4.
+(2, 7) = imec7.
+Note: ip has range [0..np-1], where, np is queried using getStreamNP().
+
+=======================
+GetParams and SetParams
+=======================
+
+Manual Pre-validation
+=====================
+
+You'll find that several of the API functions to get or set run parameters complain if you haven't validated any parameters yet. To validate parameters, visit the Configure dialog in SpikeGLX and make choices for your experiment, then click either 'Run' or 'Verify|Save'. Either of these buttons apply a battery of self-consistency checks to your choices. The most recent set of Configuration settings that have passed all the sanity checks are saved in:
+
+- 'SpikeGLX/_Configs/daq.ini'
+- 'SpikeGLX/_Calibration/imec_probe_settings.ini'
+- 'SpikeGLX/_Calibration/imec_onebox_settings.ini'.
+
+The above ini files are used to initialize the Configure dialog each time you open it. Open the ini files in a text editor. You'll see several subgroups of settings. This is the best way to see the exact spelling, case, and value type of the items you can read and write via the API. Examples of accessing the subgroups:
+
+- Group [DAQSettings]:                getParams()
+- Group [DAQ_Imec_All]:               getParamsImecCommon()
+- Group [SerialNumberToProbe]/SNjjj:  getParamsImecProbe()
+- Group [SerialNumberToOneBox]/SNjjj: getParamsOneBox()
+
+Generally, follow this workflow:
+
+(1) Start SpikeGLX and make sure its Command Server is listening (you'll see a message to that effect in the Console/Log window).
+
+(2) Open the Configure dialog to elect which hardware streams you want to run.
+
+(3) Click 'Detect' and then 'Verify|Save'.
+
+Now you are ready to run from a remote application.
+
+(4) Typically you will need to adjust just a few settings from within your script.
+
+

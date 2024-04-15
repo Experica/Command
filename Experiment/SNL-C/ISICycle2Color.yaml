@@ -3,9 +3,9 @@ Name: ISICycle2Color
 Designer: Alex
 Experimenter: LZ
 Log: 
-Subject_ID: AG5
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG6
+Subject_Name: Brooks
+Subject_Species: Macaca F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -13,15 +13,15 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 2
-  MarkerPosition@Marker@Marker: -39.39 21.72 -1000
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -38.05 20.72 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
   ScreenToEye@OrthoCamera@OrthoCamera: 40
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
@@ -38,7 +38,7 @@ EnvParam:
   Contrast@GratingQuad@GratingQuad: 1
   SpatialFreq@GratingQuad@GratingQuad: 0
   TemporalFreq@GratingQuad@GratingQuad: 0
-  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.015625
+  ModulateTemporalFreq@GratingQuad@GratingQuad: 0.01563
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
   MinColor@GratingQuad@GratingQuad: 0.3701 0.6156 0 1
@@ -51,7 +51,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.99585
+  ModulateTimeSecond@GratingQuad@GratingQuad: 63.97715
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -67,7 +67,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 5
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -130,7 +130,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
-NotifyExperimenter: false
+NotifyExperimenter: true
 Version: 2
 Config: 
 CondTest: 

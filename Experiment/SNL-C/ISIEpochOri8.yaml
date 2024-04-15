@@ -1,29 +1,29 @@
 ID: ISIEpochOri8
 Name: ISIEpochOri8
 Designer: Alex
-Experimenter: LZ
+Experimenter: Alex
 Log: 
-Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG6
+Subject_Name: Brooks
+Subject_Species: Macaca F.
 Subject_Gender: Male
-Subject_Birth: ''
+Subject_Birth: 2017-01-19
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 8.3
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
   Ori@GratingQuad@GratingQuad: 0
@@ -41,7 +41,7 @@ EnvParam:
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 1.998E-15 0 4.996E-16 1
+  MinColor@GratingQuad@GratingQuad: 0 1.665E-16 1.665E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
@@ -55,7 +55,7 @@ EnvParam:
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: Condition\Ori45DegStep.yaml
+CondPath: Condition\Ori_Step=45.yaml
 Cond: 
 LogicPath: ImagerEpoch
 Hemisphere: Left
@@ -67,7 +67,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 10
+CondRepeat: 5
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -126,7 +126,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: FULL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

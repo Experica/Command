@@ -7,7 +7,7 @@ LogicPath: ColorEPhysLite
 ReadyWait: 10000
 StopWait: 10000
 Param: {}
-NotifyExperimenter: true
+NotifyExperimenter: false
 IsFullScreen: true
 IsFullViewport: true
 IsGuideOn: false

@@ -3,9 +3,9 @@ Name: ISIEpochFlash2Color
 Designer: Alex
 Experimenter: LZ
 Log: 
-Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG6
+Subject_Name: Brooks
+Subject_Species: Macaca F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -13,17 +13,17 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
-  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
+  MarkerPosition@Marker@Marker: -38.05 20.72 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
   Rotation@Quad@Quad: 0 0 0
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
@@ -42,7 +42,7 @@ CondPath: ''
 Cond: 
 LogicPath: ImagerEpochNoBlank
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: ''
 RecordSite: Full
 DataDir: I:\
@@ -50,7 +50,7 @@ DataPath:
 Input: false
 CondSampling: Ascending
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 80
+CondRepeat: 25
 BlockRepeat: 1
 BlockParam:
 - ''

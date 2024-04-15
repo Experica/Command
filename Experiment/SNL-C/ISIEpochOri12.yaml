@@ -1,8 +1,8 @@
-ID: ConditionTest
-Name: ConditionTest
+ID: ISIEpochOri12
+Name: ISIEpochOri12
 Designer: Alex
 Experimenter: Alex
-Log: Right Eye
+Log: 
 Subject_ID: AG6
 Subject_Name: Brooks
 Subject_Species: Macaca F.
@@ -26,69 +26,97 @@ EnvParam:
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 200.0792
+  Ori@GratingQuad@GratingQuad: 30
   OriOffset@GratingQuad@GratingQuad: 0
-  Diameter@GratingQuad@GratingQuad: 5
-  Size@GratingQuad@GratingQuad: 5 5 1
-  MaskType@GratingQuad@GratingQuad: Disk
+  Diameter@GratingQuad@GratingQuad: 10
+  Size@GratingQuad@GratingQuad: 95.68 53.82 1
+  MaskType@GratingQuad@GratingQuad: None
   MaskRadius@GratingQuad@GratingQuad: 0.5
   MaskSigma@GratingQuad@GratingQuad: 0.15
   OriPositionOffset@GratingQuad@GratingQuad: false
   Luminance@GratingQuad@GratingQuad: 0.5
   Contrast@GratingQuad@GratingQuad: 1
-  SpatialFreq@GratingQuad@GratingQuad: 0.7
-  TemporalFreq@GratingQuad@GratingQuad: 3
+  SpatialFreq@GratingQuad@GratingQuad: 1.5
+  TemporalFreq@GratingQuad@GratingQuad: 6
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.2
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0
-  MinColor@GratingQuad@GratingQuad: 0 0 0 1
+  MinColor@GratingQuad@GratingQuad: 0 1.665E-16 1.665E-16 1
   MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: false
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Square
   ModulateType@GratingQuad@GratingQuad: Square
   ReverseTime@GratingQuad@GratingQuad: false
-  Duty@GratingQuad@GratingQuad: 0.5
+  Duty@GratingQuad@GratingQuad: 0.2
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
   ModulateTimeSecond@GratingQuad@GratingQuad: 0
   Visible@GratingQuad@GratingQuad: false
-  Position@GratingQuad@GratingQuad: 2.167 2.838 0
+  Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
-CondPath: ''
+CondPath: Condition\Ori_Step=30.yaml
 Cond: 
-LogicPath: ConditionTestLogic
+LogicPath: ImagerEpoch
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
 DataDir: I:\
 DataPath: 
-Input: true
+Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 5
 BlockRepeat: 1
-BlockParam: []
-PreICI: 250
-CondDur: 250
-SufICI: 0
-PreITI: 0
+BlockParam:
+- ''
+PreICI: 2000
+CondDur: 4000
+SufICI: 2000
+PreITI: 2000
 TrialDur: 0
-SufITI: 0
+SufITI: 2000
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: NONE
-CondTestAtState: NONE
+PushCondAtState: COND
+CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
 - CondIndex
 - Event
 - SyncEvent
-InheritParam: []
-EnvInheritParam: []
-Param: {}
+InheritParam:
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Size
+- Subject_Weight
+- Hemisphere
+- Eye
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- Display_ID
+- NotifyExperimenter
+- Subject_Birth
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- MarkOffColor@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkerSize@Marker@Marker
+- ScreenHeight@OrthoCamera@OrthoCamera
+Param:
+  ColorSpace: DKL
+  Color: X
+  OnLine: True
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   SyncMethods:
@@ -97,7 +125,7 @@ EventSyncProtocol:
   nSyncChannel: 1
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: NONE
+CondTestShowLevel: FULL
 NotifyExperimenter: false
 Version: 2
 Config: 

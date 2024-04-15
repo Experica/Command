@@ -1,25 +1,25 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: LZ
+Experimenter: Alex
 Log: 
-Subject_ID: AG5
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG6
+Subject_Name: Brooks
+Subject_Species: Macaca F.
 Subject_Gender: Male
-Subject_Birth: ''
+Subject_Birth: 2017-01-19
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 8.3
 Subject_Log: 
 EnvPath: MarkerQuad
 EnvParam:
-  MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.39 20.72 -1000
+  MarkerSize@Marker@Marker: 3
+  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
   ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
@@ -28,23 +28,23 @@ EnvParam:
   RotationOffset@Quad@Quad: 0 0 0
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Diameter@Quad@Quad: 5
-  Size@Quad@Quad: 85.12 51.12 1
-  Color@Quad@Quad: 0.6299 0.3844 1 1
+  Diameter@Quad@Quad: 10
+  Size@Quad@Quad: 10 10 1
+  Color@Quad@Quad: 0.6254 0.386 1 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
   Visible@Quad@Quad: false
-  Position@Quad@Quad: 2.167 2.838 0
+  Position@Quad@Quad: 0 0 0
   PositionOffset@Quad@Quad: 0 0 0
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: 17R
+RecordSession: ''
+RecordSite: Full
 DataDir: I:\
 DataPath: 
 Input: false
@@ -109,7 +109,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: FULL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 
