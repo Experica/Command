@@ -1,27 +1,27 @@
 ID: ISICycle2Color
 Name: ISICycle2Color
 Designer: Alex
-Experimenter: LZ
+Experimenter: Alex
 Log: 
 Subject_ID: AG6
 Subject_Name: Brooks
 Subject_Species: Macaca F.
 Subject_Gender: Male
-Subject_Birth: ''
+Subject_Birth: 2017-01-19
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 8.3
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
   MarkerSize@Marker@Marker: 4
-  MarkerPosition@Marker@Marker: -38.05 20.72 -1000
+  MarkerPosition@Marker@Marker: -27.11 14.38 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
   MarkOffColor@Marker@Marker: 0 0 0 1
-  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33.5
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.762463
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
@@ -41,8 +41,8 @@ EnvParam:
   ModulateTemporalFreq@GratingQuad@GratingQuad: 0.01563
   ModulateTemporalPhase@GratingQuad@GratingQuad: 0
   SpatialPhase@GratingQuad@GratingQuad: 0.75
-  MinColor@GratingQuad@GratingQuad: 0.3701 0.6156 0 1
-  MaxColor@GratingQuad@GratingQuad: 0.6299 0.3844 1 1
+  MinColor@GratingQuad@GratingQuad: 0 1.665E-16 1.665E-16 1
+  MaxColor@GratingQuad@GratingQuad: 1 1 1 1
   PauseTime@GratingQuad@GratingQuad: true
   PauseModulateTime@GratingQuad@GratingQuad: true
   GratingType@GratingQuad@GratingQuad: Sinusoidal
@@ -51,7 +51,7 @@ EnvParam:
   Duty@GratingQuad@GratingQuad: 0.5
   ModulateDuty@GratingQuad@GratingQuad: 0.5
   TimeSecond@GratingQuad@GratingQuad: 0
-  ModulateTimeSecond@GratingQuad@GratingQuad: 63.97715
+  ModulateTimeSecond@GratingQuad@GratingQuad: 63.97831
   Visible@GratingQuad@GratingQuad: false
   Position@GratingQuad@GratingQuad: 0 0 0
   PositionOffset@GratingQuad@GratingQuad: 0 0 0
@@ -67,7 +67,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 5
+CondRepeat: 10
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -114,8 +114,8 @@ EnvInheritParam:
 - MarkerCorner@Marker@Marker
 - MarkerSize@Marker@Marker
 Param:
-  ColorSpace: LMS
-  Color: Z
+  ColorSpace: DKL
+  Color: X
   ModulateParam: ModulateTime
   Intercept: 0
   CycleDirection: 1
@@ -130,7 +130,7 @@ EventSyncProtocol:
   nSyncpEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: NONE
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 2
 Config: 
 CondTest: 

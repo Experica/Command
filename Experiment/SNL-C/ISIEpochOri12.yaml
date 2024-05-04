@@ -13,8 +13,8 @@ Subject_Weight: 8.3
 Subject_Log: 
 EnvPath: MarkerGrating
 EnvParam:
-  MarkerSize@Marker@Marker: 3
-  MarkerPosition@Marker@Marker: -27.61 14.88 -1000
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -27.11 14.38 -1000
   MarkerCorner@Marker@Marker: TopLeft
   Mark@Marker@Marker: false
   MarkOnColor@Marker@Marker: 1 1 1 1
@@ -26,7 +26,7 @@ EnvParam:
   CLUT@OrthoCamera@OrthoCamera: false
   Rotation@GratingQuad@GratingQuad: 0 0 0
   RotationOffset@GratingQuad@GratingQuad: 0 0 0
-  Ori@GratingQuad@GratingQuad: 30
+  Ori@GratingQuad@GratingQuad: 0
   OriOffset@GratingQuad@GratingQuad: 0
   Diameter@GratingQuad@GratingQuad: 10
   Size@GratingQuad@GratingQuad: 95.68 53.82 1
@@ -59,7 +59,7 @@ CondPath: Condition\Ori_Step=30.yaml
 Cond: 
 LogicPath: ImagerEpoch
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: ''
 RecordSite: Full
 DataDir: I:\
@@ -67,7 +67,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 5
+CondRepeat: 8
 BlockRepeat: 1
 BlockParam:
 - ''
@@ -96,7 +96,6 @@ InheritParam:
 - Subject_Size
 - Subject_Weight
 - Hemisphere
-- Eye
 - RecordSession
 - RecordSite
 - DataDir
