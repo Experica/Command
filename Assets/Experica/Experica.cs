@@ -1,5 +1,5 @@
 ﻿/*
-Extension.cs is part of the Experica.
+Experica.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -51,6 +51,9 @@ using MethodInvoker = Fasterflect.MethodInvoker;
 
 namespace Experica
 {
+    /// <summary>
+    /// wrapper and cache of fast delegate to reflected property
+    /// </summary>
     public class Property
     {
         public Type Type { get; }
@@ -62,27 +65,41 @@ namespace Experica
         {
             Type = type; Name = name; Getter = getter; Setter = setter;
         }
-        public Property(PropertyInfo p)
+        public Property(PropertyInfo info)
         {
-            Type = p.PropertyType;
-            Name = p.Name;
-            Getter = p.DelegateForGetPropertyValue();
-            Setter = p.DelegateForSetPropertyValue();
+            Type = info.PropertyType;
+            Name = info.Name;
+            Getter = info.DelegateForGetPropertyValue();
+            Setter = info.DelegateForSetPropertyValue();
         }
     }
+    /// <summary>
+    /// wrapper and cache of fast delegate to reflected method
+    /// </summary>
     public class Method
     {
-        public Type Type { get; }
+        public Type ReturnType { get; }
         public string Name { get; }
+        public Type[] ParamType { get; }
         public MethodInvoker Invoker { get; }
-        public Type[] Arguments { get; }
 
-        public Method(Type type, string name, MethodInvoker invoker, params Type[] arguments)
+        public Method(Type returntype, string name, MethodInvoker invoker, params Type[] paramtype)
         {
-            Type = type; Name = name; Invoker = invoker; Arguments = arguments;
+            ReturnType = returntype; Name = name; Invoker = invoker; ParamType = paramtype;
+        }
+        public Method(MethodInfo info)
+        {
+            ReturnType = info.ReturnType;
+            Name = info.Name;
+            Invoker = info.DelegateForCallMethod();
+            ParamType = info.GetParameters().Select(i => i.ParameterType).ToArray();
         }
     }
 
+    /// <summary>
+    /// UI datasource wrapper of reflected property for data binding
+    /// </summary>
+    /// <typeparam name="TContainer">Type of object on which the property is reflected</typeparam>
     public class PropertySource<TContainer> : INotifyBindablePropertyChanged, IDataSource<object>
     {
         public string Name => Property.Name;
@@ -119,11 +136,17 @@ namespace Experica
         }
 
         public void NotifyValue() { Notify("Value"); }
+        public void SetValueWithoutNotify(object value) { Property.Setter(Container, value); }
 
         public T GetValue<T>() { return Value.Convert<T>(Type); }
         public void SetValue<T>(T value) { Value = value.Convert(typeof(T), Type); }
+        public void SetValueWithoutNotify<T>(T value) { Property.Setter(Container, value.Convert(typeof(T), Type)); }
     }
 
+    /// <summary>
+    /// UI datasource wrapper of dictionary for data binding
+    /// </summary>
+    /// <typeparam name="TValue">Value Type of dictionary</typeparam>
     public class DictSource<TValue> : INotifyBindablePropertyChanged, IDataSource<TValue>
     {
         public string Name { get; }
@@ -143,18 +166,22 @@ namespace Experica
             get { return Container[Name]; }
             set { Container[Name] = value; Notify(); }
         }
-
-        public void NotifyValue() { Notify("Value"); }
-
         void Notify([CallerMemberName] string property = "")
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
 
+        public void NotifyValue() { Notify("Value"); }
+        public void SetValueWithoutNotify(TValue value) { Container[Name] = value; }
+
         public T GetValue<T>() { return Value.Convert<T>(); }
         public void SetValue<T>(T value) { Value = value.Convert<TValue>(typeof(T)); }
+        public void SetValueWithoutNotify<T>(T value) { Container[Name] = value.Convert<TValue>(typeof(T)); }
     }
 
+    /// <summary>
+    /// UI datasource wrapper of reflected property for data binding
+    /// </summary>
     public class PropertySource : INotifyBindablePropertyChanged, IDataSource<object>
     {
         public string Name => Property.Name;
@@ -164,9 +191,12 @@ namespace Experica
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        public PropertySource(Type containertype, object container, Type propertytype, string propertyname)
+        public PropertySource(object container, Property property) { Container = container; Property = property; }
+
+        public PropertySource(object container, Type propertytype, string propertyname)
         {
             Container = container;
+            var containertype = container.GetType();
             var containertypename = containertype.ToString();
 
             if (!containertypename.QueryProperty(propertyname, out Property))
@@ -188,8 +218,11 @@ namespace Experica
         }
 
         public void NotifyValue() { Notify("Value"); }
+        public void SetValueWithoutNotify(object value) { Property.Setter(Container, value); }
+
         public T GetValue<T>() { return Value.Convert<T>(Type); }
         public void SetValue<T>(T value) { Value = value.Convert(typeof(T), Type); }
+        public void SetValueWithoutNotify<T>(T value) { Property.Setter(Container, value.Convert(typeof(T), Type)); }
     }
 
     public interface IDataSource<T>
@@ -198,6 +231,7 @@ namespace Experica
         public Type Type { get; }
         public T Value { get; set; }
         public void NotifyValue();
+        public void SetValueWithoutNotify(T value);
     }
 
     public class MethodAccess
@@ -254,7 +288,7 @@ namespace Experica
     public interface INetEnv
     {
         public Scene Scene { get; }
-        public void SetParam(string nvORfullName, object value, bool active=false);
+        public void SetParam(string nvORfullName, object value, bool active = false);
     }
 
     public enum FactorDesignMethod
@@ -268,7 +302,7 @@ namespace Experica
     public class ImageSet
     {
         public Texture2D[] Images = Array.Empty<Texture2D>();
-        public Color MeanColor=Color.gray;
+        public Color MeanColor = Color.gray;
     }
 
     public class MPIS<T> where T : struct
@@ -281,9 +315,9 @@ namespace Experica
     public static class Experica
     {
         public const uint ExperimentDataVersion = 3;
-        static Dictionary<string, Dictionary<string, List<object>>> colordata = new ();
-        
-        static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new ();
+        static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
+
+        static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new();
 
         // Plants of the Unit Cube defined by a point and a corresponding normal, used for intersection of line and six faces of the Unit Cube
         static Vector<float>[] UnitOriginCubePoints = new[] { CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f), CreateVector.Dense(3, 0f),
@@ -299,20 +333,20 @@ namespace Experica
             typeof(int),typeof(uint),typeof(long),typeof(ulong),
             typeof(float),typeof(double),typeof(decimal)
         };
-        static Type TObject=typeof(object), TString=typeof(string), TBool=typeof(bool), TInt=typeof(int), TFloat=typeof(float), TDouble=typeof(double), 
-            TVector2=typeof(Vector2), TVector3=typeof(Vector3), TVector4=typeof(Vector4), TColor=typeof(Color), 
-            TListT=typeof(List<>),TArray=typeof(Array),TFixString512=typeof(FixedString512Bytes);
+        static Type TObject = typeof(object), TString = typeof(string), TBool = typeof(bool), TInt = typeof(int), TFloat = typeof(float), TDouble = typeof(double),
+            TVector2 = typeof(Vector2), TVector3 = typeof(Vector3), TVector4 = typeof(Vector4), TColor = typeof(Color),
+            TListT = typeof(List<>), TArray = typeof(Array), TFixString512 = typeof(FixedString512Bytes);
 
         #region ImageSets
         static Dictionary<string, ImageSet> imagesets = new();
-        public static bool QueryImageSet(this string imagesetname,out ImageSet imgset, bool reload = false)
+        public static bool QueryImageSet(this string imagesetname, out ImageSet imgset, bool reload = false)
         {
             if (!reload && imagesets.ContainsKey(imagesetname))
             {
-                imgset= imagesets[imagesetname];
+                imgset = imagesets[imagesetname];
                 return true;
             }
-            imgset =  imagesetname.LoadImageSet();
+            imgset = imagesetname.LoadImageSet();
             if (imgset == null)
             {
                 imgset = new();
@@ -478,10 +512,10 @@ namespace Experica
             }
         }
 
-        public static LineRenderer AddLine(this Vector3[] positions,string name=null, Transform parent=null,bool loop=false)
+        public static LineRenderer AddLine(this Vector3[] positions, string name = null, Transform parent = null, bool loop = false)
         {
             if (!"Assets/NetEnv/Object/Line.prefab".QueryPrefab(out GameObject lineprefab)) { return null; }
-            var go = parent ==null ? GameObject.Instantiate(lineprefab) : GameObject.Instantiate(lineprefab, parent);
+            var go = parent == null ? GameObject.Instantiate(lineprefab) : GameObject.Instantiate(lineprefab, parent);
             if (!string.IsNullOrEmpty(name)) { go.name = name; }
             var lr = go.GetComponent<LineRenderer>();
             lr.positionCount = positions.Length;
@@ -492,23 +526,23 @@ namespace Experica
 
         public static LineRenderer AddXLine(float radius = 0.5f, string name = null, Transform parent = null)
         {
-           return AddLine(new[] { new Vector3(-radius, 0, 0), new Vector3(radius, 0, 0) }, name, parent);
+            return AddLine(new[] { new Vector3(-radius, 0, 0), new Vector3(radius, 0, 0) }, name, parent);
         }
 
         public static LineRenderer AddYLine(float radius = 0.5f, string name = null, Transform parent = null)
         {
-            return AddLine(new[] { new Vector3(0,-radius, 0), new Vector3(0,radius, 0) }, name, parent);
+            return AddLine(new[] { new Vector3(0, -radius, 0), new Vector3(0, radius, 0) }, name, parent);
         }
 
-        public static LineRenderer AddCircle(float radius=0.5f,float deltadegree=2f, string name = null, Transform parent = null)
+        public static LineRenderer AddCircle(float radius = 0.5f, float deltadegree = 2f, string name = null, Transform parent = null)
         {
             var ps = new Vector3[Mathf.FloorToInt(360 / deltadegree)];
             for (int i = 0; i < ps.Length; i++)
             {
-                var d = Mathf.Deg2Rad* i * deltadegree;
+                var d = Mathf.Deg2Rad * i * deltadegree;
                 ps[i] = new Vector3(radius * Mathf.Cos(d), radius * Mathf.Sin(d), 0);
             }
-            return AddLine(ps,name,parent,true);
+            return AddLine(ps, name, parent, true);
         }
 
         #endregion
@@ -1021,9 +1055,9 @@ namespace Experica
             foreach (var f in conddesign.Keys.ToArray())
             {
                 var fd = conddesign[f];
-                if (fd.Count == 2 && fd[0].GetType() == typeof(string) && (string)fd[0] == "FactorDesign" && fd[1].GetType()==typeof(Dictionary<object,object>))
+                if (fd.Count == 2 && fd[0].GetType() == typeof(string) && (string)fd[0] == "FactorDesign" && fd[1].GetType() == typeof(Dictionary<object, object>))
                 {
-                    var design = ((Dictionary<object,object>)fd[1]).ToDictionary(kv=>(string)kv.Key,kv=>kv.Value);
+                    var design = ((Dictionary<object, object>)fd[1]).ToDictionary(kv => (string)kv.Key, kv => kv.Value);
                     if (design.ValidateFactorDesign())
                     {
                         conddesign[f] = design.FactorLevelOfDesign();
@@ -1033,18 +1067,18 @@ namespace Experica
             return conddesign;
         }
 
-        public static float[] Range(this FactorDesignMethod method,float start,int n, float? step,float? stop)
+        public static float[] Range(this FactorDesignMethod method, float start, int n, float? step, float? stop)
         {
             if (step.HasValue)
             {
                 var s = step.Value;
                 return method switch
                 {
-                    FactorDesignMethod.Power => Enumerable.Range(0, n).Select(i=>1+i*s).Select(i => Mathf.Pow(start,i)).ToArray(),
+                    FactorDesignMethod.Power => Enumerable.Range(0, n).Select(i => 1 + i * s).Select(i => Mathf.Pow(start, i)).ToArray(),
                     _ => Enumerable.Range(0, n).Select(i => start + i * s).ToArray(),
                 };
             }
-            else if(stop.HasValue)
+            else if (stop.HasValue)
             {
                 var s = stop.Value;
                 return method switch
@@ -1163,11 +1197,11 @@ namespace Experica
             return ls;
         }
 
-        public static Dictionary<string, List<object>> ProcessOrthoCombineFactor(this Dictionary<string,List<object>> cond)
+        public static Dictionary<string, List<object>> ProcessOrthoCombineFactor(this Dictionary<string, List<object>> cond)
         {
             if (cond.ContainsKey("OrthoCombineFactor") && cond["OrthoCombineFactor"].Count == 0)
             {
-               return cond.OrthoCombineFactor();
+                return cond.OrthoCombineFactor();
             }
             return cond;
         }
@@ -1278,7 +1312,7 @@ namespace Experica
             }
             gi = new List<List<int>>() { new List<int>() { 0 } };
 
-            bool isequal=true;
+            bool isequal = true;
             for (var i = 1; i < n; i++)
             {
                 for (var j = 0; j < gi.Count; j++)
@@ -1699,7 +1733,7 @@ namespace Experica
         //}
 #endif
 
-        
+
         /// <summary>
         /// Get a unique file incremental index that fits in the file name pattern within a dir.
         /// Index is supposed to be the last part before file extension in pattern: *_{index}.*
@@ -1927,7 +1961,7 @@ namespace Experica
 
 
 
-       
+
         public static Dictionary<string, Texture2D> Load(this string imageset, int startidx = 0, int numofimg = 10)
         {
             if (string.IsNullOrEmpty(imageset)) return null;
@@ -2108,7 +2142,7 @@ namespace Experica
             return Color.gray;
         }
 
-        
+
 
         public static byte[] Compress(this byte[] data)
         {

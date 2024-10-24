@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -923,14 +923,14 @@ RectTransform:
   - {fileID: 1784660072}
   - {fileID: 1996178765}
   - {fileID: 386045323}
-  - {fileID: 713751378}
-  - {fileID: 126350015}
-  - {fileID: 1362274765}
-  - {fileID: 116732423}
-  - {fileID: 377719023}
   - {fileID: 1318028122}
+  - {fileID: 713751378}
   - {fileID: 1343119229}
+  - {fileID: 377719023}
   - {fileID: 1394811413}
+  - {fileID: 1362274765}
+  - {fileID: 126350015}
+  - {fileID: 116732423}
   m_Father: {fileID: 652919583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5248,9 +5248,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 6a319be08273a0249acd60a35c52d86c, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 2bed2f46b68ac3a498cea73d55dffaa1,
+  sourceAsset: {fileID: 9197481963319205126, guid: 32a5f11b471241e43abc8fe5059dbf9a,
     type: 3}
   m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!4 &570668882
 Transform:
   m_ObjectHideFlags: 0
@@ -5303,6 +5306,8 @@ MonoBehaviour:
   ToggleVector4: {fileID: 9197481963319205126, guid: 6aac28fb1d042cb4ea9b51b95ddf4b4b,
     type: 3}
   viewport: {fileID: 9197481963319205126, guid: 5397b29f51d84fe41b4f98132ce4d6e0,
+    type: 3}
+  ParamsFoldout: {fileID: 9197481963319205126, guid: a45b5efea52a66940bc1e4d66327945e,
     type: 3}
 --- !u!1001 &572449017
 PrefabInstance:
@@ -6324,13 +6329,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NetworkManagerExpanded: 0
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 652919584}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists:
-      - {fileID: 11400000, guid: cb21b4149bf2e77448a4d3aed5d758ae, type: 2}
+      NetworkPrefabsLists: []
     TickRate: 1000
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -6346,6 +6351,11 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 1
     EnableNetworkLogs: 1
+    NetworkTopology: 0
+    UseCMBService: 0
+    AutoSpawnPlayerPrefabClientSide: 1
+    NetworkMessageMetrics: 1
+    NetworkProfilingMetrics: 1
     OldPrefabList: []
   RunInBackground: 1
   LogLevel: 1
@@ -13739,6 +13749,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!114 &1784660071
 MonoBehaviour:
   m_ObjectHideFlags: 0

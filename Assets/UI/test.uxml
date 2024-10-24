@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
+    <ui:VisualElement name="Root" class="Panel" style="width: 100%; height: 100%; justify-content: space-between; flex-grow: 1; background-color: rgb(46, 51, 77);">
+        <ui:Label text="Experiment" name="Title" style="height: 50px; -unity-font-style: bold; font-size: 40px; background-color: rgb(137, 152, 229); -unity-text-align: middle-left;" />
+        <ui:ScrollView name="ExperimentContent" />
+        <ui:VisualElement name="ExperimentStatus" style="width: auto; height: 50px; flex-direction: row;">
+            <ui:Button text="+" name="AddExtendParam" style="font-size: 40px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        </ui:VisualElement>
+        <ui:Toggle label="Toggle" class="ToggleButton ToggleButtonGreen" />
+        <ui:Vector2Field label="Vec2 Field" name="Vector2Field" class="Vector" />
+    </ui:VisualElement>
+</ui:UXML>

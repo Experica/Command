@@ -1,5 +1,5 @@
 ﻿/*
-ImagerCTLogic.cs is part of the Experica.
+ImagerEpoch.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 

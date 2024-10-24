@@ -23,12 +23,12 @@ EnvParam:
   Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 10 10 10
-  Diameter@Quad@Quad: 10
-  Color@Quad@Quad: 0 1 1 1
+  Size@Quad@Quad: 1 1 1
+  Diameter@Quad@Quad: 1
+  Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0
-  MaskSigma@Quad@Quad: 0
+  MaskRadius@Quad@Quad: 0.5
+  MaskSigma@Quad@Quad: 0.15
   OriPositionOffset@Quad@Quad: false
   PositionOffset@Quad@Quad: 0 0 0
   Position@Quad@Quad: 0 0 0
@@ -90,7 +90,10 @@ EnvInheritParam:
 - Diameter@Quad@Quad
 - MarkerSize@Marker@Marker~OrthoCamera
 - MarkerCorner@Marker@Marker~OrthoCamera
-ExtendParam: {}
+ExtendParam:
+  ColorSpace: DKL
+  Color: X
+  OnLine: true
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -100,7 +103,7 @@ EventSyncProtocol:
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: FULL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 

@@ -1,5 +1,5 @@
 ﻿/*
-Environment.cs is part of the Experica.
+NetEnv.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -29,6 +29,7 @@ using UnityEngine.Rendering.HighDefinition;
 using Unity.Properties;
 using UnityEngine.UIElements;
 using System.Runtime.CompilerServices;
+using System.Reflection.Emit;
 
 namespace Experica.NetEnv
 {
@@ -114,35 +115,39 @@ namespace Experica.NetEnv
         public Texture3D CLUT;
     }
 
+    /// <summary>
+    /// UI datasource wrapper of reflected "Value" property of NetworkVariable for UI data binding and network sync
+    /// </summary>
     public class NetworkVariableSource : INotifyBindablePropertyChanged,IDataSource<object>
     {
         public string Name => Property.Name;
         public Type Type => Property.Type;
         Property Property;
-        Method Method;
         NetworkVariableBase NV;
+        //Method Method;
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
+        public NetworkVariableSource(NetworkVariableBase nv, Property property) { NV = nv; Property = property; }
         public NetworkVariableSource(NetworkVariableBase nv)
         {
             NV = nv;
             var nvtype = nv.GetType(); // NetworkVariable<T>
+            var nvtypename = nvtype.ToString();
             var propertytype = nvtype.GenericTypeArguments[0]; // T
             var propertyname = "Value";
-            var methodname = "Set";
-            var nvtypename = nvtype.ToString();
+            //var methodname = "Set";
             
             if (!nvtypename.QueryProperty(propertyname, out Property))
             {
                 Property = new Property(propertytype, propertyname, nvtype.DelegateForGetPropertyValue(propertyname), nvtype.DelegateForSetPropertyValue(propertyname));
                 nvtypename.StoreProperty(propertyname, Property);
             }
-            if (!nvtypename.QueryMethod(methodname, out Method))
-            {
-                Method = new Method(null, methodname, nvtype.DelegateForCallMethod(methodname, propertytype), propertytype);
-                nvtypename.StoreMethod(methodname, Method);
-            }
+            //if (!nvtypename.QueryMethod(methodname, out Method))
+            //{
+            //    Method = new Method(null, methodname, nvtype.DelegateForCallMethod(methodname, propertytype), propertytype);
+            //    nvtypename.StoreMethod(methodname, Method);
+            //}
         }
 
         [CreateProperty]
@@ -151,19 +156,17 @@ namespace Experica.NetEnv
             get { return Property.Getter(NV); }
             set { Property.Setter(NV, value); if (NV.IsDirty()) { Notify(); } }
         }
-
         void Notify([CallerMemberName] string property = "")
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
 
-        public void NotifyValue()
-        {
-            Notify("Value");
-        }
+        public void NotifyValue()        {            Notify("Value");        }
+        public void SetValueWithoutNotify(object value) { Property.Setter(NV, value); }
 
         public T GetValue<T>() { return Value.Convert<T>(Type); }
         public void SetValue<T>(T value) { Value = value.Convert(typeof(T), Type); }
+        public void SetValueWithoutNotify<T>(T value) { Property.Setter(NV, value.Convert(typeof(T), Type)); }
 
         public NetworkVariable<T> NetworkVariable<T>()
         {
@@ -172,7 +175,15 @@ namespace Experica.NetEnv
             else { Debug.LogError($"Can not downcast to NetworkVariable<{typeof(T)}>."); return null; }
         }
 
-        public void Refresh() { Method.Invoker(NV, Value); }
+        public void NotifyNetworkValue()
+        { 
+            NV.SetDirty(true);
+            dynamic nv = NV;
+            dynamic v = nv.Value;
+            nv.OnValueChanged(v, v);
+
+            ////Method.Invoker(NV, Value,Value);
+        }
 
         public NetworkBehaviour GetBehaviour() { return NV.GetBehaviour(); }
     }

@@ -1,29 +1,30 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="ControlPanel" src="project://database/Assets/UI/ControlPanel.uxml?fileID=9197481963319205126&amp;guid=ad4a7156f491be0459a6669d1a45d9d5&amp;type=3#ControlPanel" />
-    <ui:Template name="EnvironmentPanel" src="project://database/Assets/UI/EnvironmentPanel.uxml?fileID=9197481963319205126&amp;guid=17a13fe736bbfcb4493f640ad3e9d45b&amp;type=3#EnvironmentPanel" />
-    <ui:Template name="ConsolePanel" src="project://database/Assets/UI/ConsolePanel.uxml?fileID=9197481963319205126&amp;guid=a3a4601e3b7922045a3dae3b2ade7243&amp;type=3#ConsolePanel" />
-    <ui:Template name="ExperimentPanel" src="project://database/Assets/UI/ExperimentPanel.uxml?fileID=9197481963319205126&amp;guid=472e2988206fbfd4fad9f19b71b9f476&amp;type=3#ExperimentPanel" />
-    <ui:Template name="ConditionTestPanel" src="project://database/Assets/UI/ConditionTestPanel.uxml?fileID=9197481963319205126&amp;guid=48a88339727808b4c9e5237198e1a493&amp;type=3#ConditionTestPanel" />
-    <ui:Template name="ViewPanel" src="project://database/Assets/UI/ViewPanel.uxml?fileID=9197481963319205126&amp;guid=799d5cc0db7d84b46b29158c5cd1d745&amp;type=3#ViewPanel" />
-    <ui:Template name="ConditionPanel" src="project://database/Assets/UI/ConditionPanel.uxml?fileID=9197481963319205126&amp;guid=4d626067649a70a498bee4f6289a3f21&amp;type=3#ConditionPanel" />
-    <ui:VisualElement name="Root" style="width: 100%; height: 100%; background-color: rgba(117, 136, 166, 0); justify-content: space-between;">
-        <ui:VisualElement name="MainMenu" style="height: 50px;" />
-        <ui:VisualElement name="MainContent" style="flex-direction: row; height: 100%;">
-            <ui:VisualElement name="CEC" style="width: 32%; justify-content: space-between;">
-                <ui:Instance template="ControlPanel" name="ControlPanel" style="height: 28%;" />
-                <ui:Instance template="EnvironmentPanel" name="EnvironmentPanel" style="height: 44%;" />
-                <ui:Instance template="ConsolePanel" name="ConsolePanel" style="height: 28%;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="ECVC" style="justify-content: space-between; width: 70%;">
-                <ui:VisualElement name="EC" style="flex-direction: row; height: 44%;">
-                    <ui:Instance template="ExperimentPanel" name="ExperimentPanel" style="width: 46%;" />
-                    <ui:Instance template="ConditionTestPanel" name="ConditionTestPanel" style="width: auto; min-width: 40%; max-width: 50%;" />
-                </ui:VisualElement>
-                <ui:VisualElement name="VC" style="flex-direction: row; height: 56%;">
-                    <ui:Instance template="ViewPanel" name="ViewPanel" style="width: 62%;" />
-                    <ui:Instance template="ConditionPanel" name="CondtionPanel" style="width: auto; min-width: 30%; max-width: 40%;" />
-                </ui:VisualElement>
-            </ui:VisualElement>
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="ControlPanel" src="project://database/Assets/UI/ControlPanel.uxml?fileID=9197481963319205126&amp;guid=ad4a7156f491be0459a6669d1a45d9d5&amp;type=3#ControlPanel" />
+    <engine:Template name="EnvironmentPanel" src="project://database/Assets/UI/EnvironmentPanel.uxml?fileID=9197481963319205126&amp;guid=a6b2641994bf70e41af9d27a2614f365&amp;type=3#EnvironmentPanel" />
+    <engine:Template name="ConsolePanel" src="project://database/Assets/UI/ConsolePanel.uxml?fileID=9197481963319205126&amp;guid=a3a4601e3b7922045a3dae3b2ade7243&amp;type=3#ConsolePanel" />
+    <engine:Template name="ExperimentPanel" src="project://database/Assets/UI/ExperimentPanel.uxml?fileID=9197481963319205126&amp;guid=f12577b504f22324a9bc41f7ba0aa236&amp;type=3#ExperimentPanel" />
+    <engine:Template name="ConditionTestPanel" src="project://database/Assets/UI/ConditionTestPanel.uxml?fileID=9197481963319205126&amp;guid=48a88339727808b4c9e5237198e1a493&amp;type=3#ConditionTestPanel" />
+    <engine:Template name="ViewPanel" src="project://database/Assets/UI/ViewPanel.uxml?fileID=9197481963319205126&amp;guid=799d5cc0db7d84b46b29158c5cd1d745&amp;type=3#ViewPanel" />
+    <engine:Template name="ConditionPanel" src="project://database/Assets/UI/ConditionPanel.uxml?fileID=9197481963319205126&amp;guid=4d626067649a70a498bee4f6289a3f21&amp;type=3#ConditionPanel" />
+    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
+    <engine:VisualElement name="Root" class="Main">
+        <engine:VisualElement name="MainMenu" class="MainMenu" />
+        <engine:VisualElement name="MainContent" class="MainContent">
+            <engine:VisualElement name="CEC" style="flex-grow: 1; width: 32%; justify-content: space-between;">
+                <engine:Instance template="ControlPanel" name="ControlPanel" style="flex-grow: 1; height: 28%;" />
+                <engine:Instance template="EnvironmentPanel" name="EnvironmentPanel" style="flex-grow: 1; height: 44%;" />
+                <engine:Instance template="ConsolePanel" name="ConsolePanel" style="flex-grow: 1; height: 28%;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="ECVC" style="flex-grow: 1; width: 68%; justify-content: space-between;">
+                <engine:VisualElement name="EC" style="flex-grow: 1; flex-direction: row; justify-content: space-between; height: 44%;">
+                    <engine:Instance template="ExperimentPanel" name="ExperimentPanel" style="flex-grow: 1; width: 47%;" />
+                    <engine:Instance template="ConditionTestPanel" name="ConditionTestPanel" style="flex-grow: 1; width: 53%;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="VC" style="flex-grow: 1; flex-direction: row; justify-content: space-between; height: 56%;">
+                    <engine:Instance template="ViewPanel" name="ViewPanel" style="flex-grow: 1; width: 62%;" />
+                    <engine:Instance template="ConditionPanel" name="ConditionPanel" style="flex-grow: 1; width: 38%;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

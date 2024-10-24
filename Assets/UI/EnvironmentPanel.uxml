@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
-    <ui:VisualElement name="Root" class="Panel" style="justify-content: space-between; width: 100%; height: 100%;">
-        <ui:Label text="Environment" name="Title" style="height: 50px; -unity-font-style: bold; -unity-text-align: middle-left; font-size: 40px; background-color: rgb(153, 153, 153);" />
-        <ui:ScrollView name="EnvironmentContent" />
-        <ui:VisualElement name="EnvironmentStatus" style="flex-direction: row; height: 50px;" />
+    <ui:VisualElement name="Root" class="Panel">
+        <ui:Label name="Title" text="Environment" />
+        <ui:ScrollView name="Content" />
+        <ui:VisualElement name="Status">
+            <ui:Button text="+" name="AddExtendParam" style="font-size: 40px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

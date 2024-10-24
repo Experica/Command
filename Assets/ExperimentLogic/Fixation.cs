@@ -1,5 +1,5 @@
 ﻿/*
-ConditionTestLogic.cs is part of the Experica.
+Fixation.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -52,7 +52,7 @@ public class Fixation : ExperimentLogic
     }
     public TASKSTATE TaskState;
 
-    EnterStateCode EnterTaskState(TASKSTATE value)
+    protected virtual EnterStateCode EnterTaskState(TASKSTATE value)
     {
         if (value == TaskState) { return EnterStateCode.AlreadyIn; }
         switch (value)

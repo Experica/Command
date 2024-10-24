@@ -11,47 +11,8 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
-EnvPath: MaskGrating
-EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 0
-  ScreenHeight@OrthoCamera@OrthoCamera: 0
-  ScreenAspect@OrthoCamera@OrthoCamera: 0
-  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker~OrthoCamera: 0
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
-  Mark@Marker@Marker~OrthoCamera: false
-  Rotation@MaskGrating@MaskGrating: 0 0 0
-  RotationOffset@MaskGrating@MaskGrating: 0 0 0
-  Ori@MaskGrating@MaskGrating: 0
-  OriOffset@MaskGrating@MaskGrating: 0
-  Size@MaskGrating@MaskGrating: 0 0 0
-  Diameter@MaskGrating@MaskGrating: 0
-  MaskType@MaskGrating@MaskGrating: None
-  MaskRadius@MaskGrating@MaskGrating: 0
-  MaskSigma@MaskGrating@MaskGrating: 0
-  Luminance@MaskGrating@MaskGrating: 0
-  Contrast@MaskGrating@MaskGrating: 0
-  SpatialFreq@MaskGrating@MaskGrating: 0
-  TemporalFreq@MaskGrating@MaskGrating: 0
-  ModulateTemporalFreq@MaskGrating@MaskGrating: 0
-  ModulateTemporalPhase@MaskGrating@MaskGrating: 0
-  SpatialPhase@MaskGrating@MaskGrating: 0
-  MinColor@MaskGrating@MaskGrating: 0 0 0 0
-  MaxColor@MaskGrating@MaskGrating: 0 0 0 0
-  PauseTime@MaskGrating@MaskGrating: false
-  PauseModulateTime@MaskGrating@MaskGrating: false
-  GratingType@MaskGrating@MaskGrating: Square
-  ModulateType@MaskGrating@MaskGrating: Square
-  ReverseTime@MaskGrating@MaskGrating: false
-  Duty@MaskGrating@MaskGrating: 0
-  ModulateDuty@MaskGrating@MaskGrating: 0
-  TimeSecond@MaskGrating@MaskGrating: 0
-  ModulateTimeSecond@MaskGrating@MaskGrating: 0
-  OriPositionOffset@MaskGrating@MaskGrating: false
-  PositionOffset@MaskGrating@MaskGrating: 0 0 0
-  Position@MaskGrating@MaskGrating: 0 0 0
-  Visible@MaskGrating@MaskGrating: false
+EnvPath: Grating
+EnvParam: {}
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: ConditionTestLogic
@@ -115,7 +76,7 @@ EventSyncProtocol:
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShowLevel: SHORT
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 

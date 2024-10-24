@@ -13,16 +13,16 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.3333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 0
+  ScreenHeight@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@Marker~OrthoCamera: 0
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
-  FixDotPosition@FixDot@FixDot: -5 5 0
-  FixDotDiameter@FixDot@FixDot: 3
+  FixDotPosition@FixDot@FixDot: 0 0 0
+  FixDotDiameter@FixDot@FixDot: 0
   FixDotVisible@FixDot@FixDot: false
 CondPath: ''
 Cond: 
@@ -42,9 +42,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 426
+PreITI: 352
 TrialDur: 0
-SufITI: 778
+SufITI: 849
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0

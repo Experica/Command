@@ -13,45 +13,45 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 0
-  ScreenHeight@OrthoCamera@OrthoCamera: 0
-  ScreenAspect@OrthoCamera@OrthoCamera: 0
-  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker~OrthoCamera: 0
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 0 0 0
-  Diameter@Grating@Grating: 0
+  Size@Grating@Grating: 1 1 1
+  Diameter@Grating@Grating: 1
   MaskType@Grating@Grating: None
-  MaskRadius@Grating@Grating: 0
-  MaskSigma@Grating@Grating: 0
-  Luminance@Grating@Grating: 0
-  Contrast@Grating@Grating: 0
-  SpatialFreq@Grating@Grating: 0
-  TemporalFreq@Grating@Grating: 0
-  ModulateTemporalFreq@Grating@Grating: 0
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
-  MinColor@Grating@Grating: 0 0 0 0
-  MaxColor@Grating@Grating: 0 0 0 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
   PauseTime@Grating@Grating: false
-  PauseModulateTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
   GratingType@Grating@Grating: Square
   ModulateType@Grating@Grating: Square
   ReverseTime@Grating@Grating: false
-  Duty@Grating@Grating: 0
-  ModulateDuty@Grating@Grating: 0
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
   TimeSecond@Grating@Grating: 0
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: false
+  Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic

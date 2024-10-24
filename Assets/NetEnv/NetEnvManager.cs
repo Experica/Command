@@ -1,5 +1,5 @@
 ﻿/*
-EnvironmentManager.cs is part of the Experica.
+NetEnvManager.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -28,6 +28,7 @@ using System;
 using System.Linq;
 using Experica;
 using Fasterflect;
+using System.Xml.Linq;
 
 namespace Experica.NetEnv
 {
@@ -279,7 +280,7 @@ namespace Experica.NetEnv
             {
                 foreach (var p in nv.Values)
                 {
-                    p.Refresh();
+                    p.NotifyNetworkValue();
                 }
             }
         }
@@ -293,12 +294,70 @@ namespace Experica.NetEnv
                 {
                     foreach (var p in nv.Values)
                     {
-                        p.Refresh();
+                        p.NotifyNetworkValue();
                     }
                 }
             }
         }
 
+
+        public Dictionary<string, object> GetParamsByGameObject(string goName, bool tryReduceFullName = false)
+        {
+            if (!go_nb_nv.ContainsKey(goName))
+            {
+                Debug.LogError($"Can not find gameobject: {goName}");
+                return null;
+            }
+
+            var envparam = new Dictionary<string, object>();
+            var nb_nv = go_nb_nv[goName];
+            foreach (var nbName in nb_nv.Keys)
+            {
+                var nv = nb_nv[nbName];
+                foreach (var nvName in nv.Keys)
+                {
+                    envparam[string.Join('@', nvName, nbName, goName)] = nv[nvName].Value;
+                }
+            }
+            if (tryReduceFullName)
+            {
+                var nvNames = envparam.Keys.Select(i => i.FirstSplitHead());
+                if (nvNames.Distinct().Count() == envparam.Count)
+                {
+                    envparam = new(nvNames.Zip(envparam.Values, (k, v) => KeyValuePair.Create(k, v)));
+                }
+            }
+            return envparam;
+        }
+
+        public Dictionary<string, NetworkVariableSource> GetParamSourcesByGameObject(string goName, bool tryReduceFullName = false)
+        {
+            if (!go_nb_nv.ContainsKey(goName))
+            {
+                Debug.LogError($"Can not find gameobject: {goName}");
+                return null;
+            }
+
+            var envps = new Dictionary<string, NetworkVariableSource>();
+            var nb_nv = go_nb_nv[goName];
+            foreach (var nbName in nb_nv.Keys)
+            {
+                var nv = nb_nv[nbName];
+                foreach (var nvName in nv.Keys)
+                {
+                    envps[string.Join('@', nvName, nbName, goName)] = nv[nvName];
+                }
+            }
+            if (tryReduceFullName)
+            {
+                var nvNames = envps.Keys.Select(i => i.FirstSplitHead());
+                if (nvNames.Distinct().Count() == envps.Count)
+                {
+                    envps = new(nvNames.Zip(envps.Values, (k, v) => KeyValuePair.Create(k, v)));
+                }
+            }
+            return envps;
+        }
 
         public Dictionary<string, object> GetActiveParams(bool tryReduceFullName = false) => GetParams(tryReduceFullName, true);
 
@@ -357,6 +416,7 @@ namespace Experica.NetEnv
             }
             return envps;
         }
+
 
         public T GetActiveParam<T>(string nvORfullName) => GetParam<T>(nvORfullName, true);
 
@@ -584,11 +644,15 @@ namespace Experica.NetEnv
             }
         }
 
+        public string[] GetGameObjectFullNames(bool active = false) { return active ? active_go.Keys.ToArray() : go.Keys.ToArray(); }
+
+
         public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null)
         {
             var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform);
             if (nb == null) { return null; }
-            nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
+            //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
+            nb.Position.Value = Vector3.zero;
             c.OnCameraChange += nb.UpdateView;
             nb.UpdateView(c);
             return nb;

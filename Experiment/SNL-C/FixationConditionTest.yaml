@@ -1,0 +1,99 @@
+ID: FixationConditionTest
+Name: FixationConditionTest
+Designer: Alex
+Experimenter: LZ
+Log: Right Eye
+Subject_ID: Test
+Subject_Name: AG5
+Subject_Species: M. F.
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.4
+Subject_Log: 
+EnvPath: Fixation
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  FixDotPosition@FixDot@FixDot: -5 5 0
+  FixDotDiameter@FixDot@FixDot: 3
+  FixDotVisible@FixDot@FixDot: true
+CondPath: ''
+Cond: 
+LogicPath: FixationConditionTest
+Hemisphere: Left
+Eye: Both
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: true
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 250
+SufICI: 0
+PreITI: 426
+TrialDur: 0
+SufITI: 778
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+InheritParam:
+- Experimenter
+- Subject_ID
+- Hemisphere
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Birth
+- Subject_Size
+- Subject_Weight
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- MarkerSize@Marker@Marker~OrthoCamera
+- MarkerCorner@Marker@Marker~OrthoCamera
+ExtendParam:
+  MinPreITIDur: 250
+  MaxPreITIDur: 500
+  MinSufITIDur: 500
+  MaxSufITIDur: 1000
+  MinFixDur: 1000
+  MaxFixDur: 2000
+  WaitForFixTimeOut: 3000
+  FixRadius: 1
+  DotScaleOnFix: 0.7
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+  - DigitalOut
+  - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShowLevel: NONE
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 
