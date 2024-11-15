@@ -13,27 +13,27 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Dots
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
+  ScreenToEye@OrthoCamera@OrthoCamera: 0
+  ScreenHeight@OrthoCamera@OrthoCamera: 0
+  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 0
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
   Dir@Dots@Dots: 0
   DirOffset@Dots@Dots: 0
-  Speed@Dots@Dots: 1
-  Size@Dots@Dots: 10 10 10
-  Diameter@Dots@Dots: 10
-  NDots@Dots@Dots: 30
-  DotColor@Dots@Dots: 0 0 0 1
-  DotSize@Dots@Dots: 1 1
+  Speed@Dots@Dots: 0
+  Size@Dots@Dots: 0 0 0
+  Diameter@Dots@Dots: 0
+  NDots@Dots@Dots: 0
+  DotColor@Dots@Dots: 0 0 0 0
+  DotSize@Dots@Dots: 0 0
   Coherence@Dots@Dots: 0
   Position@Dots@Dots: 0 0 0
-  Visible@Dots@Dots: true
+  Visible@Dots@Dots: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
@@ -62,22 +62,21 @@ PushCondAtState: NONE
 CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam: []
 EnvInheritParam:
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- CLUT@OrthoCamera@OrthoCamera
-- Position@Dots@Dots
-ExtendParam: {}
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - Position@Dots@Dots
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
-  - DigitalOut
-  - Display
+    - DigitalOut
+    - Display
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
@@ -86,3 +85,4 @@ NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

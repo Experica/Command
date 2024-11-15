@@ -925,7 +925,7 @@ MonoBehaviour:
         asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:
         m_Version: 0
-        m_VolumeProfile: {fileID: 11400000, guid: 254c4fe87beb7be4fa72e1681edbed02,
+        m_VolumeProfile: {fileID: 11400000, guid: 190ac111d13f1594b99b0624a771decc,
           type: 2}
     - rid: 5376348425393274888
       type: {class: RenderGraphSettings, ns: UnityEngine.Rendering.HighDefinition,

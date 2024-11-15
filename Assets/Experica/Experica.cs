@@ -52,7 +52,7 @@ using MethodInvoker = Fasterflect.MethodInvoker;
 namespace Experica
 {
     /// <summary>
-    /// wrapper and cache of fast delegate to reflected property
+    /// wrap and cache of fast delegate to reflected property
     /// </summary>
     public class Property
     {
@@ -73,8 +73,9 @@ namespace Experica
             Setter = info.DelegateForSetPropertyValue();
         }
     }
+
     /// <summary>
-    /// wrapper and cache of fast delegate to reflected method
+    /// wrap and cache of fast delegate to reflected method
     /// </summary>
     public class Method
     {
@@ -144,9 +145,9 @@ namespace Experica
     }
 
     /// <summary>
-    /// UI datasource wrapper of dictionary for data binding
+    /// UI datasource wrapper of Dictionary<String, TValue> for data binding
     /// </summary>
-    /// <typeparam name="TValue">Value Type of dictionary</typeparam>
+    /// <typeparam name="TValue">Value Type of Dictionary</typeparam>
     public class DictSource<TValue> : INotifyBindablePropertyChanged, IDataSource<TValue>
     {
         public string Name { get; }
@@ -225,6 +226,10 @@ namespace Experica
         public void SetValueWithoutNotify<T>(T value) { Property.Setter(Container, value.Convert(typeof(T), Type)); }
     }
 
+    /// <summary>
+    /// DataSource that expose only one DataPath of name: "Value"
+    /// </summary>
+    /// <typeparam name="T">Type of Exposed Value</typeparam>
     public interface IDataSource<T>
     {
         public string Name { get; }
@@ -233,6 +238,217 @@ namespace Experica
         public void NotifyValue();
         public void SetValueWithoutNotify(T value);
     }
+
+    /// <summary>
+    /// For it's derived class, provide reflected property access and UI datasource wrapper
+    /// </summary>
+    public abstract class DataClass
+    {
+        public Dictionary<string, object> ExtendParam { get; set; } = new();
+        Dictionary<string, PropertySource<DataClass>> properties = new();
+        Dictionary<string, DictSource<object>> extendproperties = new();
+
+        /// <summary>
+        /// cache and wrap all property access in datasource for UI binding
+        /// </summary>
+        public DataClass()
+        {
+            var dtype = GetType();
+            var dtypename = dtype.ToString();
+            start:
+            if (dtypename.QueryProperties(out var ps))
+            {
+                properties = ps.ToDictionary(kv => kv.Key, kv => new PropertySource<DataClass>(this, kv.Value));
+            }
+            else 
+            {
+                foreach (var p in dtype.GetProperties())
+                {
+                    dtypename.StoreProperty(p.Name, new Property(p));
+                }
+                goto start;
+            }
+        }
+
+
+        /// <summary>
+        /// Try set value for properties or ExtendParam via datasource wrapper(will notify UI for value change)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetParam(string name, object value)
+        {
+            if (properties.ContainsKey(name))
+            {
+                var p = properties[name];
+                p.Value = value.Convert(p.Type);
+                return true;
+            }
+            if (extendproperties.ContainsKey(name))
+            {
+                extendproperties[name].Value = value;
+                return true;
+            }
+            Debug.LogError($"Param: {name} not found in {GetType().Name} or its ExtendParam");
+            return false;
+        }
+
+        /// <summary>
+        /// set ExtendParam value via datasource wrapper(will notify UI for value change)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetExtendProperty(string name, object value)
+        {
+            if (extendproperties.ContainsKey(name))
+            {
+                extendproperties[name].Value = value;
+                return true;
+            }
+            Debug.LogError($"ExtendProperty: {name} not exist in {GetType().Name}.ExtendParam");
+            return false;
+        }
+
+        /// <summary>
+        /// set property value via datasource wrapper(will notify UI for value change)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetProperty(string name, object value)
+        {
+            if (properties.ContainsKey(name))
+            {
+                var p = properties[name];
+                p.Value = value.Convert(p.Type);
+                return true;
+            }
+            Debug.LogError($"Property: {name} not defined in {GetType().Name}");
+            return false;
+        }
+
+        public T GetParam<T>(string name)
+        {
+            if (properties.ContainsKey(name))
+            {
+                return properties[name].GetValue<T>();
+            }
+            if (extendproperties.ContainsKey(name))
+            {
+                return extendproperties[name].GetValue<T>();
+            }
+            Debug.LogError($"Param: {name} not found in {GetType().Name} or its ExtendParam, return default value of {typeof(T)} : {default}.");
+            return default;
+        }
+
+        /// <summary>
+        /// Try get value from properties or ExtendParam via datasource wrapper
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public object GetParam(string name)
+        {
+            if (properties.ContainsKey(name))
+            {
+                return properties[name].Value;
+            }
+            if (extendproperties.ContainsKey(name))
+            {
+                return extendproperties[name].Value;
+            }
+            Debug.LogError($"Param: {name} not found in {GetType().Name} or its ExtendParam");
+            return null;
+        }
+
+        public T GetExtendProperty<T>(string name)
+        {
+            if (extendproperties.ContainsKey(name))
+            {
+                return extendproperties[name].GetValue<T>();
+            }
+            Debug.LogError($"ExtendProperty: {name} not exist in {GetType().Name}.ExtendParam, return default value of {typeof(T)} : {default}.");
+            return default;
+        }
+
+        /// <summary>
+        /// get ExtendParam value via datasource wrapper
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public object GetExtendProperty(string name)
+        {
+            if (extendproperties.ContainsKey(name))
+            {
+                return extendproperties[name].Value;
+            }
+            Debug.LogError($"ExtendProperty: {name} not exist in {GetType().Name}.ExtendParam");
+            return null;
+        }
+
+        public T GetProperty<T>(string name)
+        {
+            if (properties.ContainsKey(name))
+            {
+                return properties[name].GetValue<T>();
+            }
+            Debug.LogError($"Property: {name} not defined in {GetType().Name}, return default value of {typeof(T)} : {default}.");
+            return default;
+        }
+
+        /// <summary>
+        /// get property value via datasource wrapper
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public object GetProperty(string name)
+        {
+            if (properties.ContainsKey(name))
+            {
+                return properties[name].Value;
+            }
+            Debug.LogError($"Property: {name} not defined in {GetType().Name}");
+            return null;
+        }
+
+        public bool ContainsParam(string name) => properties.ContainsKey(name) || extendproperties.ContainsKey(name);
+        public bool ContainsExtendProperty(string name) => extendproperties.ContainsKey(name);
+        public bool ContainsProperty(string name) => properties.ContainsKey(name);
+        public Dictionary<string, PropertySource<DataClass>> Properties() => properties;
+        public Dictionary<string, DictSource<object>> ExtendProperties() => extendproperties;
+
+        /// <summary>
+        /// delete name:value in ExtendParam and its datasource wrapper
+        /// </summary>
+        /// <param name="name"></param>
+        public void RemoveExtendProperty(string name)
+        {
+            extendproperties.Remove(name);
+            ExtendParam.Remove(name);
+        }
+
+        /// <summary>
+        /// add name:value in ExtendParam and its datasource wrapper
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public DictSource<object> AddExtendProperty(string name, object value)
+        {
+            ExtendParam[name] = value;
+            DictSource<object> source = new(ExtendParam, name);
+            extendproperties[name] = source;
+            return source;
+        }
+
+        /// <summary>
+        /// wrap all ExtendParam in datasource for UI binding
+        /// </summary>
+        public void RefreshExtendProperties() => extendproperties = ExtendParam.ToDictionary(kv => kv.Key, kv => new DictSource<object>(ExtendParam, kv.Key));
+
+    }
+
 
     public class MethodAccess
     {
@@ -314,7 +530,9 @@ namespace Experica
 
     public static class Experica
     {
-        public const uint ExperimentDataVersion = 3;
+        public const uint ExperimentVersion = 3;
+        public const uint CommandConfigVersion = 0;
+        public const string EmptyScene = "Empty";
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
 
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new();
@@ -333,9 +551,9 @@ namespace Experica
             typeof(int),typeof(uint),typeof(long),typeof(ulong),
             typeof(float),typeof(double),typeof(decimal)
         };
-        static Type TObject = typeof(object), TString = typeof(string), TBool = typeof(bool), TInt = typeof(int), TFloat = typeof(float), TDouble = typeof(double),
-            TVector2 = typeof(Vector2), TVector3 = typeof(Vector3), TVector4 = typeof(Vector4), TColor = typeof(Color),
-            TListT = typeof(List<>), TArray = typeof(Array), TFixString512 = typeof(FixedString512Bytes);
+        static Type TObject = typeof(object), TString = typeof(string), TBool = typeof(bool), TInt = typeof(int), TUInt = typeof(uint), TFloat = typeof(float), TDouble = typeof(double),
+            TVector2 = typeof(Vector2), TVector3 = typeof(Vector3), TVector4 = typeof(Vector4), TColor = typeof(Color), TFixString512 = typeof(FixedString512Bytes),
+            TListT = typeof(List<>), TDictTT = typeof(Dictionary<,>), TListObject = typeof(List<object>), TDictObjectObject = typeof(Dictionary<object, object>), TArray = typeof(Array);
 
         #region ImageSets
         static Dictionary<string, ImageSet> imagesets = new();
@@ -561,29 +779,16 @@ namespace Experica
         public static IList AsList(this object o) => o as IList;
 
         #region Convert between Types
-
+        // Here, we try parsing string on all build-in types of YAML, plus commonly used UnityEngine types. We begin on scaler types, then container types,
+        // since we allow long vector to be parsed as short vector, so we need to search descendingly to prevent e.g. vector4 be parsed as vector2
+        static Type[] tryparsestringfortypes = new Type[] { TBool, TFloat, TColor, TVector3, TVector2, TListObject, TDictObjectObject };
         public static object TryParse(this string value)
         {
-            if (float.TryParse(value, out float fr)) { return fr; }
-            if (bool.TryParse(value, out bool br)) { return br; }
-            var vs = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var n = vs.Length;
-            if (n > 1)
+            if (string.IsNullOrEmpty(value)) { return value; }
+            foreach (var T in tryparsestringfortypes)
             {
-                var fvs = new float[n];
-                if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
-                {
-                    switch (n)
-                    {
-                        case 2:
-                            return new Vector2(fvs[0], fvs[1]);
-                        case 3:
-                            return new Vector3(fvs[0], fvs[1], fvs[2]);
-                        case 4:
-                            return new Color(fvs[0], fvs[1], fvs[2], fvs[3]);
-                    };
-
-                };
+                var v = value.Convert(TString, T);
+                if (v != null) { return v; }
             }
             return value;
         }
@@ -604,12 +809,22 @@ namespace Experica
             return Convert(value, value.GetType(), T);
         }
 
-        public static object Convert(this object value, Type TValue, Type T)
+        /// <summary>
+        /// Try convert between types
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="TValue">Type of the value</param>
+        /// <param name="T">Type we want the value to be converted to</param>
+        /// <param name="floatfmt">String format when convert float value (float gives 9 significant digits, since most of our data don't need full precision, here we use 5 significant digits.)</param>
+        /// <returns>The converted value, or null if unsuccessful</returns>
+        public static object Convert(this object value, Type TValue, Type T, string floatfmt = "G5")
         {
             lock (apilock)
             {
-                if (TValue == T) { return value; }
+                if (value == null || TValue == T) { return value; }
+                object cvalue = null; bool isfallback = false;
 
+                // try all to all conversion
                 if (TValue == TFixString512)
                 {
                     var v = (FixedString512Bytes)value;
@@ -620,90 +835,24 @@ namespace Experica
                     var v = (float)value;
                     if (T == TString)
                     {
-                        return v.ToString("G4");
+                        return v.ToString(floatfmt);
                     }
-                }
-                else if (TValue.IsGenericType && TValue.GetGenericTypeDefinition() == TListT)
-                {
-                    if (T.IsGenericType && T.GetGenericTypeDefinition() == TListT)
-                    {
-                        var CTT = T.GetGenericArguments()[0];
-                        var v = Activator.CreateInstance(T).AsList();
-                        foreach (var i in value.AsList())
-                        {
-                            v.Add(i.Convert(CTT));
-                        }
-                        return v;
-                    }
-                    else if (T == TVector3)
-                    {
-                        var v = value.AsList();
-                        var vn = v.Count;
-                        float x = 0, y = 0, z = 0;
-                        if (vn > 0)
-                        {
-                            x = v[0].Convert<float>();
-                        }
-                        if (vn > 1)
-                        {
-                            y = v[1].Convert<float>();
-                        }
-                        if (vn > 2)
-                        {
-                            z = v[2].Convert<float>();
-                        }
-                        return new Vector3(x, y, z);
-                    }
-                    else if (T == TColor)
-                    {
-                        var v = value.AsList();
-                        var vn = v.Count;
-                        float r = 0, g = 0, b = 0, a = 1;
-                        if (vn > 0)
-                        {
-                            r = v[0].Convert<float>();
-                        }
-                        if (vn > 1)
-                        {
-                            g = v[1].Convert<float>();
-                        }
-                        if (vn > 2)
-                        {
-                            b = v[2].Convert<float>();
-                        }
-                        if (vn > 3)
-                        {
-                            a = v[3].Convert<float>();
-                        }
-                        return new Color(r, g, b, a);
-                    }
-                    else if (T == TString)
-                    {
-                        var v = value.AsList();
-                        var vn = v.Count;
-                        if (vn == 0) return "[]";
-
-                        var vs = new string[vn];
-                        for (var i = 0; i < vn; i++)
-                        {
-                            vs[i] = v[i].Convert<string>();
-                        }
-                        return "[" + string.Join(", ", vs) + "]";
-                    }
+                    else { isfallback = true; }
                 }
                 else if (TValue == TVector2)
                 {
                     var v = (Vector2)value;
                     if (T == TString)
                     {
-                        return v.x.ToString("G4") + " " + v.y.ToString("G4");
+                        return v.x.ToString(floatfmt) + " " + v.y.ToString(floatfmt);
                     }
                     else if (T.IsSubclassOf(TArray))
                     {
                         var et = T.GetElementType();
-                        var tv = Array.CreateInstance(et, 2);
-                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1);
-                        return tv;
+                        var av = Array.CreateInstance(et, 2);
+                        av.SetValue(v.x.Convert(TFloat, et), 0);
+                        av.SetValue(v.y.Convert(TFloat, et), 1);
+                        return av;
                     }
                 }
                 else if (TValue == TVector3)
@@ -711,14 +860,16 @@ namespace Experica
                     var v = (Vector3)value;
                     if (T == TString)
                     {
-                        return string.Join(" ", Enumerable.Range(0, 3).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 3).Select(i => v[i].ToString(floatfmt)));
                     }
                     else if (T.IsSubclassOf(TArray))
                     {
                         var et = T.GetElementType();
-                        var tv = Array.CreateInstance(et, 3);
-                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1); tv.SetValue(v.z.Convert(TFloat, et), 2);
-                        return tv;
+                        var av = Array.CreateInstance(et, 3);
+                        av.SetValue(v.x.Convert(TFloat, et), 0);
+                        av.SetValue(v.y.Convert(TFloat, et), 1);
+                        av.SetValue(v.z.Convert(TFloat, et), 2);
+                        return av;
                     }
                 }
                 else if (TValue == TVector4)
@@ -726,7 +877,7 @@ namespace Experica
                     var v = (Vector4)value;
                     if (T == TString)
                     {
-                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString(floatfmt)));
                     }
                     else if (T == TColor)
                     {
@@ -735,9 +886,12 @@ namespace Experica
                     else if (T.IsSubclassOf(TArray))
                     {
                         var et = T.GetElementType();
-                        var tv = Array.CreateInstance(et, 4);
-                        tv.SetValue(v.x.Convert(TFloat, et), 0); tv.SetValue(v.y.Convert(TFloat, et), 1); tv.SetValue(v.z.Convert(TFloat, et), 2); tv.SetValue(v.w.Convert(TFloat, et), 3);
-                        return tv;
+                        var av = Array.CreateInstance(et, 4);
+                        av.SetValue(v.x.Convert(TFloat, et), 0);
+                        av.SetValue(v.y.Convert(TFloat, et), 1);
+                        av.SetValue(v.z.Convert(TFloat, et), 2);
+                        av.SetValue(v.w.Convert(TFloat, et), 3);
+                        return av;
                     }
                 }
                 else if (TValue == TColor)
@@ -745,7 +899,7 @@ namespace Experica
                     var v = (Color)value;
                     if (T == TString)
                     {
-                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString("G4")));
+                        return string.Join(" ", Enumerable.Range(0, 4).Select(i => v[i].ToString(floatfmt)));
                     }
                     else if (T == TVector4)
                     {
@@ -754,79 +908,193 @@ namespace Experica
                     else if (T.IsSubclassOf(TArray))
                     {
                         var et = T.GetElementType();
-                        var tv = Array.CreateInstance(et, 4);
-                        tv.SetValue(v.r.Convert(TFloat, et), 0); tv.SetValue(v.g.Convert(TFloat, et), 1); tv.SetValue(v.b.Convert(TFloat, et), 2); tv.SetValue(v.a.Convert(TFloat, et), 3);
-                        return tv;
+                        var av = Array.CreateInstance(et, 4);
+                        av.SetValue(v.r.Convert(TFloat, et), 0);
+                        av.SetValue(v.g.Convert(TFloat, et), 1);
+                        av.SetValue(v.b.Convert(TFloat, et), 2);
+                        av.SetValue(v.a.Convert(TFloat, et), 3);
+                        return av;
                     }
                 }
                 else if (TValue == TString)
                 {
-                    var vstr = (string)value;
+                    var str = (string)value;
                     if (T == TBool)
                     {
-                        return bool.Parse(vstr);
+                        if (bool.TryParse(str, out bool v)) { cvalue = v; }
+                    }
+                    else if (T == TUInt)
+                    {
+                        if (uint.TryParse(str, out uint v)) { cvalue = v; }
                     }
                     else if (T == TInt)
                     {
-                        return int.Parse(vstr);
+                        if (int.TryParse(str, out int v)) { cvalue = v; }
                     }
                     else if (T == TFloat)
                     {
-                        return float.Parse(vstr);
+                        if (float.TryParse(str, out float v)) { cvalue = v; }
                     }
                     else if (T == TDouble)
                     {
-                        return double.Parse(vstr);
+                        if (double.TryParse(str, out double v)) { cvalue = v; }
                     }
                     else if (T == TVector2)
                     {
-                        var vs = vstr.Split(' ');
-                        return new Vector2(float.Parse(vs[0]), float.Parse(vs[1]));
+                        var n = 2;
+                        var vs = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (vs.Length >= n) // here allow e.g. Vector4 as Vector2
+                        {
+                            var fvs = new float[n];
+                            if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
+                            {
+                                cvalue = new Vector2(fvs[0], fvs[1]);
+                            }
+                        }
                     }
                     else if (T == TVector3)
                     {
-                        var vs = vstr.Split(' ');
-                        return new Vector3(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]));
+                        var n = 3;
+                        var vs = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (vs.Length >= n)
+                        {
+                            var fvs = new float[n];
+                            if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
+                            {
+                                cvalue = new Vector3(fvs[0], fvs[1], fvs[2]);
+                            }
+                        }
                     }
                     else if (T == TVector4)
                     {
-                        var vs = vstr.Split(' ');
-                        return new Vector4(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
+                        var n = 4;
+                        var vs = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (vs.Length >= n)
+                        {
+                            var fvs = new float[n];
+                            if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
+                            {
+                                cvalue = new Vector4(fvs[0], fvs[1], fvs[2], fvs[3]);
+                            }
+                        }
                     }
                     else if (T == TColor)
                     {
-                        var vs = vstr.Split(' ');
-                        return new Color(float.Parse(vs[0]), float.Parse(vs[1]), float.Parse(vs[2]), float.Parse(vs[3]));
+                        var n = 4;
+                        var vs = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (vs.Length >= n)
+                        {
+                            var fvs = new float[n];
+                            if (Enumerable.Range(0, n).Select(i => float.TryParse(vs[i], out fvs[i])).All(i => i))
+                            {
+                                cvalue = new Color(fvs[0], fvs[1], fvs[2], fvs[3]);
+                            }
+                        }
                     }
-                    else if (T.IsEnum && Enum.IsDefined(T, vstr))
+                    else if (T.IsEnum)
                     {
-                        return Enum.Parse(T, vstr);
+                        if (Enum.TryParse(T, str, out object v)) { cvalue = v; }
                     }
                     else if (T == TFixString512)
                     {
-                        return new FixedString512Bytes(vstr);
+                        cvalue = new FixedString512Bytes(str);
                     }
-                    else if (T.IsGenericType && T.GetGenericTypeDefinition() == TListT)
+                    else if (T.IsValueType) // for all other value-types
                     {
-                        var CTT = T.GetGenericArguments()[0];
-                        var v = Activator.CreateInstance(T).AsList();
-                        var si = vstr.IndexOf('[') + 1; var ei = vstr.LastIndexOf(']');
-                        var vs = vstr.Substring(si, ei - si).Split(',').Select(i => i.Trim()).ToList();
-                        foreach (var i in vs)
-                        {
-                            v.Add(i.Convert(CTT));
-                        }
-                        return v;
+                        isfallback = true;
+                    }
+                    else // for all other non-value-types, we assume the string value is its yaml serialization(List, Dict, Classes, etc.)
+                    {
+                        try { cvalue = str.DeserializeYaml(T); }
+                        catch (Exception ex) { /*Debug.LogException(ex);*/ }
                     }
                 }
-                else // Value Type not handled
+                else if (TValue.IsGenericType && TValue.GetGenericTypeDefinition() == TListT)
+                {
+                    if (T.IsGenericType && T.GetGenericTypeDefinition() == TListT)
+                    {
+                        var TT = T.GetGenericArguments()[0];
+                        var v = Activator.CreateInstance(T).AsList();
+                        foreach (var i in value.AsList())
+                        {
+                            v.Add(i.Convert(TT));
+                        }
+                        cvalue = v;
+                    }
+                    else if (T == TVector2)
+                    {
+                        var list = value.AsList();
+                        var n = 2;
+                        if (list.Count >= n)
+                        {
+                            var fvs = Enumerable.Range(0, n).Select(i => list[i].Convert(TFloat)).ToArray();
+                            if (fvs.All(i => i != null))
+                            {
+                                cvalue = new Vector2((float)fvs[0], (float)fvs[1]);
+                            }
+                        }
+                    }
+                    else if (T == TVector3)
+                    {
+                        var list = value.AsList();
+                        var n = 3;
+                        if (list.Count >= n)
+                        {
+                            var fvs = Enumerable.Range(0, n).Select(i => list[i].Convert(TFloat)).ToArray();
+                            if (fvs.All(i => i != null))
+                            {
+                                cvalue = new Vector3((float)fvs[0], (float)fvs[1], (float)fvs[2]);
+                            }
+                        }
+                    }
+                    else if (T == TVector4)
+                    {
+                        var list = value.AsList();
+                        var n = 4;
+                        if (list.Count >= n)
+                        {
+                            var fvs = Enumerable.Range(0, n).Select(i => list[i].Convert(TFloat)).ToArray();
+                            if (fvs.All(i => i != null))
+                            {
+                                cvalue = new Vector4((float)fvs[0], (float)fvs[1], (float)fvs[2], (float)fvs[3]);
+                            }
+                        }
+                    }
+                    else if (T == TColor)
+                    {
+                        var list = value.AsList();
+                        var n = 4;
+                        if (list.Count >= n)
+                        {
+                            var fvs = Enumerable.Range(0, n).Select(i => list[i].Convert(TFloat)).ToArray();
+                            if (fvs.All(i => i != null))
+                            {
+                                cvalue = new Color((float)fvs[0], (float)fvs[1], (float)fvs[2], (float)fvs[3]);
+                            }
+                        }
+                    }
+                    else if (T == TString)
+                    {
+                        var list = value.AsList();
+                        cvalue = '[' + string.Join(", ", Enumerable.Range(0, list.Count).Select(i => list[i].Convert(TString))) + ']';
+                    }
+                }
+                else // other Types of value
                 {
                     if (T == TString)
                     {
-                        return value.ToString();
+                        cvalue = value.SerializeYaml();
                     }
+                    else { isfallback = true; }
                 }
-                return System.Convert.ChangeType(value, T);
+
+                if (isfallback)
+                {
+                    try { cvalue = System.Convert.ChangeType(value, T); }
+                    catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                }
+
+                return cvalue;
             }
         }
         #endregion

@@ -32,7 +32,7 @@ namespace Experica.Command
         public string LastConfigFilePath { get; set; } = "";
     }
 
-    public class CommandConfig
+    public class CommandConfig : DataClass
     {
         public bool IsSaveExOnQuit { get; set; } = true;
         public bool IsSaveExSessionOnQuit { get; set; } = true;
@@ -88,9 +88,10 @@ namespace Experica.Command
         public string RecordHost2 { get; set; } = "LocalHost";
         public int RecordHostPort2 { get; set; } = 10000;
 
-        public Dictionary<string, object> Param { get; set; } = new Dictionary<string, object>();
+        public uint Version { get; set; } = Experica.CommandConfigVersion;
         public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
         public Dictionary<string, NetEnv.Display> Display { get; set; } = new ();
+
 
         public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(Dictionary<string, Dictionary<string, List<string>>> rule)
         {

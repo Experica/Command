@@ -31,6 +31,7 @@ using Experica.NetEnv;
 using UnityEngine.Rendering;
 using Unity.Properties;
 using Unity.Collections;
+using System.Security.AccessControl;
 
 namespace Experica.Command
 {
@@ -38,10 +39,11 @@ namespace Experica.Command
     {
         public UIController uicontroller;
         public UIDocument uidoc;
-        public VisualTreeAsset ExtendButton, ToggleString, ToggleEnum, ToggleBool, ToggleInteger, ToggleUInteger, ToggleFloat, ToggleDouble, ToggleVector2,
-            ToggleVector3, ToggleVector4, viewport, ParamsFoldout;
+        public VisualTreeAsset ToggleString, ToggleEnum, ToggleBool, ToggleInteger, ToggleUInteger, ToggleFloat, ToggleDouble, ToggleVector2,ToggleVector3, ToggleVector4,
+            ParamString, ParamEnum, ParamBool, ParamInteger, ParamUInteger, ParamFloat, ParamDouble, ParamVector2, ParamVector3, ParamVector4,
+            ExtendButton, viewport, ParamsFoldout,AboutWindow,ConfigWindow,AddExParamWindow;
 
-        VisualElement root, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
+        VisualElement root,mainmenu,maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
         public Toggle server, host, start, pause, startsession;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
@@ -51,6 +53,11 @@ namespace Experica.Command
         void OnEnable()
         {
             root = uidoc.rootVisualElement;
+            mainmenu = root.Q("MainMenu");
+            maincontent = root.Q("MainContent");
+            // Main Menu
+             mainmenu.Q<Button>("About").RegisterCallback<ClickEvent>(e => OnAboutWindow(root)  );
+            mainmenu.Q<Button>("Config").RegisterCallback<ClickEvent>(e => OnConfigWindow(root));
             // Control Panel
             controlpanel = root.Q("ControlPanel");
             server = controlpanel.Q<Toggle>("Server");
@@ -81,20 +88,49 @@ namespace Experica.Command
             // Experiment Panel
             experimentpanel = root.Q("ExperimentPanel");
             excontent = experimentpanel.Q<ScrollView>("Content");
-            addexextendparam = experimentpanel.Q<Button>("AddExtendParam");
-            addexextendparam.RegisterCallback<ClickEvent>(e => AddExExtendParamUI());
+            experimentpanel.Q<Button>("AddParam").RegisterCallback<ClickEvent>(e => OnAddExParamWindow(experimentpanel));
             // Environment Panel
             environmentpanel = root.Q("EnvironmentPanel");
             envcontent = environmentpanel.Q<ScrollView>("Content");
             // View Panel
             viewpanel = root.Q("ViewPanel");
-            viewcontent = viewpanel.Q("ViewContent");
+            viewcontent = viewpanel.Q("Content");
             // Console Panel
             consolepanel = root.Q("ConsolePanel");
             // Condition Panel
             condpanel = root.Q("ConditionPanel");
             // ConditionTest Panel
             condtestpanel = root.Q("ConditionTestPanel");
+        }
+
+        void OnAboutWindow(VisualElement parent)
+        {
+            var w = AboutWindow.Instantiate()[0];
+            w.Q<Label>("CommandVersion").text = Application.version;
+            w.Q<Label>("UnityVersion").text = Application.unityVersion;
+            w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
+
+            w.style.position = Position.Absolute;
+            w.style.top = Length.Percent(33);
+            w.style.left = Length.Percent(33);
+            w.style.width = Length.Percent(33);
+            w.style.height = Length.Percent(33);
+            parent.Add(w);
+        }
+
+        void OnConfigWindow(VisualElement parent)
+        {
+            var w = ConfigWindow.Instantiate()[0];
+            w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
+            var cfgcontent = w.Q<ScrollView>("Content");
+            UpdateConfig(uicontroller.config,cfgcontent);
+
+            w.style.position = Position.Absolute;
+            w.style.top = Length.Percent(20);
+            w.style.left = Length.Percent(25);
+            w.style.width = Length.Percent(50);
+            w.style.height = Length.Percent(60);
+            parent.Add(w);
         }
 
         public void UpdateExperimentList(List<string> list, string first = null)
@@ -119,13 +155,60 @@ namespace Experica.Command
             experimentsessionlist.index = Mathf.Clamp(experimentsessionlist.index, 0, list.Count - 1);
         }
 
+        public void UpdateConfig(CommandConfig config,ScrollView content)
+        {
+            content.Clear();
+            var previousui = content.Children().ToList();
+            var previousuiname = previousui.Select(i => i.name).ToList();
+            // since ExtendParam is a param container and we always show them, so here we do not AddParamUI for the container itself, but add its content
+            var currentpropertyname = config.Properties().Keys.Where(i => i != "ExtendParam").ToArray();
+            var ui2update = previousuiname.Intersect(currentpropertyname);
+            var ui2remove = previousuiname.Except(currentpropertyname);
+            var ui2add = currentpropertyname.Except(previousuiname);
+
+            if (ui2update.Count() > 0)
+            {
+                foreach (var p in ui2update)
+                {
+                    var ui = previousui[previousuiname.IndexOf(p)];
+                    var namelabel = ui.Q<Label>("Name");
+                    namelabel.text = p;
+                    var vi = ui.Q("Value");
+                    var ds = config.Properties()[p];
+                    var db = vi.GetBinding("value") as DataBinding;
+                    db.dataSource = ds;
+                    ds.NotifyValue();
+                }
+            }
+            if (ui2remove.Count() > 0)
+            {
+                foreach (var p in ui2remove)
+                {
+                    content.Remove(previousui[previousuiname.IndexOf(p)]);
+                }
+            }
+            if (ui2add.Count() > 0)
+            {
+                foreach (var p in ui2add)
+                {
+                    AddParamUI(p, p, config.Properties()[p], false, null, content);
+                }
+            }
+
+            foreach (var p in config.ExtendProperties().Keys.ToArray())
+            {
+                AddParamUI(p, p, config.ExtendProperties()[p], false, null, content, config, true);
+            }
+            content.scrollOffset = content.contentRect.size;
+        }
+
         public void UpdateEx(Experiment ex)
         {
             excontent.Clear();
             var previousui = excontent.Children().ToList();
             var previousuiname = previousui.Select(i => i.name).ToList();
             // since ExtendParam is a param container and we always show them, so here we do not AddParamUI for the container itself, but add its content
-            var currentpropertyname = ex.Properties.Keys.Except(uicontroller.config.ExHideParams).Where(i => i != "ExtendParam").ToArray();
+            var currentpropertyname = ex.Properties().Keys.Except(uicontroller.config.ExHideParams).Where(i => i != "ExtendParam").ToArray();
             var ui2update = previousuiname.Intersect(currentpropertyname);
             var ui2remove = previousuiname.Except(currentpropertyname);
             var ui2add = currentpropertyname.Except(previousuiname);
@@ -138,7 +221,7 @@ namespace Experica.Command
                     var nametoggle = ui.Q<Toggle>("Name");
                     nametoggle.SetValueWithoutNotify(ex.InheritParam.Contains(p));
                     var vi = ui.Q("Value");
-                    var ds = ex.Properties[p];
+                    var ds = ex.Properties()[p];
                     var db = vi.GetBinding("value") as DataBinding;
                     db.dataSource = ds;
                     ds.NotifyValue();
@@ -155,29 +238,30 @@ namespace Experica.Command
             {
                 foreach (var p in ui2add)
                 {
-                    AddParamUI(p, p, ex.Properties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent);
+                    AddParamUI(p, p, ex.Properties()[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent);
                 }
             }
 
-            foreach (var p in ex.ExtendProperties.Keys.Except(uicontroller.config.ExHideParams).ToArray())
+            foreach (var p in ex.ExtendProperties().Keys.Except(uicontroller.config.ExHideParams).ToArray())
             {
-                AddParamUI(p, p, ex.ExtendProperties[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent, true);
+                AddParamUI(p, p, ex.ExtendProperties()[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent,uicontroller.exmanager.el.ex, true);
             }
             excontent.scrollOffset = excontent.contentRect.size;
         }
 
-        void AddParamUI<T>(string id, string name, IDataSource<T> source, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, bool isextendparam = false)
+        void AddParamUI<T>(string id, string name, IDataSource<T> source, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, DataClass datasourceclass = null, bool isextendparam = false)
         {
-            AddParamUI(id, name, source.Type, source.Value, isinherit, inherithandler, parent, source, "Value", isextendparam);
+            AddParamUI(id, name, source.Type, source.Value, isinherit, inherithandler, parent,datasourceclass, source, "Value", isextendparam);
         }
 
-        void AddParamUI(string id, string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, object datasource = null, string datapath = "Value", bool isextendparam = false)
+        void AddParamUI(string id, string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, DataClass datasourceclass =null, object datasource = null, string datapath = "Value", bool isextendparam = false)
         {
             VisualElement ui, valueinput;
 
             if (T.IsEnum)
             {
-                ui = ToggleEnum.Instantiate()[0];
+                var asset = inherithandler == null ? ParamEnum : ToggleEnum;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<EnumField>("Value");
@@ -186,7 +270,8 @@ namespace Experica.Command
             }
             else if (T == typeof(bool))
             {
-                ui = ToggleBool.Instantiate()[0];
+                var asset = inherithandler == null ? ParamBool : ToggleBool;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<Toggle>("Value");
@@ -197,7 +282,8 @@ namespace Experica.Command
             }
             else if (T == typeof(int))
             {
-                ui = ToggleInteger.Instantiate()[0];
+                var asset = inherithandler == null ? ParamInteger : ToggleInteger;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<IntegerField>("Value");
@@ -206,7 +292,8 @@ namespace Experica.Command
             }
             else if (T == typeof(uint))
             {
-                ui = ToggleUInteger.Instantiate()[0];
+                var asset = inherithandler == null ? ParamUInteger : ToggleUInteger;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<UnsignedIntegerField>("Value");
@@ -215,7 +302,8 @@ namespace Experica.Command
             }
             else if (T == typeof(float))
             {
-                ui = ToggleFloat.Instantiate()[0];
+                var asset = inherithandler == null ? ParamFloat : ToggleFloat;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<FloatField>("Value");
@@ -224,7 +312,8 @@ namespace Experica.Command
             }
             else if (T == typeof(double))
             {
-                ui = ToggleDouble.Instantiate()[0];
+                var asset = inherithandler == null ? ParamDouble : ToggleDouble;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<DoubleField>("Value");
@@ -233,7 +322,8 @@ namespace Experica.Command
             }
             else if (T == typeof(Vector2))
             {
-                ui = ToggleVector2.Instantiate()[0];
+                var asset = inherithandler == null ? ParamVector2 : ToggleVector2;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<Vector2Field>("Value");
@@ -242,7 +332,8 @@ namespace Experica.Command
             }
             else if (T == typeof(Vector3))
             {
-                ui = ToggleVector3.Instantiate()[0];
+                var asset = inherithandler == null ? ParamVector3 : ToggleVector3;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<Vector3Field>("Value");
@@ -251,7 +342,8 @@ namespace Experica.Command
             }
             else if (T == typeof(Vector4))
             {
-                ui = ToggleVector4.Instantiate()[0];
+                var asset = inherithandler == null ? ParamVector4 : ToggleVector4;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<Vector4Field>("Value");
@@ -260,7 +352,8 @@ namespace Experica.Command
             }
             else if (T == typeof(Color))
             {
-                ui = ToggleVector4.Instantiate()[0];
+                var asset = inherithandler == null ? ParamVector4 : ToggleVector4;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<Vector4Field>("Value");
@@ -269,7 +362,8 @@ namespace Experica.Command
             }
             else
             {
-                ui = ToggleString.Instantiate()[0];
+                var asset = inherithandler == null ? ParamString : ToggleString;
+                ui = asset.Instantiate()[0];
                 ui.name = id;
 
                 var vi = ui.Q<TextField>("Value");
@@ -277,10 +371,17 @@ namespace Experica.Command
                 valueinput = vi;
             }
 
-            var nametoggle = ui.Q<Toggle>("Name");
-            nametoggle.label = name;
-            nametoggle.value = isinherit;
-            nametoggle.RegisterValueChangedCallback(e => inherithandler(id, e.newValue));
+            if (inherithandler == null)
+            {
+                ui.Q<Button>("Name").text = name;
+            }
+            else
+            {
+                var nametoggle = ui.Q<Toggle>("Name");
+                nametoggle.label = name;
+                nametoggle.value = isinherit;
+                nametoggle.RegisterValueChangedCallback(e => inherithandler(id, e.newValue));
+            }
 
             if (datasource != null)
             {
@@ -299,32 +400,65 @@ namespace Experica.Command
                     binding.sourceToUiConverters.AddConverter((ref object s) => s.ToString());
                     binding.uiToSourceConverters.AddConverter((ref string v) => (object)new FixedString512Bytes(v));
                 }
+                else if (T.IsGenericType && (T.GetGenericTypeDefinition() == typeof(List<>) || T.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
+                {
+                    binding.sourceToUiConverters.AddConverter((ref object s) => s.Convert<string>(T));
+                    binding.uiToSourceConverters.AddConverter((ref string v) => v.Convert(typeof(string),T));
+                }
                 valueinput.SetBinding("value", binding);
             }
-            if (isextendparam)
+            if (isextendparam && datasourceclass !=null)
             {
                 var deletebutton = ExtendButton.Instantiate().Q<Button>("Delete");
-                deletebutton.RegisterCallback<ClickEvent>(e => DeleteExExtendParam(ui));
+                deletebutton.RegisterCallback<ClickEvent>(e =>
+                {
+                    datasourceclass.RemoveExtendProperty(id);
+                    parent.Remove(ui);
+                });
                 ui.Insert(0, deletebutton);
             }
             parent.Add(ui);
         }
 
-        void AddExExtendParamUI()
+        void OnAddExParamWindow(VisualElement parent)
         {
-            Debug.Log("add ExExtendParam");
+            var w = AddExParamWindow.Instantiate()[0];
+            w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
+
+            var namefield = w.Q<TextField>("Name");
+            var valuefield = w.Q<TextField> ("Value");
+            var errorout = w.Q<Label>("ErrOut");
+            w.Q<Button>("Confirm").RegisterCallback<ClickEvent>(e=>
+            {
+                var name = namefield.value;
+                if (string.IsNullOrEmpty( name)) 
+                {
+                    errorout.text = "Name Empty";
+                    return; 
+                }
+                else if (uicontroller.exmanager.el.ex.ContainsParam(name))
+                {
+                    errorout.text = "Name Conflict";
+                    return;
+                }
+                var value = valuefield.value.TryParse();
+                var s = uicontroller.exmanager.el.ex.AddExtendProperty(name, value);
+                parent.Remove(w);
+
+                //AddParamUI(s.Name, s.Name, s,uicontroller.exmanager.el. ex.InheritParam.Contains(s.Name), uicontroller.ToggleExInherit, excontent, true);
+                UpdateEx(uicontroller.exmanager.el.ex);
+            });
+
+            w.style.position = Position.Absolute;
+            w.style.top = Length.Percent(25);
+            w.style.left = Length.Percent(20);
+            w.style.width = Length.Percent(60);
+            w.style.height = Length.Percent(50);
+            parent.Add(w);
         }
 
-        void DeleteExExtendParam(VisualElement ui)
-        {
-            var name = ui.name;
-            Debug.Log($"delete ExExtendParam: {name}");
-            //excontent.Remove(ui);
-            //uicontroller.exmanager.el.ex.RemoveExtendProperty(name);
-        }
 
-
-        void AddParamsFoldoutUI(string[] ids, string[] names, IDataSource<object>[] sources, bool[] inherits, Action<string, bool> inherithandler, VisualElement parent, string groupname, bool isextendparam = false)
+        void AddParamsFoldoutUI(string[] ids, string[] names, IDataSource<object>[] sources, bool[] inherits, Action<string, bool> inherithandler, VisualElement parent, string groupname, DataClass datasourceclass = null, bool isextendparam = false)
         {
             var foldout = ParamsFoldout.Instantiate().Q<Foldout>();
             foldout.name = groupname;
@@ -332,10 +466,12 @@ namespace Experica.Command
 
             for (int i = 0; i < ids.Length; i++)
             {
-                AddParamUI(ids[i], names[i], sources[i], inherits[i], inherithandler, foldout, isextendparam);
+                AddParamUI(ids[i], names[i], sources[i], inherits[i], inherithandler, foldout,datasourceclass, isextendparam);
             }
             parent.Add(foldout);
         }
+
+        public void ClearEnv()=>envcontent.Clear();
 
         public void UpdateEnv()
         {
@@ -363,6 +499,8 @@ namespace Experica.Command
                 AddParamsFoldoutUI(nvfullnames, nvnames, nvsources, inherits, uicontroller.ToggleEnvInherit, envcontent, goname);
             }
         }
+
+        public void ClearView()=>viewcontent.Clear();
 
         public void UpdateView()
         {

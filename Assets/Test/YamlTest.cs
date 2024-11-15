@@ -35,20 +35,34 @@ namespace Experica.Test
              "SpatialPhase: [0, 0.25, 0.5, 0.75]";
         static string datastring, exstring;
 
-        [Test]
-        public void YamlWrite()
+
+        class TestData
         {
-            var data = new Dictionary<string, object>
+            public string name { get; set; } = "TestData";
+            public Vector2 vector2 { get; set; } = Vector2.left;
+            public Vector3 vector3 { get; set; } = Vector3.left;
+            public Vector4 vector4 { get; set; } = Vector4.one;
+            public Color color { get; set; } = Color.black;
+            public List<Color> colors { get; set; } = new List<Color>() { Color.red, Color.blue };
+            public Dictionary<string, object> param { get; set; } = new Dictionary<string, object>()
             {
                 ["Color"] = Color.black,
                 ["Vector4"] = Vector4.one,
                 ["Vector3"] = Vector3.right,
                 ["Vector2"] = Vector2.left,
                 ["Bool"] = true,
+                ["UInt"] = 2,
                 ["Int"] = 3,
                 ["Float"] = 4.5f,
-                ["Double"] = 3.142
+                ["Double"] = 3.142,
+                ["Colors"] = new List<Color>() { Color.gray, Color.green }
             };
+        }
+
+        [Test]
+        public void YamlWrite()
+        {
+            var data = new TestData();
             datastring = data.SerializeYaml();
             Debug.Log(datastring);
         }
@@ -65,9 +79,10 @@ namespace Experica.Test
         [Test]
         public void YamlRead()
         {
-            var data = datastring.DeserializeYaml<Dictionary<string, object>>();
-            foreach (var p in data.Keys)
-            { Debug.Log($"{p}({data[p].GetType()}): {data[p]}"); }
+            var data = datastring.DeserializeYaml<TestData>();
+            Debug.Log("For params of `typeof(object)`");
+            foreach (var p in data.param.Keys)
+            { Debug.Log($"{p}({data.param[p].GetType()}): {data.param[p]}"); }
 
             //var cond = yaml.DeserializeYaml<Dictionary<string, List<object>>>();
         }
@@ -78,16 +93,6 @@ namespace Experica.Test
             var ex = exstring.DeserializeYaml<Experiment>();
             //ex.InitializeDataSource();
             Debug.Log(ex);
-        }
-
-        // A UnityTest behaves like a coroutine in PlayMode
-        // and allows you to yield null to skip a frame in EditMode
-        [UnityTest]
-        public IEnumerator NewTestScriptWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // yield to skip a frame
-            yield return null;
         }
     }
 }

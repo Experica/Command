@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
-    <ui:VisualElement name="Root" class="Panel" style="justify-content: space-between; width: 100%; height: 100%; flex-grow: 1;">
-        <ui:Label text="View" name="Title" style="height: 50px; -unity-font-style: bold; -unity-text-align: middle-left; font-size: 40px; background-color: rgb(153, 153, 153);" />
-        <ui:VisualElement name="ViewContent" style="flex-direction: row; flex-grow: 1;" />
-        <ui:VisualElement name="ViewStatus" style="width: auto; height: 50px; flex-direction: row;" />
+    <ui:VisualElement name="Root" class="Panel">
+        <ui:Label text="View" name="Title" />
+        <ui:VisualElement name="Content" style="flex-direction: row; flex-grow: 1; justify-content: space-between; flex-wrap: wrap;" />
+        <ui:VisualElement name="Status" />
     </ui:VisualElement>
 </ui:UXML>

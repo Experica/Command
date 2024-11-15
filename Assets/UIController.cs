@@ -123,7 +123,7 @@ namespace Experica.Command
 
         void Start()
         {
-            version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
+            //version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
             Initialize();
         }
 
@@ -262,8 +262,8 @@ namespace Experica.Command
             //UpdateExDropdown();
             ui.UpdateExperimentSessionList(exsmanager.deffile.Keys.ToList());
             //UpdateExSessionDropdown();
-            savedata.interactable = !config.AutoSaveData;
-            consolepanel.maxentry = config.MaxLogEntry;
+            //savedata.interactable = !config.AutoSaveData;
+            //consolepanel.maxentry = config.MaxLogEntry;
         }
 
         void OnApplicationQuit()
@@ -377,21 +377,33 @@ namespace Experica.Command
             exmanager.el.envmanager.SetParam("ScreenAspect", ratio, true);
         }
 
+        /// <summary>
+        /// whenever new scene loaded, we get access to scene parameters, setup inheritance, update UI and get ready for running experiment
+        /// </summary>
+        /// <param name="scene"></param>
         public void OnSceneLoadEventCompleted(string scene)
         {
-            exmanager.el.envmanager.ParseScene(scene);
-            exmanager.el.envmanager.SetParams(exmanager.el.ex.EnvParam);
-            exmanager.InheritEnv();
-            exmanager.el.envmanager.RefreshParams();
-            // uicontroller.SyncCurrentDisplayCLUT();
+            if (scene == Experica.EmptyScene) // just do proper cleaning for the empty scene
+            {
+                ui.ClearEnv();
+                ui.ClearView();
+            }
+            else
+            {
+                exmanager.el.envmanager.ParseScene(scene);
+                // init user envparam values
+                exmanager.el.envmanager.SetParams(exmanager.el.ex.EnvParam);
+                // apply user inherit rules
+                exmanager.InheritEnv();
+                exmanager.el.envmanager.RefreshParams();
+                // uicontroller.SyncCurrentDisplayCLUT();
 
 
-            //envpanel.UpdateEnv(exmanager.el.envmanager);
-            ui.UpdateEnv();
-            //viewpanel.UpdateViewport();
-            //showhidescalegrid(exmanager.el.envmanager.MainCamera[0], true);
-            ui.UpdateView();
-            exmanager.OnReady();
+                ui.UpdateEnv();
+                //showhidescalegrid(exmanager.el.envmanager.MainCamera[0], true);
+                ui.UpdateView();
+                exmanager.OnReady();
+            }
         }
 
         public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)
@@ -518,7 +530,7 @@ namespace Experica.Command
             ui.deleteex.SetEnabled(false);
 
             var msg = $"Experiment \"{exmanager.el.ex.ID}\" Started.";
-            consolepanel.Log(msg);
+            //consolepanel.Log(msg);
             if (exmanager.el.ex.NotifyExperimenter)
             {
                 exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
@@ -643,7 +655,7 @@ namespace Experica.Command
                 if (!ip.Contains(name))
                 {
                     ip.Add(name);
-                    exmanager.el.ex.Properties["ExInheritParam"].NotifyValue();
+                    exmanager.el.ex.Properties()["ExInheritParam"].NotifyValue();
                 }
                 exmanager.InheritExParam(name);
             }
@@ -652,7 +664,7 @@ namespace Experica.Command
                 if (ip.Contains(name))
                 {
                     ip.Remove(name);
-                    exmanager.el.ex.Properties["ExInheritParam"].NotifyValue();
+                    exmanager.el.ex.Properties()["ExInheritParam"].NotifyValue();
                 }
             }
         }
@@ -709,7 +721,7 @@ namespace Experica.Command
                 if (!ip.Contains(fullname))
                 {
                     ip.Add(fullname);
-                    exmanager.el.ex.Properties["EnvInheritParam"].NotifyValue();
+                    exmanager.el.ex.Properties()["EnvInheritParam"].NotifyValue();
                 }
                 exmanager.InheritEnvParam(fullname);
             }
@@ -718,7 +730,7 @@ namespace Experica.Command
                 if (ip.Contains(fullname))
                 {
                     ip.Remove(fullname);
-                    exmanager.el.ex.Properties["EnvInheritParam"].NotifyValue();
+                    exmanager.el.ex.Properties()["EnvInheritParam"].NotifyValue();
                 }
             }
         }

@@ -9,9 +9,9 @@ ExSessionDir: ExperimentSession\SNL-C
 DataDir: Data
 ExLogic: ConditionTestLogic
 NotifyParams:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 AntiAliasing: 2
 AnisotropicFilterLevel: 5
 FixedDeltaTime: 1000000
@@ -23,20 +23,20 @@ IsShowInactiveEnvParam: false
 IsShowEnvParamFullName: false
 MaxLogEntry: 999
 ExHideParams:
-- Cond
-- CondTest
-- EnvParam
-- Param
-- Log
-- Subject_Log
-- DataPath
-- InheritParam
-- EnvInheritParam
-- Version
-- EventSyncProtocol
-- Config
-- NotifyPerCondTest
-- NotifyParam
+  - Cond
+  - CondTest
+  - EnvParam
+  - Param
+  - Log
+  - Subject_Log
+  - DataPath
+  - InheritParam
+  - EnvInheritParam
+  - Version
+  - EventSyncProtocol
+  - Config
+  - NotifyPerCondTest
+  - NotifyParam
 FirstTestID: ConditionTest
 ExperimenterAddress:
   Alex: 4109829463@mms.att.net
@@ -68,31 +68,31 @@ RecordHost1: 10.1.51.93
 RecordHostPort1: 10000
 RecordHost2: LocalHost
 RecordHostPort2: 10000
-Param: {}
+Version: 0
 EnvCrossInheritRule:
   GratingQuad:
     Quad:
-    - Ori
-    - Position
-    - Diameter
+      - Ori
+      - Position
+      - Diameter
     ImageQuad:
-    - Position
-    - Diameter
+      - Position
+      - Diameter
   Quad:
     GratingQuad:
-    - Ori
-    - Position
-    - Diameter
+      - Ori
+      - Position
+      - Diameter
     ImageQuad:
-    - Position
-    - Diameter
+      - Position
+      - Diameter
   ImageQuad:
     GratingQuad:
-    - Position
-    - Diameter
+      - Position
+      - Diameter
     Quad:
-    - Position
-    - Diameter
+      - Position
+      - Diameter
 Display:
   ROGPG279Q:
     ID: ROGPG279Q
@@ -114,3 +114,4 @@ Display:
     FitType: LinearSpline
     IntensityMeasurement: 
     SpectralMeasurement: 
+ExtendParam: {}

@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
+    <ui:VisualElement name="Root" class="Panel">
+        <ui:Label text="About" name="Title">
+            <ui:Button text="X" name="Close" class="CloseButton" />
+        </ui:Label>
+        <ui:VisualElement name="Content" style="flex-grow: 1;">
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 25px; margin-bottom: 25px; margin-right: 30px; margin-left: 30px;">
+                <ui:VisualElement style="background-image: url(&quot;project://database/Assets/NetEnv/Element/command_logo.svg?fileID=6192944022281365145&amp;guid=0107fa3a3d2698e40a2231b5d991c1cd&amp;type=3#command_logo&quot;); -unity-background-scale-mode: scale-to-fit; width: 30%;" />
+                <ui:Label text="Command" style="width: 30%; -unity-text-align: middle-left; -unity-font-style: bold; font-size: 50px; margin-left: 30px;" />
+                <ui:Label text="Version" name="CommandVersion" style="width: 30%; -unity-text-align: middle-left; -unity-font-style: bold; font-size: 50px; margin-left: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 25px; margin-bottom: 25px; margin-right: 30px; margin-left: 30px;">
+                <ui:VisualElement style="background-image: url(&quot;project://database/Assets/NetEnv/Element/unity_logo.svg?fileID=6192944022281365145&amp;guid=71a67df7c342c9c4089eedeeb1060bd9&amp;type=3#unity_logo&quot;); -unity-background-scale-mode: scale-to-fit; width: 30%;" />
+                <ui:Label text="Unity" style="width: 30%; -unity-text-align: middle-left; -unity-font-style: bold; font-size: 50px; margin-left: 30px;" />
+                <ui:Label text="Version" name="UnityVersion" style="width: 30%; -unity-text-align: middle-left; -unity-font-style: bold; font-size: 50px; margin-left: 30px;" />
+            </ui:VisualElement>
+            <ui:Label text="Copyright (c) 2016 Li Alex Zhang and Contributors" style="-unity-font-style: bold; font-size: 25px; -unity-text-align: middle-center; margin-top: 25px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

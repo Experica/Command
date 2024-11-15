@@ -25,6 +25,7 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode.Transports.UTP;
+using System.Threading;
 
 namespace Experica.Command
 {
@@ -36,57 +37,66 @@ namespace Experica.Command
         //int nenvsyncframe;
 
         public UIController uicontroller;
-        public UnityTransport utp;
 
         public bool StartHostServer(bool ishost = true)
         {
-            utp.SetConnectionData("127.0.0.0", 8800, "0.0.0.0");
-            bool isstarted = false;
-            if (ishost)
+            var isstarted = false;
+            var nm = NetworkManager.Singleton;
+            if (nm != null)
             {
-                isstarted = NetworkManager.Singleton.StartHost();
-            }
-            else
-            {
-                isstarted = NetworkManager.Singleton.StartServer();
+                isstarted = ishost ? nm.StartHost() : nm.StartServer();
             }
 
             if (isstarted)
             {
-                NetworkManager.Singleton.SceneManager.OnLoadComplete += SceneManager_OnLoadComplete;
-                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+                nm.SceneManager.OnLoadEventCompleted += NetworkSceneManager_OnLoadEventCompleted;
             }
             return isstarted;
         }
 
-        void SceneManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+        void NetworkSceneManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
             uicontroller.OnSceneLoadEventCompleted(sceneName);
         }
 
-        void SceneManager_OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
-        {
-        }
-
         public void Shutdown()
         {
-            if (NetworkManager.Singleton.IsListening)
+            var nm = NetworkManager.Singleton;
+            if (nm!=null && nm.IsListening)
             {
-                NetworkManager.Singleton.Shutdown();
+                nm.Shutdown();
+                // Network SceneManager will not exist when NetworkManager shutdown, so here we use UnityEngine's SceneManager to clean any loaded scene by loading an Empty scene
+                SceneManager.LoadScene(Experica.EmptyScene, LoadSceneMode.Single);
+                uicontroller.OnSceneLoadEventCompleted(Experica.EmptyScene);
             }
         }
 
         public void LoadScene(string scene, LoadSceneMode mode = LoadSceneMode.Single)
         {
-            if (NetworkManager.Singleton.IsServer)
+            var nm = NetworkManager.Singleton;
+            if (nm!=null && nm.IsServer)
             {
-                var status = NetworkManager.Singleton.SceneManager.LoadScene(scene, mode);
+                var status = nm.SceneManager.LoadScene(scene, mode);
                 if (status != SceneEventProgressStatus.Started)
                 {
-                    Debug.LogWarning($"Failed to load {scene} with a {nameof(SceneEventProgressStatus)}: {status}");
+                    Debug.LogError($"Failed to load {scene} with a {nameof(SceneEventProgressStatus)}: {status}");
                 }
             }
         }
+
+        public void UnLoadScene(Scene scene) 
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                var status = nm.SceneManager.UnloadScene(scene);
+                if (status != SceneEventProgressStatus.Started)
+                {
+                    Debug.LogError($"Failed to unload {scene} with a {nameof(SceneEventProgressStatus)}: {status}");
+                }
+            }
+        }
+
 
         //public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         //{

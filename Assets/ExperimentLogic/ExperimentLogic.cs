@@ -328,7 +328,7 @@ namespace Experica.Command
 
             ex.CondTest = condtestmanager.CondTest;
             ex.EnvParam = envmanager.GetActiveParams();
-            ex.Version = Experica.ExperimentDataVersion;
+            ex.Version = Experica.ExperimentVersion;
             // Hold references to data that may not need to save
             Dictionary<string, Dictionary<string, List<object>>[]> m = null;
             CommandConfig cfg = ex.Config;

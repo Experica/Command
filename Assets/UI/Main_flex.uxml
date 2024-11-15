@@ -9,22 +9,24 @@
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
     <engine:VisualElement name="Root" class="Main">
         <engine:VisualElement name="MainMenu" class="MainMenu" />
-        <engine:VisualElement name="MainContent" class="MainContent">
-            <engine:VisualElement name="CEC" style="flex-grow: 1; width: 32%; justify-content: space-between;">
-                <engine:Instance template="ControlPanel" name="ControlPanel" style="flex-grow: 1; height: 28%;" />
-                <engine:Instance template="EnvironmentPanel" name="EnvironmentPanel" style="flex-grow: 1; height: 44%;" />
-                <engine:Instance template="ConsolePanel" name="ConsolePanel" style="flex-grow: 1; height: 28%;" />
-            </engine:VisualElement>
-            <engine:VisualElement name="ECVC" style="flex-grow: 1; width: 68%; justify-content: space-between;">
-                <engine:VisualElement name="EC" style="flex-grow: 1; flex-direction: row; justify-content: space-between; height: 44%;">
-                    <engine:Instance template="ExperimentPanel" name="ExperimentPanel" style="flex-grow: 1; width: 47%;" />
-                    <engine:Instance template="ConditionTestPanel" name="ConditionTestPanel" style="flex-grow: 1; width: 53%;" />
-                </engine:VisualElement>
-                <engine:VisualElement name="VC" style="flex-grow: 1; flex-direction: row; justify-content: space-between; height: 56%;">
-                    <engine:Instance template="ViewPanel" name="ViewPanel" style="flex-grow: 1; width: 62%;" />
-                    <engine:Instance template="ConditionPanel" name="ConditionPanel" style="flex-grow: 1; width: 38%;" />
-                </engine:VisualElement>
-            </engine:VisualElement>
-        </engine:VisualElement>
+        <engine:TwoPaneSplitView name="MainContent" fixed-pane-initial-dimension="550">
+            <engine:TwoPaneSplitView name="CEC" orientation="Vertical" fixed-pane-initial-dimension="300">
+                <engine:Instance template="ControlPanel" style="flex-shrink: 1; flex-grow: 1;" />
+                <engine:TwoPaneSplitView name="EC" orientation="Vertical" fixed-pane-initial-dimension="300" style="flex-shrink: 1;">
+                    <engine:Instance template="EnvironmentPanel" style="flex-grow: 1;" />
+                    <engine:Instance template="ConsolePanel" />
+                </engine:TwoPaneSplitView>
+            </engine:TwoPaneSplitView>
+            <engine:TwoPaneSplitView name="ECVC" orientation="Vertical" fixed-pane-initial-dimension="350">
+                <engine:TwoPaneSplitView name="EC" fixed-pane-initial-dimension="500">
+                    <engine:Instance template="ExperimentPanel" style="flex-grow: 1;" />
+                    <engine:Instance template="ConditionTestPanel" style="flex-shrink: 1;" />
+                </engine:TwoPaneSplitView>
+                <engine:TwoPaneSplitView name="VC" fixed-pane-initial-dimension="600">
+                    <engine:Instance template="ViewPanel" style="flex-grow: 1; flex-shrink: 1;" />
+                    <engine:Instance template="ConditionPanel" style="flex-shrink: 1;" />
+                </engine:TwoPaneSplitView>
+            </engine:TwoPaneSplitView>
+        </engine:TwoPaneSplitView>
     </engine:VisualElement>
 </engine:UXML>

@@ -1,5 +1,5 @@
 ﻿/*
-ExperimentPanel.cs is part of the Experica.
+ConfigPanel.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -30,7 +30,7 @@ using System.Linq;
 
 namespace Experica.Command
 {
-    public class ExperimentPanel : MonoBehaviour
+    public class ConfigPanel : MonoBehaviour
     {
         public UIController uicontroller;
         public GameObject content, newexparampanelprefab;
@@ -44,6 +44,27 @@ namespace Experica.Command
         public Dictionary<string, GameObject> exparamgo = new Dictionary<string, GameObject>();
         public Dictionary<string, Toggle> exparamtoggle = new Dictionary<string, Toggle>();
 
+
+        public void ChooseConfigFile()
+        {
+            if (Experica.YesNoDialog("Save Current State of Experica.Command?"))
+            {
+                uicontroller.SaveConfig();
+            }
+
+            var configfilepath = Experica.OpenFile("Choose Config File ...");
+            var config = uicontroller.LoadConfig(configfilepath, false);
+            if (config != null)
+            {
+                uicontroller.config = config;
+                uicontroller.configmanager.LastConfigFilePath = configfilepath;
+                uicontroller.Initialize();
+            }
+            else
+            {
+                Experica.WarningDialog("Invalid Experica.Command Configuration.");
+            }
+        }
 
         public void UpdateEx(Experiment ex)
         {
@@ -59,11 +80,11 @@ namespace Experica.Command
 
         public void AddExUI(Experiment ex)
         {
-            foreach (var p in ex.Properties.Keys)
+            foreach (var p in ex.Properties().Keys)
             {
                 if (IsShowParam(p))
                 {
-                    var pa = ex.Properties[p];
+                    var pa = ex.Properties()[p];
                     AddParamUI(p, pa.Type, ex.GetProperty(p), ex.InheritParam.Contains(p),
                         p.GetPrefab(pa.Type), content.transform);
                 }
@@ -74,7 +95,7 @@ namespace Experica.Command
 
         public void UpdateExUI(Experiment ex)
         {
-            foreach (var p in ex.Properties.Keys)
+            foreach (var p in ex.Properties().Keys)
             {
                 if (IsShowParam(p))
                 {

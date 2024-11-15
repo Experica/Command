@@ -34,7 +34,7 @@ namespace Experica.Command
     /// Holds all information that define an experiment,
     /// with reflection for properties warpped for UI DataSource Binding
     /// </summary>
-    public class Experiment
+    public class Experiment : DataClass
     {
         public string ID { get; set; } = "";
         public string Name { get; set; } = "";
@@ -87,175 +87,18 @@ namespace Experica.Command
         public List<CONDTESTPARAM> NotifyParam { get; set; } = new();
         public List<string> InheritParam { get; set; } = new();
         public List<string> EnvInheritParam { get; set; } = new();
-        public Dictionary<string, object> ExtendParam { get; set; } = new();
         public double TimerDriftSpeed { get; set; } = 6e-5;
         public EventSyncProtocol EventSyncProtocol { get; set; } = new();
         public string Display_ID { get; set; } = "";
         public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; } = CONDTESTSHOWLEVEL.FULL;
         public bool NotifyExperimenter { get; set; } = false;
-        public uint Version { get; set; } = Experica.ExperimentDataVersion;
+        public uint Version { get; set; } = Experica.ExperimentVersion;
 
         [IgnoreMember]
         public CommandConfig Config { get; set; }
         [IgnoreMember]
         public Dictionary<CONDTESTPARAM, IList> CondTest { get; set; }
 
-
-        [IgnoreMember]
-        public Dictionary<string, PropertySource<Experiment>> Properties = new();
-        [IgnoreMember]
-        public Dictionary<string, DictSource<object>> ExtendProperties = new();
-
-
-        static Experiment()
-        {
-            var extype = typeof(Experiment);
-            var extypename = extype.ToString();
-            foreach (var p in extype.GetProperties())
-            {
-                extypename.StoreProperty(p.Name, new Property(p));
-            }
-        }
-
-        public Experiment()
-        {
-            var extype = typeof(Experiment);
-            var extypename = extype.ToString();
-            if (extypename.QueryProperties(out var properties))
-            {
-                Properties = properties.ToDictionary(kv => kv.Key, kv => new PropertySource<Experiment>(this, kv.Value));
-            }
-            else { Debug.LogError($"Property Reflections of {extype} Not Initialized"); }
-        }
-
-        public bool SetParam(string name, object value)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                var p = Properties[name];
-                p.Value = value.Convert(p.Type);
-                return true;
-            }
-            if (ExtendProperties.ContainsKey(name))
-            {
-                ExtendProperties[name].Value = value;
-                return true;
-            }
-            Debug.LogError($"Param: {name} not found in Experiment or Experiment.ExtendParam");
-            return false;
-        }
-
-        public bool SetExtendProperty(string name, object value)
-        {
-            if (ExtendProperties.ContainsKey(name))
-            {
-                ExtendProperties[name].Value = value;
-                return true;
-            }
-            Debug.LogError($"ExtendProperty: {name} not exist in Experiment.ExtendParam");
-            return false;
-        }
-
-        public bool SetProperty(string name, object value)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                var p = Properties[name];
-                p.Value = value.Convert(p.Type);
-                return true;
-            }
-            Debug.LogError($"Property: {name} not defined in Experiment");
-            return false;
-        }
-
-        public T GetParam<T>(string name)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                return Properties[name].GetValue<T>();
-            }
-            if (ExtendProperties.ContainsKey(name))
-            {
-                return ExtendProperties[name].GetValue<T>();
-            }
-            Debug.LogError($"Param: {name} not found in Experiment or Experiment.ExtendParam, return default value of {typeof(T)} : {default}.");
-            return default;
-        }
-
-        public object GetParam(string name)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                return Properties[name].Value;
-            }
-            if (ExtendProperties.ContainsKey(name))
-            {
-                return ExtendProperties[name].Value;
-            }
-            Debug.LogError($"Param: {name} not found in Experiment or Experiment.ExtendParam");
-            return null;
-        }
-
-        public T GetExtendProperty<T>(string name)
-        {
-            if (ExtendProperties.ContainsKey(name))
-            {
-                return ExtendProperties[name].GetValue<T>();
-            }
-            Debug.LogError($"ExtendProperty: {name} not exist in Experiment.ExtendParam, return default value of {typeof(T)} : {default}.");
-            return default;
-        }
-
-        public object GetExtendProperty(string name)
-        {
-            if (ExtendProperties.ContainsKey(name))
-            {
-                return ExtendProperties[name].Value;
-            }
-            Debug.LogError($"ExtendProperty: {name} not exist in Experiment.ExtendParam");
-            return null;
-        }
-
-        public T GetProperty<T>(string name)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                return Properties[name].GetValue<T>();
-            }
-            Debug.LogError($"Property: {name} not defined in Experiment, return default value of {typeof(T)} : {default}.");
-            return default;
-        }
-
-        public object GetProperty(string name)
-        {
-            if (Properties.ContainsKey(name))
-            {
-                return Properties[name].Value;
-            }
-            Debug.LogError($"Property: {name} not defined in Experiment");
-            return null;
-        }
-
-        public bool ContainsParam(string name) { return Properties.ContainsKey(name) || ExtendProperties.ContainsKey(name); }
-        public bool ContainsExtendProperty(string name) { return ExtendProperties.ContainsKey(name); }
-        public bool ContainsProperty(string name) { return Properties.ContainsKey(name); }
-
-        public void RemoveExtendProperty(string name)
-        {
-            ExtendProperties.Remove(name);
-            ExtendParam.Remove(name);
-            InheritParam.Remove(name);
-        }
-
-        public DictSource<object> AddExtendProperty(string name, object value)
-        {
-            ExtendParam[name] = value;
-            DictSource<object> source = new(ExtendParam, name);
-            ExtendProperties[name] = source;
-            return source;
-        }
-
-        public void RefreshExtendProperties() => ExtendProperties = ExtendParam.ToDictionary(kv => kv.Key, kv => new DictSource<object>(ExtendParam, kv.Key));
 
         /// <summary>
         /// Prepare data path if `DataPath` is valid, otherwise create a new unique data path based on experiment parameters.
@@ -305,12 +148,12 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// Exclude config and data, only saving experiment definition
+        /// Exclude config and data, only save experiment definition
         /// </summary>
         /// <param name="filepath"></param>
         public void SaveDefinition(string filepath)
         {
-            Version = Experica.ExperimentDataVersion;
+            Version = Experica.ExperimentVersion;
             var config = Config;
             var cond = Cond;
             var condtest = CondTest;

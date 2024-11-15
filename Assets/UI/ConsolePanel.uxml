@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/ToggleButton.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#ToggleButton" />
-    <ui:VisualElement name="Root" class="Panel" style="justify-content: space-between; width: 100%; height: 100%;">
-        <ui:Label text="Console" name="Title" style="height: 50px; -unity-font-style: bold; -unity-text-align: middle-left; font-size: 40px; background-color: rgb(153, 153, 153);" />
+    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
+    <ui:VisualElement name="Root" class="Panel">
+        <ui:Label text="Console" name="Title" />
         <ui:VisualElement name="Content" style="flex-grow: 1;" />
-        <ui:VisualElement name="ConsoleStatus" style="width: auto; height: 50px; flex-direction: row;" />
+        <ui:VisualElement name="Status" />
     </ui:VisualElement>
 </ui:UXML>

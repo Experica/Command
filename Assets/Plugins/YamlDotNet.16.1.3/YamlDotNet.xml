@@ -1188,6 +1188,153 @@
             Simple implementation of <see cref="T:YamlDotNet.Core.IParser"/> that implements merging: http://yaml.org/type/merge.html
             </summary>
         </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1">
+            <summary>
+            Default implementation of <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/>.
+            </summary>
+            <typeparam name="T">The type to pool objects for.</typeparam>
+            <remarks>This implementation keeps a cache of retained objects. This means that if objects are returned when the pool has already reached "maximumRetained" objects they will be available to be Garbage Collected.</remarks>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.#ctor(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{`0})">
+            <summary>
+            Creates an instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/>.
+            </summary>
+            <param name="policy">The pooling policy to use.</param>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.#ctor(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{`0},System.Int32)">
+            <summary>
+            Creates an instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/>.
+            </summary>
+            <param name="policy">The pooling policy to use.</param>
+            <param name="maximumRetained">The maximum number of objects to retain in the pool.</param>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.Get">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.Return(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1.ReturnCore(`0)">
+            <summary>
+            Returns an object to the pool.
+            </summary>
+            <returns>true if the object was returned to the pool</returns>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1">
+            <summary>
+            Default implementation for <see cref="!:PooledObjectPolicy&lt;T&gt;"/>.
+            </summary>
+            <typeparam name="T">The type of object which is being pooled.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1.Create">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1.Return(`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1">
+            <summary>
+            Represents a policy for managing pooled objects.
+            </summary>
+            <typeparam name="T">The type of object which is being pooled.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1.Create">
+            <summary>
+            Create a <typeparamref name="T"/>.
+            </summary>
+            <returns>The <typeparamref name="T"/> which was created.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1.Return(`0)">
+            <summary>
+            Runs some processing when an object was returned to the pool. Can be used to reset the state of an object and indicate if the object should be returned to the pool.
+            </summary>
+            <param name="obj">The object to return to the pool.</param>
+            <returns><see langword="true" /> if the object should be returned to the pool. <see langword="false" /> if it's not possible/desirable for the pool to keep the object.</returns>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.IResettable">
+            <summary>
+            Defines a method to reset an object to its initial state.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.IResettable.TryReset">
+            <summary>
+            Reset the object to a neutral state, semantically similar to when the object was first constructed.
+            </summary>
+            <returns><see langword="true" /> if the object was able to reset itself, otherwise <see langword="false" />.</returns>
+            <remarks>
+            In general, this method is not expected to be thread-safe.
+            </remarks>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.ObjectPool`1">
+            <summary>
+            A pool of objects.
+            </summary>
+            <typeparam name="T">The type of objects to pool.</typeparam>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool`1.Get">
+            <summary>
+            Gets an object from the pool if one is available, otherwise creates one.
+            </summary>
+            <returns>A <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool`1.Return(`0)">
+            <summary>
+            Return an object to the pool.
+            </summary>
+            <param name="obj">The object to add to the pool.</param>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.ObjectPool">
+            <summary>
+            Methods for creating <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/> instances.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})">
+            <summary>
+            Create a new <see cref="T:YamlDotNet.Core.ObjectPool.ObjectPool`1"/> instance using the default implementation.
+            </summary>
+            <typeparam name="T">The type of object to be pooled</typeparam>
+            <param name="policy">The <see cref="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1"/> to use (or <see cref="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1"/> if <see langword="null"/>).</param>
+            <returns>An instance of <see cref="T:YamlDotNet.Core.ObjectPool.DefaultObjectPool`1"/> with the specified policy.</returns>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(System.Int32,YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})">
+            <inheritdoc cref="M:YamlDotNet.Core.ObjectPool.ObjectPool.Create``1(YamlDotNet.Core.ObjectPool.IPooledObjectPolicy{``0})" />
+            <param name="maximumRetained">The maximum number of objects to retain in the pool.</param>
+            <param name="policy">The <see cref="T:YamlDotNet.Core.ObjectPool.IPooledObjectPolicy`1"/> to use (or <see cref="T:YamlDotNet.Core.ObjectPool.DefaultPooledObjectPolicy`1"/> if <see langword="null"/>).</param>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringBuilderPool">
+            <summary>
+            Pooling of StringBuilder instances.
+            </summary>
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy">
+            <summary>
+            A policy for pooling <see cref="T:System.Text.StringBuilder"/> instances.
+            </summary>
+        </member>
+        <member name="P:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.InitialCapacity">
+            <summary>
+            Gets or sets the initial capacity of pooled <see cref="T:System.Text.StringBuilder"/> instances.
+            </summary>
+            <value>Defaults to <c>100</c>.</value>
+        </member>
+        <member name="P:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.MaximumRetainedCapacity">
+            <summary>
+            Gets or sets the maximum value for <see cref="P:System.Text.StringBuilder.Capacity"/> that is allowed to be
+            retained, when <see cref="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Return(System.Text.StringBuilder)"/> is invoked.
+            </summary>
+            <value>Defaults to <c>4096</c>.</value>
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Create">
+            <inheritdoc />
+        </member>
+        <member name="M:YamlDotNet.Core.ObjectPool.StringBuilderPooledObjectPolicy.Return(System.Text.StringBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:YamlDotNet.Core.ObjectPool.StringLookAheadBufferPool">
+            <summary>
+            Pooling of <see cref="T:YamlDotNet.Core.StringLookAheadBuffer"/> instances.
+            </summary>
+        </member>
         <member name="T:YamlDotNet.Core.Parser">
             <summary>
             Parses YAML streams.
@@ -1509,6 +1656,11 @@
             The folded scalar style.
             </summary>
         </member>
+        <member name="F:YamlDotNet.Core.ScalarStyle.ForcePlain">
+            <summary>
+             Forced plain scalar, regardless.
+            </summary>
+        </member>
         <member name="T:YamlDotNet.Core.Scanner">
             <summary>
             Converts a sequence of characters into a sequence of YAML tokens.
@@ -1525,6 +1677,14 @@
             </summary>
             <param name="input">The input.</param>
             <param name="skipComments">Indicates whether comments should be ignored</param>
+        </member>
+        <member name="M:YamlDotNet.Core.Scanner.#ctor(System.IO.TextReader,System.Boolean,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YamlDotNet.Core.Scanner"/> class.
+            </summary>
+            <param name="input">The input.</param>
+            <param name="skipComments">Indicates whether comments should be ignored</param>
+            <param name="maxKeySize">Override the default of 1024 characters for the max key size</param>
         </member>
         <member name="P:YamlDotNet.Core.Scanner.CurrentPosition">
             <summary>
@@ -1549,7 +1709,7 @@
             cannot contain simple keys anymore.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Core.Scanner.UnrollIndent(System.Int32)">
+        <member name="M:YamlDotNet.Core.Scanner.UnrollIndent(System.Int64)">
             <summary>
             Pop indentation levels from the indents stack until the current level
             becomes less or equal to the column.  For each indentation level, append
@@ -1617,7 +1777,7 @@
             Produce the VALUE token.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Core.Scanner.RollIndent(System.Int32,System.Int32,System.Boolean,YamlDotNet.Core.Mark)">
+        <member name="M:YamlDotNet.Core.Scanner.RollIndent(System.Int64,System.Int32,System.Boolean,YamlDotNet.Core.Mark)">
             <summary>
             Push the current indentation level to the stack and set the new level
             the current column is greater than the indentation level.  In this case,
@@ -1649,7 +1809,7 @@
             Scan a block scalar.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Core.Scanner.ScanBlockScalarBreaks(System.Int32,System.Text.StringBuilder,System.Boolean,YamlDotNet.Core.Mark@,System.Nullable{System.Boolean}@)">
+        <member name="M:YamlDotNet.Core.Scanner.ScanBlockScalarBreaks(System.Int64,System.Text.StringBuilder,System.Boolean,YamlDotNet.Core.Mark@,System.Nullable{System.Boolean}@)">
             <summary>
             Scan indentation spaces and line breaks for a block scalar.  Determine the
             indentation level if needed.
@@ -2421,51 +2581,6 @@
             <param name="message">The message.</param>
             <param name="inner">The inner.</param>
         </member>
-        <member name="T:YamlDotNet.Helpers.ConcurrentObjectPool`1">
-             <summary>
-             Generic implementation of object pooling pattern with predefined pool size limit. The main
-             purpose is that limited number of frequently used objects can be kept in the pool for
-             further recycling.
-            
-             Notes:
-             1) it is not the goal to keep all returned objects. Pool is not meant for storage. If there
-                is no space in the pool, extra returned objects will be dropped.
-            
-             2) it is implied that if object was obtained from a pool, the caller will return it back in
-                a relatively short time. Keeping checked out objects for long durations is ok, but
-                reduces usefulness of pooling. Just new up your own.
-            
-             Not returning objects to the pool in not detrimental to the pool's work, but is a bad practice.
-             Rationale:
-                If there is no intent for reusing the object, do not use pool - just use "new".
-             </summary>
-        </member>
-        <member name="T:YamlDotNet.Helpers.ConcurrentObjectPool`1.Factory">
-            <remarks>
-            Not using System.Func{T} because this file is linked into the (debugger) Formatter,
-            which does not have that type (since it compiles against .NET 2.0).
-            </remarks>
-        </member>
-        <member name="M:YamlDotNet.Helpers.ConcurrentObjectPool`1.Allocate">
-            <summary>
-            Produces an instance.
-            </summary>
-            <remarks>
-            Search strategy is a simple linear probing which is chosen for it cache-friendliness.
-            Note that Free will try to store recycled objects close to the start thus statistically
-            reducing how far we will typically search.
-            </remarks>
-        </member>
-        <member name="M:YamlDotNet.Helpers.ConcurrentObjectPool`1.Free(`0)">
-            <summary>
-            Returns objects to the pool.
-            </summary>
-            <remarks>
-            Search strategy is a simple linear probing which is chosen for it cache-friendliness.
-            Note that Free will try to store recycled objects close to the start thus statistically
-            reducing how far we will typically search in Allocate.
-            </remarks>
-        </member>
         <member name="M:YamlDotNet.Helpers.ExpressionExtensions.AsProperty(System.Linq.Expressions.LambdaExpression)">
             <summary>
             Returns the <see cref="T:System.Reflection.PropertyInfo" /> that describes the property that
@@ -2509,10 +2624,15 @@
             </summary>
             <param name="index">The zero-based index of the element to remove.</param>
         </member>
-        <member name="T:YamlDotNet.Helpers.StringBuilderPool">
+        <member name="M:YamlDotNet.ReflectionExtensions.HasDefaultConstructor(System.Type,System.Boolean)">
             <summary>
-            Pooling of StringBuilder instances.
+            Determines whether the specified type has a default constructor.
             </summary>
+            <param name="type">The type.</param>
+            <param name="allowPrivateConstructors">Whether to include private constructors</param>
+            <returns>
+                <c>true</c> if the type has a default constructor; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="T:YamlDotNet.RepresentationModel.DocumentLoadingState">
             <summary>
@@ -3677,6 +3797,13 @@
             Sets the <see cref="T:YamlDotNet.Serialization.INamingConvention" /> that will be used by the (de)serializer.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithEnumNamingConvention(YamlDotNet.Serialization.INamingConvention)">
+            <summary>
+            Sets the <see cref="T:YamlDotNet.Serialization.INamingConvention"/> to use when handling enum's.
+            </summary>
+            <param name="enumNamingConvention">Naming convention to use when handling enum's</param>
+            <returns></returns>
+        </member>
         <member name="M:YamlDotNet.Serialization.BuilderSkeleton`1.WithTypeResolver(YamlDotNet.Serialization.ITypeResolver)">
             <summary>
             Sets the <see cref="T:YamlDotNet.Serialization.ITypeResolver" /> that will be used by the (de)serializer.
@@ -3783,6 +3910,48 @@
             <param name="argument">The argument of the factory.</param>
             <returns>Returns a new instance of <typeparamref name="TComponent" /> that is based on <paramref name="wrapped" /> and <paramref name="argument" />.</returns>
         </member>
+        <member name="T:YamlDotNet.Serialization.Converters.DateTime8601Converter">
+            <summary>
+            This represents the YAML converter entity for <see cref="T:System.DateTime"/> using the ISO-8601 standard format.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Converters.DateTime8601Converter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YamlDotNet.Serialization.Converters.DateTime8601Converter"/> class using the default any scalar style.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Converters.DateTime8601Converter.#ctor(YamlDotNet.Core.ScalarStyle)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YamlDotNet.Serialization.Converters.DateTime8601Converter"/> class.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Converters.DateTime8601Converter.Accepts(System.Type)">
+            <summary>
+            Gets a value indicating whether the current converter supports converting the specified type.
+            </summary>
+            <param name="type"><see cref="T:System.Type"/> to check.</param>
+            <returns>Returns <c>True</c>, if the current converter supports; otherwise returns <c>False</c>.</returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Converters.DateTime8601Converter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
+            <summary>
+            Reads an object's state from a YAML parser.
+            </summary>
+            <param name="parser"><see cref="T:YamlDotNet.Core.IParser"/> instance.</param>
+            <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="rootDeserializer">The deserializer to use to deserialize complex types.</param>
+            <returns>Returns the <see cref="T:System.DateTime"/> instance converted.</returns>
+            <remarks>On deserializing, all formats in the list are used for conversion.</remarks>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Converters.DateTime8601Converter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
+            <summary>
+            Writes the specified object's state to a YAML emitter.
+            </summary>
+            <param name="emitter"><see cref="T:YamlDotNet.Core.IEmitter"/> instance.</param>
+            <param name="value">Value to write.</param>
+            <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="serializer">A serializer to serializer complext objects.</param>
+            <remarks>On serializing, the first format in the list is used.</remarks>
+        </member>
         <member name="T:YamlDotNet.Serialization.Converters.DateTimeConverter">
             <summary>
             This represents the YAML converter entity for <see cref="T:System.DateTime"/>.
@@ -3805,22 +3974,24 @@
             <param name="type"><see cref="T:System.Type"/> to check.</param>
             <returns>Returns <c>True</c>, if the current converter supports; otherwise returns <c>False</c>.</returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateTimeConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Converters.DateTimeConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
             <summary>
             Reads an object's state from a YAML parser.
             </summary>
             <param name="parser"><see cref="T:YamlDotNet.Core.IParser"/> instance.</param>
             <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="rootDeserializer">The deserializer to use to deserialize complex types.</param>
             <returns>Returns the <see cref="T:System.DateTime"/> instance converted.</returns>
             <remarks>On deserializing, all formats in the list are used for conversion.</remarks>
         </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateTimeConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Converters.DateTimeConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Writes the specified object's state to a YAML emitter.
             </summary>
             <param name="emitter"><see cref="T:YamlDotNet.Core.IEmitter"/> instance.</param>
             <param name="value">Value to write.</param>
             <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="serializer">A serializer to serializer complext objects.</param>
             <remarks>On serializing, the first format in the list is used.</remarks>
         </member>
         <member name="T:YamlDotNet.Serialization.Converters.DateTimeOffsetConverter">
@@ -3847,22 +4018,24 @@
             <param name="type"><see cref="T:System.Type"/> to check.</param>
             <returns>Returns <c>True</c>, if the current converter supports; otherwise returns <c>False</c>.</returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateTimeOffsetConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Converters.DateTimeOffsetConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
             <summary>
             Reads an object's state from a YAML parser.
             </summary>
             <param name="parser"><see cref="T:YamlDotNet.Core.IParser"/> instance.</param>
             <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="rootDeserializer">The deserializer to use to deserialize complex types.</param>
             <returns>Returns the <see cref="T:System.DateTime"/> instance converted.</returns>
             <remarks>On deserializing, all formats in the list are used for conversion.</remarks>
         </member>
-        <member name="M:YamlDotNet.Serialization.Converters.DateTimeOffsetConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Converters.DateTimeOffsetConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Writes the specified object's state to a YAML emitter.
             </summary>
             <param name="emitter"><see cref="T:YamlDotNet.Core.IEmitter"/> instance.</param>
             <param name="value">Value to write.</param>
             <param name="type"><see cref="T:System.Type"/> to convert.</param>
+            <param name="serializer">A serializer to serializer complext objects.</param>
             <remarks>On serializing, the first format in the list is used.</remarks>
         </member>
         <member name="T:YamlDotNet.Serialization.Converters.GuidConverter">
@@ -3952,6 +4125,12 @@
             Initializes a new <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" /> using the default component registrations.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.DeserializerBuilder.BuildTypeInspector">
+            <summary>
+            Builds the type inspector used by various classes to get information about types and their members.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:YamlDotNet.Serialization.DeserializerBuilder.WithAttemptingUnquotedStringTypeDeserialization">
             <summary>
             When deserializing it will attempt to convert unquoted strings to their correct datatype. If conversion is not sucessful, it will leave it as a string.
@@ -4025,6 +4204,24 @@
             </summary>
             <param name="nodeTypeResolverFactory">A factory that creates the <see cref="T:YamlDotNet.Serialization.INodeTypeResolver" /> based on a previously registered <see cref="T:YamlDotNet.Serialization.INodeTypeResolver" />.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.INodeTypeResolver" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.DeserializerBuilder.WithCaseInsensitivePropertyMatching">
+            <summary>
+            Ignore case when matching property names.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.DeserializerBuilder.WithEnforceNullability">
+            <summary>
+            Enforce whether null values can be set on non-nullable properties and fields.
+            </summary>
+            <returns>This deserializer builder.</returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.DeserializerBuilder.WithEnforceRequiredMembers">
+            <summary>
+            Require that all members with the 'required' keyword be set by YAML.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:YamlDotNet.Serialization.DeserializerBuilder.WithoutNodeTypeResolver``1">
             <summary>
@@ -4256,29 +4453,32 @@
             Defines a strategy that walks through an object graph.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphTraversalStrategy.Traverse``1(YamlDotNet.Serialization.IObjectDescriptor,YamlDotNet.Serialization.IObjectGraphVisitor{``0},``0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphTraversalStrategy.Traverse``1(YamlDotNet.Serialization.IObjectDescriptor,YamlDotNet.Serialization.IObjectGraphVisitor{``0},``0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Traverses the specified object graph.
             </summary>
             <param name="graph">The graph.</param>
             <param name="visitor">An <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1"/> that is to be notified during the traversal.</param>
             <param name="context">A <typeparamref name="TContext" /> that will be passed to the <paramref name="visitor" />.</param>
+            <param name="serializer">The serializer to use to serialize complex objects.</param>
         </member>
         <member name="T:YamlDotNet.Serialization.IObjectGraphVisitor`1">
             <summary>
             Defined the interface of a type that can be notified during an object graph traversal.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.Enter(YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.Enter(YamlDotNet.Serialization.IPropertyDescriptor,YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Indicates whether the specified value should be entered. This allows the visitor to
             override the handling of a particular object or type.
             </summary>
             <param name="value">The value that is about to be entered.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
+            <param name="propertyDescriptor">The descriptor for the property that the value belongs to.</param>
             <returns>If the value is to be entered, returns true; otherwise returns false;</returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.EnterMapping(YamlDotNet.Serialization.IObjectDescriptor,YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.EnterMapping(YamlDotNet.Serialization.IObjectDescriptor,YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Indicates whether the specified mapping should be entered. This allows the visitor to
             override the handling of a particular pair.
@@ -4286,9 +4486,10 @@
             <param name="key">The key of the mapping that is about to be entered.</param>
             <param name="value">The value of the mapping that is about to be entered.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
             <returns>If the mapping is to be entered, returns true; otherwise returns false;</returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.EnterMapping(YamlDotNet.Serialization.IPropertyDescriptor,YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.EnterMapping(YamlDotNet.Serialization.IPropertyDescriptor,YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Indicates whether the specified mapping should be entered. This allows the visitor to
             override the handling of a particular pair. This overload should be invoked when the
@@ -4297,16 +4498,18 @@
             <param name="key">The <see cref="T:YamlDotNet.Serialization.IPropertyDescriptor"/> that provided access to <paramref name="value"/>.</param>
             <param name="value">The value of the mapping that is about to be entered.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
             <returns>If the mapping is to be entered, returns true; otherwise returns false;</returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitScalar(YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitScalar(YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Notifies the visitor that a scalar value has been encountered.
             </summary>
             <param name="scalar">The value of the scalar.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitMappingStart(YamlDotNet.Serialization.IObjectDescriptor,System.Type,System.Type,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitMappingStart(YamlDotNet.Serialization.IObjectDescriptor,System.Type,System.Type,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Notifies the visitor that the traversal of a mapping is about to begin.
             </summary>
@@ -4314,28 +4517,32 @@
             <param name="keyType">The static type of the keys of the mapping.</param>
             <param name="valueType">The static type of the values of the mapping.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitMappingEnd(YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitMappingEnd(YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Notifies the visitor that the traversal of a mapping has ended.
             </summary>
             <param name="mapping">The value that corresponds to the mapping.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitSequenceStart(YamlDotNet.Serialization.IObjectDescriptor,System.Type,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitSequenceStart(YamlDotNet.Serialization.IObjectDescriptor,System.Type,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Notifies the visitor that the traversal of a sequence is about to begin.
             </summary>
             <param name="sequence">The value that corresponds to the sequence.</param>
             <param name="elementType">The static type of the elements of the sequence.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
         </member>
-        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitSequenceEnd(YamlDotNet.Serialization.IObjectDescriptor,`0)">
+        <member name="M:YamlDotNet.Serialization.IObjectGraphVisitor`1.VisitSequenceEnd(YamlDotNet.Serialization.IObjectDescriptor,`0,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Notifies the visitor that the traversal of a sequence has ended.
             </summary>
             <param name="sequence">The value that corresponds to the sequence.</param>
             <param name="context">The context that this implementation depend on.</param>
+            <param name="serializer">A serializer that can be used to serialize complex objects.</param>
         </member>
         <member name="M:YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax`1.InsteadOf``1">
             <summary>
@@ -4423,7 +4630,7 @@
             <param name="container">The actual object of type <paramref name="type"/> whose properties are to be enumerated. Can be null.</param>
             <returns></returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.ITypeInspector.GetProperty(System.Type,System.Object,System.String,System.Boolean)">
+        <member name="M:YamlDotNet.Serialization.ITypeInspector.GetProperty(System.Type,System.Object,System.String,System.Boolean,System.Boolean)">
             <summary>
             Gets the property of the type with the specified name.
             </summary>
@@ -4434,6 +4641,22 @@
             Determines if an exception or null should be returned if <paramref name="name"/> can't be
             found in <paramref name="type"/>
             </param>
+            <param name="caseInsensitivePropertyMatching">If true use case-insitivity when choosing the property or field.</param>
+            <returns></returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ITypeInspector.GetEnumName(System.Type,System.String)">
+            <summary>
+            Returns the actual name from the EnumMember attribute
+            </summary>
+            <param name="enumType">The type of the enum.</param>
+            <param name="name">The name to lookup.</param>
+            <returns>The actual name of the enum value.</returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.ITypeInspector.GetEnumValue(System.Object)">
+            <summary>
+            Return the value of the enum
+            </summary>
+            <param name="enumValue"></param>
             <returns></returns>
         </member>
         <member name="T:YamlDotNet.Serialization.ITypeResolver">
@@ -4506,12 +4729,12 @@
             Gets a value indicating whether the current converter supports converting the specified type.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.IYamlTypeConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type)">
+        <member name="M:YamlDotNet.Serialization.IYamlTypeConverter.ReadYaml(YamlDotNet.Core.IParser,System.Type,YamlDotNet.Serialization.ObjectDeserializer)">
             <summary>
             Reads an object's state from a YAML parser.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.IYamlTypeConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type)">
+        <member name="M:YamlDotNet.Serialization.IYamlTypeConverter.WriteYaml(YamlDotNet.Core.IEmitter,System.Object,System.Type,YamlDotNet.Serialization.ObjectSerializer)">
             <summary>
             Writes the specified object's state to a YAML emitter.
             </summary>
@@ -4771,7 +4994,20 @@
             </summary>
             <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
         </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,YamlDotNet.Serialization.ITypeInspector,``0})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
+            </summary>
+            <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
+        </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IEventEmitter}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
+            </summary>
+            <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IEventEmitter" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,YamlDotNet.Serialization.ITypeInspector,``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IEventEmitter}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
             </summary>
@@ -4861,6 +5097,18 @@
             </remarks>
             <param name="objectGraphVisitor">The type inspector.</param>
         </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(System.Func{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},``0})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector.</param>
+        </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(``0,System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
@@ -4874,6 +5122,19 @@
             <param name="objectGraphVisitor">The type inspector.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
         </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(System.Func{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
+        </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(YamlDotNet.Serialization.WrapperFactory{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing},``0},System.Action{YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
@@ -4884,7 +5145,20 @@
             before actually emitting it. This allows a visitor to collect information about the graph that
             can be used later by another visitor registered in the emission phase.
             </remarks>
-            <param name="objectGraphVisitorFactory">A factory that creates the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(YamlDotNet.Serialization.WrapperFactory{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing},``0},System.Action{YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
         </member>
         <member name="M:YamlDotNet.Serialization.SerializerBuilder.WithoutPreProcessingPhaseObjectGraphVisitor``1">
@@ -4960,6 +5234,12 @@
             deserializer is to use the <see cref="M:YamlDotNet.Serialization.SerializerBuilder.Build" /> method.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.SerializerBuilder.BuildTypeInspector">
+            <summary>
+            Builds the type inspector used by various classes to get information about types and their members.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:YamlDotNet.Serialization.Settings.AllowPrivateConstructors">
             <summary>
             If true then private, parameterless constructors will be invoked if a public one is not available.
@@ -4974,6 +5254,13 @@
             <summary>
             Sets the <see cref="T:YamlDotNet.Serialization.INamingConvention" /> that will be used by the (de)serializer.
             </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticBuilderSkeleton`1.WithEnumNamingConvention(YamlDotNet.Serialization.INamingConvention)">
+            <summary>
+            Sets the <see cref="T:YamlDotNet.Serialization.INamingConvention"/> to use when handling enum's.
+            </summary>
+            <param name="enumNamingConvention">Naming convention to use when handling enum's</param>
+            <returns></returns>
         </member>
         <member name="M:YamlDotNet.Serialization.StaticBuilderSkeleton`1.WithTypeResolver(YamlDotNet.Serialization.ITypeResolver)">
             <summary>
@@ -5052,6 +5339,19 @@
             Holds the static object factory and type inspector to use when statically serializing/deserializing YAML.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.StaticContext.IsKnownType(System.Type)">
+            <summary>
+            Gets whether the type is known to the context
+            </summary>
+            <param name="type">Type to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticContext.GetTypeResolver">
+            <summary>
+            Gets the <see cref="T:YamlDotNet.Serialization.ITypeResolver"/> to use for serialization
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:YamlDotNet.Serialization.StaticContext.GetFactory">
             <summary>
             Gets the factory to use for serialization and deserialization
@@ -5077,6 +5377,12 @@
             Initializes a new <see cref="T:YamlDotNet.Serialization.DeserializerBuilder" /> using the default component registrations.
             </summary>
         </member>
+        <member name="M:YamlDotNet.Serialization.StaticDeserializerBuilder.BuildTypeInspector">
+            <summary>
+            Builds the type inspector used by various classes to get information about types and their members.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:YamlDotNet.Serialization.StaticDeserializerBuilder.WithAttemptingUnquotedStringTypeDeserialization">
             <summary>
             When deserializing it will attempt to convert unquoted strings to their correct datatype. If conversion is not sucessful, it will leave it as a string.
@@ -5101,6 +5407,18 @@
             </summary>
             <param name="nodeDeserializerFactory">A factory that creates the <see cref="T:YamlDotNet.Serialization.INodeDeserializer" /> based on a previously registered <see cref="T:YamlDotNet.Serialization.INodeDeserializer" />.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.INodeDeserializer" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticDeserializerBuilder.WithCaseInsensitivePropertyMatching">
+            <summary>
+            Ignore case when matching property names.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticDeserializerBuilder.WithEnforceNullability">
+            <summary>
+            Enforce whether null values can be set on non-nullable properties and fields.
+            </summary>
+            <returns>This static deserializer builder.</returns>
         </member>
         <member name="M:YamlDotNet.Serialization.StaticDeserializerBuilder.WithoutNodeDeserializer``1">
             <summary>
@@ -5224,7 +5542,20 @@
             </summary>
             <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
         </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,YamlDotNet.Serialization.ITypeInspector,``0})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
+            </summary>
+            <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
+        </member>
         <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IEventEmitter}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
+            </summary>
+            <param name="eventEmitterFactory">A function that instantiates the event emitter.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IEventEmitter" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithEventEmitter``1(System.Func{YamlDotNet.Serialization.IEventEmitter,YamlDotNet.Serialization.ITypeInspector,``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IEventEmitter}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IEventEmitter" /> to be used by the serializer.
             </summary>
@@ -5314,6 +5645,18 @@
             </remarks>
             <param name="objectGraphVisitor">The type inspector.</param>
         </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(System.Func{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},``0})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector.</param>
+        </member>
         <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(``0,System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
@@ -5327,6 +5670,19 @@
             <param name="objectGraphVisitor">The type inspector.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
         </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(System.Func{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},``0},System.Action{YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
+        </member>
         <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(YamlDotNet.Serialization.WrapperFactory{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing},``0},System.Action{YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
             <summary>
             Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
@@ -5337,7 +5693,20 @@
             before actually emitting it. This allows a visitor to collect information about the graph that
             can be used later by another visitor registered in the emission phase.
             </remarks>
-            <param name="objectGraphVisitorFactory">A factory that creates the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
+            <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithPreProcessingPhaseObjectGraphVisitor``1(YamlDotNet.Serialization.WrapperFactory{System.Collections.Generic.IEnumerable{YamlDotNet.Serialization.IYamlTypeConverter},YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing},``0},System.Action{YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax{YamlDotNet.Serialization.IObjectGraphVisitor{YamlDotNet.Serialization.Nothing}}})">
+            <summary>
+            Registers an additional <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /> to be used by the serializer
+            before emitting an object graph.
+            </summary>
+            <remarks>
+            Registering a visitor in the pre-processing phase enables to traverse the object graph once
+            before actually emitting it. This allows a visitor to collect information about the graph that
+            can be used later by another visitor registered in the emission phase.
+            </remarks>
+            <param name="objectGraphVisitorFactory">A function that instantiates the type inspector based on a previously registered <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" />.</param>
             <param name="where">Configures the location where to insert the <see cref="T:YamlDotNet.Serialization.IObjectGraphVisitor`1" /></param>
         </member>
         <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.WithoutPreProcessingPhaseObjectGraphVisitor``1">
@@ -5412,6 +5781,12 @@
             This method is available for advanced scenarios. The preferred way to customize the behavior of the
             deserializer is to use the <see cref="M:YamlDotNet.Serialization.StaticSerializerBuilder.Build" /> method.
             </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.StaticSerializerBuilder.BuildTypeInspector">
+            <summary>
+            Builds the type inspector used by various classes to get information about types and their members.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:YamlDotNet.Serialization.StreamFragment">
             <summary>
@@ -5507,7 +5882,7 @@
         </member>
         <member name="T:YamlDotNet.Serialization.TypeResolvers.StaticTypeResolver">
             <summary>
-            The type returned will always be the static type.
+            Except for primitive types, the type returned will always be the static type.
             </summary>
         </member>
         <member name="T:YamlDotNet.Serialization.Utilities.IPostDeserializationCallback">
@@ -5516,12 +5891,14 @@
             needs to be notified after deserialization.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.ITypeConverter.ChangeType(System.Object,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Utilities.ITypeConverter.ChangeType(System.Object,System.Type,YamlDotNet.Serialization.INamingConvention,YamlDotNet.Serialization.ITypeInspector)">
             <summary>
             Convert a value to a specified type
             </summary>
             <param name="value"></param>
             <param name="expectedType"></param>
+            <param name="enumNamingConvention">Naming convention to use on enums in the type converter.</param>
+            <param name="typeInspector">The type inspector to use when getting information about a type.</param>
             <returns></returns>
         </member>
         <member name="M:YamlDotNet.Serialization.Utilities.ObjectAnchorCollection.Add(System.String,System.Object)">
@@ -5594,56 +5971,46 @@
             Performs type conversions using every standard provided by the .NET library.
             </summary>
         </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType``1(System.Object)">
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType``1(System.Object,YamlDotNet.Serialization.INamingConvention,YamlDotNet.Serialization.ITypeInspector)">
             <summary>
             Converts the specified value.
             </summary>
             <typeparam name="T">The type to which the value is to be converted.</typeparam>
             <param name="value">The value to convert.</param>
+            <param name="enumNamingConvention">Naming convention to apply to enums.</param>
+            <param name="typeInspector">The type inspector to use when getting information about a type.</param>
             <returns></returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType``1(System.Object,System.IFormatProvider)">
-            <summary>
-            Converts the specified value.
-            </summary>
-            <typeparam name="T">The type to which the value is to be converted.</typeparam>
-            <param name="value">The value to convert.</param>
-            <param name="provider">The provider.</param>
-            <returns></returns>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType``1(System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            Converts the specified value.
-            </summary>
-            <typeparam name="T">The type to which the value is to be converted.</typeparam>
-            <param name="value">The value to convert.</param>
-            <param name="culture">The culture.</param>
-            <returns></returns>
-        </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type)">
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type,YamlDotNet.Serialization.INamingConvention,YamlDotNet.Serialization.ITypeInspector)">
             <summary>
             Converts the specified value using the invariant culture.
             </summary>
             <param name="value">The value to convert.</param>
             <param name="destinationType">The type to which the value is to be converted.</param>
+            <param name="enumNamingConvention">Naming convention to apply to enums.</param>
+            <param name="typeInspector">The type inspector to use when getting information about a type.</param>
             <returns></returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type,System.IFormatProvider)">
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type,System.IFormatProvider,YamlDotNet.Serialization.INamingConvention,YamlDotNet.Serialization.ITypeInspector)">
             <summary>
             Converts the specified value.
             </summary>
             <param name="value">The value to convert.</param>
             <param name="destinationType">The type to which the value is to be converted.</param>
             <param name="provider">The format provider.</param>
+            <param name="enumNamingConvention">Naming convention to apply to enums.</param>
+            <param name="typeInspector">The type inspector to use when getting information about a type.</param>
             <returns></returns>
         </member>
-        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type,System.Globalization.CultureInfo)">
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.ChangeType(System.Object,System.Type,System.Globalization.CultureInfo,YamlDotNet.Serialization.INamingConvention,YamlDotNet.Serialization.ITypeInspector)">
             <summary>
             Converts the specified value.
             </summary>
             <param name="value">The value to convert.</param>
             <param name="destinationType">The type to which the value is to be converted.</param>
             <param name="culture">The culture.</param>
+            <param name="enumNamingConvention">Naming convention to apply to enums.</param>
+            <param name="typeInspector">The type inspector to use when getting information about a type.</param>
             <returns></returns>
         </member>
         <member name="M:YamlDotNet.Serialization.Utilities.TypeConverter.RegisterTypeConverter``2">
@@ -5652,6 +6019,31 @@
             </summary>
             <typeparam name="TConvertible">The type to which the converter should be associated.</typeparam>
             <typeparam name="TConverter">The type of the converter.</typeparam>
+        </member>
+        <member name="T:YamlDotNet.Serialization.Utilities.TypeConverterCache">
+            <summary>
+            A cache / map for <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> instances.
+            </summary>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.TryGetConverterForType(System.Type,YamlDotNet.Serialization.IYamlTypeConverter@)">
+            <summary>
+            Returns the first <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> that accepts the given type.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to lookup.</param>
+            <param name="typeConverter">The <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter" /> that accepts this type or <see langword="false" /> if no converter is found.</param>
+            <returns><see langword="true"/> if a type converter was found; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.GetConverterByType(System.Type)">
+            <summary>
+            Returns the <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> of the given type.
+            </summary>
+            <param name="converter">The type of the converter.</param>
+            <returns>The <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> of the given type.</returns>
+            <exception cref="T:System.ArgumentException">If no type converter of the given type is found.</exception>
+            <remarks>
+            Note that this method searches on the type of the <see cref="T:YamlDotNet.Serialization.IYamlTypeConverter"/> itself. If you want to find a type converter
+            that accepts a given <see cref="T:System.Type"/>, use <see cref="M:YamlDotNet.Serialization.Utilities.TypeConverterCache.TryGetConverterForType(System.Type,YamlDotNet.Serialization.IYamlTypeConverter@)"/> instead.
+            </remarks>
         </member>
         <member name="T:YamlDotNet.Serialization.YamlAttributeOverrides">
             <summary>
@@ -5690,6 +6082,18 @@
         <member name="T:YamlDotNet.Serialization.YamlAttributesTypeInspector">
             <summary>
             Applies the Yaml* attributes to another <see cref="T:YamlDotNet.Serialization.ITypeInspector"/>.
+            </summary>
+        </member>
+        <member name="P:YamlDotNet.Serialization.YamlFormatter.FormatEnum">
+            <summary>
+            Converts an enum to it's string representation.
+            By default it will be the string representation of the enum passed through the naming convention.
+            </summary>
+            <returns>A string representation of the enum</returns>
+        </member>
+        <member name="P:YamlDotNet.Serialization.YamlFormatter.PotentiallyQuoteEnums">
+            <summary>
+            If this function returns true, the serializer will put quotes around the formatted enum value if necessary. Defaults to true.
             </summary>
         </member>
         <member name="T:YamlDotNet.Serialization.YamlIgnoreAttribute">
@@ -5751,18 +6155,20 @@
         </member>
         <member name="T:YamlDotNet.Serialization.YamlSerializableAttribute">
             <summary>
-            Put this attribute on classes that you want the static analyzer to detect and use.
+            Put this attribute either on serializable types or on the <see cref="T:YamlDotNet.Serialization.StaticContext"/> that you want
+            the static analyzer to detect and use.
             </summary>
         </member>
-        <member name="M:YamlDotNet.ReflectionExtensions.HasDefaultConstructor(System.Type,System.Boolean)">
+        <member name="M:YamlDotNet.Serialization.YamlSerializableAttribute.#ctor">
             <summary>
-            Determines whether the specified type has a default constructor.
+            Use this constructor if the attribute is placed on a serializable class.
             </summary>
-            <param name="type">The type.</param>
-            <param name="allowPrivateConstructors">Whether to include private constructors</param>
-            <returns>
-                <c>true</c> if the type has a default constructor; otherwise, <c>false</c>.
-            </returns>
+        </member>
+        <member name="M:YamlDotNet.Serialization.YamlSerializableAttribute.#ctor(System.Type)">
+            <summary>
+            Use this constructor if the attribute is placed on the <see cref="T:YamlDotNet.Serialization.StaticContext"/>.
+            </summary>
+            <param name="serializableType">The type for which to include static code generation.</param>
         </member>
     </members>
 </doc>

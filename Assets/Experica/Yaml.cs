@@ -30,25 +30,26 @@ using YamlDotNet.Core.Events;
 namespace Experica
 {
     /// <summary>
-    /// Convert between value and its text representation of Types which don't have built-in support in YamlDotNet.
+    /// Convert between value and its text representation of Types that don't have built-in support/need special treatment, in YAML(Bool, Int, Float, List, Dict, etc.)
     /// 
     /// For `typeof(object)`, serialization would use runtime type of value, but deserialization don't know which specific
     /// type to use except `typeof(object)`. So the runtime type should be serialized in tag along with value,
     /// however it would add noise in the Yaml file, and the deserialization, probably in other languages, may not support tag
     /// or need extra work, so here Type tag is not serialized yet.
     /// 
-    /// Without type info, value remains in string for `typeof(object)`, but it is 
-    /// reasonable to try parsing string to conventional types such as bool, float or Vector3, etc.
+    /// Without specific Type tag, deserialized value remains in string for `typeof(object)`, but it is 
+    /// reasonable to try parsing string to common types such as bool, float or Vector3, etc.
     /// </summary>
-    public class YamlTypeConverter : IYamlTypeConverter
+    class YamlTypeConverter : IYamlTypeConverter
     {
         Type TVector2 = typeof(Vector2);
         Type TVector3 = typeof(Vector3);
         Type TVector4 = typeof(Vector4);
         Type TColor = typeof(Color);
-        Type TObject = typeof(object);
-        Type TString = typeof(string);
         Type TFixString512 = typeof(FixedString512Bytes);
+
+        Type TObject = typeof(object);
+
 
         public bool Accepts(Type type)
         {
@@ -59,16 +60,16 @@ namespace Experica
             return false;
         }
 
-        public object ReadYaml(IParser parser, Type type)
+        public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
         {
-            var value = ((Scalar)parser.Current).Value;
-            parser.MoveNext();
-            return type == TObject ? value.TryParse() : value.Convert(TString, type);
+            var value = parser.Consume<Scalar>().Value;
+            return type == TObject ? value.TryParse() : value.Convert(typeof(string), type);
         }
 
-        public void WriteYaml(IEmitter emitter, object value, Type type)
+        public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
         {
-            emitter.Emit(new Scalar(value.Convert<string>(type)));
+            // here use the runtime type of value
+            emitter.Emit(new Scalar(value.Convert<string>()));
         }
     }
 
@@ -80,8 +81,8 @@ namespace Experica
         static Yaml()
         {
             var c = new YamlTypeConverter();
-            // The default behaviour is to emit public fields and public properties, here we exclude fields and use explicit [YamlIgnore] to exclude specific property.
-            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(c).Build();
+            // The default behaviour is to emit public fields and public properties, here we exclude fields and could use explicit [YamlIgnore] to exclude specific property if we want.
+            serializer = new SerializerBuilder().DisableAliases().IgnoreFields().WithTypeConverter(c).WithIndentedSequences().Build();
             deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().IgnoreFields().WithTypeConverter(c).Build();
         }
 
@@ -100,9 +101,19 @@ namespace Experica
             return File.ReadAllText(path).DeserializeYaml<T>();
         }
 
+        public static object ReadYamlFile(this string path, Type type)
+        {
+            return File.ReadAllText(path).DeserializeYaml(type);
+        }
+
         public static T DeserializeYaml<T>(this string data)
         {
             return deserializer.Deserialize<T>(data);
+        }
+
+        public static object DeserializeYaml(this string data, Type type)
+        {
+            return deserializer.Deserialize(data, type);
         }
     }
 }
