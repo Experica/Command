@@ -33,30 +33,30 @@ namespace Experica.Command
     {
         bool islogicactive = false;
         public ExperimentSession exsession;
-        public ExperimentManager exmanager;
+        public ExperimentManager exmgr;
         public Action OnBeginStartExperimentSession, OnEndStartExperimentSession,
             OnBeginStopExperimentSession, OnEndStopExperimentSession;
 
-        public ExperimentLogic EL => exmanager.el;
-        public int ExRepeat => exmanager.Repeat;
-        public double SinceExReady => exmanager.SinceReady;
-        public double SinceExStop => exmanager.SinceStop;
+        public ExperimentLogic EL => exmgr.el;
+        public int ExRepeat => exmgr.Repeat;
+        public double SinceExReady => exmgr.SinceReady;
+        public double SinceExStop => exmgr.SinceStop;
         public EXPERIMENTSTATUS ExperimentStatus
         {
-            get => exmanager.ExperimentStatus;
-            set => exmanager.ExperimentStatus = value;
+            get => exmgr.ExperimentStatus;
+            set => exmgr.ExperimentStatus = value;
         }
 
         public string ExperimentID
         {
-            get => exmanager.el?.ex.ID;
+            get => exmgr.el?.ex.ID;
             set
             {
-                if (ExperimentID != value) { exmanager.ChangeEx(value); }
+                if (ExperimentID != value) { exmgr.ChangeEx(value); }
             }
         }
 
-        public void StartExperiment() { exmanager.StartEx(); }
+        public void StartExperiment() { exmgr.StartEx(); }
 
         public void StartStopExperimentSession(bool isstart)
         {
@@ -89,7 +89,7 @@ namespace Experica.Command
 
         protected virtual void StartExperimentSessionTimeSync()
         {
-            exmanager.timer.Restart();
+            exmgr.timer.Restart();
         }
 
         protected virtual void OnExperimentSessionStarted()
@@ -101,7 +101,7 @@ namespace Experica.Command
 
         protected virtual void StopExperimentSessionTimeSync()
         {
-            exmanager.timer.Stop();
+            exmgr.timer.Stop();
         }
 
         protected virtual void OnExperimentSessionStopped()

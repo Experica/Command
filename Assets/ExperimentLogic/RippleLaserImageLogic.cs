@@ -55,7 +55,7 @@ namespace Experica.Command
             }
         }
 
-        protected override void GenerateCondition()
+        protected override void PrepareCondition()
         {
             pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
@@ -170,7 +170,7 @@ namespace Experica.Command
             }
             fcond.Remove("b"); fcond.Remove("l");
 
-            condmanager.FinalizeCondition(fcond);
+            condmgr.PrepareCondition(fcond);
         }
 
         protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
@@ -186,16 +186,16 @@ namespace Experica.Command
             {
                 case BLOCKSTATE.NONE:
                     EnterBlockState(BLOCKSTATE.PREIBI);
-                    condmanager.SampleBlockSpace();
-                    if (condmanager.BlockCond.ContainsKey("LaserPower"))
+                    condmgr.SampleBlockSpace();
+                    if (condmgr.BlockCond.ContainsKey("LaserPower"))
                     {
-                        power = (float)condmanager.BlockCond["LaserPower"][condmanager.BlockIndex];
+                        power = (float)condmgr.BlockCond["LaserPower"][condmgr.BlockIndex];
                         if (lasersignalch != null)
                         {
                             laser.PowerRatio = power;
-                            if (power > 0 && condmanager.BlockCond.ContainsKey("LaserFreq"))
+                            if (power > 0 && condmgr.BlockCond.ContainsKey("LaserFreq"))
                             {
-                                var freq = (Vector4)condmanager.BlockCond["LaserFreq"][condmanager.BlockIndex];
+                                var freq = (Vector4)condmgr.BlockCond["LaserFreq"][condmgr.BlockIndex];
                                 if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                                 {
                                     ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
@@ -211,15 +211,15 @@ namespace Experica.Command
                             }
                         }
                     }
-                    if (condmanager.BlockCond.ContainsKey("LaserPower2"))
+                    if (condmgr.BlockCond.ContainsKey("LaserPower2"))
                     {
-                        power2 = (float)condmanager.BlockCond["LaserPower2"][condmanager.BlockIndex];
+                        power2 = (float)condmgr.BlockCond["LaserPower2"][condmgr.BlockIndex];
                         if (laser2signalch != null)
                         {
                             laser2.PowerRatio = power2;
-                            if (power2 > 0 && condmanager.BlockCond.ContainsKey("LaserFreq2"))
+                            if (power2 > 0 && condmgr.BlockCond.ContainsKey("LaserFreq2"))
                             {
-                                var freq2 = (Vector4)condmanager.BlockCond["LaserFreq2"][condmanager.BlockIndex];
+                                var freq2 = (Vector4)condmgr.BlockCond["LaserFreq2"][condmgr.BlockIndex];
                                 if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                                 {
                                     ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
@@ -246,7 +246,7 @@ namespace Experica.Command
                     switch (TrialState)
                     {
                         case TRIALSTATE.NONE:
-                            if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
+                            if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.ExFinish) { return; }
                             break;
                         case TRIALSTATE.PREITI:
                             if (PreITIHold >= ex.PreITI)
@@ -268,7 +268,7 @@ namespace Experica.Command
                             switch (CondState)
                             {
                                 case CONDSTATE.NONE:
-                                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                                     break;
                                 case CONDSTATE.PREICI:
                                     if (PreICIHold >= ex.PreICI)
@@ -298,8 +298,8 @@ namespace Experica.Command
                                 case CONDSTATE.SUFICI:
                                     if (SufICIHold >= ex.SufICI)
                                     {
-                                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
-                                        if (TrialHold >= ex.TrialDur || condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
+                                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
+                                        if (TrialHold >= ex.TrialDur || condmgr.IsAllCondOfBlockRepeated(condmgr.BlockIndex, ex.CondRepeat))
                                         {
                                             EnterTrialState(TRIALSTATE.SUFITI);
                                             if (ex.GetParam("WithVisible").Convert<bool>())
@@ -324,8 +324,8 @@ namespace Experica.Command
                         case TRIALSTATE.SUFITI:
                             if (SufITIHold >= ex.SufITI + power * ex.TrialDur * ex.GetParam("ITIFactor").Convert<float>())
                             {
-                                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
-                                if (condmanager.IsCondOfBlockRepeat(condmanager.BlockIndex, ex.CondRepeat))
+                                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.ExFinish) { return; }
+                                if (condmgr.IsAllCondOfBlockRepeated(condmgr.BlockIndex, ex.CondRepeat))
                                 {
                                     EnterBlockState(BLOCKSTATE.SUFIBI);
                                 }

@@ -27,9 +27,9 @@ namespace Experica.Command
 {
     /// <summary>
     /// Holds all information that define an experiment session,
-    /// in which several experiments are sequenced in certain way.
+    /// in which several experiments are sequenced in a customizable way.
     /// </summary>
-    public class ExperimentSession
+    public class ExperimentSession : DataClass
     {
         public string ID { get; set; } = "";
         public string Name { get; set; } = "";
@@ -40,12 +40,12 @@ namespace Experica.Command
         public string LogicPath { get; set; } = "";
         public double ReadyWait { get; set; } = 5000;
         public double StopWait { get; set; } = 5000;
-        public Dictionary<string, object> ExtendParam { get; set; } = new();
 
         public bool NotifyExperimenter { get; set; } = true;
         public bool IsFullScreen { get; set; } = false;
         public bool IsFullViewport { get; set; } = false;
         public bool IsGuideOn { get; set; } = true;
+        public uint Version { get; set; } = Experica.ExperimentSessionVersion;
 
 
         public ExperimentSession PrepareDefinition()
@@ -54,11 +54,13 @@ namespace Experica.Command
             {
                 Name = ID;
             }
+            RefreshExtendProperties();
             return this;
         }
 
         public void SaveDefinition(string filepath)
         {
+            Version = Experica.ExperimentSessionVersion;
             filepath.WriteYamlFile(this);
         }
     }

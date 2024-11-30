@@ -32,7 +32,7 @@ namespace Experica
 {
     public class ConditionTestManager
     {
-        public Dictionary<CONDTESTPARAM, IList> CondTest { get; } = new();
+        public Dictionary<string, IList> CondTest { get; } = new();
         public int CondTestIndex { get; private set; } = -1;
         public Action OnNotifyUI, OnClear;
 
@@ -50,6 +50,8 @@ namespace Experica
             OnClear?.Invoke();
         }
 
+        public void NewCondTest() => CondTestIndex++;
+
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
             PushCondTest(starttime, notifyparam, notifypercondtest, pushall, notifyui);
@@ -60,26 +62,26 @@ namespace Experica
         {
             if (CondTestIndex < 0) { return; }
             if (notifyUI && OnNotifyUI != null) { OnNotifyUI(); }
-            if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
-            {
-                if (!pushall)
-                {
-                    if (((CondTestIndex - notifiedidx) / notifypercondtest) >= 1)
-                    {
-                        if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
-                        {
-                            notifiedidx = CondTestIndex;
-                        }
-                    }
-                }
-                else
-                {
-                    if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
-                    {
-                        notifiedidx = CondTestIndex;
-                    }
-                }
-            }
+            //if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
+            //{
+            //    if (!pushall)
+            //    {
+            //        if (((CondTestIndex - notifiedidx) / notifypercondtest) >= 1)
+            //        {
+            //            if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
+            //            {
+            //                notifiedidx = CondTestIndex;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (NotifyCondTestAndEnd(notifiedidx + 1, notifyparam, pushtime))
+            //        {
+            //            notifiedidx = CondTestIndex;
+            //        }
+            //    }
+            //}
         }
 
         bool NotifyCondTest(int startidx, List<CONDTESTPARAM> notifyparam)
@@ -111,11 +113,18 @@ namespace Experica
             return NotifyCondTest(startidx, notifyparam) && OnNotifyCondTestEnd != null && OnNotifyCondTestEnd(notifytime);
         }
 
-        public Dictionary<CONDTESTPARAM, object> this[int condtestindex] => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
 
-        public Dictionary<CONDTESTPARAM, object> CurrentCondTest => this[CondTestIndex];
+        public Dictionary<string, object> this[int condtestindex] => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
 
-        public void Add(CONDTESTPARAM paramname, object paramvalue)
+        public Dictionary<string, object> CurrentCondTest => this[CondTestIndex];
+
+        // because we need null to represent missing value, here we use object(boxing of value type) instead of Nullable<T> where T : stuct(double boxing)
+        /// <summary>
+        /// Add value to current condtest for a parameter, fill null for any previous condtest missing value of the parameter
+        /// </summary>
+        /// <param name="paramname"></param>
+        /// <param name="paramvalue"></param>
+        public void Add(string paramname, object paramvalue)
         {
             if (CondTestIndex < 0) { return; }
             if (CondTest.ContainsKey(paramname))
@@ -139,7 +148,13 @@ namespace Experica
             }
         }
 
-        public void AddInList<T>(CONDTESTPARAM paramname, T listvalue)
+        /// <summary>
+        /// Add value to the list of current condtest for a parameter, fill null for any previous condtest missing list of the parameter
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="paramname"></param>
+        /// <param name="listvalue"></param>
+        public void AddInList<T>(string paramname, T listvalue)
         {
             if (CondTestIndex < 0) { return; }
             if (CondTest.ContainsKey(paramname))
@@ -171,7 +186,15 @@ namespace Experica
             }
         }
 
-        public void AddInList<TKey, TValue>(CONDTESTPARAM paramname, TKey listkey, TValue listvalue)
+        /// <summary>
+        /// Add key:value pair to the list of current condtest for a parameter, fill null for any previous condtest missing list of the parameter
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="paramname"></param>
+        /// <param name="listkey"></param>
+        /// <param name="listvalue"></param>
+        public void AddInList<TKey, TValue>(string paramname, TKey listkey, TValue listvalue)
         {
             if (CondTestIndex < 0) { return; }
             if (CondTest.ContainsKey(paramname))
@@ -183,7 +206,7 @@ namespace Experica
                 }
                 if (vs.Count < (CondTestIndex + 1))
                 {
-                    vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
+                    vs.Add(new List<Dictionary<TKey, TValue>>() { new() { [listkey] = listvalue } });
                 }
                 else
                 {
@@ -198,7 +221,7 @@ namespace Experica
                 {
                     vs.Add(null);
                 }
-                vs.Add(new List<Dictionary<TKey, TValue>>() { new Dictionary<TKey, TValue>() { [listkey] = listvalue } });
+                vs.Add(new List<Dictionary<TKey, TValue>>() { new() { [listkey] = listvalue } });
                 CondTest[paramname] = vs;
             }
         }

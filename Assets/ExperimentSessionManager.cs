@@ -29,24 +29,25 @@ using System.IO;
 namespace Experica.Command
 {
     /// <summary>
-    /// Manage ExperimentSession Query, Load/UnLoad, Save
+    /// Manage ExperimentSession
     /// </summary>
     public class ExperimentSessionManager : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager appmgr;
         public Dictionary<string, string> deffile = new();
         public ExperimentSessionLogic esl;
 
 
         public void CollectDefination(string indir)
         {
-            var defs = indir.GetDefinationFiles("ExperimentSession");
+            var defs = indir.GetDefinationFiles();
             if (defs != null) { deffile = defs; }
         }
 
         public ExperimentSession LoadExSession(string exsfilepath)
         {
             var exs = exsfilepath.ReadYamlFile<ExperimentSession>();
+            // keep consistent file name and experimentsession ID
             var exsfilename = Path.GetFileNameWithoutExtension(exsfilepath);
             if (string.IsNullOrEmpty(exs.ID) || exs.ID != exsfilename)
             {
@@ -80,32 +81,89 @@ namespace Experica.Command
             if (esl != null)
             {
                 Destroy(esl);
+                esl = null;
             }
             esl = gameObject.AddComponent(esltype) as ExperimentSessionLogic;
             esl.exsession = exs;
-            esl.exmanager = uicontroller.exmanager;
+            esl.exmgr = appmgr.exmgr;
             RegisterESLCallback();
         }
 
         void RegisterESLCallback()
         {
-            esl.OnBeginStartExperimentSession = uicontroller.OnBeginStartExperimentSession;
-            esl.OnEndStartExperimentSession = uicontroller.OnEndStartExperimentSession;
-            esl.OnBeginStopExperimentSession = uicontroller.OnBeginStopExperimentSession;
-            esl.OnEndStopExperimentSession = uicontroller.OnEndStopExperimentSession;
+            esl.OnBeginStartExperimentSession = appmgr.OnBeginStartExperimentSession;
+            esl.OnEndStartExperimentSession = appmgr.OnEndStartExperimentSession;
+            esl.OnBeginStopExperimentSession = appmgr.OnBeginStopExperimentSession;
+            esl.OnEndStopExperimentSession = appmgr.OnEndStopExperimentSession;
         }
 
-        public void SaveExSession(string id)
+        public bool NewExSession(string id, string idcopyfrom)
+        {
+            if (!deffile.ContainsKey(idcopyfrom))
+            {
+                return NewExSession(id);
+            }
+            else
+            {
+                if (!deffile.ContainsKey(id))
+                {
+                    var exs = deffile[idcopyfrom].ReadYamlFile<ExperimentSession>();
+                    exs.ID = id;
+                    exs.Name = id;
+                    exs.PrepareDefinition();
+
+                    deffile[id] = Path.Combine(appmgr.cfgmgr.config.ExSessionDir, id + ".yaml");
+                    exs.SaveDefinition(deffile[id]);
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool NewExSession(string id)
+        {
+            if (deffile.ContainsKey(id))
+            {
+                return false;
+            }
+            else
+            {
+                var exs = new ExperimentSession { ID = id };
+                exs.PrepareDefinition();
+
+                deffile[id] = Path.Combine(appmgr.cfgmgr.config.ExSessionDir, id + ".yaml");
+                exs.SaveDefinition(deffile[id]);
+                return true;
+            }
+        }
+
+        public bool SaveExSession() => SaveExSession(esl.exsession.ID);
+
+        public bool SaveExSession(string id)
         {
             if (deffile.ContainsKey(id) && id == esl.exsession.ID)
             {
                 esl.exsession.SaveDefinition(deffile[id]);
+                return true;
             }
+            return false;
         }
 
-        public void SaveExSession()
+        public bool DeleteExSession() => DeleteExSession(esl.exsession.ID);
+
+        public bool DeleteExSession(string id)
         {
-            SaveExSession(esl.exsession.ID);
+            if (!deffile.ContainsKey(id)) { return false; }
+
+            if (id == esl.exsession.ID)
+            {
+                Destroy(esl);
+                esl = null;
+            }
+
+            File.Delete(deffile[id]);
+            deffile.Remove(id);
+            return true;
         }
     }
 }

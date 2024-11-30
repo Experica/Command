@@ -1,26 +1,65 @@
 ID: HartleySubspace
 Name: HartleySubspace
 Designer: Alex
-Experimenter: LZ
+Experimenter: Alex
 Log: 
 Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_Name: AF6
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Grating
-EnvParam: {}
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 0
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 20 20 20
+  Diameter@Grating@Grating: 20
+  MaskType@Grating@Grating: Disk
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
+  PauseTime@Grating@Grating: true
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Sinusoidal
+  ModulateType@Grating@Grating: Square
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 0
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 0 0 0
+  Visible@Grating@Grating: true
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: ConditionTestLogic
-Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: I:\
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -41,37 +80,40 @@ PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam:
-- Experimenter
-- Subject_ID
-- Subject_Name
-- Subject_Gender
-- Subject_Size
-- Subject_Species
-- Subject_Weight
-- Hemisphere
-- Eye
-- RecordSession
-- RecordSite
-- DataDir
-- TimerDriftSpeed
-- Display_ID
-- NotifyExperimenter
-- Subject_Birth
+  - Experimenter
+  - Subject_ID
+  - Subject_Name
+  - Subject_Gender
+  - Subject_Size
+  - Subject_Species
+  - Subject_Weight
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
+  - Subject_Birth
 EnvInheritParam:
-- ScreenAspect@OrthoCamera@OrthoCamera
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- CLUT@OrthoCamera@OrthoCamera
-ExtendParam: {}
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - Diameter@Grating@Grating
+  - Position@Grating@Grating
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
-  - DigitalOut
-  - Display
+    - DigitalOut
+    - Display
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
@@ -80,3 +122,4 @@ NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

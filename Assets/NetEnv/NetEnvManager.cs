@@ -29,6 +29,7 @@ using System.Linq;
 using Experica;
 using Fasterflect;
 using System.Xml.Linq;
+using System.IO;
 
 namespace Experica.NetEnv
 {
@@ -67,17 +68,22 @@ namespace Experica.NetEnv
 
                 foreach (var rgo in Scene.GetRootGameObjects())
                 {
-                    ParseGameObject(rgo);
+                    ParseGameObject(rgo, null);
                 }
             }
             else { Debug.LogError($"Parse Invalid Scene: {Scene.name}."); }
         }
 
-        public void ParseGameObject(GameObject cgo, string parent = null)
+        public void ParseGameObject(GameObject cgo, bool parsechild = true)
         {
-            var goname = string.IsNullOrEmpty(parent) ? cgo.name : cgo.name + "~" + parent;
-            go[goname] = cgo;
-            if (cgo.activeInHierarchy) { active_go[goname] = cgo; }
+            var p = cgo.transform.parent;
+            var pn = p == null ? null : GetGameObjectFullName(p.gameObject);
+            ParseGameObject(cgo, pn, parsechild);
+        }
+
+        public void ParseGameObject(GameObject cgo, string parent, bool parsechild = true)
+        {
+            var goname = string.IsNullOrEmpty(parent) ? cgo.name : cgo.name + '~' + parent;
             Dictionary<string, Dictionary<string, NetworkVariableSource>> nb_nv = new();
             foreach (var nb in cgo.GetComponents<NetworkBehaviour>())
             {
@@ -92,11 +98,19 @@ namespace Experica.NetEnv
                     }
                 }
             }
-            if (nb_nv.Count > 0) { go_nb_nv[goname] = nb_nv; }
-
-            for (var i = 0; i < cgo.transform.childCount; i++)
+            if (nb_nv.Count > 0)
             {
-                ParseGameObject(cgo.transform.GetChild(i).gameObject, goname);
+                go[goname] = cgo;
+                if (cgo.activeInHierarchy) { active_go[goname] = cgo; }
+                go_nb_nv[goname] = nb_nv;
+            }
+
+            if (parsechild)
+            {
+                for (var i = 0; i < cgo.transform.childCount; i++)
+                {
+                    ParseGameObject(cgo.transform.GetChild(i).gameObject, goname);
+                }
             }
         }
 
@@ -646,15 +660,32 @@ namespace Experica.NetEnv
 
         public string[] GetGameObjectFullNames(bool active = false) { return active ? active_go.Keys.ToArray() : go.Keys.ToArray(); }
 
+        public static string GetGameObjectFullName(GameObject go)
+        {
+            var name = go.name;
+            while (true)
+            {
+                var p = go.transform.parent;
+                if (p == null) { break; }
+                else
+                {
+                    go = p.gameObject;
+                    name = name + '~' + go.name;
+                }
+            }
+            return name;
+        }
 
-        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null)
+        public bool Empty => go.Count == 0;
+
+        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, bool parse = true)
         {
             var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform);
             if (nb == null) { return null; }
             //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
-            nb.Position.Value = Vector3.zero;
             c.OnCameraChange += nb.UpdateView;
             nb.UpdateView(c);
+            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
@@ -668,7 +699,7 @@ namespace Experica.NetEnv
             return cross;
         }
 
-        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null)
+        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null, bool parse = true)
         {
             var nb = Spawn<Circle>("Assets/NetEnv/Object/Circle.prefab", name, parent);
             if (nb == null) { return null; }
@@ -676,6 +707,7 @@ namespace Experica.NetEnv
             nb.Size.Value = size;
             nb.Color.Value = color;
             nb.Width.Value = width;
+            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
@@ -687,7 +719,7 @@ namespace Experica.NetEnv
             return go.GetComponent<Dot>();
         }
 
-        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null)
+        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null, bool parse = true)
         {
             var nb = Spawn<DotTrail>("Assets/NetEnv/Object/DotTrail.prefab", name, parent);
             if (nb == null) { return null; }
@@ -695,15 +727,19 @@ namespace Experica.NetEnv
             nb.Size.Value = size;
             nb.Color.Value = color;
             nb.TrailWidthScale.Value = trailwidthscale;
+            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
         public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool destroyWithScene = true)
         {
             if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
-            var go = parent == null ? GameObject.Instantiate(prefab) : GameObject.Instantiate(prefab, parent);
-            if (!string.IsNullOrEmpty(name)) { go.name = name; }
-            go.GetComponent<NetworkObject>().Spawn(destroyWithScene);
+            var go = GameObject.Instantiate(prefab);
+            go.name = string.IsNullOrEmpty(name) ? Path.GetFileNameWithoutExtension(addressprefab) : name;
+            var no = go.GetComponent<NetworkObject>();
+            if (no == null) { return default; }
+            no.Spawn(destroyWithScene);
+            if (parent != null) { no.TrySetParent(parent); }
             return go.GetComponent<T>();
         }
     }

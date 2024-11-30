@@ -55,6 +55,10 @@
     text-overflow: ellipsis;
 }
 
+.Dropdown > VisualElement{
+    margin-left: 0px;
+}
+
 .CloseButton {
     border-top-width: 0;
     border-right-width: 0;

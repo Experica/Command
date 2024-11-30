@@ -29,7 +29,7 @@ namespace Experica.Command
 {
     public class ConditionPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public GameObject condcontent, condheadcontent, inputprefab,
             blueheadertextprefab, redheadertextprefab, greenheadertextprefab, textprefab;
         public Canvas panel;
@@ -42,10 +42,10 @@ namespace Experica.Command
         {
             if (ison)
             {
-                var el = uicontroller.exmanager.el;
+                var el = uicontroller.exmgr.el;
                 if (el != null)
                 {
-                    el.PrepareCondition(el.regeneratecond);
+                    el.InitializeCondSampling(el.regeneratecond);
                 }
             }
             else
@@ -56,7 +56,7 @@ namespace Experica.Command
 
         public void OnForcePrepare(bool isforceprepare)
         {
-            var el = uicontroller.exmanager.el;
+            var el = uicontroller.exmgr.el;
             if (el != null)
             {
                 el.regeneratecond = isforceprepare;
@@ -74,7 +74,7 @@ namespace Experica.Command
 
         void CreateConditionUI()
         {
-            var cond = uicontroller.exmanager.el.condmanager.Cond;
+            var cond = uicontroller.exmgr.el.condmgr.Cond;
             var grid = condcontent.GetComponent<GridLayoutGroup>();
             var fn = cond.Keys.Count;
             if (fn > 0)
@@ -84,7 +84,7 @@ namespace Experica.Command
                 grid.constraintCount = rn;
                 AddCondIndex(rn);
 
-                if (uicontroller.exmanager.el.condmanager.NBlock > 1)
+                if (uicontroller.exmgr.el.condmgr.NBlock > 1)
                 {
                     AddBlockIndex(rn);
                 }
@@ -128,7 +128,7 @@ namespace Experica.Command
             headertext.GetComponentInChildren<Text>().text = "BlockIndex";
             headertext.transform.SetParent(condheadcontent.transform, false);
 
-            var condsamplesapces = uicontroller.exmanager.el.condmanager.CondSampleSpaces;
+            var condsamplesapces = uicontroller.exmgr.el.condmgr.CondSampleSpaces;
             for (var i = 0; i < condn; i++)
             {
                 var textvalue = Instantiate(textprefab);

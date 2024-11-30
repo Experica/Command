@@ -27,7 +27,7 @@ namespace Experica.Command
 {
     public class RippleLaserCTLogic : RippleLaserLogic
     {
-        protected override void GenerateCondition()
+        protected override void PrepareCondition()
         {
             pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
@@ -107,8 +107,8 @@ namespace Experica.Command
             }
 
             // get base conditions
-            condmanager.FinalizeCondition(ex.CondPath);
-            var bcond = condmanager.Cond;
+            condmgr.PrepareCondition(ex.CondPath);
+            var bcond = condmgr.Cond;
 
             // combine laser and base conditions
             var fcond = new Dictionary<string, List<object>>()
@@ -140,7 +140,7 @@ namespace Experica.Command
             }
             fcond.Remove("b"); fcond.Remove("l");
 
-            condmanager.FinalizeCondition(fcond);
+            condmgr.PrepareCondition(fcond);
         }
     }
 }

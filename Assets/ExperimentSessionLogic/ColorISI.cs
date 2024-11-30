@@ -43,9 +43,9 @@ public class ColorISI : ExperimentSessionLogic
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
-                    exmanager.uicontroller.GuideActive = exsession.IsGuideOn;
-                    exmanager.uicontroller.FullScreen = exsession.IsFullScreen;
-                    exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
+                    exmgr.el.Guide = exsession.IsGuideOn;
+                    exmgr.appmgr.FullScreen = exsession.IsFullScreen;
+                    exmgr.appmgr.FullViewport = exsession.IsFullViewport;
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
                     eye = EL.GetExParam<Eye>("Eye");
 
@@ -64,7 +64,7 @@ public class ColorISI : ExperimentSessionLogic
                                     EL.SetExParam("Eye", eye);
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.FullViewportSize();
+                                    exmgr.appmgr.FullViewportSize();
                                     break;
                             }
                             StartExperiment();
@@ -96,7 +96,7 @@ public class ColorISI : ExperimentSessionLogic
                                 case 0:
                                     EL.SetExParam("ColorSpace", "DKL");
                                     EL.SetExParam("Color", "X");
-                                    exmanager.uicontroller.FullViewportSize();
+                                    exmgr.appmgr.FullViewportSize();
                                     break;
 
                             }
@@ -131,7 +131,7 @@ public class ColorISI : ExperimentSessionLogic
                                     EL.SetExParam("Color", "X");
                                     EL.SetExParam("ModulateParam", "ModulateTime");
                                     EL.SetExParam("CycleDirection", 1f);
-                                    exmanager.uicontroller.FullViewportSize();
+                                    exmgr.appmgr.FullViewportSize();
                                     EL.SetEnvActiveParam("GratingType", "Sinusoidal");
                                     EL.SetEnvActiveParam("ModulateGratingType", "Sinusoidal");
                                     EL.SetEnvActiveParam("SpatialPhase", 0.75);
@@ -163,8 +163,8 @@ public class ColorISI : ExperimentSessionLogic
                             else
                             {
                                 StartStopExperimentSession(false);
-                                exmanager.uicontroller.IsFullViewport = false;
-                                exmanager.uicontroller.GuideActive = true;
+                                exmgr.appmgr.FullViewport = false;
+                                exmgr.el.Guide = true;
                             }
                         }
                         break;

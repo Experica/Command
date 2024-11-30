@@ -30,13 +30,13 @@ namespace Experica.Command
         protected float diameterbeforeadjust;
         protected bool isdiameteradjusted;
 
-        protected override void GenerateCondition()
+        protected override void PrepareCondition()
         {
             var cond = new Dictionary<string, List<object>>
             {
                 ["Image"] = Enumerable.Range((int)GetEnvActiveParam("StartIndex"), (int)GetEnvActiveParam("NumOfImage")).Select(i => (object)i).ToList()
             };
-            condmanager.FinalizeCondition(cond);
+            condmgr.PrepareCondition(cond);
         }
 
         protected override void OnStartExperiment()

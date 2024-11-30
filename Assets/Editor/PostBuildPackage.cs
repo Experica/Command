@@ -33,12 +33,12 @@ namespace Experica.Editor
         static string builddir = "Build";
         static List<string> files = new List<string>()
         {
-            "Command.exe",
+            //"Command.exe",
             "CommandConfigManager.yaml",
             "LICENSE.md",
             "README.md",
-            "UnityCrashHandler64.exe",
-            "UnityPlayer.dll"
+            //"UnityCrashHandler64.exe",
+            //"UnityPlayer.dll"
         };
         static List<string> dirs = new List<string>()
         {
@@ -50,8 +50,7 @@ namespace Experica.Editor
             "Data",
             "Configuration",
             "Condition",
-            "Command_Data",
-            "MonoBleedingEdge"
+            //"MonoBleedingEdge"
         };
 
         [MenuItem("File/PostBuildPackage")]

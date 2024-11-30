@@ -44,9 +44,9 @@ public class BOShadowV1 : ExperimentSessionLogic
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
-                    exmanager.uicontroller.GuideActive = exsession.IsGuideOn;
-                    exmanager.uicontroller.FullScreen = exsession.IsFullScreen;
-                    exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
+                    exmgr.el.Guide = exsession.IsGuideOn;
+                    exmgr.appmgr.FullScreen = exsession.IsFullScreen;
+                    exmgr.appmgr.FullViewport = exsession.IsFullViewport;
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
                     diameter = EL.GetEnvActiveParam<float>("Diameter");
 
@@ -94,7 +94,7 @@ public class BOShadowV1 : ExperimentSessionLogic
                     case EXPERIMENTSTATUS.NONE:
                         if (SinceExReady > exsession.ReadyWait)
                         {
-                            exmanager.uicontroller.ViewportSize();
+                            exmgr.appmgr.ViewportSize();
                             StartExperiment();
                         }
                         break;
@@ -112,7 +112,7 @@ public class BOShadowV1 : ExperimentSessionLogic
                     case EXPERIMENTSTATUS.NONE:
                         if (SinceExReady > exsession.ReadyWait)
                         {
-                            exmanager.uicontroller.ViewportSize();
+                            exmgr.appmgr.ViewportSize();
                             StartExperiment();
                         }
                         break;
@@ -130,7 +130,7 @@ public class BOShadowV1 : ExperimentSessionLogic
                     case EXPERIMENTSTATUS.NONE:
                         if (SinceExReady > exsession.ReadyWait)
                         {
-                            exmanager.uicontroller.ViewportSize();
+                            exmgr.appmgr.ViewportSize();
                             StartExperiment();
                         }
                         break;
@@ -148,7 +148,7 @@ public class BOShadowV1 : ExperimentSessionLogic
                     case EXPERIMENTSTATUS.NONE:
                         if (SinceExReady > exsession.ReadyWait)
                         {
-                            exmanager.uicontroller.ViewportSize();
+                            exmgr.appmgr.ViewportSize();
                             StartExperiment();
                         }
                         break;
@@ -156,8 +156,8 @@ public class BOShadowV1 : ExperimentSessionLogic
                         if (SinceExStop > exsession.StopWait)
                         {
                             StartStopExperimentSession(false);
-                            exmanager.uicontroller.IsFullViewport = false;
-                            exmanager.uicontroller.GuideActive = true;
+                            exmgr.appmgr.FullViewport = false;
+                            exmgr.el.Guide = true;
                         }
                         break;
                 }

@@ -4,12 +4,12 @@
         <ui:Label text="Control" name="Title" />
         <ui:VisualElement name="Content" style="justify-content: space-between; flex-grow: 1;">
             <ui:VisualElement name="Experiment" style="height: 50%;">
-                <ui:Label text="Experiment" style="-unity-text-align: middle-center; font-size: 38px; height: 45px;" />
+                <ui:Label text="Experiment" style="-unity-text-align: middle-center; font-size: 38px; -unity-font-style: bold;" />
                 <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: space-around;">
-                    <ui:Button text="New" name="New" style="height: 50px; width: 90px; font-size: 34px;" />
-                    <ui:DropdownField name="ExperimentList" style="width: 65%; height: 50px; font-size: 34px;" />
-                    <ui:Button text="Save" name="Save" style="width: 95px; height: 50px; font-size: 34px;" />
-                    <ui:Button text="Delete" name="Delete" style="width: 120px; height: 50px; font-size: 34px;" />
+                    <ui:Button text="New" name="New" style="height: 50px; font-size: 34px; -unity-font-style: bold;" />
+                    <ui:DropdownField name="ExperimentList" style="width: 65%; height: 50px; font-size: 34px; -unity-font-style: bold;" />
+                    <ui:Button text="Save" name="Save" style="height: 50px; font-size: 34px; -unity-font-style: bold;" />
+                    <ui:Button text="Delete" name="Delete" style="height: 50px; font-size: 34px; -unity-font-style: bold;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: space-between;">
                     <ui:Toggle label="Server" name="Server" class="ToggleButton ToggleButtonBlue" style="height: 70px; font-size: 36px; -unity-font-style: bold;" />
@@ -19,9 +19,9 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="ExperimentSession" style="height: 50%;">
-                <ui:Label text="Experiment Session" style="-unity-text-align: middle-center; font-size: 38px; height: 45px;" />
+                <ui:Label text="Experiment Session" style="-unity-text-align: middle-center; font-size: 38px; -unity-font-style: bold;" />
                 <ui:VisualElement style="flex-direction: row; justify-content: space-around; align-items: center;">
-                    <ui:DropdownField name="ExperimentSessionList" style="width: 65%; height: 50px; font-size: 34px;" />
+                    <ui:DropdownField name="ExperimentSessionList" style="height: 50px; font-size: 34px; -unity-font-style: bold; width: 65%;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: space-around;">
                     <ui:Toggle label="StartSession" name="StartSession" class="ToggleButton ToggleButtonPurple" style="height: 70px; font-size: 36px; -unity-font-style: bold;" />

@@ -108,12 +108,12 @@ public class ImagerEpoch : ConditionTestLogic
         if (online && saveepoch)
         {
             var epochpath = Path.Combine(dataroot, $".{currentepoch}.{Config.SaveDataFormat.ToString().ToLower()}");
-            var ct = condtestmanager.CurrentCondTest;
+            var ct = condtestmgr.CurrentCondTest;
             epochpath.Save(ct, rmext: true);
         }
     }
 
-    protected override void GenerateCondition()
+    protected override void PrepareCondition()
     {
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
@@ -148,7 +148,7 @@ public class ImagerEpoch : ConditionTestLogic
         }
 
         // get conditions from file
-        base.GenerateCondition();
+        base.PrepareCondition();
 
         if (color != null)
         {
@@ -161,7 +161,7 @@ public class ImagerEpoch : ConditionTestLogic
 
             if (ex.ID == "ISIEpoch2Color" || ex.ID== "ISIEpochFlash2Color")
             {
-                condmanager.FinalizeCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
+                condmgr.PrepareCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
             }
         }
     }
@@ -197,7 +197,7 @@ public class ImagerEpoch : ConditionTestLogic
         switch (TrialState)
         {
             case TRIALSTATE.NONE:
-                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
+                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.ExFinish) { return; }
                 SyncFrame();
                 break;
             case TRIALSTATE.PREITI:
@@ -211,7 +211,7 @@ public class ImagerEpoch : ConditionTestLogic
                 switch (CondState)
                 {
                     case CONDSTATE.NONE:
-                        StartEpochRecord(condtestmanager.CondTestIndex);
+                        StartEpochRecord(condtestmgr.CondTestIndex);
                         EnterCondState(CONDSTATE.PREICI);
                         SyncFrame();
                         break;

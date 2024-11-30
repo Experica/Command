@@ -28,11 +28,11 @@ using System;
 namespace Experica.Command
 {
     /// <summary>
-    /// Manage Experiment Query, Load/UnLoad, Start/Stop, and Holding the History of Running ExperimentLogic defined in Experiment
+    /// Manage Experiment Query, Load/UnLoad, Start/Stop, and Holding the History of ExperimentLogic defined in Experiment
     /// </summary>
     public class ExperimentManager : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager appmgr;
         public Dictionary<string, string> deffile = new();
         List<ExperimentLogic> elhistory = new();
         public ExperimentLogic el;
@@ -50,22 +50,22 @@ namespace Experica.Command
             if (string.IsNullOrEmpty(id)) { Debug.LogError($"Invalid Experiment ID: \"{id}\"."); return; }
             if (deffile.ContainsKey(id))
             {
-                uicontroller.ui.experimentlist.value = id;
+                appmgr.ui.experimentlist.value = id;
             }
             else
             {
-                Debug.LogError($"Can Not Find \"{id}\" in Experiment Directory: {uicontroller.config.ExDir}.");
+                Debug.LogError($"Can Not Find \"{id}\" in Experiment Definition List.");
             }
         }
 
         public void StartEx()
         {
-            uicontroller.ui.start.value = true;
+            appmgr.ui.start.value = true;
         }
 
         public void StopEx()
         {
-            uicontroller.ui.start.value = false;
+            appmgr.ui.start.value = false;
         }
 
         public void OnReady()
@@ -73,7 +73,6 @@ namespace Experica.Command
             ReadyTime = timer.ElapsedMillisecond;
             ExperimentStatus = EXPERIMENTSTATUS.NONE;
             Repeat = 0;
-            el?.OnReady();
         }
 
         public void OnStart()
@@ -92,19 +91,20 @@ namespace Experica.Command
 
         public void CollectDefination(string indir)
         {
-            var defs = indir.GetDefinationFiles("Experiment");
+            var defs = indir.GetDefinationFiles();
             if (defs != null) { deffile = defs; }
         }
 
         public Experiment LoadEx(string exfilepath)
         {
             var ex = exfilepath.ReadYamlFile<Experiment>();
+            // keep consistent file name and experiment ID
             var exfilename = Path.GetFileNameWithoutExtension(exfilepath);
             if (string.IsNullOrEmpty(ex.ID) || ex.ID != exfilename)
             {
                 ex.ID = exfilename;
             }
-            return ex.PrepareDefinition(uicontroller.config);
+            return ex.PrepareDefinition(appmgr.cfgmgr.config);
         }
 
         public void LoadEL(string exfilepath) { LoadEL(LoadEx(exfilepath)); }
@@ -126,13 +126,13 @@ namespace Experica.Command
             }
             if (eltype == null)
             {
-                ex.LogicPath = uicontroller.config.ExLogic;
+                ex.LogicPath = appmgr.cfgmgr.config.ExLogic;
                 eltype = Type.GetType(ex.LogicPath);
                 Debug.LogWarning($"No Valid ExperimentLogc For {ex.ID}, Use {ex.LogicPath} Instead.");
             }
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.ex = ex;
-            RegisterELCallback();
+            el.appmgr = appmgr;
             AddEL(el);
         }
 
@@ -166,14 +166,6 @@ namespace Experica.Command
 
         void RegisterELCallback()
         {
-            el.OnBeginStartExperiment = uicontroller.OnBeginStartExperiment;
-            el.OnEndStartExperiment = uicontroller.OnEndStartExperiment;
-            el.OnBeginStopExperiment = uicontroller.OnBeginStopExperiment;
-            el.OnEndStopExperiment = uicontroller.OnEndStopExperiment;
-            el.OnBeginPauseExperiment = uicontroller.OnBeginPauseExperiment;
-            el.OnEndPauseExperiment = uicontroller.OnEndPauseExperiment;
-            el.OnBeginResumeExperiment = uicontroller.OnBeginResumeExperiment;
-            el.OnEndResumeExpeirment = uicontroller.OnEndResumeExpeirment;
 
             //el.condmanager.OnSamplingInitialized = uicontroller.condpanel.RefreshCondition;
             //el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
@@ -186,21 +178,21 @@ namespace Experica.Command
 
         public bool NewEx(string id, string idcopyfrom)
         {
-            if (string.IsNullOrEmpty(idcopyfrom))
+            if (!deffile.ContainsKey(idcopyfrom))
             {
                 return NewEx(id);
             }
             else
             {
-                if (!deffile.ContainsKey(id) && deffile.ContainsKey(idcopyfrom))
+                if (!deffile.ContainsKey(id))
                 {
                     var ex = deffile[idcopyfrom].ReadYamlFile<Experiment>();
                     ex.ID = id;
                     ex.Name = id;
-                    LoadEL(ex.PrepareDefinition(uicontroller.config));
+                    ex.PrepareDefinition(appmgr.cfgmgr.config);
 
-                    deffile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
-                    SaveEx(id);
+                    deffile[id] = Path.Combine(appmgr.cfgmgr.config.ExDir, id + ".yaml");
+                    ex.SaveDefinition(deffile[id]);
                     return true;
                 }
                 return false;
@@ -215,27 +207,43 @@ namespace Experica.Command
             }
             else
             {
-                var ex = new Experiment
-                {
-                    ID = id
-                };
-                LoadEL(ex.PrepareDefinition(uicontroller.config));
+                var ex = new Experiment { ID = id };
+                ex.PrepareDefinition(appmgr.cfgmgr.config);
 
-                deffile[id] = Path.Combine(uicontroller.config.ExDir, id + ".yaml");
-                SaveEx(id);
+                deffile[id] = Path.Combine(appmgr.cfgmgr.config.ExDir, id + ".yaml");
+                ex.SaveDefinition(deffile[id]);
                 return true;
             }
         }
 
-        public void SaveEx(string id)
+        /// <summary>
+        /// Save the current experiment
+        /// </summary>
+        public bool SaveEx() => SaveEx(el.ex.ID);
+
+        /// <summary>
+        /// Save the definition state of experiment to file
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool SaveEx(string id)
         {
-            if (!deffile.ContainsKey(id)) { return; }
+            if (!deffile.ContainsKey(id)) { return false; }
             var i = FindFirstInELHistory(id);
-            if (i < 0) { return; }
+            if (i < 0) { return false; }
 
             var el = elhistory[i];
-            el.ex.EnvParam = el.envmanager.GetParams();
+            if(!el.envmgr.Empty)
+            {
+                el.ex.EnvParam = el.envmgr.GetParams();
+            }
+            //var envps = el.envmgr.GetParams();
+            //if (envps != null && envps.Count > 0)
+            //{
+            //    el.ex.EnvParam = envps;
+            //}
             el.ex.SaveDefinition(deffile[id]);
+            return true;
         }
 
         public void SaveAllEx()
@@ -245,6 +253,8 @@ namespace Experica.Command
                 SaveEx(id);
             }
         }
+
+        public bool DeleteEx() => DeleteEx(el.ex.ID);
 
         public bool DeleteEx(string id)
         {
@@ -258,6 +268,7 @@ namespace Experica.Command
                 Destroy(elhistory[i]);
                 elhistory.RemoveAt(i);
             }
+
             File.Delete(deffile[id]);
             deffile.Remove(id);
             return true;
@@ -271,6 +282,10 @@ namespace Experica.Command
             }
         }
 
+        /// <summary>
+        /// Clear experiments in history
+        /// </summary>
+        /// <param name="excludelast"></param>
         public void Clear(bool excludelast = false)
         {
             var n = excludelast ? elhistory.Count - 1 : elhistory.Count;
@@ -284,8 +299,14 @@ namespace Experica.Command
         }
 
 
-        public int FindDuplicateOfLast() { return FindFirstInELHistory(elhistory.Last().ex.ID, true); }
+        public int FindDuplicateOfLast() => FindFirstInELHistory(elhistory.Last().ex.ID, true);
 
+        /// <summary>
+        /// Find first Experiment with `exid` in history
+        /// </summary>
+        /// <param name="exid"></param>
+        /// <param name="excludelast"></param>
+        /// <returns>index of Experiment in history, or -1 when not found</returns>
         public int FindFirstInELHistory(string exid, bool excludelast = false)
         {
             var n = excludelast ? elhistory.Count - 1 : elhistory.Count;
@@ -301,6 +322,7 @@ namespace Experica.Command
 
         void InheritExExtendProperty(string name)
         {
+            // ExtendParam is designed to be static in Experiment run/stop lifecycle, so we can safely delete param in inherit that is not defined
             if (!el.ex.ContainsExtendProperty(name)) { el.ex.InheritParam.Remove(name); return; }
             for (var i = elhistory.Count - 2; i > -1; i--)
             {
@@ -312,6 +334,10 @@ namespace Experica.Command
             }
         }
 
+        /// <summary>
+        /// Try inherit param from Experiment's Properties or ExtendProperties
+        /// </summary>
+        /// <param name="name"></param>
         public void InheritExParam(string name)
         {
             var n = elhistory.Count;
@@ -320,6 +346,10 @@ namespace Experica.Command
             else { InheritExExtendProperty(name); }
         }
 
+        /// <summary>
+        /// Try inherit all params
+        /// </summary>
+        /// <param name="byobj">only params for a specific object</param>
         public void InheritEnv(string byobj = null)
         {
             if (elhistory.Count < 2) { return; }
@@ -327,7 +357,7 @@ namespace Experica.Command
             {
                 if (!ip.SplitEnvParamFullName(out var ns)) { Debug.LogError($"EnvParam: {ip} is not a valid fullname, skip inherit search."); continue; };
                 if (!string.IsNullOrEmpty(byobj) && byobj != ns[2]) { continue; }
-                if (!el.envmanager.ContainsParamByFullName(ns[0], ns[1], ns[2])) { el.ex.EnvInheritParam.Remove(ip); continue; }
+                if (!el.envmgr.ContainsParamByFullName(ns[0], ns[1], ns[2])) { continue; }
                 InheritEnvParam(ns[0], ns[1], ns[2], ip);
             }
         }
@@ -336,7 +366,9 @@ namespace Experica.Command
         {
             if (elhistory.Count < 2) { return; }
             if (!FullName.SplitEnvParamFullName(out var ns)) { Debug.LogError($"EnvParam: {FullName} is not a valid fullname, skip inherit search."); return; };
-            if (!el.envmanager.ContainsParamByFullName(ns[0], ns[1], ns[2])) { el.ex.EnvInheritParam.Remove(FullName); return; }
+            // envparams are dynamic because of spawn/unspawn in a scene, so we don't delete param in inherit that not defined at the moment,
+            // but may used later when corresponding object spawned(might accumulate unused param in the EnvInheritParam)
+            if (!el.envmgr.ContainsParamByFullName(ns[0], ns[1], ns[2])) { return; }
             InheritEnvParam(ns[0], ns[1], ns[2], FullName);
         }
 
@@ -344,19 +376,20 @@ namespace Experica.Command
         {
             for (var i = elhistory.Count - 2; i > -1; i--)
             {
-                var envparam = elhistory[i].ex.EnvParam; // config.IsSaveExOnQuit=true will update EnvParam whenever an experiment unselected
+                // since the scene of previous experiment probably unloaded, we can't safely retrieve envparams from envmanager,
+                // but when config.IsSaveExOnQuit=true(default), the EnvParam will be filled whenever an experiment unselected and become history
+                var envparam = elhistory[i].ex.EnvParam;
                 object v = null;
                 if (envparam.ContainsKey(FullName))
                 {
                     v = envparam[FullName];
                 }
-                else if (uicontroller.config.EnvCrossInheritRule.IsEnvCrossInheritTo(goName))
+                else if (appmgr.cfgmgr.config.EnvCrossInheritRule.ContainsKey(nbName))
                 {
                     foreach (var p in envparam.Keys)
                     {
-                        string paramfrom = p.FirstSplitHead();
-                        string objectfrom = p.LastSplitTail();
-                        if (nvName == paramfrom && uicontroller.config.EnvCrossInheritRule.IsFollowEnvCrossInheritRule(goName, objectfrom, nvName))
+                        if (!p.SplitEnvParamFullName(out var ns)) { continue; }
+                        if (nvName == ns[0] && appmgr.cfgmgr.config.EnvCrossInheritRule[nbName].Contains(ns[1]))
                         {
                             v = envparam[p];
                             break;
@@ -366,7 +399,7 @@ namespace Experica.Command
 
                 if (v != null)
                 {
-                    el.envmanager.SetParamByFullName(nvName, nbName, goName, v);
+                    el.envmgr.SetParamByFullName(nvName, nbName, goName, v);
                     break;
                 }
             }

@@ -40,7 +40,7 @@ namespace Experica.Command
             ppw = new GPIOWave(pport2);
         }
 
-        protected override void GenerateCondition()
+        protected override void PrepareCondition()
         {
             pushexcludefactor = new List<string>() { "LaserPower", "LaserFreq", "LaserPower2", "LaserFreq2" };
 
@@ -118,7 +118,7 @@ namespace Experica.Command
                 }
             }
 
-            condmanager.FinalizeCondition(lcond);
+            condmgr.PrepareCondition(lcond);
         }
 
         protected override void StartExperimentTimeSync()
@@ -150,15 +150,15 @@ namespace Experica.Command
         {
             base.SamplePushCondition(manualcondidx, manualblockidx, istrysampleblock);
             // Push laser conditions
-            if (condmanager.Cond.ContainsKey("LaserPower"))
+            if (condmgr.Cond.ContainsKey("LaserPower"))
             {
-                power = (float)condmanager.Cond["LaserPower"][condmanager.CondIndex];
+                power = (float)condmgr.Cond["LaserPower"][condmgr.CondIndex];
                 if (lasersignalch != null)
                 {
                     laser.PowerRatio = power;
-                    if (power > 0 && condmanager.Cond.ContainsKey("LaserFreq"))
+                    if (power > 0 && condmgr.Cond.ContainsKey("LaserFreq"))
                     {
-                        var freq = (Vector4)condmanager.Cond["LaserFreq"][condmanager.CondIndex];
+                        var freq = (Vector4)condmgr.Cond["LaserFreq"][condmgr.CondIndex];
                         if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                         {
                             ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
@@ -174,15 +174,15 @@ namespace Experica.Command
                     }
                 }
             }
-            if (condmanager.Cond.ContainsKey("LaserPower2"))
+            if (condmgr.Cond.ContainsKey("LaserPower2"))
             {
-                power2 = (float)condmanager.Cond["LaserPower2"][condmanager.CondIndex];
+                power2 = (float)condmgr.Cond["LaserPower2"][condmgr.CondIndex];
                 if (laser2signalch != null)
                 {
                     laser2.PowerRatio = power2;
-                    if (power2 > 0 && condmanager.Cond.ContainsKey("LaserFreq2"))
+                    if (power2 > 0 && condmgr.Cond.ContainsKey("LaserFreq2"))
                     {
-                        var freq2 = (Vector4)condmanager.Cond["LaserFreq2"][condmanager.CondIndex];
+                        var freq2 = (Vector4)condmgr.Cond["LaserFreq2"][condmgr.CondIndex];
                         if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                         {
                             ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
@@ -205,7 +205,7 @@ namespace Experica.Command
             switch (CondState)
             {
                 case CONDSTATE.NONE:
-                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                     break;
                 case CONDSTATE.PREICI:
                     if (PreICIHold >= ex.PreICI)
@@ -255,7 +255,7 @@ namespace Experica.Command
                 case CONDSTATE.SUFICI:
                     if (SufICIHold >= ex.SufICI + power * ex.CondDur * ex.GetParam("ICIFactor").Convert<float>())
                     {
-                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                     }
                     break;
             }

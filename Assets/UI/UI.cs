@@ -37,11 +37,11 @@ namespace Experica.Command
 {
     public class UI : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager appmgr;
         public UIDocument uidoc;
         public VisualTreeAsset ToggleString, ToggleEnum, ToggleBool, ToggleInteger, ToggleUInteger, ToggleFloat, ToggleDouble, ToggleVector2,ToggleVector3, ToggleVector4,
             ParamString, ParamEnum, ParamBool, ParamInteger, ParamUInteger, ParamFloat, ParamDouble, ParamVector2, ParamVector3, ParamVector4,
-            ExtendButton, viewport, ParamsFoldout,AboutWindow,ConfigWindow,AddExParamWindow;
+            ExtendButton, viewport, ParamsFoldout,AboutWindow,ConfigWindow,AddExParamWindow,NewExWindow;
 
         VisualElement root,mainmenu,maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
         public Toggle server, host, start, pause, startsession;
@@ -71,19 +71,20 @@ namespace Experica.Command
             saveex = controlpanel.Q<Button>("Save");
             deleteex = controlpanel.Q<Button>("Delete");
 
-            experimentlist.RegisterValueChangedCallback(e => uicontroller.OnExChoiceChanged(e.newValue));
-            experimentsessionlist.RegisterValueChangedCallback(e => uicontroller.OnExSessionChoiceChanged(e.newValue));
-            server.RegisterValueChangedCallback(e => uicontroller.ToggleServer(e.newValue));
-            host.RegisterValueChangedCallback(e => uicontroller.ToggleHost(e.newValue));
-            start.RegisterValueChangedCallback(e => uicontroller.exmanager.el?.StartStopExperiment(e.newValue));
-            pause.RegisterValueChangedCallback(e => uicontroller.exmanager.el?.PauseResumeExperiment(e.newValue));
+            experimentlist.RegisterValueChangedCallback(e => appmgr.OnExChoiceChanged(e.newValue));
+            experimentsessionlist.RegisterValueChangedCallback(e => appmgr.OnExSessionChoiceChanged(e.newValue));
+            server.RegisterValueChangedCallback(e => appmgr.ToggleServer(e.newValue));
+            host.RegisterValueChangedCallback(e => appmgr.ToggleHost(e.newValue));
+            start.RegisterValueChangedCallback(e => appmgr.exmgr.el?.StartStopExperiment(e.newValue));
+            pause.RegisterValueChangedCallback(e => appmgr.exmgr.el?.PauseResumeExperiment(e.newValue));
             start.SetEnabled(false);
             pause.SetEnabled(false);
-            saveex.RegisterCallback<ClickEvent>(e => uicontroller.exmanager.SaveEx(experimentlist.value));
+            newex.RegisterCallback<ClickEvent>(e => OnNewExWindow(controlpanel));
+            saveex.RegisterCallback<ClickEvent>(e => appmgr.exmgr.SaveEx(experimentlist.value));
             deleteex.RegisterCallback<ClickEvent>(e =>
             {
-                if (uicontroller.exmanager.DeleteEx(experimentlist.value))
-                { UpdateExperimentList(uicontroller.exmanager.deffile.Keys.ToList(), uicontroller.config.FirstTestID); }
+                if (appmgr.exmgr.DeleteEx(experimentlist.value))
+                { UpdateExperimentList(appmgr.exmgr.deffile.Keys.ToList(), appmgr.cfgmgr.config.FirstTestID); }
             });
             // Experiment Panel
             experimentpanel = root.Q("ExperimentPanel");
@@ -123,7 +124,7 @@ namespace Experica.Command
             var w = ConfigWindow.Instantiate()[0];
             w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
             var cfgcontent = w.Q<ScrollView>("Content");
-            UpdateConfig(uicontroller.config,cfgcontent);
+            UpdateConfig(appmgr.cfgmgr.config,cfgcontent);
 
             w.style.position = Position.Absolute;
             w.style.top = Length.Percent(20);
@@ -133,7 +134,52 @@ namespace Experica.Command
             parent.Add(w);
         }
 
-        public void UpdateExperimentList(List<string> list, string first = null)
+        void OnNewExWindow(VisualElement parent)
+        {
+            var w = NewExWindow.Instantiate()[0];
+            w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
+
+            var namefield = w.Q<TextField>("Name");
+            var copylist = w.Q<DropdownField>("Copy");
+            var exlist = appmgr.exmgr.deffile.Keys.ToList();
+            exlist.Insert(0, ""); // add "empty" option for no copy
+            UpdateDropdown(copylist,exlist);
+            var errorout = w.Q<Label>("ErrOut");
+            w.Q<Button>("Confirm").RegisterCallback<ClickEvent>(e =>
+            {
+                var name = namefield.value;
+                if (string.IsNullOrEmpty(name))
+                {
+                    errorout.text = "Name Empty";
+                    return;
+                }
+                else if (appmgr.exmgr.deffile.ContainsKey(name))
+                {
+                    errorout.text = "Name Conflict";
+                    return;
+                }
+                parent.Remove(w);
+
+                if(appmgr.exmgr.NewEx(name, copylist.value))
+                {
+                    UpdateExperimentList(appmgr.exmgr.deffile.Keys.ToList(), appmgr.cfgmgr.config.FirstTestID);
+                    experimentlist.value = name;
+                }
+            });
+
+            w.style.position = Position.Absolute;
+            w.style.top = Length.Percent(20);
+            w.style.left = Length.Percent(20);
+            w.style.width = Length.Percent(60);
+            w.style.height = Length.Percent(60);
+            parent.Add(w);
+        }
+
+        public void UpdateExperimentList(List<string> list, string first = null) => UpdateDropdown(experimentlist, list,first);
+
+        public void UpdateExperimentSessionList(List<string> list)=> UpdateDropdown(experimentsessionlist,list);
+
+        void UpdateDropdown(DropdownField which, List<string> list, string first = null)
         {
             if (list == null || list.Count == 0) { return; }
             list.Sort();
@@ -143,16 +189,11 @@ namespace Experica.Command
                 list.RemoveAt(i);
                 list.Insert(0, first);
             }
-            experimentlist.choices = list;
-            experimentlist.index = Mathf.Clamp(experimentlist.index, 0, list.Count - 1);
-        }
-
-        public void UpdateExperimentSessionList(List<string> list)
-        {
-            if (list == null || list.Count == 0) { return; }
-            list.Sort();
-            experimentsessionlist.choices = list;
-            experimentsessionlist.index = Mathf.Clamp(experimentsessionlist.index, 0, list.Count - 1);
+            which.choices = list;
+            if (which.index < 0 || which.index > list.Count - 1)
+            {
+                which.index = Mathf.Clamp(which.index, 0, list.Count - 1);
+            }
         }
 
         public void UpdateConfig(CommandConfig config,ScrollView content)
@@ -161,7 +202,7 @@ namespace Experica.Command
             var previousui = content.Children().ToList();
             var previousuiname = previousui.Select(i => i.name).ToList();
             // since ExtendParam is a param container and we always show them, so here we do not AddParamUI for the container itself, but add its content
-            var currentpropertyname = config.Properties().Keys.Where(i => i != "ExtendParam").ToArray();
+            var currentpropertyname = config.properties.Keys.Where(i => i != "ExtendParam").ToArray();
             var ui2update = previousuiname.Intersect(currentpropertyname);
             var ui2remove = previousuiname.Except(currentpropertyname);
             var ui2add = currentpropertyname.Except(previousuiname);
@@ -174,7 +215,7 @@ namespace Experica.Command
                     var namelabel = ui.Q<Label>("Name");
                     namelabel.text = p;
                     var vi = ui.Q("Value");
-                    var ds = config.Properties()[p];
+                    var ds = config.properties[p];
                     var db = vi.GetBinding("value") as DataBinding;
                     db.dataSource = ds;
                     ds.NotifyValue();
@@ -191,13 +232,13 @@ namespace Experica.Command
             {
                 foreach (var p in ui2add)
                 {
-                    AddParamUI(p, p, config.Properties()[p], false, null, content);
+                    AddParamUI(p, p, config.properties[p], false, null, content);
                 }
             }
 
-            foreach (var p in config.ExtendProperties().Keys.ToArray())
+            foreach (var p in config.extendproperties.Keys.ToArray())
             {
-                AddParamUI(p, p, config.ExtendProperties()[p], false, null, content, config, true);
+                AddParamUI(p, p, config.extendproperties[p], false, null, content, config, true);
             }
             content.scrollOffset = content.contentRect.size;
         }
@@ -208,7 +249,7 @@ namespace Experica.Command
             var previousui = excontent.Children().ToList();
             var previousuiname = previousui.Select(i => i.name).ToList();
             // since ExtendParam is a param container and we always show them, so here we do not AddParamUI for the container itself, but add its content
-            var currentpropertyname = ex.Properties().Keys.Except(uicontroller.config.ExHideParams).Where(i => i != "ExtendParam").ToArray();
+            var currentpropertyname = ex.properties.Keys.Except(appmgr.cfgmgr.config.ExHideParams).Where(i => i != "ExtendParam").ToArray();
             var ui2update = previousuiname.Intersect(currentpropertyname);
             var ui2remove = previousuiname.Except(currentpropertyname);
             var ui2add = currentpropertyname.Except(previousuiname);
@@ -221,7 +262,7 @@ namespace Experica.Command
                     var nametoggle = ui.Q<Toggle>("Name");
                     nametoggle.SetValueWithoutNotify(ex.InheritParam.Contains(p));
                     var vi = ui.Q("Value");
-                    var ds = ex.Properties()[p];
+                    var ds = ex.properties[p];
                     var db = vi.GetBinding("value") as DataBinding;
                     db.dataSource = ds;
                     ds.NotifyValue();
@@ -238,13 +279,13 @@ namespace Experica.Command
             {
                 foreach (var p in ui2add)
                 {
-                    AddParamUI(p, p, ex.Properties()[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent);
+                    AddParamUI(p, p, ex.properties[p], ex.InheritParam.Contains(p), appmgr.ToggleExInherit, excontent);
                 }
             }
 
-            foreach (var p in ex.ExtendProperties().Keys.Except(uicontroller.config.ExHideParams).ToArray())
+            foreach (var p in ex.extendproperties.Keys.Except(appmgr.cfgmgr.config.ExHideParams).ToArray())
             {
-                AddParamUI(p, p, ex.ExtendProperties()[p], ex.InheritParam.Contains(p), uicontroller.ToggleExInherit, excontent,uicontroller.exmanager.el.ex, true);
+                AddParamUI(p, p, ex.extendproperties[p], ex.InheritParam.Contains(p), appmgr.ToggleExInherit, excontent,appmgr.exmgr.el.ex, true);
             }
             excontent.scrollOffset = excontent.contentRect.size;
         }
@@ -436,17 +477,17 @@ namespace Experica.Command
                     errorout.text = "Name Empty";
                     return; 
                 }
-                else if (uicontroller.exmanager.el.ex.ContainsParam(name))
+                else if (appmgr.exmgr.el.ex.ContainsParam(name))
                 {
                     errorout.text = "Name Conflict";
                     return;
                 }
                 var value = valuefield.value.TryParse();
-                var s = uicontroller.exmanager.el.ex.AddExtendProperty(name, value);
+                var s = appmgr.exmgr.el.ex.AddExtendProperty(name, value);
                 parent.Remove(w);
 
                 //AddParamUI(s.Name, s.Name, s,uicontroller.exmanager.el. ex.InheritParam.Contains(s.Name), uicontroller.ToggleExInherit, excontent, true);
-                UpdateEx(uicontroller.exmanager.el.ex);
+                UpdateEx(appmgr.exmgr.el.ex);
             });
 
             w.style.position = Position.Absolute;
@@ -476,7 +517,7 @@ namespace Experica.Command
         public void UpdateEnv()
         {
             envcontent.Clear();
-            var el = uicontroller.exmanager.el;
+            var el = appmgr.exmgr.el;
 
 
             //var envps = uicontroller.exmanager.el.envmanager.GetParamSources(active: !uicontroller.config.IsShowInactiveEnvParam);
@@ -488,15 +529,15 @@ namespace Experica.Command
 
 
 
-            var gonames = el.envmanager.GetGameObjectFullNames(!uicontroller.config.IsShowInactiveEnvParam);
+            var gonames = el.envmgr.GetGameObjectFullNames(!appmgr.cfgmgr.config.IsShowInactiveEnvParam);
             foreach (var goname in gonames)
             {
-                var gonvs = el.envmanager.GetParamSourcesByGameObject(goname);
+                var gonvs = el.envmgr.GetParamSourcesByGameObject(goname);
                 var nvfullnames = gonvs.Keys.ToArray();
                 var nvnames = nvfullnames.Select(i => i.FirstSplitHead()).ToArray();
                 var nvsources = gonvs.Values.ToArray();
                 var inherits = nvfullnames.Select(i => el.ex.EnvInheritParam.Contains(i)).ToArray();
-                AddParamsFoldoutUI(nvfullnames, nvnames, nvsources, inherits, uicontroller.ToggleEnvInherit, envcontent, goname);
+                AddParamsFoldoutUI(nvfullnames, nvnames, nvsources, inherits, appmgr.ToggleEnvInherit, envcontent, goname);
             }
         }
 
@@ -506,7 +547,7 @@ namespace Experica.Command
         {
             var currentui = viewcontent.Query<TemplateContainer>().ToList();
             var currentuiname = currentui.Select(i => i.name).ToList();
-            var currentcamera = uicontroller.exmanager.el.envmanager.MainCamera;
+            var currentcamera = appmgr.exmgr.el.envmgr.MainCamera;
             var currentcameraname = currentcamera.Select(i => i.ClientID.ToString()).ToList();
             var updateui = currentuiname.Intersect(currentcameraname);
             var removeui = currentuiname.Except(currentcameraname);
@@ -577,7 +618,7 @@ namespace Experica.Command
                     dimension = TextureDimension.Tex2D,
                     depthBufferBits = 32,
                     autoGenerateMips = false,
-                    msaaSamples = uicontroller.config.AntiAliasing,
+                    msaaSamples = appmgr.cfgmgr.config.AntiAliasing,
                     colorFormat = RenderTextureFormat.ARGBHalf,
                     sRGB = false,
                     width = Mathf.Max(1, Mathf.FloorToInt(width)),
@@ -585,7 +626,7 @@ namespace Experica.Command
                     volumeDepth = 1
                 })
                 {
-                    anisoLevel = uicontroller.config.AnisotropicFilterLevel
+                    anisoLevel = appmgr.cfgmgr.config.AnisotropicFilterLevel
                 };
             }
             else

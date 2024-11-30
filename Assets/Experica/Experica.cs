@@ -245,8 +245,9 @@ namespace Experica
     public abstract class DataClass
     {
         public Dictionary<string, object> ExtendParam { get; set; } = new();
-        Dictionary<string, PropertySource<DataClass>> properties = new();
-        Dictionary<string, DictSource<object>> extendproperties = new();
+
+        public Dictionary<string, PropertySource<DataClass>> properties = new();
+        public Dictionary<string, DictSource<object>> extendproperties = new();
 
         /// <summary>
         /// cache and wrap all property access in datasource for UI binding
@@ -255,12 +256,12 @@ namespace Experica
         {
             var dtype = GetType();
             var dtypename = dtype.ToString();
-            start:
+        start:
             if (dtypename.QueryProperties(out var ps))
             {
                 properties = ps.ToDictionary(kv => kv.Key, kv => new PropertySource<DataClass>(this, kv.Value));
             }
-            else 
+            else
             {
                 foreach (var p in dtype.GetProperties())
                 {
@@ -415,8 +416,6 @@ namespace Experica
         public bool ContainsParam(string name) => properties.ContainsKey(name) || extendproperties.ContainsKey(name);
         public bool ContainsExtendProperty(string name) => extendproperties.ContainsKey(name);
         public bool ContainsProperty(string name) => properties.ContainsKey(name);
-        public Dictionary<string, PropertySource<DataClass>> Properties() => properties;
-        public Dictionary<string, DictSource<object>> ExtendProperties() => extendproperties;
 
         /// <summary>
         /// delete name:value in ExtendParam and its datasource wrapper
@@ -531,8 +530,10 @@ namespace Experica
     public static class Experica
     {
         public const uint ExperimentVersion = 3;
+        public const uint ExperimentSessionVersion = 0;
         public const uint CommandConfigVersion = 0;
         public const string EmptyScene = "Empty";
+        public const string CommandConfigManagerPath = "CommandConfigManager.yaml";
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
 
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new();
@@ -1156,14 +1157,14 @@ namespace Experica
             }
         }
 
-        public static Dictionary<string, string> GetDefinationFiles(this string indir, string definationtype, string ext = ".yaml", bool createdir = true)
+        public static Dictionary<string, string> GetDefinationFiles(this string indir, string ext = ".yaml", bool createdir = true)
         {
             if (Directory.Exists(indir))
             {
                 var files = Directory.GetFiles(indir, $"*{ext}", SearchOption.TopDirectoryOnly);
                 if (files.Length == 0)
                 {
-                    Debug.Log($"{definationtype} Defination Directory: \"{indir}\" Is Empty.");
+                    Debug.Log($"In Defination Directory: \"{indir}\", Can not find any {ext} files.");
                 }
                 else
                 {
@@ -1177,7 +1178,7 @@ namespace Experica
             }
             else
             {
-                Debug.Log($"{definationtype} Defination Directory: \"{indir}\" Not Exist{(createdir ? ", Create the Directory" : "")}.");
+                Debug.LogWarning($"Defination Directory: \"{indir}\" Not Exist{(createdir ? ", Create the Directory" : "")}.");
                 if (createdir) { Directory.CreateDirectory(indir); }
             }
             return null;
@@ -1301,6 +1302,11 @@ namespace Experica
         }
 
         #region Condition
+        /// <summary>
+        /// Check if a factordesign has neccessary params: "Start", "N", "Method" and "Step"/"Stop", and if types are consistent and values are valid.
+        /// </summary>
+        /// <param name="design"></param>
+        /// <returns></returns>
         public static bool ValidateFactorDesign(this Dictionary<string, object> design)
         {
             if (design.ContainsKey("Start") && design["Start"] != null && design.ContainsKey("N") && design["N"] != null && design.ContainsKey("Method") && design["Method"] != null)
@@ -1318,6 +1324,12 @@ namespace Experica
             return false;
         }
 
+        /// <summary>
+        /// Process factor design when a factor has two values, the first is "FactorDesign" and the second is a dictionary of param/value of the design, 
+        /// e.g. "Ori: [FactorDesign, {Start: 0, Step: 45, N: 8, ...}]" in yaml condition file.
+        /// </summary>
+        /// <param name="conddesign"></param>
+        /// <returns></returns>
         public static Dictionary<string, List<object>> ProcessFactorDesign(this Dictionary<string, List<object>> conddesign)
         {
             foreach (var f in conddesign.Keys.ToArray())
@@ -1465,6 +1477,12 @@ namespace Experica
             return ls;
         }
 
+        /// <summary>
+        /// Process orthogonal combination of factor/values when there is a factor named "OrthoCombineFactor" paired with an empty list, 
+        /// e.g. "OrthoCombineFactor: []" in yaml condition file.
+        /// </summary>
+        /// <param name="cond"></param>
+        /// <returns></returns>
         public static Dictionary<string, List<object>> ProcessOrthoCombineFactor(this Dictionary<string, List<object>> cond)
         {
             if (cond.ContainsKey("OrthoCombineFactor") && cond["OrthoCombineFactor"].Count == 0)
@@ -1474,6 +1492,11 @@ namespace Experica
             return cond;
         }
 
+        /// <summary>
+        /// Get Conditions by Combining Factor/Values Orthogonally
+        /// </summary>
+        /// <param name="fsls"></param>
+        /// <returns></returns>
         public static Dictionary<string, List<object>> OrthoCombineFactor(this Dictionary<string, List<object>> fsls)
         {
             foreach (var f in fsls.Keys.ToArray())
@@ -1506,9 +1529,10 @@ namespace Experica
                 List<object> ir = new();
                 for (var l = 0; l < fln[i]; l++)
                 {
+                    var v = fsls[fs[i]][l];
                     for (var r = 0; r < irn[i]; r++)
                     {
-                        ir.Add(fsls[fs[i]][l]);
+                        ir.Add(v);
                     }
                 }
                 var orn = cn / ir.Count;
@@ -1522,68 +1546,45 @@ namespace Experica
             return cond;
         }
 
-        //public static Type GetFactorValueType(this string factorname)
-        //{
-        //    switch (factorname)
-        //    {
-        //        case "Luminance":
-        //        case "Contrast":
-        //        case "Diameter":
-        //        case "SpatialFreq":
-        //        case "SpatialPhase":
-        //        case "TemporalFreq":
-        //        case "Ori":
-        //        case "OriOffset":
-        //        case "Ori_Final":
-        //        case "Speed":
-        //            return typeof(float);
-        //        case "Rotation":
-        //        case "RotationOffset":
-        //        case "Rotation_Final":
-        //        case "Position":
-        //        case "PositionOffset":
-        //        case "Position_Final":
-        //            return typeof(Vector3);
-        //        case "Color":
-        //        case "BGColor":
-        //            return typeof(Color);
-        //        default:
-        //            return null;
-        //    }
-        //}
-
-        public static Dictionary<string, IList> FinalizeFactorValue(this Dictionary<string, List<object>> cond)
+        public static Dictionary<string, IList> SpecializeFactorValue(this Dictionary<string, List<object>> cond)
         {
-            if (cond == null) { return null; }
-            var final = new Dictionary<string, IList>();
+            if (cond == null || cond.Count == 0 || cond.Values.First().Count == 0) { return null; }
+            var newcond = new Dictionary<string, IList>();
             foreach (var f in cond.Keys)
             {
-                var fvt = cond[f][0].GetType();
-                var fvs = Activator.CreateInstance(typeof(List<>).MakeGenericType(fvt)).AsList();
-                cond[f].ForEach(i => fvs.Add(i.Convert(fvt)));
-                final[f] = fvs;
+                var fvt = cond[f].First().GetType();
+                var fvs = Activator.CreateInstance(typeof(List<>).MakeGenericType(fvt)).AsList(); // specialize e.g. List<int> instead of List<object>
+                cond[f].ForEach(i => fvs.Add(i.Convert(fvt))); // make sure factor values have the same type as the first one
+                newcond[f] = fvs;
             }
-            return final;
+            return newcond;
         }
 
-        public static Dictionary<string, IList> CondGroup(this Dictionary<string, IList> cond, List<string> groupingfactor, out List<List<int>> gi)
+        /// <summary>
+        /// partition cond into groups
+        /// </summary>
+        /// <param name="cond"></param>
+        /// <param name="groupingfactor">subset of factors of cond for grouping</param>
+        /// <param name="groupindex">condindex partitioned into each group</param>
+        /// <returns>unique groupingfactor/value of each group</returns>
+        public static Dictionary<string, IList> CondGroup(this Dictionary<string, IList> cond, List<string> groupingfactor, out List<List<int>> groupindex)
         {
-            var n = cond.Values.First().Count;
+            var ncond = cond.Values.First().Count;
             var group = new Dictionary<string, IList>();
             foreach (var f in groupingfactor)
             {
                 var t = cond[f][0].GetType();
-
                 var l = Activator.CreateInstance(typeof(List<>).MakeGenericType(t)).AsList();
                 l.Add(cond[f][0]);
                 group[f] = l;
             }
-            gi = new List<List<int>>() { new List<int>() { 0 } };
+            groupindex = new() { new() { 0 } };
 
+            // compare each cond to each group, if duplicate, then add condindex to the same group; if not, add new group
             bool isequal = true;
-            for (var i = 1; i < n; i++)
+            for (var i = 1; i < ncond; i++)
             {
-                for (var j = 0; j < gi.Count; j++)
+                for (var j = 0; j < groupindex.Count; j++)
                 {
                     isequal = true;
                     foreach (var f in groupingfactor)
@@ -1592,12 +1593,12 @@ namespace Experica
                     }
                     if (isequal)
                     {
-                        gi[j].Add(i); break;
+                        groupindex[j].Add(i); break;
                     }
                 }
                 if (!isequal)
                 {
-                    gi.Add(new List<int>() { i });
+                    groupindex.Add(new() { i });
                     foreach (var f in groupingfactor)
                     {
                         group[f].Add(cond[f][i]);
@@ -1607,6 +1608,8 @@ namespace Experica
             return group;
         }
         #endregion
+
+
         //public static string GetAddresses(this string experimenter, CommandConfig config)
         //{
         //    string addresses = null;

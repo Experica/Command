@@ -33,7 +33,7 @@ namespace Experica.Command
 {
     public class EnvironmentPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public GameObject content;
 
         public Dictionary<string, Toggle> inherittoggle = new Dictionary<string, Toggle>();
@@ -52,8 +52,8 @@ namespace Experica.Command
 
         public void AddEnvUI(NetEnvManager em)
         {
-            var isshowinactive = uicontroller.config.IsShowInactiveEnvParam;
-            var isshowfullname = uicontroller.config.IsShowEnvParamFullName;
+            var isshowinactive = uicontroller.cfgmgr.config.IsShowInactiveEnvParam;
+            var isshowfullname = uicontroller.cfgmgr.config.IsShowEnvParamFullName;
             var envparam = em.GetParams(!isshowfullname, !isshowinactive);
 
             foreach (var fullname in envparam.Keys)
@@ -61,7 +61,7 @@ namespace Experica.Command
                 var v = envparam[fullname];
                 var T = v.GetType();
                 AddParamUI(fullname, fullname, fullname, T, v,
-                           uicontroller.exmanager.el.ex.EnvInheritParam.Contains(fullname),
+                           uicontroller.exmgr.el.ex.EnvInheritParam.Contains(fullname),
                            fullname.GetPrefab(T), content.transform);
             }
 
@@ -138,7 +138,7 @@ namespace Experica.Command
                 if (inputfield != null)
                 {
                     inputfield.text = value == null ? "" : value.Convert<string>();
-                    inputfield.onEndEdit.AddListener(s => uicontroller.exmanager.el.envmanager.SetParam(fullname, s));
+                    inputfield.onEndEdit.AddListener(s => uicontroller.exmgr.el.envmgr.SetParam(fullname, s));
                     this.inputfield[fullname] = inputfield;
                 }
                 if (dropdown != null)
@@ -148,7 +148,7 @@ namespace Experica.Command
                     {
                         dropdown.AddOptions(vs);
                         dropdown.value = vs.IndexOf(value.ToString());
-                        dropdown.onValueChanged.AddListener(vi => uicontroller.exmanager.el.envmanager.SetParam(fullname, dropdown.captionText.text));
+                        dropdown.onValueChanged.AddListener(vi => uicontroller.exmgr.el.envmgr.SetParam(fullname, dropdown.captionText.text));
                         this.dropdown[fullname] = dropdown;
                     }
                 }
@@ -158,14 +158,14 @@ namespace Experica.Command
 
         public void OffsetToPosition()
         {
-            var el = uicontroller.exmanager.el;
+            var el = uicontroller.exmgr.el;
            if(el!=null)
             {
-                var ori = el.envmanager.GetActiveParam("Ori");
-                var orioffset = el.envmanager.GetActiveParam("OriOffset");
-                var p = el.envmanager.GetActiveParam("Position");
-                var poffset = el.envmanager.GetActiveParam("PositionOffset");
-                var oripoffset = el.envmanager.GetActiveParam("OriPositionOffset");
+                var ori = el.envmgr.GetActiveParam("Ori");
+                var orioffset = el.envmgr.GetActiveParam("OriOffset");
+                var p = el.envmgr.GetActiveParam("Position");
+                var poffset = el.envmgr.GetActiveParam("PositionOffset");
+                var oripoffset = el.envmgr.GetActiveParam("OriPositionOffset");
                 if(ori!=null && orioffset!=null && p!=null && poffset!=null && oripoffset!=null)
                 {
                     Vector3 newp;
@@ -177,8 +177,8 @@ namespace Experica.Command
                     {
                         newp = (Vector3)poffset + (Vector3)p;
                     }
-                    el.envmanager.SetActiveParam("PositionOffset", new Vector3());
-                    el.envmanager.SetActiveParam("Position", newp);
+                    el.envmgr.SetActiveParam("PositionOffset", new Vector3());
+                    el.envmgr.SetActiveParam("Position", newp);
                 }
             }
         }

@@ -36,7 +36,7 @@ namespace Experica.Command
         //HashSet<int> envconnid = new HashSet<int>();
         //int nenvsyncframe;
 
-        public UIController uicontroller;
+        public AppManager appmgr;
 
         public bool StartHostServer(bool ishost = true)
         {
@@ -56,18 +56,21 @@ namespace Experica.Command
 
         void NetworkSceneManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
-            uicontroller.OnSceneLoadEventCompleted(sceneName);
+            appmgr.OnSceneLoadEventCompleted(sceneName);
         }
 
-        public void Shutdown()
+        public void Shutdown(bool cleanscene=true)
         {
             var nm = NetworkManager.Singleton;
             if (nm!=null && nm.IsListening)
             {
                 nm.Shutdown();
-                // Network SceneManager will not exist when NetworkManager shutdown, so here we use UnityEngine's SceneManager to clean any loaded scene by loading an Empty scene
-                SceneManager.LoadScene(Experica.EmptyScene, LoadSceneMode.Single);
-                uicontroller.OnSceneLoadEventCompleted(Experica.EmptyScene);
+                if (cleanscene)
+                {
+                    // Network SceneManager will not exist when NetworkManager shutdown, so here we use UnityEngine's SceneManager to clean any loaded scene by loading an Empty scene
+                    SceneManager.LoadScene(Experica.EmptyScene, LoadSceneMode.Single);
+                    appmgr.OnSceneLoadEventCompleted(Experica.EmptyScene);
+                }
             }
         }
 
@@ -97,6 +100,8 @@ namespace Experica.Command
             }
         }
 
+        public bool IsServer => NetworkManager.Singleton?.IsServer ?? false;
+        public bool IsHost => NetworkManager.Singleton?.IsHost ?? false;
 
         //public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         //{
@@ -278,4 +283,4 @@ namespace Experica.Command
         //    uicontroller.ForcePushEnv();
         //}
     }
-}
+    }

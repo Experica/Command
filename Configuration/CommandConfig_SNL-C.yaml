@@ -70,29 +70,15 @@ RecordHost2: LocalHost
 RecordHostPort2: 10000
 Version: 0
 EnvCrossInheritRule:
-  GratingQuad:
-    Quad:
-      - Ori
-      - Position
-      - Diameter
-    ImageQuad:
-      - Position
-      - Diameter
+  Grating:
+    - Quad
+    - ImageList
   Quad:
-    GratingQuad:
-      - Ori
-      - Position
-      - Diameter
-    ImageQuad:
-      - Position
-      - Diameter
-  ImageQuad:
-    GratingQuad:
-      - Position
-      - Diameter
-    Quad:
-      - Position
-      - Diameter
+    - Grating
+    - ImageList
+  ImageList:
+    - Quad
+    - Grating
 Display:
   ROGPG279Q:
     ID: ROGPG279Q

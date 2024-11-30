@@ -38,7 +38,7 @@ public class ImagerEpochNoBlank : ImagerEpoch
         switch (TrialState)
         {
             case TRIALSTATE.NONE:
-                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.NoNeed) { return; }
+                if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.ExFinish) { return; }
                 SyncFrame();
                 break;
             case TRIALSTATE.PREITI:
@@ -52,7 +52,7 @@ public class ImagerEpochNoBlank : ImagerEpoch
                 switch (CondState)
                 {
                     case CONDSTATE.NONE:
-                        StartEpochRecord(condtestmanager.CondTestIndex);
+                        StartEpochRecord(condtestmgr.CondTestIndex);
                         EnterCondState(CONDSTATE.PREICI);
                         SyncFrame();
                         break;

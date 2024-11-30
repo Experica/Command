@@ -28,14 +28,14 @@ namespace Experica.Command
 {
     public class NewExParamPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public Text namecheck;
         public Button confirm, cancel;
         string pname; object param; bool isvalidname, isvalue;
 
         public void OnNewExParamName(string name)
         {
-            if (uicontroller.exmanager.el.ex.ExtendParam.ContainsKey(name))
+            if (uicontroller.exmgr.el.ex.ExtendParam.ContainsKey(name))
             {
                 namecheck.text = "Name Already Exists";
                 isvalidname = false;

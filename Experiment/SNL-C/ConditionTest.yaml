@@ -12,7 +12,46 @@ Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Grating
-EnvParam: {}
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 30
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 10 10 10
+  Diameter@Grating@Grating: 10
+  MaskType@Grating@Grating: Disk
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
+  PauseTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Sinusoidal
+  ModulateType@Grating@Grating: Square
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 0
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 0 0 0
+  Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic

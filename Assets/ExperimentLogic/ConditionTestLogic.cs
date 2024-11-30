@@ -26,28 +26,28 @@ using System;
 using Experica;
 using Experica.Command;
 using System.Linq;
+using Experica.NetEnv;
 
 /// <summary>
-/// Condition Test Logic {PreICI - Cond - SufICI} ..., and EnvParam manipulation with User Input Action
+/// Condition Test Logic {PreICI - Cond - SufICI} ..., with ScaleGrid visual guide and EnvParam manipulation through User Input Action
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {
-    protected List<string> actionnames = new() { "Move","Scale","Visible","Ori" };
-    Dictionary<string, InputAction> useractions=new();
+    protected Dictionary<string, InputAction> useractions=new();
+    protected ScaleGrid scalegrid;
 
     protected override void Enable()
     {
-        useractions = InputSystem.actions.FindActionMap("Logic").actions.Where(i=>actionnames.Contains(i.name)).ToDictionary(i => i.name, i => i);
-        useractions["Move"].performed += OnMoveAction;
-        useractions["Scale"].performed += OnScaleAction;
+        useractions = InputSystem.actions.FindActionMap("Logic").actions.ToDictionary(i => i.name, i => i);
+        useractions["Move"].started += OnMoveAction;
+        useractions["Scale"].started += OnScaleAction;
         useractions["Visible"].performed += OnVisibleAction;
         useractions["Ori"].performed += OnOriAction;
     }
     protected override void Disable()
     {
-        if (useractions.Count == 0) { return; }
-        useractions["Move"].performed -= OnMoveAction;
-        useractions["Scale"].performed -= OnScaleAction;
+        useractions["Move"].started -= OnMoveAction;
+        useractions["Scale"].started -= OnScaleAction;
         useractions["Visible"].performed -= OnVisibleAction;
         useractions["Ori"].performed -= OnOriAction;
     }
@@ -55,17 +55,17 @@ public class ConditionTestLogic : ExperimentLogic
     protected virtual void OnMoveAction(InputAction.CallbackContext context)
     {
         var position = context.ReadValue<Vector2>();
-        if (ex.Input && envmanager.MainCamera.Count > 0)
+        if (ex.Input && envmgr.MainCamera.Count > 0)
         {
-            var po = envmanager.GetActiveParam("Position");
+            var po = envmgr.GetActiveParam("Position");
             if (po != null)
             {
-                var so = envmanager.GetActiveParam("Size");
+                var so = envmgr.GetActiveParam("Size");
                 var p = (Vector3)po;
                 var s = so == null ? Vector3.zero : (Vector3)so;
-                var hh = (envmanager.MainCamera.First().Height + s.y) / 2;
-                var hw = (envmanager.MainCamera.First().Width + s.x) / 2;
-                envmanager.SetActiveParam("Position", new Vector3(
+                var hh = (envmgr.MainCamera.First().Height + s.y) / 2;
+                var hw = (envmgr.MainCamera.First().Width + s.x) / 2;
+                envmgr.SetActiveParam("Position", new Vector3(
                 Mathf.Clamp(p.x + position.x * hw * Time.deltaTime, -hw, hw),
                 Mathf.Clamp(p.y + position.y * hh * Time.deltaTime, -hh, hh),
                 p.z));
@@ -77,11 +77,11 @@ public class ConditionTestLogic : ExperimentLogic
         var size = context.ReadValue<Vector2>();
         if (ex.Input)
         {
-            var so = envmanager.GetActiveParam("Size");
+            var so = envmgr.GetActiveParam("Size");
             if (so != null)
             {
                 var s = (Vector3)so;
-                envmanager.SetActiveParam("Size", new Vector3(
+                envmgr.SetActiveParam("Size", new Vector3(
                     Mathf.Max(0, s.x + size.x * s.x * Time.deltaTime),
                     Mathf.Max(0, s.y + size.y * s.y * Time.deltaTime),
                     s.z));
@@ -92,7 +92,7 @@ public class ConditionTestLogic : ExperimentLogic
     {
         if (ex.Input)
         {
-            envmanager.SetActiveParam("Visible", context.ReadValue<float>() > 0);
+            envmgr.SetActiveParam("Visible", context.ReadValue<float>() > 0);
         }
     }
     protected virtual void OnOriAction(InputAction.CallbackContext context)
@@ -100,12 +100,12 @@ public class ConditionTestLogic : ExperimentLogic
         var v = context.ReadValue<float>();
         if (ex.Input)
         {
-            var oo = envmanager.GetActiveParam("Ori");
+            var oo = envmgr.GetActiveParam("Ori");
             if (oo != null)
             {
                 var o = (float)oo;
                 o = (o + v * 180 * Time.deltaTime) % 360f;
-                envmanager.SetActiveParam("Ori", o < 0 ? 360f - o : o);
+                envmgr.SetActiveParam("Ori", o < 0 ? 360f - o : o);
             }
         }
     }
@@ -113,11 +113,11 @@ public class ConditionTestLogic : ExperimentLogic
     {
         if (ex.Input)
         {
-            var dio = envmanager.GetActiveParam("Diameter");
+            var dio = envmgr.GetActiveParam("Diameter");
             if (dio != null)
             {
                 var d = (float)dio;
-                envmanager.SetActiveParam("Diameter", Mathf.Max(0, d + Mathf.Pow(diameter * d * Time.deltaTime, 1)));
+                envmgr.SetActiveParam("Diameter", Mathf.Max(0, d + Mathf.Pow(diameter * d * Time.deltaTime, 1)));
             }
         }
     }
@@ -125,11 +125,11 @@ public class ConditionTestLogic : ExperimentLogic
     {
         if (ex.Input)
         {
-            var sfo = envmanager.GetActiveParam("SpatialFreq");
+            var sfo = envmgr.GetActiveParam("SpatialFreq");
             if (sfo != null)
             {
                 var s = (float)sfo;
-                envmanager.SetActiveParam("SpatialFreq", Mathf.Clamp(s + sf * s * Time.deltaTime, 0, 20f));
+                envmgr.SetActiveParam("SpatialFreq", Mathf.Clamp(s + sf * s * Time.deltaTime, 0, 20f));
             }
         }
     }
@@ -137,22 +137,25 @@ public class ConditionTestLogic : ExperimentLogic
     {
         if (ex.Input)
         {
-            var tfo = envmanager.GetActiveParam("TemporalFreq");
+            var tfo = envmgr.GetActiveParam("TemporalFreq");
             if (tfo != null)
             {
                 var t = (float)tfo;
-                envmanager.SetActiveParam("TemporalFreq", Mathf.Clamp(t + tf * t * Time.deltaTime, 0, 20f));
+                envmgr.SetActiveParam("TemporalFreq", Mathf.Clamp(t + tf * t * Time.deltaTime, 0, 20f));
             }
         }
     }
 
 
-    public override void OnReady()
+    public override void OnSceneReady()
     {
-        foreach(var c in envmanager.MainCamera)
-        {
-           envmanager.SpawnScaleGrid(c);
-        }
+        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(), parse: false);
+    }
+
+    public override bool Guide 
+    { 
+        get => scalegrid?.Visible.Value??false; 
+        set => SetEnvParamByGameObject("Visible", "ScaleGrid", value);
     }
 
     protected override void OnStartExperiment()
@@ -171,7 +174,7 @@ public class ConditionTestLogic : ExperimentLogic
         switch (CondState)
         {
             case CONDSTATE.NONE:
-                if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                 SyncFrame?.Invoke();
                 break;
             case CONDSTATE.PREICI:
@@ -192,7 +195,7 @@ public class ConditionTestLogic : ExperimentLogic
                     if (ex.PreICI <= 0 && ex.SufICI <= 0)
                     {
                         // new condtest starts at PreICI
-                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                        if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                         EnterCondState(CONDSTATE.COND, true);
                     }
                     else
@@ -206,7 +209,7 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
-                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.NoNeed) { return; }
+                    if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                     SyncFrame?.Invoke();
                 }
                 break;

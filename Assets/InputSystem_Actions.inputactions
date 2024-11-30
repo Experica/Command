@@ -999,7 +999,7 @@
                     "name": "ToggleHost",
                     "type": "Button",
                     "id": "6155f914-a379-49ef-9be9-96b83d2a3060",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1008,16 +1008,16 @@
                     "name": "ToggleFullScreen",
                     "type": "Button",
                     "id": "ab33bdd6-f19f-461a-bc01-d5abfc3e3372",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleFullView",
+                    "name": "ToggleFullViewport",
                     "type": "Button",
                     "id": "880f76ad-ff10-41cf-93fd-36e6e851a9a6",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1026,7 +1026,7 @@
                     "name": "ToggleGuide",
                     "type": "Button",
                     "id": "4bdc1a79-11e9-41b6-bc95-df5be984da64",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1035,7 +1035,7 @@
                     "name": "ToggleExperiment",
                     "type": "Button",
                     "id": "b5cc222d-9136-40cf-8e5b-cfcaaf893678",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1044,7 +1044,7 @@
                     "name": "ToggleExperimentSession",
                     "type": "Button",
                     "id": "131dedf9-7b8c-4e52-92fb-a39435e033d6",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1053,7 +1053,7 @@
                     "name": "Quit",
                     "type": "Button",
                     "id": "8166f686-0ef2-41e0-b428-f772a88b3564",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1232,7 +1232,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToggleFullView",
+                    "action": "ToggleFullViewport",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -1243,7 +1243,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "ToggleFullView",
+                    "action": "ToggleFullViewport",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1254,7 +1254,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "ToggleFullView",
+                    "action": "ToggleFullViewport",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1337,7 +1337,7 @@
                     "name": "Function0",
                     "type": "Button",
                     "id": "cdd2d653-8c94-486f-b42c-294269078444",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1346,7 +1346,7 @@
                     "name": "Function1",
                     "type": "Button",
                     "id": "c2c4ef12-4001-466f-bdc3-826ff5cb9dab",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1355,7 +1355,7 @@
                     "name": "Function2",
                     "type": "Button",
                     "id": "d05ab127-331c-419a-9ed3-0634ff5eb69f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1364,7 +1364,7 @@
                     "name": "Function3",
                     "type": "Button",
                     "id": "ca415f1a-1108-4c7a-b9a9-750c26d3ac0d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

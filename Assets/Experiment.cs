@@ -97,7 +97,7 @@ namespace Experica.Command
         [IgnoreMember]
         public CommandConfig Config { get; set; }
         [IgnoreMember]
-        public Dictionary<CONDTESTPARAM, IList> CondTest { get; set; }
+        public Dictionary<string, IList> CondTest { get; set; }
 
 
         /// <summary>
@@ -173,9 +173,15 @@ namespace Experica.Command
             }
         }
 
-        public Experiment PrepareDefinition(CommandConfig cfg = null)
+        /// <summary>
+        /// Exclude data, validation and update extendproperties for experiment ready to run
+        /// </summary>
+        /// <param name="cfg"></param>
+        /// <returns></returns>
+        public Experiment PrepareDefinition(CommandConfig cfg)
         {
-            if (cfg != null) { Config = cfg; }
+            Cond = null;
+            CondTest= null;
             if (string.IsNullOrEmpty(Name))
             {
                 Name = ID;
@@ -184,20 +190,22 @@ namespace Experica.Command
             {
                 Subject_Name = Subject_ID;
             }
-            if (string.IsNullOrEmpty(DataDir))
+
+            if (cfg != null)
             {
-                DataDir = Config.DataDir;
-                if (!Directory.Exists(DataDir))
+                Config = cfg;
+                if (string.IsNullOrEmpty(DataDir))
                 {
-                    Directory.CreateDirectory(DataDir);
-                    Debug.Log($"Create Data Directory \"{DataDir}\".");
+                    DataDir = Config.DataDir;
+                    if (!Directory.Exists(DataDir))
+                    {
+                        Directory.CreateDirectory(DataDir);
+                        Debug.Log($"Create Data Directory \"{DataDir}\".");
+                    }
                 }
+                NotifyParam ??= Config.NotifyParams;
             }
-            if (CondTest != null)
-            {
-                CondTest = null;
-            }
-            NotifyParam ??= Config.NotifyParams;
+
             RefreshExtendProperties();
             return this;
         }
@@ -303,7 +311,7 @@ namespace Experica.Command
         Success = 0,
         Failure,
         AlreadyIn,
-        NoNeed
+        ExFinish
     }
 
     public enum CONDTESTSHOWLEVEL

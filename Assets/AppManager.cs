@@ -42,10 +42,9 @@ using Experica.NetEnv;
 
 namespace Experica.Command
 {
-    public class UIController : MonoBehaviour
+    public class AppManager : MonoBehaviour
     {
-        public CommandConfigManager configmanager;
-        public CommandConfig config;
+        public CommandConfigManager cfgmgr = CommandConfigManager.Load();
 
         //public VisualElement ui;
         public UI ui;
@@ -53,19 +52,17 @@ namespace Experica.Command
         public Toggle host, server, start, startsession, pause;
         public Dropdown exs, exss;
         public Button savedata, newex, saveex, deleteex;
-        public Text startstoptext, startstopsessiontext, pauseresumetext, version;
+        public Text startstoptext, startstopsessiontext, pauseresumetext;
         public Volume postprocessing;
 
         // The managers for the panels on the Scene
         public NetworkController networkcontroller;
         // public SyncFrameManager syncmanager;
-        public ExperimentManager exmanager;
-        public ExperimentSessionManager exsmanager;
+        public ExperimentManager exmgr;
+        public ExperimentSessionManager exsmgr;
         // public AnalysisManager alsmanager;
         // public ControlManager ctrlmanager;
 
-        public GameObject canvas;
-        public ControlPanel controlpanel;
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
         public ViewPanel viewpanel;
@@ -73,89 +70,82 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
-        const string configmanagerpath = "CommandConfigManager.yaml";
+
         int lastwindowwidth = 1024, lastwindowheight = 768;
 
         void Awake()
         {
-            // Check for CommandConfigManager.yaml existance
-            if (File.Exists(configmanagerpath))
-            {
-                configmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
-            }
-            if (configmanager == null)
-            {
-                configmanager = new CommandConfigManager();
-            }
-
-            // Load the config file according to configmanager
-            if (configmanager.AutoLoadSaveLastConfig)
-            {
-                config = LoadConfig(configmanager.LastConfigFilePath);
-            }
-        }
-
-        public CommandConfig LoadConfig(string configfilepath, bool otherwisedefault = true)
-        {
-            CommandConfig cfg = null;
-            if (File.Exists(configfilepath))
-            {
-                cfg = configfilepath.ReadYamlFile<CommandConfig>();
-            }
-            if (cfg == null)
-            {
-                configmanager.LastConfigFilePath = null; // forgot why add this line
-                if (otherwisedefault)
-                {
-                    cfg = new CommandConfig();
-                }
-            }
-            if (cfg != null)
-            {
-                if (cfg.EnvCrossInheritRule == null)
-                {
-                    cfg.EnvCrossInheritRule = new Dictionary<string, Dictionary<string, List<string>>>();
-                }
-                cfg.EnvCrossInheritRule = CommandConfig.ValidateEnvCrossInheritRule(cfg.EnvCrossInheritRule);
-            }
-            return cfg;
+            Application.wantsToQuit += Application_wantsToQuit;
         }
 
         void Start()
         {
-            //version.text = $"Version {Application.version}\nUnity {Application.unityVersion}";
-            Initialize();
+            exmgr.CollectDefination(cfgmgr.config.ExDir);
+            exsmgr.CollectDefination(cfgmgr.config.ExSessionDir);
+            ui.UpdateExperimentList(exmgr.deffile.Keys.ToList(), cfgmgr.config.FirstTestID);
+            ui.UpdateExperimentSessionList(exsmgr.deffile.Keys.ToList());
         }
+
+        bool Application_wantsToQuit()
+        {
+            exsmgr.esl?.StartStopExperimentSession(false);
+            exmgr.el?.StartStopExperiment(false);
+            if (cfgmgr.config.IsSaveExOnQuit)
+            {
+                exmgr.SaveEx();
+            }
+            if (cfgmgr.config.IsSaveExSessionOnQuit)
+            {
+                exsmgr.SaveExSession();
+            }
+            exmgr.Clear();
+            cfgmgr.Save();
+            return true;
+        }
+
+        //void OnApplicationQuit()
+        //{
+        //    exsmgr.esl?.StartStopExperimentSession(false);
+        //    exmgr.el?.StartStopExperiment(false);
+        //    if (cfgmgr.config.IsSaveExOnQuit)
+        //    {
+        //        exmgr.SaveEx();
+        //    }
+        //    if (cfgmgr.config.IsSaveExSessionOnQuit)
+        //    {
+        //        exsmgr.SaveExSession();
+        //    }
+        //    //networkcontroller.Shutdown(false);
+        //    exmgr.Clear();
+        //    cfgmgr.Save();
+        //}
 
         #region Command Action Callback
         public void OnToggleFullViewportAction(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                IsFullViewport = !IsFullViewport;
-            }
+            if (context.performed) { FullViewport = !FullViewport; }
         }
 
-        bool isfullviewport = false;
-        public bool IsFullViewport
+        public bool FullViewport
         {
-            get { return isfullviewport; }
+            get => !ui.uidoc.rootVisualElement.visible;
             set
             {
-                var maincamera = exmanager.el.envmanager.MainCamera.First().Camera;
-                if (maincamera != null && isfullviewport != value)
+                if (ui.uidoc.rootVisualElement.visible != value) { return; }
+                var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
+                if (maincamera != null)
                 {
-                    isfullviewport = value;
                     if (value)
                     {
-                        canvas.SetActive(false);
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
+                        ui.uidoc.rootVisualElement.visible = !value;
+                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
                         maincamera.targetTexture = null;
                     }
                     else
                     {
-                        canvas.SetActive(true);
-                        viewpanel.UpdateViewport();
+                        ui.uidoc.rootVisualElement.visible = !value;
+                        ui.UpdateView();
+                        //viewpanel.UpdateViewport();
                     }
                 }
             }
@@ -163,25 +153,22 @@ namespace Experica.Command
 
         public void OnToggleHostAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { controlpanel.startstophost.isOn = !controlpanel.startstophost.isOn; }
+            if (context.performed) { ui.host.value = !ui.host.value; }
         }
 
         public void OnToggleExperimentAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { controlpanel.startstopexperiment.isOn = !controlpanel.startstopexperiment.isOn; }
+            if (context.performed) { ui.start.value = !ui.start.value; }
         }
 
         public void OnToggleExperimentSessionAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { controlpanel.startstopexperimentsession.isOn = !controlpanel.startstopexperimentsession.isOn; }
+            if (context.performed) { ui.startsession.value = !ui.startsession.value; }
         }
 
         public void OnToggleFullScreenAction(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                FullScreen = !FullScreen;
-            }
+            if (context.performed) { FullScreen = !FullScreen; }
         }
 
         public bool FullScreen
@@ -194,21 +181,21 @@ namespace Experica.Command
                 {
                     lastwindowwidth = Math.Max(1024, Screen.width);
                     lastwindowheight = Math.Max(768, Screen.height);
-                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, config.FullScreenMode);
-                    var maincamera = exmanager.el.envmanager.MainCamera.First().Camera;
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, cfgmgr.config.FullScreenMode);
+                    var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
                     if (maincamera != null && maincamera.targetTexture == null)
                     {
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
+                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
                         maincamera.targetTexture = null;
                     }
                 }
                 else
                 {
                     Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
-                    var maincamera = exmanager.el.envmanager.MainCamera.First().Camera;
+                    var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
                     if (maincamera != null && maincamera.targetTexture == null)
                     {
-                        exmanager.el.envmanager.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
+                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
                         maincamera.targetTexture = null;
                     }
                 }
@@ -217,35 +204,7 @@ namespace Experica.Command
 
         public void OnToggleGuideAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { GuideActive = !GuideActive; }
-        }
-
-        bool guideactive = true;
-        public bool GuideActive
-        {
-            get => guideactive;
-            set
-            {
-                if (guideactive == value) { return; }
-                guideactive = value;
-                viewpanel.togglegrid.isOn = value;
-            }
-        }
-
-        public void showhidescalegrid(INetEnvCamera camera, bool isshow)
-        {
-            var sg = camera.gameObject.GetComponentInChildren<ScaleGrid>(true);
-            if (isshow)
-            {
-                if (sg == null)
-                {
-                }
-                else { sg.gameObject.SetActive(true); }
-            }
-            else
-            {
-                if (sg != null) { sg.gameObject.SetActive(false); }
-            }
+            if (context.performed) { exmgr.el.Guide = !exmgr.el.Guide; }
         }
 
         public void OnQuitAction(InputAction.CallbackContext context)
@@ -254,77 +213,28 @@ namespace Experica.Command
         }
         #endregion
 
-        public void Initialize()
-        {
-            exmanager.CollectDefination(config.ExDir);
-            exsmanager.CollectDefination(config.ExSessionDir);
-            ui.UpdateExperimentList(exmanager.deffile.Keys.ToList(), config.FirstTestID);
-            //UpdateExDropdown();
-            ui.UpdateExperimentSessionList(exsmanager.deffile.Keys.ToList());
-            //UpdateExSessionDropdown();
-            //savedata.interactable = !config.AutoSaveData;
-            //consolepanel.maxentry = config.MaxLogEntry;
-        }
-
-        void OnApplicationQuit()
-        {
-            ToggleHost(false);
-
-            if (configmanager.AutoLoadSaveLastConfig)
-            {
-                SaveConfig();
-            }
-            configmanagerpath.WriteYamlFile(configmanager);
-            exmanager.Clear();
-        }
-
-        public void SaveConfig()
-        {
-            if (config.IsSaveExOnQuit)
-            {
-                exmanager.SaveAllEx();
-            }
-            if (config.IsSaveExSessionOnQuit)
-            {
-                exsmanager.SaveExSession();
-            }
-
-            if (string.IsNullOrEmpty(configmanager.LastConfigFilePath))
-            {
-                configmanager.LastConfigFilePath = Experica.SaveFile("Save Config File");
-            }
-            if (!string.IsNullOrEmpty(configmanager.LastConfigFilePath))
-            {
-                configmanager.LastConfigFilePath.WriteYamlFile(config);
-            }
-        }
-
-
-
         public void OnExSessionChoiceChanged(string newValue)
         {
-            if (config.IsSaveExSessionOnQuit && exsmanager.esl != null)
+            if (cfgmgr.config.IsSaveExSessionOnQuit && exsmgr.esl != null)
             {
-                exsmanager.SaveExSession(exsmanager.esl.exsession.ID);
+                exsmgr.SaveExSession(exsmgr.esl.exsession.ID);
             }
-            if (exsmanager.deffile.ContainsKey(newValue))
+            if (exsmgr.deffile.ContainsKey(newValue))
             {
-                exsmanager.LoadESL(exsmanager.deffile[newValue]);
+                exsmgr.LoadESL(exsmgr.deffile[newValue]);
             }
         }
-
-
 
         public void OnExChoiceChanged(string newValue)
         {
-            if (config.IsSaveExOnQuit && exmanager.el != null)
+            if (cfgmgr.config.IsSaveExOnQuit && exmgr.el != null)
             {
-                exmanager.SaveEx(exmanager.el.ex.ID);
+                exmgr.SaveEx();
             }
-            if (exmanager.deffile.ContainsKey(newValue))
+            if (exmgr.deffile.ContainsKey(newValue))
             {
-                exmanager.LoadEL(exmanager.deffile[newValue]);
-                ui.UpdateEx(exmanager.el.ex);
+                exmgr.LoadEL(exmgr.deffile[newValue]);
+                ui.UpdateEx(exmgr.el.ex);
                 LoadCurrentScene();
             }
         }
@@ -360,7 +270,7 @@ namespace Experica.Command
             get
             {
                 Texture3D tex = null;
-                var cd = exmanager.el.ex.Display_ID.GetDisplay(config.Display);
+                var cd = exmgr.el.ex.Display_ID.GetDisplay(cfgmgr.config.Display);
                 if (cd != null)
                 {
                     if (cd.PrepareCLUT())
@@ -374,35 +284,36 @@ namespace Experica.Command
 
         public void OnAspectRatioMessage(float ratio)
         {
-            exmanager.el.envmanager.SetParam("ScreenAspect", ratio, true);
+            exmgr.el.envmgr.SetParam("ScreenAspect", ratio, true);
         }
 
         /// <summary>
-        /// whenever new scene loaded, we get access to scene parameters, setup inheritance, update UI and get ready for running experiment
+        /// whenever new scene loaded, we get access to scene parameters, apply logic specific env operations,
+        /// and finally update UI and get ready for running experiment
         /// </summary>
         /// <param name="scene"></param>
         public void OnSceneLoadEventCompleted(string scene)
         {
-            if (scene == Experica.EmptyScene) // just do proper cleaning for the empty scene
+            exmgr.el.envmgr.ParseScene(scene);
+
+            if (exmgr.el.envmgr.Empty)
             {
                 ui.ClearEnv();
                 ui.ClearView();
             }
             else
             {
-                exmanager.el.envmanager.ParseScene(scene);
+                exmgr.el.OnSceneReady();
                 // init user envparam values
-                exmanager.el.envmanager.SetParams(exmanager.el.ex.EnvParam);
+                exmgr.el.envmgr.SetParams(exmgr.el.ex.EnvParam);
                 // apply user inherit rules
-                exmanager.InheritEnv();
-                exmanager.el.envmanager.RefreshParams();
+                exmgr.InheritEnv();
+                exmgr.el.envmgr.RefreshParams();
                 // uicontroller.SyncCurrentDisplayCLUT();
 
-
                 ui.UpdateEnv();
-                //showhidescalegrid(exmanager.el.envmanager.MainCamera[0], true);
                 ui.UpdateView();
-                exmanager.OnReady();
+                exmgr.OnReady();
             }
         }
 
@@ -464,11 +375,11 @@ namespace Experica.Command
             start.interactable = false;
 
             startstopsessiontext.text = "StopSession";
-            var msg = $"Experiment Session \"{exsmanager.esl.exsession.ID}\" Started.";
+            var msg = $"Experiment Session \"{exsmgr.esl.exsession.ID}\" Started.";
             consolepanel.Log(msg);
-            if (exsmanager.esl.exsession.NotifyExperimenter)
+            if (exsmgr.esl.exsession.NotifyExperimenter)
             {
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+                exmgr.el.ex.Experimenter.GetAddresses(cfgmgr.config).Mail(body: msg);
             }
         }
 
@@ -476,7 +387,7 @@ namespace Experica.Command
 
         public void ToggleStartStopExperimentSession(bool isstart)
         {
-            var esl = exsmanager?.esl;
+            var esl = exsmgr?.esl;
             if (esl != null)
             {
                 esl.StartStopExperimentSession(isstart);
@@ -509,11 +420,11 @@ namespace Experica.Command
 
         public void OnEndStopExperimentSession()
         {
-            consolepanel.Log($"Experiment Session \"{exsmanager.esl.exsession.ID}\" Stoped.");
-            if (exsmanager.esl.exsession.NotifyExperimenter)
+            consolepanel.Log($"Experiment Session \"{exsmgr.esl.exsession.ID}\" Stoped.");
+            if (exsmgr.esl.exsession.NotifyExperimenter)
             {
-                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment Session \"{exsmanager.esl.exsession.ID}\" in {Math.Round(exmanager.timer.ElapsedHour, 2):g}hour.";
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+                var msg = $"{exmgr.el.ex.Subject_ID} finished Experiment Session \"{exsmgr.esl.exsession.ID}\" in {Math.Round(exmgr.timer.ElapsedHour, 2):g}hour.";
+                exmgr.el.ex.Experimenter.GetAddresses(cfgmgr.config).Mail(body: msg);
             }
         }
         #endregion
@@ -529,11 +440,11 @@ namespace Experica.Command
             ui.saveex.SetEnabled(false);
             ui.deleteex.SetEnabled(false);
 
-            var msg = $"Experiment \"{exmanager.el.ex.ID}\" Started.";
+            var msg = $"Experiment \"{exmgr.el.ex.ID}\" Started.";
             //consolepanel.Log(msg);
-            if (exmanager.el.ex.NotifyExperimenter)
+            if (exmgr.el.ex.NotifyExperimenter)
             {
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+                exmgr.el.ex.Experimenter.GetAddresses(cfgmgr.config).Mail(body: msg);
             }
 
             // By default, Command need to run as fast as possible(no vsync, pipelining, realtimer, etc.), 
@@ -541,21 +452,21 @@ namespace Experica.Command
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 0;
             QualitySettings.maxQueuedFrames = 2;
-            exmanager.el.timer.IsFrameTime = false;
-            if (!canvas.activeSelf)
+            exmgr.el.timer.IsFrameTime = false;
+            if (FullViewport)
             {
                 // FullViewport(No UI), hide cursor
                 Cursor.visible = false;
-                if (Screen.fullScreen)
+                if (FullScreen)
                 {
                     // FullScreen Viewport can be used to present the final stimuli without any connected Environment.
                     QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-                    QualitySettings.vSyncCount = config.VSyncCount;
-                    QualitySettings.maxQueuedFrames = config.MaxQueuedFrames;
-                    exmanager.el.timer.IsFrameTime = config.FrameTimer;
+                    QualitySettings.vSyncCount = cfgmgr.config.VSyncCount;
+                    QualitySettings.maxQueuedFrames = cfgmgr.config.MaxQueuedFrames;
+                    exmgr.el.timer.IsFrameTime = cfgmgr.config.FrameTimer;
                 }
             }
-            Time.fixedDeltaTime = config.FixedDeltaTime;
+            Time.fixedDeltaTime = cfgmgr.config.FixedDeltaTime;
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             Thread.CurrentThread.Priority = System.Threading.ThreadPriority.Highest;
             GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
@@ -575,24 +486,24 @@ namespace Experica.Command
             //     }
             // }
 
-            exmanager.OnStart();
+            exmgr.OnStart();
         }
 
         public void OnBeginStopExperiment() { }
 
         public void OnEndStopExperiment()
         {
-            exmanager.OnStop();
+            exmgr.OnStop();
             // alsmanager?.RpcNotifyStopExperiment();
-            exmanager.el.SaveData();
-            consolepanel.Log($"Experiment \"{exmanager.el.ex.ID}\" Stoped.");
-            if (exmanager.el.ex.NotifyExperimenter)
+            exmgr.el.SaveData();
+            //consolepanel.Log($"Experiment \"{exmgr.el.ex.ID}\" Stoped.");
+            if (exmgr.el.ex.NotifyExperimenter)
             {
-                var msg = $"{exmanager.el.ex.Subject_ID} finished Experiment \"{exmanager.el.ex.ID}\" in {Math.Round(exmanager.el.timer.ElapsedMinute, 2):g}min.";
-                exmanager.el.ex.Experimenter.GetAddresses(config).Mail(body: msg);
+                var msg = $"{exmgr.el.ex.Subject_ID} finished Experiment \"{exmgr.el.ex.ID}\" in {Math.Round(exmgr.el.timer.ElapsedMinute, 2):g}min.";
+                exmgr.el.ex.Experimenter.GetAddresses(cfgmgr.config).Mail(body: msg);
             }
 
-            
+
 
             // Return normal when experiment stopped
             Cursor.visible = true;
@@ -647,60 +558,40 @@ namespace Experica.Command
         #endregion
 
 
-        public void ToggleExInherit(string name, bool isinherit)
-        {
-            var ip = exmanager.el.ex.InheritParam;
-            if (isinherit)
-            {
-                if (!ip.Contains(name))
-                {
-                    ip.Add(name);
-                    exmanager.el.ex.Properties()["ExInheritParam"].NotifyValue();
-                }
-                exmanager.InheritExParam(name);
-            }
-            else
-            {
-                if (ip.Contains(name))
-                {
-                    ip.Remove(name);
-                    exmanager.el.ex.Properties()["ExInheritParam"].NotifyValue();
-                }
-            }
-        }
+
 
         public void ViewportSize()
         {
-            if (exmanager.el != null)
+            if (exmgr.el != null)
             {
-                var so = exmanager.el.GetEnvActiveParam("Size");
+                var so = exmgr.el.GetEnvActiveParam("Size");
                 if (so != null)
                 {
                     var s = so.Convert<Vector3>();
-                    s.x = exmanager.el.envmanager.MainCamera.First().Width;
+                    s.x = exmgr.el.envmgr.MainCamera.First().Width;
                     //if (w.HasValue) { s.x = w.Value; }
-                    s.y = exmanager.el.envmanager.MainCamera.First().Height;
+                    s.y = exmgr.el.envmgr.MainCamera.First().Height;
                     //if (h.HasValue) { s.y = h.Value; }
-                    exmanager.el.SetEnvActiveParam("Size", s);
+                    exmgr.el.SetEnvActiveParam("Size", s);
                 }
             }
         }
 
         public void FullViewportSize()
         {
-            if (exmanager.el != null)
+            if (exmgr.el != null)
             {
-                var so = exmanager.el.GetEnvActiveParam("Size");
+                var so = exmgr.el.GetEnvActiveParam("Size");
                 if (so != null)
                 {
                     var s = so.Convert<Vector3>();
-                    s.x = exmanager.el.envmanager.MainCamera.First().Width;
+                    s.x = exmgr.el.envmgr.MainCamera.First().Width;
                     //if (w.HasValue) { s.x = w.Value; }
-                    s.y = exmanager.el.envmanager.MainCamera.First().Height;
+                    s.y = exmgr.el.envmgr.MainCamera.First().Height;
                     //if (h.HasValue) { s.y = h.Value; }
 
-                    var po = exmanager.el.GetEnvActiveParam("Position");
-                    var poff = exmanager.el.GetEnvActiveParam("PositionOffset");
+                    var po = exmgr.el.GetEnvActiveParam("Position");
+                    var poff = exmgr.el.GetEnvActiveParam("PositionOffset");
                     if (po != null && poff != null)
                     {
                         var p = po.Convert<Vector3>();
@@ -708,29 +599,51 @@ namespace Experica.Command
                         s.x += 2 * Mathf.Abs(p.x + pf.x);
                         s.y += 2 * Mathf.Abs(p.y + pf.y);
                     }
-                    exmanager.el.SetEnvActiveParam("Size", s);
+                    exmgr.el.SetEnvActiveParam("Size", s);
+                }
+            }
+        }
+
+        public void ToggleExInherit(string name, bool isinherit)
+        {
+            var ip = exmgr.el.ex.InheritParam;
+            if (isinherit)
+            {
+                if (!ip.Contains(name))
+                {
+                    ip.Add(name);
+                    exmgr.el.ex.properties["InheritParam"].NotifyValue();
+                }
+                exmgr.InheritExParam(name);
+            }
+            else
+            {
+                if (ip.Contains(name))
+                {
+                    ip.Remove(name);
+                    exmgr.el.ex.properties["InheritParam"].NotifyValue();
                 }
             }
         }
 
         public void ToggleEnvInherit(string fullname, bool isinherit)
         {
-            var ip = exmanager.el.ex.EnvInheritParam;
+            var ip = exmgr.el.ex.EnvInheritParam;
             if (isinherit)
             {
                 if (!ip.Contains(fullname))
                 {
                     ip.Add(fullname);
-                    exmanager.el.ex.Properties()["EnvInheritParam"].NotifyValue();
+                    exmgr.el.ex.properties["EnvInheritParam"].NotifyValue();
                 }
-                exmanager.InheritEnvParam(fullname);
+                exmgr.InheritEnvParam(fullname);
             }
             else
             {
                 if (ip.Contains(fullname))
                 {
                     ip.Remove(fullname);
-                    exmanager.el.ex.Properties()["EnvInheritParam"].NotifyValue();
+                    exmgr.el.ex.properties["EnvInheritParam"].NotifyValue();
                 }
             }
         }
@@ -744,7 +657,7 @@ namespace Experica.Command
             }
             else
             {
-                exmanager.el?.StartStopExperiment(false);
+                exmgr.el?.StartStopExperiment(false);
                 networkcontroller.Shutdown();
             }
             ui.host.label = newValue ? "Shutdown" : "Host";
@@ -761,7 +674,7 @@ namespace Experica.Command
             }
             else
             {
-                exmanager.el?.StartStopExperiment(false);
+                exmgr.el?.StartStopExperiment(false);
                 networkcontroller.Shutdown();
             }
             ui.server.label = newValue ? "Shutdown" : "Server";
@@ -771,7 +684,7 @@ namespace Experica.Command
 
         public void LoadCurrentScene()
         {
-            var scene = exmanager.el?.ex.EnvPath;
+            var scene = exmgr.el?.ex.EnvPath;
             if (!string.IsNullOrEmpty(scene))
             {
                 networkcontroller.LoadScene(scene);

@@ -21,8 +21,12 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Experica.NetEnv;
+using UnityEngine.VFX;
+using IceStorm;
+using YamlDotNet.Serialization;
 
 namespace Experica.Command
 {
@@ -30,6 +34,76 @@ namespace Experica.Command
     {
         public bool AutoLoadSaveLastConfig { get; set; } = true;
         public string LastConfigFilePath { get; set; } = "";
+
+        public CommandConfig config = new();
+
+        public static CommandConfigManager Load(string configmanagerpath = Experica.CommandConfigManagerPath)
+        {
+            CommandConfigManager cfgmanager = null;
+            if (File.Exists(configmanagerpath))
+            {
+                cfgmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
+            }
+            if (cfgmanager == null)
+            {
+                cfgmanager = new CommandConfigManager();
+                Debug.LogWarning($"Can not load CommandConfigManager: {configmanagerpath}, Use the default CommandConfigManager");
+            }
+
+            if (cfgmanager.AutoLoadSaveLastConfig)
+            {
+                cfgmanager.LoadConfig();
+            }
+            return cfgmanager;
+        }
+
+        public bool LoadConfig() => LoadConfig(LastConfigFilePath);
+
+        public bool LoadConfig(string configfilepath)
+        {
+            CommandConfig cfg = null; bool isvalidfile = false;
+            if (File.Exists(configfilepath))
+            {
+                cfg = configfilepath.ReadYamlFile<CommandConfig>();
+                isvalidfile = true;
+            }
+            if (cfg == null)
+            {
+                cfg = new CommandConfig();
+                Debug.LogWarning($"Can not load CommandConfig: {configfilepath}, Use the default CommandConfig");
+            }
+
+            cfg.EnvCrossInheritRule ??= CommandConfig.DefaultEnvCrossInheritRule();
+            config = cfg;
+            return isvalidfile;
+        }
+
+        public void Save(string configmanagerpath = Experica.CommandConfigManagerPath)
+        {
+            if (AutoLoadSaveLastConfig)
+            {
+                SaveConfig();
+            }
+            configmanagerpath.WriteYamlFile(this);
+        }
+
+        public bool SaveConfig() => SaveConfig(LastConfigFilePath);
+
+        public bool SaveConfig(string configfilepath)
+        {
+            bool success = false;
+            if (string.IsNullOrEmpty(configfilepath))
+            {
+                configfilepath = Experica.SaveFile("Save Config File");
+            }
+            if (!string.IsNullOrEmpty(configfilepath))
+            {
+                configfilepath.WriteYamlFile(config);
+                success = true;
+            }
+            else { Debug.LogWarning($"Invalid file path: {configfilepath}, skip saving config"); }
+            return success;
+        }
     }
 
     public class CommandConfig : DataClass
@@ -89,39 +163,18 @@ namespace Experica.Command
         public int RecordHostPort2 { get; set; } = 10000;
 
         public uint Version { get; set; } = Experica.CommandConfigVersion;
-        public Dictionary<string, Dictionary<string, List<string>>> EnvCrossInheritRule { get; set; } = new Dictionary<string, Dictionary<string, List<string>>>();
-        public Dictionary<string, NetEnv.Display> Display { get; set; } = new ();
+        public Dictionary<string, List<string>> EnvCrossInheritRule { get; set; } = DefaultEnvCrossInheritRule();
+        public Dictionary<string, NetEnv.Display> Display { get; set; } = new();
 
 
-        public static Dictionary<string, Dictionary<string, List<string>>> ValidateEnvCrossInheritRule(Dictionary<string, Dictionary<string, List<string>>> rule)
+        public static Dictionary<string, List<string>> DefaultEnvCrossInheritRule()
         {
-            if (!rule.ContainsKey(NetEnvObject.GratingQuad.ToString()))
+            var rule = new Dictionary<string, List<string>>
             {
-                var gratingquadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [NetEnvObject.Quad.ToString()] = new List<string> { "Ori", "Position" },
-                    [NetEnvObject.ImageQuad.ToString()] = new List<string> { "Position", "Diameter" }
-                };
-                rule[NetEnvObject.GratingQuad.ToString()] = gratingquadinheritfrom;
-            }
-            if (!rule.ContainsKey(NetEnvObject.Quad.ToString()))
-            {
-                var quadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [NetEnvObject.GratingQuad.ToString()] = new List<string> { "Ori", "Position" },
-                    [NetEnvObject.ImageQuad.ToString()] = new List<string> { "Position" }
-                };
-                rule[NetEnvObject.Quad.ToString()] = quadinheritfrom;
-            }
-            if (!rule.ContainsKey(NetEnvObject.ImageQuad.ToString()))
-            {
-                var imagequadinheritfrom = new Dictionary<string, List<string>>
-                {
-                    [NetEnvObject.GratingQuad.ToString()] = new List<string> { "Position", "Diameter" },
-                    [NetEnvObject.Quad.ToString()] = new List<string> { "Position" }
-                };
-                rule[NetEnvObject.ImageQuad.ToString()] = imagequadinheritfrom;
-            }
+                [nameof(Grating)] = new() { nameof(Quad), nameof(ImageList) },
+                [nameof(Quad)] = new() { nameof(Grating), nameof(ImageList) },
+                [nameof(ImageList)] = new() { nameof(Quad), nameof(Grating) }
+            };
             return rule;
         }
 

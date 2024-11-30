@@ -30,7 +30,7 @@ namespace Experica.Command
 {
     public class ConditionTestPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public GameObject ctcontent, ctheadcontent, blueheadertextprefab, redheadertextprefab,
             yellowheadertextprefab, greenheadertextprefab, textprefab;
         GridLayoutGroup grid; float ctcontentheight, textheight;
@@ -76,76 +76,76 @@ namespace Experica.Command
             textheight = cti.fontSize + 3;
         }
 
-        public void PushCondTest()
-        {
-            var ctm = uicontroller.exmanager.el.condtestmanager;
-            if (ctm.CondTestIndex <= condtestidx)
-            {
-                return;
-            }
-            else
-            {
-                condtestidx = ctm.CondTestIndex;
-            }
-            var showlevel = uicontroller.exmanager.el.ex.CondTestShowLevel;
-            var condindexstr = ""; var condrepeatstr = ""; var blockindexstr = ""; var blockrepeatstr = "";
-            switch (showlevel)
-            {
-                case CONDTESTSHOWLEVEL.FULL:
-                    cti.text = cti.text + condtestidx.ToString() + "\n";
-                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
-                    {
-                        condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
-                    }
-                    ci.text = ci.text + condindexstr + "\n";
-                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
-                    {
-                        condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
-                    }
-                    cr.text = cr.text + condrepeatstr + "\n";
-                    if (uicontroller.exmanager.el.condmanager.NBlock > 1)
-                    {
-                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
-                        {
-                            blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
-                        }
-                        bi.text = bi.text + blockindexstr + "\n";
-                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
-                        {
-                            blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
-                        }
-                        br.text = br.text + blockrepeatstr + "\n";
-                    }
-                    UpdateViewRect(condtestidx + 1);
-                    return;
-                case CONDTESTSHOWLEVEL.SHORT:
-                    cti.text = condtestidx.ToString();
-                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
-                    {
-                        condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
-                    }
-                    ci.text = condindexstr;
-                    if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
-                    {
-                        condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
-                    }
-                    cr.text = condrepeatstr;
-                    if (uicontroller.exmanager.el.condmanager.NBlock > 1)
-                    {
-                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
-                        {
-                            blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
-                        }
-                        bi.text = blockindexstr;
-                        if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
-                        {
-                            blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
-                        }
-                        br.text = blockrepeatstr;
-                    }
-                    return;
-            }
-        }
+        //public void PushCondTest()
+        //{
+        //    var ctm = uicontroller.exmgr.el.condtestmgr;
+        //    if (ctm.CondTestIndex <= condtestidx)
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        condtestidx = ctm.CondTestIndex;
+        //    }
+        //    var showlevel = uicontroller.exmgr.el.ex.CondTestShowLevel;
+        //    var condindexstr = ""; var condrepeatstr = ""; var blockindexstr = ""; var blockrepeatstr = "";
+        //    switch (showlevel)
+        //    {
+        //        case CONDTESTSHOWLEVEL.FULL:
+        //            cti.text = cti.text + condtestidx.ToString() + "\n";
+        //            if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
+        //            {
+        //                condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
+        //            }
+        //            ci.text = ci.text + condindexstr + "\n";
+        //            if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
+        //            {
+        //                condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
+        //            }
+        //            cr.text = cr.text + condrepeatstr + "\n";
+        //            if (uicontroller.exmgr.el.condmgr.NBlock > 1)
+        //            {
+        //                if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
+        //                {
+        //                    blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
+        //                }
+        //                bi.text = bi.text + blockindexstr + "\n";
+        //                if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
+        //                {
+        //                    blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
+        //                }
+        //                br.text = br.text + blockrepeatstr + "\n";
+        //            }
+        //            UpdateViewRect(condtestidx + 1);
+        //            return;
+        //        case CONDTESTSHOWLEVEL.SHORT:
+        //            cti.text = condtestidx.ToString();
+        //            if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondIndex) && ctm.CondTest[CONDTESTPARAM.CondIndex].Count > condtestidx)
+        //            {
+        //                condindexstr = ctm.CondTest[CONDTESTPARAM.CondIndex][condtestidx].ToString();
+        //            }
+        //            ci.text = condindexstr;
+        //            if (ctm.CondTest.ContainsKey(CONDTESTPARAM.CondRepeat) && ctm.CondTest[CONDTESTPARAM.CondRepeat].Count > condtestidx)
+        //            {
+        //                condrepeatstr = ctm.CondTest[CONDTESTPARAM.CondRepeat][condtestidx].ToString();
+        //            }
+        //            cr.text = condrepeatstr;
+        //            if (uicontroller.exmgr.el.condmgr.NBlock > 1)
+        //            {
+        //                if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockIndex) && ctm.CondTest[CONDTESTPARAM.BlockIndex].Count > condtestidx)
+        //                {
+        //                    blockindexstr = ctm.CondTest[CONDTESTPARAM.BlockIndex][condtestidx].ToString();
+        //                }
+        //                bi.text = blockindexstr;
+        //                if (ctm.CondTest.ContainsKey(CONDTESTPARAM.BlockRepeat) && ctm.CondTest[CONDTESTPARAM.BlockRepeat].Count > condtestidx)
+        //                {
+        //                    blockrepeatstr = ctm.CondTest[CONDTESTPARAM.BlockRepeat][condtestidx].ToString();
+        //                }
+        //                br.text = blockrepeatstr;
+        //            }
+        //            return;
+        //    }
+        //}
 
         Text AddText(string value)
         {

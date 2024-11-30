@@ -43,20 +43,27 @@ namespace Experica
         }
         public List<string> BlockFactor { get; private set; } = new();
         public List<string> NonBlockFactor { get; private set; } = new();
+        public int NBlockCond
+        {
+            get
+            {
+                if (BlockCond.Count == 0) { return 0; }
+                return BlockCond.Values.First().Count;
+            }
+        }
         public Dictionary<string, IList> BlockCond { get; private set; } = new();
         public int NBlock => BlockSampleSpace.Count;
         public List<List<int>> CondSampleSpaces { get; private set; } = new();
         public List<int> BlockSampleSpace { get; private set; } = new();
-
-        public System.Random RNG = new MersenneTwister();
         public SampleMethod CondSampleMethod { get; private set; } = SampleMethod.Ascending;
         public SampleMethod BlockSampleMethod { get; private set; } = SampleMethod.Ascending;
-        public Action OnCondFinalized, OnSamplingInitialized;
 
         public int NSampleSkip = 0;
         public int ScendingStep = 1;
+        public System.Random RNG = new MersenneTwister();
         public int BlockIndex { get; private set; } = -1;
         public int CondIndex { get; private set; } = -1;
+
         int condsampleindex = -1;
         int blocksampleindex = -1;
         List<int> blockrepeat = new();
@@ -64,7 +71,7 @@ namespace Experica
         List<List<int>> condofblockrepeat = new();
 
 
-        public Dictionary<string, List<object>> ReadConditionFile(string path)
+        public static Dictionary<string, List<object>> ReadConditionFile(string path)
         {
             if (!File.Exists(path))
             {
@@ -74,7 +81,7 @@ namespace Experica
             return path.ReadYamlFile<Dictionary<string, List<object>>>();
         }
 
-        public Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond)
+        public static Dictionary<string, List<object>> ProcessCondition(Dictionary<string, List<object>> cond)
         {
             if (cond != null && cond.Count > 0)
             {
@@ -84,11 +91,15 @@ namespace Experica
             return cond;
         }
 
-        public void FinalizeCondition(Dictionary<string, List<object>> cond)
+        /// <summary>
+        /// prepare and set the `Cond`
+        /// </summary>
+        /// <param name="cond"></param>
+        public void PrepareCondition(Dictionary<string, List<object>> cond)
         {
             if (cond == null || cond.Count == 0)
             {
-                Cond.Clear();
+                Cond.Clear(); return;
             }
             else
             {
@@ -102,16 +113,15 @@ namespace Experica
                         cond[f] = cond[f].GetRange(0, minfln);
                     }
                 }
-                if (cond.Count == 0) { Debug.LogWarning("Finalized Condition Is Empty."); Cond.Clear(); return; }
-                Cond = cond.FinalizeFactorValue();
-                OnCondFinalized?.Invoke();
+                if (cond.Values.First().Count == 0) { Cond.Clear(); return; }
+                Cond = cond.SpecializeFactorValue();
             }
         }
 
-        public void FinalizeCondition(string path) { FinalizeCondition(ProcessCondition(ReadConditionFile(path))); }
+        public void PrepareCondition(string path) { PrepareCondition(ProcessCondition(ReadConditionFile(path))); }
 
 
-        public List<int> GetSampleSpace(List<int> space, SampleMethod samplemethod)
+        List<int> GetSampleSpace(List<int> space, SampleMethod samplemethod)
         {
             switch (samplemethod)
             {
@@ -129,7 +139,7 @@ namespace Experica
             return space;
         }
 
-        public List<int> GetSampleSpace(int spacesize, SampleMethod samplemethod)
+        List<int> GetSampleSpace(int spacesize, SampleMethod samplemethod)
         {
             return samplemethod switch
             {
@@ -139,6 +149,12 @@ namespace Experica
             };
         }
 
+        /// <summary>
+        /// partition cond to blocks, prepare block factors/values, and init block and cond index sampling spaces
+        /// </summary>
+        /// <param name="condsamplemethod"></param>
+        /// <param name="blocksamplemethod"></param>
+        /// <param name="blockfactor"></param>
         public void InitializeSampleSpace(SampleMethod condsamplemethod, SampleMethod blocksamplemethod, List<string> blockfactor)
         {
             CondSampleMethod = condsamplemethod;
@@ -152,7 +168,7 @@ namespace Experica
             else { BlockFactor = Cond.Keys.Intersect(blockfactor).ToList(); }
             NonBlockFactor = Cond.Keys.Except(BlockFactor).ToList();
             var bfn = BlockFactor.Count;
-            if (bfn == 0 || bfn == Cond.Count || NCond == 1)
+            if (bfn == 0 || bfn == Cond.Count || NCond == 1) // essentially no blocking, but all considered as one block containing all conditions
             {
                 BlockSampleSpace.Add(0);
                 CondSampleSpaces.Add(GetSampleSpace(NCond, CondSampleMethod));
@@ -160,7 +176,7 @@ namespace Experica
             else
             {
                 BlockCond = Cond.CondGroup(BlockFactor, out List<List<int>> gi);
-                BlockSampleSpace = GetSampleSpace(NBlock, BlockSampleMethod);
+                BlockSampleSpace = GetSampleSpace(NBlockCond, BlockSampleMethod);
                 gi.ForEach(i => CondSampleSpaces.Add(GetSampleSpace(i, CondSampleMethod)));
             }
         }
@@ -192,7 +208,6 @@ namespace Experica
         {
             InitializeSampleSpace(condsamplemethod, blocksamplemethod, blockfactor);
             ResetSampling();
-            OnSamplingInitialized?.Invoke();
         }
 
         public void ResetCondOfBlockSampling(int blockindex)
@@ -269,6 +284,11 @@ namespace Experica
                     break;
                 case SampleMethod.Manual:
                     CondIndex = manualcondindex;
+                    for (var i = 0; i < NBlock; i++)
+                    {
+                        var j = CondSampleSpaces[i].IndexOf(CondIndex);
+                        if (j > -1) { BlockIndex = i; condsampleindex = j; break; }
+                    }
                     break;
             }
             condofblockrepeat[BlockIndex][condsampleindex] += 1;
@@ -276,13 +296,13 @@ namespace Experica
             return CondIndex;
         }
 
-        public int SampleCondition(int condofblockrepeat, int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
+        public int SampleCondition(int condofblockrepeat = 1, int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
         {
             if (NCond == 0) { return -1; }
             if (NSampleSkip < 1)
             {
                 if (BlockIndex < 0) { SampleBlockSpace(manualblockindex); }
-                if (autosampleblock) { if (IsCondOfBlockRepeat(BlockIndex, condofblockrepeat)) { SampleBlockSpace(manualblockindex); } }
+                if (autosampleblock) { if (IsAllCondOfBlockRepeated(BlockIndex, condofblockrepeat)) { SampleBlockSpace(manualblockindex); } }
                 SampleCondSpace(manualcondindex);
             }
             else
@@ -292,9 +312,16 @@ namespace Experica
             return CondIndex;
         }
 
+        /// <summary>
+        /// Push the factors/value of a condition to NetEnv scene
+        /// </summary>
+        /// <param name="condindex"></param>
+        /// <param name="envmanager"></param>
+        /// <param name="includeblockfactor"></param>
+        /// <param name="excludefactor"></param>
         public void PushCondition(int condindex, INetEnv envmanager, bool includeblockfactor = false, List<string> excludefactor = null)
         {
-            if (NCond == 0 || condindex < 0) { return; }
+            if (condindex < 0 || NCond == 0) { return; }
             var condfactors = includeblockfactor ? Cond.Keys.ToList() : NonBlockFactor;
             var factors = excludefactor == null ? condfactors : condfactors.Except(excludefactor);
             foreach (var f in factors)
@@ -303,9 +330,15 @@ namespace Experica
             }
         }
 
+        /// <summary>
+        /// Push the factors/value of a block to NetEnv scene
+        /// </summary>
+        /// <param name="blockindex"></param>
+        /// <param name="envmanager"></param>
+        /// <param name="excludefactor"></param>
         public void PushBlock(int blockindex, INetEnv envmanager, List<string> excludefactor = null)
         {
-            if (blockindex < 0 || BlockCond.Count == 0) { return; }
+            if (blockindex < 0 || NBlockCond == 0) { return; }
             var factors = excludefactor == null ? BlockFactor : BlockFactor.Except(excludefactor);
             foreach (var f in factors)
             {
@@ -313,9 +346,28 @@ namespace Experica
             }
         }
 
-        public bool IsCondRepeat(int condindex, int n) { return condrepeat[condindex] >= n; }
-        public bool IsBlockRepeat(int blockindex, int n) { return blockrepeat[blockindex] >= n; }
-        public bool IsCondOfBlockRepeat(int blockindex, int n)
+
+        /// <summary>
+        /// whether a condition have been sampled on total certain times
+        /// </summary>
+        /// <param name="condindex"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public bool IsCondRepeated(int condindex, int n) { return condrepeat[condindex] >= n; }
+        /// <summary>
+        /// whether a block have been sampled certain times
+        /// </summary>
+        /// <param name="blockindex"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public bool IsBlockRepeated(int blockindex, int n) { return blockrepeat[blockindex] >= n; }
+        /// <summary>
+        /// whether all conditions in a block have been sampled certain times
+        /// </summary>
+        /// <param name="blockindex"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public bool IsAllCondOfBlockRepeated(int blockindex, int n)
         {
             for (var i = 0; i < condofblockrepeat[blockindex].Count; i++)
             {
@@ -323,8 +375,12 @@ namespace Experica
             }
             return true;
         }
-
-        public bool IsAllCondRepeat(int n)
+        /// <summary>
+        /// whether all conditions have been sampled on total certain times
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public bool IsAllCondRepeated(int n)
         {
             if (NCond == 0) { return false; }
             for (var i = 0; i < NCond; i++)
@@ -333,11 +389,17 @@ namespace Experica
             }
             return true;
         }
-
-        public bool IsCondAndBlockRepeat(int condofblockrepeat, int blockrepeat)
+        /// <summary>
+        /// whether all conditions of all blocks have been sampled certain times, 
+        /// the individual condition is required to repeat `condofblockrepeat` * `blockrepeat` times.
+        /// </summary>
+        /// <param name="condofblockrepeat"></param>
+        /// <param name="blockrepeat"></param>
+        /// <returns></returns>
+        public bool IsCondOfAndBlockRepeated(int condofblockrepeat, int blockrepeat)
         {
             var total = Math.Max(0, condofblockrepeat) * Math.Max(1, blockrepeat);
-            return IsAllCondRepeat(total);
+            return IsAllCondRepeated(total);
         }
 
         public List<int> CurrentCondSampleSpace => CondSampleSpaces[BlockIndex];

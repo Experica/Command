@@ -28,7 +28,7 @@ namespace Experica.Command
 {
     public class ConsolePanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public GameObject content, logprefab, warningprefab, errorprefab;
 
         public bool IsStackTrace { get; set; }

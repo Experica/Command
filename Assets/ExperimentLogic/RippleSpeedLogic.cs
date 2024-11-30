@@ -26,15 +26,15 @@ namespace Experica.Command
 {
     public class RippleSpeedLogic : RippleCTLogic
     {
-        protected override void GenerateCondition()
+        protected override void PrepareCondition()
         {
             pushexcludefactor = new List<string>() { "Speed" };
             float sf = GetEnvActiveParam("SpatialFreq").Convert<float>();
 
             // convert speed to temporal frequency
-            var bcond = condmanager.ProcessCondition(condmanager.ReadConditionFile(ex.CondPath));
+            var bcond = ConditionManager.ProcessCondition(ConditionManager.ReadConditionFile(ex.CondPath));
             bcond["TemporalFreq"] = bcond["Speed"].Convert<List<float>>().Select(i => (object)(i * sf)).ToList();
-            condmanager.FinalizeCondition(bcond);
+            condmgr.PrepareCondition(bcond);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Experica.Command
 {
     public class ExperimentPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         public GameObject content, newexparampanelprefab;
         GameObject newexparampanel;
         public Canvas canvas;
@@ -59,11 +59,11 @@ namespace Experica.Command
 
         public void AddExUI(Experiment ex)
         {
-            foreach (var p in ex.Properties().Keys)
+            foreach (var p in ex.properties.Keys)
             {
                 if (IsShowParam(p))
                 {
-                    var pa = ex.Properties()[p];
+                    var pa = ex.properties[p];
                     AddParamUI(p, pa.Type, ex.GetProperty(p), ex.InheritParam.Contains(p),
                         p.GetPrefab(pa.Type), content.transform);
                 }
@@ -74,7 +74,7 @@ namespace Experica.Command
 
         public void UpdateExUI(Experiment ex)
         {
-            foreach (var p in ex.Properties().Keys)
+            foreach (var p in ex.properties.Keys)
             {
                 if (IsShowParam(p))
                 {
@@ -96,7 +96,7 @@ namespace Experica.Command
 
         bool IsShowParam(string name)
         {
-            var exhideparam = uicontroller.config.ExHideParams;
+            var exhideparam = uicontroller.cfgmgr.config.ExHideParams;
             return exhideparam.Contains(name) ? false : true;
         }
 
@@ -173,7 +173,7 @@ namespace Experica.Command
                 if (inputfield != null)
                 {
                     inputfield.text = value == null ? "" : value.Convert<string>();
-                    inputfield.onEndEdit.AddListener(s => uicontroller.exmanager.el.ex.SetParam(name, s));
+                    inputfield.onEndEdit.AddListener(s => uicontroller.exmgr.el.ex.SetParam(name, s));
                     this.inputfield[name] = inputfield;
                 }
                 if (dropdown != null)
@@ -183,7 +183,7 @@ namespace Experica.Command
                     {
                         dropdown.AddOptions(vs);
                         dropdown.value = vs.IndexOf(v);
-                        dropdown.onValueChanged.AddListener(vi => uicontroller.exmanager.el.ex.SetParam(name, dropdown.captionText.text));
+                        dropdown.onValueChanged.AddListener(vi => uicontroller.exmgr.el.ex.SetParam(name, dropdown.captionText.text));
                         this.dropdown[name] = dropdown;
                     }
                 }
@@ -227,7 +227,7 @@ namespace Experica.Command
 
         public void NewExParam(string name, object value)
         {
-            uicontroller.exmanager.el.ex.ExtendParam[name] = value;
+            uicontroller.exmgr.el.ex.ExtendParam[name] = value;
             AddExParamUI(name, value, false);
             UpdateContentRect();
         }
@@ -238,8 +238,8 @@ namespace Experica.Command
             {
                 if (exparamtoggle[s].isOn)
                 {
-                    uicontroller.exmanager.el.ex.ExtendParam.Remove(s);
-                    uicontroller.exmanager.el.ex.InheritParam.Remove(s);
+                    uicontroller.exmgr.el.ex.ExtendParam.Remove(s);
+                    uicontroller.exmgr.el.ex.InheritParam.Remove(s);
 
                     exparamtoggle.Remove(s);
                     Destroy(exparamgo[s]);

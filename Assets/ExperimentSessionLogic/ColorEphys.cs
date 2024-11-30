@@ -46,9 +46,9 @@ public class ColorEPhys : ExperimentSessionLogic
             case "ConditionTest":
                 if (SinceExReady > exsession.ReadyWait)
                 {
-                    exmanager.uicontroller.GuideActive = exsession.IsGuideOn;
-                    exmanager.uicontroller.FullScreen = exsession.IsFullScreen;
-                    exmanager.uicontroller.IsFullViewport = exsession.IsFullViewport;
+                    exmgr.el.Guide = exsession.IsGuideOn;
+                    exmgr.appmgr.FullScreen = exsession.IsFullScreen;
+                    exmgr.appmgr.FullViewport = exsession.IsFullViewport;
                     EL.SetExParam("NotifyExperimenter", exsession.NotifyExperimenter);
                     eye = EL.GetExParam<Eye>("Eye");
                     diameter = EL.GetEnvActiveParam<float>("Diameter");
@@ -66,7 +66,7 @@ public class ColorEPhys : ExperimentSessionLogic
                             switch (ExRepeat)
                             {
                                 case 0:
-                                    exmanager.uicontroller.FullViewportSize();
+                                    exmgr.appmgr.FullViewportSize();
                                     EL.SetExParam("Eye", eye);
                                     EL.SetExParam("CondRepeat", 100);
                                     EL.SetExParam("ColorSpace", "DKL");
@@ -322,8 +322,8 @@ public class ColorEPhys : ExperimentSessionLogic
                             else
                             {
                                 StartStopExperimentSession(false);
-                                exmanager.uicontroller.IsFullViewport = false;
-                                exmanager.uicontroller.GuideActive = true;
+                                exmgr.appmgr.FullViewport = false;
+                                exmgr.el.Guide = true;
                             }
                         }
                         break;

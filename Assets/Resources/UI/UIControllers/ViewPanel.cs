@@ -34,7 +34,7 @@ namespace Experica.Command
 {
     public class ViewPanel : MonoBehaviour
     {
-        public UIController uicontroller;
+        public AppManager uicontroller;
         RenderTexture rendertexture;
         public GameObject viewportcontent;
         public Toggle togglegrid;
@@ -50,14 +50,14 @@ namespace Experica.Command
                 dimension = TextureDimension.Tex2D,
                 depthBufferBits = 32,
                 autoGenerateMips = false,
-                msaaSamples = uicontroller.config.AntiAliasing,
+                msaaSamples = uicontroller.cfgmgr.config.AntiAliasing,
                 colorFormat = RenderTextureFormat.ARGBHalf,
                 sRGB = false,
                 width = 1,
                 height = 1,
                 volumeDepth = 1
             });
-            rendertexture.anisoLevel = uicontroller.config.AnisotropicFilterLevel;
+            rendertexture.anisoLevel = uicontroller.cfgmgr.config.AnisotropicFilterLevel;
 
             SetGridCenter(new Vector3(0, 0, 50));
         }
@@ -91,15 +91,15 @@ namespace Experica.Command
 
         void UpdateGridLineWidth()
         {
-            var maincamera = uicontroller.exmanager.el.envmanager.MainCamera.First().Camera;
+            var maincamera = uicontroller.exmgr.el.envmgr.MainCamera.First().Camera;
             //grid.UpdateAxisLineWidth(maincamera.orthographicSize);
             //grid.UpdateTickLineWidth(maincamera.orthographicSize);
         }
 
         public void UpdateViewport()
         {
-            if (uicontroller.IsFullViewport) { return; }
-            var envmanager = uicontroller.exmanager.el.envmanager;
+            if (uicontroller.FullViewport) { return; }
+            var envmanager = uicontroller.exmgr.el.envmgr;
             var maincamera = envmanager.MainCamera.First().Camera;
             if (maincamera != null)
             {

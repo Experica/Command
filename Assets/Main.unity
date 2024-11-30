@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e338d279a9c4faa41a28b05e6cd73997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uicontroller: {fileID: 355740905}
+  appmgr: {fileID: 355740905}
   el: {fileID: 0}
   ExperimentStatus: 0
   ReadyTime: 0
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 355740905}
   - component: {fileID: 355740906}
   m_Layer: 0
-  m_Name: UIController
+  m_Name: AppManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,13 +231,10 @@ MonoBehaviour:
   startstoptext: {fileID: 0}
   startstopsessiontext: {fileID: 0}
   pauseresumetext: {fileID: 0}
-  version: {fileID: 0}
   postprocessing: {fileID: 355740907}
   networkcontroller: {fileID: 652919586}
-  exmanager: {fileID: 195929017}
-  exsmanager: {fileID: 1423087642}
-  canvas: {fileID: 0}
-  controlpanel: {fileID: 0}
+  exmgr: {fileID: 195929017}
+  exsmgr: {fileID: 1423087642}
   expanel: {fileID: 0}
   envpanel: {fileID: 0}
   viewpanel: {fileID: 0}
@@ -256,8 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -4598779086313414778, guid: 00000000000000002000000000000000,
-    type: 0}
+  m_Actions: {fileID: -944628639613478452, guid: bed57f6b55da548428fa6a2abe174381,
+    type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -577,7 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5405ef099b2e92b449a91782c3e64528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uicontroller: {fileID: 355740905}
+  appmgr: {fileID: 355740905}
   uidoc: {fileID: 570668881}
   ToggleString: {fileID: 9197481963319205126, guid: ede5726a410446e4b856ed1b357b7f01,
     type: 3}
@@ -630,6 +627,8 @@ MonoBehaviour:
   ConfigWindow: {fileID: 9197481963319205126, guid: e51fe3bbec1482c4899ce9326a0e1c1a,
     type: 3}
   AddExParamWindow: {fileID: 9197481963319205126, guid: 63b4830282a346346a5b2ab1734258ad,
+    type: 3}
+  NewExWindow: {fileID: 9197481963319205126, guid: 612ed07111b4da245b74f481472fd6ff,
     type: 3}
 --- !u!1 &631312289
 GameObject:
@@ -694,9 +693,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 355740904}
   - {fileID: 195929019}
   - {fileID: 1423087641}
-  - {fileID: 355740904}
   - {fileID: 570668882}
   - {fileID: 931700751}
   m_Father: {fileID: 0}
@@ -784,7 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15ee3f73aa9e6149b8c7a910cd24900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uicontroller: {fileID: 355740905}
+  appmgr: {fileID: 355740905}
 --- !u!1 &931700748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7bd544e6147a64888d29908ac5befd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uicontroller: {fileID: 355740905}
+  appmgr: {fileID: 355740905}
   esl: {fileID: 0}
 --- !u!1 &2145171384
 GameObject:

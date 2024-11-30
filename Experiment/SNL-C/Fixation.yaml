@@ -13,16 +13,16 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 0
-  ScreenHeight@OrthoCamera@OrthoCamera: 0
-  ScreenAspect@OrthoCamera@OrthoCamera: 0
-  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker~OrthoCamera: 0
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
-  FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 0
+  FixDotPosition@FixDot@FixDot: -5 5 0
+  FixDotDiameter@FixDot@FixDot: 5
   FixDotVisible@FixDot@FixDot: false
 CondPath: ''
 Cond: 
@@ -42,9 +42,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 352
+PreITI: 486
 TrialDur: 0
-SufITI: 849
+SufITI: 656
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -52,43 +52,34 @@ PushCondAtState: NONE
 CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam:
-- Experimenter
-- Subject_ID
-- Hemisphere
-- RecordSession
-- RecordSite
-- DataDir
-- Subject_Name
-- Subject_Species
-- Subject_Gender
-- Subject_Birth
-- Subject_Size
-- Subject_Weight
+  - Experimenter
+  - Subject_ID
+  - Hemisphere
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
 EnvInheritParam:
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- MarkerSize@Marker@Marker~OrthoCamera
-- MarkerCorner@Marker@Marker~OrthoCamera
-ExtendParam:
-  MinPreITIDur: 250
-  MaxPreITIDur: 500
-  MinSufITIDur: 500
-  MaxSufITIDur: 1000
-  MinFixDur: 1000
-  MaxFixDur: 2000
-  WaitForFixTimeOut: 3000
-  FixRadius: 1
-  DotScaleOnFix: 0.7
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
-  - DigitalOut
-  - Display
+    - DigitalOut
+    - Display
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
@@ -97,3 +88,13 @@ NotifyExperimenter: true
 Version: 3
 Config: 
 CondTest: 
+ExtendParam:
+  MinPreITIDur: 250
+  MaxPreITIDur: 500
+  MinSufITIDur: 500
+  MaxSufITIDur: 1000
+  MinFixDur: 1000
+  MaxFixDur: 2000
+  WaitForFixTimeOut: 3000
+  FixRadius: 5
+  DotScaleOnFix: 0.8

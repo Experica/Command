@@ -60,23 +60,21 @@ namespace Experica.Command
         }
         #endregion
 
+        public AppManager appmgr;
         public Experiment ex;
         public Timer timer = new();
-        public NetEnvManager envmanager = new();
-        public ConditionManager condmanager = new();
-        public ConditionTestManager condtestmanager = new();
+        public NetEnvManager envmgr = new();
+        public ConditionManager condmgr = new();
+        public ConditionTestManager condtestmgr = new();
         public IRecorder recorder;
-        public List<string> pushexcludefactor;
         public System.Random RNG = new MersenneTwister();
         public bool regeneratecond = true;
+        public List<string> pushexcludefactor;
 
         protected IGPIO gpio;
         protected bool syncstate;
 
-        public Action OnBeginStartExperiment, OnEndStartExperiment,
-            OnBeginStopExperiment, OnEndStopExperiment,
-            OnBeginPauseExperiment, OnEndPauseExperiment,
-            OnBeginResumeExperiment, OnEndResumeExpeirment,
+        public Action 
             /* called anywhere in update will guarantee:
             1. all updates will be received and processed in a whole in all Environment connected to Command,
                so that rendered frame is the same as the Command.
@@ -101,6 +99,7 @@ namespace Experica.Command
         public CommandConfig Config => ex.Config;
 
 
+        #region State Management
         CONDSTATE condstate = CONDSTATE.NONE;
         public CONDSTATE CondState => condstate;
         protected virtual EnterStateCode EnterCondState(CONDSTATE value, bool sync = false)
@@ -108,32 +107,32 @@ namespace Experica.Command
             if (value == condstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
             {
-                case CONDSTATE.PREICI:
+                case CONDSTATE.PREICI: 
                     PreICIOnTime = timer.ElapsedMillisecond;
-                    if (ex.CondTestAtState == CONDTESTATSTATE.PREICI)
+                    if (ex.CondTestAtState == CONDTESTATSTATE.PREICI) // usually the start state of a condition test
                     {
-                        if (condmanager.IsCondAndBlockRepeat(ex.CondRepeat, ex.BlockRepeat))
+                        if (condmgr.IsCondOfAndBlockRepeated(ex.CondRepeat, ex.BlockRepeat))
                         {
                             StartStopExperiment(false);
-                            return EnterStateCode.NoNeed;
+                            return EnterStateCode.ExFinish;
                         }
-                        condtestmanager.NewCondTest(PreICIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
+                        condtestmgr.NewCondTest();
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreICIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), PreICIOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREICI)
                     {
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
-                            if (condmanager.NBlock > 1)
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondIndex), condmgr.CondIndex);
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondRepeat), condmgr.CurrentCondRepeat);
+                            if (condmgr.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockIndex), condmgr.BlockIndex);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockRepeat), condmgr.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -142,19 +141,19 @@ namespace Experica.Command
                     CondOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), CondOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), CondOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.COND)
                     {
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
-                            if (condmanager.NBlock > 1)
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondIndex), condmgr.CondIndex);
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondRepeat), condmgr.CurrentCondRepeat);
+                            if (condmgr.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockIndex), condmgr.BlockIndex);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockRepeat), condmgr.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -163,7 +162,7 @@ namespace Experica.Command
                     SufICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufICIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), SufICIOnTime);
                     }
                     break;
             }
@@ -183,28 +182,28 @@ namespace Experica.Command
                     PreITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREITI)
                     {
-                        if (condmanager.IsCondAndBlockRepeat(ex.CondRepeat, ex.BlockRepeat))
+                        if (condmgr.IsCondOfAndBlockRepeated(ex.CondRepeat, ex.BlockRepeat))
                         {
                             StartStopExperiment(false);
-                            return EnterStateCode.NoNeed;
+                            return EnterStateCode.ExFinish;
                         }
-                        condtestmanager.NewCondTest(PreITIOnTime, ex.NotifyParam, ex.NotifyPerCondTest);
+                        condtestmgr.NewCondTest();
                     }
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreITIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), PreITIOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.PREITI)
                     {
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
-                            if (condmanager.NBlock > 1)
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondIndex), condmgr.CondIndex);
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondRepeat), condmgr.CurrentCondRepeat);
+                            if (condmgr.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockIndex), condmgr.BlockIndex);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockRepeat), condmgr.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -213,19 +212,19 @@ namespace Experica.Command
                     TrialOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), TrialOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), TrialOnTime);
                     }
                     if (ex.PushCondAtState == PUSHCONDATSTATE.TRIAL)
                     {
                         SamplePushCondition();
                         if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                         {
-                            condtestmanager.Add(CONDTESTPARAM.CondIndex, condmanager.CondIndex);
-                            condtestmanager.Add(CONDTESTPARAM.CondRepeat, condmanager.CurrentCondRepeat);
-                            if (condmanager.NBlock > 1)
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondIndex), condmgr.CondIndex);
+                            condtestmgr.Add(nameof(CONDTESTPARAM.CondRepeat), condmgr.CurrentCondRepeat);
+                            if (condmgr.NBlock > 1)
                             {
-                                condtestmanager.Add(CONDTESTPARAM.BlockIndex, condmanager.BlockIndex);
-                                condtestmanager.Add(CONDTESTPARAM.BlockRepeat, condmanager.CurrentBlockRepeat);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockIndex), condmgr.BlockIndex);
+                                condtestmgr.Add(nameof(CONDTESTPARAM.BlockRepeat), condmgr.CurrentBlockRepeat);
                             }
                         }
                     }
@@ -234,7 +233,7 @@ namespace Experica.Command
                     SufITIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufITIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), SufITIOnTime);
                     }
                     break;
             }
@@ -254,21 +253,21 @@ namespace Experica.Command
                     PreIBIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), PreIBIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), PreIBIOnTime);
                     }
                     break;
                 case BLOCKSTATE.BLOCK:
                     BlockOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), BlockOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), BlockOnTime);
                     }
                     break;
                 case BLOCKSTATE.SUFIBI:
                     SufIBIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
                     {
-                        condtestmanager.AddInList(CONDTESTPARAM.Event, value.ToString(), SufIBIOnTime);
+                        condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), SufIBIOnTime);
                     }
                     break;
             }
@@ -276,34 +275,47 @@ namespace Experica.Command
             if (sync) { SyncEvent(value.ToString()); }
             return EnterStateCode.Success;
         }
+        #endregion
 
 
-        protected virtual void GenerateCondition()
+        #region Condition
+        /// <summary>
+        /// prepare condition based on `ex.CondPath` file
+        /// </summary>
+        protected virtual void PrepareCondition()
         {
-            condmanager.FinalizeCondition(ex.CondPath);
+            condmgr.PrepareCondition(ex.CondPath);
         }
 
-        public void PrepareCondition(bool forceprepare = false)
+        public void InitializeCondSampling(bool forceprepare = false)
         {
-            if (forceprepare || condmanager.NCond == 0)
+            if (forceprepare || condmgr.NCond == 0)
             {
-                GenerateCondition();
+                PrepareCondition();
             }
-            ex.Cond = condmanager.Cond;
-            condmanager.InitializeSampling(ex.CondSampling, ex.BlockSampling, ex.BlockFactor);
+            ex.Cond = condmgr.Cond;
+            condmgr.InitializeSampling(ex.CondSampling, ex.BlockSampling, ex.BlockFactor);
         }
 
+        /// <summary>
+        /// sample condition and block, then push all factors/value of the condition(except `pushexcludefactor`) to NetEnv scene
+        /// </summary>
+        /// <param name="manualcondindex"></param>
+        /// <param name="manualblockindex"></param>
+        /// <param name="autosampleblock">whether automatically sample block when condofblock finished repeating certain times, and push all factors/value instead of only none block factors</param>
         protected virtual void SamplePushCondition(int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
         {
-            condmanager.PushCondition(condmanager.SampleCondition(ex.CondRepeat, manualcondindex, manualblockindex, autosampleblock), envmanager, autosampleblock, pushexcludefactor);
+            condmgr.PushCondition(condmgr.SampleCondition(ex.CondRepeat, manualcondindex, manualblockindex, autosampleblock), envmgr, autosampleblock, pushexcludefactor);
         }
 
         protected virtual void SamplePushBlock(int manualblockindex = 0)
         {
-            condmanager.PushBlock(condmanager.SampleBlockSpace(manualblockindex), envmanager, pushexcludefactor);
+            condmgr.PushBlock(condmgr.SampleBlockSpace(manualblockindex), envmgr, pushexcludefactor);
         }
+        #endregion
 
 
+        #region Data
         /// <summary>
         /// user function for preparing `DataPath` for saving experiment data
         /// </summary>
@@ -326,8 +338,8 @@ namespace Experica.Command
                 else { return; }
             }
 
-            ex.CondTest = condtestmanager.CondTest;
-            ex.EnvParam = envmanager.GetActiveParams();
+            ex.CondTest = condtestmgr.CondTest;
+            ex.EnvParam = envmgr.GetParams();
             ex.Version = Experica.ExperimentVersion;
             // Hold references to data that may not need to save
             Dictionary<string, Dictionary<string, List<object>>[]> m = null;
@@ -369,8 +381,10 @@ namespace Experica.Command
                 }
             }
         }
+        #endregion
 
 
+        #region Access Experiment and NetEnv
         public T GetExParam<T>(string name) => ex.GetParam<T>(name);
 
         public object GetExParam(string name) => ex.GetParam(name);
@@ -378,29 +392,29 @@ namespace Experica.Command
         public void SetExParam(string name, object value) => ex.SetParam(name, value);
 
 
-        public T GetEnvActiveParam<T>(string name) => envmanager.GetActiveParam<T>(name);
+        public T GetEnvActiveParam<T>(string name) => envmgr.GetActiveParam<T>(name);
 
-        public T GetEnvParam<T>(string name) => envmanager.GetParam<T>(name);
+        public T GetEnvParam<T>(string name) => envmgr.GetParam<T>(name);
 
-        public object GetEnvActiveParam(string name) => envmanager.GetActiveParam(name);
+        public object GetEnvActiveParam(string name) => envmgr.GetActiveParam(name);
 
-        public object GetEnvParam(string name) => envmanager.GetParam(name);
+        public object GetEnvParam(string name) => envmgr.GetParam(name);
 
-        public T GetEnvActiveParamByGameObject<T>(string nvName, string goName) => envmanager.GetActiveParamByGameObject<T>(nvName, goName);
+        public T GetEnvActiveParamByGameObject<T>(string nvName, string goName) => envmgr.GetActiveParamByGameObject<T>(nvName, goName);
 
-        public T GetEnvParamByGameObject<T>(string nvName, string goName) => envmanager.GetParamByGameObject<T>(nvName, goName);
+        public T GetEnvParamByGameObject<T>(string nvName, string goName) => envmgr.GetParamByGameObject<T>(nvName, goName);
 
-        public object GetEnvActiveParamByGameObject(string nvName, string goName) => envmanager.GetActiveParamByGameObject(nvName, goName);
+        public object GetEnvActiveParamByGameObject(string nvName, string goName) => envmgr.GetActiveParamByGameObject(nvName, goName);
 
-        public object GetEnvParamByGameObject(string nvName, string goName) => envmanager.GetParamByGameObject(nvName, goName);
+        public object GetEnvParamByGameObject(string nvName, string goName) => envmgr.GetParamByGameObject(nvName, goName);
 
-        public void SetEnvActiveParam(string name, object value) => envmanager.SetActiveParam(name, value);
+        public void SetEnvActiveParam(string name, object value) => envmgr.SetActiveParam(name, value);
 
-        public void SetEnvParam(string name, object value) => envmanager.SetParam(name, value);
+        public void SetEnvParam(string name, object value) => envmgr.SetParam(name, value);
 
-        public void SetEnvActiveParamByGameObject(string nvName, string goName, object value) => envmanager.SetActiveParamByGameObject(nvName, goName, value);
+        public void SetEnvActiveParamByGameObject(string nvName, string goName, object value) => envmgr.SetActiveParamByGameObject(nvName, goName, value);
 
-        public void SetEnvParamByGameObject(string nvName, string goName, object value) => envmanager.SetParamByGameObject(nvName, goName, value);
+        public void SetEnvParamByGameObject(string nvName, string goName, object value) => envmgr.SetParamByGameObject(nvName, goName, value);
 
 
         public void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = true)
@@ -415,7 +429,7 @@ namespace Experica.Command
             {
                 yield return null;
             }
-            envmanager.SetActiveParam(name, value);
+            envmgr.SetActiveParam(name, value);
         }
 
         public void SetEnvActiveParamTwice(string name, object value1, float interval_ms, object value2, bool notifyui = false)
@@ -425,17 +439,10 @@ namespace Experica.Command
 
         public void SetEnvActiveParamTwice(string name1, object value1, float interval_ms, string name2, object value2, bool notifyui = true)
         {
-            envmanager.SetActiveParam(name1, value1);
+            envmgr.SetActiveParam(name1, value1);
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(interval_ms, name2, value2, notifyui));
         }
-
-
-        /// <summary>
-        /// empty user function called when Experiment ready to start(scene loaded)
-        /// </summary>
-        public virtual void OnReady()
-        {
-        }
+        #endregion
 
 
         #region Experiment Control
@@ -443,15 +450,15 @@ namespace Experica.Command
         {
             if (ispause)
             {
-                OnBeginPauseExperiment?.Invoke();
+                appmgr.OnBeginPauseExperiment();
                 PauseExperiment();
-                OnEndPauseExperiment?.Invoke();
+                appmgr.OnEndPauseExperiment();
             }
             else
             {
-                OnBeginResumeExperiment?.Invoke();
+                appmgr.OnBeginResumeExperiment();
                 ResumeExperiment();
-                OnEndResumeExpeirment?.Invoke();
+                appmgr.OnEndResumeExpeirment();
             }
         }
 
@@ -478,12 +485,12 @@ namespace Experica.Command
             if (isstart == islogicactive) { return; }
             if (isstart)
             {
-                OnBeginStartExperiment?.Invoke();
+                appmgr.OnBeginStartExperiment();
                 // clean for new experiment
                 condstate = CONDSTATE.NONE;
                 trialstate = TRIALSTATE.NONE;
                 blockstate = BLOCKSTATE.NONE;
-                condtestmanager.Clear();
+                condtestmgr.Clear();
                 /* 
                  * clear `DataPath` for new experiment, 
                  * so that new `DataPath` could be generated later, 
@@ -492,17 +499,17 @@ namespace Experica.Command
                 ex.DataPath = null;
 
                 OnStartExperiment();
-                PrepareCondition(regeneratecond);
+                InitializeCondSampling(regeneratecond);
                 StartCoroutine(ExperimentStartSequence());
             }
             else
             {
-                OnBeginStopExperiment?.Invoke();
+                appmgr.OnBeginStopExperiment();
                 OnStopExperiment();
                 islogicactive = false;
 
                 // Push any condtest left
-                condtestmanager.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
+                condtestmgr.PushCondTest(timer.ElapsedMillisecond, ex.NotifyParam, ex.NotifyPerCondTest, true, true);
                 StartCoroutine(ExperimentStopSequence());
             }
         }
@@ -553,7 +560,7 @@ namespace Experica.Command
             // wait for all timelines have been started and synced.
             yield return new WaitForSecondsRealtime(Config.NotifyLatency / 1000f);
             OnExperimentStarted();
-            OnEndStartExperiment?.Invoke();
+            appmgr.OnEndStartExperiment();
             islogicactive = true;
         }
 
@@ -600,7 +607,7 @@ namespace Experica.Command
             // wait for all timelines have been synced and stopped.
             yield return new WaitForSecondsRealtime(Config.NotifyLatency / 1000f);
             OnExperimentStopped();
-            OnEndStopExperiment?.Invoke();
+            appmgr.OnEndStopExperiment();
         }
 
         /// <summary>
@@ -623,6 +630,7 @@ namespace Experica.Command
         #endregion
 
 
+        #region Unity Event Callback
         void Awake()
         {
             OnAwake();
@@ -679,7 +687,7 @@ namespace Experica.Command
         {
         }
         /// <summary>
-        /// empty user virtual Logic for experiment control
+        /// empty user virtual Logic of experiment
         /// </summary>
         protected virtual void Logic()
         {
@@ -697,13 +705,27 @@ namespace Experica.Command
         }
 
 
-        #region IO Functions
+        /// <summary>
+        /// empty user virtual function called when "None-Empty" scene loaded and parsed, for customized env manipulation logic
+        /// </summary>
+        public virtual void OnSceneReady()
+        {
+        }
+
+        /// <summary>
+        /// empty user virtual property for toggling logic specific visual guides
+        /// </summary>
+        public virtual bool Guide { get;set; }
+        #endregion
+
+
+        #region IO Function
         /// <summary>
         /// Sync to External Device and Register Event Name/Time/Value according to EventSyncProtocol
         /// </summary>
-        /// <param name="name">Event Name, NullorEmpty will Reset Sync Channel to inactive state without event register</param>
-        /// <param name="time">Event Time, Non-NaN value will register in `Event` as well as `SyncEvent`</param>
-        /// <param name="value">Event Value, Non-Null value will register in `CONDTESTPARAM` if event name is a valid `CONDTESTPARAM`</param>
+        /// <param name="name">Event Name, NullorEmpty will Reset Sync Channel to inactive state without register</param>
+        /// <param name="time">Event Time, Non-NaN value will register in `Event`</param>
+        /// <param name="value">Event Value, Non-Null value will register for event name</param>
         protected virtual void SyncEvent(string name = null, double time = double.NaN, object value = null)
         {
             var esp = ex.EventSyncProtocol;
@@ -715,6 +737,7 @@ namespace Experica.Command
             bool addtosynclist = false;
             bool syncreset = string.IsNullOrEmpty(name);
 
+            // binary flip signal in one channel
             if (esp.NChannel == 1 && esp.NEdgePEvent == 1)
             {
                 addtosynclist = !syncreset;
@@ -737,19 +760,12 @@ namespace Experica.Command
             {
                 if (!double.IsNaN(time))
                 {
-                    condtestmanager.AddInList(CONDTESTPARAM.Event, name, time);
+                    condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), name, time);
                 }
-                condtestmanager.AddInList(CONDTESTPARAM.SyncEvent, name);
+                condtestmgr.AddInList(nameof(CONDTESTPARAM.SyncEvent), name);
                 if (value != null)
                 {
-                    if (Enum.TryParse(name, out CONDTESTPARAM ctp))
-                    {
-                        condtestmanager.AddInList(ctp, value);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Skip Adding Event Value: {value}, because \"{name}\" is not a valid CONDTESTPARAM.");
-                    }
+                    condtestmgr.AddInList(name, value);
                 }
             }
         }
