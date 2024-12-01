@@ -45,7 +45,7 @@ namespace Experica.Command
                 var el = uicontroller.exmgr.el;
                 if (el != null)
                 {
-                    el.InitializeCondSampling(el.regeneratecond);
+                    el.InitializeCondSampling(el.forcepreparecond);
                 }
             }
             else
@@ -59,7 +59,7 @@ namespace Experica.Command
             var el = uicontroller.exmgr.el;
             if (el != null)
             {
-                el.regeneratecond = isforceprepare;
+                el.forcepreparecond = isforceprepare;
             }
         }
 

@@ -69,7 +69,7 @@ namespace Experica
         public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
         {
             // here use the runtime type of value
-            emitter.Emit(new Scalar(value.Convert<string>()));
+            emitter.Emit(new Scalar(value == null ? "" : value.Convert<string>()));
         }
     }
 

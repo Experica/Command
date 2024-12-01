@@ -90,7 +90,7 @@ namespace Experica.Command
         public double TimerDriftSpeed { get; set; } = 6e-5;
         public EventSyncProtocol EventSyncProtocol { get; set; } = new();
         public string Display_ID { get; set; } = "";
-        public CONDTESTSHOWLEVEL CondTestShowLevel { get; set; } = CONDTESTSHOWLEVEL.FULL;
+        public CONDTESTSHOW CondTestShow { get; set; } = CONDTESTSHOW.ALL;
         public bool NotifyExperimenter { get; set; } = false;
         public uint Version { get; set; } = Experica.ExperimentVersion;
 
@@ -99,6 +99,8 @@ namespace Experica.Command
         [IgnoreMember]
         public Dictionary<string, IList> CondTest { get; set; }
 
+
+        public bool HasCondTestState() => CondTestAtState != CONDTESTATSTATE.NONE;
 
         /// <summary>
         /// Prepare data path if `DataPath` is valid, otherwise create a new unique data path based on experiment parameters.
@@ -181,7 +183,7 @@ namespace Experica.Command
         public Experiment PrepareDefinition(CommandConfig cfg)
         {
             Cond = null;
-            CondTest= null;
+            CondTest = null;
             if (string.IsNullOrEmpty(Name))
             {
                 Name = ID;
@@ -276,6 +278,15 @@ namespace Experica.Command
         IBI
     }
 
+    public enum TASKRESULT
+    {
+        NONE = 301,
+        TIMEOUT,
+        EARLY,
+        HIT,
+        MISS
+    }
+
     //public enum TASKSTATE
     //{
     //    NONE = 301,
@@ -314,11 +325,13 @@ namespace Experica.Command
         ExFinish
     }
 
-    public enum CONDTESTSHOWLEVEL
+    public enum CONDTESTSHOW
     {
         NONE,
-        SHORT,
-        FULL
+        ONE_SHORT,
+        ONE,
+        ALL_SHORT,
+        ALL
     }
 
     public enum EXPERIMENTSTATUS

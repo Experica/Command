@@ -58,6 +58,7 @@ namespace Experica.NetEnv
             Size.OnValueChanged -= OnSize;
         }
 
+
         protected override void OnVisible(bool p, bool c)
         {
             linerenderer.enabled = c;
@@ -76,7 +77,7 @@ namespace Experica.NetEnv
 
         protected virtual void OnSize(Vector3 p, Vector3 c)
         {
-            linerenderer.transform.localScale = new(c.x, c.y, 1);
+            transform.localScale = c;
         }
 
     }

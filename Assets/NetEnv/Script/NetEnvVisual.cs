@@ -25,6 +25,9 @@ using Unity.Netcode;
 
 namespace Experica.NetEnv
 {
+    /// <summary>
+    /// Minimal base class for NetEnv Visual Object with only two NetworkVariable: Position and Visible
+    /// </summary>
     public class NetEnvVisual : NetworkBehaviour
     {
         public NetworkVariable<Vector3> Position = new(Vector3.zero);
@@ -65,11 +68,21 @@ namespace Experica.NetEnv
             Position.OnValueChanged -= OnPosition;
         }
 
+        /// <summary>
+        /// change visibility of the renderer
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="c"></param>
         protected virtual void OnVisible(bool p, bool c)
         {
             renderer.enabled = c;
         }
 
+        /// <summary>
+        /// change local position
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="c"></param>
         protected virtual void OnPosition(Vector3 p, Vector3 c)
         {
             transform.localPosition = c;

@@ -39,11 +39,11 @@ namespace Experica.Command
     {
         public AppManager appmgr;
         public UIDocument uidoc;
-        public VisualTreeAsset ToggleString, ToggleEnum, ToggleBool, ToggleInteger, ToggleUInteger, ToggleFloat, ToggleDouble, ToggleVector2,ToggleVector3, ToggleVector4,
+        public VisualTreeAsset ToggleString, ToggleEnum, ToggleBool, ToggleInteger, ToggleUInteger, ToggleFloat, ToggleDouble, ToggleVector2, ToggleVector3, ToggleVector4,
             ParamString, ParamEnum, ParamBool, ParamInteger, ParamUInteger, ParamFloat, ParamDouble, ParamVector2, ParamVector3, ParamVector4,
-            ExtendButton, viewport, ParamsFoldout,AboutWindow,ConfigWindow,AddExParamWindow,NewExWindow;
+            ExtendButton, viewport, ParamsFoldout, AboutWindow, ConfigWindow, AddExParamWindow, NewExWindow;
 
-        VisualElement root,mainmenu,maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
+        VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
         public Toggle server, host, start, pause, startsession;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
@@ -56,7 +56,7 @@ namespace Experica.Command
             mainmenu = root.Q("MainMenu");
             maincontent = root.Q("MainContent");
             // Main Menu
-             mainmenu.Q<Button>("About").RegisterCallback<ClickEvent>(e => OnAboutWindow(root)  );
+            mainmenu.Q<Button>("About").RegisterCallback<ClickEvent>(e => OnAboutWindow(root));
             mainmenu.Q<Button>("Config").RegisterCallback<ClickEvent>(e => OnConfigWindow(root));
             // Control Panel
             controlpanel = root.Q("ControlPanel");
@@ -124,7 +124,7 @@ namespace Experica.Command
             var w = ConfigWindow.Instantiate()[0];
             w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
             var cfgcontent = w.Q<ScrollView>("Content");
-            UpdateConfig(appmgr.cfgmgr.config,cfgcontent);
+            UpdateConfig(appmgr.cfgmgr.config, cfgcontent);
 
             w.style.position = Position.Absolute;
             w.style.top = Length.Percent(20);
@@ -143,7 +143,7 @@ namespace Experica.Command
             var copylist = w.Q<DropdownField>("Copy");
             var exlist = appmgr.exmgr.deffile.Keys.ToList();
             exlist.Insert(0, ""); // add "empty" option for no copy
-            UpdateDropdown(copylist,exlist);
+            UpdateDropdown(copylist, exlist);
             var errorout = w.Q<Label>("ErrOut");
             w.Q<Button>("Confirm").RegisterCallback<ClickEvent>(e =>
             {
@@ -160,7 +160,7 @@ namespace Experica.Command
                 }
                 parent.Remove(w);
 
-                if(appmgr.exmgr.NewEx(name, copylist.value))
+                if (appmgr.exmgr.NewEx(name, copylist.value))
                 {
                     UpdateExperimentList(appmgr.exmgr.deffile.Keys.ToList(), appmgr.cfgmgr.config.FirstTestID);
                     experimentlist.value = name;
@@ -175,9 +175,9 @@ namespace Experica.Command
             parent.Add(w);
         }
 
-        public void UpdateExperimentList(List<string> list, string first = null) => UpdateDropdown(experimentlist, list,first);
+        public void UpdateExperimentList(List<string> list, string first = null) => UpdateDropdown(experimentlist, list, first);
 
-        public void UpdateExperimentSessionList(List<string> list)=> UpdateDropdown(experimentsessionlist,list);
+        public void UpdateExperimentSessionList(List<string> list) => UpdateDropdown(experimentsessionlist, list);
 
         void UpdateDropdown(DropdownField which, List<string> list, string first = null)
         {
@@ -196,7 +196,7 @@ namespace Experica.Command
             }
         }
 
-        public void UpdateConfig(CommandConfig config,ScrollView content)
+        public void UpdateConfig(CommandConfig config, ScrollView content)
         {
             content.Clear();
             var previousui = content.Children().ToList();
@@ -285,17 +285,17 @@ namespace Experica.Command
 
             foreach (var p in ex.extendproperties.Keys.Except(appmgr.cfgmgr.config.ExHideParams).ToArray())
             {
-                AddParamUI(p, p, ex.extendproperties[p], ex.InheritParam.Contains(p), appmgr.ToggleExInherit, excontent,appmgr.exmgr.el.ex, true);
+                AddParamUI(p, p, ex.extendproperties[p], ex.InheritParam.Contains(p), appmgr.ToggleExInherit, excontent, appmgr.exmgr.el.ex, true);
             }
             excontent.scrollOffset = excontent.contentRect.size;
         }
 
         void AddParamUI<T>(string id, string name, IDataSource<T> source, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, DataClass datasourceclass = null, bool isextendparam = false)
         {
-            AddParamUI(id, name, source.Type, source.Value, isinherit, inherithandler, parent,datasourceclass, source, "Value", isextendparam);
+            AddParamUI(id, name, source.Type, source.Value, isinherit, inherithandler, parent, datasourceclass, source, "Value", isextendparam);
         }
 
-        void AddParamUI(string id, string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, DataClass datasourceclass =null, object datasource = null, string datapath = "Value", bool isextendparam = false)
+        void AddParamUI(string id, string name, Type T, object value, bool isinherit, Action<string, bool> inherithandler, VisualElement parent, DataClass datasourceclass = null, object datasource = null, string datapath = "Value", bool isextendparam = false)
         {
             VisualElement ui, valueinput;
 
@@ -444,11 +444,11 @@ namespace Experica.Command
                 else if (T.IsGenericType && (T.GetGenericTypeDefinition() == typeof(List<>) || T.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
                 {
                     binding.sourceToUiConverters.AddConverter((ref object s) => s.Convert<string>(T));
-                    binding.uiToSourceConverters.AddConverter((ref string v) => v.Convert(typeof(string),T));
+                    binding.uiToSourceConverters.AddConverter((ref string v) => v.Convert(typeof(string), T));
                 }
                 valueinput.SetBinding("value", binding);
             }
-            if (isextendparam && datasourceclass !=null)
+            if (isextendparam && datasourceclass != null)
             {
                 var deletebutton = ExtendButton.Instantiate().Q<Button>("Delete");
                 deletebutton.RegisterCallback<ClickEvent>(e =>
@@ -467,15 +467,15 @@ namespace Experica.Command
             w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
 
             var namefield = w.Q<TextField>("Name");
-            var valuefield = w.Q<TextField> ("Value");
+            var valuefield = w.Q<TextField>("Value");
             var errorout = w.Q<Label>("ErrOut");
-            w.Q<Button>("Confirm").RegisterCallback<ClickEvent>(e=>
+            w.Q<Button>("Confirm").RegisterCallback<ClickEvent>(e =>
             {
                 var name = namefield.value;
-                if (string.IsNullOrEmpty( name)) 
+                if (string.IsNullOrEmpty(name))
                 {
                     errorout.text = "Name Empty";
-                    return; 
+                    return;
                 }
                 else if (appmgr.exmgr.el.ex.ContainsParam(name))
                 {
@@ -507,12 +507,12 @@ namespace Experica.Command
 
             for (int i = 0; i < ids.Length; i++)
             {
-                AddParamUI(ids[i], names[i], sources[i], inherits[i], inherithandler, foldout,datasourceclass, isextendparam);
+                AddParamUI(ids[i], names[i], sources[i], inherits[i], inherithandler, foldout, datasourceclass, isextendparam);
             }
             parent.Add(foldout);
         }
 
-        public void ClearEnv()=>envcontent.Clear();
+        public void ClearEnv() => envcontent.Clear();
 
         public void UpdateEnv()
         {
@@ -541,7 +541,7 @@ namespace Experica.Command
             }
         }
 
-        public void ClearView()=>viewcontent.Clear();
+        public void ClearView() => viewcontent.Clear();
 
         public void UpdateView()
         {

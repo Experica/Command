@@ -42,6 +42,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+
 #if COMMAND
 using System.Windows.Forms;
 using MethodInvoker = Fasterflect.MethodInvoker;
@@ -239,10 +240,15 @@ namespace Experica
         public void SetValueWithoutNotify(T value);
     }
 
+    public interface IDataClass
+    {
+        public bool SetParam(string name, object value);
+    }
+
     /// <summary>
     /// For it's derived class, provide reflected property access and UI datasource wrapper
     /// </summary>
-    public abstract class DataClass
+    public abstract class DataClass : IDataClass
     {
         public Dictionary<string, object> ExtendParam { get; set; } = new();
 
@@ -448,6 +454,13 @@ namespace Experica
 
     }
 
+    public enum CondPushTarget
+    {
+        NetEnvManager,
+        Experiment,
+        All
+    }
+
 
     public class MethodAccess
     {
@@ -487,11 +500,12 @@ namespace Experica
         BlockRepeat,
         Event,
         SyncEvent,
-        CONDSTATE,
-        TRIALSTATE,
-        BLOCKSTATE,
-        TASKSTATE,
-        CYCLE
+        Cond,
+        Trial,
+        Block,
+        Task,
+        TaskResult,
+        Cycle
     }
 
     public enum DataFormat
@@ -500,10 +514,10 @@ namespace Experica
         EX
     }
 
-    public interface INetEnv
+    public interface INetEnv : IDataClass
     {
         public Scene Scene { get; }
-        public void SetParam(string nvORfullName, object value, bool active = false);
+        public bool SetParam(string nvORfullName, object value, bool active);
     }
 
     public enum FactorDesignMethod
@@ -733,9 +747,10 @@ namespace Experica
 
         public static LineRenderer AddLine(this Vector3[] positions, string name = null, Transform parent = null, bool loop = false)
         {
-            if (!"Assets/NetEnv/Object/Line.prefab".QueryPrefab(out GameObject lineprefab)) { return null; }
+            var addressprefab = "Assets/NetEnv/Object/Line.prefab";
+            if (!addressprefab.QueryPrefab(out GameObject lineprefab)) { Debug.LogError($"Can not find Line Prefab at address: {addressprefab}."); return null; }
             var go = parent == null ? GameObject.Instantiate(lineprefab) : GameObject.Instantiate(lineprefab, parent);
-            if (!string.IsNullOrEmpty(name)) { go.name = name; }
+            go.name = string.IsNullOrEmpty(name) ? "Line" : name;
             var lr = go.GetComponent<LineRenderer>();
             lr.positionCount = positions.Length;
             lr.loop = loop;
@@ -796,6 +811,7 @@ namespace Experica
 
         public static T Convert<T>(this object value)
         {
+            if (value == null) { return default; }
             return (T)Convert(value, value.GetType(), typeof(T));
         }
 

@@ -15,15 +15,15 @@ EnvPath: Fixation
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
-  FixDotPosition@FixDot@FixDot: -5 5 0
-  FixDotDiameter@FixDot@FixDot: 5
-  FixDotVisible@FixDot@FixDot: false
+  FixDotPosition@FixDot@FixDot: 0 0 0
+  FixDotDiameter@FixDot@FixDot: 10
+  FixDotVisible@FixDot@FixDot: true
 CondPath: ''
 Cond: 
 LogicPath: Fixation
@@ -42,14 +42,14 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 486
+PreITI: 620
 TrialDur: 0
-SufITI: 656
+SufITI: 1789
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: NONE
-CondTestAtState: NONE
+CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
   - CondIndex
@@ -83,18 +83,18 @@ EventSyncProtocol:
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: NONE
+CondTestShow: ALL
 NotifyExperimenter: true
 Version: 3
 Config: 
 CondTest: 
 ExtendParam:
-  MinPreITIDur: 250
-  MaxPreITIDur: 500
+  MinPreITIDur: 500
+  MaxPreITIDur: 800
   MinSufITIDur: 500
-  MaxSufITIDur: 1000
+  MaxSufITIDur: 2000
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
-  FixRadius: 5
+  FixRadius: 2
   DotScaleOnFix: 0.8

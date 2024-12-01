@@ -15,7 +15,7 @@ EnvPath: Dots
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.739665
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
@@ -23,12 +23,12 @@ EnvParam:
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
-  Dir@Dots@Dots: 0
+  Dir@Dots@Dots: 45
   DirOffset@Dots@Dots: 0
   Speed@Dots@Dots: 1
   Size@Dots@Dots: 10 10 10
   Diameter@Dots@Dots: 10
-  NDots@Dots@Dots: 30
+  NDots@Dots@Dots: 40
   DotColor@Dots@Dots: 1 1 1 1
   DotSize@Dots@Dots: 1 1
   Coherence@Dots@Dots: 0

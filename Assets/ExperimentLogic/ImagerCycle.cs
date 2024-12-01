@@ -120,7 +120,7 @@ public class ImagerCycle : ImagerEpoch
                     if (sc > nsc)
                     {
                         nsc = sc;
-                        SyncEvent(CONDTESTPARAM.CYCLE.ToString(), timer.ElapsedMillisecond, cycle * cycledir);
+                        SyncEvent(CONDTESTPARAM.Cycle.ToString(), timer.ElapsedMillisecond, cycle * cycledir);
                     }
                     switch (param)
                     {

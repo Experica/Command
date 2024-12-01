@@ -68,13 +68,14 @@ namespace Experica.Command
         public ConditionTestManager condtestmgr = new();
         public IRecorder recorder;
         public System.Random RNG = new MersenneTwister();
-        public bool regeneratecond = true;
+        public bool forcepreparecond = true;
+        public CondPushTarget condpushtarget = CondPushTarget.NetEnvManager;
         public List<string> pushexcludefactor;
 
         protected IGPIO gpio;
         protected bool syncstate;
 
-        public Action 
+        public Action
             /* called anywhere in update will guarantee:
             1. all updates will be received and processed in a whole in all Environment connected to Command,
                so that rendered frame is the same as the Command.
@@ -107,7 +108,7 @@ namespace Experica.Command
             if (value == condstate) { return EnterStateCode.AlreadyIn; }
             switch (value)
             {
-                case CONDSTATE.PREICI: 
+                case CONDSTATE.PREICI:
                     PreICIOnTime = timer.ElapsedMillisecond;
                     if (ex.CondTestAtState == CONDTESTATSTATE.PREICI) // usually the start state of a condition test
                     {
@@ -298,19 +299,65 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// sample condition and block, then push all factors/value of the condition(except `pushexcludefactor`) to NetEnv scene
+        /// sample condition and block, then push all factors/value of the condition(except `pushexcludefactor`) to pushtargets
         /// </summary>
         /// <param name="manualcondindex"></param>
         /// <param name="manualblockindex"></param>
         /// <param name="autosampleblock">whether automatically sample block when condofblock finished repeating certain times, and push all factors/value instead of only none block factors</param>
-        protected virtual void SamplePushCondition(int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
+        protected virtual void SamplePushCondition(int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
         {
-            condmgr.PushCondition(condmgr.SampleCondition(ex.CondRepeat, manualcondindex, manualblockindex, autosampleblock), envmgr, autosampleblock, pushexcludefactor);
+            var ci = condmgr.SampleCondition(ex.CondRepeat, manualcondindex, manualblockindex, autosampleblock);
+            PushCondition(ci, pushtarget, autosampleblock, pushexcludefactor);
         }
 
-        protected virtual void SamplePushBlock(int manualblockindex = 0)
+        protected virtual void SamplePushBlock(int manualblockindex = 0, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
         {
-            condmgr.PushBlock(condmgr.SampleBlockSpace(manualblockindex), envmgr, pushexcludefactor);
+            var bi = condmgr.SampleBlockSpace(manualblockindex);
+            PushBlock(bi, pushtarget, pushexcludefactor);
+        }
+
+        public void PushCondition(int ci, CondPushTarget pushtarget, bool includeblockfactor = false, List<string> excludefactor = null)
+        {
+            switch (pushtarget)
+            {
+                case CondPushTarget.NetEnvManager:
+                    condmgr.PushCondition(ci, envmgr, includeblockfactor, pushexcludefactor);
+                    break;
+                case CondPushTarget.Experiment:
+                    condmgr.PushCondition(ci, ex, includeblockfactor, pushexcludefactor);
+                    break;
+                case CondPushTarget.All:
+                    var factors = condmgr.ConditionPushFactor(ci, includeblockfactor, pushexcludefactor);
+                    if (factors == null) { break; }
+                    foreach (var f in factors)
+                    {
+                        var v = condmgr.Cond[f][ci];
+                        if (!envmgr.SetParam(f, v)) { ex.SetParam(f, v); }
+                    }
+                    break;
+            }
+        }
+
+        public void PushBlock(int bi, CondPushTarget pushtarget, List<string> excludefactor = null)
+        {
+            switch (pushtarget)
+            {
+                case CondPushTarget.NetEnvManager:
+                    condmgr.PushBlock(bi, envmgr, pushexcludefactor);
+                    break;
+                case CondPushTarget.Experiment:
+                    condmgr.PushBlock(bi, ex, pushexcludefactor);
+                    break;
+                case CondPushTarget.All:
+                    var factors = condmgr.BlockPushFactor(bi, pushexcludefactor);
+                    if (factors == null) { break; }
+                    foreach (var f in factors)
+                    {
+                        var v = condmgr.BlockCond[f][bi];
+                        if (!envmgr.SetParam(f, v)) { ex.SetParam(f, v); }
+                    }
+                    break;
+            }
         }
         #endregion
 
@@ -499,7 +546,7 @@ namespace Experica.Command
                 ex.DataPath = null;
 
                 OnStartExperiment();
-                InitializeCondSampling(regeneratecond);
+                InitializeCondSampling(forcepreparecond);
                 StartCoroutine(ExperimentStartSequence());
             }
             else
@@ -715,7 +762,7 @@ namespace Experica.Command
         /// <summary>
         /// empty user virtual property for toggling logic specific visual guides
         /// </summary>
-        public virtual bool Guide { get;set; }
+        public virtual bool Guide { get; set; }
         #endregion
 
 

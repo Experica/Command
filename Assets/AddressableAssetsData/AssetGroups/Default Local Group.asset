@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 9f155923ab94006409ebed9f678ec299
   m_SerializeEntries:
+  - m_GUID: 2039f8cca9ad8724e93f873792168571
+    m_Address: Assets/NetEnv/Object/DotTrail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b0f0d7e1bcb172479ce92bf415dc52c
+    m_Address: Assets/NetEnv/Object/Trail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b8284182a152164794002e8366a69e8
     m_Address: Assets/NetEnv/Object/ScaleGrid.prefab
     m_ReadOnly: 0
@@ -25,23 +35,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cf14af72466168846ae446afcb045e29
-    m_Address: Assets/NetEnv/Object/Line.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2b0f0d7e1bcb172479ce92bf415dc52c
-    m_Address: Assets/NetEnv/Object/Trail.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2039f8cca9ad8724e93f873792168571
-    m_Address: Assets/NetEnv/Object/DotTrail.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6631f1eb7cf2f7418c514a46863e059
     m_Address: Assets/NetEnv/Object/Cross.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf14af72466168846ae446afcb045e29
+    m_Address: Assets/NetEnv/Object/Line.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -54,5 +54,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: bd6162bd321dcfb4d822e2ca9e3ca51f, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: c5a4911fd4172ea49ac2977dff3789e4, type: 2}
     - {fileID: 11400000, guid: 4162bfa83bb4c7741974446e5d9579d4, type: 2}
+    - {fileID: 11400000, guid: c5a4911fd4172ea49ac2977dff3789e4, type: 2}

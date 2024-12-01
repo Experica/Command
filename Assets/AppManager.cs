@@ -45,8 +45,6 @@ namespace Experica.Command
     public class AppManager : MonoBehaviour
     {
         public CommandConfigManager cfgmgr = CommandConfigManager.Load();
-
-        //public VisualElement ui;
         public UI ui;
 
         public Toggle host, server, start, startsession, pause;
@@ -55,7 +53,6 @@ namespace Experica.Command
         public Text startstoptext, startstopsessiontext, pauseresumetext;
         public Volume postprocessing;
 
-        // The managers for the panels on the Scene
         public NetworkController networkcontroller;
         // public SyncFrameManager syncmanager;
         public ExperimentManager exmgr;
@@ -102,23 +99,6 @@ namespace Experica.Command
             cfgmgr.Save();
             return true;
         }
-
-        //void OnApplicationQuit()
-        //{
-        //    exsmgr.esl?.StartStopExperimentSession(false);
-        //    exmgr.el?.StartStopExperiment(false);
-        //    if (cfgmgr.config.IsSaveExOnQuit)
-        //    {
-        //        exmgr.SaveEx();
-        //    }
-        //    if (cfgmgr.config.IsSaveExSessionOnQuit)
-        //    {
-        //        exsmgr.SaveExSession();
-        //    }
-        //    //networkcontroller.Shutdown(false);
-        //    exmgr.Clear();
-        //    cfgmgr.Save();
-        //}
 
         #region Command Action Callback
         public void OnToggleFullViewportAction(InputAction.CallbackContext context)

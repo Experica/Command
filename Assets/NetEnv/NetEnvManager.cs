@@ -258,31 +258,36 @@ namespace Experica.NetEnv
             }
         }
 
-        public void SetActiveParam(string nvORfullName, object value) => SetParam(nvORfullName, value, true);
+        public bool SetActiveParam(string nvORfullName, object value) => SetParam(nvORfullName, value, true);
 
-        public void SetParam(string nvORfullName, object value, bool active = false)
+        public bool SetParam(string name, object value) => SetParam(name, value, false);
+
+        public bool SetParam(string nvORfullName, object value, bool active)
         {
             var ps = GetParamSource(nvORfullName, active);
-            if (ps == null) { return; }
+            if (ps == null) { return false; }
             ps.Value = value.Convert(ps.Type);
+            return true;
         }
 
-        public void SetActiveParamByGameObject(string nvName, string goName, object value) => SetParamByGameObject(nvName, goName, value, true);
+        public bool SetActiveParamByGameObject(string nvName, string goName, object value) => SetParamByGameObject(nvName, goName, value, true);
 
-        public void SetParamByGameObject(string nvName, string goName, object value, bool active = false)
+        public bool SetParamByGameObject(string nvName, string goName, object value, bool active = false)
         {
             var ps = GetParamSourceByGameObject(nvName, goName, active);
-            if (ps == null) { return; }
+            if (ps == null) { return false; }
             ps.Value = value.Convert(ps.Type);
+            return true;
         }
 
-        public void SetActiveParamByFullName(string nvName, string nbName, string goName, object value) => SetParamByFullName(nvName, nbName, goName, value, true);
+        public bool SetActiveParamByFullName(string nvName, string nbName, string goName, object value) => SetParamByFullName(nvName, nbName, goName, value, true);
 
-        public void SetParamByFullName(string nvName, string nbName, string goName, object value, bool active = false)
+        public bool SetParamByFullName(string nvName, string nbName, string goName, object value, bool active = false)
         {
             var ps = GetParamSourceByFullName(nvName, nbName, goName, active);
-            if (ps == null) { return; }
+            if (ps == null) { return false; }
             ps.Value = value.Convert(ps.Type);
+            return true;
         }
 
 
@@ -742,6 +747,7 @@ namespace Experica.NetEnv
             if (parent != null) { no.TrySetParent(parent); }
             return go.GetComponent<T>();
         }
+
     }
 }
 

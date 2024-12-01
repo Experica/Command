@@ -313,39 +313,50 @@ namespace Experica
         }
 
         /// <summary>
-        /// Push the factors/value of a condition to NetEnv scene
+        /// Push the factors/value of a condition to IDataClass
         /// </summary>
         /// <param name="condindex"></param>
-        /// <param name="envmanager"></param>
+        /// <param name="idataclass"></param>
         /// <param name="includeblockfactor"></param>
         /// <param name="excludefactor"></param>
-        public void PushCondition(int condindex, INetEnv envmanager, bool includeblockfactor = false, List<string> excludefactor = null)
+        public void PushCondition(int condindex, IDataClass idataclass, bool includeblockfactor = false, List<string> excludefactor = null)
         {
-            if (condindex < 0 || NCond == 0) { return; }
-            var condfactors = includeblockfactor ? Cond.Keys.ToList() : NonBlockFactor;
-            var factors = excludefactor == null ? condfactors : condfactors.Except(excludefactor);
+            var factors = ConditionPushFactor(condindex, includeblockfactor, excludefactor);
+            if (factors == null) { return; }
             foreach (var f in factors)
             {
-                envmanager.SetParam(f, Cond[f][condindex]);
+                idataclass.SetParam(f, Cond[f][condindex]);
             }
+        }
+
+        public IEnumerable<string> ConditionPushFactor(int condindex, bool includeblockfactor = false, List<string> excludefactor = null)
+        {
+            if (condindex < 0 || NCond == 0) { return null; }
+            var condfactors = includeblockfactor ? Cond.Keys.ToList() : NonBlockFactor;
+            return excludefactor == null ? condfactors : condfactors.Except(excludefactor);
         }
 
         /// <summary>
-        /// Push the factors/value of a block to NetEnv scene
+        /// Push the factors/value of a block to IDataClass
         /// </summary>
         /// <param name="blockindex"></param>
-        /// <param name="envmanager"></param>
+        /// <param name="idataclass"></param>
         /// <param name="excludefactor"></param>
-        public void PushBlock(int blockindex, INetEnv envmanager, List<string> excludefactor = null)
+        public void PushBlock(int blockindex, IDataClass idataclass, List<string> excludefactor = null)
         {
-            if (blockindex < 0 || NBlockCond == 0) { return; }
-            var factors = excludefactor == null ? BlockFactor : BlockFactor.Except(excludefactor);
+            var factors = BlockPushFactor(blockindex, excludefactor);
+            if (factors == null) { return; }
             foreach (var f in factors)
             {
-                envmanager.SetParam(f, BlockCond[f][blockindex]);
+                idataclass.SetParam(f, BlockCond[f][blockindex]);
             }
         }
 
+        public IEnumerable<string> BlockPushFactor(int blockindex, List<string> excludefactor = null)
+        {
+            if (blockindex < 0 || NBlockCond == 0) { return null; }
+            return excludefactor == null ? BlockFactor : BlockFactor.Except(excludefactor);
+        }
 
         /// <summary>
         /// whether a condition have been sampled on total certain times

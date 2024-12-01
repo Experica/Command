@@ -173,7 +173,7 @@ namespace Experica.Command
             condmgr.PrepareCondition(fcond);
         }
 
-        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
+        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
         {
             // Laser manual sampling and pushing defered into logic BlockState, while Laser on/off into logic TrialState,
             // so that Laser been pushed only once at the beginning of each Block and turned on in each Trial.

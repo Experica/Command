@@ -33,7 +33,7 @@ using Experica.NetEnv;
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {
-    protected Dictionary<string, InputAction> useractions=new();
+    protected Dictionary<string, InputAction> useractions = new();
     protected ScaleGrid scalegrid;
 
     protected override void Enable()
@@ -152,10 +152,10 @@ public class ConditionTestLogic : ExperimentLogic
         scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(), parse: false);
     }
 
-    public override bool Guide 
-    { 
-        get => scalegrid?.Visible.Value??false; 
-        set => SetEnvParamByGameObject("Visible", "ScaleGrid", value);
+    public override bool Guide
+    {
+        get => scalegrid?.Visible.Value ?? false;
+        set { if (scalegrid != null) { scalegrid.Visible.Value = value; } }
     }
 
     protected override void OnStartExperiment()

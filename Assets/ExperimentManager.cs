@@ -233,7 +233,7 @@ namespace Experica.Command
             if (i < 0) { return false; }
 
             var el = elhistory[i];
-            if(!el.envmgr.Empty)
+            if (!el.envmgr.Empty)
             {
                 el.ex.EnvParam = el.envmgr.GetParams();
             }

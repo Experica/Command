@@ -13,11 +13,11 @@ Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 0
-  ScreenHeight@OrthoCamera@OrthoCamera: 0
-  ScreenAspect@OrthoCamera@OrthoCamera: 0
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
   BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 0
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
@@ -61,22 +61,21 @@ PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam: []
 EnvInheritParam:
-- Position@Quad@Quad
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- CLUT@OrthoCamera@OrthoCamera
-ExtendParam: {}
+  - Position@Quad@Quad
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
   Routes:
-  - DigitalOut
-  - Display
+    - DigitalOut
+    - Display
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: Trinitron
@@ -85,3 +84,4 @@ NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

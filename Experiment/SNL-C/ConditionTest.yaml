@@ -15,7 +15,7 @@ EnvPath: Grating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
@@ -23,7 +23,7 @@ EnvParam:
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 30
+  Ori@Grating@Grating: 45
   OriOffset@Grating@Grating: 0
   Size@Grating@Grating: 10 10 10
   Diameter@Grating@Grating: 10
@@ -93,7 +93,7 @@ EventSyncProtocol:
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: NONE
+CondTestShow: ALL
 NotifyExperimenter: false
 Version: 3
 Config: 

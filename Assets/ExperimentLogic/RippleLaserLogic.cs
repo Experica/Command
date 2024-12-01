@@ -146,7 +146,7 @@ namespace Experica.Command
             laser2signalch = null;
         }
 
-        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
+        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true,CondPushTarget pushtarget= CondPushTarget.NetEnvManager)
         {
             base.SamplePushCondition(manualcondidx, manualblockidx, istrysampleblock);
             // Push laser conditions
