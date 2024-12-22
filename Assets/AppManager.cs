@@ -39,6 +39,7 @@ using MessagePack;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Experica.NetEnv;
+using System.Threading.Tasks;
 
 namespace Experica.Command
 {
@@ -58,7 +59,6 @@ namespace Experica.Command
         public ExperimentManager exmgr;
         public ExperimentSessionManager exsmgr;
         // public AnalysisManager alsmanager;
-        // public ControlManager ctrlmanager;
 
         public ExperimentPanel expanel;
         public EnvironmentPanel envpanel;
@@ -67,12 +67,17 @@ namespace Experica.Command
         public ConditionPanel condpanel;
         public ConditionTestPanel ctpanel;
 
+        public AgentStub agentstub;
+        public TaskScheduler unitymainthreadscheduler;
 
         int lastwindowwidth = 1024, lastwindowheight = 768;
 
         void Awake()
         {
             Application.wantsToQuit += Application_wantsToQuit;
+            unitymainthreadscheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            agentstub = new(this);
+            agentstub.StartStopAgentStub(true);
         }
 
         void Start()
@@ -97,6 +102,7 @@ namespace Experica.Command
             }
             exmgr.Clear();
             cfgmgr.Save();
+            agentstub.StartStopAgentStub(false);
             return true;
         }
 

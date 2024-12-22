@@ -548,6 +548,7 @@ namespace Experica
         public const uint CommandConfigVersion = 0;
         public const string EmptyScene = "Empty";
         public const string CommandConfigManagerPath = "CommandConfigManager.yaml";
+        public static string ProjectRootDir = Path.GetDirectoryName(UnityEngine. Application.dataPath);
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
 
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new();
@@ -1149,16 +1150,25 @@ namespace Experica
             }
         }
 
+        /// <summary>
+        /// Check if a path is a file/dir/not exist.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>true: file, false: dir, null: not exist</returns>
+        public static bool? IsFileOrDir(this string path)
+        {
+            try { return (File.GetAttributes(path) & FileAttributes.Directory) == 0; }
+            catch { return null; }
+        }
+
         public static void CopyDirectory(this string sourceDirectory, string targetDirectory, string excludeExt = ". ")
         {
-            DirectoryInfo dirSource = new DirectoryInfo(sourceDirectory);
-            DirectoryInfo dirTarget = new DirectoryInfo(targetDirectory);
-
-            CopyDirectory(dirSource, dirTarget, excludeExt);
+            CopyDirectory(new DirectoryInfo(sourceDirectory), new DirectoryInfo(targetDirectory), excludeExt);
         }
 
         public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target, string excludeExt = ". ")
         {
+            if (source.FullName == target.FullName || !source.Exists) { return; }
             Directory.CreateDirectory(target.FullName);
 
             foreach (FileInfo fi in source.GetFiles().Where(i => !i.Extension.StartsWith(excludeExt)))

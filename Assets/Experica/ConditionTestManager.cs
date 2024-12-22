@@ -34,7 +34,7 @@ namespace Experica
     {
         public Dictionary<string, IList> CondTest { get; } = new();
         public int CondTestIndex { get; private set; } = -1;
-        public Action OnNotifyUI, OnClear;
+        public Action OnNewCondTest, OnCondTestClear;
 
         public Func<CONDTESTPARAM, List<object>, bool> OnNotifyCondTest;
         public Func<double, bool> OnNotifyCondTestEnd;
@@ -47,10 +47,14 @@ namespace Experica
             CondTest.Clear();
             CondTestIndex = -1;
             notifiedidx = -1;
-            OnClear?.Invoke();
+            OnCondTestClear?.Invoke();
         }
 
-        public void NewCondTest() => CondTestIndex++;
+        public void NewCondTest()
+        {
+            OnNewCondTest?.Invoke();
+            CondTestIndex++;
+        }
 
         public void NewCondTest(double starttime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyui = true)
         {
@@ -60,8 +64,8 @@ namespace Experica
 
         public void PushCondTest(double pushtime, List<CONDTESTPARAM> notifyparam, int notifypercondtest = 0, bool pushall = false, bool notifyUI = true)
         {
-            if (CondTestIndex < 0) { return; }
-            if (notifyUI && OnNotifyUI != null) { OnNotifyUI(); }
+            //if (CondTestIndex < 0) { return; }
+            //if (notifyUI && OnNewCondTest != null) { OnNewCondTest(); }
             //if (notifypercondtest > 0 && OnNotifyCondTest != null && OnNotifyCondTestEnd != null)
             //{
             //    if (!pushall)
@@ -114,7 +118,9 @@ namespace Experica
         }
 
 
-        public Dictionary<string, object> this[int condtestindex] => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
+        //public Dictionary<string, object> this[int condtestindex] => CondTest.ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
+
+        public Dictionary<string, object> this[int condtestindex] => CondTest.Where(kv=>kv.Value.Count==condtestindex+1).ToDictionary(kv => kv.Key, kv => kv.Value[condtestindex]);
 
         public Dictionary<string, object> CurrentCondTest => this[CondTestIndex];
 

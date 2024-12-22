@@ -2,7 +2,9 @@
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
     <ui:VisualElement name="Root" class="Panel">
         <ui:Label text="ConditionTest" name="Title" />
-        <ui:VisualElement name="Content" style="flex-grow: 1;" />
+        <ui:MultiColumnListView name="Content" style="flex-grow: 1;">
+            <ui:Columns />
+        </ui:MultiColumnListView>
         <ui:VisualElement name="Status" />
     </ui:VisualElement>
 </ui:UXML>

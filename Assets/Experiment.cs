@@ -338,6 +338,7 @@ namespace Experica.Command
     {
         NONE,
         RUNNING,
+        PAUSED,
         STOPPED
     }
 }

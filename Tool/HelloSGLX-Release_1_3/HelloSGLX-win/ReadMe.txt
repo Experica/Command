@@ -17,7 +17,7 @@ Notes:
 
 Commands:
 -cmd=justConnect
-Returns lines: version, host, port.
+Returns line: version.
 
 -cmd=enumDataDir [-args=idir] (default 0)
 Retrieve a listing of files in idir data directory.
@@ -270,6 +270,15 @@ setRecordingEnable.
 
 Change Log
 ----------
+Version 1.3
+- Use CPP-SDK v1.2.
+
+Version 1.2
+- Add getGeomMap.
+
+Version 1.1
+- Better demos.
+
 Version 1.0
 - Initial release.
 

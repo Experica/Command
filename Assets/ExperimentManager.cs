@@ -133,6 +133,7 @@ namespace Experica.Command
             el = gameObject.AddComponent(eltype) as ExperimentLogic;
             el.ex = ex;
             el.appmgr = appmgr;
+            RegisterCallback();
             AddEL(el);
         }
 
@@ -164,14 +165,15 @@ namespace Experica.Command
             }
         }
 
-        void RegisterELCallback()
+        void RegisterCallback()
         {
+            el.condtestmgr.OnNewCondTest += appmgr.ui.OnNewCondTest;
+            el.condtestmgr.OnCondTestClear += appmgr.ui.OnCondTestClear;
 
             //el.condmanager.OnSamplingInitialized = uicontroller.condpanel.RefreshCondition;
             //el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             //el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
             //el.condtestmanager.PushUICondTest = uicontroller.ctpanel.PushCondTest;
-            //el.condtestmanager.OnClearCondTest = uicontroller.ctpanel.ClearCondTest;
 
             // el.SyncFrame = uicontroller.netmanager.BeginSyncFrame;
         }

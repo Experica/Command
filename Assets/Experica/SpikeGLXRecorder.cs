@@ -99,7 +99,7 @@ namespace Experica
                 bool r = false;
                 try
                 {
-                    var fp = Path.GetFullPath("Tool/HelloSGLX-Release_1_2/HelloSGLX-win/HelloSGLX.exe");
+                    var fp = Path.GetFullPath("Tool/HelloSGLX-Release_1_3/HelloSGLX-win/HelloSGLX.exe");
                     hellosglx.StartInfo.FileName = $"\"{fp}\"";
                     hellosglx.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     hellosglx.StartInfo.UseShellExecute = false;

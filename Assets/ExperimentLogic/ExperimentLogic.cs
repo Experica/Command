@@ -457,7 +457,7 @@ namespace Experica.Command
 
         public void SetEnvActiveParam(string name, object value) => envmgr.SetActiveParam(name, value);
 
-        public void SetEnvParam(string name, object value) => envmgr.SetParam(name, value);
+        public bool SetEnvParam(string name, object value) => envmgr.SetParam(name, value);
 
         public void SetEnvActiveParamByGameObject(string nvName, string goName, object value) => envmgr.SetActiveParamByGameObject(nvName, goName, value);
 

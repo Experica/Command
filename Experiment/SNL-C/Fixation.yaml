@@ -22,7 +22,7 @@ EnvParam:
   MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
   Mark@Marker@Marker~OrthoCamera: false
   FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 10
+  FixDotDiameter@FixDot@FixDot: 3.2768
   FixDotVisible@FixDot@FixDot: true
 CondPath: ''
 Cond: 
@@ -42,9 +42,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 620
+PreITI: 635
 TrialDur: 0
-SufITI: 1789
+SufITI: 866
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
