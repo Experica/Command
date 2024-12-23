@@ -38,8 +38,8 @@ namespace Experica.Editor
         public static void Release()
         {
             var builditems = new[] { "Command_Data", "D3D12", "MonoBleedingEdge", "Command.exe", "UnityCrashHandler64.exe", "UnityPlayer.dll" };
-            var projectitems = new[] { "Install", "Experiment", "ExperimentSession", "ExperimentLogic", "Environment", "Data","Tool",
-                "Configuration", "Condition","CommandConfigManager.yaml", "LICENSE.md","README.md"};
+            var projectitems = new[] {  "ExperimentLogic", "Environment","Condition","Configuration", "Data","Tool","Install"
+                , "CommandConfigManager.yaml", "LICENSE.md","README.md"};
             var allitems = builditems.Concat(projectitems).ToArray();
             var parentdir = Enumerable.Repeat(builddir, builditems.Length).Concat(Enumerable.Repeat(Experica.ProjectRootDir, projectitems.Length)).ToArray();
 

@@ -1,0 +1,111 @@
+ID: ConditionTest
+Name: ConditionTest
+Designer: Alex
+Experimenter: LZ
+Log: Right Eye
+Subject_ID: Test
+Subject_Name: AG5
+Subject_Species: M. F.
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.4
+Subject_Log: 
+EnvPath: Plaid
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.724252
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@Plaid@Plaid: 0 0 0
+  RotationOffset@Plaid@Plaid: 0 0 0
+  Ori0@Plaid@Plaid: 0
+  OriOffset0@Plaid@Plaid: 0
+  Ori1@Plaid@Plaid: -90
+  OriOffset1@Plaid@Plaid: 0
+  Size@Plaid@Plaid: 25 25 25
+  Diameter@Plaid@Plaid: 25
+  MaskType@Plaid@Plaid: Disk
+  MaskRadius@Plaid@Plaid: 0.5
+  MaskSigma@Plaid@Plaid: 0.15
+  Luminance@Plaid@Plaid: 0.5
+  Contrast@Plaid@Plaid: 1
+  SpatialFreq0@Plaid@Plaid: 0.2
+  SpatialFreq1@Plaid@Plaid: 0.2
+  TemporalFreq0@Plaid@Plaid: 0
+  TemporalFreq1@Plaid@Plaid: 0
+  ModulateTemporalFreq0@Plaid@Plaid: 0.2
+  ModulateTemporalFreq1@Plaid@Plaid: 0.2
+  ModulateTemporalPhase0@Plaid@Plaid: 0
+  ModulateTemporalPhase1@Plaid@Plaid: 0
+  SpatialPhase0@Plaid@Plaid: 0
+  SpatialPhase1@Plaid@Plaid: 0
+  MinColor@Plaid@Plaid: 0 1 0 1
+  MaxColor@Plaid@Plaid: 1 0 0 1
+  PauseTime@Plaid@Plaid: false
+  PauseModulateTime@Plaid@Plaid: true
+  GratingType0@Plaid@Plaid: Square
+  GratingType1@Plaid@Plaid: Square
+  ModulateType0@Plaid@Plaid: Square
+  ModulateType1@Plaid@Plaid: Square
+  ReverseTime@Plaid@Plaid: false
+  Duty0@Plaid@Plaid: 0.5
+  Duty1@Plaid@Plaid: 0.5
+  ModulateDuty0@Plaid@Plaid: 0.5
+  ModulateDuty1@Plaid@Plaid: 0.5
+  TimeSecond@Plaid@Plaid: 0
+  ModulateTimeSecond@Plaid@Plaid: 0
+  PositionOffset@Plaid@Plaid: 0 0 0
+  Position@Plaid@Plaid: 0 0 0
+  Visible@Plaid@Plaid: false
+CondPath: ''
+Cond: 
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: true
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 250
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam: []
+EnvInheritParam: []
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam: {}

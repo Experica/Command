@@ -94,6 +94,8 @@ namespace Experica.Command
             // Environment Panel
             environmentpanel = root.Q("EnvironmentPanel");
             envcontent = environmentpanel.Q<ScrollView>("Content");
+            environmentpanel.Q<Button>("LoadScene").RegisterCallback<ClickEvent>(e => appmgr.LoadCurrentScene());
+            environmentpanel.Q<Button>("ParseScene").RegisterCallback<ClickEvent>(e => appmgr.OnSceneLoadEventCompleted(appmgr.exmgr.el.ex.EnvPath));
             // View Panel
             viewpanel = root.Q("ViewPanel");
             viewcontent = viewpanel.Q("Content");

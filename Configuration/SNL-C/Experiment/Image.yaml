@@ -1,0 +1,104 @@
+ID: Image
+Name: Image
+Designer: Alex
+Experimenter: LZ
+Log: 
+Subject_ID: Test
+Subject_Name: AG5
+Subject_Species: M. F.
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.4
+Subject_Log: 
+EnvPath: ImageList
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Ori@ImageList@ImageList: 0
+  OriOffset@ImageList@ImageList: 0
+  Size@ImageList@ImageList: 20 20 20
+  Diameter@ImageList@ImageList: 20
+  MaskType@ImageList@ImageList: None
+  MaskRadius@ImageList@ImageList: 0.5
+  MaskSigma@ImageList@ImageList: 0.15
+  MinColor@ImageList@ImageList: 0 0 0 1
+  MaxColor@ImageList@ImageList: 1 1 1 1
+  ImageSet@ImageList@ImageList: TestImageSet.UInt8
+  Image@ImageList@ImageList: 3
+  ChannelModulate@ImageList@ImageList: None
+  Position@ImageList@ImageList: 0 0 0
+  Visible@ImageList@ImageList: true
+CondPath: ''
+Cond: 
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 0
+CondDur: 29
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+InheritParam:
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Size
+- Subject_Weight
+- Hemisphere
+- Eye
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- Display_ID
+- NotifyExperimenter
+- Subject_Birth
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+ExtendParam: {}
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+  - DigitalOut
+  - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShowLevel: SHORT
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 

@@ -204,6 +204,7 @@
     "m_OutputNode": {
         "m_Id": "abc2bad48b9f4fcab7b49ab43b13dd65"
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": []
 }
 
@@ -457,6 +458,7 @@
     "m_SourceType": 0,
     "m_FunctionName": "grating",
     "m_FunctionSource": "17fc293bf5567644eb92bcec0684f83e",
+    "m_FunctionSourceUsePragmas": true,
     "m_FunctionBody": "Enter function body here..."
 }
 

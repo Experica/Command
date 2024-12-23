@@ -1,0 +1,97 @@
+ID: GPIOSignal
+Name: GPIOSignal
+Designer: Alex
+Experimenter: PL
+Log: 
+Subject_ID: Test
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Age: 13
+Subject_Size: 0 0 0
+Subject_Weight: 6.75
+Subject_Log: 
+EnvPath: Marker
+EnvParam:
+  MarkerSize@Marker@Marker: 2
+  MarkerPosition@Marker@Marker: -12.48 -13.74 -1000
+  MarkerCorner@Marker@Marker: BottomLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 0.9140625
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+CondPath: ''
+Cond: 
+ExLogicPath: Experica.GPIODigitalWave
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 0
+BlockRepeat: 0
+BlockParam: []
+Input: None
+PreICI: 0
+CondDur: 0
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+ExInheritParam:
+- Experimenter
+- Subject_ID
+- Subject_Name
+- Subject_Species
+- Subject_Gender
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- ResponseDelay
+- Display_ID
+EnvInheritParam:
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- CLUT@OrthoCamera@OrthoCamera
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+Param:
+  GPIO: 1208FS
+  WaveType: PWM
+  Freq: 10000
+TimerDriftSpeed: 3.0199999999999999E-05
+EventSyncProtocol:
+  SyncMethods:
+  - GPIO
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+Display_ID: ROGPG279Q
+ResponseDelay: 15
+Version: 1
+Config: 
+CondTest: 
+CondTestShowLevel: NONE
+SendMail: false

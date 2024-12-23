@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NetEnv/Scene/Fixation.unity
     guid: 9253c1ef231bdaf40932c130e723fc18
+  - enabled: 1
+    path: Assets/NetEnv/Scene/Plaid.unity
+    guid: d3a898f140f95ad46bc1b8d1d6110fb2
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1aa0d92f72f6a0c438cc237989f52627,
       type: 2}

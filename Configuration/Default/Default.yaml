@@ -1,0 +1,103 @@
+IsSaveExOnQuit: true
+IsSaveExSessionOnQuit: true
+AutoSaveData: true
+SaveConfigInData: true
+SaveConfigDisplayMeasurementInData: false
+SaveDataFormat: YAML
+ExDir: Configuration\Default\Experiment
+ExSessionDir: Configuration\Default\ExperimentSession
+DataDir: Data
+ExLogic: ConditionTestLogic
+NotifyParams:
+  - CondIndex
+  - Event
+  - SyncEvent
+AntiAliasing: 2
+AnisotropicFilterLevel: 5
+FixedDeltaTime: 1000000
+VSyncCount: 1
+MaxQueuedFrames: 2
+FrameTimer: false
+FullScreenMode: FullScreenWindow
+IsShowInactiveEnvParam: false
+IsShowEnvParamFullName: false
+MaxLogEntry: 999
+ExHideParams:
+  - Cond
+  - CondTest
+  - EnvParam
+  - Param
+  - Log
+  - Subject_Log
+  - DataPath
+  - InheritParam
+  - EnvInheritParam
+  - Version
+  - EventSyncProtocol
+  - Config
+  - NotifyPerCondTest
+  - NotifyParam
+FirstTestID: ConditionTest
+ExperimenterAddress:
+  Alex: 4109829463@mms.att.net
+  PL: 8584056165@mms.att.net
+  Tom: 8585684497@mms.att.net
+SyncFrameTimeOut: 4
+NotifyLatency: 100
+MaxDisplayLatencyError: 20
+OnlineSignalLatency: 50
+MCCDevice: 1208FS
+MCCDPort: 10
+ParallelPort0: 45072
+ParallelPort1: 53264
+ParallelPort2: 53264
+EventSyncCh: 0
+EventMeasureCh: 1
+StartSyncCh: 2
+StopSyncCh: 3
+Bits16Ch: 5
+SignalCh0: 0
+SignalCh1: 1
+SignalCh2: 2
+SerialPort0: COM3
+SerialPort1: COM4
+SerialPort2: COM5
+RecordHost0: 10.1.51.93
+RecordHostPort0: 4142
+RecordHost1: 10.1.51.93
+RecordHostPort1: 10000
+RecordHost2: LocalHost
+RecordHostPort2: 10000
+Version: 0
+EnvCrossInheritRule:
+  Grating:
+    - Quad
+    - ImageList
+  Quad:
+    - Grating
+    - ImageList
+  ImageList:
+    - Quad
+    - Grating
+Display:
+  ROGPG279Q:
+    ID: ROGPG279Q
+    Type: LCD
+    Latency: 21
+    RiseLag: 1.1
+    FallLag: 15
+    CLUTSize: 24
+    FitType: LinearSpline
+    IntensityMeasurement: 
+    SpectralMeasurement: 
+  ROGPG259QN:
+    ID: ROGPG259QN
+    Type: LCD
+    Latency: 21
+    RiseLag: 0.9
+    FallLag: 4.7
+    CLUTSize: 24
+    FitType: LinearSpline
+    IntensityMeasurement: 
+    SpectralMeasurement: 
+ExtendParam: {}

@@ -80,6 +80,7 @@ Material:
     - _Duty: 0.5
     - _EnableBlendModePreserveSpecularLighting: 0
     - _EnableFogOnTransparent: 0
+    - _ExcludeFromTUAndAA: 0
     - _GratingType: 0
     - _MDuty: 0.5
     - _MGratingType: 0

@@ -1,0 +1,87 @@
+ID: Flash
+Name: Flash
+Designer: Alex
+Experimenter: Alex
+Log: 
+Subject_ID: Test
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.75
+Subject_Log: 
+EnvPath: Quad
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
+  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 0
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 0 0 0
+  Diameter@Quad@Quad: 0
+  Color@Quad@Quad: 0 0 0 0
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0
+  MaskSigma@Quad@Quad: 0
+  OriPositionOffset@Quad@Quad: false
+  PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0 0 0
+  Visible@Quad@Quad: false
+CondPath: Condition\WhiteBlack.yaml
+Cond: 
+LogicPath: ConditionTestLogic
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: X:\
+DataPath: 
+Input: false
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 120
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 0
+CondDur: 300
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam: []
+EnvInheritParam:
+  - Position@Quad@Quad
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+TimerDriftSpeed: 3.02E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: Trinitron
+CondTestShowLevel: FULL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam: {}

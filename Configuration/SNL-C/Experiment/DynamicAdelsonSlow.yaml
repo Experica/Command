@@ -1,0 +1,115 @@
+ID: DynamicAdelsonSlow
+Name: DynamicAdelsonSlow
+Designer: Alex
+Experimenter: Tom
+Log: 
+Subject_ID: AF6
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Age: 0
+Subject_Size: 0 0 0
+Subject_Weight: 11.3000002
+Subject_Log: 
+EnvPath: MarkerImage
+EnvParam:
+  MarkerSize@Marker@Marker: 4
+  MarkerPosition@Marker@Marker: -23.65 14.42 -1000
+  MarkerCorner@Marker@Marker: TopLeft
+  Mark@Marker@Marker: false
+  MarkOnColor@Marker@Marker: 1 1 1 1
+  MarkOffColor@Marker@Marker: 0 0 0 1
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5999985
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.56167758
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  Rotation@ImageQuad@ImageQuad: 0 0 0
+  RotationOffset@ImageQuad@ImageQuad: 0 0 0
+  Ori@ImageQuad@ImageQuad: 0
+  OriOffset@ImageQuad@ImageQuad: 0
+  Diameter@ImageQuad@ImageQuad: 10
+  Size@ImageQuad@ImageQuad: 58.39 32.84 1
+  MaskType@ImageQuad@ImageQuad: None
+  MaskRadius@ImageQuad@ImageQuad: 0.5
+  MaskSigma@ImageQuad@ImageQuad: 0.150000006
+  OriPositionOffset@ImageQuad@ImageQuad: false
+  MinColor@ImageQuad@ImageQuad: 0 0 0 1
+  MaxColor@ImageQuad@ImageQuad: 1 1 1 1
+  ChannelModulate@ImageQuad@ImageQuad: None
+  Image@ImageQuad@ImageQuad: 328
+  ImageSet@ImageQuad@ImageQuad: DynamicAdelson_0125Hz_004
+  Visible@ImageQuad@ImageQuad: false
+  Position@ImageQuad@ImageQuad: 0 0 0
+  PositionOffset@ImageQuad@ImageQuad: 0 0 0
+CondPath: ''
+Cond: 
+ExLogicPath: Experica.SpikeGLXImage
+RecordSession: HLV1
+RecordSite: ODL1
+DataDir: X:\
+DataPath: 
+CondSampling: Ascending
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 10
+BlockRepeat: 1
+BlockParam: []
+Input: false
+PreICI: 0
+CondDur: 2000
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- CONDSTATE
+- CondRepeat
+ExInheritParam:
+- Subject_ID
+- Subject_Species
+- Subject_Age
+- Subject_Size
+- Subject_Weight
+- RecordSession
+- RecordSite
+- DataDir
+- Subject_Name
+- Subject_Gender
+- Experimenter
+- TimerDriftSpeed
+- ResponseDelay
+- Display_ID
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- MarkerSize@Marker@Marker
+- MarkerCorner@Marker@Marker
+- MarkOnColor@Marker@Marker
+- MarkOffColor@Marker@Marker
+- Position@ImageQuad@ImageQuad
+Param:
+  ColorSpace: DKL
+  Color: X
+TimerDriftSpeed: 6.4999999999999994E-05
+EventSyncProtocol:
+  SyncMethods:
+  - GPIO
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+Display_ID: ROGPG279Q
+ResponseDelay: 15
+Version: 2
+Config: 
+CondTest: 
+CondTestShowLevel: SHORT
+SendMail: true

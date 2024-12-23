@@ -1,0 +1,121 @@
+ID: OriSF
+Name: OriSF
+Designer: Alex
+Experimenter: LZ
+Log: 
+Subject_ID: Test
+Subject_Name: AG5
+Subject_Species: M. F.
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.4
+Subject_Log: 
+EnvPath: MaskGrating
+EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.7
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  Mark@Marker@Marker~OrthoCamera: false
+  Rotation@MaskGrating@MaskGrating: 0 0 0
+  RotationOffset@MaskGrating@MaskGrating: 0 0 0
+  Ori@MaskGrating@MaskGrating: 330
+  OriOffset@MaskGrating@MaskGrating: 0
+  Size@MaskGrating@MaskGrating: 10 10 10
+  Diameter@MaskGrating@MaskGrating: 10
+  MaskType@MaskGrating@MaskGrating: Disk
+  MaskRadius@MaskGrating@MaskGrating: 0.5
+  MaskSigma@MaskGrating@MaskGrating: 0.15
+  Luminance@MaskGrating@MaskGrating: 0.5
+  Contrast@MaskGrating@MaskGrating: 1
+  SpatialFreq@MaskGrating@MaskGrating: 6.4
+  TemporalFreq@MaskGrating@MaskGrating: 5
+  ModulateTemporalFreq@MaskGrating@MaskGrating: 0.2
+  ModulateTemporalPhase@MaskGrating@MaskGrating: 0
+  SpatialPhase@MaskGrating@MaskGrating: 0
+  MinColor@MaskGrating@MaskGrating: 0 0 0 1
+  MaxColor@MaskGrating@MaskGrating: 1 1 1 1
+  PauseTime@MaskGrating@MaskGrating: false
+  PauseModulateTime@MaskGrating@MaskGrating: true
+  GratingType@MaskGrating@MaskGrating: Square
+  ModulateType@MaskGrating@MaskGrating: Square
+  ReverseTime@MaskGrating@MaskGrating: false
+  Duty@MaskGrating@MaskGrating: 0.5
+  ModulateDuty@MaskGrating@MaskGrating: 0.5
+  TimeSecond@MaskGrating@MaskGrating: 0
+  ModulateTimeSecond@MaskGrating@MaskGrating: 0
+  OriPositionOffset@MaskGrating@MaskGrating: false
+  PositionOffset@MaskGrating@MaskGrating: 0 0 0
+  Position@MaskGrating@MaskGrating: 0 0 0
+  Visible@MaskGrating@MaskGrating: false
+CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
+Cond: 
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 1500
+SufICI: 250
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+- CondIndex
+- Event
+- SyncEvent
+InheritParam:
+- Experimenter
+- Subject_Name
+- Subject_ID
+- Subject_Species
+- Subject_Weight
+- Subject_Gender
+- Subject_Size
+- Hemisphere
+- Eye
+- RecordSession
+- RecordSite
+- DataDir
+- TimerDriftSpeed
+- Display_ID
+- NotifyExperimenter
+EnvInheritParam:
+- ScreenToEye@OrthoCamera@OrthoCamera
+- ScreenHeight@OrthoCamera@OrthoCamera
+- ScreenAspect@OrthoCamera@OrthoCamera
+- CLUT@OrthoCamera@OrthoCamera
+- MarkerCorner@Marker@Marker~OrthoCamera
+ExtendParam: {}
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  SyncMethods:
+  - GPIO
+  - Display
+  nSyncChannel: 1
+  nSyncpEvent: 1
+Display_ID: ROGPG279Q
+CondTestShowLevel: FULL
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 

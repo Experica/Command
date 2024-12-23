@@ -124,6 +124,7 @@
     "m_OutputNode": {
         "m_Id": "f5e3b85c99024bebb095e5ef56a8c17a"
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": []
 }
 
@@ -187,6 +188,7 @@
     "m_SourceType": 0,
     "m_FunctionName": "syrcw",
     "m_FunctionSource": "17fc293bf5567644eb92bcec0684f83e",
+    "m_FunctionSourceUsePragmas": true,
     "m_FunctionBody": "Enter function body here..."
 }
 
