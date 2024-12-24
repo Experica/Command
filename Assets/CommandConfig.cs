@@ -37,7 +37,7 @@ namespace Experica.Command
 
         public CommandConfig config = new();
 
-        public static CommandConfigManager Load(string configmanagerpath = Experica.CommandConfigManagerPath)
+        public static CommandConfigManager Load(string configmanagerpath = Base.CommandConfigManagerPath)
         {
             CommandConfigManager cfgmanager = null;
             if (File.Exists(configmanagerpath))
@@ -78,7 +78,7 @@ namespace Experica.Command
             return isvalidfile;
         }
 
-        public void Save(string configmanagerpath = Experica.CommandConfigManagerPath)
+        public void Save(string configmanagerpath = Base.CommandConfigManagerPath)
         {
             if (AutoLoadSaveLastConfig)
             {
@@ -94,7 +94,7 @@ namespace Experica.Command
             bool success = false;
             if (string.IsNullOrEmpty(configfilepath))
             {
-                configfilepath = Experica.SaveFile("Save Config File");
+                configfilepath = Base.SaveFile("Save Config File");
             }
             if (!string.IsNullOrEmpty(configfilepath))
             {
@@ -162,7 +162,7 @@ namespace Experica.Command
         public string RecordHost2 { get; set; } = "LocalHost";
         public int RecordHostPort2 { get; set; } = 10000;
 
-        public uint Version { get; set; } = Experica.CommandConfigVersion;
+        public uint Version { get; set; } = Base.CommandConfigVersion;
         public Dictionary<string, List<string>> EnvCrossInheritRule { get; set; } = DefaultEnvCrossInheritRule();
         public Dictionary<string, NetEnv.Display> Display { get; set; } = new();
 

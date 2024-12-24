@@ -47,12 +47,12 @@ namespace Experica.Command
 
         public void ChooseConfigFile()
         {
-            if (Experica.YesNoDialog("Save Current State of Experica.Command?"))
+            if (Base.YesNoDialog("Save Current State of Experica.Command?"))
             {
                 //uicontroller.SaveConfig();
             }
 
-            var configfilepath = Experica.OpenFile("Choose Config File ...");
+            var configfilepath = Base.OpenFile("Choose Config File ...");
             //var config = uicontroller.LoadConfig(configfilepath, false);
             //if (config != null)
             //{

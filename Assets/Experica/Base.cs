@@ -528,6 +528,13 @@ namespace Experica
         Log2
     }
 
+    public enum DisplayFitType
+    {
+        Gamma,
+        LinearSpline,
+        CubicSpline
+    }
+
     public class ImageSet
     {
         public Texture2D[] Images = Array.Empty<Texture2D>();
@@ -541,7 +548,8 @@ namespace Experica
         public T[][] Images;
     }
 
-    public static class Experica
+
+    public static class Base
     {
         public const uint ExperimentVersion = 3;
         public const uint ExperimentSessionVersion = 0;
@@ -1804,25 +1812,25 @@ namespace Experica
             return false;
         }
 
-        //public static bool SplineFit(double[] x, double[] y, out IInterpolation spline, DisplayFitType fittype = DisplayFitType.LinearSpline)
-        //{
-        //    spline = null;
-        //    try
-        //    {
-        //        switch (fittype)
-        //        {
-        //            case DisplayFitType.LinearSpline:
-        //                spline = Interpolate.Linear(x, y);
-        //                return true;
-        //            case DisplayFitType.CubicSpline:
-        //                spline = Interpolate.CubicSpline(x, y);
-        //                return true;
-        //        }
-        //        return false;
-        //    }
-        //    catch (Exception) { }
-        //    return false;
-        //}
+        public static bool SplineFit(double[] x, double[] y, out IInterpolation spline, DisplayFitType fittype = DisplayFitType.LinearSpline)
+        {
+            spline = null;
+            try
+            {
+                switch (fittype)
+                {
+                    case DisplayFitType.LinearSpline:
+                        spline = Interpolate.Linear(x, y);
+                        return true;
+                    case DisplayFitType.CubicSpline:
+                        spline = Interpolate.CubicSpline(x, y);
+                        return true;
+                }
+                return false;
+            }
+            catch (Exception) { }
+            return false;
+        }
 
         /// <summary>
         /// Get Independent R,G,B channel measurement

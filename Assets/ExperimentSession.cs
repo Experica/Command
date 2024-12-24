@@ -45,7 +45,7 @@ namespace Experica.Command
         public bool IsFullScreen { get; set; } = false;
         public bool IsFullViewport { get; set; } = false;
         public bool IsGuideOn { get; set; } = true;
-        public uint Version { get; set; } = Experica.ExperimentSessionVersion;
+        public uint Version { get; set; } = Base.ExperimentSessionVersion;
 
 
         public ExperimentSession PrepareDefinition()
@@ -60,7 +60,7 @@ namespace Experica.Command
 
         public void SaveDefinition(string filepath)
         {
-            Version = Experica.ExperimentSessionVersion;
+            Version = Base.ExperimentSessionVersion;
             filepath.WriteYamlFile(this);
         }
     }

@@ -94,12 +94,12 @@ namespace Experica.NetEnv
         Projector
     }
 
-    public enum DisplayFitType
-    {
-        Gamma,
-        LinearSpline,
-        CubicSpline
-    }
+    //public enum DisplayFitType
+    //{
+    //    Gamma,
+    //    LinearSpline,
+    //    CubicSpline
+    //}
 
     public class Display
     {

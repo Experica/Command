@@ -68,8 +68,8 @@ namespace Experica.Command
                 if (cleanscene)
                 {
                     // Network SceneManager will not exist when NetworkManager shutdown, so here we use UnityEngine's SceneManager to clean any loaded scene by loading an Empty scene
-                    SceneManager.LoadScene(Experica.EmptyScene, LoadSceneMode.Single);
-                    appmgr.OnSceneLoadEventCompleted(Experica.EmptyScene);
+                    SceneManager.LoadScene(Base.EmptyScene, LoadSceneMode.Single);
+                    appmgr.OnSceneLoadEventCompleted(Base.EmptyScene);
                 }
             }
         }

@@ -31,9 +31,9 @@ namespace Experica.Editor
 {
     public class GenerateAgentInterface : MonoBehaviour
     {
-        static string slice2cs = Path.Combine(Experica.ProjectRootDir, "Agent\\AgentDotNet\\packages\\zeroc.ice.net.3.7.10\\tools\\slice2cs.exe");
-        static string sourcedir = Path.Combine(Experica.ProjectRootDir, "Agent");
-        static string outdir = Path.Combine(Experica.ProjectRootDir, "Assets\\Agent");
+        static string slice2cs = Path.Combine(Base.ProjectRootDir, "Agent\\AgentDotNet\\packages\\zeroc.ice.net.3.7.10\\tools\\slice2cs.exe");
+        static string sourcedir = Path.Combine(Base.ProjectRootDir, "Agent");
+        static string outdir = Path.Combine(Base.ProjectRootDir, "Assets\\Agent");
 
         [MenuItem("File/Generate Agent Interface")]
         public static void Generate()

@@ -36,7 +36,7 @@ namespace Experica.NetEnv
 
         protected override void OnAwake()
         {
-            linerenderer = Experica.AddCircle(parent: transform);
+            linerenderer = Base.AddCircle(parent: transform);
             OnColor(default, Color.Value);
             OnWidth(default, Width.Value);
             OnSize(default, Size.Value);

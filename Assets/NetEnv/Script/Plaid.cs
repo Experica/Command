@@ -283,7 +283,7 @@ namespace Experica.NetEnv
         void OnLuminance(float p, float c)
         {
             Color _mincolor, _maxcolor;
-            Experica.LuminanceSpan(c, Contrast.Value).ScaleColor(MinColor.Value, MaxColor.Value, out _mincolor, out _maxcolor);
+            Base.LuminanceSpan(c, Contrast.Value).ScaleColor(MinColor.Value, MaxColor.Value, out _mincolor, out _maxcolor);
 
             renderer.material.SetColor("_MinColor", _mincolor);
             renderer.material.SetColor("_MaxColor", _maxcolor);
@@ -292,7 +292,7 @@ namespace Experica.NetEnv
         void OnContrast(float p, float c)
         {
             Color _mincolor, _maxcolor;
-            Experica.LuminanceSpan(Luminance.Value, c).ScaleColor(MinColor.Value, MaxColor.Value, out _mincolor, out _maxcolor);
+            Base.LuminanceSpan(Luminance.Value, c).ScaleColor(MinColor.Value, MaxColor.Value, out _mincolor, out _maxcolor);
 
             renderer.material.SetColor("_MinColor", _mincolor);
             renderer.material.SetColor("_MaxColor", _maxcolor);

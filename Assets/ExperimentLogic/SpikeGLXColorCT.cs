@@ -19,71 +19,60 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using UnityEngine;
+using Experica;
+using System.Collections.Generic;
+using ColorSpace = Experica.NetEnv.ColorSpace;
 
-//The above copyright notice and this permission notice shall be included 
-//in all copies or substantial portions of the Software.
+/// <summary>
+/// Condition Test with SpikeGLX Data Acquisition System, and Predefined Colors
+/// </summary>
+public class SpikeGLXColorCT : SpikeGLXCTLogic
+{
+    protected override void PrepareCondition()
+    {
+        var colorspace = GetExParam<ColorSpace>("ColorSpace");
+        var colorvar = GetExParam<string>("Color");
+        var colorname = colorspace + "_" + colorvar;
 
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
-//OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//*/
-//using UnityEngine;
-//using Experica;
-//using System.Collections.Generic;
-//using ColorSpace = Experica.Environment.ColorSpace;
+        // get color
+        List<Color> color = null;
+        List<Color> wp = null;
+        List<float> angle = null;
+        var data = ex.Display_ID.GetColorData();
+        if (data != null)
+        {
+            if (data.ContainsKey(colorname))
+            {
+                color = data[colorname].Convert<List<Color>>();
 
-///// <summary>
-///// Condition Test with SpikeGLX Data Acquisition System, and Predefined Colors
-///// </summary>
-//public class SpikeGLXColorCT : SpikeGLXCTLogic
-//{
-//    protected override void GenerateFinalCondition()
-//    {
-//        var colorspace = GetExParam<ColorSpace>("ColorSpace");
-//        var colorvar = GetExParam<string>("Color");
-//        var colorname = colorspace + "_" + colorvar;
+                var wpname = colorname + "_WP";
+                if (data.ContainsKey(wpname))
+                {
+                    wp = data[wpname].Convert<List<Color>>();
+                }
+                var anglename = colorname + "_Angle";
+                if (data.ContainsKey(anglename))
+                {
+                    angle = data[anglename].Convert<List<float>>();
+                }
+            }
+            else
+            {
+                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
+            }
+        }
 
-//        // get color
-//        List<Color> color = null;
-//        List<Color> wp = null;
-//        List<float> angle = null;
-//        var data = ex.Display_ID.GetColorData();
-//        if (data != null)
-//        {
-//            if (data.ContainsKey(colorname))
-//            {
-//                color = data[colorname].Convert<List<Color>>();
+        if (color != null)
+        {
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
+            if (wp != null)
+            {
+                SetEnvActiveParam("BGColor", wp[0]);
+            }
+        }
 
-//                var wpname = colorname + "_WP";
-//                if (data.ContainsKey(wpname))
-//                {
-//                    wp = data[wpname].Convert<List<Color>>();
-//                }
-//                var anglename = colorname + "_Angle";
-//                if (data.ContainsKey(anglename))
-//                {
-//                    angle = data[anglename].Convert<List<float>>();
-//                }
-//            }
-//            else
-//            {
-//                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
-//            }
-//        }
-
-//        if (color != null)
-//        {
-//            SetEnvActiveParam("MinColor", color[0]);
-//            SetEnvActiveParam("MaxColor", color[1]);
-//            if (wp != null)
-//            {
-//                SetEnvActiveParam("BGColor", wp[0]);
-//            }
-//        }
-
-//        base.GenerateFinalCondition();
-//    }
-//}
+        base.PrepareCondition();
+    }
+}

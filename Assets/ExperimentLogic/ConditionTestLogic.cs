@@ -188,13 +188,10 @@ public class ConditionTestLogic : ExperimentLogic
             case CONDSTATE.COND:
                 if (CondHold >= ex.CondDur)
                 {
-                    /*
-                    for successive conditions without rest, 
-                    make sure no extra logic updates(frames) are inserted.
-                    */
                     if (ex.PreICI <= 0 && ex.SufICI <= 0)
                     {
-                        // new condtest starts at PreICI
+                        // for successive conditions without rest, make sure no extra logic updates(frames) are inserted.
+                        // So first enter PREICI(new condtest starts at PREICI), then immediately enter COND.
                         if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
                         EnterCondState(CONDSTATE.COND, true);
                     }

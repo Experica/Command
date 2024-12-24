@@ -339,106 +339,106 @@ namespace Experica.Command
         /// <param name="y"></param>
         /// <param name="isnormalize"></param>
         /// <param name="issort"></param>
-        public static void GetRGBIntensityMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
-        {
-            var colors = m["Color"].Convert<List<Color>>();
-            var intensities = m["Y"].Convert<List<double>>();
+        //public static void GetRGBIntensityMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[]> y, bool isnormalize = false, bool issort = false)
+        //{
+        //    var colors = m["Color"].Convert<List<Color>>();
+        //    var intensities = m["Y"].Convert<List<double>>();
 
-            var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
-            var rys = new List<double>(); var gys = new List<double>(); var bys = new List<double>();
-            for (var j = 0; j < colors.Count; j++)
-            {
-                var c = colors[j]; var i = intensities[j];
-                if (c.r == 0 && c.g == 0 && c.b == 0)
-                {
-                    rs.Add(c.r);
-                    rys.Add(i);
-                    gs.Add(c.g);
-                    gys.Add(i);
-                    bs.Add(c.b);
-                    bys.Add(i);
-                }
-                else
-                {
-                    if (c.g == 0 && c.b == 0)
-                    {
-                        rs.Add(c.r);
-                        rys.Add(i);
-                    }
-                    if (c.r == 0 && c.b == 0)
-                    {
-                        gs.Add(c.g);
-                        gys.Add(i);
-                    }
-                    if (c.r == 0 && c.g == 0)
-                    {
-                        bs.Add(c.b);
-                        bys.Add(i);
-                    }
-                }
-            }
-            if (issort)
-            {
-                Sorting.Sort(rs, rys); Sorting.Sort(gs, gys); Sorting.Sort(bs, bys);
-            }
-            if (isnormalize)
-            {
-                rys.Scale01(); gys.Scale01(); bys.Scale01();
-            }
-            x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
-            y = new Dictionary<string, double[]>() { { "R", rys.ToArray() }, { "G", gys.ToArray() }, { "B", bys.ToArray() } };
-        }
+        //    var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
+        //    var rys = new List<double>(); var gys = new List<double>(); var bys = new List<double>();
+        //    for (var j = 0; j < colors.Count; j++)
+        //    {
+        //        var c = colors[j]; var i = intensities[j];
+        //        if (c.r == 0 && c.g == 0 && c.b == 0)
+        //        {
+        //            rs.Add(c.r);
+        //            rys.Add(i);
+        //            gs.Add(c.g);
+        //            gys.Add(i);
+        //            bs.Add(c.b);
+        //            bys.Add(i);
+        //        }
+        //        else
+        //        {
+        //            if (c.g == 0 && c.b == 0)
+        //            {
+        //                rs.Add(c.r);
+        //                rys.Add(i);
+        //            }
+        //            if (c.r == 0 && c.b == 0)
+        //            {
+        //                gs.Add(c.g);
+        //                gys.Add(i);
+        //            }
+        //            if (c.r == 0 && c.g == 0)
+        //            {
+        //                bs.Add(c.b);
+        //                bys.Add(i);
+        //            }
+        //        }
+        //    }
+        //    if (issort)
+        //    {
+        //        Sorting.Sort(rs, rys); Sorting.Sort(gs, gys); Sorting.Sort(bs, bys);
+        //    }
+        //    if (isnormalize)
+        //    {
+        //        rys.Scale01(); gys.Scale01(); bys.Scale01();
+        //    }
+        //    x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
+        //    y = new Dictionary<string, double[]>() { { "R", rys.ToArray() }, { "G", gys.ToArray() }, { "B", bys.ToArray() } };
+        //}
 
-        public static void GetRGBSpectralMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[][]> yi, out Dictionary<string, double[][]> y)
-        {
-            var colors = m["Color"].Convert<List<Color>>();
-            var wls = m["WL"].Convert<List<double[]>>();
-            var wlis = m["Spectral"].Convert<List<double[]>>();
+        //public static void GetRGBSpectralMeasurement(this Dictionary<string, List<object>> m, out Dictionary<string, double[]> x, out Dictionary<string, double[][]> yi, out Dictionary<string, double[][]> y)
+        //{
+        //    var colors = m["Color"].Convert<List<Color>>();
+        //    var wls = m["WL"].Convert<List<double[]>>();
+        //    var wlis = m["Spectral"].Convert<List<double[]>>();
 
-            var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
-            var rwls = new List<double[]>(); var gwls = new List<double[]>(); var bwls = new List<double[]>();
-            var rwlis = new List<double[]>(); var gwlis = new List<double[]>(); var bwlis = new List<double[]>();
-            for (var j = 0; j < colors.Count; j++)
-            {
-                var c = colors[j]; var wl = wls[j]; var wli = wlis[j];
-                if (c.r == 0 && c.g == 0 && c.b == 0)
-                {
-                    rs.Add(c.r);
-                    rwls.Add(wl);
-                    rwlis.Add(wli);
-                    gs.Add(c.g);
-                    gwls.Add(wl);
-                    gwlis.Add(wli);
-                    bs.Add(c.b);
-                    bwls.Add(wl);
-                    bwlis.Add(wli);
-                }
-                else
-                {
-                    if (c.g == 0 && c.b == 0)
-                    {
-                        rs.Add(c.r);
-                        rwls.Add(wl);
-                        rwlis.Add(wli);
-                    }
-                    if (c.r == 0 && c.b == 0)
-                    {
-                        gs.Add(c.g);
-                        gwls.Add(wl);
-                        gwlis.Add(wli);
-                    }
-                    if (c.r == 0 && c.g == 0)
-                    {
-                        bs.Add(c.b);
-                        bwls.Add(wl);
-                        bwlis.Add(wli);
-                    }
-                }
-            }
-            x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
-            yi = new Dictionary<string, double[][]> { { "R", rwls.ToArray() }, { "G", gwls.ToArray() }, { "B", bwls.ToArray() } };
-            y = new Dictionary<string, double[][]>() { { "R", rwlis.ToArray() }, { "G", gwlis.ToArray() }, { "B", bwlis.ToArray() } };
-        }
+        //    var rs = new List<double>(); var gs = new List<double>(); var bs = new List<double>();
+        //    var rwls = new List<double[]>(); var gwls = new List<double[]>(); var bwls = new List<double[]>();
+        //    var rwlis = new List<double[]>(); var gwlis = new List<double[]>(); var bwlis = new List<double[]>();
+        //    for (var j = 0; j < colors.Count; j++)
+        //    {
+        //        var c = colors[j]; var wl = wls[j]; var wli = wlis[j];
+        //        if (c.r == 0 && c.g == 0 && c.b == 0)
+        //        {
+        //            rs.Add(c.r);
+        //            rwls.Add(wl);
+        //            rwlis.Add(wli);
+        //            gs.Add(c.g);
+        //            gwls.Add(wl);
+        //            gwlis.Add(wli);
+        //            bs.Add(c.b);
+        //            bwls.Add(wl);
+        //            bwlis.Add(wli);
+        //        }
+        //        else
+        //        {
+        //            if (c.g == 0 && c.b == 0)
+        //            {
+        //                rs.Add(c.r);
+        //                rwls.Add(wl);
+        //                rwlis.Add(wli);
+        //            }
+        //            if (c.r == 0 && c.b == 0)
+        //            {
+        //                gs.Add(c.g);
+        //                gwls.Add(wl);
+        //                gwlis.Add(wli);
+        //            }
+        //            if (c.r == 0 && c.g == 0)
+        //            {
+        //                bs.Add(c.b);
+        //                bwls.Add(wl);
+        //                bwlis.Add(wli);
+        //            }
+        //        }
+        //    }
+        //    x = new Dictionary<string, double[]>() { { "R", rs.ToArray() }, { "G", gs.ToArray() }, { "B", bs.ToArray() } };
+        //    yi = new Dictionary<string, double[][]> { { "R", rwls.ToArray() }, { "G", gwls.ToArray() }, { "B", bwls.ToArray() } };
+        //    y = new Dictionary<string, double[][]>() { { "R", rwlis.ToArray() }, { "G", gwlis.ToArray() }, { "B", bwlis.ToArray() } };
+        //}
 
         public static Texture3D GenerateRGBGammaCLUT(double rgamma, double ggamma, double bgamma, double ra, double ga, double ba, double rc, double gc, double bc, int n)
         {

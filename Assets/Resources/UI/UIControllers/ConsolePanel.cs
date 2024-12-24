@@ -80,7 +80,7 @@ namespace Experica.Command
             var v = msg.Convert<string>();
             if (IsStackTrace && !string.IsNullOrEmpty(stacktrace))
             {
-                Experica.WarningDialog(v + "\r\n\r\n" + stacktrace);
+                Base.WarningDialog(v + "\r\n\r\n" + stacktrace);
                 return;
             }
             if (istimestamp)

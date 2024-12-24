@@ -31,17 +31,17 @@ namespace Experica.Editor
 {
     public class ReleaseBuild : MonoBehaviour
     {
-        static string builddir = Path.Combine(Experica.ProjectRootDir, "Build");
-        static string releaserootdir = Path.Combine(Experica.ProjectRootDir, "Release");
+        static string builddir = Path.Combine(Base.ProjectRootDir, "Build");
+        static string releaserootdir = Path.Combine(Base.ProjectRootDir, "Release");
 
         [MenuItem("File/Release Build")]
         public static void Release()
         {
             var builditems = new[] { "Command_Data", "D3D12", "MonoBleedingEdge", "Command.exe", "UnityCrashHandler64.exe", "UnityPlayer.dll" };
-            var projectitems = new[] {  "ExperimentLogic", "Environment","Condition","Configuration", "Data","Tool","Install"
-                , "CommandConfigManager.yaml", "LICENSE.md","README.md"};
+            var projectitems = new[] {  "ExperimentLogic", "Environment","Condition","Configuration", "Data","Tool",
+                 "CommandConfigManager.yaml", "LICENSE.md","README.md"};
             var allitems = builditems.Concat(projectitems).ToArray();
-            var parentdir = Enumerable.Repeat(builddir, builditems.Length).Concat(Enumerable.Repeat(Experica.ProjectRootDir, projectitems.Length)).ToArray();
+            var parentdir = Enumerable.Repeat(builddir, builditems.Length).Concat(Enumerable.Repeat(Base.ProjectRootDir, projectitems.Length)).ToArray();
 
             var releasedir = Path.Combine(releaserootdir, $"Command_v{Application.version}");
             if (Directory.Exists(releasedir))

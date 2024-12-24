@@ -19,71 +19,60 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using Experica;
+using Experica.Command;
+/// <summary>
+/// Condition Test with SpikeGLX Data Acquisition System
+/// </summary>
+public class SpikeGLXCTLogic : ConditionTestLogic
+{
+    protected override void OnStartExperiment()
+    {
+        recorder = Base.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
+        base.OnStartExperiment();
+    }
 
-//The above copyright notice and this permission notice shall be included 
-//in all copies or substantial portions of the Software.
+    protected override void OnExperimentStopped()
+    {
+        recorder = null;
+        base.OnExperimentStopped();
+    }
 
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
-//OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//*/
-//using Experica;
+    protected override void StartExperimentTimeSync()
+    {
+        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        {
+            if (recorder != null)
+            {
+                recorder.RecordPath = ex.GetDataPath();
+                /* 
+                SpikeGLX command server receive network message and change file path, all of which need time to complete.
+                Start recording before file path change completion may not save to correct file path.
+                */
+                timer.TimeoutMillisecond(Config.NotifyLatency);
 
-///// <summary>
-///// Condition Test with SpikeGLX Data Acquisition System
-///// </summary>
-//public class SpikeGLXCTLogic : ConditionTestLogic
-//{
-//    protected override void OnStartExperiment()
-//    {
-//        recorder = Extension.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
-//        base.OnStartExperiment();
-//    }
+                recorder.RecordStatus = RecordStatus.Recording;
+                /* 
+                SpikeGLX command server receive network message and change record state, all of which need time to complete.
+                Begin experiment before record started may lose information.
+                */
+                timer.TimeoutMillisecond(Config.NotifyLatency);
+            }
+        }
+        base.StartExperimentTimeSync();
+    }
 
-//    protected override void OnExperimentStopped()
-//    {
-//        recorder = null;
-//        base.OnExperimentStopped();
-//    }
-
-//    protected override void StartExperimentTimeSync()
-//    {
-//        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
-//        {
-//            if (recorder != null)
-//            {
-//                recorder.RecordPath = ex.GetDataPath();
-//                /* 
-//                SpikeGLX command server receive network message and change file path, all of which need time to complete.
-//                Start recording before file path change completion may not save to correct file path.
-//                */
-//                timer.TimeoutMillisecond(Config.NotifyLatency);
-
-//                recorder.RecordStatus = RecordStatus.Recording;
-//                /* 
-//                SpikeGLX command server receive network message and change record state, all of which need time to complete.
-//                Begin experiment before record started may lose information.
-//                */
-//                timer.TimeoutMillisecond(Config.NotifyLatency);
-//            }
-//        }
-//        base.StartExperimentTimeSync();
-//    }
-
-//    protected override void StopExperimentTimeSync()
-//    {
-//        if (recorder != null)
-//        {
-//            recorder.RecordStatus = RecordStatus.Stopped;
-//            /*
-//            SpikeGLX command server receive network message and change record state, all of which need time to complete.
-//            Here wait recording ended before further processing.
-//            */
-//            timer.TimeoutMillisecond(Config.NotifyLatency);
-//        }
-//        base.StopExperimentTimeSync();
-//    }
-//}
+    protected override void StopExperimentTimeSync()
+    {
+        if (recorder != null)
+        {
+            recorder.RecordStatus = RecordStatus.Stopped;
+            /*
+            SpikeGLX command server receive network message and change record state, all of which need time to complete.
+            Here wait recording ended before further processing.
+            */
+            timer.TimeoutMillisecond(Config.NotifyLatency);
+        }
+        base.StopExperimentTimeSync();
+    }
+}

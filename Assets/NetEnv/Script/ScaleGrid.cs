@@ -43,8 +43,8 @@ namespace Experica.NetEnv
 
         protected override void OnAwake()
         {
-            xaxis = Experica.AddXLine(name: "XAxis", parent: transform);
-            yaxis = Experica.AddYLine(name: "YAxis", parent: transform);
+            xaxis = Base.AddXLine(name: "XAxis", parent: transform);
+            yaxis = Base.AddYLine(name: "YAxis", parent: transform);
             // Axis on top of ticks
             xaxis.transform.localPosition = Vector3.back;
             yaxis.transform.localPosition = Vector3.back;
@@ -159,7 +159,7 @@ namespace Experica.NetEnv
             }
             if (xd < 0)
             {
-                for (var i = 0; i < -xd; i++) { xticks.Add(Experica.AddYLine(parent: transform)); }
+                for (var i = 0; i < -xd; i++) { xticks.Add(Base.AddYLine(parent: transform)); }
             }
             for (var i = 0; i < nx; i++)
             {
@@ -186,7 +186,7 @@ namespace Experica.NetEnv
             }
             if (yd < 0)
             {
-                for (var i = 0; i < -yd; i++) { yticks.Add(Experica.AddXLine(parent: transform)); }
+                for (var i = 0; i < -yd; i++) { yticks.Add(Base.AddXLine(parent: transform)); }
             }
             for (var i = 0; i < ny; i++)
             {

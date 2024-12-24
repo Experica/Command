@@ -37,8 +37,8 @@ namespace Experica.NetEnv
 
         protected override void OnAwake()
         {
-            xlinerenderer = Experica.AddXLine(name: "XAxis", parent: transform);
-            ylinerenderer = Experica.AddYLine(name: "YAxis", parent: transform);
+            xlinerenderer = Base.AddXLine(name: "XAxis", parent: transform);
+            ylinerenderer = Base.AddYLine(name: "YAxis", parent: transform);
             OnColor(default, Color.Value);
             OnWidth(default, Width.Value);
             OnSize(default, Size.Value);
