@@ -24,88 +24,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Experica.NetEnv;
-using UnityEngine.VFX;
-using IceStorm;
-using YamlDotNet.Serialization;
 
 namespace Experica.Command
 {
-    public class CommandConfigManager
-    {
-        public bool AutoLoadSaveLastConfig { get; set; } = true;
-        public string LastConfigFilePath { get; set; } = "";
-
-        public CommandConfig config = new();
-
-        public static CommandConfigManager Load(string configmanagerpath = Base.CommandConfigManagerPath)
-        {
-            CommandConfigManager cfgmanager = null;
-            if (File.Exists(configmanagerpath))
-            {
-                cfgmanager = configmanagerpath.ReadYamlFile<CommandConfigManager>();
-            }
-            if (cfgmanager == null)
-            {
-                cfgmanager = new CommandConfigManager();
-                Debug.LogWarning($"Can not load CommandConfigManager: {configmanagerpath}, Use the default CommandConfigManager");
-            }
-
-            if (cfgmanager.AutoLoadSaveLastConfig)
-            {
-                cfgmanager.LoadConfig();
-            }
-            return cfgmanager;
-        }
-
-        public bool LoadConfig() => LoadConfig(LastConfigFilePath);
-
-        public bool LoadConfig(string configfilepath)
-        {
-            CommandConfig cfg = null; bool isvalidfile = false;
-            if (File.Exists(configfilepath))
-            {
-                cfg = configfilepath.ReadYamlFile<CommandConfig>();
-                isvalidfile = true;
-            }
-            if (cfg == null)
-            {
-                cfg = new CommandConfig();
-                Debug.LogWarning($"Can not load CommandConfig: {configfilepath}, Use the default CommandConfig");
-            }
-
-            cfg.EnvCrossInheritRule ??= CommandConfig.DefaultEnvCrossInheritRule();
-            config = cfg;
-            return isvalidfile;
-        }
-
-        public void Save(string configmanagerpath = Base.CommandConfigManagerPath)
-        {
-            if (AutoLoadSaveLastConfig)
-            {
-                SaveConfig();
-            }
-            configmanagerpath.WriteYamlFile(this);
-        }
-
-        public bool SaveConfig() => SaveConfig(LastConfigFilePath);
-
-        public bool SaveConfig(string configfilepath)
-        {
-            bool success = false;
-            if (string.IsNullOrEmpty(configfilepath))
-            {
-                configfilepath = Base.SaveFile("Save Config File");
-            }
-            if (!string.IsNullOrEmpty(configfilepath))
-            {
-                configfilepath.WriteYamlFile(config);
-                success = true;
-            }
-            else { Debug.LogWarning($"Invalid file path: {configfilepath}, skip saving config"); }
-            return success;
-        }
-    }
-
     public class CommandConfig : DataClass
     {
         public bool IsSaveExOnQuit { get; set; } = true;
@@ -178,5 +99,9 @@ namespace Experica.Command
             return rule;
         }
 
+        public override void Validate()
+        {
+            EnvCrossInheritRule ??= DefaultEnvCrossInheritRule();
+        }
     }
 }

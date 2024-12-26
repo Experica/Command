@@ -42,10 +42,10 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
-#if COMMAND
 using System.Windows.Forms;
 using MethodInvoker = Fasterflect.MethodInvoker;
+
+#if COMMAND
 //using Microsoft.CodeAnalysis;
 //using Microsoft.CodeAnalysis.CSharp;
 #endif
@@ -452,6 +452,86 @@ namespace Experica
         /// </summary>
         public void RefreshExtendProperties() => extendproperties = ExtendParam.ToDictionary(kv => kv.Key, kv => new DictSource<object>(ExtendParam, kv.Key));
 
+        /// <summary>
+        /// empty func for derived class to implement customized validation
+        /// </summary>
+        public virtual void Validate() { }
+    }
+
+    public class ConfigManager<T> where T : DataClass, new()
+    {
+        public bool AutoLoadSaveLastConfig { get; set; } = true;
+        public string LastConfigFilePath { get; set; } = "";
+
+        public T config = new();
+
+        public static ConfigManager<T> Load(string configmanagerpath)
+        {
+            ConfigManager<T> cfgmanager = null;
+            if (File.Exists(configmanagerpath))
+            {
+                cfgmanager = configmanagerpath.ReadYamlFile<ConfigManager<T>>();
+            }
+            if (cfgmanager == null)
+            {
+                cfgmanager = new ConfigManager<T>();
+                Debug.LogWarning($"Can not load ConfigManager<{nameof(T)}>: {configmanagerpath}, Use the default ConfigManager<{nameof(T)}>");
+            }
+
+            if (cfgmanager.AutoLoadSaveLastConfig)
+            {
+                cfgmanager.LoadConfig();
+            }
+            return cfgmanager;
+        }
+
+        public bool LoadConfig() => LoadConfig(LastConfigFilePath);
+
+        public bool LoadConfig(string configfilepath)
+        {
+            T cfg = null; bool isvalidfile = false;
+            if (File.Exists(configfilepath))
+            {
+                cfg = configfilepath.ReadYamlFile<T>();
+                isvalidfile = true;
+            }
+            if (cfg == null)
+            {
+                cfg = new T();
+                Debug.LogWarning($"Can not load {nameof(T)}: {configfilepath}, Use the default {nameof(T)}");
+            }
+
+            cfg.Validate();
+            config = cfg;
+            return isvalidfile;
+        }
+
+        public void Save(string configmanagerpath)
+        {
+            if (AutoLoadSaveLastConfig)
+            {
+                SaveConfig();
+            }
+            configmanagerpath.WriteYamlFile(this);
+        }
+
+        public bool SaveConfig() => SaveConfig(LastConfigFilePath);
+
+        public bool SaveConfig(string configfilepath)
+        {
+            bool success = false;
+            if (string.IsNullOrEmpty(configfilepath))
+            {
+                configfilepath = Base.SaveFile("Save Config File");
+            }
+            if (!string.IsNullOrEmpty(configfilepath))
+            {
+                configfilepath.WriteYamlFile(config);
+                success = true;
+            }
+            else { Debug.LogWarning($"Invalid file path: {configfilepath}, skip saving config"); }
+            return success;
+        }
     }
 
     public enum CondPushTarget
@@ -554,8 +634,10 @@ namespace Experica
         public const uint ExperimentVersion = 3;
         public const uint ExperimentSessionVersion = 0;
         public const uint CommandConfigVersion = 0;
+        public const uint EnvironmentConfigVersion = 0;
         public const string EmptyScene = "Empty";
         public const string CommandConfigManagerPath = "CommandConfigManager.yaml";
+        public const string EnvironmentConfigManagerPath = "EnvironmentConfigManager.yaml";
         public static string ProjectRootDir = Path.GetDirectoryName(UnityEngine. Application.dataPath);
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
 
@@ -1280,6 +1362,65 @@ namespace Experica
         //    return cond;
         //}
 
+
+        #region System Dialog
+        public static string OpenFile(string title = "Open File ...")
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = title,
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public static string SaveFile(string title = "Save File ...")
+        {
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = title,
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public static string ChooseDir(string title = "Choose Directory ...")
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = title;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedPath;
+            }
+            return null;
+        }
+
+        public static bool YesNoDialog(string msg = "Yes or No?")
+        {
+            if (MessageBox.Show(msg, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void WarningDialog(string msg = "This is a Warning.")
+        {
+            MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        #endregion
+
 #if COMMAND
         public static IRecorder GetSpikeGLXRecorder(string host = "localhost", int port = 4142)
         {
@@ -1695,61 +1836,7 @@ namespace Experica
             return null;
         }
 
-        public static string OpenFile(string title = "Open File ...")
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Title = title,
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.FileName;
-            }
-            return null;
-        }
-
-        public static string SaveFile(string title = "Save File ...")
-        {
-            SaveFileDialog dialog = new SaveFileDialog
-            {
-                Title = title,
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Filter = "File (*.yaml;*.cs)|*.yaml;*.cs|All Files (*.*)|*.*"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.FileName;
-            }
-            return null;
-        }
-
-        public static string ChooseDir(string title = "Choose Directory ...")
-        {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = true;
-            dialog.Description = title;
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.SelectedPath;
-            }
-            return null;
-        }
-
-        public static bool YesNoDialog(string msg = "Yes or No?")
-        {
-            if (MessageBox.Show(msg, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static void WarningDialog(string msg = "This is a Warning.")
-        {
-            MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+        
 
         public static Display GetDisplay(this string displayid, Dictionary<string, Display> displays)
         {

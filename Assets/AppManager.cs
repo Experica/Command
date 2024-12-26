@@ -45,7 +45,7 @@ namespace Experica.Command
 {
     public class AppManager : MonoBehaviour
     {
-        public CommandConfigManager cfgmgr = CommandConfigManager.Load();
+        public ConfigManager<CommandConfig> cfgmgr = ConfigManager<CommandConfig>.Load(Base.CommandConfigManagerPath);
         public UI ui;
 
         public Toggle host, server, start, startsession, pause;
@@ -101,7 +101,7 @@ namespace Experica.Command
                 exsmgr.SaveExSession();
             }
             exmgr.Clear();
-            cfgmgr.Save();
+            cfgmgr.Save(Base.CommandConfigManagerPath);
             agentstub.StartStopAgentStub(false);
             return true;
         }
