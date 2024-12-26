@@ -13,6 +13,14 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.724252
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@Marker~OrthoCamera: 2
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
+  Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
   Size@Quad@Quad: 10 10 10
@@ -25,21 +33,13 @@ EnvParam:
   PositionOffset@Quad@Quad: 0 0 0
   Position@Quad@Quad: 0 0 0
   Visible@Quad@Quad: true
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
-  Mark@Marker@Marker~OrthoCamera: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
+Eye: Both
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: I:\
 DataPath: 
 Input: false
@@ -98,7 +98,7 @@ EventSyncProtocol:
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: FULL
+CondTestShow: ALL
 NotifyExperimenter: false
 Version: 3
 Config: 

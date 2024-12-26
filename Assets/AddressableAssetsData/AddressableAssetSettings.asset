@@ -24,11 +24,11 @@ MonoBehaviour:
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_EnableJsonCatalog: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
@@ -69,31 +69,31 @@ MonoBehaviour:
       m_Id: f0fb37b2580d2df4a8be4cd7d4363d10
       m_ProfileName: Default
       m_Values:
-      - m_Id: dd01dc3379388374f925ed486728dd91
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: 19f62e183b3c19b42a5d3f6757bf3a6d
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-      - m_Id: e3dba1ac2040e6449addc13bff266592
-        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: 712374febdfb09340a4a299100430be1
         m_Value: 'ServerData/[BuildTarget]'
       - m_Id: a986c31829f8dc8449a34cbb7f271327
         m_Value: <undefined>
+      - m_Id: dd01dc3379388374f925ed486728dd91
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: e3dba1ac2040e6449addc13bff266592
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
     m_ProfileEntryNames:
-    - m_Id: dd01dc3379388374f925ed486728dd91
-      m_Name: BuildTarget
-      m_InlineUsage: 0
     - m_Id: 19f62e183b3c19b42a5d3f6757bf3a6d
       m_Name: Local.BuildPath
-      m_InlineUsage: 0
-    - m_Id: e3dba1ac2040e6449addc13bff266592
-      m_Name: Local.LoadPath
       m_InlineUsage: 0
     - m_Id: 712374febdfb09340a4a299100430be1
       m_Name: Remote.BuildPath
       m_InlineUsage: 0
     - m_Id: a986c31829f8dc8449a34cbb7f271327
       m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: dd01dc3379388374f925ed486728dd91
+      m_Name: BuildTarget
+      m_InlineUsage: 0
+    - m_Id: e3dba1ac2040e6449addc13bff266592
+      m_Name: Local.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:

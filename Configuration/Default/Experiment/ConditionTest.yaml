@@ -11,7 +11,7 @@ Subject_Birth: ''
 Subject_Size: 0 0 0
 Subject_Weight: 6.4
 Subject_Log: 
-EnvPath: Plaid
+EnvPath: Grating
 EnvParam:
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
@@ -19,49 +19,39 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
   Mark@Marker@Marker~OrthoCamera: false
-  Rotation@Plaid@Plaid: 0 0 0
-  RotationOffset@Plaid@Plaid: 0 0 0
-  Ori0@Plaid@Plaid: 0
-  OriOffset0@Plaid@Plaid: 0
-  Ori1@Plaid@Plaid: -90
-  OriOffset1@Plaid@Plaid: 0
-  Size@Plaid@Plaid: 25 25 25
-  Diameter@Plaid@Plaid: 25
-  MaskType@Plaid@Plaid: Disk
-  MaskRadius@Plaid@Plaid: 0.5
-  MaskSigma@Plaid@Plaid: 0.15
-  Luminance@Plaid@Plaid: 0.5
-  Contrast@Plaid@Plaid: 1
-  SpatialFreq0@Plaid@Plaid: 0.2
-  SpatialFreq1@Plaid@Plaid: 0.2
-  TemporalFreq0@Plaid@Plaid: 0
-  TemporalFreq1@Plaid@Plaid: 0
-  ModulateTemporalFreq0@Plaid@Plaid: 0.2
-  ModulateTemporalFreq1@Plaid@Plaid: 0.2
-  ModulateTemporalPhase0@Plaid@Plaid: 0
-  ModulateTemporalPhase1@Plaid@Plaid: 0
-  SpatialPhase0@Plaid@Plaid: 0
-  SpatialPhase1@Plaid@Plaid: 0
-  MinColor@Plaid@Plaid: 0 1 0 1
-  MaxColor@Plaid@Plaid: 1 0 0 1
-  PauseTime@Plaid@Plaid: false
-  PauseModulateTime@Plaid@Plaid: true
-  GratingType0@Plaid@Plaid: Square
-  GratingType1@Plaid@Plaid: Square
-  ModulateType0@Plaid@Plaid: Square
-  ModulateType1@Plaid@Plaid: Square
-  ReverseTime@Plaid@Plaid: false
-  Duty0@Plaid@Plaid: 0.5
-  Duty1@Plaid@Plaid: 0.5
-  ModulateDuty0@Plaid@Plaid: 0.5
-  ModulateDuty1@Plaid@Plaid: 0.5
-  TimeSecond@Plaid@Plaid: 0
-  ModulateTimeSecond@Plaid@Plaid: 0
-  PositionOffset@Plaid@Plaid: 0 0 0
-  Position@Plaid@Plaid: 0 0 0
-  Visible@Plaid@Plaid: false
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 0
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 10 10 10
+  Diameter@Grating@Grating: 10
+  MaskType@Grating@Grating: None
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
+  PauseTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Square
+  ModulateType@Grating@Grating: Square
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 0
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 0 0 0
+  Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic

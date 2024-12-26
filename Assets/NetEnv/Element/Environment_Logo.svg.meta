@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4dd2c4218b0b0a84bb1f249ffa3ea578
+guid: 6512e1268e77d454ca4413489c844d7d
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -8,27 +8,27 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
-  svgType: 0
+  svgType: 2
   texturedSpriteMeshType: 0
-  svgPixelsPerUnit: 100
-  gradientResolution: 64
+  svgPixelsPerUnit: 256
+  gradientResolution: 256
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
-  advancedMode: 0
+  advancedMode: 1
   predefinedResolutionIndex: 1
   targetResolution: 1080
   resolutionMultiplier: 1
-  stepDistance: 10
-  samplingStepDistance: 100
-  maxCordDeviationEnabled: 0
-  maxCordDeviation: 1
-  maxTangentAngleEnabled: 0
-  maxTangentAngle: 5
+  stepDistance: 0.1
+  samplingStepDistance: 1000
+  maxCordDeviationEnabled: 1
+  maxCordDeviation: 0.1
+  maxTangentAngleEnabled: 1
+  maxTangentAngle: 0.1
   keepTextureAspectRatio: 1
-  textureSize: 256
+  textureSize: 1024
   textureWidth: 256
   textureHeight: 256
   wrapMode: 0
@@ -51,5 +51,5 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: 1e3c70cc10f4b284dac6cb7222391c02
+      spriteID: 0f6e5c69d8bc4984099f7dfb2b50ca69
     PhysicsOutlines: []

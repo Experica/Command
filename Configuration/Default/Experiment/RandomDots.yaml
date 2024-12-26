@@ -19,7 +19,7 @@ EnvParam:
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
+  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
   Mark@Marker@Marker~OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
@@ -38,7 +38,7 @@ CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: I:\
