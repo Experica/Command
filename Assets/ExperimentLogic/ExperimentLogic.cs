@@ -758,7 +758,7 @@ namespace Experica.Command
 
 
         /// <summary>
-        /// empty user virtual function called when "None-Empty" scene loaded and parsed, for customized env manipulation logic
+        /// empty user virtual function called when scene loaded and parsed, for customized env manipulation logic
         /// </summary>
         public virtual void OnSceneReady()
         {

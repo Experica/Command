@@ -291,6 +291,7 @@ namespace Experica.Command
         public void OnSceneLoadEventCompleted(string scene)
         {
             exmgr.el.envmgr.ParseScene(scene);
+            exmgr.el.OnSceneReady();
 
             if (exmgr.el.envmgr.Empty)
             {
@@ -299,7 +300,6 @@ namespace Experica.Command
             }
             else
             {
-                exmgr.el.OnSceneReady();
                 // init user envparam values
                 exmgr.el.envmgr.SetParams(exmgr.el.ex.EnvParam);
                 // apply user inherit rules
@@ -310,8 +310,8 @@ namespace Experica.Command
 
                 ui.UpdateEnv();
                 ui.UpdateView();
-                exmgr.OnReady();
             }
+            exmgr.OnReady();
         }
 
         public bool OnNotifyCondTest(CONDTESTPARAM name, List<object> value)

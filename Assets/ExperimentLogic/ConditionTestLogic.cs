@@ -150,7 +150,7 @@ public class ConditionTestLogic : ExperimentLogic
 
     public override void OnSceneReady()
     {
-        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(),spawn:true, parse: false);
+        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(),spawn:true, parse: true);
     }
 
     public override bool Guide

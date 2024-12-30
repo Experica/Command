@@ -56,16 +56,20 @@ namespace Experica.NetEnv
             ParseScene();
         }
 
+        public void Clear()
+        {
+            go.Clear();
+            active_go.Clear();
+            go_nb_nv.Clear();
+            go_nb_rpc.Clear();
+            MainCamera.Clear();
+        }
+
         public void ParseScene()
         {
             if (Scene.IsValid())
             {
-                go.Clear();
-                active_go.Clear();
-                go_nb_nv.Clear();
-                go_nb_rpc.Clear();
-                MainCamera.Clear();
-
+                Clear();
                 foreach (var rgo in Scene.GetRootGameObjects())
                 {
                     ParseGameObject(rgo, null);
