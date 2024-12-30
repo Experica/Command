@@ -38,6 +38,18 @@ namespace Experica.Command
 
         public AppManager appmgr;
 
+        /// <summary>
+        /// NetworkManager and NetworkController have same lifetime(as the same GameObject components),
+        /// so we register events only once here when NetworkManager has initialized.
+        /// </summary>
+        void Start()
+        {
+            if (NetworkManager.Singleton != null)
+            {
+                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+            }
+        }
+
         public bool StartHostServer(bool ishost = true)
         {
             var isstarted = false;
@@ -54,15 +66,21 @@ namespace Experica.Command
             return isstarted;
         }
 
+        void OnClientConnectedCallback(ulong obj)
+        {
+            // When a client connected and synchronized, we force all NetworkVariables update to trigger OnValueChanged callbacks on the client.
+            appmgr.exmgr.el.envmgr.RefreshParams();
+        }
+
         void NetworkSceneManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
             appmgr.OnSceneLoadEventCompleted(sceneName);
         }
 
-        public void Shutdown(bool cleanscene=true)
+        public void Shutdown(bool cleanscene = true)
         {
             var nm = NetworkManager.Singleton;
-            if (nm!=null && nm.IsListening)
+            if (nm != null && nm.IsListening)
             {
                 nm.Shutdown();
                 if (cleanscene)
@@ -77,7 +95,7 @@ namespace Experica.Command
         public void LoadScene(string scene, LoadSceneMode mode = LoadSceneMode.Single)
         {
             var nm = NetworkManager.Singleton;
-            if (nm!=null && nm.IsServer)
+            if (nm != null && nm.IsServer)
             {
                 var status = nm.SceneManager.LoadScene(scene, mode);
                 if (status != SceneEventProgressStatus.Started)
@@ -87,7 +105,7 @@ namespace Experica.Command
             }
         }
 
-        public void UnLoadScene(Scene scene) 
+        public void UnLoadScene(Scene scene)
         {
             var nm = NetworkManager.Singleton;
             if (nm != null && nm.IsServer)
@@ -96,6 +114,43 @@ namespace Experica.Command
                 if (status != SceneEventProgressStatus.Started)
                 {
                     Debug.LogError($"Failed to unload {scene} with a {nameof(SceneEventProgressStatus)}: {status}");
+                }
+            }
+        }
+
+        public bool IsNetworkHideFromAll(NetworkObject no)
+        {
+            int count = 0;
+            var obs = no.GetObservers();
+            while (obs.MoveNext()) { count++; }
+            return count == 0;
+        }
+
+        public void NetworkShowHideAll(NetworkObject no, bool isshow)
+        {
+            if (isshow) { NetworkShowToAll(no); } else { NetworkHideFromAll(no); }
+        }
+
+        public void NetworkShowToAll(NetworkObject no)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in nm.ConnectedClientsIds)
+                {
+                    no.NetworkShow(c);
+                }
+            }
+        }
+
+        public void NetworkHideFromAll(NetworkObject no)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in nm.ConnectedClientsIds)
+                {
+                    no.NetworkHide(c);
                 }
             }
         }
@@ -276,11 +331,5 @@ namespace Experica.Command
         //    envconnid.Remove(conn.connectionId);
         //}
 
-        //public override void OnServerReady(NetworkConnection conn)
-        //{
-        //    base.OnServerReady(conn);
-        //    // when a client loaded scene and been spawned, refresh all syncvars in the scene
-        //    uicontroller.ForcePushEnv();
-        //}
     }
-    }
+}

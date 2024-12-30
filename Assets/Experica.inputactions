@@ -1,5 +1,5 @@
 {
-    "name": "InputSystem_Actions",
+    "name": "Experica",
     "maps": [
         {
             "name": "Player",
@@ -27,7 +27,7 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -992,13 +992,22 @@
             ]
         },
         {
-            "name": "Command",
+            "name": "Experica",
             "id": "1469436b-66e0-4980-ab19-e1d2b6f1a0a7",
             "actions": [
                 {
                     "name": "ToggleHost",
                     "type": "Button",
                     "id": "6155f914-a379-49ef-9be9-96b83d2a3060",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleClient",
+                    "type": "Button",
+                    "id": "368e4ef2-f43c-43d2-9a5e-3b08c2be9788",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1026,6 +1035,24 @@
                     "name": "ToggleGuide",
                     "type": "Button",
                     "id": "4bdc1a79-11e9-41b6-bc95-df5be984da64",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleNetVisible",
+                    "type": "Button",
+                    "id": "b26f6ac3-17d8-4975-a83f-4057438037b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleCursor",
+                    "type": "Button",
+                    "id": "068cc9cf-0980-4f61-84ca-292380985733",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1090,6 +1117,39 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "ToggleHost",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "c4ea2c9c-7d2b-4db2-8d89-4ae199393f6a",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleClient",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "07bb3e3a-26db-4805-9229-560cb3bffd41",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleClient",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "610fd30d-c100-435a-9c8c-0f17524c0641",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleClient",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1222,6 +1282,72 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "ToggleGuide",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "b52c061c-44b4-4796-9f94-0475ce3d7121",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleNetVisible",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "51f8a0cf-8958-409f-b109-5110b4d407f8",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleNetVisible",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "85d206f0-aba1-4c92-9453-ac0b7eda7d2b",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleNetVisible",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "c9be9405-0a32-4230-82fe-11a923a80dea",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleCursor",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "3a3db700-65e9-436b-adec-b53e4dbaf0cc",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "432292ac-f7ea-4746-b78a-4cc02fc96d06",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleCursor",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

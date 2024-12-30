@@ -33,17 +33,18 @@ namespace Experica.Editor
     {
         static string builddir = Path.Combine(Base.ProjectRootDir, "Build");
         static string releaserootdir = Path.Combine(Base.ProjectRootDir, "Release");
+        static string product = Application.productName;
 
         [MenuItem("File/Release Build")]
         public static void Release()
         {
-            var builditems = new[] { "Command_Data", "D3D12", "MonoBleedingEdge", "Command.exe", "UnityCrashHandler64.exe", "UnityPlayer.dll" };
+            var builditems = new[] { $"{product}_Data", "D3D12", "MonoBleedingEdge", $"{product}.exe", "UnityCrashHandler64.exe", "UnityPlayer.dll" };
             var projectitems = new[] {  "ExperimentLogic", "Environment","Condition","Configuration", "Data","Tool",
-                 "CommandConfigManager.yaml", "LICENSE.md","README.md"};
+                 $"{product}ConfigManager.yaml", "LICENSE.md","README.md"};
             var allitems = builditems.Concat(projectitems).ToArray();
             var parentdir = Enumerable.Repeat(builddir, builditems.Length).Concat(Enumerable.Repeat(Base.ProjectRootDir, projectitems.Length)).ToArray();
 
-            var releasedir = Path.Combine(releaserootdir, $"Command_v{Application.version}");
+            var releasedir = Path.Combine(releaserootdir, $"{product}_v{Application.version}");
             if (Directory.Exists(releasedir))
             {
                 Directory.Delete(releasedir, true);
@@ -67,7 +68,7 @@ namespace Experica.Editor
                     itempath.CopyDirectory(Path.Combine(releasedir, allitems[i]), ".mp");
                 }
             }
-            Debug.Log("Build Released.");
+            Debug.Log($"{product} Build Released.");
         }
     }
 }

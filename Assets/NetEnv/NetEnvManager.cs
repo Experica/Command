@@ -683,9 +683,9 @@ namespace Experica.NetEnv
 
         public bool Empty => go.Count == 0;
 
-        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, bool parse = true)
+        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, bool spawn = true, bool parse = true)
         {
-            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform);
+            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, spawn);
             if (nb == null) { return null; }
             //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
             c.OnCameraChange += nb.UpdateView;
@@ -704,9 +704,9 @@ namespace Experica.NetEnv
             return cross;
         }
 
-        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null, bool parse = true)
+        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null, bool spawn = true, bool parse = true)
         {
-            var nb = Spawn<Circle>("Assets/NetEnv/Object/Circle.prefab", name, parent);
+            var nb = Spawn<Circle>("Assets/NetEnv/Object/Circle.prefab", name, parent, spawn);
             if (nb == null) { return null; }
             nb.Position.Value = position;
             nb.Size.Value = size;
@@ -724,9 +724,9 @@ namespace Experica.NetEnv
             return go.GetComponent<Dot>();
         }
 
-        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null, bool parse = true)
+        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null, bool spawn = true, bool parse = true)
         {
-            var nb = Spawn<DotTrail>("Assets/NetEnv/Object/DotTrail.prefab", name, parent);
+            var nb = Spawn<DotTrail>("Assets/NetEnv/Object/DotTrail.prefab", name, parent, spawn);
             if (nb == null) { return null; }
             nb.Position.Value = position;
             nb.Size.Value = size;
@@ -736,15 +736,22 @@ namespace Experica.NetEnv
             return nb;
         }
 
-        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool destroyWithScene = true)
+        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool spawn = true, bool destroyWithScene = true)
         {
             if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
             var go = GameObject.Instantiate(prefab);
             go.name = string.IsNullOrEmpty(name) ? Path.GetFileNameWithoutExtension(addressprefab) : name;
             var no = go.GetComponent<NetworkObject>();
-            if (no == null) { return default; }
-            no.Spawn(destroyWithScene);
-            if (parent != null) { no.TrySetParent(parent); }
+            if (no == null)
+            {
+                if (parent != null) { go.transform.parent = parent; }
+            }
+            else
+            {
+                if (!spawn) { no.CheckObjectVisibility += _ => false; }
+                no.Spawn(destroyWithScene);
+                if (parent != null) { no.TrySetParent(parent); }
+            }
             return go.GetComponent<T>();
         }
 

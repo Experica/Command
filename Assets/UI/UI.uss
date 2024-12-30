@@ -7,7 +7,35 @@
     flex-shrink: 0;
     height: 50px;
     flex-direction: row;
-    background-color: rgb(205, 205, 205);
+    background-color: rgb(200, 200, 200);
+}
+
+.MainMenuButton {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(140, 140, 140);
+    border-right-color: rgb(140, 140, 140);
+    border-top-color: rgb(140, 140, 140);
+    border-bottom-color: rgb(140, 140, 140);
+    background-color: rgb(210, 210, 210);
+    -unity-text-align: middle-center;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 4px;
+    margin-left: 4px;
+    padding-top: 10;
+    padding-bottom: 10;
+    padding-left: 12;
+    padding-right: 12;
+    font-size: 34;
+    -unity-font-style: bold;
+    text-overflow: ellipsis;
+}
+
+.MainMenuButton:hover {
+    background-color: rgb(235, 235, 235);
 }
 
 .MainContent {

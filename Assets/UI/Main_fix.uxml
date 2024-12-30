@@ -9,8 +9,8 @@
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
     <engine:VisualElement name="Root" class="Main">
         <engine:VisualElement name="MainMenu" class="MainMenu">
-            <engine:Button text="Config" name="Config" style="font-size: 40px;" />
-            <engine:Button text="About" name="About" style="font-size: 40px;" />
+            <engine:Button text="Config" name="Config" class="MainMenuButton" />
+            <engine:Button text="About" name="About" class="MainMenuButton" />
         </engine:VisualElement>
         <engine:VisualElement name="MainContent" class="MainContent">
             <engine:VisualElement name="CEC" style="flex-grow: 1; width: 32%; justify-content: space-between;">

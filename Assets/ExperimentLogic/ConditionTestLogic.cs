@@ -27,6 +27,7 @@ using Experica;
 using Experica.Command;
 using System.Linq;
 using Experica.NetEnv;
+using Unity.Netcode;
 
 /// <summary>
 /// Condition Test Logic {PreICI - Cond - SufICI} ..., with ScaleGrid visual guide and EnvParam manipulation through User Input Action
@@ -149,13 +150,19 @@ public class ConditionTestLogic : ExperimentLogic
 
     public override void OnSceneReady()
     {
-        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(), parse: false);
+        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(),spawn:true, parse: false);
     }
 
     public override bool Guide
     {
         get => scalegrid?.Visible.Value ?? false;
         set { if (scalegrid != null) { scalegrid.Visible.Value = value; } }
+    }
+
+    public override bool NetVisible
+    {
+        get { if (scalegrid != null) {return !IsNetworkHideFromAll(scalegrid); } else {return false; } }
+        set { if (scalegrid != null) { NetworkShowHideAll(scalegrid, value); } }
     }
 
     protected override void OnStartExperiment()

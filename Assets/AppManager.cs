@@ -193,6 +193,16 @@ namespace Experica.Command
             if (context.performed) { exmgr.el.Guide = !exmgr.el.Guide; }
         }
 
+        public void OnToggleNetVisibleAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { exmgr.el.NetVisible = !exmgr.el.NetVisible; }
+        }
+
+        public void OnToggleCursorAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) { Cursor.visible = !Cursor.visible; }
+        }
+
         public void OnQuitAction(InputAction.CallbackContext context)
         {
             if (context.performed) { Application.Quit(); }
@@ -294,6 +304,7 @@ namespace Experica.Command
                 exmgr.el.envmgr.SetParams(exmgr.el.ex.EnvParam);
                 // apply user inherit rules
                 exmgr.InheritEnv();
+                // we force all NetworkVariables update to trigger OnValueChanged callbacks
                 exmgr.el.envmgr.RefreshParams();
                 // uicontroller.SyncCurrentDisplayCLUT();
 

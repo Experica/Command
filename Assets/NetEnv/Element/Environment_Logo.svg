@@ -27,7 +27,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.5"
-     inkscape:cx="1037"
+     inkscape:cx="1038"
      inkscape:cy="243"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -67,19 +67,19 @@
      style="display:inline">
     <g
        id="g2"
-       transform="matrix(0.95653274,0,0,0.95653274,18.190358,20.631974)">
+       transform="matrix(0.8960564,0,0,0.8960564,49.012282,38.446693)">
       <circle
-         style="display:inline;fill:none;stroke:#262626;stroke-width:40;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:none;stroke:#262626;stroke-width:57.4993;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
          id="path1-8"
-         cx="522.77722"
-         cy="298.94855"
+         cx="523.66302"
+         cy="299.24384"
          r="120" />
       <circle
-         style="display:inline;fill:none;stroke:#066f26;stroke-width:45;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:none;stroke:#066f26;stroke-width:55.8001;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
          id="path1-9-8"
-         cx="522.77722"
-         cy="298.94855"
-         r="56" />
+         cx="523.66302"
+         cy="299.24384"
+         r="46.347134" />
     </g>
   </g>
 </svg>

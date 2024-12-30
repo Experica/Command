@@ -124,7 +124,11 @@ namespace Experica.NetEnv
 
         void OnDiameter(float p, float c)
         {
-            Size.Value = new Vector3(c, c, c);
+            if (IsServer)
+            {
+                // Only Server has write permission of NetworkVariable
+                Size.Value = new Vector3(c, c, c);
+            }
         }
 
         void OnColor(Color p, Color c)

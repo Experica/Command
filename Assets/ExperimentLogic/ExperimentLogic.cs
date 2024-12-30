@@ -28,6 +28,7 @@ using System.Threading;
 using System.Linq;
 using Experica.NetEnv;
 using MathNet.Numerics.Random;
+using Unity.Netcode;
 
 namespace Experica.Command
 {
@@ -464,6 +465,10 @@ namespace Experica.Command
         public void SetEnvParamByGameObject(string nvName, string goName, object value) => envmgr.SetParamByGameObject(nvName, goName, value);
 
 
+        public bool IsNetworkHideFromAll(NetworkBehaviour nb)=>appmgr.networkcontroller.IsNetworkHideFromAll(nb.NetworkObject);
+
+        public void NetworkShowHideAll(NetworkBehaviour nb, bool isshow) => appmgr.networkcontroller.NetworkShowHideAll(nb.NetworkObject, isshow);
+
         public void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = true)
         {
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(waittime_ms, name, value, notifyui));
@@ -763,6 +768,11 @@ namespace Experica.Command
         /// empty user virtual property for toggling logic specific visual guides
         /// </summary>
         public virtual bool Guide { get; set; }
+
+        /// <summary>
+        /// empty user virtual property for toggling logic specific visual guides Network Visibility(show/hide from connected clients)
+        /// </summary>
+        public virtual bool NetVisible { get; set; }
         #endregion
 
 

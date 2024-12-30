@@ -495,9 +495,45 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: cc756ae6-103f-42ed-9e5c-67cdad7f7d4d
     m_ActionName: 'Logic/Function5[/Keyboard/alt,/Keyboard/5]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 368e4ef2-f43c-43d2-9a5e-3b08c2be9788
+    m_ActionName: 'Experica/ToggleClient[/Keyboard/alt,/Keyboard/c]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 355740905}
+        m_TargetAssemblyTypeName: Experica.Command.AppManager, Experica.Command
+        m_MethodName: OnToggleCursorAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 068cc9cf-0980-4f61-84ca-292380985733
+    m_ActionName: 'Experica/ToggleCursor[/Keyboard/alt,/Keyboard/k]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 355740905}
+        m_TargetAssemblyTypeName: Experica.Command.AppManager, Experica.Command
+        m_MethodName: OnToggleNetVisibleAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b26f6ac3-17d8-4975-a83f-4057438037b2
+    m_ActionName: 'Experica/ToggleNetVisible[/Keyboard/alt,/Keyboard/i]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: Command
+  m_DefaultActionMap: Experica
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &355740907
@@ -725,7 +761,7 @@ MonoBehaviour:
   m_UseEncryption: 0
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
-  m_HeartbeatTimeoutMS: 500
+  m_HeartbeatTimeoutMS: 1000
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
@@ -755,7 +791,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 652919584}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 44c1fe305750c45468e0307cba8355f4, type: 2}
     TickRate: 1000
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0

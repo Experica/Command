@@ -111,7 +111,8 @@ namespace Experica.Command
         void OnAboutWindow(VisualElement parent)
         {
             var w = AboutWindow.Instantiate()[0];
-            w.Q<Label>("CommandVersion").text = Application.version;
+            w.Q<Label>("Product").text = Application.productName;
+            w.Q<Label>("ProductVersion").text = Application.version;
             w.Q<Label>("UnityVersion").text = Application.unityVersion;
             w.Q<Button>("Close").RegisterCallback<ClickEvent>(e => parent.Remove(w));
 

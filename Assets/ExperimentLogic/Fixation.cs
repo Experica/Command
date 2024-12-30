@@ -88,6 +88,17 @@ public class Fixation : ExperimentLogic
         }
     }
 
+    public override bool NetVisible
+    {
+        get { if (scalegrid != null) { return !IsNetworkHideFromAll(scalegrid); } else { return false; } }
+        set
+        {
+            if (scalegrid != null) { NetworkShowHideAll(scalegrid, value); }
+            if (fixcircle != null) { NetworkShowHideAll(fixcircle, value); }
+            if (fixtrail != null) { NetworkShowHideAll(fixtrail, value); }
+        }
+    }
+
     protected override void OnUpdate()
     {
         if (ex.Input && MoveAction.WasPerformedThisFrame() && fixtrail != null && fixtrail.Visible.Value)
