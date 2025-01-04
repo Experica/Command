@@ -52,18 +52,17 @@ namespace Experica.Command
 
         public bool StartHostServer(bool ishost = true)
         {
-            var isstarted = false;
+            bool isstart = false;
             var nm = NetworkManager.Singleton;
-            if (nm != null)
+            if (nm != null && !nm.IsListening)
             {
-                isstarted = ishost ? nm.StartHost() : nm.StartServer();
+                isstart = ishost ? nm.StartHost() : nm.StartServer();
+                if (isstart)
+                {
+                    nm.SceneManager.OnLoadEventCompleted += NetworkSceneManager_OnLoadEventCompleted;
+                }
             }
-
-            if (isstarted)
-            {
-                nm.SceneManager.OnLoadEventCompleted += NetworkSceneManager_OnLoadEventCompleted;
-            }
-            return isstarted;
+            return isstart;
         }
 
         void OnClientConnectedCallback(ulong obj)
@@ -74,7 +73,10 @@ namespace Experica.Command
 
         void NetworkSceneManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
-            appmgr.OnSceneLoadEventCompleted(sceneName);
+            appmgr.exmgr.el.envmgr.ParseScene(sceneName);
+            appmgr.exmgr.el.OnSceneReady(clientsCompleted);
+            appmgr.exmgr.el.OnPlayerReady();
+            appmgr.OnEnvLoadCompleted();
         }
 
         public void Shutdown(bool cleanscene = true)
@@ -82,6 +84,7 @@ namespace Experica.Command
             var nm = NetworkManager.Singleton;
             if (nm != null && nm.IsListening)
             {
+                nm.SceneManager.OnLoadEventCompleted -= NetworkSceneManager_OnLoadEventCompleted;
                 nm.Shutdown();
                 if (cleanscene)
                 {
@@ -129,9 +132,27 @@ namespace Experica.Command
             return count == 0;
         }
 
+        public void NetworkShowHideOnly(NetworkObject no,ulong clientid, bool isshow)
+        {
+            if (isshow) { NetworkShowOnlyTo(no,clientid); } else { NetworkHideOnlyFrom(no,clientid); }
+        }
+
         public void NetworkShowHideAll(NetworkObject no, bool isshow)
         {
             if (isshow) { NetworkShowToAll(no); } else { NetworkHideFromAll(no); }
+        }
+
+        public void NetworkShowOnlyTo(NetworkObject no, ulong clientid)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in nm.ConnectedClientsIds)
+                {
+                    if (c == clientid) { no.NetworkShow(c); }
+                    else { no.NetworkHide(c); }
+                }
+            }
         }
 
         public void NetworkShowToAll(NetworkObject no)
@@ -142,6 +163,19 @@ namespace Experica.Command
                 foreach (var c in nm.ConnectedClientsIds)
                 {
                     no.NetworkShow(c);
+                }
+            }
+        }
+
+        public void NetworkHideOnlyFrom(NetworkObject no,ulong clientid)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in nm.ConnectedClientsIds)
+                {
+                    if (c == clientid) { no.NetworkHide(c); }
+                    else { no.NetworkShow(c); }
                 }
             }
         }

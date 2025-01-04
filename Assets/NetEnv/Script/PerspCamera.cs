@@ -47,5 +47,15 @@ namespace Experica.NetEnv
         public HDAdditionalCameraData CameraHD => throw new NotImplementedException();
 
         public float Aspect => throw new NotImplementedException();
+
+        public void AskReportRpc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReportRpc(string name, float value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

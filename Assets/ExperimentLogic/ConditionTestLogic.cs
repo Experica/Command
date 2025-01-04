@@ -148,9 +148,17 @@ public class ConditionTestLogic : ExperimentLogic
     }
 
 
-    public override void OnSceneReady()
+    public override void OnSceneReady(List<ulong> clientids)
     {
-        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(),spawn:true, parse: true);
+        if (clientids.Count == 0) { return; }
+        for (var i = 0; i < clientids.Count; i++)
+        {
+            var cname = $"OrthoCamera{(i==0 ? "" : i)}";
+            var oc = envmgr.SpawnMarkerOrthoCamera( cname);
+            oc.OnReport = (string name, object value) => envmgr.SetParamByGameObject(name, cname, value);
+            scalegrid = envmgr.SpawnScaleGrid(oc, spawn: true, parse: true);
+            //appmgr.networkcontroller.NetworkShowOnlyTo(oc.NetworkObject, clientids[i]);
+        }
     }
 
     public override bool Guide

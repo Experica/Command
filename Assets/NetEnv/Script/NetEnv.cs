@@ -37,9 +37,9 @@ namespace Experica.NetEnv
     {
         None,
         Quad,
-        GratingQuad,
-        ImageQuad,
-        ImageArrayQuad,
+        Grating,
+        Plaid,
+        ImageList,
         Dots
     }
 
@@ -200,5 +200,7 @@ namespace Experica.NetEnv
         public Action<INetEnvCamera> OnCameraChange { get; set; }
         public Camera Camera { get; }
         public HDAdditionalCameraData CameraHD { get; }
+        public void AskReportRpc();
+        public void ReportRpc(string name, float value);
     }
 }

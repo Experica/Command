@@ -94,7 +94,8 @@ namespace Experica.Command
             exmgr.el?.StartStopExperiment(false);
             if (cfgmgr.config.IsSaveExOnQuit)
             {
-                exmgr.SaveEx();
+                // now only save in-scene object, where spwan object all null
+                //exmgr.SaveEx();
             }
             if (cfgmgr.config.IsSaveExSessionOnQuit)
             {
@@ -284,15 +285,10 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// whenever new scene loaded, we get access to scene parameters, apply logic specific env operations,
-        /// and finally update UI and get ready for running experiment
+        /// when env ready, we apply and inherit params, update UI and get ready for running experiment
         /// </summary>
-        /// <param name="scene"></param>
-        public void OnSceneLoadEventCompleted(string scene)
+        public void OnEnvLoadCompleted()
         {
-            exmgr.el.envmgr.ParseScene(scene);
-            exmgr.el.OnSceneReady();
-
             if (exmgr.el.envmgr.Empty)
             {
                 ui.ClearEnv();
@@ -306,6 +302,8 @@ namespace Experica.Command
                 exmgr.InheritEnv();
                 // we force all NetworkVariables update to trigger OnValueChanged callbacks
                 exmgr.el.envmgr.RefreshParams();
+                // ask all clients to report their main camera current states
+                exmgr.el.envmgr.AskMainCameraReport();
                 // uicontroller.SyncCurrentDisplayCLUT();
 
                 ui.UpdateEnv();

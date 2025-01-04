@@ -65,6 +65,26 @@ namespace Experica.NetEnv
             MainCamera.Clear();
         }
 
+        public void ClearGameObject(GameObject o)
+        {
+            string oname=null;
+            foreach(var n in go.Keys)
+            {
+                if (go[n] == o) { oname = n; break; }
+            }
+            if(o.tag=="MainCamera")
+            {
+                MainCamera.Remove(o.GetComponent<INetEnvCamera>());
+            }
+            if(!string.IsNullOrEmpty(oname))
+            {
+                go.Remove(oname);
+                active_go.Remove(oname);
+                go_nb_nv.Remove(oname);
+                go_nb_rpc.Remove(oname);
+            }
+        }
+
         public void ParseScene()
         {
             if (Scene.IsValid())
@@ -87,7 +107,7 @@ namespace Experica.NetEnv
 
         public void ParseGameObject(GameObject cgo, string parent, bool parsechild = true)
         {
-            var goname = string.IsNullOrEmpty(parent) ? cgo.name : cgo.name + '~' + parent;
+            var goname = string.IsNullOrEmpty(parent) ? cgo.name : parent + '/' + cgo.name;
             Dictionary<string, Dictionary<string, NetworkVariableSource>> nb_nv = new();
             foreach (var nb in cgo.GetComponents<NetworkBehaviour>())
             {
@@ -320,6 +340,14 @@ namespace Experica.NetEnv
                         p.NotifyNetworkValue();
                     }
                 }
+            }
+        }
+
+        public void AskMainCameraReport()
+        {
+            foreach(var c in MainCamera)
+            {
+                c.AskReportRpc();
             }
         }
 
@@ -687,6 +715,16 @@ namespace Experica.NetEnv
 
         public bool Empty => go.Count == 0;
 
+        public void Despawn(NetworkObject no,bool destroy=true)
+        {
+            if (no == null) { return; }
+            no.Despawn(destroy);
+            if(destroy)
+            {
+                ClearGameObject(no.gameObject);
+            }
+        }
+
         public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, bool spawn = true, bool parse = true)
         {
             var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, spawn);
@@ -740,7 +778,15 @@ namespace Experica.NetEnv
             return nb;
         }
 
-        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool spawn = true, bool destroyWithScene = true)
+        public OrthoCamera SpawnMarkerOrthoCamera(string name="OrthoCamera",Transform parent=null, bool destroyWithScene = true,bool parse=true)
+        {
+            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/MarkerOrthoCamera.prefab", name, parent,true,null,destroyWithScene);
+            if (nb == null) { return null; }
+            if (parse) { ParseGameObject(nb.gameObject); }
+            return nb;
+        }
+
+        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool spawn = true, ulong? clientid = null, bool destroyWithScene = true)
         {
             if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
             var go = GameObject.Instantiate(prefab);
@@ -753,7 +799,8 @@ namespace Experica.NetEnv
             else
             {
                 if (!spawn) { no.CheckObjectVisibility += _ => false; }
-                no.Spawn(destroyWithScene);
+                if (clientid.HasValue) { no.SpawnAsPlayerObject(clientid.Value, destroyWithScene); }
+                else { no.Spawn(destroyWithScene); }
                 if (parent != null) { no.TrySetParent(parent); }
             }
             return go.GetComponent<T>();

@@ -758,9 +758,18 @@ namespace Experica.Command
 
 
         /// <summary>
-        /// empty user virtual function called when scene loaded and parsed, for customized env manipulation logic
+        /// empty user virtual function called when server and connected clients have loaded and parsed scene,
+        /// here we do player spawning for each connected clients
         /// </summary>
-        public virtual void OnSceneReady()
+        public virtual void OnSceneReady(List<ulong> clientids)
+        {
+        }
+
+        /// <summary>
+        /// empty user virtual function called when scene and players all loaded/parsed, 
+        /// here we do scene decoration, such as guide spawning
+        /// </summary>
+        public virtual void OnPlayerReady()
         {
         }
 

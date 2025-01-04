@@ -638,7 +638,7 @@ namespace Experica
         public const string EmptyScene = "Empty";
         public const string CommandConfigManagerPath = "CommandConfigManager.yaml";
         public const string EnvironmentConfigManagerPath = "EnvironmentConfigManager.yaml";
-        public static string ProjectRootDir = Path.GetDirectoryName(UnityEngine. Application.dataPath);
+        public static string ProjectRootDir = Path.GetDirectoryName(UnityEngine.Application.dataPath);
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new();
 
         static Dictionary<string, Dictionary<string, Matrix<float>>> colormatrix = new();
@@ -1836,7 +1836,7 @@ namespace Experica
             return null;
         }
 
-        
+
 
         public static Display GetDisplay(this string displayid, Dictionary<string, Display> displays)
         {
@@ -2591,5 +2591,8 @@ namespace Experica
                     break;
             }
         }
+
+        public static float ScreenAspect => (float)UnityEngine.Screen.width / UnityEngine.Screen.height;
+
     }
 }

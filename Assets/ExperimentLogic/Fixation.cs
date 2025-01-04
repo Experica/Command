@@ -57,7 +57,7 @@ public class Fixation : ExperimentLogic
     /// <summary>
     /// add helpful visual guides
     /// </summary>
-    public override void OnSceneReady()
+    public override void OnPlayerReady()
     {
         fixdotposition = envmgr.GetNetworkVariable<Vector3>("FixDotPosition");
         // hook function to update only x/y positions

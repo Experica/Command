@@ -30,6 +30,7 @@ namespace Experica.NetEnv
 {
     public class OrthoCamera : NetworkBehaviour, INetEnvCamera
     {
+        public NetworkVariable<Vector3> Position = new(new Vector3(0f, 0f, -501f));
         /// <summary>
         /// Distance from screen to eye in arbitory unit
         /// </summary>
@@ -51,6 +52,22 @@ namespace Experica.NetEnv
         /// </summary>
         public NetworkVariable<bool> CLUT = new(true);
 
+        public Action<string, object> OnReport;
+
+
+        [Rpc(SendTo.Server)]
+        public void ReportRpc(string name, float value)
+        {
+            OnReport?.Invoke(name, value);
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        public void AskReportRpc()
+        {
+            // report to server this client's screen aspect ratio
+            ReportRpc("ScreenAspect", Base.ScreenAspect);
+        }
+
         /// <summary>
         /// Height of the camera viewport in visual field angle(degree)
         /// </summary>
@@ -67,7 +84,7 @@ namespace Experica.NetEnv
             get { return Camera.orthographicSize * 2f * Camera.aspect; }
         }
 
-        public float Aspect=>Camera.aspect;
+        public float Aspect => Camera.aspect;
 
         public float NearPlane
         {
@@ -93,13 +110,11 @@ namespace Experica.NetEnv
             tag = "MainCamera";
             Camera = GetComponent<Camera>();
             CameraHD = GetComponent<HDAdditionalCameraData>();
-            transform.localPosition = new Vector3(0f, 0f, -501f);
-            Camera.nearClipPlane = 1f;
-            Camera.farClipPlane = 1001f;
         }
 
         public override void OnNetworkSpawn()
         {
+            Position.OnValueChanged += OnPosition;
             ScreenToEye.OnValueChanged += OnScreenToEye;
             ScreenHeight.OnValueChanged += OnScreenHeight;
             ScreenAspect.OnValueChanged += OnScreenAspect;
@@ -109,11 +124,17 @@ namespace Experica.NetEnv
 
         public override void OnNetworkDespawn()
         {
+            Position.OnValueChanged -= OnPosition;
             ScreenToEye.OnValueChanged -= OnScreenToEye;
             ScreenHeight.OnValueChanged -= OnScreenHeight;
             ScreenAspect.OnValueChanged -= OnScreenAspect;
             BGColor.OnValueChanged -= OnBGColor;
             CLUT.OnValueChanged -= OnCLUT;
+        }
+
+        protected virtual void OnPosition(Vector3 p, Vector3 c)
+        {
+            transform.localPosition = c;
         }
 
         protected virtual void OnScreenToEye(float p, float c)
