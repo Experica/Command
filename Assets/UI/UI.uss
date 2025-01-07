@@ -166,11 +166,11 @@
 }
 
 .ToggleButtonBlue:hover {
-    background-color: rgb(67, 96, 191);
+    background-color: rgb(76, 100, 255);
 }
 
 .ToggleButtonBlue:checked {
-    background-color: rgb(38, 90, 255);
+    background-color: rgb(102, 123, 255);
 }
 
 .ToggleButtonBool {
@@ -187,6 +187,36 @@
 
 .Vector > VisualElement {
     flex-direction: row;
+}
+
+.Viewport {
+    border-width: 1px;
+    border-color: rgb(220, 220, 220);
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.Viewport > #Content {
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.Viewport > #Client {
+    position: Absolute;
+    top: 0;
+    left: 0;
+    margin-top: 5;
+    margin-right: 5;
+    margin-bottom: 5;
+    margin-left: 5;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 30;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    color: rgb(255, 255, 255);
 }
 
 .Panel {

@@ -70,7 +70,6 @@ namespace Experica.Command
         public AgentStub agentstub;
         public TaskScheduler unitymainthreadscheduler;
 
-        int lastwindowwidth = 1024, lastwindowheight = 768;
 
         void Awake()
         {
@@ -119,20 +118,19 @@ namespace Experica.Command
             set
             {
                 if (ui.uidoc.rootVisualElement.visible != value) { return; }
-                var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
+                var maincamera = exmgr.el.envmgr.MainCamera.First();
                 if (maincamera != null)
                 {
                     if (value)
                     {
                         ui.uidoc.rootVisualElement.visible = !value;
-                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
-                        maincamera.targetTexture = null;
+                        //exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)Screen.width / Screen.height);
+                        maincamera.Camera.targetTexture = null;
                     }
                     else
                     {
                         ui.uidoc.rootVisualElement.visible = !value;
                         ui.UpdateView();
-                        //viewpanel.UpdateViewport();
                     }
                 }
             }
@@ -158,6 +156,7 @@ namespace Experica.Command
             if (context.performed) { FullScreen = !FullScreen; }
         }
 
+        int lastwindowwidth = 1024, lastwindowheight = 768;
         public bool FullScreen
         {
             get { return Screen.fullScreen; }
@@ -166,25 +165,13 @@ namespace Experica.Command
                 if (Screen.fullScreen == value) { return; }
                 if (value)
                 {
-                    lastwindowwidth = Math.Max(1024, Screen.width);
-                    lastwindowheight = Math.Max(768, Screen.height);
+                    lastwindowwidth = Math.Max(800, Screen.width);
+                    lastwindowheight = Math.Max(600, Screen.height);
                     Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, cfgmgr.config.FullScreenMode);
-                    var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
-                    if (maincamera != null && maincamera.targetTexture == null)
-                    {
-                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)Screen.currentResolution.width / Screen.currentResolution.height);
-                        maincamera.targetTexture = null;
-                    }
                 }
                 else
                 {
                     Screen.SetResolution(lastwindowwidth, lastwindowheight, false);
-                    var maincamera = exmgr.el.envmgr.MainCamera.First().Camera;
-                    if (maincamera != null && maincamera.targetTexture == null)
-                    {
-                        exmgr.el.envmgr.SetActiveParam("ScreenAspect", (float)lastwindowwidth / lastwindowheight);
-                        maincamera.targetTexture = null;
-                    }
                 }
             }
         }
@@ -209,6 +196,13 @@ namespace Experica.Command
             if (context.performed) { Application.Quit(); }
         }
         #endregion
+
+        public void OnScreenSizeChanged()
+        {
+            if (exmgr.el.envmgr.MainCamera.Count == 0) { return; }
+            var lmc = exmgr.el.envmgr.MainCamera.Where(i => i.ClientID == NetworkManager.Singleton.LocalClientId).First();
+            lmc?.ReportRpc("ScreenAspect", Base.ScreenAspect);
+        }
 
         public void OnExSessionChoiceChanged(string newValue)
         {

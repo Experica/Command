@@ -98,7 +98,7 @@ namespace Experica.NetEnv
 
         public ulong ClientID
         {
-            get { return NetworkManager.LocalClientId; }
+            get; set;
         }
 
         public Action<INetEnvCamera> OnCameraChange { get; set; }

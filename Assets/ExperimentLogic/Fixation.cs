@@ -27,6 +27,7 @@ using Experica.Command;
 using System.Linq;
 using Experica.NetEnv;
 using Unity.Netcode;
+using System.Collections.Generic;
 
 /// <summary>
 /// Eye Fixation Task, with User Input Action mimicking eye movement, and helpful visual guides.
@@ -45,13 +46,29 @@ public class Fixation : ExperimentLogic
     public Vector2 FixPosition;
     public float FixDotDiameter;
     NetworkVariable<Vector3> fixdotposition;
-    ScaleGrid scalegrid;
+    protected List<ScaleGrid> scalegrid = new();
     DotTrail fixtrail;
     Circle fixcircle;
 
     protected override void Enable()
     {
         MoveAction = InputSystem.actions.FindActionMap("Logic").FindAction("Move");
+    }
+
+    public override void OnSceneReady(List<ulong> clientids)
+    {
+        scalegrid.Clear();
+        if (clientids.Count == 0) { return; }
+        for (var i = 0; i < clientids.Count; i++)
+        {
+            var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
+            var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientids[i]);
+            oc.OnCameraChange += _ => appmgr.ui.UpdateView();
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], spawn: true, parse: true);
+            sg.NetworkObject.NetworkShowOnlyTo(clientids[i]);
+            oc.NetworkObject.NetworkShowOnlyTo(clientids[i]);
+            scalegrid.Add(sg);
+        }
     }
 
     /// <summary>
@@ -70,19 +87,25 @@ public class Fixation : ExperimentLogic
         // hook a ExtendParam to a NetworkVariable
         ex.extendproperties["FixRadius"].propertyChanged += (o, e) => fixcircle.Size.Value = new(2 * (float)ex.ExtendParam["FixRadius"], 2 * (float)ex.ExtendParam["FixRadius"], 1);
 
-        scalegrid = envmgr.SpawnScaleGrid(envmgr.MainCamera.First(), parse: false);
-        fixdotposition.OnValueChanged += (p, c) => upxy(scalegrid, c); // center scalegrid with fixdot
-        upxy(scalegrid, fixdotposition.Value);
+        foreach (var sg in scalegrid)
+        {
+            fixdotposition.OnValueChanged += (p, c) => upxy(sg, c); // center scalegrid with fixdot
+            upxy(sg, fixdotposition.Value);
+        }
 
         fixtrail = envmgr.SpawnDotTrail(position: Vector3.back, size: new(0.25f, 0.25f, 1), color: new(1, 0.1f, 0.1f), parse: false);
     }
 
     public override bool Guide
     {
-        get => (scalegrid?.Visible.Value ?? false) || (fixcircle?.Visible.Value ?? false) || (fixtrail?.Visible.Value ?? false);
+        get
+        {
+            if (scalegrid.Count == 0) { return false; }
+            return scalegrid.First().Visible.Value;
+        }
         set
         {
-            if (scalegrid != null) { scalegrid.Visible.Value = value; }
+            foreach (var sg in scalegrid) { sg.Visible.Value = value; }
             if (fixcircle != null) { fixcircle.Visible.Value = value; }
             if (fixtrail != null) { fixtrail.Visible.Value = value; }
         }
@@ -90,12 +113,21 @@ public class Fixation : ExperimentLogic
 
     public override bool NetVisible
     {
-        get { if (scalegrid != null) { return !IsNetworkHideFromAll(scalegrid); } else { return false; } }
+        get
+        {
+            if (scalegrid.Count == 0) { return false; }
+            var sg = scalegrid.First();
+            return !sg.NetworkObject.IsNetworkHideFromAll();
+        }
         set
         {
-            if (scalegrid != null) { NetworkShowHideAll(scalegrid, value); }
-            if (fixcircle != null) { NetworkShowHideAll(fixcircle, value); }
-            if (fixtrail != null) { NetworkShowHideAll(fixtrail, value); }
+            foreach (var sg in scalegrid)
+            {
+                if (value) { sg.NetworkObject.NetworkShowOnlyTo(sg.ClientID); }
+                else { sg.NetworkObject.NetworkHideFromAll(); }
+            }
+            if (fixcircle != null) { fixcircle.NetworkObject.NetworkShowHideAll(value); }
+            if (fixtrail != null) { fixtrail.NetworkObject.NetworkShowHideAll(value); }
         }
     }
 

@@ -13,14 +13,6 @@ Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Dots
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.724252
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
-  Mark@Marker@Marker~OrthoCamera: false
   Rotation@Dots@Dots: 0 0 0
   RotationOffset@Dots@Dots: 0 0 0
   Dir@Dots@Dots: 45
@@ -34,11 +26,28 @@ EnvParam:
   Coherence@Dots@Dots: 0
   Position@Dots@Dots: 0 0 0
   Visible@Dots@Dots: true
+  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.66849
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
+  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
+  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
+  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
+  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
+  Size@ScaleGrid@OrthoCamera/ScaleGrid: 53.873 32.289 1
+  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
+  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Both
+Eye: Right
 RecordSession: HLV1
 RecordSite: ODL9
 DataDir: I:\

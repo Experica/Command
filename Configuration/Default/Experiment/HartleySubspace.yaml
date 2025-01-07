@@ -1,32 +1,24 @@
 ID: HartleySubspace
 Name: HartleySubspace
 Designer: Alex
-Experimenter: Alex
+Experimenter: LZ
 Log: 
 Subject_ID: Test
-Subject_Name: AF6
-Subject_Species: Macaque
+Subject_Name: AG5
+Subject_Species: M. F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
-  Mark@Marker@Marker~OrthoCamera: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 20 20 20
-  Diameter@Grating@Grating: 20
+  Size@Grating@Grating: 10 10 10
+  Diameter@Grating@Grating: 10
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
@@ -52,14 +44,31 @@ EnvParam:
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: 0 0 0
   Visible@Grating@Grating: true
+  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.66849
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
+  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
+  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
+  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
+  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
+  Size@ScaleGrid@OrthoCamera/ScaleGrid: 53.873 32.289 1
+  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
+  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: ConditionTestLogic
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODL9
-DataDir: X:\
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -117,7 +126,7 @@ EventSyncProtocol:
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: SHORT
+CondTestShow: ALL
 NotifyExperimenter: false
 Version: 3
 Config: 

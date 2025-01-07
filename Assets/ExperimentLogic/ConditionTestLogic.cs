@@ -35,7 +35,7 @@ using Unity.Netcode;
 public class ConditionTestLogic : ExperimentLogic
 {
     protected Dictionary<string, InputAction> useractions = new();
-    protected ScaleGrid scalegrid;
+    protected List<ScaleGrid> scalegrid = new();
 
     protected override void Enable()
     {
@@ -150,27 +150,46 @@ public class ConditionTestLogic : ExperimentLogic
 
     public override void OnSceneReady(List<ulong> clientids)
     {
+        scalegrid.Clear();
         if (clientids.Count == 0) { return; }
         for (var i = 0; i < clientids.Count; i++)
         {
-            var cname = $"OrthoCamera{(i==0 ? "" : i)}";
-            var oc = envmgr.SpawnMarkerOrthoCamera( cname);
-            oc.OnReport = (string name, object value) => envmgr.SetParamByGameObject(name, cname, value);
-            scalegrid = envmgr.SpawnScaleGrid(oc, spawn: true, parse: true);
-            //appmgr.networkcontroller.NetworkShowOnlyTo(oc.NetworkObject, clientids[i]);
+            var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
+            var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientids[i]);
+            oc.OnCameraChange += _ => appmgr.ui.UpdateView();
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], spawn: true, parse: true);
+            sg.NetworkObject.NetworkShowOnlyTo(clientids[i]);
+            oc.NetworkObject.NetworkShowOnlyTo(clientids[i]);
+            scalegrid.Add(sg);
         }
     }
 
     public override bool Guide
     {
-        get => scalegrid?.Visible.Value ?? false;
-        set { if (scalegrid != null) { scalegrid.Visible.Value = value; } }
+        get
+        {
+            if (scalegrid.Count == 0) { return false; }
+            return scalegrid.First().Visible.Value;
+        }
+        set { foreach (var sg in scalegrid) { sg.Visible.Value = value; } }
     }
 
     public override bool NetVisible
     {
-        get { if (scalegrid != null) {return !IsNetworkHideFromAll(scalegrid); } else {return false; } }
-        set { if (scalegrid != null) { NetworkShowHideAll(scalegrid, value); } }
+        get
+        {
+            if (scalegrid.Count == 0) { return false; }
+            var sg = scalegrid.First();
+            return !sg.NetworkObject.IsNetworkHideFromAll();
+        }
+        set
+        {
+            foreach (var sg in scalegrid)
+            {
+                if (value) { sg.NetworkObject.NetworkShowOnlyTo(sg.ClientID); }
+                else { sg.NetworkObject.NetworkHideFromAll(); }
+            }
+        }
     }
 
     protected override void OnStartExperiment()

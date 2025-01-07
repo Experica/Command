@@ -465,10 +465,6 @@ namespace Experica.Command
         public void SetEnvParamByGameObject(string nvName, string goName, object value) => envmgr.SetParamByGameObject(nvName, goName, value);
 
 
-        public bool IsNetworkHideFromAll(NetworkBehaviour nb)=>appmgr.networkcontroller.IsNetworkHideFromAll(nb.NetworkObject);
-
-        public void NetworkShowHideAll(NetworkBehaviour nb, bool isshow) => appmgr.networkcontroller.NetworkShowHideAll(nb.NetworkObject, isshow);
-
         public void WaitSetEnvActiveParam(float waittime_ms, string name, object value, bool notifyui = true)
         {
             StartCoroutine(WaitSetEnvActiveParam_Coroutine(waittime_ms, name, value, notifyui));

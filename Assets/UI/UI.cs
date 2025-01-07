@@ -53,6 +53,7 @@ namespace Experica.Command
         void OnEnable()
         {
             root = uidoc.rootVisualElement;
+            root.RegisterCallback<GeometryChangedEvent>(e => appmgr.OnScreenSizeChanged());
             mainmenu = root.Q("MainMenu");
             maincontent = root.Q("MainContent");
             // Main Menu
@@ -543,77 +544,58 @@ namespace Experica.Command
                 var inherits = nvfullnames.Select(i => el.ex.EnvInheritParam.Contains(i)).ToArray();
                 AddParamsFoldoutUI(nvfullnames, nvnames, nvsources, inherits, appmgr.ToggleEnvInherit, envcontent, goname);
             }
+            envcontent.scrollOffset = envcontent.contentRect.size;
         }
 
         public void ClearView() => viewcontent.Clear();
 
         public void UpdateView()
         {
-            var currentui = viewcontent.Query<TemplateContainer>().ToList();
-            var currentuiname = currentui.Select(i => i.name).ToList();
-            var currentcamera = appmgr.exmgr.el.envmgr.MainCamera;
-            var currentcameraname = currentcamera.Select(i => i.ClientID.ToString()).ToList();
-            var updateui = currentuiname.Intersect(currentcameraname);
-            var removeui = currentuiname.Except(currentcameraname);
-            var addui = currentcameraname.Except(currentuiname);
-            var total = updateui.Count() + addui.Count();
+            var nvp = viewcontent.childCount;
+            var nmc = appmgr.exmgr.el.envmgr.MainCamera.Count;
+            if (nvp > nmc)
+            {
+                for (var i = nvp - 1; i > nmc - 1; i--)
+                {
+                    viewcontent.RemoveAt(i);
+                }
+            }
+            else if (nmc > nvp)
+            {
+                for (var i = 0; i < nmc - nvp; i++)
+                {
+                    viewcontent.Add(viewport.Instantiate()[0]);
+                }
+            }
 
-            if (updateui.Count() > 0)
+            for (var i = 0; i < viewcontent.childCount; i++)
             {
-                foreach (var p in updateui)
-                {
-                    var ui = currentui[currentuiname.IndexOf(p)];
-                    var vp = ui.Q<Image>("Viewport");
-                    var camera = currentcamera[currentcameraname.IndexOf(p)];
-                    var rt = GetRenderTexture(viewcontent.layout.size, camera.Aspect, (RenderTexture)vp.image);
-                    vp.style.height = rt.height;
-                    vp.style.width = rt.width;
-                    camera.Camera.targetTexture = rt;
-                }
+                var ui = viewcontent[i];
+                var mc = appmgr.exmgr.el.envmgr.MainCamera[i];
+                ui.name = mc.ClientID.ToString();
+                ui.Q<Label>("Client").text = ui.name;
+                var img = ui.Q<Image>("Content");
+                var size = new Vector2(0.97f * viewcontent.layout.width / viewcontent.childCount, 0.97f * viewcontent.layout.height);
+                var rt = GetRenderTexture(size, mc.Aspect, (RenderTexture)img.image);
+                mc.Camera.targetTexture = rt;
+                img.image = rt;
+                img.style.width = rt.width;
+                img.style.height = rt.height;
             }
-            if (removeui.Count() > 0)
-            {
-                foreach (var p in removeui)
-                {
-                    viewcontent.Remove(currentui[currentuiname.IndexOf(p)]);
-                }
-            }
-            if (addui.Count() > 0)
-            {
-                foreach (var p in addui)
-                {
-                    AddCameraUI(currentcamera[currentcameraname.IndexOf(p)]);
-                }
-            }
-        }
-
-        void AddCameraUI(INetEnvCamera camera)
-        {
-            var ui = viewport.Instantiate();
-            ui.name = camera.ClientID.ToString();
-            var vp = ui.Q<Image>("Viewport");
-            var rt = GetRenderTexture(viewcontent.layout.size, camera.Aspect);
-            vp.image = rt;
-            vp.style.height = rt.height;
-            vp.style.width = rt.width;
-            camera.Camera.targetTexture = rt;
-            camera.OnCameraChange += _ => UpdateView();
-            viewcontent.Add(ui);
         }
 
         RenderTexture GetRenderTexture(Vector2 size, float aspect, RenderTexture rt = null)
         {
-            float width, height;
             if (size.x / size.y >= aspect)
             {
-                width = size.y * aspect;
-                height = size.y;
+                size.x = size.y * aspect;
             }
             else
             {
-                width = size.x;
-                height = size.x / aspect;
+                size.y = size.x / aspect;
             }
+            var width = Mathf.Max(1, Mathf.FloorToInt(size.x));
+            var height = Mathf.Max(1, Mathf.FloorToInt(size.y));
             if (rt == null)
             {
                 return new RenderTexture(
@@ -625,8 +607,8 @@ namespace Experica.Command
                     msaaSamples = appmgr.cfgmgr.config.AntiAliasing,
                     colorFormat = RenderTextureFormat.ARGBHalf,
                     sRGB = false,
-                    width = Mathf.Max(1, Mathf.FloorToInt(width)),
-                    height = Mathf.Max(1, Mathf.FloorToInt(height)),
+                    width = width,
+                    height = height,
                     volumeDepth = 1
                 })
                 {
@@ -636,42 +618,42 @@ namespace Experica.Command
             else
             {
                 rt.Release();
-                rt.width = Mathf.Max(1, Mathf.FloorToInt(width));
-                rt.height = Mathf.Max(1, Mathf.FloorToInt(height));
+                rt.width = width;
+                rt.height = height;
                 return rt;
             }
         }
 
         public void OnNewCondTest()
         {
-           // var ctmgr = appmgr.exmgr.el.condtestmgr;
-           // var show = appmgr.exmgr.el.ex.CondTestShow;
-           //if(show== CONDTESTSHOW.NONE || ctmgr.CondTestIndex < 0) { return; }
-           //var cnames = condtestcontent.columns.Select(c => c.title).ToList();
-           // var ct = ctmgr.CurrentCondTest;
-           // var newc = ct.Keys.Except(cnames);
-           // var oldci = Enumerable.Range(0,cnames.Count).Where(i=> ct.ContainsKey(cnames[i]));
-           // //foreach (var c in oldci)
-           // //{
-           // //  condtestcontent.columns[c].m;
-           // //}
-           // condtestcontent.dataSource ??= ctmgr.CondTest;
-           // condtestcontent.bindingSourceSelectionMode = BindingSourceSelectionMode.AutoAssign;
-           // foreach (var c in newc)
-           // {
-           //     var col = new Column
-           //     {
-           //         name = c,
-           //         title = c,
-           //         width = 100,
-           //         //bindingPath = PropertyPath.FromKey(c).ToString(),
-           //         bindingPath = $"[{c}]",
-           //         makeCell = () => new Label(),
-           //         bindCell = (VisualElement v, int i) =>  (v as Label).text = ctmgr.CondTest[c][i].Convert<string>() ?? ""
-           //     };
-           //     condtestcontent.columns.Add(col);
-           // }
-           // condtestcontent.RefreshItems();
+            // var ctmgr = appmgr.exmgr.el.condtestmgr;
+            // var show = appmgr.exmgr.el.ex.CondTestShow;
+            //if(show== CONDTESTSHOW.NONE || ctmgr.CondTestIndex < 0) { return; }
+            //var cnames = condtestcontent.columns.Select(c => c.title).ToList();
+            // var ct = ctmgr.CurrentCondTest;
+            // var newc = ct.Keys.Except(cnames);
+            // var oldci = Enumerable.Range(0,cnames.Count).Where(i=> ct.ContainsKey(cnames[i]));
+            // //foreach (var c in oldci)
+            // //{
+            // //  condtestcontent.columns[c].m;
+            // //}
+            // condtestcontent.dataSource ??= ctmgr.CondTest;
+            // condtestcontent.bindingSourceSelectionMode = BindingSourceSelectionMode.AutoAssign;
+            // foreach (var c in newc)
+            // {
+            //     var col = new Column
+            //     {
+            //         name = c,
+            //         title = c,
+            //         width = 100,
+            //         //bindingPath = PropertyPath.FromKey(c).ToString(),
+            //         bindingPath = $"[{c}]",
+            //         makeCell = () => new Label(),
+            //         bindCell = (VisualElement v, int i) =>  (v as Label).text = ctmgr.CondTest[c][i].Convert<string>() ?? ""
+            //     };
+            //     condtestcontent.columns.Add(col);
+            // }
+            // condtestcontent.RefreshItems();
         }
 
         public void OnCondTestClear()

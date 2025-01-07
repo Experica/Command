@@ -61,7 +61,7 @@ namespace Experica.Command
         SelectToggleButtonGreenPathInput
     }
 
-    public static class CommandExtension
+    public static class CommandBase
     {
         public const uint ExperimentDataVersion = 2;
         static Dictionary<string, Dictionary<string, List<object>>> colordata = new Dictionary<string, Dictionary<string, List<object>>>();

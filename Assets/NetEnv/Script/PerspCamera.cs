@@ -38,8 +38,6 @@ namespace Experica.NetEnv
 
         public float FarPlane => throw new NotImplementedException();
 
-        public ulong ClientID => throw new NotImplementedException();
-
         public Action<INetEnvCamera> OnCameraChange { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Camera Camera => throw new NotImplementedException();
@@ -47,6 +45,9 @@ namespace Experica.NetEnv
         public HDAdditionalCameraData CameraHD => throw new NotImplementedException();
 
         public float Aspect => throw new NotImplementedException();
+
+        public ulong ClientID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 
         public void AskReportRpc()
         {

@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace Experica.NetEnv
 {
-    public class ScaleGrid : NetEnvVisual
+    public class ScaleGrid : NetEnvVisual,INetEnvPlayer
     {
         public NetworkVariable<Color> AxisColor = new(new(0.1f, 0.1f, 0.1f));
         public NetworkVariable<float> AxisWidth = new(0.2f);
@@ -40,6 +40,17 @@ namespace Experica.NetEnv
         protected List<LineRenderer> xticks = new();
         protected List<LineRenderer> yticks = new();
 
+        public ulong ClientID { get; set; }
+
+        public void AskReportRpc()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ReportRpc(string name, float value)
+        {
+            throw new System.NotImplementedException();
+        }
 
         protected override void OnAwake()
         {

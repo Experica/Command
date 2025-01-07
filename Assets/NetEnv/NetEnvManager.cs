@@ -67,16 +67,16 @@ namespace Experica.NetEnv
 
         public void ClearGameObject(GameObject o)
         {
-            string oname=null;
-            foreach(var n in go.Keys)
+            string oname = null;
+            foreach (var n in go.Keys)
             {
                 if (go[n] == o) { oname = n; break; }
             }
-            if(o.tag=="MainCamera")
+            if (o.tag == "MainCamera")
             {
                 MainCamera.Remove(o.GetComponent<INetEnvCamera>());
             }
-            if(!string.IsNullOrEmpty(oname))
+            if (!string.IsNullOrEmpty(oname))
             {
                 go.Remove(oname);
                 active_go.Remove(oname);
@@ -345,7 +345,7 @@ namespace Experica.NetEnv
 
         public void AskMainCameraReport()
         {
-            foreach(var c in MainCamera)
+            foreach (var c in MainCamera)
             {
                 c.AskReportRpc();
             }
@@ -715,20 +715,21 @@ namespace Experica.NetEnv
 
         public bool Empty => go.Count == 0;
 
-        public void Despawn(NetworkObject no,bool destroy=true)
+        public void Despawn(NetworkObject no, bool destroy = true)
         {
             if (no == null) { return; }
             no.Despawn(destroy);
-            if(destroy)
+            if (destroy)
             {
                 ClearGameObject(no.gameObject);
             }
         }
 
-        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, bool spawn = true, bool parse = true)
+        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, ulong clientid = 0, bool spawn = true, bool parse = true)
         {
             var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, spawn);
             if (nb == null) { return null; }
+            nb.ClientID = clientid;
             //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
             c.OnCameraChange += nb.UpdateView;
             nb.UpdateView(c);
@@ -778,11 +779,13 @@ namespace Experica.NetEnv
             return nb;
         }
 
-        public OrthoCamera SpawnMarkerOrthoCamera(string name="OrthoCamera",Transform parent=null, bool destroyWithScene = true,bool parse=true)
+        public OrthoCamera SpawnMarkerOrthoCamera(string name = "OrthoCamera", ulong clientid = 0, Transform parent = null, bool destroyWithScene = true, bool parse = true)
         {
-            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/MarkerOrthoCamera.prefab", name, parent,true,null,destroyWithScene);
+            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/MarkerOrthoCamera.prefab", name, parent, true, null, destroyWithScene);
             if (nb == null) { return null; }
+            nb.ClientID = clientid;
             if (parse) { ParseGameObject(nb.gameObject); }
+            nb.OnReport = (string name, object value) => SetParamByGameObject(name, nb.gameObject.name, value);
             return nb;
         }
 

@@ -30,6 +30,7 @@ using Unity.Properties;
 using UnityEngine.UIElements;
 using System.Runtime.CompilerServices;
 using System.Reflection.Emit;
+using System.Linq;
 
 namespace Experica.NetEnv
 {
@@ -118,7 +119,7 @@ namespace Experica.NetEnv
     /// <summary>
     /// UI datasource wrapper of reflected "Value" property of NetworkVariable for UI data binding and network sync
     /// </summary>
-    public class NetworkVariableSource : INotifyBindablePropertyChanged,IDataSource<object>
+    public class NetworkVariableSource : INotifyBindablePropertyChanged, IDataSource<object>
     {
         public string Name => Property.Name;
         public Type Type => Property.Type;
@@ -137,7 +138,7 @@ namespace Experica.NetEnv
             var propertytype = nvtype.GenericTypeArguments[0]; // T
             var propertyname = "Value";
             //var methodname = "Set";
-            
+
             if (!nvtypename.QueryProperty(propertyname, out Property))
             {
                 Property = new Property(propertytype, propertyname, nvtype.DelegateForGetPropertyValue(propertyname), nvtype.DelegateForSetPropertyValue(propertyname));
@@ -161,7 +162,7 @@ namespace Experica.NetEnv
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
 
-        public void NotifyValue()        {            Notify("Value");        }
+        public void NotifyValue() { Notify("Value"); }
         public void SetValueWithoutNotify(object value) { Property.Setter(NV, value); }
 
         public T GetValue<T>() { return Value.Convert<T>(Type); }
@@ -176,7 +177,7 @@ namespace Experica.NetEnv
         }
 
         public void NotifyNetworkValue()
-        { 
+        {
             NV.SetDirty(true);
             dynamic nv = NV;
             dynamic v = nv.Value;
@@ -188,7 +189,14 @@ namespace Experica.NetEnv
         public NetworkBehaviour GetBehaviour() { return NV.GetBehaviour(); }
     }
 
-    public interface INetEnvCamera
+    public interface INetEnvPlayer
+    {
+        public ulong ClientID { get; set; }
+        public void AskReportRpc();
+        public void ReportRpc(string name, float value);
+    }
+
+    public interface INetEnvCamera : INetEnvPlayer
     {
         public GameObject gameObject { get; }
         public float Height { get; }
@@ -196,11 +204,106 @@ namespace Experica.NetEnv
         public float Aspect { get; }
         public float NearPlane { get; }
         public float FarPlane { get; }
-        public ulong ClientID { get; }
         public Action<INetEnvCamera> OnCameraChange { get; set; }
         public Camera Camera { get; }
         public HDAdditionalCameraData CameraHD { get; }
-        public void AskReportRpc();
-        public void ReportRpc(string name, float value);
+    }
+
+    public static class NetEnvBase
+    {
+        public static List<ulong> Observers(this NetworkObject no)
+        {
+            List<ulong> list = new();
+            var obs = no.GetObservers();
+            while (obs.MoveNext()) { list.Add(obs.Current); }
+            return list;
+        }
+
+        public static bool IsNetworkHideFromAll(this NetworkObject no)
+        {
+            int count = 0;
+            var obs = no.GetObservers();
+            while (obs.MoveNext()) { count++; }
+            return count == 0;
+        }
+
+        public static bool IsNetworkShowToAll(this NetworkObject no)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                int count = 0;
+                var obs = no.GetObservers();
+                while (obs.MoveNext()) { count++; }
+                return count == nm.ConnectedClientsIds.Count;
+            }
+            return false;
+        }
+
+        public static bool IsNetworkHideFrom(this NetworkObject no, ulong clientid)
+        {
+            bool ishide = true;
+            var obs = no.GetObservers();
+            while (obs.MoveNext()) { if (obs.Current == clientid) { ishide = false; break; } }
+            return ishide;
+        }
+
+        public static void NetworkShowHideOnly(this NetworkObject no, ulong clientid, bool isshow)
+        {
+            if (isshow) { NetworkShowOnlyTo(no, clientid); } else { NetworkHideOnlyFrom(no, clientid); }
+        }
+
+        public static void NetworkShowHideAll(this NetworkObject no, bool isshow)
+        {
+            if (isshow) { NetworkShowToAll(no); } else { NetworkHideFromAll(no); }
+        }
+
+        public static void NetworkShowOnlyTo(this NetworkObject no, ulong clientid)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                var ss = no.Observers();
+                var hs = nm.ConnectedClientsIds.Except(ss).ToArray();
+                if (hs.Contains(clientid)) { no.NetworkShow(clientid); }
+                foreach (var c in ss) { if (c != clientid) { no.NetworkHide(c); } }
+            }
+        }
+
+        public static void NetworkShowToAll(this NetworkObject no)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in nm.ConnectedClientsIds.Except(no.Observers()))
+                {
+                    no.NetworkShow(c);
+                }
+            }
+        }
+
+        public static void NetworkHideOnlyFrom(this NetworkObject no, ulong clientid)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                var ss = no.Observers();
+                var hs = nm.ConnectedClientsIds.Except(ss).ToArray();
+                if (ss.Contains(clientid)) { no.NetworkHide(clientid); }
+                foreach (var c in hs) { if (c != clientid) { no.NetworkShow(c); } }
+            }
+        }
+
+        public static void NetworkHideFromAll(this NetworkObject no)
+        {
+            var nm = NetworkManager.Singleton;
+            if (nm != null && nm.IsServer)
+            {
+                foreach (var c in no.Observers())
+                {
+                    no.NetworkHide(c);
+                }
+            }
+        }
     }
 }

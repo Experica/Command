@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
     <ui:VisualElement name="Root" class="Panel">
         <ui:Label text="View" name="Title" />
-        <ui:VisualElement name="Content" style="flex-direction: row; flex-grow: 1; justify-content: space-between; flex-wrap: wrap;" />
+        <ui:VisualElement name="Content" style="flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; flex-grow: 1;" />
         <ui:VisualElement name="Status" />
     </ui:VisualElement>
 </ui:UXML>

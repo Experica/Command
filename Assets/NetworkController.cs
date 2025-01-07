@@ -124,74 +124,6 @@ namespace Experica.Command
             }
         }
 
-        public bool IsNetworkHideFromAll(NetworkObject no)
-        {
-            int count = 0;
-            var obs = no.GetObservers();
-            while (obs.MoveNext()) { count++; }
-            return count == 0;
-        }
-
-        public void NetworkShowHideOnly(NetworkObject no,ulong clientid, bool isshow)
-        {
-            if (isshow) { NetworkShowOnlyTo(no,clientid); } else { NetworkHideOnlyFrom(no,clientid); }
-        }
-
-        public void NetworkShowHideAll(NetworkObject no, bool isshow)
-        {
-            if (isshow) { NetworkShowToAll(no); } else { NetworkHideFromAll(no); }
-        }
-
-        public void NetworkShowOnlyTo(NetworkObject no, ulong clientid)
-        {
-            var nm = NetworkManager.Singleton;
-            if (nm != null && nm.IsServer)
-            {
-                foreach (var c in nm.ConnectedClientsIds)
-                {
-                    if (c == clientid) { no.NetworkShow(c); }
-                    else { no.NetworkHide(c); }
-                }
-            }
-        }
-
-        public void NetworkShowToAll(NetworkObject no)
-        {
-            var nm = NetworkManager.Singleton;
-            if (nm != null && nm.IsServer)
-            {
-                foreach (var c in nm.ConnectedClientsIds)
-                {
-                    no.NetworkShow(c);
-                }
-            }
-        }
-
-        public void NetworkHideOnlyFrom(NetworkObject no,ulong clientid)
-        {
-            var nm = NetworkManager.Singleton;
-            if (nm != null && nm.IsServer)
-            {
-                foreach (var c in nm.ConnectedClientsIds)
-                {
-                    if (c == clientid) { no.NetworkHide(c); }
-                    else { no.NetworkShow(c); }
-                }
-            }
-        }
-
-        public void NetworkHideFromAll(NetworkObject no)
-        {
-            var nm = NetworkManager.Singleton;
-            if (nm != null && nm.IsServer)
-            {
-                foreach (var c in nm.ConnectedClientsIds)
-                {
-                    no.NetworkHide(c);
-                }
-            }
-        }
-
         public bool IsServer => NetworkManager.Singleton?.IsServer ?? false;
         public bool IsHost => NetworkManager.Singleton?.IsHost ?? false;
 
@@ -277,46 +209,6 @@ namespace Experica.Command
         //    }
         //}
 
-        //public void SpwanVLAnalysisManager()
-        //{
-        //    GameObject go = Instantiate(vlabanalysismanagerprefab);
-        //    var am = go.GetComponent<AnalysisManager>();
-        //    am.uicontroller = uicontroller;
-        //    uicontroller.alsmanager = am;
-        //    go.name = "VLAnalysisManager";
-        //    go.transform.SetParent(transform, false);
-
-        //    NetworkServer.Spawn(go);
-        //}
-
-        //public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
-        //{
-        //    GameObject go = Instantiate(Resources.Load<GameObject>("VLControlManager"));
-        //    var ctrl = go.GetComponent<ControlManager>();
-        //    ctrl.uicontroller = uicontroller;
-        //    uicontroller.ctrlmanager = ctrl;
-        //    go.name = "VLControlManager";
-        //    go.transform.SetParent(transform, false);
-
-        //    NetworkServer.AddPlayerForConnection(conn, go, playerControllerId);
-        //}
-
-        //void AspectRatioHandler(NetworkMessage netMsg)
-        //{
-        //    //var r = netMsg.ReadMessage<FloatMessage>().value;
-        //    var r = float.Parse(netMsg.ReadMessage<StringMessage>().value);
-        //    if (LogFilter.logDebug)
-        //    {
-        //        Debug.Log("Receive AspectRatio Message: " + r.ToString());
-        //    }
-        //    var connid = netMsg.conn.connectionId; var strkey = MsgType.MsgTypeToString(MsgType.AspectRatio);
-        //    if (!peerinfo.ContainsKey(connid))
-        //    {
-        //        peerinfo[connid] = new Dictionary<string, object>();
-        //    }
-        //    peerinfo[connid][strkey] = r;
-        //    uicontroller.OnAspectRatioMessage(r);
-        //}
 
         ///// <summary>
         ///// send BeginSyncFrame Msg before lateupdate where syncvars being batched by UNET
@@ -355,17 +247,6 @@ namespace Experica.Command
         //    {
         //        uicontroller.exmanager.el.issyncingframe = false;
         //    }
-        //}
-
-        ///// <summary>
-        ///// Called on the server when a client disconnects. Removes the connections.
-        ///// </summary>
-        ///// <param name="conn">The connection to remove from the server</param>
-        //public override void OnServerDisconnect(NetworkConnection conn)
-        //{
-        //    base.OnServerDisconnect(conn);
-        //    peerinfo.Remove(conn.connectionId);
-        //    envconnid.Remove(conn.connectionId);
         //}
 
     }
