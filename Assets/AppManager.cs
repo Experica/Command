@@ -1,5 +1,5 @@
 ﻿/*
-UIController.cs is part of the Experica.
+AppManager.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -200,7 +200,7 @@ namespace Experica.Command
         public void OnScreenSizeChanged()
         {
             if (exmgr.el.envmgr.MainCamera.Count == 0) { return; }
-            var lmc = exmgr.el.envmgr.MainCamera.Where(i => i.ClientID == NetworkManager.Singleton.LocalClientId).First();
+            var lmc = exmgr.el.envmgr.MainCamera.Where(i => i.ClientID == NetworkManager.ServerClientId).First();
             lmc?.ReportRpc("ScreenAspect", Base.ScreenAspect);
         }
 
@@ -271,11 +271,6 @@ namespace Experica.Command
                 }
                 return tex;
             }
-        }
-
-        public void OnAspectRatioMessage(float ratio)
-        {
-            exmgr.el.envmgr.SetParam("ScreenAspect", ratio, true);
         }
 
         /// <summary>

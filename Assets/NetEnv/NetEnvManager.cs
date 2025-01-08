@@ -707,7 +707,7 @@ namespace Experica.NetEnv
                 else
                 {
                     go = p.gameObject;
-                    name = name + '~' + go.name;
+                    name = go.name + '/' + name;
                 }
             }
             return name;
@@ -725,15 +725,14 @@ namespace Experica.NetEnv
             }
         }
 
-        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, ulong clientid = 0, bool spawn = true, bool parse = true)
+        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
-            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, spawn);
+            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, netvis, clientid, destroyWithScene, parse);
             if (nb == null) { return null; }
             nb.ClientID = clientid;
             //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);
             c.OnCameraChange += nb.UpdateView;
             nb.UpdateView(c);
-            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
@@ -747,15 +746,14 @@ namespace Experica.NetEnv
             return cross;
         }
 
-        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null, bool spawn = true, bool parse = true)
+        public Circle SpawnCircle(Vector3 size, Color color, Vector3 position = default, float width = 0.1f, string name = null, Transform parent = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
-            var nb = Spawn<Circle>("Assets/NetEnv/Object/Circle.prefab", name, parent, spawn);
+            var nb = Spawn<Circle>("Assets/NetEnv/Object/Circle.prefab", name, parent, netvis, clientid, destroyWithScene, parse);
             if (nb == null) { return null; }
             nb.Position.Value = position;
             nb.Size.Value = size;
             nb.Color.Value = color;
             nb.Width.Value = width;
-            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
@@ -767,29 +765,27 @@ namespace Experica.NetEnv
             return go.GetComponent<Dot>();
         }
 
-        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null, bool spawn = true, bool parse = true)
+        public DotTrail SpawnDotTrail(Vector3 size, Color color, Vector3 position = default, float trailwidthscale = 0.5f, string name = null, Transform parent = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
-            var nb = Spawn<DotTrail>("Assets/NetEnv/Object/DotTrail.prefab", name, parent, spawn);
+            var nb = Spawn<DotTrail>("Assets/NetEnv/Object/DotTrail.prefab", name, parent, netvis, clientid, destroyWithScene, parse);
             if (nb == null) { return null; }
             nb.Position.Value = position;
             nb.Size.Value = size;
             nb.Color.Value = color;
             nb.TrailWidthScale.Value = trailwidthscale;
-            if (parse) { ParseGameObject(nb.gameObject); }
             return nb;
         }
 
-        public OrthoCamera SpawnMarkerOrthoCamera(string name = "OrthoCamera", ulong clientid = 0, Transform parent = null, bool destroyWithScene = true, bool parse = true)
+        public OrthoCamera SpawnMarkerOrthoCamera(string name = "OrthoCamera", Transform parent = null, NetVisibility netvis = NetVisibility.Single, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
-            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/MarkerOrthoCamera.prefab", name, parent, true, null, destroyWithScene);
+            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/MarkerOrthoCamera.prefab", name, parent, netvis, clientid, destroyWithScene, parse);
             if (nb == null) { return null; }
             nb.ClientID = clientid;
-            if (parse) { ParseGameObject(nb.gameObject); }
-            nb.OnReport = (string name, object value) => SetParamByGameObject(name, nb.gameObject.name, value);
+            nb.OnReport = (string name, object value) => SetParamByGameObject(name, GetGameObjectFullName(nb.gameObject), value);
             return nb;
         }
 
-        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, bool spawn = true, ulong? clientid = null, bool destroyWithScene = true)
+        public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, NetVisibility netvis = NetVisibility.All, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
             if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
             var go = GameObject.Instantiate(prefab);
@@ -801,14 +797,34 @@ namespace Experica.NetEnv
             }
             else
             {
-                if (!spawn) { no.CheckObjectVisibility += _ => false; }
-                if (clientid.HasValue) { no.SpawnAsPlayerObject(clientid.Value, destroyWithScene); }
-                else { no.Spawn(destroyWithScene); }
+                switch (netvis)
+                {
+                    case NetVisibility.None:
+                        no.SpawnWithObservers = false;
+                        break;
+                    case NetVisibility.Single:
+                        no.SpawnWithObservers = true;
+                        no.CheckObjectVisibility += id => id == clientid;
+                        break;
+                    case NetVisibility.All:
+                        no.SpawnWithObservers = true;
+                        break;
+                }
+                no.Spawn(destroyWithScene);
                 if (parent != null) { no.TrySetParent(parent); }
+                if (parse) { ParseGameObject(go); }
             }
             return go.GetComponent<T>();
         }
 
+        public GameObject Instantiate(string addressprefab, string name = null, Transform parent = null)
+        {
+            if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
+            var go = GameObject.Instantiate(prefab);
+            go.name = string.IsNullOrEmpty(name) ? Path.GetFileNameWithoutExtension(addressprefab) : name;
+            if (parent != null) { go.transform.parent = parent; }
+            return go;
+        }
     }
 }
 

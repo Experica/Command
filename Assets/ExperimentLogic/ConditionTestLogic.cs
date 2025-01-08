@@ -155,11 +155,9 @@ public class ConditionTestLogic : ExperimentLogic
         for (var i = 0; i < clientids.Count; i++)
         {
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
-            var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientids[i]);
+            var oc = envmgr.SpawnMarkerOrthoCamera(cname,clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
-            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], spawn: true, parse: true);
-            sg.NetworkObject.NetworkShowOnlyTo(clientids[i]);
-            oc.NetworkObject.NetworkShowOnlyTo(clientids[i]);
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: true);
             scalegrid.Add(sg);
         }
     }

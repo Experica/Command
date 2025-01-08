@@ -205,17 +205,17 @@
     position: Absolute;
     top: 0;
     left: 0;
-    margin-top: 5;
-    margin-right: 5;
-    margin-bottom: 5;
-    margin-left: 5;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 6;
     padding-top: 0;
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
     font-size: 30;
     -unity-font-style: bold;
-    -unity-text-align: middle-left;
+    -unity-text-align: top-left;
     color: rgb(255, 255, 255);
 }
 

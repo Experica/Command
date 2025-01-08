@@ -810,7 +810,10 @@ namespace Experica.Command
                     switch (esp.Routes[i])
                     {
                         case EventSyncRoute.Display:
-                            SetEnvActiveParam("Mark", syncstate);
+                            foreach (var c in envmgr.MainCamera)
+                            {
+                                SetEnvActiveParamByGameObject("Mark", NetEnvManager.GetGameObjectFullName(c.gameObject) + '/' + "Marker", syncstate);
+                            }
                             break;
                         case EventSyncRoute.DigitalOut:
                             gpio?.BitOut(bit: Config.EventSyncCh, value: syncstate);

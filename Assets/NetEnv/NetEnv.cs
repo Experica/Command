@@ -209,6 +209,13 @@ namespace Experica.NetEnv
         public HDAdditionalCameraData CameraHD { get; }
     }
 
+    public enum NetVisibility
+    {
+        None,
+        Single,
+        All
+    }
+
     public static class NetEnvBase
     {
         public static List<ulong> Observers(this NetworkObject no)
@@ -238,14 +245,6 @@ namespace Experica.NetEnv
                 return count == nm.ConnectedClientsIds.Count;
             }
             return false;
-        }
-
-        public static bool IsNetworkHideFrom(this NetworkObject no, ulong clientid)
-        {
-            bool ishide = true;
-            var obs = no.GetObservers();
-            while (obs.MoveNext()) { if (obs.Current == clientid) { ishide = false; break; } }
-            return ishide;
         }
 
         public static void NetworkShowHideOnly(this NetworkObject no, ulong clientid, bool isshow)
