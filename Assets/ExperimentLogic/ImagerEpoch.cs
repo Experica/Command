@@ -198,13 +198,11 @@ public class ImagerEpoch : ConditionTestLogic
         {
             case TRIALSTATE.NONE:
                 if (EnterTrialState(TRIALSTATE.PREITI) == EnterStateCode.ExFinish) { return; }
-                SyncFrame();
                 break;
             case TRIALSTATE.PREITI:
                 if (PreITIHold >= ex.PreITI)
                 {
                     EnterTrialState(TRIALSTATE.TRIAL, true);
-                    SyncFrame();
                 }
                 break;
             case TRIALSTATE.TRIAL:
@@ -213,14 +211,12 @@ public class ImagerEpoch : ConditionTestLogic
                     case CONDSTATE.NONE:
                         StartEpochRecord(condtestmgr.CondTestIndex);
                         EnterCondState(CONDSTATE.PREICI);
-                        SyncFrame();
                         break;
                     case CONDSTATE.PREICI:
                         if (PreICIHold >= ex.PreICI)
                         {
                             EnterCondState(CONDSTATE.COND, true);
                             SetEnvActiveParam("Visible", true);
-                            SyncFrame();
                         }
                         break;
                     case CONDSTATE.COND:
@@ -228,7 +224,6 @@ public class ImagerEpoch : ConditionTestLogic
                         {
                             EnterCondState(CONDSTATE.SUFICI, true);
                             SetEnvActiveParam("Visible", false);
-                            SyncFrame();
                         }
                         break;
                     case CONDSTATE.SUFICI:
@@ -237,7 +232,6 @@ public class ImagerEpoch : ConditionTestLogic
                             StopEpochRecord();
                             EnterCondState(CONDSTATE.NONE);
                             EnterTrialState(TRIALSTATE.SUFITI, true);
-                            SyncFrame();
                         }
                         break;
                 }

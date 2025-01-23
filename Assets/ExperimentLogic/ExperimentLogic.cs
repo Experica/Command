@@ -76,18 +76,9 @@ namespace Experica.Command
         protected IGPIO gpio;
         protected bool syncstate;
 
-        public Action
-            /* called anywhere in update will guarantee:
-            1. all updates will be received and processed in a whole in all Environment connected to Command,
-               so that rendered frame is the same as the Command.
-            2. logic will not resume until last frame has been fully processed by all Environment,
-               so that no frame will ever dropped/missed by any Environment.
-            */
-            SyncFrame;
-
-        bool issyncingframe = false, islogicactive = false;
+        bool islogicactive = false;
         public double PreICIOnTime, CondOnTime, SufICIOnTime, PreITIOnTime,
-            TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime, SyncFrameOnTime;
+            TrialOnTime, SufITIOnTime, PreIBIOnTime, BlockOnTime, SufIBIOnTime;
         public double PreICIHold => timer.ElapsedMillisecond - PreICIOnTime;
         public double CondHold => timer.ElapsedMillisecond - CondOnTime;
         public double SufICIHold => timer.ElapsedMillisecond - SufICIOnTime;
@@ -593,12 +584,7 @@ namespace Experica.Command
             var n = 4 + QualitySettings.maxQueuedFrames;
             for (var i = 0; i < n; i++)
             {
-                SyncFrame?.Invoke();
                 yield return null;
-                while (issyncingframe)
-                {
-                    yield return null;
-                }
             }
             // wait until the synced same start frame have been presented on display.
             var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
@@ -640,12 +626,7 @@ namespace Experica.Command
             var n = 4 + QualitySettings.maxQueuedFrames;
             for (var i = 0; i < n; i++)
             {
-                SyncFrame?.Invoke();
                 yield return null;
-                while (issyncingframe)
-                {
-                    yield return null;
-                }
             }
             // wait until the synced same stop frame have been presented on display.
             var dur = n * ex.Display_ID.DisplayLatencyPlusResponseTime(Config.Display) ?? Config.NotifyLatency;
@@ -715,18 +696,7 @@ namespace Experica.Command
         void Update()
         {
             OnUpdate();
-            if (issyncingframe)
-            {
-                if (Time.realtimeSinceStartupAsDouble - SyncFrameOnTime >= Config.SyncFrameTimeOut)
-                {
-                    Debug.Log($"SyncFrame Timeout({Config.SyncFrameTimeOut}s), Stop Waiting.");
-                    issyncingframe = false;
-                }
-            }
-            else
-            {
-                if (islogicactive) { Logic(); }
-            }
+            if (islogicactive) { Logic(); }
         }
         /// <summary>
         /// empty user virtual "Update"

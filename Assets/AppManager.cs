@@ -21,7 +21,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using Unity.Netcode;
-//using UnityEngine.UIElements;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
@@ -55,7 +54,6 @@ namespace Experica.Command
         public Volume postprocessing;
 
         public NetworkController networkcontroller;
-        // public SyncFrameManager syncmanager;
         public ExperimentManager exmgr;
         public ExperimentSessionManager exsmgr;
         // public AnalysisManager alsmanager;

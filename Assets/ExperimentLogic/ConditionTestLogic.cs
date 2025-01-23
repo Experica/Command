@@ -157,7 +157,7 @@ public class ConditionTestLogic : ExperimentLogic
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
             var oc = envmgr.SpawnMarkerOrthoCamera(cname,clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
-            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: true);
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false);
             scalegrid.Add(sg);
         }
     }
@@ -207,14 +207,12 @@ public class ConditionTestLogic : ExperimentLogic
         {
             case CONDSTATE.NONE:
                 if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
-                SyncFrame?.Invoke();
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     EnterCondState(CONDSTATE.COND, true);
                     SetEnvActiveParam("Visible", true);
-                    SyncFrame?.Invoke();
                 }
                 break;
             case CONDSTATE.COND:
@@ -232,14 +230,12 @@ public class ConditionTestLogic : ExperimentLogic
                         EnterCondState(CONDSTATE.SUFICI, true);
                         SetEnvActiveParam("Visible", false);
                     }
-                    SyncFrame?.Invoke();
                 }
                 break;
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)
                 {
                     if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
-                    SyncFrame?.Invoke();
                 }
                 break;
         }

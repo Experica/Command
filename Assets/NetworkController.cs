@@ -34,7 +34,6 @@ namespace Experica.Command
         //public Dictionary<int, Dictionary<string, object>> peerinfo = new Dictionary<int, Dictionary<string, object>>();
         //public GameObject vlabanalysismanagerprefab, vlabcontrolmanagerprefab;
         //HashSet<int> envconnid = new HashSet<int>();
-        //int nenvsyncframe;
 
         public AppManager appmgr;
 
@@ -124,9 +123,6 @@ namespace Experica.Command
             }
         }
 
-        public bool IsServer => NetworkManager.Singleton?.IsServer ?? false;
-        public bool IsHost => NetworkManager.Singleton?.IsHost ?? false;
-
         //public bool IsPeerTypeConnected(PeerType peertype, int[] excludeconns)
         //{
         //    foreach (var cid in peerinfo.Keys.Except(excludeconns))
@@ -210,44 +206,7 @@ namespace Experica.Command
         //}
 
 
-        ///// <summary>
-        ///// send BeginSyncFrame Msg before lateupdate where syncvars being batched by UNET
-        ///// </summary>
-        //public void BeginSyncFrame()
-        //{
-        //    if (envconnid.Count > 0)
-        //    {
-        //        foreach (var id in envconnid)
-        //        {
-        //            NetworkServer.SendToClient(id, MsgType.BeginSyncFrame, new EmptyMessage());
-        //        }
-        //        // mark task in SyncFrameManager lateupdate(of which the script execution order later than UNET) to end SyncFrame Msg structure
-        //        uicontroller.syncmanager.endingsyncframe = true;
-        //    }
-        //}
 
-        //public void EndSyncFrame()
-        //{
-        //    if (envconnid.Count > 0)
-        //    {
-        //        nenvsyncframe = envconnid.Count;
-        //        foreach (var id in envconnid)
-        //        {
-        //            NetworkServer.SendToClient(id, MsgType.EndSyncFrame, new EmptyMessage());
-        //        }
-        //        uicontroller.exmanager.el.issyncingframe = true;
-        //        uicontroller.exmanager.el.SyncFrameOnTime = Time.realtimeSinceStartupAsDouble;
-        //    }
-        //}
-
-        //void EndSyncFrameHandler(NetworkMessage netMsg)
-        //{
-        //    nenvsyncframe--;
-        //    if (nenvsyncframe == 0)
-        //    {
-        //        uicontroller.exmanager.el.issyncingframe = false;
-        //    }
-        //}
 
     }
 }

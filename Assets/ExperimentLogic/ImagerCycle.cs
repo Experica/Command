@@ -90,14 +90,12 @@ public class ImagerCycle : ImagerEpoch
             case CONDSTATE.NONE:
                 StartEpochRecord();
                 EnterCondState(CONDSTATE.PREICI);
-                SyncFrame();
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     EnterCondState(CONDSTATE.COND, true);
                     SetEnvActiveParam("Visible", true);
-                    SyncFrame();
                 }
                 break;
             case CONDSTATE.COND:
@@ -141,7 +139,6 @@ public class ImagerCycle : ImagerEpoch
                             break;
                     }
                 }
-                SyncFrame();
                 break;
             case CONDSTATE.SUFICI:
                 if (SufICIHold >= ex.SufICI)

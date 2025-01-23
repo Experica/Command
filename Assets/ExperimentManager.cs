@@ -174,8 +174,6 @@ namespace Experica.Command
             //el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;
             //el.condtestmanager.OnNotifyCondTestEnd = uicontroller.OnNotifyCondTestEnd;
             //el.condtestmanager.PushUICondTest = uicontroller.ctpanel.PushCondTest;
-
-            // el.SyncFrame = uicontroller.netmanager.BeginSyncFrame;
         }
 
         public bool NewEx(string id, string idcopyfrom)

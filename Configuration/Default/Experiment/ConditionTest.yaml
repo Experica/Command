@@ -23,14 +23,6 @@ EnvParam:
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
-  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
-  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
-  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
-  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
-  Size@ScaleGrid@OrthoCamera/ScaleGrid: 25.161 32.289 1
-  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
-  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
@@ -77,8 +69,8 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
-PreICI: 250
-CondDur: 250
+PreICI: 150
+CondDur: 150
 SufICI: 0
 PreITI: 0
 TrialDur: 0

@@ -177,14 +177,12 @@ public class DisplayCalibration : ExperimentLogic
         {
             case CONDSTATE.NONE:
                 if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
-                SyncFrame();
                 break;
             case CONDSTATE.PREICI:
                 if (PreICIHold >= ex.PreICI)
                 {
                     EnterCondState(CONDSTATE.COND);
                     SetEnvActiveParam("Visible", true);
-                    SyncFrame();
                 }
                 break;
             case CONDSTATE.COND:
@@ -254,7 +252,6 @@ public class DisplayCalibration : ExperimentLogic
                     {
                         SetEnvActiveParam("Visible", false);
                     }
-                    SyncFrame();
                 }
                 break;
             case CONDSTATE.SUFICI:
@@ -275,7 +272,6 @@ public class DisplayCalibration : ExperimentLogic
                     }
 
                     if (EnterCondState(CONDSTATE.PREICI) == EnterStateCode.ExFinish) { return; }
-                    SyncFrame();
                 }
                 break;
         }
