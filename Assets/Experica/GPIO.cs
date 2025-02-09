@@ -32,25 +32,23 @@ using System;
 
 namespace Experica
 {
+    /// <summary>
+    /// Implementation should be Thread Safe
+    /// </summary>
     public interface IGPIO : IDisposable
     {
         byte In();
         void Out(byte value);
         void BitOut(int bit, bool value);
-        void BitPulse(int bit, double duration_ms);
+        void BitPulse(int bit, double duration_ms, double delay_ms = 0, bool ispositivepulse = true);
         bool Found { get; }
+        double MaxFreq { get; }
     }
 
     public enum IODirection
     {
         Input,
         Output
-    }
-
-    public enum DigitalWaveType
-    {
-        PWM,
-        PoissonSpike
     }
 
     public class SerialGPIO : IDisposable
@@ -324,96 +322,348 @@ namespace Experica
     //    }
     //}
 
-    public class GPIOWave
+
+    public abstract class WaveBase
     {
-        IGPIO gpio;
-        public IGPIO GPIO { get { lock (apilock) { return gpio; } } set { lock (apilock) { gpio = value; } } }
-        readonly float lowcutofffreq, highcutofffreq;
-        System.Random rng = new MersenneTwister(true);
-        readonly object apilock = new object();
+        public IGPIO gpio;
+        public int bit;
+        public double startdelay_ms, stopdelay_ms, duration_ms;
 
-        ConcurrentDictionary<int, Thread> bitthread = new ConcurrentDictionary<int, Thread>();
-        ConcurrentDictionary<int, ManualResetEvent> bitthreadevent = new ConcurrentDictionary<int, ManualResetEvent>();
-        ConcurrentDictionary<int, bool> bitthreadbreak = new ConcurrentDictionary<int, bool>();
+        protected Thread thread;
+        protected ManualResetEvent threadevent = new(false);
+        protected bool threadbreak;
+        protected readonly object apilock = new();
 
-        ConcurrentDictionary<int, DigitalWaveType> bitwave = new ConcurrentDictionary<int, DigitalWaveType>();
-        ConcurrentDictionary<int, double> bitlatency_ms = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bitphase = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bithighdur_ms = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bitlowdur_ms = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bitspikerate = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bitspikewidth_ms = new ConcurrentDictionary<int, double>();
-        ConcurrentDictionary<int, double> bitrefreshperiod_ms = new ConcurrentDictionary<int, double>();
-
-        public GPIOWave(IGPIO gpio, float lowcutofffreq = 0.00001f, float highcutofffreq = 10000f)
+        public WaveBase(IGPIO gpio, int bit, double startdelay_ms, double stopdelay_ms, double duration_ms = double.PositiveInfinity)
         {
             this.gpio = gpio;
-            this.lowcutofffreq = lowcutofffreq;
-            this.highcutofffreq = highcutofffreq;
+            this.bit = bit;
+            this.startdelay_ms = startdelay_ms;
+            this.stopdelay_ms = stopdelay_ms;
+            this.duration_ms = duration_ms;
         }
 
-        public void SetBitWave(int bit, double highdur_ms, double lowdur_ms, double latency_ms = 0, double phase = 0)
+        public virtual void Start()
         {
             lock (apilock)
             {
-                bitlatency_ms[bit] = latency_ms;
-                bitphase[bit] = phase;
-                bithighdur_ms[bit] = highdur_ms;
-                bitlowdur_ms[bit] = lowdur_ms;
-                bitwave[bit] = DigitalWaveType.PWM;
-            }
-        }
-
-        public void SetBitWave(int bit, float freq, double latency_ms = 0, double phase = 0)
-        {
-            lock (apilock)
-            {
-                bitlatency_ms[bit] = latency_ms;
-                bitphase[bit] = phase;
-                var halfcycle = (1.0 / Mathf.Clamp(freq, lowcutofffreq, highcutofffreq)) * 1000.0 / 2.0;
-                bithighdur_ms[bit] = halfcycle;
-                bitlowdur_ms[bit] = halfcycle;
-                bitwave[bit] = DigitalWaveType.PWM;
-            }
-        }
-
-        public void SetBitWave(int bit, double rate_sps, double spikewidth_ms = 2, double refreshperiod_ms = 2, double latency_ms = 0, double phase = 0)
-        {
-            lock (apilock)
-            {
-                bitlatency_ms[bit] = latency_ms;
-                bitphase[bit] = phase;
-                bitspikerate[bit] = rate_sps / 1000;
-                bitspikewidth_ms[bit] = spikewidth_ms;
-                bitrefreshperiod_ms[bit] = refreshperiod_ms;
-                bitwave[bit] = DigitalWaveType.PoissonSpike;
-            }
-        }
-
-        public void Start(params int[] bs)
-        {
-            lock (apilock)
-            {
-                var vbs = bitwave.Keys.Intersect(bs).ToArray();
-                var vbn = vbs.Length;
-                if (vbn > 0)
+                thread ??= new(_Wave);
+                if (!thread.IsAlive)
                 {
-                    foreach (var b in vbs)
+                    thread.Start();
+                }
+                threadbreak = false;
+                threadevent.Set();
+            }
+        }
+
+        public virtual void Stop()
+        {
+            lock (apilock)
+            {
+                threadevent.Reset();
+                threadbreak = true;
+            }
+        }
+
+        protected virtual void _Wave() { }
+    }
+
+    /// <summary>
+    /// Thread Safe PWM Digital Wave for a GPIO Bit Channel
+    /// </summary>
+    public class PWMWave : WaveBase, IFactorPushTarget
+    {
+        public double phasedelay, highdur_ms, lowdur_ms;
+
+        public PWMWave(IGPIO gpio = null, int bit = 0, double highdur_ms = 10, double lowdur_ms = 10, double startdelay_ms = 0, double stopdelay_ms = 0, double phasedelay = 0, double duration_ms = double.PositiveInfinity)
+            : base(gpio, bit, startdelay_ms, stopdelay_ms, duration_ms)
+        {
+            this.phasedelay = Math.Clamp(phasedelay, 0, 1);
+            this.highdur_ms = highdur_ms;
+            this.lowdur_ms = lowdur_ms;
+        }
+
+        public void SetWave(double freq, double duty = 0.5, double startdelay_ms = 0, double stopdelay_ms = 0, double phasedelay = 0, double duration_ms = double.PositiveInfinity)
+        {
+            this.startdelay_ms = startdelay_ms;
+            this.stopdelay_ms = stopdelay_ms;
+            this.phasedelay = Math.Clamp(phasedelay, 0, 1);
+            this.duration_ms = duration_ms;
+            SetWave(freq, duty);
+        }
+
+        public void SetWave(double freq, double duty = 0.5)
+        {
+            var mf = gpio?.MaxFreq ?? 1e4;
+            freq = Math.Clamp(freq, 1 / mf, mf);
+            duty = Math.Clamp(duty, 0, 1);
+            var period_ms = 1.0 / freq * 1000;
+            highdur_ms = period_ms * duty;
+            lowdur_ms = period_ms - highdur_ms;
+        }
+
+        public void SetWaveFreq(double freq)
+        {
+            var mf = gpio?.MaxFreq ?? 1e4;
+            freq = Math.Clamp(freq, 1 / mf, mf);
+            var duty = highdur_ms / (highdur_ms + lowdur_ms);
+            var period_ms = 1.0 / freq * 1000;
+            highdur_ms = period_ms * duty;
+            lowdur_ms = period_ms - highdur_ms;
+        }
+
+        public void SetWaveDuty(double duty)
+        {
+            duty = Math.Clamp(duty, 0, 1);
+            var period_ms = highdur_ms + lowdur_ms;
+            highdur_ms = period_ms * duty;
+            lowdur_ms = period_ms - highdur_ms;
+        }
+
+        public bool SetParam(string name, object value)
+        {
+            switch (name)
+            {
+                case "Opto":
+                    if ((int)value != 0) { Start(); }
+                    break;
+                case "OptoFreq":
+                    SetWaveFreq((double)value);
+                    break;
+                case "OptoDuty":
+                    SetWaveDuty((double)value);
+                    break;
+                default:
+                    Debug.LogWarning($"Push Factor: {name} not supported in PWMWave.");
+                    return false;
+            }
+            return true;
+        }
+
+        protected override void _Wave()
+        {
+            var timer = new Timer(); bool isbreakstarted;
+            double starttime = 0, fliptime = 0, breaktime = 0;
+        Break:
+            threadevent.WaitOne();
+            isbreakstarted = false;
+            timer.Restart();
+
+            timer.TimeoutMillisecond(startdelay_ms + phasedelay * (highdur_ms + lowdur_ms));
+            starttime = timer.ElapsedMillisecond;
+            while (true)
+            {
+                gpio?.BitOut(bit, true);
+                fliptime = timer.ElapsedMillisecond;
+                while ((timer.ElapsedMillisecond - fliptime) < highdur_ms)
+                {
+                    if (threadbreak)
                     {
-                        if (!bitthread.ContainsKey(b))
+                        if (!isbreakstarted)
                         {
-                            bitthread[b] = new Thread(_BitWave);
-                            bitthreadevent[b] = new ManualResetEvent(false);
+                            breaktime = timer.ElapsedMillisecond;
+                            isbreakstarted = true;
                         }
-                        if (!bitthread[b].IsAlive)
+                        if (isbreakstarted && timer.ElapsedMillisecond - breaktime >= stopdelay_ms)
                         {
-                            bitthread[b].Start(b);
+                            gpio?.BitOut(bit, false);
+                            goto Break;
                         }
-                        bitthreadbreak[b] = false;
                     }
-                    foreach (var b in vbs)
+                    if (timer.ElapsedMillisecond - starttime >= duration_ms)
                     {
-                        bitthreadevent[b].Set();
+                        threadevent.Reset();
+                        gpio?.BitOut(bit, false);
+                        goto Break;
+                    }
+                }
+
+                gpio?.BitOut(bit, false);
+                fliptime = timer.ElapsedMillisecond;
+                while ((timer.ElapsedMillisecond - fliptime) < lowdur_ms)
+                {
+                    if (threadbreak)
+                    {
+                        if (!isbreakstarted)
+                        {
+                            breaktime = timer.ElapsedMillisecond;
+                            isbreakstarted = true;
+                        }
+                        if (isbreakstarted && timer.ElapsedMillisecond - breaktime >= stopdelay_ms)
+                        {
+                            goto Break;
+                        }
+                    }
+                    if (timer.ElapsedMillisecond - starttime >= duration_ms)
+                    {
+                        threadevent.Reset();
+                        goto Break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Thread Safe Poisson Spike Digital Wave for a GPIO Bit Channel
+    /// </summary>
+    public class PoissonSpikeWave : WaveBase, IFactorPushTarget
+    {
+        public double spikerate_spms, spikewidth_ms, refreshperiod_ms;
+        System.Random rng = new MersenneTwister(true);
+
+        public PoissonSpikeWave(IGPIO gpio = null, int bit = 0, double spikerate_sps = 10, double spikewidth_ms = 1, double refreshperiod_ms = 1, double startdelay_ms = 0, double stopdelay_ms = 0, double duration_ms = double.PositiveInfinity)
+            : base(gpio, bit, startdelay_ms, stopdelay_ms, duration_ms)
+        {
+            this.spikewidth_ms = spikewidth_ms;
+            this.refreshperiod_ms = refreshperiod_ms;
+            spikerate_spms = spikerate_sps / 1000;
+        }
+
+        public bool SetParam(string name, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void _Wave()
+        {
+            var timer = new Timer(); bool isbreakstarted;
+            double starttime = 0, fliptime = 0, breaktime = 0, isi = 0;
+            Exponential isid;
+        Break:
+            threadevent.WaitOne();
+            isbreakstarted = false;
+            timer.Restart();
+
+            timer.TimeoutMillisecond(startdelay_ms);
+            starttime = timer.ElapsedMillisecond;
+            isid = new Exponential(spikerate_spms, rng);
+            while (true)
+            {
+                isi = isid.Sample();
+                if (isi > refreshperiod_ms)
+                {
+                    fliptime = timer.ElapsedMillisecond;
+                    while ((timer.ElapsedMillisecond - fliptime) < isi)
+                    {
+                        if (threadbreak)
+                        {
+                            if (!isbreakstarted)
+                            {
+                                breaktime = timer.ElapsedMillisecond;
+                                isbreakstarted = true;
+                            }
+                            if (isbreakstarted && timer.ElapsedMillisecond - breaktime >= stopdelay_ms)
+                            {
+                                goto Break;
+                            }
+                        }
+                        if (timer.ElapsedMillisecond - starttime >= duration_ms)
+                        {
+                            threadevent.Reset();
+                            goto Break;
+                        }
+                    }
+
+                    gpio?.BitOut(bit, true);
+                    fliptime = timer.ElapsedMillisecond;
+                    while ((timer.ElapsedMillisecond - fliptime) < spikewidth_ms)
+                    {
+                        if (threadbreak)
+                        {
+                            if (!isbreakstarted)
+                            {
+                                breaktime = timer.ElapsedMillisecond;
+                                isbreakstarted = true;
+                            }
+                            if (isbreakstarted && timer.ElapsedMillisecond - breaktime >= stopdelay_ms)
+                            {
+                                gpio?.BitOut(bit, false);
+                                goto Break;
+                            }
+                        }
+                        if (timer.ElapsedMillisecond - starttime >= duration_ms)
+                        {
+                            threadevent.Reset();
+                            gpio?.BitOut(bit, false);
+                            goto Break;
+                        }
+                    }
+                    gpio?.BitOut(bit, false);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Thread Safe Digital Waves for GPIO Bit Channels
+    /// </summary>
+    public class GPIOWave
+    {
+        public IGPIO gpio;
+        readonly object apilock = new();
+        ConcurrentDictionary<int, ConcurrentDictionary<string, WaveBase>> waves = new();
+
+        public GPIOWave(IGPIO gpio)
+        {
+            this.gpio = gpio;
+        }
+
+        public void SetBitWave(int bit, string name, WaveBase wave)
+        {
+            lock (apilock)
+            {
+                if (!waves.ContainsKey(bit)) { waves[bit] = new(); }
+                wave.gpio = gpio;
+                wave.bit = bit;
+                waves[bit][name] = wave;
+            }
+        }
+
+        public void Start(int bit, string name)
+        {
+            lock (apilock)
+            {
+                if (waves.ContainsKey(bit) && waves[bit].ContainsKey(name)) { waves[bit][name].Start(); }
+            }
+        }
+
+        public void Stop(int bit, string name)
+        {
+            lock (apilock)
+            {
+                if (waves.ContainsKey(bit) && waves[bit].ContainsKey(name)) { waves[bit][name].Stop(); }
+            }
+        }
+
+        public void Start(int[] bits, string[] names)
+        {
+            lock (apilock)
+            {
+                if (bits == null || names == null) { return; }
+                var bs = bits.Distinct().ToArray();
+                if (bs.Length == names.Length)
+                {
+                    for (var i = 0; i < bs.Length; i++)
+                    {
+                        Start(bs[i], names[i]);
+                    }
+                }
+            }
+        }
+
+        public void Stop(int[] bits, string[] names)
+        {
+            lock (apilock)
+            {
+                if (bits == null || names == null) { return; }
+                var bs = bits.Distinct().ToArray();
+                if (bs.Length == names.Length)
+                {
+                    for (var i = 0; i < bs.Length; i++)
+                    {
+                        Stop(bs[i], names[i]);
                     }
                 }
             }
@@ -421,21 +671,13 @@ namespace Experica
 
         public void StartAll()
         {
-            Start(bitwave.Keys.ToArray());
-        }
-
-        public void Stop(params int[] bs)
-        {
             lock (apilock)
             {
-                var vbs = bitthread.Keys.Intersect(bs).ToArray();
-                var vbn = vbs.Length;
-                if (vbn > 0)
+                foreach (var ws in waves.Values)
                 {
-                    foreach (var b in vbs)
+                    foreach (var w in ws.Values)
                     {
-                        bitthreadevent[b].Reset();
-                        bitthreadbreak[b] = true;
+                        w.Start();
                     }
                 }
             }
@@ -443,112 +685,17 @@ namespace Experica
 
         public void StopAll()
         {
-            Stop(bitthread.Keys.ToArray());
-        }
-
-        void _BitWave(object p)
-        {
-            ThreadBitWave((int)p);
-        }
-
-        void ThreadBitWave(int bit)
-        {
-            var timer = new Timer(); bool isbreakstarted;
-            double start = 0; double breakstart = 0;
-            Break:
-            bitthreadevent[bit].WaitOne();
-            isbreakstarted = false;
-            timer.Restart();
-            switch (bitwave[bit])
+            lock (apilock)
             {
-                case DigitalWaveType.PWM:
-                    timer.TimeoutMillisecond(bitlatency_ms[bit] + bitphase[bit] * (bithighdur_ms[bit] + bitlowdur_ms[bit]));
-                    while (true)
+                foreach (var ws in waves.Values)
+                {
+                    foreach (var w in ws.Values)
                     {
-                        gpio.BitOut(bit, true);
-                        start = timer.ElapsedMillisecond;
-                        while ((timer.ElapsedMillisecond - start) < bithighdur_ms[bit])
-                        {
-                            if (bitthreadbreak[bit])
-                            {
-                                if (!isbreakstarted)
-                                {
-                                    breakstart = timer.ElapsedMillisecond;
-                                    isbreakstarted = true;
-                                }
-                                if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                                {
-                                    gpio.BitOut(bit, false);
-                                    goto Break;
-                                }
-                            }
-                        }
-
-                        gpio.BitOut(bit, false);
-                        start = timer.ElapsedMillisecond;
-                        while ((timer.ElapsedMillisecond - start) < bitlowdur_ms[bit])
-                        {
-                            if (bitthreadbreak[bit])
-                            {
-                                if (!isbreakstarted)
-                                {
-                                    breakstart = timer.ElapsedMillisecond;
-                                    isbreakstarted = true;
-                                }
-                                if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                                {
-                                    goto Break;
-                                }
-                            }
-                        }
+                        w.Stop();
                     }
-                case DigitalWaveType.PoissonSpike:
-                    timer.TimeoutMillisecond(bitlatency_ms[bit] + bitphase[bit] / bitspikerate[bit]);
-                    var isid = new Exponential(bitspikerate[bit], rng);
-                    while (true)
-                    {
-                        var i = isid.Sample();
-                        if (i > bitrefreshperiod_ms[bit])
-                        {
-                            start = timer.ElapsedMillisecond;
-                            while ((timer.ElapsedMillisecond - start) < i)
-                            {
-                                if (bitthreadbreak[bit])
-                                {
-                                    if (!isbreakstarted)
-                                    {
-                                        breakstart = timer.ElapsedMillisecond;
-                                        isbreakstarted = true;
-                                    }
-                                    if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                                    {
-                                        goto Break;
-                                    }
-                                }
-                            }
-
-                            gpio.BitOut(bit, true);
-                            start = timer.ElapsedMillisecond;
-                            while ((timer.ElapsedMillisecond - start) < bitspikewidth_ms[bit])
-                            {
-                                if (bitthreadbreak[bit])
-                                {
-                                    if (!isbreakstarted)
-                                    {
-                                        breakstart = timer.ElapsedMillisecond;
-                                        isbreakstarted = true;
-                                    }
-                                    if (isbreakstarted && timer.ElapsedMillisecond - breakstart >= bitlatency_ms[bit])
-                                    {
-                                        gpio.BitOut(bit, false);
-                                        goto Break;
-                                    }
-                                }
-                            }
-                            gpio.BitOut(bit, false);
-                        }
-                    }
+                }
             }
         }
+
     }
 }

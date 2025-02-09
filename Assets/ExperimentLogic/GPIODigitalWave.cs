@@ -25,14 +25,11 @@ using Experica.Command;
 
 public class GPIODigitalWave : ExperimentLogic
 {
-    protected IGPIO gpio;
     protected GPIOWave gpiowave;
 
     protected override void OnStartExperiment()
     {
-        var gpioname = (string)ex.GetParam("GPIO");
-        var wavetype = ex.GetParam("WaveType").Convert<DigitalWaveType>();
-        var freq = ex.GetParam("Freq").Convert<float>();
+        var gpioname = GetExParam<string>("GPIO");
         switch (gpioname)
         {
             case "ParallelPort":
@@ -48,30 +45,31 @@ public class GPIODigitalWave : ExperimentLogic
                 //gpio = new MCCDevice();
                 break;
         }
-        if (gpio != null)
+        if (gpio == null) { Debug.LogWarning($"No Valid GPIO From {gpioname}."); return; }
+
+        gpiowave = new GPIOWave(gpio);
+        var wavetype = GetExParam<string>("WaveType");
+        var freq = GetExParam<double>("Freq");
+        var duty = GetExParam<double>("Duty");
+        var rate = GetExParam<double>("FiringRate");
+        switch (wavetype)
         {
-            gpiowave = new GPIOWave(gpio);
-            switch (wavetype)
-            {
-                case DigitalWaveType.PWM:
-                    gpiowave.SetBitWave(0, freq);
-                    break;
-                case DigitalWaveType.PoissonSpike:
-                    gpiowave.SetBitWave(0, 50, 2, 2, 0, 0);
-                    gpiowave.SetBitWave(1, 100, 2, 2, 0, 0);
-                    break;
-            }
-            gpiowave.StartAll();
+            case "PWM":
+                var w = new PWMWave();
+                w.SetWave(freq, duty);
+                gpiowave.SetBitWave(0, wavetype, w);
+                break;
+            case "PoissonSpike":
+                gpiowave.SetBitWave(0, wavetype, new PoissonSpikeWave(spikerate_sps: rate));
+                gpiowave.SetBitWave(1, wavetype, new PoissonSpikeWave(spikerate_sps: 2 * rate));
+                break;
         }
-        else
-        {
-            Debug.LogWarning("No Valid GPIO.");
-        }
+        gpiowave.StartAll();
     }
 
-    protected override void OnStopExperiment()
+    protected override void OnExperimentStopped()
     {
         gpiowave?.StopAll();
-        gpio?.Dispose();
+        base.OnExperimentStopped();
     }
 }

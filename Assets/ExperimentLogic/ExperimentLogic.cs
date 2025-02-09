@@ -70,8 +70,8 @@ namespace Experica.Command
         public IRecorder recorder;
         public System.Random RNG = new MersenneTwister();
         public bool forcepreparecond = true;
-        public CondPushTarget condpushtarget = CondPushTarget.NetEnvManager;
         public List<string> pushexcludefactor;
+        public Dictionary<string, IFactorPushTarget> factorpushtarget;
 
         protected IGPIO gpio;
         protected bool syncstate;
@@ -273,11 +273,20 @@ namespace Experica.Command
 
         #region Condition
         /// <summary>
-        /// prepare condition based on `ex.CondPath` file
+        /// prepare condition based on `ex.CondPath` file, and set all factor push to NetEnvManager
         /// </summary>
         protected virtual void PrepareCondition()
         {
             condmgr.PrepareCondition(ex.CondPath);
+            PrepareFactorPushTarget();
+        }
+
+        /// <summary>
+        /// push all factors to NetEnvManager
+        /// </summary>
+        protected virtual void PrepareFactorPushTarget()
+        {
+            factorpushtarget = condmgr.Cond.Keys.ToDictionary(k => k, k => (IFactorPushTarget)envmgr);
         }
 
         public void InitializeCondSampling(bool forceprepare = false)
@@ -291,65 +300,31 @@ namespace Experica.Command
         }
 
         /// <summary>
-        /// sample condition and block, then push all factors/value of the condition(except `pushexcludefactor`) to pushtargets
+        /// sample condition and block, then push all factors/value of the condition(except `pushexcludefactor`) to `pushfactortarget`
         /// </summary>
         /// <param name="manualcondindex"></param>
         /// <param name="manualblockindex"></param>
         /// <param name="autosampleblock">whether automatically sample block when condofblock finished repeating certain times, and push all factors/value instead of only none block factors</param>
-        protected virtual void SamplePushCondition(int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
+        protected virtual void SamplePushCondition(int manualcondindex = 0, int manualblockindex = 0, bool autosampleblock = true)
         {
             var ci = condmgr.SampleCondition(ex.CondRepeat, manualcondindex, manualblockindex, autosampleblock);
-            PushCondition(ci, pushtarget, autosampleblock, pushexcludefactor);
+            PushCondition(ci, autosampleblock, factorpushtarget, pushexcludefactor);
         }
 
-        protected virtual void SamplePushBlock(int manualblockindex = 0, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
+        protected virtual void SamplePushBlock(int manualblockindex = 0)
         {
             var bi = condmgr.SampleBlockSpace(manualblockindex);
-            PushBlock(bi, pushtarget, pushexcludefactor);
+            PushBlock(bi, factorpushtarget, pushexcludefactor);
         }
 
-        public void PushCondition(int ci, CondPushTarget pushtarget, bool includeblockfactor = false, List<string> excludefactor = null)
+        protected virtual void PushCondition(int ci, bool includeblockfactor = false, Dictionary<string, IFactorPushTarget> factorpushtarget = null, List<string> pushexcludefactor = null)
         {
-            switch (pushtarget)
-            {
-                case CondPushTarget.NetEnvManager:
-                    condmgr.PushCondition(ci, envmgr, includeblockfactor, pushexcludefactor);
-                    break;
-                case CondPushTarget.Experiment:
-                    condmgr.PushCondition(ci, ex, includeblockfactor, pushexcludefactor);
-                    break;
-                case CondPushTarget.All:
-                    var factors = condmgr.ConditionPushFactor(ci, includeblockfactor, pushexcludefactor);
-                    if (factors == null) { break; }
-                    foreach (var f in factors)
-                    {
-                        var v = condmgr.Cond[f][ci];
-                        if (!envmgr.SetParam(f, v)) { ex.SetParam(f, v); }
-                    }
-                    break;
-            }
+            condmgr.PushCondition(ci, factorpushtarget, includeblockfactor, pushexcludefactor);
         }
 
-        public void PushBlock(int bi, CondPushTarget pushtarget, List<string> excludefactor = null)
+        protected virtual void PushBlock(int bi, Dictionary<string, IFactorPushTarget> factorpushtarget = null, List<string> pushexcludefactor = null)
         {
-            switch (pushtarget)
-            {
-                case CondPushTarget.NetEnvManager:
-                    condmgr.PushBlock(bi, envmgr, pushexcludefactor);
-                    break;
-                case CondPushTarget.Experiment:
-                    condmgr.PushBlock(bi, ex, pushexcludefactor);
-                    break;
-                case CondPushTarget.All:
-                    var factors = condmgr.BlockPushFactor(bi, pushexcludefactor);
-                    if (factors == null) { break; }
-                    foreach (var f in factors)
-                    {
-                        var v = condmgr.BlockCond[f][bi];
-                        if (!envmgr.SetParam(f, v)) { ex.SetParam(f, v); }
-                    }
-                    break;
-            }
+            condmgr.PushBlock(bi, factorpushtarget, pushexcludefactor);
         }
         #endregion
 

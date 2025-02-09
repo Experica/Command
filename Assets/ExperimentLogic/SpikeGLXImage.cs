@@ -29,7 +29,7 @@ using ColorSpace = Experica.NetEnv.ColorSpace;
 /// <summary>
 /// Image Test with SpikeGLX Data Acquisition System, and Predefined Colors
 /// </summary>
-public class SpikeGLXImage : SpikeGLXCTLogic
+public class SpikeGLXImage : SpikeGLXCondTest
 {
     protected override void PrepareCondition()
     {

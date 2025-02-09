@@ -28,7 +28,7 @@ using ColorSpace = Experica.NetEnv.ColorSpace;
 /// <summary>
 /// Periodic modulation of parameters with SpikeGLX Data Acquisition System, and Predefined Colors
 /// </summary>
-public class SpikeGLXCycle : SpikeGLXCTLogic
+public class SpikeGLXCycle : SpikeGLXCondTest
 {
     protected int nsc;
     protected override void OnStartExperiment()

@@ -27,7 +27,6 @@ using Experica;
 using Experica.Command;
 using System.Linq;
 using Experica.NetEnv;
-using Unity.Netcode;
 
 /// <summary>
 /// Condition Test Logic {PreICI - Cond - SufICI} ..., with ScaleGrid visual guide and EnvParam manipulation through User Input Action

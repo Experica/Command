@@ -239,7 +239,7 @@ namespace Experica
         public void SetValueWithoutNotify(T value);
     }
 
-    public interface IDataClass
+    public interface IFactorPushTarget
     {
         public bool SetParam(string name, object value);
     }
@@ -247,7 +247,7 @@ namespace Experica
     /// <summary>
     /// For it's derived class, provide reflected property access and UI datasource wrapper
     /// </summary>
-    public abstract class DataClass : IDataClass
+    public abstract class DataClass : IFactorPushTarget
     {
         public Dictionary<string, object> ExtendParam { get; set; } = new();
 
@@ -533,14 +533,6 @@ namespace Experica
         }
     }
 
-    public enum CondPushTarget
-    {
-        NetEnvManager,
-        Experiment,
-        All
-    }
-
-
     public class MethodAccess
     {
         public MethodInvoker Call { get; }
@@ -593,7 +585,7 @@ namespace Experica
         EX
     }
 
-    public interface INetEnv : IDataClass
+    public interface INetEnv : IFactorPushTarget
     {
         public Scene Scene { get; }
         public bool SetParam(string nvORfullName, object value, bool active);
@@ -1421,7 +1413,7 @@ namespace Experica
         #endregion
 
 #if COMMAND
-        public static IRecorder GetSpikeGLXRecorder(string host = "localhost", int port = 4142)
+        public static IRecorder QuerySpikeGLXRecorder(string host = "localhost", int port = 4142)
         {
             if (spikeglxrecorder == null)
             {
@@ -1444,12 +1436,12 @@ namespace Experica
                 {
                     spikeglxrecorder.Dispose();
                     spikeglxrecorder = null;
-                    return GetSpikeGLXRecorder(host, port);
+                    return QuerySpikeGLXRecorder(host, port);
                 }
             }
         }
 
-        public static IRecorder GetImagerRecorder(string host = "localhost", int port = 10000)
+        public static IRecorder QueryImagerRecorder(string host = "localhost", int port = 10000)
         {
             if (imagerrecorder == null)
             {
@@ -1470,7 +1462,7 @@ namespace Experica
                 {
                     imagerrecorder.Dispose();
                     imagerrecorder = null;
-                    return GetImagerRecorder(host, port);
+                    return QueryImagerRecorder(host, port);
                 }
             }
         }
@@ -1716,6 +1708,60 @@ namespace Experica
                     or.AddRange(ir);
                 }
                 cond[fs[i]] = or;
+            }
+            return cond;
+        }
+
+        /// <summary>
+        /// Orthogonally Combine Two Condition Table
+        /// </summary>
+        /// <param name="acond"></param>
+        /// <param name="bcond"></param>
+        /// <returns></returns>
+        public static Dictionary<string, List<object>> OrthoCombineCondition(this Dictionary<string, List<object>> acond, Dictionary<string, List<object>> bcond)
+        {
+            var cond = new Dictionary<string, List<object>>()
+            {
+                ["("] = Enumerable.Range(0, acond.First().Value.Count).Cast<object>().ToList(),
+                [")"] = Enumerable.Range(0, bcond.First().Value.Count).Cast<object>().ToList()
+            };
+            cond = cond.OrthoCombineFactor();
+            foreach (var f in acond.Keys)
+            {
+                cond[f] = new();
+            }
+            foreach (var f in bcond.Keys)
+            {
+                cond[f] = new();
+            }
+            for (var i = 0; i < cond["("].Count; i++)
+            {
+                var aci = (int)cond["("][i];
+                var bci = (int)cond[")"][i];
+                foreach (var f in acond.Keys)
+                {
+                    cond[f].Add(acond[f][aci]);
+                }
+                foreach (var f in bcond.Keys)
+                {
+                    cond[f].Add(bcond[f][bci]);
+                }
+            }
+            cond.Remove("("); cond.Remove(")");
+            return cond;
+        }
+
+        public static Dictionary<string, List<object>> TrimCondition(this Dictionary<string, List<object>> cond)
+        {
+            var fln = cond.Values.Select(i => i.Count).ToArray();
+            var minfln = fln.Min();
+            var maxfln = fln.Max();
+            if (minfln != maxfln)
+            {
+                foreach (var f in cond.Keys.ToArray())
+                {
+                    cond[f] = cond[f].GetRange(0, minfln);
+                }
             }
             return cond;
         }

@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXColorCT.cs is part of the Experica.
+SpikeGLXColor.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -22,20 +22,42 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using Experica;
 using System.Collections.Generic;
+using System.Linq;
 using ColorSpace = Experica.NetEnv.ColorSpace;
 
 /// <summary>
-/// Condition Test with SpikeGLX Data Acquisition System, and Predefined Colors
+/// Condition Test using SpikeGLX Data Acquisition System, combined with optogenetic manipulation
 /// </summary>
-public class SpikeGLXColorCT : SpikeGLXCTLogic
+public class SpikeGLXOpto : SpikeGLXCondTest
 {
+    protected PWMWave pwmwave;
+
+    protected override void OnStartExperiment()
+    {
+        base.OnStartExperiment();
+        var ch = GetExParam<int>("OptoCh");
+        pwmwave = new PWMWave
+        {
+            gpio = gpio,
+            bit = ch,
+            duration_ms = ex.CondDur,
+            startdelay_ms = ex.PreICI
+        };
+    }
+
+    protected override void OnExperimentStopped()
+    {
+        pwmwave?.Stop();
+        base.OnExperimentStopped();
+    }
+
     protected override void PrepareCondition()
     {
+        // get predefined colors for current display
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
         var colorname = colorspace + "_" + colorvar;
 
-        // get color
         List<Color> color = null;
         List<Color> wp = null;
         List<float> angle = null;
@@ -59,20 +81,39 @@ public class SpikeGLXColorCT : SpikeGLXCTLogic
             }
             else
             {
-                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
+                Debug.LogWarning($"{colorname} is not found in colordata of display: {ex.Display_ID}.");
             }
         }
 
-        if (color != null)
+        // get optogenetics conditions
+        var optofreq = GetExParam<List<float>>("OptoFreq");
+        var optoduty = GetExParam<List<float>>("OptoDuty");
+        var nopto = GetExParam<bool>("WithNonOpto");
+        var ocond = new Dictionary<string, List<object>>()
         {
-            SetEnvActiveParam("MinColor", color[0]);
-            SetEnvActiveParam("MaxColor", color[1]);
-            if (wp != null)
-            {
-                SetEnvActiveParam("BGColor", wp[0]);
-            }
+            ["Opto"] = new List<object> { 1 }
+        };
+        if (optofreq != null) { ocond["OptoFreq"] = optofreq.Cast<object>().ToList(); }
+        if (optoduty != null) { ocond["OptoDuty"] = optoduty.Cast<object>().ToList(); }
+        ocond = ocond.OrthoCombineFactor();
+        if (nopto)
+        {
+            foreach (var fl in ocond.Values) { fl.Insert(0, 0); }
         }
 
-        base.PrepareCondition();
+        // get base conditions from condition file
+        var bcond = ConditionManager.ProcessCondition(ex.CondPath);
+
+        // combine optogenetics conditions with base conditions
+        var cond = ocond.OrthoCombineCondition(bcond);
+        condmgr.PrepareCondition(cond);
+
+        // prepare factor push target
+        PrepareFactorPushTarget();
+        foreach (var f in new[] { "Opto", "OptoFreq", "OptoDuty" })
+        {
+            factorpushtarget[f] = pwmwave;
+        }
+
     }
 }

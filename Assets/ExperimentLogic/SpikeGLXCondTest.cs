@@ -20,15 +20,15 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using Experica;
-using Experica.Command;
+
 /// <summary>
-/// Condition Test with SpikeGLX Data Acquisition System
+/// Condition Test Logic with SpikeGLX Data Acquisition System
 /// </summary>
-public class SpikeGLXCTLogic : ConditionTestLogic
+public class SpikeGLXCondTest : ConditionTestLogic
 {
     protected override void OnStartExperiment()
     {
-        recorder = Base.GetSpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
+        recorder = Base.QuerySpikeGLXRecorder(Config.RecordHost0, Config.RecordHostPort0);
         base.OnStartExperiment();
     }
 
@@ -40,7 +40,7 @@ public class SpikeGLXCTLogic : ConditionTestLogic
 
     protected override void StartExperimentTimeSync()
     {
-        if (ex.CondTestAtState != CONDTESTATSTATE.NONE)
+        if (ex.HasCondTestState())
         {
             if (recorder != null)
             {

@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXColor.cs is part of the Experica.
+SpikeGLXColorCT.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -22,24 +22,20 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using Experica;
 using System.Collections.Generic;
-using System.Linq;
 using ColorSpace = Experica.NetEnv.ColorSpace;
 
 /// <summary>
-/// SpikeGLX Condition Test with Display-Confined Colors
+/// Condition Test Logic with SpikeGLX Data Acquisition System, and Predefined Min/Max/BG Colors
 /// </summary>
-public class SpikeGLXColor : SpikeGLXCondTest
+public class SpikeGLXColorCondTest : SpikeGLXCondTest
 {
     protected override void PrepareCondition()
     {
-        var cond = new Dictionary<string, List<object>>();
         var colorspace = GetExParam<ColorSpace>("ColorSpace");
         var colorvar = GetExParam<string>("Color");
         var colorname = colorspace + "_" + colorvar;
-        var ori = GetExParam<List<float>>("Ori");
-        var sf = GetExParam<List<float>>("SpatialFreq");
 
-        // get color
+        // get predefined colors for current display
         List<Color> color = null;
         List<Color> wp = null;
         List<float> angle = null;
@@ -63,67 +59,20 @@ public class SpikeGLXColor : SpikeGLXCondTest
             }
             else
             {
-                Debug.Log($"{colorname} is not found in colordata of {ex.Display_ID}.");
+                Debug.LogWarning($"{colorname} is not found in colordata of display: {ex.Display_ID}.");
             }
         }
 
-        // combine factor levels
-        if (ori != null)
-        {
-            cond["Ori"] = ori.Select(i => (object)i).ToList();
-        }
-        if (sf != null)
-        {
-            cond["SpatialFreq"] = sf.Select(i => (object)i).ToList();
-        }
-        var colorcond = new Dictionary<string, List<object>>();
         if (color != null)
         {
-            cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList();
-            var colorparam = "Color";
-            if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
-            {
-            }
-            else
-            {
-                colorparam = "MaxColor";
-            }
-            colorcond[colorparam] = color.Select(i => (object)i).ToList();
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
             if (wp != null)
             {
-                colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
-                if (colorparam == "MaxColor")
-                {
-                    colorcond["MinColor"] = wp.Select(i => (object)i).ToList();
-                }
-            }
-            if (angle != null)
-            {
-                colorcond["Angle"] = angle.Select(i => (object)i).ToList();
+                SetEnvActiveParam("BGColor", wp[0]);
             }
         }
 
-        var fcond = cond.OrthoCombineFactor();
-        if (fcond.ContainsKey("_colorindex"))
-        {
-            foreach (var i in fcond["_colorindex"])
-            {
-                foreach (var f in colorcond.Keys)
-                {
-                    if (!fcond.ContainsKey(f))
-                    {
-                        fcond[f] = new List<object> { colorcond[f][(int)i] };
-                    }
-                    else
-                    {
-                        fcond[f].Add(colorcond[f][(int)i]);
-                    }
-                }
-            }
-            fcond.Remove("_colorindex");
-        }
-
-        pushexcludefactor= new List<string>() { "Angle" };
-        condmgr.PrepareCondition(fcond);
+        base.PrepareCondition();
     }
 }

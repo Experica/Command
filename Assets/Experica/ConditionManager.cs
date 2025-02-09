@@ -87,9 +87,12 @@ namespace Experica
             {
                 cond = cond.ProcessFactorDesign();
                 cond = cond.ProcessOrthoCombineFactor();
+                cond = cond.TrimCondition();
             }
             return cond;
         }
+
+        public static Dictionary<string, List<object>> ProcessCondition(string path) { return ProcessCondition(ReadConditionFile(path)); }
 
         /// <summary>
         /// prepare and set the `Cond`
@@ -97,23 +100,12 @@ namespace Experica
         /// <param name="cond"></param>
         public void PrepareCondition(Dictionary<string, List<object>> cond)
         {
-            if (cond == null || cond.Count == 0)
+            if (cond == null || cond.Count == 0 || cond.Values.First().Count == 0)
             {
                 Cond.Clear(); return;
             }
             else
             {
-                var fln = cond.Values.Select(i => i.Count).ToArray();
-                var minfln = fln.Min();
-                var maxfln = fln.Max();
-                if (minfln != maxfln)
-                {
-                    foreach (var f in cond.Keys.ToArray())
-                    {
-                        cond[f] = cond[f].GetRange(0, minfln);
-                    }
-                }
-                if (cond.Values.First().Count == 0) { Cond.Clear(); return; }
                 Cond = cond.SpecializeFactorValue();
             }
         }
@@ -313,50 +305,80 @@ namespace Experica
         }
 
         /// <summary>
-        /// Push the factors/value of a condition to IDataClass
+        /// Push the factors/value of a condition to target
         /// </summary>
         /// <param name="condindex"></param>
-        /// <param name="idataclass"></param>
+        /// <param name="target"></param>
         /// <param name="includeblockfactor"></param>
         /// <param name="excludefactor"></param>
-        public void PushCondition(int condindex, IDataClass idataclass, bool includeblockfactor = false, List<string> excludefactor = null)
+        public void PushCondition(int condindex, IFactorPushTarget target, bool includeblockfactor = false, List<string> excludefactor = null)
         {
-            var factors = ConditionPushFactor(condindex, includeblockfactor, excludefactor);
+            var factors = ConditionPushFactor(includeblockfactor, excludefactor);
             if (factors == null) { return; }
             foreach (var f in factors)
             {
-                idataclass.SetParam(f, Cond[f][condindex]);
+                target.SetParam(f, Cond[f][condindex]);
             }
         }
 
-        public IEnumerable<string> ConditionPushFactor(int condindex, bool includeblockfactor = false, List<string> excludefactor = null)
+        public void PushCondition(int condindex, Dictionary<string, IFactorPushTarget> targets, bool includeblockfactor = false, List<string> excludefactor = null)
         {
-            if (condindex < 0 || NCond == 0) { return null; }
+            var factors = ConditionPushFactor(includeblockfactor, excludefactor);
+            if (factors == null) { return; }
+            foreach (var f in factors)
+            {
+                if (targets.ContainsKey(f))
+                {
+                    targets[f].SetParam(f, Cond[f][condindex]);
+                }
+            }
+        }
+
+        public IEnumerable<string> ConditionPushFactor(bool includeblockfactor = false, List<string> excludefactor = null)
+        {
+            if (CondIndex < 0 || NCond == 0) { return null; }
             var condfactors = includeblockfactor ? Cond.Keys.ToList() : NonBlockFactor;
             return excludefactor == null ? condfactors : condfactors.Except(excludefactor);
         }
 
+        public void PushConditionFactor(int condindex, string factor, IFactorPushTarget target) => target.SetParam(factor, Cond[factor][condindex]);
+
         /// <summary>
-        /// Push the factors/value of a block to IDataClass
+        /// Push the factors/value of a block to target
         /// </summary>
         /// <param name="blockindex"></param>
-        /// <param name="idataclass"></param>
+        /// <param name="target"></param>
         /// <param name="excludefactor"></param>
-        public void PushBlock(int blockindex, IDataClass idataclass, List<string> excludefactor = null)
+        public void PushBlock(int blockindex, IFactorPushTarget target, List<string> excludefactor = null)
         {
-            var factors = BlockPushFactor(blockindex, excludefactor);
+            var factors = BlockPushFactor(excludefactor);
             if (factors == null) { return; }
             foreach (var f in factors)
             {
-                idataclass.SetParam(f, BlockCond[f][blockindex]);
+                target.SetParam(f, BlockCond[f][blockindex]);
             }
         }
 
-        public IEnumerable<string> BlockPushFactor(int blockindex, List<string> excludefactor = null)
+        public void PushBlock(int blockindex, Dictionary<string, IFactorPushTarget> targets, List<string> excludefactor = null)
         {
-            if (blockindex < 0 || NBlockCond == 0) { return null; }
+            var factors = BlockPushFactor(excludefactor);
+            if (factors == null) { return; }
+            foreach (var f in factors)
+            {
+                if (targets.ContainsKey(f))
+                {
+                    targets[f].SetParam(f, BlockCond[f][blockindex]);
+                }
+            }
+        }
+
+        public IEnumerable<string> BlockPushFactor(List<string> excludefactor = null)
+        {
+            if (BlockIndex < 0 || NBlockCond == 0) { return null; }
             return excludefactor == null ? BlockFactor : BlockFactor.Except(excludefactor);
         }
+
+        public void PushBlockFactor(int blockindex, string factor, IFactorPushTarget target) => target.SetParam(factor, BlockCond[factor][blockindex]);
 
         /// <summary>
         /// whether a condition have been sampled on total certain times

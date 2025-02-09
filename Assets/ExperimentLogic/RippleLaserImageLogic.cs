@@ -173,7 +173,7 @@ namespace Experica.Command
             condmgr.PrepareCondition(fcond);
         }
 
-        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true, CondPushTarget pushtarget = CondPushTarget.NetEnvManager)
+        protected override void SamplePushCondition(int manualcondidx = 0, int manualblockidx = 0, bool istrysampleblock = true)
         {
             // Laser manual sampling and pushing defered into logic BlockState, while Laser on/off into logic TrialState,
             // so that Laser been pushed only once at the beginning of each Block and turned on in each Trial.
@@ -198,15 +198,15 @@ namespace Experica.Command
                                 var freq = (Vector4)condmgr.BlockCond["LaserFreq"][condmgr.BlockIndex];
                                 if (freq.y > 0 && freq.z <= 0 && freq.w <= 0)
                                 {
-                                    ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
+                                    //ppw.SetBitWave(lasersignalch.Value, freq.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                                 }
                                 else if (freq.y > 0 && freq.z > 0 && freq.w <= 0)
                                 {
-                                    ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
+                                    //ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                                 }
                                 else if (freq.y > 0 && freq.z > 0 && freq.w > 0)
                                 {
-                                    ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
+                                    //ppw.SetBitWave(lasersignalch.Value, freq.y, freq.z, freq.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq.x);
                                 }
                             }
                         }
@@ -222,15 +222,15 @@ namespace Experica.Command
                                 var freq2 = (Vector4)condmgr.BlockCond["LaserFreq2"][condmgr.BlockIndex];
                                 if (freq2.y > 0 && freq2.z <= 0 && freq2.w <= 0)
                                 {
-                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
+                                    //ppw.SetBitWave(laser2signalch.Value, freq2.y, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                                 }
                                 else if (freq2.y > 0 && freq2.z > 0 && freq2.w <= 0)
                                 {
-                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
+                                    //ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                                 }
                                 else if (freq2.y > 0 && freq2.z > 0 && freq2.w > 0)
                                 {
-                                    ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
+                                    //ppw.SetBitWave(laser2signalch.Value, freq2.y, freq2.z, freq2.w, ex.Display_ID.DisplayLatency(Config.Display) ?? 0, freq2.x);
                                 }
                             }
                         }
@@ -261,7 +261,7 @@ namespace Experica.Command
                                 {
                                     lsc.Add(laser2signalch.Value);
                                 }
-                                ppw.Start(lsc.ToArray());
+                                //ppw.Start(lsc.ToArray());
                             }
                             break;
                         case TRIALSTATE.TRIAL:
@@ -315,7 +315,7 @@ namespace Experica.Command
                                             {
                                                 lsc.Add(laser2signalch.Value);
                                             }
-                                            ppw.Stop(lsc.ToArray());
+                                            //ppw.Stop(lsc.ToArray());
                                         }
                                     }
                                     break;
