@@ -11,6 +11,7 @@
         <engine:VisualElement name="MainMenu" class="MainMenu">
             <engine:Button text="Config" name="Config" class="MainMenuButton" />
             <engine:Button text="About" name="About" class="MainMenuButton" />
+            <engine:Toggle label="FPS" name="FPS" class="ToggleButton MainMenuToggle ToggleButtonOrange" />
         </engine:VisualElement>
         <engine:VisualElement name="MainContent" class="MainContent">
             <engine:VisualElement name="CEC" style="flex-grow: 1; width: 32%; justify-content: space-between;">

@@ -178,7 +178,7 @@ namespace Experica
                 case "5":
                     cmdresp("M" + datareportformat, 0); // cmd and return, without reading response
                     timer = new Timer();
-                    timer.TimeoutMillisecond(timeout_ms); // need at least 8s at BaudRate:9600
+                    timer.WaitMillisecond(timeout_ms); // need at least 8s at BaudRate:9600
                     hr = cmdresp("", timeout_ms, false); // now the full response should be returned
                     if (!string.IsNullOrEmpty(hr))
                     {

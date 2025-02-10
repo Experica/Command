@@ -434,7 +434,7 @@ namespace Experica.Command
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             QualitySettings.vSyncCount = 0;
             QualitySettings.maxQueuedFrames = 2;
-            exmgr.el.timer.IsFrameTime = false;
+            exmgr.el.timer.UnityFrameTime = false;
             if (FullViewport)
             {
                 // FullViewport(No UI), hide cursor
@@ -445,7 +445,7 @@ namespace Experica.Command
                     QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
                     QualitySettings.vSyncCount = cfgmgr.config.VSyncCount;
                     QualitySettings.maxQueuedFrames = cfgmgr.config.MaxQueuedFrames;
-                    exmgr.el.timer.IsFrameTime = cfgmgr.config.FrameTimer;
+                    exmgr.el.timer.UnityFrameTime = cfgmgr.config.FrameTimer;
                 }
             }
             Time.fixedDeltaTime = cfgmgr.config.FixedDeltaTime;

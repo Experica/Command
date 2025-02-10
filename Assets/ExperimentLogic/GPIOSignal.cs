@@ -1,5 +1,5 @@
 ﻿/*
-GPIODigitalWave.cs is part of the Experica.
+GPIOSignal.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,7 +23,7 @@ using UnityEngine;
 using Experica;
 using Experica.Command;
 
-public class GPIODigitalWave : ExperimentLogic
+public class GPIOSignal : ExperimentLogic
 {
     protected GPIOWave gpiowave;
 

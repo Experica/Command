@@ -47,7 +47,7 @@ namespace Experica.Command
                 otherwise the delayed action may clear the start TTL pluse which is
                 needed to mark the timer zero.
                 */
-                timer.TimeoutMillisecond(Config.NotifyLatency);
+                timer.WaitMillisecond(Config.NotifyLatency);
                 gpio.BitPulse(bit: Config.StartSyncCh, duration_ms: 5);
             }
             /*
@@ -60,7 +60,7 @@ namespace Experica.Command
         protected override void StopExperimentTimeSync()
         {
             // Tail period to make sure lagged effect data is recorded before trigger recording stop
-            timer.TimeoutMillisecond(ex.Display_ID.DisplayLatency(Config.Display) ?? 0 + Config.MaxDisplayLatencyError + Config.OnlineSignalLatency);
+            timer.WaitMillisecond(ex.Display_ID.DisplayLatency(Config.Display) ?? 0 + Config.MaxDisplayLatencyError + Config.OnlineSignalLatency);
             if (isrippletriggered)
             {
                 gpio.BitPulse(bit: Config.StopSyncCh, duration_ms: 5);

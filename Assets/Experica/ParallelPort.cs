@@ -264,13 +264,13 @@ namespace Experica
             var timer = new Timer();
             if (delay_ms > 0)
             {
-                timer.TimeoutMillisecond(delay_ms);
+                timer.WaitMillisecond(delay_ms);
             }
             if (duration_ms > 0)
             {
                 var startlevel = ispositivepulse ? true : false;
                 BitOut(bit, startlevel);
-                timer.TimeoutMillisecond(duration_ms);
+                timer.WaitMillisecond(duration_ms);
                 BitOut(bit, !startlevel);
             }
         }

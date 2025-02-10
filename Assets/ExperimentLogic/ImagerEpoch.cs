@@ -173,10 +173,10 @@ public class ImagerEpoch : ConditionTestLogic
             if (markrecorder != null)
             {
                 markrecorder.RecordPath = ex.GetDataPath(addfiledir: true);
-                timer.TimeoutMillisecond(Config.NotifyLatency);
+                timer.WaitMillisecond(Config.NotifyLatency);
 
                 markrecorder.RecordStatus = RecordStatus.Recording;
-                timer.TimeoutMillisecond(Config.NotifyLatency);
+                timer.WaitMillisecond(Config.NotifyLatency);
             }
         }
         base.StartExperimentTimeSync();
@@ -187,7 +187,7 @@ public class ImagerEpoch : ConditionTestLogic
         if (markrecorder != null)
         {
             markrecorder.RecordStatus = RecordStatus.Stopped;
-            timer.TimeoutMillisecond(Config.NotifyLatency);
+            timer.WaitMillisecond(Config.NotifyLatency);
         }
         base.StopExperimentTimeSync();
     }

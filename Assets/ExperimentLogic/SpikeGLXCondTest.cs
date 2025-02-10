@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXCTLogic.cs is part of the Experica.
+SpikeGLXCondTest.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -49,14 +49,14 @@ public class SpikeGLXCondTest : ConditionTestLogic
                 SpikeGLX command server receive network message and change file path, all of which need time to complete.
                 Start recording before file path change completion may not save to correct file path.
                 */
-                timer.TimeoutMillisecond(Config.NotifyLatency);
+                timer.WaitMillisecond(Config.NotifyLatency);
 
                 recorder.RecordStatus = RecordStatus.Recording;
                 /* 
                 SpikeGLX command server receive network message and change record state, all of which need time to complete.
                 Begin experiment before record started may lose information.
                 */
-                timer.TimeoutMillisecond(Config.NotifyLatency);
+                timer.WaitMillisecond(Config.NotifyLatency);
             }
         }
         base.StartExperimentTimeSync();
@@ -71,7 +71,7 @@ public class SpikeGLXCondTest : ConditionTestLogic
             SpikeGLX command server receive network message and change record state, all of which need time to complete.
             Here wait recording ended before further processing.
             */
-            timer.TimeoutMillisecond(Config.NotifyLatency);
+            timer.WaitMillisecond(Config.NotifyLatency);
         }
         base.StopExperimentTimeSync();
     }

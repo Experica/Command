@@ -1,5 +1,5 @@
-ID: OriSF
-Name: OriSF
+ID: OptoOriSF
+Name: OptoOriSF
 Designer: Alex
 Experimenter: LZ
 Log: 
@@ -19,13 +19,13 @@ EnvParam:
   OriOffset@Grating@Grating: 0
   Size@Grating@Grating: 10 10 10
   Diameter@Grating@Grating: 10
-  MaskType@Grating@Grating: None
+  MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 3.2
-  TemporalFreq@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.2
+  TemporalFreq@Grating@Grating: 2
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
@@ -33,7 +33,7 @@ EnvParam:
   MaxColor@Grating@Grating: 1 0.35414 0.50559 1
   PauseTime@Grating@Grating: false
   PauseModulateTime@Grating@Grating: true
-  GratingType@Grating@Grating: Square
+  GratingType@Grating@Grating: Sinusoidal
   ModulateType@Grating@Grating: Square
   ReverseTime@Grating@Grating: false
   Duty@Grating@Grating: 0.5
@@ -43,7 +43,7 @@ EnvParam:
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: false
+  Visible@Grating@Grating: true
   Position@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
@@ -55,7 +55,7 @@ EnvParam:
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
 Cond: 
-LogicPath: SpikeGLXColorCondTest
+LogicPath: SpikeGLXOpto
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
@@ -107,6 +107,9 @@ EnvInheritParam:
   - CLUT@OrthoCamera@OrthoCamera
   - MarkerCorner@Marker@Marker~OrthoCamera
   - Diameter@Grating@Grating
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - Position@Grating@Grating
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -123,3 +126,9 @@ CondTest:
 ExtendParam:
   ColorSpace: DKL
   Color: Y
+  OptoCh: 2
+  OptoFreq:
+    - 50
+  OptoDuty:
+    - 0.5
+  AddNoOpto: true

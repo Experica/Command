@@ -426,13 +426,13 @@ namespace Experica
             switch (name)
             {
                 case "Opto":
-                    if ((int)value != 0) { Start(); }
+                    if (value.Convert<bool>()) { Start(); }
                     break;
                 case "OptoFreq":
-                    SetWaveFreq((double)value);
+                    SetWaveFreq(value.Convert<double>());
                     break;
                 case "OptoDuty":
-                    SetWaveDuty((double)value);
+                    SetWaveDuty(value.Convert<double>());
                     break;
                 default:
                     Debug.LogWarning($"Push Factor: {name} not supported in PWMWave.");
@@ -450,7 +450,7 @@ namespace Experica
             isbreakstarted = false;
             timer.Restart();
 
-            timer.TimeoutMillisecond(startdelay_ms + phasedelay * (highdur_ms + lowdur_ms));
+            timer.WaitMillisecond(startdelay_ms + phasedelay * (highdur_ms + lowdur_ms));
             starttime = timer.ElapsedMillisecond;
             while (true)
             {
@@ -536,7 +536,7 @@ namespace Experica
             isbreakstarted = false;
             timer.Restart();
 
-            timer.TimeoutMillisecond(startdelay_ms);
+            timer.WaitMillisecond(startdelay_ms);
             starttime = timer.ElapsedMillisecond;
             isid = new Exponential(spikerate_spms, rng);
             while (true)

@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXColor.cs is part of the Experica.
+SpikeGLXOpto.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -85,20 +85,32 @@ public class SpikeGLXOpto : SpikeGLXCondTest
             }
         }
 
+        if (color != null)
+        {
+            SetEnvActiveParam("MinColor", color[0]);
+            SetEnvActiveParam("MaxColor", color[1]);
+            if (wp != null)
+            {
+                SetEnvActiveParam("BGColor", wp[0]);
+            }
+        }
+
         // get optogenetics conditions
-        var optofreq = GetExParam<List<float>>("OptoFreq");
-        var optoduty = GetExParam<List<float>>("OptoDuty");
-        var nopto = GetExParam<bool>("WithNonOpto");
+        var optofreq = GetExParam<List<double>>("OptoFreq");
+        var optoduty = GetExParam<List<double>>("OptoDuty");
+        var nopto = GetExParam<bool>("AddNoOpto");
         var ocond = new Dictionary<string, List<object>>()
         {
-            ["Opto"] = new List<object> { 1 }
+            ["Opto"] = new List<object> { true }
         };
         if (optofreq != null) { ocond["OptoFreq"] = optofreq.Cast<object>().ToList(); }
         if (optoduty != null) { ocond["OptoDuty"] = optoduty.Cast<object>().ToList(); }
         ocond = ocond.OrthoCombineFactor();
         if (nopto)
         {
-            foreach (var fl in ocond.Values) { fl.Insert(0, 0); }
+            ocond["Opto"].Insert(0, false);
+            ocond["OptoFreq"].Insert(0, 0.0);
+            ocond["OptoDuty"].Insert(0, 0.0);
         }
 
         // get base conditions from condition file

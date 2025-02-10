@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
-using IceInternal;
 using UnityEngine.VFX;
 using System.Linq;
 using Experica.NetEnv;
@@ -43,7 +42,7 @@ namespace Experica.Command
             ExtendButton, viewport, ParamsFoldout, AboutWindow, ConfigWindow, AddExParamWindow, NewExWindow;
 
         VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
-        public Toggle server, host, start, pause, startsession;
+        public Toggle server, host, start, pause, startsession, fps;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
         ScrollView excontent, envcontent;
@@ -59,6 +58,8 @@ namespace Experica.Command
             // Main Menu
             mainmenu.Q<Button>("About").RegisterCallback<ClickEvent>(e => OnAboutWindow(root));
             mainmenu.Q<Button>("Config").RegisterCallback<ClickEvent>(e => OnConfigWindow(root));
+            fps = mainmenu.Q<Toggle>("FPS");
+            fps.RegisterValueChangedCallback(e => fps.label = e.newValue ? "" : "FPS");
             // Control Panel
             controlpanel = root.Q("ControlPanel");
             server = controlpanel.Q<Toggle>("Server");
@@ -665,6 +666,14 @@ namespace Experica.Command
         void OnDisable()
         {
 
+        }
+
+        void Update()
+        {
+            if (fps.value)
+            {
+                fps.label = MathF.Round(1f / Time.unscaledDeltaTime).ToString();
+            }
         }
 
     }

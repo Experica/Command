@@ -27,99 +27,96 @@ namespace Experica
 {
     public class Timer : Stopwatch
     {
-        public bool IsFrameTime = false;
+        /// <summary>
+        /// Using Frame Begin-Time Resolution (Unity `Time` only works in Unity Main Thread)
+        /// </summary>
+        public bool UnityFrameTime = false;
+        bool running = false;
+        double starttime = 0, totalelapsed = 0;
 
-        double ftatstop = 0;
-        bool ftrunning = false;
-        double ft0 = 0;
-
-        public Timer(bool frametime = false)
+        public Timer(bool unityframetime = false)
         {
-            IsFrameTime = frametime;
+            UnityFrameTime = unityframetime;
         }
 
-        public new bool IsRunning
-        {
-            get
-            {
-                if (IsFrameTime) { return ftrunning; }
-                else { return base.IsRunning; }
-            }
-        }
+        public new bool IsRunning => UnityFrameTime ? running : base.IsRunning;
 
         public new void Start()
         {
-            if (IsFrameTime)
+            if (UnityFrameTime)
             {
-                ft0 = Time.timeAsDouble - ftatstop;
-                ftrunning = true;
+                if (!running)
+                {
+                    starttime = Time.timeAsDouble;
+                    running = true;
+                }
             }
             else { base.Start(); }
         }
 
         public new void Stop()
         {
-            if (IsFrameTime)
+            if (UnityFrameTime)
             {
-                ftatstop = Time.timeAsDouble - ft0;
-                ftrunning = false;
+                if (running)
+                {
+                    totalelapsed += Time.timeAsDouble - starttime;
+                    running = false;
+                }
             }
             else { base.Stop(); }
         }
 
         public new void Reset()
         {
-            if (IsFrameTime)
+            if (UnityFrameTime)
             {
-                ftatstop = 0;
-                ftrunning = false;
+                totalelapsed = 0;
+                running = false;
             }
             else { base.Reset(); }
         }
 
         public new void Restart()
         {
-            if (IsFrameTime)
+            if (UnityFrameTime)
             {
-                ft0 = Time.timeAsDouble;
-                ftrunning = true;
+                totalelapsed = 0;
+                starttime = Time.timeAsDouble;
+                running = true;
             }
             else { base.Restart(); }
         }
 
-        public double ElapsedSecond
+        public double ElapsedSecond => UnityFrameTime ? (running ? (Time.timeAsDouble - starttime + totalelapsed) : totalelapsed) : Elapsed.TotalSeconds;
+
+        public double ElapsedMillisecond => ElapsedSecond * 1000;
+
+        public double ElapsedMinute => ElapsedSecond / 60;
+
+        public double ElapsedHour => ElapsedSecond / 3600;
+
+        public double ElapsedDay => ElapsedSecond / 86400;
+
+        /// <summary>
+        /// busy waiting for a period of real time
+        /// </summary>
+        /// <param name="timeout_s"></param>
+        public void WaitSecond(double timeout_s)
         {
-            get { return IsFrameTime ? (ftrunning ? Time.timeAsDouble - ft0 : ftatstop) : Elapsed.TotalSeconds; }
+            // Unity `Time.realtimeSinceStartupAsDouble`use system timer which usually less precise than `Stopwatch`
+            var isrunning = base.IsRunning;
+            if (!isrunning) { base.Start(); }
+            var start = Elapsed.TotalSeconds;
+            while ((Elapsed.TotalSeconds - start) < timeout_s) { }
+            if (!isrunning) { base.Stop(); }
         }
 
-        public double ElapsedMillisecond
-        {
-
-            get { return ElapsedSecond * 1000; }
-        }
-
-        public double ElapsedMinute
-        {
-            get { return ElapsedSecond / 60; }
-        }
-
-        public double ElapsedHour
-        {
-            get { return ElapsedSecond / 3600; }
-        }
-
-        public void TimeoutSecond(double timeout_s)
-        {
-            var start = Time.realtimeSinceStartupAsDouble;
-            while ((Time.realtimeSinceStartupAsDouble - start) < timeout_s)
-            {
-            }
-        }
-
-        public void TimeoutMillisecond(double timeout_ms)
-        {
-            TimeoutSecond(timeout_ms / 1000);
-        }
+        /// <summary>
+        /// busy waiting for a period of real time
+        /// </summary>
+        /// <param name="timeout_ms"></param>
+        public void WaitMillisecond(double timeout_ms) => WaitSecond(timeout_ms / 1000);
 
         public TimeoutResult<Tout> TimeoutSecond<Tin, Tout>(Func<Tin, Tout> function, Tin argument, double timeout_s) where Tout : class
         {

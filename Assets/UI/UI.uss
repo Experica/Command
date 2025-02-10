@@ -38,6 +38,21 @@
     background-color: rgb(235, 235, 235);
 }
 
+.MainMenuToggle {
+    background-color: rgb(210, 210, 210);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 4px;
+    margin-left: 4px;
+    padding-top: 8;
+    padding-bottom: 8;
+    padding-left: 10;
+    padding-right: 10;
+    font-size: 34;
+    -unity-font-style: bold;
+    text-overflow: ellipsis;
+}
+
 .MainContent {
     flex-direction: row;
     flex-grow: 1;

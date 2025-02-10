@@ -914,7 +914,7 @@ namespace Experica
         /// <param name="value"></param>
         /// <param name="TValue">Type of the value</param>
         /// <param name="T">Type we want the value to be converted to</param>
-        /// <param name="floatfmt">String format when convert float value (float gives 9 significant digits, since most of our data don't need full precision, here we use 5 significant digits.)</param>
+        /// <param name="floatfmt">String format when convert floating-point value (float gives 9 significant digits, since most of our data don't need full precision, here we use 5 significant digits.)</param>
         /// <returns>The converted value, or null if unsuccessful</returns>
         public static object Convert(this object value, Type TValue, Type T, string floatfmt = "G5")
         {
@@ -932,6 +932,15 @@ namespace Experica
                 else if (TValue == TFloat)
                 {
                     var v = (float)value;
+                    if (T == TString)
+                    {
+                        return v.ToString(floatfmt);
+                    }
+                    else { isfallback = true; }
+                }
+                else if (TValue == TDouble)
+                {
+                    var v = (double)value;
                     if (T == TString)
                     {
                         return v.ToString(floatfmt);
