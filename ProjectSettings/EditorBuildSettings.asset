@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NetEnv/Scene/Plaid.unity
     guid: d3a898f140f95ad46bc1b8d1d6110fb2
+  - enabled: 1
+    path: Assets/NetEnv/Scene/TwoGrating.unity
+    guid: 89e8afb04e9717441b210d2a22dba60d
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1aa0d92f72f6a0c438cc237989f52627,
       type: 2}

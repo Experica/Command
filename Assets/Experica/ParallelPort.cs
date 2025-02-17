@@ -129,10 +129,9 @@ namespace Experica
         }
         #endregion
 
-        int dataaddress;
-        public int DataAddress { get { return dataaddress; } set { dataaddress = value; } }
-        public int StatusAddress { get { return Interlocked.Increment(ref dataaddress); } }
-        public int ControlAddress { get { return Interlocked.Add(ref dataaddress, 2); } }
+        public int DataAddress;
+        public int StatusAddress => DataAddress + 1;
+        public int ControlAddress => DataAddress + 2;
         IODirection datamode;
         public IODirection DataMode
         {
@@ -168,7 +167,7 @@ namespace Experica
                 {
                     DataMode = IODirection.Input;
                 }
-                return Inpout.Input8((ushort)dataaddress);
+                return Inpout.Input8((ushort)DataAddress);
             }
         }
 
@@ -180,7 +179,7 @@ namespace Experica
                 {
                     DataMode = IODirection.Output;
                 }
-                Inpout.Output16((ushort)dataaddress, (ushort)data);
+                Inpout.Output16((ushort)DataAddress, (ushort)data);
                 currentdataout = data;
             }
         }
@@ -193,7 +192,7 @@ namespace Experica
                 {
                     DataMode = IODirection.Output;
                 }
-                Inpout.Output8((ushort)dataaddress, data);
+                Inpout.Output8((ushort)DataAddress, data);
                 currentdataout = data;
             }
         }

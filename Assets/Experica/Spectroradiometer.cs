@@ -45,7 +45,7 @@ namespace Experica
     public class PR : ISpectroRadioMeter
     {
         bool disposed = false;
-        SerialPort sp;
+        oldSerialPort sp;
         readonly string model;
         Timer timer = new Timer();
 
@@ -54,7 +54,7 @@ namespace Experica
             switch (prmodel)
             {
                 case "PR701":
-                    sp = new SerialPort(portname: portname, baudrate: 9600, handshake: System.IO.Ports.Handshake.RequestToSend, newline: "\r");
+                    sp = new oldSerialPort(portname: portname, baudrate: 9600, handshake: System.IO.Ports.Handshake.RequestToSend, newline: "\r");
                     break;
                 default:
                     Debug.Log("Photo Research Model " + prmodel + " is not yet supported.");

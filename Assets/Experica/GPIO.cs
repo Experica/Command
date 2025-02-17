@@ -28,6 +28,7 @@ using System.Collections.Concurrent;
 using MathNet.Numerics.Random;
 using MathNet.Numerics.Distributions;
 using System;
+using System.IO.Ports;
 //using FTD2XX_NET;
 
 namespace Experica
@@ -51,22 +52,86 @@ namespace Experica
         Output
     }
 
-    public class SerialGPIO : IDisposable
+    public class SerialGPIO:IGPIO
+    {
+        #region IDisposable
+        int disposecount = 0;
+
+        ~SerialGPIO()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
+            {
+                return;
+            }
+            if (disposing) // managed resources
+            {
+            }
+            serialport.Close();
+            serialport.Dispose();
+        }
+        #endregion
+
+        protected SerialPort serialport;
+        protected readonly object apilock = new();
+
+        public SerialGPIO(string portname, int baudrate, Parity parity, int databits, StopBits stopbits) 
+        { 
+            serialport = new SerialPort(portname,baudrate,parity,databits,stopbits);
+            serialport.Open();
+        }
+
+        public bool Found => SerialPort.GetPortNames().Contains( serialport.PortName);
+
+        public double MaxFreq => 1e3;
+
+        public virtual void BitOut(int bit, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void BitPulse(int bit, double duration_ms, double delay_ms = 0, bool ispositivepulse = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual byte In()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Out(byte value)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class oldSerialGPIO : IDisposable
     {
         bool disposed = false;
-        SerialPort sp;
+        oldSerialPort sp;
         int n;
         Timer timer = new Timer();
         double timeout;
 
-        public SerialGPIO(string portname, int nio = 32, double timeout_ms = 1.0)
+        public oldSerialGPIO(string portname, int nio = 32, double timeout_ms = 1.0)
         {
-            sp = new SerialPort(portname: portname, newline: "\r");
+            sp = new oldSerialPort(portname: portname, newline: "\r");
             n = nio;
             timeout = timeout_ms;
         }
 
-        ~SerialGPIO()
+        ~oldSerialGPIO()
         {
             Dispose(false);
         }

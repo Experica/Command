@@ -40,8 +40,8 @@ public class SpikeGLXOpto : SpikeGLXCondTest
         {
             gpio = gpio,
             bit = ch,
-            duration_ms = ex.CondDur,
-            startdelay_ms = ex.PreICI
+            duration_ms = ex.PreICI / 2 + ex.CondDur + ex.SufICI / 2,
+            startdelay_ms = ex.PreICI / 2
         };
     }
 

@@ -1,21 +1,21 @@
 ID: OptoOriSF
 Name: OptoOriSF
 Designer: Alex
-Experimenter: LZ
+Experimenter: PL
 Log: 
 Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_Name: AF6
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 120
+  Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
   Size@Grating@Grating: 10 10 10
   Diameter@Grating@Grating: 10
@@ -24,7 +24,7 @@ EnvParam:
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 0.2
+  SpatialFreq@Grating@Grating: 0.4
   TemporalFreq@Grating@Grating: 2
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
@@ -43,11 +43,11 @@ EnvParam:
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: true
+  Visible@Grating@Grating: false
   Position@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.876176
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777531
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -56,11 +56,11 @@ EnvParam:
 CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
 Cond: 
 LogicPath: SpikeGLXOpto
-Hemisphere: Left
-Eye: Right
+Hemisphere: None
+Eye: None
 RecordSession: ''
-RecordSite: Full
-DataDir: I:\
+RecordSite: ''
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -110,7 +110,7 @@ EnvInheritParam:
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
   - Position@Grating@Grating
-TimerDriftSpeed: 6.5E-05
+TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut
@@ -128,7 +128,7 @@ ExtendParam:
   Color: Y
   OptoCh: 2
   OptoFreq:
-    - 50
+    - 20
   OptoDuty:
     - 0.5
-  AddNoOpto: true
+  AddNoOpto: false

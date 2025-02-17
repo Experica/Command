@@ -46,7 +46,7 @@ namespace Experica
     public class Omicron : ILaser
     {
         bool disposed = false;
-        SerialPort sp;
+        oldSerialPort sp;
         Timer timer = new Timer();
         /// <summary>
         /// Watt
@@ -56,7 +56,7 @@ namespace Experica
 
         public Omicron(string portname, int baudrate = 500000, float maxpower = 0.1f, double timeout_ms = 150.0)
         {
-            sp = new SerialPort(portname: portname, baudrate: baudrate, newline: "\r");
+            sp = new oldSerialPort(portname: portname, baudrate: baudrate, newline: "\r");
             MaxPower = maxpower;
             timeout = timeout_ms;
         }
@@ -176,7 +176,7 @@ namespace Experica
     public class Cobolt : ILaser
     {
         bool disposed = false;
-        SerialPort sp;
+        oldSerialPort sp;
         Timer timer = new Timer();
         /// <summary>
         /// Watt
@@ -186,7 +186,7 @@ namespace Experica
 
         public Cobolt(string portname, int baudrate = 115200, float maxpower = 0.1f, double timeout_ms = 1.0)
         {
-            sp = new SerialPort(portname: portname, baudrate: baudrate, newline: "\r");
+            sp = new oldSerialPort(portname: portname, baudrate: baudrate, newline: "\r");
             MaxPower = maxpower;
             timeout = timeout_ms;
         }

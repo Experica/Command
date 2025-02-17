@@ -45,13 +45,13 @@ namespace Experica
     public class EyeLink : IEyeTracker
     {
         bool disposed = false;
-        SerialPort sp;
+        oldSerialPort sp;
         Timer timer = new Timer();
         double timeout;
 
         public EyeLink(string portname, int baudrate = 115200, double timeout_ms = 1.0)
         {
-            sp = new SerialPort(portname: portname, baudrate: baudrate, newline: "\r");
+            sp = new oldSerialPort(portname: portname, baudrate: baudrate, newline: "\r");
             timeout = timeout_ms;
         }
 

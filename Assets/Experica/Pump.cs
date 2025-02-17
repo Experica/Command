@@ -45,16 +45,8 @@ namespace Experica
 
     public class Longer : IPump
     {
-        bool disposed = false;
-        SerialPort sp;
-        Timer timer = new Timer();
-        double timeout;
-
-        public Longer(string portname, int baudrate = 115200, double timeout_ms = 1.0)
-        {
-            sp = new SerialPort(portname: portname, baudrate: baudrate, newline: "\r");
-            timeout = timeout_ms;
-        }
+        #region IDisposable
+        int disposecount = 0;
 
         ~Longer()
         {
@@ -69,14 +61,25 @@ namespace Experica
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
             {
-                if (disposing)
-                {
-                }
-                sp.Dispose();
-                disposed = true;
+                return;
             }
+            if (disposing)
+            {
+            }
+            sp.Dispose();
+        }
+        #endregion
+
+        oldSerialPort sp;
+        Timer timer = new Timer();
+        double timeout;
+
+        public Longer(string portname, int baudrate = 1200, double timeout_ms = 1.0)
+        {
+            sp = new oldSerialPort(portname: portname, baudrate: baudrate, newline: "\r");
+            timeout = timeout_ms;
         }
 
         string cmdresp(string cmd, double timeout, bool isecho = true)

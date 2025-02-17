@@ -31,16 +31,16 @@ using System.Runtime.InteropServices;
 
 namespace Experica
 {
-    public class SerialPort : IDisposable
+    public class oldSerialPort : IDisposable
     {
         bool disposed = false;
-        public System.IO.Ports.SerialPort serialport;
+        public SerialPort serialport;
         public string receiveddata = "";
         SerialDataReceivedEventHandler DataReceivedEventHandler;
         SerialErrorReceivedEventHandler ErrorReceivedEventHandler;
         SerialPinChangedEventHandler PinChangedEventHandler;
 
-        public SerialPort(string portname = "COM1", int baudrate = 9600, Parity parity = Parity.None, int databits = 8, StopBits stopbits = StopBits.One,
+        public oldSerialPort(string portname = "COM1", int baudrate = 9600, Parity parity = Parity.None, int databits = 8, StopBits stopbits = StopBits.One,
             Handshake handshake = Handshake.None, int readtimeout = System.IO.Ports.SerialPort.InfiniteTimeout,
             int writetimeout = System.IO.Ports.SerialPort.InfiniteTimeout, string newline = "\n", bool isevent = false)
         {
@@ -71,7 +71,7 @@ namespace Experica
             }
         }
 
-        ~SerialPort()
+        ~oldSerialPort()
         {
             Dispose(false);
         }

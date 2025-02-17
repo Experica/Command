@@ -42,12 +42,13 @@ public class GPIOSignal : ExperimentLogic
                 break;
             case "1208FS":
                 // On Average 500Hz
-                //gpio = new MCCDevice();
+                gpio = new MCCDevice();
                 break;
         }
         if (gpio == null) { Debug.LogWarning($"No Valid GPIO From {gpioname}."); return; }
 
         gpiowave = new GPIOWave(gpio);
+        var ch = GetExParam<int>("Ch");
         var wavetype = GetExParam<string>("WaveType");
         var freq = GetExParam<double>("Freq");
         var duty = GetExParam<double>("Duty");
@@ -57,11 +58,11 @@ public class GPIOSignal : ExperimentLogic
             case "PWM":
                 var w = new PWMWave();
                 w.SetWave(freq, duty);
-                gpiowave.SetBitWave(0, wavetype, w);
+                gpiowave.SetBitWave(ch, wavetype, w);
                 break;
             case "PoissonSpike":
-                gpiowave.SetBitWave(0, wavetype, new PoissonSpikeWave(spikerate_sps: rate));
-                gpiowave.SetBitWave(1, wavetype, new PoissonSpikeWave(spikerate_sps: 2 * rate));
+                gpiowave.SetBitWave(ch, wavetype, new PoissonSpikeWave(spikerate_sps: rate));
+                gpiowave.SetBitWave(ch+1, wavetype, new PoissonSpikeWave(spikerate_sps: 2 * rate));
                 break;
         }
         gpiowave.StartAll();
