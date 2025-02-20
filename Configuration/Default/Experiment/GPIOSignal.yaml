@@ -63,7 +63,7 @@ CondTest:
 ExtendParam:
   GPIO: ParallelPort
   WaveType: PWM
-  Freq: 50
+  Freq: 100
   Duty: 0.5
   FiringRate: 50
   Ch: 2

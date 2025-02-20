@@ -14,22 +14,22 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   Show@Showroom@Showroom: Grating
-  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.876176
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerSize@Marker@OrthoCamera/Marker: 4
   MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
-  Diameter@Grating@Grating: 10
-  MaskType@Grating@Grating: None
+  Size@Grating@Grating: 5 5 5
+  Diameter@Grating@Grating: 5
+  MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
@@ -52,8 +52,8 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: true
+  Position@Grating@Grating: 7.3318 -3.2741 0
+  Visible@Grating@Grating: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
@@ -61,7 +61,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement

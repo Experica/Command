@@ -131,9 +131,10 @@ public class Fixation : ExperimentLogic
 
     protected override void OnUpdate()
     {
-        if (ex.Input && MoveAction.WasPerformedThisFrame() && fixtrail != null && fixtrail.Visible.Value)
+        if (!ex.Input || envmgr.MainCamera.Count == 0 || MoveAction.phase != InputActionPhase.Started) { return; }
+        FixPosition += MoveAction.ReadValue<Vector2>();
+        if (fixtrail != null && fixtrail.Visible.Value)
         {
-            FixPosition += MoveAction.ReadValue<Vector2>();
             fixtrail.Position.Value = FixPosition;
         }
     }

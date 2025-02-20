@@ -1,30 +1,30 @@
 ID: OptoOriSF
 Name: OptoOriSF
 Designer: Alex
-Experimenter: PL
+Experimenter: LZ
 Log: 
 Subject_ID: Test
-Subject_Name: AF6
-Subject_Species: Macaque
+Subject_Name: AG5
+Subject_Species: M. F.
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 6.4
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 0
+  Ori@Grating@Grating: 240
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
-  Diameter@Grating@Grating: 10
+  Size@Grating@Grating: 5 5 5
+  Diameter@Grating@Grating: 5
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 0.4
+  SpatialFreq@Grating@Grating: 0.05
   TemporalFreq@Grating@Grating: 2
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
@@ -42,24 +42,24 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 7.3318 -3.2741 0
   Visible@Grating@Grating: false
-  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777531
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerSize@Marker@OrthoCamera/Marker: 4
   MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
-CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
+CondPath: Condition\Ori[12]_SF[0.05,0.8].yaml
 Cond: 
 LogicPath: SpikeGLXOpto
-Hemisphere: None
-Eye: None
+Hemisphere: Left
+Eye: Right
 RecordSession: ''
-RecordSite: ''
+RecordSite: Full
 DataDir: X:\
 DataPath: 
 Input: false
@@ -77,8 +77,8 @@ SufITI: 0
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: COND
-CondTestAtState: NONE
+PushCondAtState: PREICI
+CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
   - CondIndex
@@ -110,7 +110,7 @@ EnvInheritParam:
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
   - Position@Grating@Grating
-TimerDriftSpeed: 3.02E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut
@@ -129,6 +129,8 @@ ExtendParam:
   OptoCh: 2
   OptoFreq:
     - 20
+    - 50
   OptoDuty:
-    - 0.5
+    - 0.2
+    - 0.4
   AddNoOpto: false

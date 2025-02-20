@@ -1442,15 +1442,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Visible",
-                    "type": "Value",
-                    "id": "7b6b3e0f-fc26-4880-9895-4cf2123200e3",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Ori",
                     "type": "Value",
                     "id": "644b1fc3-9053-4dc6-87fe-a831717d2ad5",
@@ -1458,6 +1449,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Visible",
+                    "type": "Button",
+                    "id": "7b6b3e0f-fc26-4880-9895-4cf2123200e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Function0",
@@ -1549,31 +1549,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "up",
-                    "id": "a47e1179-ef13-4ff5-aac3-2e12b6f4c8c8",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "down",
                     "id": "c5c3f655-cd6d-4875-89aa-67b8b7a10e65",
                     "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "88215df4-9f5b-4a47-9614-92be2482754f",
-                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -1593,31 +1571,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "80ec8a1b-370c-40c8-803b-cc6d6a352cd6",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "right",
                     "id": "7f6f6109-cbf2-4663-a2ee-01c74b34b467",
                     "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "65823019-24e7-4650-9701-36c9db61ea6a",
-                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -1637,37 +1593,81 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "9c94ad01-df2c-4063-bd7c-e9f3c212c762",
-                    "path": "1DAxis",
+                    "name": "WSAD",
+                    "id": "cf0ff8f4-caf4-4996-8bcc-37ad3538eaee",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Visible",
+                    "action": "Scale",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "0ff0b514-f28f-44dd-a103-ed2e168cd39b",
+                    "name": "up",
+                    "id": "0b627a96-5a18-4c58-8337-b2d2ed93c9c8",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "256c7eba-b64d-4c8f-ae3b-493da48bb181",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "9babddfe-4728-4b24-aeb8-8fb4ad01eb01",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "8403da8b-9dbe-4928-be9a-1a8156d542db",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scale",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5d54ebd4-ed12-48cf-b811-aa05e079cdbd",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Visible",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
-                    "id": "13d80b74-dcf9-4f29-a152-223eaebe6166",
-                    "path": "<Gamepad>/rightShoulder",
+                    "name": "",
+                    "id": "b4026ec9-d49a-48d2-9429-93475d98f8b5",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Visible",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "1D Axis",

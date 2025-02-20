@@ -33,81 +33,76 @@ using Experica.NetEnv;
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {
-    protected Dictionary<string, InputAction> useractions = new();
+    protected InputAction move_ia,scale_ia,ori_ia,visible_ia;
     protected List<ScaleGrid> scalegrid = new();
 
     protected override void Enable()
     {
-        useractions = InputSystem.actions.FindActionMap("Logic").actions.ToDictionary(i => i.name, i => i);
-        useractions["Move"].started += OnMoveAction;
-        useractions["Scale"].started += OnScaleAction;
-        useractions["Visible"].performed += OnVisibleAction;
-        useractions["Ori"].performed += OnOriAction;
-    }
-    protected override void Disable()
-    {
-        useractions["Move"].started -= OnMoveAction;
-        useractions["Scale"].started -= OnScaleAction;
-        useractions["Visible"].performed -= OnVisibleAction;
-        useractions["Ori"].performed -= OnOriAction;
+        var actionmap = InputSystem.actions.FindActionMap("Logic");
+        move_ia = actionmap.FindAction("Move");
+        scale_ia = actionmap.FindAction("Scale");
+        ori_ia = actionmap.FindAction("Ori");
+
+        visible_ia = actionmap.FindAction("Visible");
+        visible_ia.performed += OnVisibleAction;
     }
 
-    protected virtual void OnMoveAction(InputAction.CallbackContext context)
+    protected override void Disable()
     {
-        var position = context.ReadValue<Vector2>();
-        if (ex.Input && envmgr.MainCamera.Count > 0)
-        {
-            var po = envmgr.GetActiveParam("Position");
-            if (po != null)
-            {
-                var so = envmgr.GetActiveParam("Size");
-                var p = (Vector3)po;
-                var s = so == null ? Vector3.zero : (Vector3)so;
-                var hh = (envmgr.MainCamera.First().Height + s.y) / 2;
-                var hw = (envmgr.MainCamera.First().Width + s.x) / 2;
-                envmgr.SetActiveParam("Position", new Vector3(
-                Mathf.Clamp(p.x + position.x * hw * Time.deltaTime, -hw, hw),
-                Mathf.Clamp(p.y + position.y * hh * Time.deltaTime, -hh, hh),
-                p.z));
-            }
-        }
+        visible_ia.performed -= OnVisibleAction;
     }
-    protected virtual void OnScaleAction(InputAction.CallbackContext context)
+
+    protected virtual void MoveAction()
     {
-        var size = context.ReadValue<Vector2>();
-        if (ex.Input)
-        {
-            var so = envmgr.GetActiveParam("Size");
-            if (so != null)
-            {
-                var s = (Vector3)so;
-                envmgr.SetActiveParam("Size", new Vector3(
-                    Mathf.Max(0, s.x + size.x * s.x * Time.deltaTime),
-                    Mathf.Max(0, s.y + size.y * s.y * Time.deltaTime),
-                    s.z));
-            }
-        }
+        if (move_ia.phase != InputActionPhase.Started) { return; }
+        var po = envmgr.GetActiveParam("Position");
+        if (po == null) { return; }
+        var so = envmgr.GetActiveParam("Size");
+        var s = so == null ? Vector3.zero : (Vector3)so;
+        var p = (Vector3)po;
+        var v = move_ia.ReadValue<Vector2>();
+
+        var hh = (envmgr.MainCamera.First().Height + s.y) / 2;
+        var hw = (envmgr.MainCamera.First().Width + s.x) / 2;
+        envmgr.SetActiveParam("Position", new Vector3(
+        Mathf.Clamp(p.x + v.x * hw * Time.deltaTime, -hw, hw),
+        Mathf.Clamp(p.y + v.y * hh * Time.deltaTime, -hh, hh),
+        p.z));
     }
+    protected virtual void ScaleAction()
+    {
+        if (scale_ia.phase != InputActionPhase.Started) { return; }
+        var so = envmgr.GetActiveParam("Size");
+        if (so == null) { return; }
+        var s = (Vector3)so;
+        var v = scale_ia.ReadValue<Vector2>();
+
+        var diag = Mathf.Sqrt(Mathf.Pow(envmgr.MainCamera.First().Height, 2) + Mathf.Pow(envmgr.MainCamera.First().Width, 2));
+        envmgr.SetActiveParam("Size", new Vector3(
+        Mathf.Clamp(s.x + v.x * s.x * Time.deltaTime, 0, diag),
+        Mathf.Clamp(s.y + v.y * s.y * Time.deltaTime, 0, diag),
+        s.z));
+    }
+    protected virtual void OriAction()
+    {
+        if (ori_ia.phase != InputActionPhase.Started) { return; }
+        var oo = envmgr.GetActiveParam("Ori");
+        if (oo == null) { return; }
+        var o = (float)oo;
+        var v = ori_ia.ReadValue<float>();
+
+        o = (o + v * 180 * Time.deltaTime) % 360f;
+        envmgr.SetActiveParam("Ori", o < 0 ? 360f - o : o);
+    }
+
     protected virtual void OnVisibleAction(InputAction.CallbackContext context)
     {
-        if (ex.Input)
-        {
-            envmgr.SetActiveParam("Visible", context.ReadValue<float>() > 0);
-        }
-    }
-    protected virtual void OnOriAction(InputAction.CallbackContext context)
-    {
-        var v = context.ReadValue<float>();
-        if (ex.Input)
-        {
-            var oo = envmgr.GetActiveParam("Ori");
-            if (oo != null)
-            {
-                var o = (float)oo;
-                o = (o + v * 180 * Time.deltaTime) % 360f;
-                envmgr.SetActiveParam("Ori", o < 0 ? 360f - o : o);
-            }
-        }
+        if (!ex.Input || envmgr.MainCamera.Count == 0) { return; }
+        var vo = envmgr.GetActiveParam("Visible");
+        if (vo == null) { return; }
+        var v = (bool)vo;
+
+        envmgr.SetActiveParam("Visible", !v);
     }
     protected virtual void OnDiameterAction(float diameter)
     {
@@ -146,6 +141,16 @@ public class ConditionTestLogic : ExperimentLogic
         }
     }
 
+    /// <summary>
+    /// Polling and Processing Value Type Input
+    /// </summary>
+    protected override void OnUpdate()
+    {
+        if (!ex.Input || envmgr.MainCamera.Count == 0) { return; }
+        MoveAction();
+        ScaleAction();
+        OriAction();
+    }
 
     public override void OnSceneReady(List<ulong> clientids)
     {

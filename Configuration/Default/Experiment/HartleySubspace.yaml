@@ -15,22 +15,22 @@ EnvPath: Grating
 EnvParam:
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 0
+  Ori@Grating@Grating: 112.6199
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
-  Diameter@Grating@Grating: 10
+  Size@Grating@Grating: 5 5 5
+  Diameter@Grating@Grating: 5
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 0.2
+  SpatialFreq@Grating@Grating: 5.2
   TemporalFreq@Grating@Grating: 1
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
-  SpatialPhase@Grating@Grating: 0
-  MinColor@Grating@Grating: 0 0 0 1
-  MaxColor@Grating@Grating: 1 1 1 1
+  SpatialPhase@Grating@Grating: 0.625
+  MinColor@Grating@Grating: 0 0.64586 0.49441 1
+  MaxColor@Grating@Grating: 1 0.35414 0.50559 1
   PauseTime@Grating@Grating: true
   PauseModulateTime@Grating@Grating: true
   GratingType@Grating@Grating: Sinusoidal
@@ -42,33 +42,25 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 0 0 0
-  Visible@Grating@Grating: true
-  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  Position@Grating@Grating: 7.3318 -3.2741 0
+  Visible@Grating@Grating: false
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.66849
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 2
-  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
-  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
-  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
-  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
-  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
-  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
-  Size@ScaleGrid@OrthoCamera/ScaleGrid: 53.873 32.289 1
-  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
-  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
-LogicPath: ConditionTestLogic
+LogicPath: SpikeGLXColorCondTest
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -118,6 +110,8 @@ EnvInheritParam:
   - MarkerCorner@Marker@Marker~OrthoCamera
   - Diameter@Grating@Grating
   - Position@Grating@Grating
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -131,4 +125,6 @@ NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
-ExtendParam: {}
+ExtendParam:
+  ColorSpace: DKL
+  Color: Y

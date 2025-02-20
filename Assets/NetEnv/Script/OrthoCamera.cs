@@ -30,7 +30,7 @@ namespace Experica.NetEnv
 {
     public class OrthoCamera : NetworkBehaviour, INetEnvCamera
     {
-        public NetworkVariable<Vector3> Position = new(new Vector3(0f, 0f, -501f));
+        public NetworkVariable<Vector3> CameraPosition = new(new Vector3(0f, 0f, -501f));
         /// <summary>
         /// Distance from screen to eye in arbitory unit
         /// </summary>
@@ -114,7 +114,7 @@ namespace Experica.NetEnv
 
         public override void OnNetworkSpawn()
         {
-            Position.OnValueChanged += OnPosition;
+            CameraPosition.OnValueChanged += OnCameraPosition;
             ScreenToEye.OnValueChanged += OnScreenToEye;
             ScreenHeight.OnValueChanged += OnScreenHeight;
             ScreenAspect.OnValueChanged += OnScreenAspect;
@@ -124,7 +124,7 @@ namespace Experica.NetEnv
 
         public override void OnNetworkDespawn()
         {
-            Position.OnValueChanged -= OnPosition;
+            CameraPosition.OnValueChanged -= OnCameraPosition;
             ScreenToEye.OnValueChanged -= OnScreenToEye;
             ScreenHeight.OnValueChanged -= OnScreenHeight;
             ScreenAspect.OnValueChanged -= OnScreenAspect;
@@ -132,7 +132,7 @@ namespace Experica.NetEnv
             CLUT.OnValueChanged -= OnCLUT;
         }
 
-        protected virtual void OnPosition(Vector3 p, Vector3 c)
+        protected virtual void OnCameraPosition(Vector3 p, Vector3 c)
         {
             transform.localPosition = c;
         }
