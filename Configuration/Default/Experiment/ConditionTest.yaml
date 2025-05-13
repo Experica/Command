@@ -1,15 +1,15 @@
 ID: ConditionTest
 Name: ConditionTest
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: Right Eye
-Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG8
+Subject_Name: Dunn
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Showroom
 EnvParam:
@@ -17,7 +17,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.786592
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -27,15 +27,15 @@ EnvParam:
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 0
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 5 5 5
-  Diameter@Grating@Grating: 5
-  MaskType@Grating@Grating: Disk
+  Size@Grating@Grating: 10 10 10
+  Diameter@Grating@Grating: 10
+  MaskType@Grating@Grating: None
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
   SpatialFreq@Grating@Grating: 0.2
-  TemporalFreq@Grating@Grating: 1
+  TemporalFreq@Grating@Grating: 2
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
@@ -52,8 +52,8 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 7.3318 -3.2741 0
-  Visible@Grating@Grating: false
+  Position@Grating@Grating: 15.476 -2.1461 0
+  Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
@@ -61,7 +61,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: I:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
@@ -69,8 +69,8 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
-PreICI: 150
-CondDur: 150
+PreICI: 200
+CondDur: 300
 SufICI: 0
 PreITI: 0
 TrialDur: 0

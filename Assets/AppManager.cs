@@ -91,8 +91,9 @@ namespace Experica.Command
             exmgr.el?.StartStopExperiment(false);
             if (cfgmgr.config.IsSaveExOnQuit)
             {
-                // now only save in-scene object, where spwan object all null
-                //exmgr.SaveEx();
+                // during quiting, network would shutdown and NetEnv params will sync to current experiment on PreShutdown,
+                // so we shouldn't sync NetEnv params again in SaveEx because now some NetEnv objects are already invalid.
+                exmgr.SaveEx(false);
             }
             if (cfgmgr.config.IsSaveExSessionOnQuit)
             {

@@ -1,0 +1,4 @@
+Diameter: [0, 0.25, 0.5, 1, 2, 4]
+Contrast: [0.3, 1]
+Ori: [0, 180]
+OrthoCombineFactor: []

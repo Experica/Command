@@ -1,39 +1,39 @@
 ID: OriSF
 Name: OriSF
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: 
-Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG7
+Subject_Name: DAQ1
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Grating
 EnvParam:
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 120
+  Ori@Grating@Grating: 270
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
-  Diameter@Grating@Grating: 10
-  MaskType@Grating@Grating: None
+  Size@Grating@Grating: 4 4 4
+  Diameter@Grating@Grating: 4
+  MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
-  SpatialFreq@Grating@Grating: 3.2
-  TemporalFreq@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.8
+  TemporalFreq@Grating@Grating: 5
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
-  MinColor@Grating@Grating: 0 0.64586 0.49441 1
-  MaxColor@Grating@Grating: 1 0.35414 0.50559 1
+  MinColor@Grating@Grating: 1.9984E-15 0 4.996E-16 1
+  MaxColor@Grating@Grating: 1 1 1 1
   PauseTime@Grating@Grating: false
   PauseModulateTime@Grating@Grating: true
-  GratingType@Grating@Grating: Square
+  GratingType@Grating@Grating: Sinusoidal
   ModulateType@Grating@Grating: Square
   ReverseTime@Grating@Grating: false
   Duty@Grating@Grating: 0.5
@@ -42,18 +42,18 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 2.9437 -2.1461 0
   Visible@Grating@Grating: false
-  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.876176
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.650131
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerSize@Marker@OrthoCamera/Marker: 4
   MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
-CondPath: Condition\Ori[12]_SF[0.2,6.4].yaml
+CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
 LogicPath: SpikeGLXColorCondTest
 Hemisphere: Left
@@ -65,20 +65,20 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 3
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
 CondDur: 1500
 SufICI: 250
-PreITI: 0
+PreITI: 250
 TrialDur: 0
-SufITI: 0
+SufITI: 250
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: COND
-CondTestAtState: NONE
+CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
   - CondIndex
@@ -100,6 +100,7 @@ InheritParam:
   - TimerDriftSpeed
   - Display_ID
   - NotifyExperimenter
+  - Subject_Birth
 EnvInheritParam:
   - ScreenToEye@OrthoCamera@OrthoCamera
   - ScreenHeight@OrthoCamera@OrthoCamera
@@ -107,6 +108,9 @@ EnvInheritParam:
   - CLUT@OrthoCamera@OrthoCamera
   - MarkerCorner@Marker@Marker~OrthoCamera
   - Diameter@Grating@Grating
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - Position@Grating@Grating
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -122,4 +126,4 @@ Config:
 CondTest: 
 ExtendParam:
   ColorSpace: DKL
-  Color: Y
+  Color: X

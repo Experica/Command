@@ -1,0 +1,177 @@
+ID: OptoCenterSurround
+Name: OptoCenterSurround
+Designer: Alex
+Experimenter: KS
+Log: 
+Subject_ID: AG8
+Subject_Name: Dunn
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 27
+Subject_Log: 
+EnvPath: TwoGrating
+EnvParam:
+  Rotation@Grating@Grating0: 0 0 0
+  RotationOffset@Grating@Grating0: 0 0 0
+  Ori@Grating@Grating0: 90
+  OriOffset@Grating@Grating0: 0
+  Size@Grating@Grating0: 3 3 3
+  Diameter@Grating@Grating0: 3
+  MaskType@Grating@Grating0: Disk
+  MaskRadius@Grating@Grating0: 0.5
+  MaskSigma@Grating@Grating0: 0.15
+  Luminance@Grating@Grating0: 0.5
+  Contrast@Grating@Grating0: 1
+  SpatialFreq@Grating@Grating0: 0
+  TemporalFreq@Grating@Grating0: 0
+  ModulateTemporalFreq@Grating@Grating0: 0.2
+  ModulateTemporalPhase@Grating@Grating0: 0
+  SpatialPhase@Grating@Grating0: 0
+  MinColor@Grating@Grating0: 1.9984E-15 0 4.996E-16 1
+  MaxColor@Grating@Grating0: 0.37 0.01 0 1
+  PauseTime@Grating@Grating0: false
+  PauseModulateTime@Grating@Grating0: true
+  GratingType@Grating@Grating0: Square
+  ModulateType@Grating@Grating0: Square
+  ReverseTime@Grating@Grating0: false
+  Duty@Grating@Grating0: 0.5
+  ModulateDuty@Grating@Grating0: 0.5
+  TimeSecond@Grating@Grating0: 0
+  ModulateTimeSecond@Grating@Grating0: 0
+  OriPositionOffset@Grating@Grating0: false
+  PositionOffset@Grating@Grating0: 0 0 0
+  Position@Grating@Grating0: 0 0 0
+  Visible@Grating@Grating0: false
+  Rotation@Grating@Grating1: 0 0 0
+  RotationOffset@Grating@Grating1: 0 0 0
+  Ori@Grating@Grating1: 45
+  OriOffset@Grating@Grating1: 0
+  Size@Grating@Grating1: 30 30 30
+  Diameter@Grating@Grating1: 30
+  MaskType@Grating@Grating1: Disk
+  MaskRadius@Grating@Grating1: 0.5
+  MaskSigma@Grating@Grating1: 0.15
+  Luminance@Grating@Grating1: 0.5
+  Contrast@Grating@Grating1: 1
+  SpatialFreq@Grating@Grating1: 0
+  TemporalFreq@Grating@Grating1: 0
+  ModulateTemporalFreq@Grating@Grating1: 0.2
+  ModulateTemporalPhase@Grating@Grating1: 0
+  SpatialPhase@Grating@Grating1: 0
+  MinColor@Grating@Grating1: 0 0 0 1
+  MaxColor@Grating@Grating1: 0.006 0.115 0.001 1
+  PauseTime@Grating@Grating1: false
+  PauseModulateTime@Grating@Grating1: true
+  GratingType@Grating@Grating1: Square
+  ModulateType@Grating@Grating1: Square
+  ReverseTime@Grating@Grating1: false
+  Duty@Grating@Grating1: 0.5
+  ModulateDuty@Grating@Grating1: 0.5
+  TimeSecond@Grating@Grating1: 0
+  ModulateTimeSecond@Grating@Grating1: 0
+  OriPositionOffset@Grating@Grating1: false
+  PositionOffset@Grating@Grating1: 0 0 0
+  Position@Grating@Grating1: 0 0 1
+  Visible@Grating@Grating1: false
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.786592
+  BGColor@OrthoCamera@OrthoCamera: 0.098 0.078 0.083 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
+CondPath: Condition\CS_8SColor_KS.yaml
+Cond: 
+LogicPath: SpikeGLXOptoCS
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 1500
+SufICI: 250
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: PREICI
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_Name
+  - Subject_ID
+  - Subject_Species
+  - Subject_Weight
+  - Subject_Gender
+  - Subject_Size
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
+  - Subject_Birth
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - Diameter@Grating@Grating
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - Position@Grating@Grating
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  ColorSpace: HSL
+  Color: HueYm
+  OptoCh: 2
+  OptoFreq:
+    - 20
+    - 50
+  OptoDuty:
+    - 0.2
+    - 0.4
+  AddNoOpto: false
+  GPIO: 1208FS
+  Ori: []
+  SpatialFreq: []
+  Diameter0:
+    - 3
+    - 5
+  Diameter1:
+    - 30
+    - 50

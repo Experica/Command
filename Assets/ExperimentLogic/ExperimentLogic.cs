@@ -273,12 +273,11 @@ namespace Experica.Command
 
         #region Condition
         /// <summary>
-        /// prepare condition based on `ex.CondPath` file, and set all factor push to NetEnvManager
+        /// prepare condition based on `ex.CondPath` file
         /// </summary>
         protected virtual void PrepareCondition()
         {
             condmgr.PrepareCondition(ex.CondPath);
-            PrepareFactorPushTarget();
         }
 
         /// <summary>
@@ -295,6 +294,7 @@ namespace Experica.Command
             {
                 PrepareCondition();
             }
+            PrepareFactorPushTarget();
             ex.Cond = condmgr.Cond;
             condmgr.InitializeSampling(ex.CondSampling, ex.BlockSampling, ex.BlockFactor);
         }

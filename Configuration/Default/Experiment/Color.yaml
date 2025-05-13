@@ -1,30 +1,22 @@
 ID: Color
 Name: Color
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: 
-Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_ID: AG7
+Subject_Name: DAQ1
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
-  Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 20 20 20
-  Diameter@Quad@Quad: 20
+  Size@Quad@Quad: 5 5 5
+  Diameter@Quad@Quad: 5
   Color@Quad@Quad: 1 0.3931 0.256 1
   MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
@@ -32,10 +24,19 @@ EnvParam:
   OriPositionOffset@Quad@Quad: false
   PositionOffset@Quad@Quad: 0 0 0
   Position@Quad@Quad: 0 0 0
-  Visible@Quad@Quad: true
+  Visible@Quad@Quad: false
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
 CondPath: ''
 Cond: 
-LogicPath: ConditionTestLogic
+LogicPath: SpikeGLXCTColor
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
@@ -90,6 +91,8 @@ EnvInheritParam:
   - Diameter@Quad@Quad
   - MarkerSize@Marker@Marker~OrthoCamera
   - MarkerCorner@Marker@Marker~OrthoCamera
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -98,9 +101,11 @@ EventSyncProtocol:
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: FULL
+CondTestShow: ALL
 NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
-ExtendParam: {}
+ExtendParam:
+  ColorSpace: DKL
+  Color: Hue_Ym

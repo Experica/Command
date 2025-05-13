@@ -1,45 +1,46 @@
 ID: Flash
 Name: Flash
 Designer: Alex
-Experimenter: Alex
+Experimenter: KS
 Log: 
-Subject_ID: Test
-Subject_Name: AF6
-Subject_Species: Macaque
+Subject_ID: DAQ1
+Subject_Name: DAQ1
+Subject_Species: Mouse
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.859114
-  BGColor@OrthoCamera@OrthoCamera: 0 0 0 0
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 0
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
-  Mark@Marker@Marker~OrthoCamera: false
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 0 0 0
-  Diameter@Quad@Quad: 0
-  Color@Quad@Quad: 0 0 0 0
+  Size@Quad@Quad: 200 200 200
+  Diameter@Quad@Quad: 200
+  Color@Quad@Quad: 0 0 0 1
   MaskType@Quad@Quad: None
   MaskRadius@Quad@Quad: 0
   MaskSigma@Quad@Quad: 0
   OriPositionOffset@Quad@Quad: false
   PositionOffset@Quad@Quad: 0 0 0
-  Position@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 18.921 -10.821 0
   Visible@Quad@Quad: false
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 22
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\WhiteBlack.yaml
 Cond: 
-LogicPath: ConditionTestLogic
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODL9
+LogicPath: SpikeGLXCondTest
+Hemisphere: Left
+Eye: Right
+RecordSession: V1
+RecordSite: 1
 DataDir: X:\
 DataPath: 
 Input: false
@@ -64,22 +65,41 @@ NotifyParam:
   - CondIndex
   - Event
   - SyncEvent
-InheritParam: []
+InheritParam:
+  - Experimenter
+  - Subject_ID
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
 EnvInheritParam:
   - Position@Quad@Quad
   - ScreenToEye@OrthoCamera@OrthoCamera
   - ScreenHeight@OrthoCamera@OrthoCamera
   - ScreenAspect@OrthoCamera@OrthoCamera
   - CLUT@OrthoCamera@OrthoCamera
-TimerDriftSpeed: 3.02E-05
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - Diameter@Quad@Quad
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut
     - Display
   NChannel: 1
   NEdgePEvent: 1
-Display_ID: Trinitron
-CondTestShowLevel: FULL
+Display_ID: ROGPG279Q
+CondTestShow: ALL
 NotifyExperimenter: false
 Version: 3
 Config: 

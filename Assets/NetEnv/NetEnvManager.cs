@@ -715,6 +715,19 @@ namespace Experica.NetEnv
 
         public bool Empty => go.Count == 0;
 
+        public bool TryGetParams(out Dictionary<string, object> ps)
+        {
+            ps = null;
+            if (Empty) { return false; }
+            ps = GetParams();
+            if (ps != null && ps.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         public void Despawn(NetworkObject no, bool destroy = true)
         {
             if (no == null) { return; }

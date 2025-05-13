@@ -1,5 +1,5 @@
 ﻿/*
-SpikeGLXColor.cs is part of the Experica.
+SpikeGLXOpto.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -26,10 +26,22 @@ using System.Linq;
 using ColorSpace = Experica.NetEnv.ColorSpace;
 
 /// <summary>
-/// SpikeGLX Condition Test with Display-Confined Colors and User-Defined Factors
+/// SpikeGLX TwoGrating Center-Surround Test with User-Defined Factors and optogenetic manipulation 
 /// </summary>
-public class SpikeGLXColor : SpikeGLXCondTest
+public class SpikeGLXOptoCS : SpikeGLXOpto
 {
+    protected override void OnCONDEntered()
+    {
+        SetEnvActiveParam("Visible@Grating@Grating0", true);
+        SetEnvActiveParam("Visible@Grating@Grating1", true);
+    }
+
+    protected override void OnSUFICIEntered()
+    {
+        SetEnvActiveParam("Visible@Grating@Grating0", false);
+        SetEnvActiveParam("Visible@Grating@Grating1", false);
+    }
+
     protected override void PrepareCondition()
     {
         var cond = new Dictionary<string, List<object>>();
@@ -38,6 +50,8 @@ public class SpikeGLXColor : SpikeGLXCondTest
         var colorname = colorspace + "_" + colorvar;
         var ori = GetExParam<List<float>>("Ori");
         var sf = GetExParam<List<float>>("SpatialFreq");
+        var diameter0 = GetExParam<List<float>>("Diameter0");
+        var diameter1 = GetExParam<List<float>>("Diameter1");
 
         // get color
         List<Color> color = null;
@@ -67,6 +81,8 @@ public class SpikeGLXColor : SpikeGLXCondTest
             }
         }
 
+        if (wp != null) { SetEnvActiveParam("BGColor", wp[0]); }
+
         // combine factor levels
         if (ori != null)
         {
@@ -76,31 +92,44 @@ public class SpikeGLXColor : SpikeGLXCondTest
         {
             cond["SpatialFreq"] = sf.Select(i => (object)i).ToList();
         }
+        if (diameter0 != null)
+        {
+            cond["Diameter@Grating@Grating0"] = diameter0.Cast<object>().ToList();
+        }
+        if (diameter1 != null)
+        {
+            cond["Diameter@Grating@Grating1"] = diameter1.Cast<object>().ToList();
+        }
+
+        // combine color levels
         var colorcond = new Dictionary<string, List<object>>();
+        var cscond = new Dictionary<string, List<object>>();
         if (color != null)
         {
-            cond["_colorindex"] = Enumerable.Range(0, color.Count).Select(i => (object)i).ToList();
-            var colorparam = "Color";
-            if (ex.ID.StartsWith("Flash") || ex.ID.StartsWith("Color"))
+            colorcond["MaxColor@Grating@Grating0"] = Enumerable.Range(0, color.Count).Cast<object>().ToList();
+            colorcond["MaxColor@Grating@Grating1"] = Enumerable.Range(0, color.Count + 1).Cast<object>().ToList();
+            cscond = colorcond.OrthoCombineFactor();
+            for (var i = 0; i < cscond.Values.First().Count; i++)
             {
-            }
-            else
-            {
-                colorparam = "MaxColor";
-            }
-            colorcond[colorparam] = color.Select(i => (object)i).ToList();
-            if (wp != null)
-            {
-                colorcond["BGColor"] = wp.Select(i => (object)i).ToList();
-                if (colorparam == "MaxColor")
+                for (var j = 0; j < 2; j++)
                 {
-                    colorcond["MinColor"] = wp.Select(i => (object)i).ToList();
+                    var af = $"Angle{j}";
+                    var cf = $"MaxColor@Grating@Grating{j}";
+                    var ci = (int)cscond[cf][i];
+                    var av = ci == color.Count ? float.NaN : angle[ci];
+                    if (!cscond.ContainsKey(af))
+                    {
+                        cscond[af] = new List<object> { av };
+                    }
+                    else
+                    {
+                        cscond[af].Add(av);
+                    }
+                    var cv = ci == color.Count ? wp[0] : color[ci];
+                    cscond[cf][i] = cv;
                 }
             }
-            if (angle != null)
-            {
-                colorcond["Angle"] = angle.Select(i => (object)i).ToList();
-            }
+            cond["_colorindex"] = Enumerable.Range(0, cscond.Values.First().Count).Cast<object>().ToList();
         }
 
         var fcond = cond.OrthoCombineFactor();
@@ -108,22 +137,42 @@ public class SpikeGLXColor : SpikeGLXCondTest
         {
             foreach (var i in fcond["_colorindex"])
             {
-                foreach (var f in colorcond.Keys)
+                foreach (var f in cscond.Keys)
                 {
                     if (!fcond.ContainsKey(f))
                     {
-                        fcond[f] = new List<object> { colorcond[f][(int)i] };
+                        fcond[f] = new List<object> { cscond[f][(int)i] };
                     }
                     else
                     {
-                        fcond[f].Add(colorcond[f][(int)i]);
+                        fcond[f].Add(cscond[f][(int)i]);
                     }
                 }
             }
             fcond.Remove("_colorindex");
         }
 
-        pushexcludefactor= new List<string>() { "Angle" };
-        condmgr.PrepareCondition(fcond);
+        // get optogenetics conditions
+        var optofreq = GetExParam<List<double>>("OptoFreq");
+        var optoduty = GetExParam<List<double>>("OptoDuty");
+        var nopto = GetExParam<bool>("AddNoOpto");
+        var ocond = new Dictionary<string, List<object>>()
+        {
+            ["Opto"] = new List<object> { true }
+        };
+        if (optofreq != null) { ocond["OptoFreq"] = optofreq.Cast<object>().ToList(); }
+        if (optoduty != null) { ocond["OptoDuty"] = optoduty.Cast<object>().ToList(); }
+        ocond = ocond.OrthoCombineFactor();
+        if (nopto)
+        {
+            ocond["Opto"].Insert(0, false);
+            ocond["OptoFreq"].Insert(0, 0.0);
+            ocond["OptoDuty"].Insert(0, 0.0);
+        }
+
+        // combine optogenetics conditions with base conditions
+        var ofcond = ocond.OrthoCombineCondition(fcond);
+        condmgr.PrepareCondition(ofcond);
+        pushexcludefactor = new List<string>() { "Angle0", "Angle1" };
     }
 }

@@ -46,6 +46,16 @@ namespace Experica.Command
             if (NetworkManager.Singleton != null)
             {
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+                NetworkManager.Singleton.OnPreShutdown += OnPreShutdown;
+            }
+        }
+
+        void OnPreShutdown()
+        {
+            var el = appmgr.exmgr.el;
+            if (el != null && el.envmgr.TryGetParams(out Dictionary<string, object> ps))
+            {
+                el.ex.EnvParam = ps;
             }
         }
 

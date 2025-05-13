@@ -33,7 +33,7 @@ using Experica.NetEnv;
 /// </summary>
 public class ConditionTestLogic : ExperimentLogic
 {
-    protected InputAction move_ia,scale_ia,ori_ia,visible_ia;
+    protected InputAction move_ia, scale_ia, ori_ia, visible_ia;
     protected List<ScaleGrid> scalegrid = new();
 
     protected override void Enable()
@@ -159,7 +159,7 @@ public class ConditionTestLogic : ExperimentLogic
         for (var i = 0; i < clientids.Count; i++)
         {
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
-            var oc = envmgr.SpawnMarkerOrthoCamera(cname,clientid: clientids[i]);
+            var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
             var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false);
             scalegrid.Add(sg);
@@ -205,6 +205,16 @@ public class ConditionTestLogic : ExperimentLogic
         SetEnvActiveParam("Visible", false);
     }
 
+    protected virtual void OnCONDEntered()
+    {
+        SetEnvActiveParam("Visible", true);
+    }
+
+    protected virtual void OnSUFICIEntered()
+    {
+        SetEnvActiveParam("Visible", false);
+    }
+
     protected override void Logic()
     {
         switch (CondState)
@@ -216,7 +226,7 @@ public class ConditionTestLogic : ExperimentLogic
                 if (PreICIHold >= ex.PreICI)
                 {
                     EnterCondState(CONDSTATE.COND, true);
-                    SetEnvActiveParam("Visible", true);
+                    OnCONDEntered();
                 }
                 break;
             case CONDSTATE.COND:
@@ -232,7 +242,7 @@ public class ConditionTestLogic : ExperimentLogic
                     else
                     {
                         EnterCondState(CONDSTATE.SUFICI, true);
-                        SetEnvActiveParam("Visible", false);
+                        OnSUFICIEntered();
                     }
                 }
                 break;

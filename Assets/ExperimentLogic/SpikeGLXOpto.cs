@@ -35,6 +35,25 @@ public class SpikeGLXOpto : SpikeGLXCondTest
     protected override void OnStartExperiment()
     {
         base.OnStartExperiment();
+
+        var gpioname = GetExParam<string>("GPIO");
+        switch (gpioname)
+        {
+            case "ParallelPort":
+                // On Average 5kHz
+                gpio = new ParallelPort(Config.ParallelPort0);
+                break;
+            case "FTDI":
+                // On Average 2kHz
+                //gpio = new FTDIGPIO();
+                break;
+            case "1208FS":
+                // On Average 500Hz
+                gpio = new MCCDevice();
+                break;
+        }
+        if (gpio == null) { Debug.LogWarning($"No Valid GPIO From {gpioname}."); return; }
+
         var ch = GetExParam<int>("OptoCh");
         pwmwave = new PWMWave
         {
@@ -119,13 +138,14 @@ public class SpikeGLXOpto : SpikeGLXCondTest
         // combine optogenetics conditions with base conditions
         var cond = ocond.OrthoCombineCondition(bcond);
         condmgr.PrepareCondition(cond);
+    }
 
-        // prepare factor push target
-        PrepareFactorPushTarget();
+    protected override void PrepareFactorPushTarget()
+    {
+        base.PrepareFactorPushTarget();
         foreach (var f in new[] { "Opto", "OptoFreq", "OptoDuty" })
         {
             factorpushtarget[f] = pwmwave;
         }
-
     }
 }

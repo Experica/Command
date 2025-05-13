@@ -219,29 +219,27 @@ namespace Experica.Command
         /// <summary>
         /// Save the current experiment
         /// </summary>
-        public bool SaveEx() => SaveEx(el.ex.ID);
+        /// <param name="syncenvparam"></param>
+        /// <returns></returns>
+        public bool SaveEx(bool syncenvparam=true) => SaveEx(el.ex.ID,syncenvparam);
 
         /// <summary>
         /// Save the definition state of experiment to file
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="syncenvparam"></param>
         /// <returns></returns>
-        public bool SaveEx(string id)
+        public bool SaveEx(string id, bool syncenvparam=true)
         {
             if (!deffile.ContainsKey(id)) { return false; }
             var i = FindFirstInELHistory(id);
             if (i < 0) { return false; }
 
             var el = elhistory[i];
-            if (!el.envmgr.Empty)
+            if(syncenvparam && el.envmgr.TryGetParams(out Dictionary<string,object> ps))
             {
-                el.ex.EnvParam = el.envmgr.GetParams();
+                el.ex.EnvParam = ps;
             }
-            //var envps = el.envmgr.GetParams();
-            //if (envps != null && envps.Count > 0)
-            //{
-            //    el.ex.EnvParam = envps;
-            //}
             el.ex.SaveDefinition(deffile[id]);
             return true;
         }

@@ -1,10 +1,10 @@
-ID: Diameter
-Name: Diameter
+ID: OptoDiameter
+Name: OptoDiameter
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
+Subject_ID: AG8
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -15,15 +15,15 @@ EnvPath: Grating
 EnvParam:
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 0
+  Ori@Grating@Grating: 90
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 0.5 0.5 0.5
-  Diameter@Grating@Grating: 0.5
+  Size@Grating@Grating: 4 4 4
+  Diameter@Grating@Grating: 4
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
   Luminance@Grating@Grating: 0.5
-  Contrast@Grating@Grating: 1
+  Contrast@Grating@Grating: 0.3
   SpatialFreq@Grating@Grating: 0.2
   TemporalFreq@Grating@Grating: 5
   ModulateTemporalFreq@Grating@Grating: 0.2
@@ -42,12 +42,12 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 2.9437 -2.1461 0
+  Position@Grating@Grating: 15.476 -2.1461 0
   Visible@Grating@Grating: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.650131
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.786592
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -55,7 +55,7 @@ EnvParam:
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\Diameter_C2.yaml
 Cond: 
-LogicPath: SpikeGLXColorCondTest
+LogicPath: SpikeGLXOpto
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
@@ -65,7 +65,7 @@ DataPath:
 Input: false
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 8
+CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
@@ -77,7 +77,7 @@ SufITI: 250
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: COND
+PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -86,13 +86,12 @@ NotifyParam:
   - SyncEvent
 InheritParam:
   - Experimenter
-  - Subject_ID
   - Subject_Name
+  - Subject_ID
   - Subject_Species
-  - Subject_Gender
-  - Subject_Birth
-  - Subject_Size
   - Subject_Weight
+  - Subject_Gender
+  - Subject_Size
   - Hemisphere
   - Eye
   - RecordSession
@@ -101,19 +100,13 @@ InheritParam:
   - TimerDriftSpeed
   - Display_ID
   - NotifyExperimenter
+  - Subject_Birth
 EnvInheritParam:
-  - MarkerCorner@Marker@Marker
-  - MarkOnColor@Marker@Marker
-  - MarkOffColor@Marker@Marker
-  - SpatialFreq@GratingQuad@GratingQuad
-  - TemporalFreq@GratingQuad@GratingQuad
-  - Ori@GratingQuad@GratingQuad
-  - Position@GratingQuad@GratingQuad
-  - MarkerSize@Marker@Marker
   - ScreenToEye@OrthoCamera@OrthoCamera
   - ScreenHeight@OrthoCamera@OrthoCamera
   - ScreenAspect@OrthoCamera@OrthoCamera
   - CLUT@OrthoCamera@OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
   - Position@Grating@Grating
@@ -133,3 +126,11 @@ CondTest:
 ExtendParam:
   ColorSpace: DKL
   Color: X
+  OptoCh: 1
+  OptoFreq:
+    - 0.01
+  OptoDuty:
+    - 0.2
+    - 0.4
+  AddNoOpto: false
+  GPIO: 1208FS
