@@ -3,8 +3,8 @@ Name: ISIEpochOri8
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
+Subject_ID: AG8
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -46,8 +46,8 @@ EnvParam:
   Visible@Grating@Grating: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.786592
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.6
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.891167
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4

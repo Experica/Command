@@ -152,14 +152,17 @@ public class ImagerEpoch : ConditionTestLogic
 
         if (color != null)
         {
-            SetEnvActiveParam("MinColor", color[0]);
-            SetEnvActiveParam("MaxColor", color[1]);
-            if (wp != null)
+            if (!ex.ID.EndsWith("Retinotopy"))
             {
-                SetEnvActiveParam("BGColor", wp[0]);
+                SetEnvActiveParam("MinColor", color[0]);
+                SetEnvActiveParam("MaxColor", color[1]);
+                if (wp != null)
+                {
+                    SetEnvActiveParam("BGColor", wp[0]);
+                }
             }
 
-            if (ex.ID == "ISIEpoch2Color" || ex.ID== "ISIEpochFlash2Color")
+            if (ex.ID == "ISIEpoch2Color" || ex.ID == "ISIEpochFlash2Color")
             {
                 condmgr.PrepareCondition(new Dictionary<string, List<object>>() { ["Color"] = color.Select(i => (object)i).ToList() });
             }
@@ -192,6 +195,32 @@ public class ImagerEpoch : ConditionTestLogic
         base.StopExperimentTimeSync();
     }
 
+    protected override void OnCONDEntered()
+    {
+        if (ex.ID.EndsWith("Retinotopy"))
+        {
+            SetEnvActiveParam("Visible@Grating@Grating0", true);
+            SetEnvActiveParam("Visible@Grating@Grating1", true);
+        }
+        else
+        {
+            base.OnCONDEntered();
+        }
+    }
+
+    protected override void OnSUFICIEntered()
+    {
+        if (ex.ID.EndsWith("Retinotopy"))
+        {
+            SetEnvActiveParam("Visible@Grating@Grating0", false);
+            SetEnvActiveParam("Visible@Grating@Grating1", false);
+        }
+        else
+        {
+            base.OnSUFICIEntered();
+        }
+    }
+
     protected override void Logic()
     {
         switch (TrialState)
@@ -216,14 +245,14 @@ public class ImagerEpoch : ConditionTestLogic
                         if (PreICIHold >= ex.PreICI)
                         {
                             EnterCondState(CONDSTATE.COND, true);
-                            SetEnvActiveParam("Visible", true);
+                            OnCONDEntered();
                         }
                         break;
                     case CONDSTATE.COND:
                         if (CondHold >= ex.CondDur)
                         {
                             EnterCondState(CONDSTATE.SUFICI, true);
-                            SetEnvActiveParam("Visible", false);
+                            OnSUFICIEntered();
                         }
                         break;
                     case CONDSTATE.SUFICI:
