@@ -1,0 +1,14 @@
+ID: BOShadowV1
+Name: BOShadowV1
+Designer: Tom
+Experimenter: ''
+Log: ''
+LogicPath: BOShadowV1
+ReadyWait: 10000
+StopWait: 10000
+NotifyExperimenter: true
+IsFullScreen: true
+IsFullViewport: true
+IsGuideOn: false
+Version: 0
+ExtendParam: {}

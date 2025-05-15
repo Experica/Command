@@ -1,32 +1,66 @@
 ID: FixationConditionTest
 Name: FixationConditionTest
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: Right Eye
 Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_Name: Dunn
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
-EnvPath: Fixation
+EnvPath: FixationShowroom
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.33333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@Marker~OrthoCamera: 0
-  MarkerCorner@Marker@Marker~OrthoCamera: TopLeft
-  Mark@Marker@Marker~OrthoCamera: false
   FixDotPosition@FixDot@FixDot: -5 5 0
   FixDotDiameter@FixDot@FixDot: 3
-  FixDotVisible@FixDot@FixDot: true
-CondPath: ''
+  FixDotVisible@FixDot@FixDot: false
+  Show@Showroom@Showroom: Grating
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 0
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 5 5 5
+  Diameter@Grating@Grating: 5
+  MaskType@Grating@Grating: Disk
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  MaskReverse@Grating@Grating: false
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0.3
+  TemporalFreq@Grating@Grating: 1
+  ModulateTemporalFreq@Grating@Grating: 0.2
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0 0 1
+  MaxColor@Grating@Grating: 1 1 1 1
+  PauseTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Square
+  ModulateType@Grating@Grating: Square
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 0
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 5 -5 0
+  Visible@Grating@Grating: false
+CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
-LogicPath: FixationConditionTest
+LogicPath: FixationCondTest
 Hemisphere: Left
 Eye: Both
 RecordSession: ''
@@ -42,9 +76,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 426
+PreITI: 476
 TrialDur: 0
-SufITI: 778
+SufITI: 740
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -52,28 +86,43 @@ PushCondAtState: NONE
 CondTestAtState: NONE
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam:
-- Experimenter
-- Subject_ID
-- Hemisphere
-- RecordSession
-- RecordSite
-- DataDir
-- Subject_Name
-- Subject_Species
-- Subject_Gender
-- Subject_Birth
-- Subject_Size
-- Subject_Weight
+  - Experimenter
+  - Subject_ID
+  - Hemisphere
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
 EnvInheritParam:
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- MarkerSize@Marker@Marker~OrthoCamera
-- MarkerCorner@Marker@Marker~OrthoCamera
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 
 ExtendParam:
   MinPreITIDur: 250
   MaxPreITIDur: 500
@@ -82,18 +131,5 @@ ExtendParam:
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
-  FixRadius: 1
+  FixRadius: 5
   DotScaleOnFix: 0.7
-TimerDriftSpeed: 6.5E-05
-EventSyncProtocol:
-  Routes:
-  - DigitalOut
-  - Display
-  NChannel: 1
-  NEdgePEvent: 1
-Display_ID: ROGPG279Q
-CondTestShowLevel: NONE
-NotifyExperimenter: true
-Version: 3
-Config: 
-CondTest: 

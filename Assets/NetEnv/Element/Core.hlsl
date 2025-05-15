@@ -91,24 +91,28 @@ float diskfademask(float2 uv, float radius, float scale)
 }
 
 // mask function for ShaderGraph
-void mask_float(float type, float2 uv, float radius, float sigma, out float Out)
+void mask_float(float type, float2 uv, float radius, float sigma, float reverse, out float Out)
 {
-	if (type == 1)
-	{
-		Out = diskmask(uv, radius);
-	}
-	else if (type == 2)
-	{
-		Out = gaussianmask(uv, sigma);
-	}
-	else if (type == 3)
-	{
-		Out = diskfademask(uv, radius, sigma);
-	}
-	else
-	{
-		Out = 1.0;
-	}
+    if (type == 1)
+    {
+        Out = diskmask(uv, radius);
+    }
+    else if (type == 2)
+    {
+        Out = gaussianmask(uv, sigma);
+    }
+    else if (type == 3)
+    {
+        Out = diskfademask(uv, radius, sigma);
+    }
+    else
+    {
+        Out = 1.0;
+    }
+    if (reverse == 1)
+    {
+        Out = 1.0 - Out;
+    }
 }
 
 // linear interpolation between `mincolor` and `maxcolor` using another `color` for ShaderGraph

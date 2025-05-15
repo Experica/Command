@@ -37,6 +37,7 @@ namespace Experica.NetEnv
         public NetworkVariable<MaskType> MaskType = new(NetEnv.MaskType.None);
         public NetworkVariable<float> MaskRadius = new(0.5f);
         public NetworkVariable<float> MaskSigma = new(0.15f);
+        public NetworkVariable<bool> MaskReverse = new(false);
         /// <summary>
         /// Rotate `PositionOffset` by `Ori + OriOffset`, then add to `Position`
         /// </summary>
@@ -54,6 +55,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged += OnMaskType;
             MaskRadius.OnValueChanged += OnMaskRadius;
             MaskSigma.OnValueChanged += OnMaskSigma;
+            MaskReverse.OnValueChanged += OnMaskReverse;
             OriPositionOffset.OnValueChanged += OnOriPositionOffset;
             PositionOffset.OnValueChanged += OnPositionOffset;
         }
@@ -69,6 +71,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged -= OnMaskType;
             MaskRadius.OnValueChanged -= OnMaskRadius;
             MaskSigma.OnValueChanged -= OnMaskSigma;
+            MaskReverse.OnValueChanged -= OnMaskReverse;
             OriPositionOffset.OnValueChanged -= OnOriPositionOffset;
             PositionOffset.OnValueChanged -= OnPositionOffset;
         }
@@ -149,6 +152,11 @@ namespace Experica.NetEnv
         void OnMaskSigma(float p, float c)
         {
             renderer.material.SetFloat("_MaskSigma", c);
+        }
+
+        void OnMaskReverse(bool p, bool c)
+        {
+            renderer.material.SetFloat("_MaskReverse",c ? 1 : 0);
         }
 
         void OnOriPositionOffset(bool p, bool c)

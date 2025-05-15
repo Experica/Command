@@ -1,0 +1,13 @@
+ID: ColorEPhys_v1
+Name: ColorEPhys_v1
+Designer: Alex
+Experimenter: 
+Log: 
+LogicPath: ColorEPhys_v1
+ReadyWait: 10000
+StopWait: 10000
+Param: {}
+NotifyExperimenter: true
+IsFullScreen: true
+IsFullViewport: true
+IsGuideOn: false

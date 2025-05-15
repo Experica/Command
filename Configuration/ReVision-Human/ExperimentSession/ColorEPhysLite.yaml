@@ -1,0 +1,13 @@
+ID: ColorEPhysLite
+Name: ColorEPhysLite
+Designer: Alex
+Experimenter: 
+Log: 
+LogicPath: ColorEPhysLite
+ReadyWait: 10000
+StopWait: 10000
+Param: {}
+NotifyExperimenter: true
+IsFullScreen: true
+IsFullViewport: true
+IsGuideOn: false

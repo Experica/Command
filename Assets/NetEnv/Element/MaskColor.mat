@@ -81,6 +81,7 @@ Material:
     - _EnableFogOnTransparent: 0
     - _ExcludeFromTUAndAA: 0
     - _MaskRadius: 0.5
+    - _MaskReverse: 0
     - _MaskSigma: 0.15
     - _MaskType: 0
     - _OpaqueCullMode: 2

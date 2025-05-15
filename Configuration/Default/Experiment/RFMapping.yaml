@@ -1,0 +1,154 @@
+ID: RFMapping
+Name: RFMapping
+Designer: Alex
+Experimenter: KS
+Log: 
+Subject_ID: Test
+Subject_Name: Dunn
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 27
+Subject_Log: 
+EnvPath: QuadPlaid
+EnvParam:
+  Rotation@Plaid@Plaid: 0 0 45
+  RotationOffset@Plaid@Plaid: 0 0 0
+  Ori0@Plaid@Plaid: 0
+  OriOffset0@Plaid@Plaid: 0
+  Ori1@Plaid@Plaid: -90
+  OriOffset1@Plaid@Plaid: 0
+  Size@Plaid@Plaid: 30 4 30
+  Diameter@Plaid@Plaid: 30
+  MaskType@Plaid@Plaid: None
+  MaskRadius@Plaid@Plaid: 0.5
+  MaskSigma@Plaid@Plaid: 0.15
+  MaskReverse@Plaid@Plaid: false
+  Luminance@Plaid@Plaid: 0.5
+  Contrast@Plaid@Plaid: 1
+  SpatialFreq0@Plaid@Plaid: 0.2
+  SpatialFreq1@Plaid@Plaid: 0.2
+  TemporalFreq0@Plaid@Plaid: 1
+  TemporalFreq1@Plaid@Plaid: 0
+  ModulateTemporalFreq0@Plaid@Plaid: 0.2
+  ModulateTemporalFreq1@Plaid@Plaid: 0.2
+  ModulateTemporalPhase0@Plaid@Plaid: 0
+  ModulateTemporalPhase1@Plaid@Plaid: 0
+  SpatialPhase0@Plaid@Plaid: 0
+  SpatialPhase1@Plaid@Plaid: 0
+  MinColor@Plaid@Plaid: 1.9984E-15 0 4.996E-16 1
+  MaxColor@Plaid@Plaid: 1 1 1 1
+  PauseTime@Plaid@Plaid: false
+  PauseModulateTime@Plaid@Plaid: true
+  GratingType0@Plaid@Plaid: Square
+  GratingType1@Plaid@Plaid: Square
+  ModulateType0@Plaid@Plaid: Square
+  ModulateType1@Plaid@Plaid: Square
+  ReverseTime@Plaid@Plaid: false
+  Duty0@Plaid@Plaid: 0.5
+  Duty1@Plaid@Plaid: 0.5
+  ModulateDuty0@Plaid@Plaid: 0.5
+  ModulateDuty1@Plaid@Plaid: 0.5
+  TimeSecond@Plaid@Plaid: 0
+  ModulateTimeSecond@Plaid@Plaid: 0
+  RotPositionOffset@Plaid@Plaid: true
+  PositionOffset@Plaid@Plaid: 0 10 0
+  Position@Plaid@Plaid: 0 0 0
+  Visible@Plaid@Plaid: false
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 50 50 50
+  Diameter@Quad@Quad: 50
+  Color@Quad@Quad: 1 1 1 1
+  MaskType@Quad@Quad: Disk
+  MaskRadius@Quad@Quad: 0.3
+  MaskSigma@Quad@Quad: 0.15
+  MaskReverse@Quad@Quad: true
+  OriPositionOffset@Quad@Quad: false
+  PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0 0 -1
+  Visible@Quad@Quad: true
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
+CondPath: Condition\RFMapping_30Deg5DegStep_Ori[4].yaml
+Cond: 
+LogicPath: SpikeGLXColorCondTest
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 3
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 1500
+SufICI: 250
+PreITI: 250
+TrialDur: 0
+SufITI: 250
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_Name
+  - Subject_ID
+  - Subject_Species
+  - Subject_Weight
+  - Subject_Gender
+  - Subject_Size
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
+  - Subject_Birth
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - Diameter@Grating@Grating
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - Position@Grating@Grating
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  ColorSpace: DKL
+  Color: X

@@ -3,7 +3,7 @@ Name: ConditionTest
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
-Subject_ID: AG8
+Subject_ID: Test
 Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -17,7 +17,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.891167
+  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -29,9 +29,10 @@ EnvParam:
   OriOffset@Grating@Grating: 0
   Size@Grating@Grating: 10 10 10
   Diameter@Grating@Grating: 10
-  MaskType@Grating@Grating: None
+  MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
+  MaskReverse@Grating@Grating: false
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
   SpatialFreq@Grating@Grating: 0.2
@@ -52,7 +53,7 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 15.476 -2.1461 0
+  Position@Grating@Grating: 15.476 -3.9482 0
   Visible@Grating@Grating: true
 CondPath: ''
 Cond: 

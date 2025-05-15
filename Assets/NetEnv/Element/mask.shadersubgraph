@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "fc6d2340d09042d0b31a006103108c96"
+        },
+        {
+            "m_Id": "a3e845662363419ab95e9f91fe5e2ee7"
         }
     ],
     "m_Keywords": [],
@@ -41,11 +44,28 @@
         },
         {
             "m_Id": "65702e51ba0043b1aa293534e5da1af7"
+        },
+        {
+            "m_Id": "3f098fe529c540d5aeb2a445deccb9c9"
         }
     ],
     "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "3f098fe529c540d5aeb2a445deccb9c9"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ef4dae2a823b4bbd8d1648e55db0fea4"
+                },
+                "m_SlotId": 5
+            }
+        },
         {
             "m_OutputSlot": {
                 "m_Node": {
@@ -144,6 +164,7 @@
     "m_OutputNode": {
         "m_Id": "0b1ad3f77f9c4b19b09b55cf74cca123"
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": []
 }
 
@@ -179,6 +200,56 @@
         "m_SerializableColors": []
     },
     "IsFirstSlotValid": true
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "1cf70e014a134a1b8b158355f4a67ba5",
+    "m_Id": 0,
+    "m_DisplayName": "MaskReverse",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": false,
+    "m_DefaultValue": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "3f098fe529c540d5aeb2a445deccb9c9",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -332.0,
+            "y": 44.0,
+            "width": 147.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "1cf70e014a134a1b8b158355f4a67ba5"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "a3e845662363419ab95e9f91fe5e2ee7"
+    }
 }
 
 {
@@ -334,6 +405,9 @@
         },
         {
             "m_Id": "fc6d2340d09042d0b31a006103108c96"
+        },
+        {
+            "m_Id": "a3e845662363419ab95e9f91fe5e2ee7"
         }
     ]
 }
@@ -441,6 +515,21 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "8d6efebd685b49368fa13da5a865aafe",
+    "m_Id": 5,
+    "m_DisplayName": "reverse",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "reverse",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "9700d44d020a4b7eb6745cb6ceb80bb7",
     "m_Id": 4,
     "m_DisplayName": "Out",
@@ -485,6 +574,29 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "a3e845662363419ab95e9f91fe5e2ee7",
+    "m_Guid": {
+        "m_GuidSerialized": "20c7fd90-2cc7-48ee-a182-cd5a4bff466c"
+    },
+    "m_Name": "MaskReverse",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "MaskReverse",
+    "m_DefaultReferenceName": "_MaskReverse",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
 }
 
 {
@@ -603,6 +715,9 @@
             "m_Id": "9b4e2c4c3f06495595db997ca6a5b693"
         },
         {
+            "m_Id": "8d6efebd685b49368fa13da5a865aafe"
+        },
+        {
             "m_Id": "9700d44d020a4b7eb6745cb6ceb80bb7"
         }
     ],
@@ -617,6 +732,7 @@
     "m_SourceType": 0,
     "m_FunctionName": "mask",
     "m_FunctionSource": "17fc293bf5567644eb92bcec0684f83e",
+    "m_FunctionSourceUsePragmas": true,
     "m_FunctionBody": "Enter function body here..."
 }
 

@@ -1,0 +1,69 @@
+ID: GPIOSignal
+Name: GPIOSignal
+Designer: Alex
+Experimenter: PL
+Log: 
+Subject_ID: Test
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.75
+Subject_Log: 
+EnvPath: Showroom
+EnvParam:
+  Show@Showroom@Showroom: None
+CondPath: ''
+Cond: 
+LogicPath: GPIOSignal
+Hemisphere: None
+Eye: None
+RecordSession: ''
+RecordSite: ''
+DataDir: X:\
+DataPath: 
+Input: false
+CondSampling: Ascending
+BlockSampling: Ascending
+CondRepeat: 0
+BlockRepeat: 0
+BlockFactor: []
+PreICI: 0
+CondDur: 0
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam: []
+EnvInheritParam: []
+TimerDriftSpeed: 3.02E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  GPIO: ParallelPort
+  WaveType: PWM
+  Freq: 100
+  Duty: 0.5
+  FiringRate: 50
+  Ch: 2

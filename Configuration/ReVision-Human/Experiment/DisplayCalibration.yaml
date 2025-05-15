@@ -1,0 +1,81 @@
+ID: DisplayCalibration
+Name: DisplayCalibration
+Designer: Alex
+Experimenter: Alex
+Log: 
+Subject_ID: Test
+Subject_Name: Test
+Subject_Species: ''
+Subject_Gender: None
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 0
+Subject_Log: 
+EnvPath: Quad
+EnvParam:
+  Ori@Quad@Quad: 0
+  OriOffset@Quad@Quad: 0
+  Size@Quad@Quad: 50 50 50
+  Diameter@Quad@Quad: 50
+  Color@Quad@Quad: 0.098 0.078 0.083 1
+  MaskType@Quad@Quad: None
+  MaskRadius@Quad@Quad: 0.5
+  MaskSigma@Quad@Quad: 0.15
+  OriPositionOffset@Quad@Quad: false
+  PositionOffset@Quad@Quad: 0 0 0
+  Position@Quad@Quad: 0 0 0
+  Visible@Quad@Quad: true
+CondPath: ''
+Cond: 
+LogicPath: DisplayCalibration
+Hemisphere: None
+Eye: None
+RecordSession: Display
+RecordSite: Calibration
+DataDir: X:\
+DataPath: 
+Input: true
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 0
+CondDur: 200
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam: []
+EnvInheritParam:
+  - MarkerCorner@Marker@Marker
+  - MarkOnColor@Marker@Marker
+  - MarkOffColor@Marker@Marker
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam: {}

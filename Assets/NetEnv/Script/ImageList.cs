@@ -36,6 +36,7 @@ namespace Experica.NetEnv
         public NetworkVariable<MaskType> MaskType = new(NetEnv.MaskType.None);
         public NetworkVariable<float> MaskRadius = new(0.5f);
         public NetworkVariable<float> MaskSigma = new(0.15f);
+        public NetworkVariable<bool> MaskReverse = new(false);
         public NetworkVariable<Color> MinColor = new(Color.black);
         public NetworkVariable<Color> MaxColor = new(Color.white);
         public NetworkVariable<FixedString512Bytes> ImageSet = new("TestImageSet.UInt8");
@@ -54,6 +55,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged += OnMaskType;
             MaskRadius.OnValueChanged += OnMaskRadius;
             MaskSigma.OnValueChanged += OnMaskSigma;
+            MaskReverse.OnValueChanged += OnMaskReverse;
             MinColor.OnValueChanged += OnMinColor;
             MaxColor.OnValueChanged += OnMaxColor;
             ImageSet.OnValueChanged += OnImageSet;
@@ -71,6 +73,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged -= OnMaskType;
             MaskRadius.OnValueChanged -= OnMaskRadius;
             MaskSigma.OnValueChanged -= OnMaskSigma;
+            MaskReverse.OnValueChanged -= OnMaskReverse;
             MinColor.OnValueChanged -= OnMinColor;
             MaxColor.OnValueChanged -= OnMaxColor;
             ImageSet.OnValueChanged -= OnImageSet;
@@ -115,6 +118,11 @@ namespace Experica.NetEnv
         void OnMaskSigma(float p, float c)
         {
             renderer.material.SetFloat("_MaskSigma", c);
+        }
+
+        void OnMaskReverse(bool p, bool c)
+        {
+            renderer.material.SetFloat("_MaskReverse", c ? 1 : 0);
         }
 
         void OnMinColor(Color p, Color c)

@@ -1,0 +1,111 @@
+ID: RandomDots
+Name: RandomDots
+Designer: Alex
+Experimenter: LZ
+Log: RIGHT EYE
+Subject_ID: Test
+Subject_Name: AG5
+Subject_Species: M. F.
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 6.4
+Subject_Log: 
+EnvPath: Dots
+EnvParam:
+  Rotation@Dots@Dots: 0 0 0
+  RotationOffset@Dots@Dots: 0 0 0
+  Dir@Dots@Dots: 45
+  DirOffset@Dots@Dots: 0
+  Speed@Dots@Dots: 1
+  Size@Dots@Dots: 10 10 10
+  Diameter@Dots@Dots: 10
+  NDots@Dots@Dots: 40
+  DotColor@Dots@Dots: 1 1 1 1
+  DotSize@Dots@Dots: 1 1
+  Coherence@Dots@Dots: 0
+  Position@Dots@Dots: 0 0 0
+  Visible@Dots@Dots: true
+  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.66849
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
+  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
+  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
+  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
+  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
+  Size@ScaleGrid@OrthoCamera/ScaleGrid: 53.873 32.289 1
+  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
+  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
+CondPath: ''
+Cond: 
+LogicPath: ConditionTestLogic
+Hemisphere: Left
+Eye: Right
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 0
+BlockRepeat: 0
+BlockFactor: []
+PreICI: 150
+CondDur: 500
+SufICI: 0
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: NONE
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_ID
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
+  - DataDir
+  - Hemisphere
+  - Eye
+  - Display_ID
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - Position@Dots@Dots
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam: {}

@@ -41,6 +41,15 @@ public class Fixation : ExperimentLogic
     public double RandPreITIDur => RNG.Next(GetExParam<int>("MinPreITIDur"), GetExParam<int>("MaxPreITIDur"));
     public double RandSufITIDur => RNG.Next(GetExParam<int>("MinSufITIDur"), GetExParam<int>("MaxSufITIDur"));
     public double RandFixDur => RNG.Next(GetExParam<int>("MinFixDur"), GetExParam<int>("MaxFixDur"));
+    public void RandFixDotPosition()
+    {
+        var fdpos = GetExParam<List<Vector3>>("FixDotPosition");
+        if (fdpos != null && fdpos.Count>0)
+        {
+            var i = RNG.Next(fdpos.Count);
+            fixdotposition.Value = fdpos[i];
+        }
+    }
 
     public InputAction MoveAction;
     public Vector2 FixPosition;
@@ -64,7 +73,7 @@ public class Fixation : ExperimentLogic
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
             var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
-            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: true);
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false);
             scalegrid.Add(sg);
         }
     }
@@ -211,6 +220,7 @@ public class Fixation : ExperimentLogic
             condtestmgr.Add(nameof(CONDTESTPARAM.TaskResult), nameof(TASKRESULT.HIT));
             condtestmgr.Add("FixHold", FixHold);
         }
+        RandFixDotPosition();
         Debug.Log("Hit");
     }
 

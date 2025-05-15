@@ -30,7 +30,7 @@ using Experica.NetEnv;
 /// <summary>
 /// Condition Test while eyes fixing on a target, with User Input Action mimicking eye movement, and helpful visual guides.
 /// </summary>
-public class FixationConditionTest : Fixation
+public class FixationCondTest : Fixation
 {
     uint CondPerFix;
     protected override void Logic()
@@ -38,6 +38,7 @@ public class FixationConditionTest : Fixation
         switch (TrialState)
         {
             case TRIALSTATE.NONE:
+                ex.PreITI = RandPreITIDur;
                 EnterTrialState(TRIALSTATE.PREITI);
                 break;
             case TRIALSTATE.PREITI:
@@ -59,21 +60,22 @@ public class FixationConditionTest : Fixation
                         else if (WaitForFix >= WaitForFixTimeOut)
                         {
                             // Failed to acquire fixation
-                            SetEnvActiveParam("FixDotVisible", false);
                             OnTimeOut();
+                            SetEnvActiveParam("FixDotVisible", false);
                             EnterTaskState(TASKSTATE.NONE);
-                            EnterTrialState(TRIALSTATE.PREITI);
+                            EnterTrialState(TRIALSTATE.NONE);
                         }
                         break;
                     case TASKSTATE.FIX_ACQUIRED:
                         if (!FixOnTarget)
                         {
                             // Fixation breaks in required period
+                            OnEarly();
                             SetEnvActiveParam("FixDotVisible", false);
                             SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
-                            OnEarly();
+                            SetEnvActiveParam("Visible", false);
                             EnterTaskState(TASKSTATE.NONE);
-                            EnterTrialState(TRIALSTATE.SUFITI);
+                            EnterTrialState(TRIALSTATE.SUFITI); // ITI as punishment
                         }
                         else
                         {
@@ -89,11 +91,12 @@ public class FixationConditionTest : Fixation
                                     if (FixHold >= FixDur)
                                     {
                                         // Successfully hold fixation in required period
+                                        OnHit();
                                         SetEnvActiveParam("FixDotVisible", false);
                                         SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
-                                        OnHit();
+                                        SetEnvActiveParam("Visible", false);
                                         EnterTaskState(TASKSTATE.NONE);
-                                        EnterTrialState(TRIALSTATE.PREITI);
+                                        EnterTrialState(TRIALSTATE.NONE);
                                     }
                                     else if (PreICIHold >= ex.PreICI)
                                     {
@@ -122,7 +125,7 @@ public class FixationConditionTest : Fixation
             case TRIALSTATE.SUFITI:
                 if (SufITIHold >= ex.SufITI)
                 {
-                    EnterTrialState(TRIALSTATE.PREITI);
+                    EnterTrialState(TRIALSTATE.NONE);
                 }
                 break;
         }

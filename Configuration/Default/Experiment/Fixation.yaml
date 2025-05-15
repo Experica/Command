@@ -3,9 +3,9 @@ Name: Fixation
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
-Subject_ID: AG7
-Subject_Name: DAQ1
-Subject_Species: Mouse
+Subject_ID: Test
+Subject_Name: Dunn
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -13,26 +13,18 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  FixDotPosition@FixDot@FixDot: 0 0 0
+  FixDotPosition@FixDot@FixDot: 0 15 0
   FixDotDiameter@FixDot@FixDot: 3.2768
-  FixDotVisible@FixDot@FixDot: true
+  FixDotVisible@FixDot@FixDot: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
+  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
-  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
-  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
-  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
-  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
-  Size@ScaleGrid@OrthoCamera/ScaleGrid: 57.458 32.289 1
-  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
-  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
 CondPath: ''
 Cond: 
 LogicPath: Fixation
@@ -51,9 +43,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 635
+PreITI: 694
 TrialDur: 0
-SufITI: 866
+SufITI: 907
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -105,5 +97,11 @@ ExtendParam:
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
-  FixRadius: 2
+  FixRadius: 5
   DotScaleOnFix: 0.8
+  FixDotPosition:
+    - 0 0 0
+    - 15 0 0
+    - -15 0 0
+    - 0 15 0
+    - 0 -15 0

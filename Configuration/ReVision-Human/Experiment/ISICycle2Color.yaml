@@ -1,0 +1,134 @@
+ID: ISICycle2Color
+Name: ISICycle2Color
+Designer: Alex
+Experimenter: KS
+Log: 
+Subject_ID: AG7
+Subject_Name: DAQ1
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 27
+Subject_Log: 
+EnvPath: Grating
+EnvParam:
+  Rotation@Grating@Grating: 0 0 0
+  RotationOffset@Grating@Grating: 0 0 0
+  Ori@Grating@Grating: 0
+  OriOffset@Grating@Grating: 0
+  Size@Grating@Grating: 70 70 70
+  Diameter@Grating@Grating: 70
+  MaskType@Grating@Grating: None
+  MaskRadius@Grating@Grating: 0.5
+  MaskSigma@Grating@Grating: 0.15
+  Luminance@Grating@Grating: 0.5
+  Contrast@Grating@Grating: 1
+  SpatialFreq@Grating@Grating: 0
+  TemporalFreq@Grating@Grating: 0
+  ModulateTemporalFreq@Grating@Grating: 0.0167
+  ModulateTemporalPhase@Grating@Grating: 0
+  SpatialPhase@Grating@Grating: 0
+  MinColor@Grating@Grating: 0 0.55581 0.5004 1
+  MaxColor@Grating@Grating: 1 0.44419 0.4996 1
+  PauseTime@Grating@Grating: false
+  PauseModulateTime@Grating@Grating: true
+  GratingType@Grating@Grating: Square
+  ModulateType@Grating@Grating: Sinusoidal
+  ReverseTime@Grating@Grating: false
+  Duty@Grating@Grating: 0.5
+  ModulateDuty@Grating@Grating: 0.5
+  TimeSecond@Grating@Grating: 0
+  ModulateTimeSecond@Grating@Grating: 14.27339
+  OriPositionOffset@Grating@Grating: false
+  PositionOffset@Grating@Grating: 0 0 0
+  Position@Grating@Grating: 0 0 0
+  Visible@Grating@Grating: false
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 2.007585
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  Mark@Marker@OrthoCamera/Marker: false
+CondPath: ''
+Cond: 
+LogicPath: ImagerCycle
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: I:\
+DataPath: 
+Input: false
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 10
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 2000
+CondDur: 0
+SufICI: 1000
+PreITI: 0
+TrialDur: 0
+SufITI: 0
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: NONE
+CondTestAtState: PREICI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_ID
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Size
+  - Subject_Weight
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
+  - Subject_Birth
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
+  - MarkOffColor@Marker@Marker
+  - MarkOnColor@Marker@Marker
+  - MarkerCorner@Marker@Marker
+  - MarkerSize@Marker@Marker
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: false
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  ColorSpace: LMS
+  Color: X
+  OnLine: true
+  CycleDirection: 1
+  CycleSyncFreq: 1
+  ModulateParam: ModulateTime

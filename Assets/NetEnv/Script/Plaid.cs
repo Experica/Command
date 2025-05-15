@@ -21,6 +21,8 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using Unity.Netcode;
+using System;
+using MathNet.Numerics.Distributions;
 
 namespace Experica.NetEnv
 {
@@ -49,6 +51,7 @@ namespace Experica.NetEnv
         /// Sigma parameter of mask
         /// </summary>
         public NetworkVariable<float> MaskSigma = new(0.15f);
+        public NetworkVariable<bool> MaskReverse = new(false);
         /// <summary>
         /// Luminance of grating in [0, 1]
         /// </summary>
@@ -97,6 +100,10 @@ namespace Experica.NetEnv
         public NetworkVariable<float> ModulateDuty1 = new(0.5f);
         public NetworkVariable<float> TimeSecond = new(0f);
         public NetworkVariable<float> ModulateTimeSecond = new(0f);
+        /// <summary>
+        /// Rotate `PositionOffset` by `Rotation + RotationOffset`, then add to `Position`
+        /// </summary>
+        public NetworkVariable<bool> RotPositionOffset = new(false);
         public NetworkVariable<Vector3> PositionOffset = new(Vector3.zero);
 
         double timeatreverse = 0;
@@ -118,6 +125,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged += OnMaskType;
             MaskRadius.OnValueChanged += OnMaskRadius;
             MaskSigma.OnValueChanged += OnMaskSigma;
+            MaskReverse.OnValueChanged += OnMaskReverse;
             Luminance.OnValueChanged += OnLuminance;
             Contrast.OnValueChanged += OnContrast;
             SpatialFreq0.OnValueChanged += OnSpatialFreq0;
@@ -145,6 +153,7 @@ namespace Experica.NetEnv
             ModulateDuty1.OnValueChanged += OnModulateDuty1;
             TimeSecond.OnValueChanged += OnTimeSecond;
             ModulateTimeSecond.OnValueChanged += OnModulateTimeSecond;
+            RotPositionOffset.OnValueChanged += OnRotPositionOffset;
             PositionOffset.OnValueChanged += OnPositionOffset;
 
             timer.Start();
@@ -166,6 +175,7 @@ namespace Experica.NetEnv
             MaskType.OnValueChanged -= OnMaskType;
             MaskRadius.OnValueChanged -= OnMaskRadius;
             MaskSigma.OnValueChanged -= OnMaskSigma;
+            MaskReverse.OnValueChanged -= OnMaskReverse;
             Luminance.OnValueChanged -= OnLuminance;
             Contrast.OnValueChanged -= OnContrast;
             SpatialFreq0.OnValueChanged -= OnSpatialFreq0;
@@ -193,27 +203,48 @@ namespace Experica.NetEnv
             ModulateDuty1.OnValueChanged -= OnModulateDuty1;
             TimeSecond.OnValueChanged -= OnTimeSecond;
             ModulateTimeSecond.OnValueChanged -= OnModulateTimeSecond;
+            RotPositionOffset.OnValueChanged -= OnRotPositionOffset;
             PositionOffset.OnValueChanged -= OnPositionOffset;
         }
 
         void OnRotation(Vector3 p, Vector3 c)
         {
-            transform.localEulerAngles = c + RotationOffset.Value;
+            var theta = c + RotationOffset.Value;
+            transform.localEulerAngles = theta;
+            if (RotPositionOffset.Value)
+            {
+                transform.localPosition = Position.Value + Quaternion.Euler(theta) * PositionOffset.Value;
+            }
         }
 
         void OnRotationOffset(Vector3 p, Vector3 c)
         {
-            transform.localEulerAngles = Rotation.Value + c;
+            var theta = c + Rotation.Value;
+            transform.localEulerAngles = theta;
+            if (RotPositionOffset.Value)
+            {
+                transform.localPosition = Position.Value + Quaternion.Euler(theta) * PositionOffset.Value;
+            }
         }
 
         protected override void OnPosition(Vector3 p, Vector3 c)
         {
-            transform.localPosition = c + PositionOffset.Value;
+            var theta = Rotation.Value + RotationOffset.Value;
+            if (RotPositionOffset.Value)
+            {
+                transform.localPosition = c + Quaternion.Euler(theta) * PositionOffset.Value;
+            }
+            else { transform.localPosition = c + PositionOffset.Value; }
         }
 
         void OnPositionOffset(Vector3 p, Vector3 c)
         {
-            transform.localPosition = Position.Value + c;
+            var theta = Rotation.Value + RotationOffset.Value;
+            if (RotPositionOffset.Value)
+            {
+                transform.localPosition = Position.Value + Quaternion.Euler(theta) * c;
+            }
+            else { transform.localPosition = Position.Value + c; }
         }
 
         void OnOri0(float p, float c)
@@ -268,6 +299,11 @@ namespace Experica.NetEnv
         void OnMaskSigma(float p, float c)
         {
             renderer.material.SetFloat("_MaskSigma", c);
+        }
+
+        void OnMaskReverse(bool p, bool c)
+        {
+            renderer.material.SetFloat("_MaskReverse", c ? 1 : 0);
         }
 
         protected override void OnVisible(bool p, bool c)
@@ -434,6 +470,18 @@ namespace Experica.NetEnv
         void OnModulateTimeSecond(float p, float c)
         {
             renderer.material.SetFloat("_MT", c);
+        }
+
+        void OnRotPositionOffset(bool p, bool c)
+        {
+            if (c)
+            {
+                transform.localPosition = Position.Value + Quaternion.Euler(Rotation.Value + RotationOffset.Value) * PositionOffset.Value;
+            }
+            else
+            {
+                transform.localPosition = Position.Value + PositionOffset.Value;
+            }
         }
 
         /// <summary>
