@@ -13,17 +13,21 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  FixDotPosition@FixDot@FixDot: 0 15 0
-  FixDotDiameter@FixDot@FixDot: 3.2768
+  FixDotPosition@FixDot@FixDot: 0 -15 0
+  FixDotDiameter@FixDot@FixDot: 2
+  FixDotInnerRadius@FixDot@FixDot: 0.25
+  FixDotOuterRadius@FixDot@FixDot: 0.5
+  FixDotInnerColor@FixDot@FixDot: 0 0 0 1
+  FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 2
-  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  MarkerSize@Marker@OrthoCamera/Marker: 4
+  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: ''
 Cond: 
@@ -32,7 +36,7 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
@@ -43,9 +47,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 694
+PreITI: 399
 TrialDur: 0
-SufITI: 907
+SufITI: 1385
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -76,6 +80,8 @@ EnvInheritParam:
   - MarkerSize@Marker@Marker~OrthoCamera
   - MarkerCorner@Marker@Marker~OrthoCamera
   - CLUT@OrthoCamera@OrthoCamera
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - MarkerSize@Marker@OrthoCamera/Marker
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -90,18 +96,19 @@ Version: 3
 Config: 
 CondTest: 
 ExtendParam:
-  MinPreITIDur: 500
-  MaxPreITIDur: 800
+  MinPreITIDur: 300
+  MaxPreITIDur: 500
   MinSufITIDur: 500
   MaxSufITIDur: 2000
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
   FixRadius: 5
-  DotScaleOnFix: 0.8
   FixDotPosition:
     - 0 0 0
     - 15 0 0
     - -15 0 0
     - 0 15 0
     - 0 -15 0
+  EyeMoveRadius: 30
+  FixPreDur: 300

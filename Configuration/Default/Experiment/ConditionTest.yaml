@@ -17,7 +17,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -25,9 +25,9 @@ EnvParam:
   Mark@Marker@OrthoCamera/Marker: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
-  Ori@Grating@Grating: 0
+  Ori@Grating@Grating: 274.7381
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 10 10 10
+  Size@Grating@Grating: 6.8458 6.3763 10
   Diameter@Grating@Grating: 10
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
@@ -36,7 +36,7 @@ EnvParam:
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
   SpatialFreq@Grating@Grating: 0.2
-  TemporalFreq@Grating@Grating: 2
+  TemporalFreq@Grating@Grating: 1
   ModulateTemporalFreq@Grating@Grating: 0.2
   ModulateTemporalPhase@Grating@Grating: 0
   SpatialPhase@Grating@Grating: 0
@@ -53,7 +53,7 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 15.476 -3.9482 0
+  Position@Grating@Grating: -4.708 -2.485 0
   Visible@Grating@Grating: true
 CondPath: ''
 Cond: 
@@ -62,7 +62,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement

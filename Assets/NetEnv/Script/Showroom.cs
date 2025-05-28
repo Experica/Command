@@ -59,7 +59,7 @@ namespace Experica.NetEnv
             if (no != null) { envmgr.Despawn(no); no = null; }
             if (c != NetEnvObject.None)
             {
-                no = envmgr.Spawn<NetworkObject>($"Assets/NetEnv/Object/{c}.prefab"); // spawn under root
+                no = envmgr.Spawn<NetworkObject>($"Assets/NetEnv/Object/{c}.prefab", parent: transform.parent); // spawn along side of Showroom
                 envmgr.ParseGameObject(no.gameObject);
                 // Try init EnvParam for this object
                 envmgr.SetParamsByGameObject(appmgr.exmgr.el.ex.EnvParam, no.gameObject.name);

@@ -1,5 +1,5 @@
-ID: FixationConditionTest
-Name: FixationConditionTest
+ID: FixationDrawBorder
+Name: FixationDrawBorder
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
@@ -20,7 +20,7 @@ EnvParam:
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: false
-  Show@Showroom@FixDot/Showroom: Grating
+  Show@Showroom@FixDot/Showroom: Quad
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
@@ -30,41 +30,25 @@ EnvParam:
   MarkerSize@Marker@OrthoCamera/Marker: 4
   MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
   Mark@Marker@OrthoCamera/Marker: false
-  Rotation@Grating@FixDot/Grating: 0 0 0
-  RotationOffset@Grating@FixDot/Grating: 0 0 0
-  Ori@Grating@FixDot/Grating: 300
-  OriOffset@Grating@FixDot/Grating: 0
-  Size@Grating@FixDot/Grating: 4 4 4
-  Diameter@Grating@FixDot/Grating: 4
-  MaskType@Grating@FixDot/Grating: Disk
-  MaskRadius@Grating@FixDot/Grating: 0.5
-  MaskSigma@Grating@FixDot/Grating: 0.15
-  MaskReverse@Grating@FixDot/Grating: false
-  Luminance@Grating@FixDot/Grating: 0.5
-  Contrast@Grating@FixDot/Grating: 1
-  SpatialFreq@Grating@FixDot/Grating: 0.4
-  TemporalFreq@Grating@FixDot/Grating: 1
-  ModulateTemporalFreq@Grating@FixDot/Grating: 0.2
-  ModulateTemporalPhase@Grating@FixDot/Grating: 0
-  SpatialPhase@Grating@FixDot/Grating: 0
-  MinColor@Grating@FixDot/Grating: 0 0 0 1
-  MaxColor@Grating@FixDot/Grating: 1 1 1 1
-  PauseTime@Grating@FixDot/Grating: false
-  PauseModulateTime@Grating@FixDot/Grating: true
-  GratingType@Grating@FixDot/Grating: Square
-  ModulateType@Grating@FixDot/Grating: Square
-  ReverseTime@Grating@FixDot/Grating: false
-  Duty@Grating@FixDot/Grating: 0.5
-  ModulateDuty@Grating@FixDot/Grating: 0.5
-  TimeSecond@Grating@FixDot/Grating: 0
-  ModulateTimeSecond@Grating@FixDot/Grating: 0
-  OriPositionOffset@Grating@FixDot/Grating: false
-  PositionOffset@Grating@FixDot/Grating: 0 0 0
-  Position@Grating@FixDot/Grating: 5 -5 0
-  Visible@Grating@FixDot/Grating: false
+  LineColor@DrawLine@DrawLine: 1 0 0 1
+  LineWidth@DrawLine@DrawLine: 0.1
+  LineVisible@DrawLine@DrawLine: true
+  Ori@Quad@FixDot/Quad: 0
+  OriOffset@Quad@FixDot/Quad: 0
+  Size@Quad@FixDot/Quad: 3 3 3
+  Diameter@Quad@FixDot/Quad: 3
+  Color@Quad@FixDot/Quad: 0 1 0 1
+  MaskType@Quad@FixDot/Quad: Gaussian
+  MaskRadius@Quad@FixDot/Quad: 0.5
+  MaskSigma@Quad@FixDot/Quad: 0.15
+  MaskReverse@Quad@FixDot/Quad: false
+  OriPositionOffset@Quad@FixDot/Quad: false
+  PositionOffset@Quad@FixDot/Quad: 0 0 0
+  Position@Quad@FixDot/Quad: 0 10 0
+  Visible@Quad@FixDot/Quad: false
 CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
-LogicPath: FixationCondTest
+LogicPath: FixationDrawBorder
 Hemisphere: Left
 Eye: Both
 RecordSession: ''
@@ -77,12 +61,12 @@ BlockSampling: UniformWithoutReplacement
 CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
-PreICI: 250
-CondDur: 250
+PreICI: 0
+CondDur: 1000
 SufICI: 0
-PreITI: 434
+PreITI: 398
 TrialDur: 0
-SufITI: 667
+SufITI: 857
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -114,7 +98,6 @@ EnvInheritParam:
   - MarkerCorner@Marker@Marker~OrthoCamera
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
-  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -133,8 +116,8 @@ ExtendParam:
   MaxPreITIDur: 500
   MinSufITIDur: 500
   MaxSufITIDur: 1000
-  MinFixDur: 1000
-  MaxFixDur: 2000
+  MinFixDur: 800
+  MaxFixDur: 1000
   WaitForFixTimeOut: 3000
   FixRadius: 5
   DotScaleOnFix: 0.7
@@ -142,3 +125,4 @@ ExtendParam:
   FixDotPosition:
     - -3 3 0
   FixPreDur: 200
+  WaitForInputTimeOut: 5000

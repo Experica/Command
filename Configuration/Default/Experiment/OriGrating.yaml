@@ -69,7 +69,7 @@ CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 5
 BlockRepeat: 1
-BlockParam: []
+BlockFactor: []
 PreICI: 150
 CondDur: 500
 SufICI: 350
@@ -83,30 +83,30 @@ PushCondAtState: PREICI
 CondTestAtState: PREICI
 NotifyPerCondTest: 2
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam: []
 EnvInheritParam:
-- MarkerCorner@Marker@Marker
-- MarkOnColor@Marker@Marker
-- MarkOffColor@Marker@Marker
-- SpatialFreq@GratingQuad@GratingQuad
-- TemporalFreq@GratingQuad@GratingQuad
-- Diameter@GratingQuad@GratingQuad
-- Position@GratingQuad@GratingQuad
-- MarkerSize@Marker@Marker
-Param: {}
+  - MarkerCorner@Marker@Marker
+  - MarkOnColor@Marker@Marker
+  - MarkOffColor@Marker@Marker
+  - SpatialFreq@GratingQuad@GratingQuad
+  - TemporalFreq@GratingQuad@GratingQuad
+  - Diameter@GratingQuad@GratingQuad
+  - Position@GratingQuad@GratingQuad
+  - MarkerSize@Marker@Marker
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
-  - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: ''
-CondTestShowLevel: FULL
+CondTestShow: ALL
 NotifyExperimenter: false
-Version: 1
+Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

@@ -738,9 +738,18 @@ namespace Experica.NetEnv
             }
         }
 
-        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
+        public DrawLine SpawnDrawLine(INetEnvCamera c, string name = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true, Transform parent = null)
         {
-            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name, c.gameObject.transform, netvis, clientid, destroyWithScene, parse);
+            var nb = Spawn<DrawLine>("Assets/NetEnv/Object/DrawLine.prefab", name, parent, netvis, clientid, destroyWithScene, parse);
+            if (nb == null) { return null; }
+            nb.ClientID = clientid;
+            nb.NetEnvCamera = c;
+            return nb;
+        }
+
+        public ScaleGrid SpawnScaleGrid(INetEnvCamera c, string name = null, NetVisibility netvis = NetVisibility.None, ulong clientid = 0, bool destroyWithScene = true, bool parse = true,Transform parent=null)
+        {
+            var nb = Spawn<ScaleGrid>("Assets/NetEnv/Object/ScaleGrid.prefab", name,parent ==null ? c.gameObject.transform : parent, netvis, clientid, destroyWithScene, parse);
             if (nb == null) { return null; }
             nb.ClientID = clientid;
             //nb.transform.localPosition = new(0, 0, c.FarPlane - c.NearPlane);

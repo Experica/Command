@@ -549,9 +549,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
+  m_Priority: 0
+  m_BlendDistance: 0
+  m_Weight: 1
   sharedProfile: {fileID: 11400000, guid: bc3017157b016ca4698944e99ee3afb0, type: 2}
 --- !u!1 &570668880
 GameObject:
@@ -588,9 +588,13 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 6a7701bb82e91614783f5867f01774c0,
     type: 3}
   m_SortingOrder: 0
+  m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!4 &570668882
 Transform:
   m_ObjectHideFlags: 0

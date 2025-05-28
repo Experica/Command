@@ -1,5 +1,5 @@
 ﻿/*
-FixationCondTest.cs is part of the Experica.
+FixationDrawBorder.cs is part of the Experica.
 Copyright (c) 2016 Li Alex Zhang and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a 
@@ -22,23 +22,100 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections.Generic;
 using Experica;
 using Experica.Command;
 using System.Linq;
 using Experica.NetEnv;
 
 /// <summary>
-/// Condition Test while eyes fixing on a target, with User Input Action mimicking eye movement, and helpful visual guides.
+/// Ask user to draw border of the object or phosephoen while eyes fixing on a target, with User Input Action mimicking eye movement, and helpful visual guides.
 /// </summary>
-public class FixationCondTest : Fixation
+public class FixationDrawBorder : Fixation
 {
-    uint CondPerFix;
+    public double WaitForDrawOnTime;
+    public InputAction VisibleAction;
+    DrawLine drawline;
+
+    protected override void Enable()
+    {
+        base.Enable();
+        VisibleAction = InputSystem.actions.FindActionMap("Logic").FindAction("Visible");
+    }
+
+    public override void OnPlayerReady()
+    {
+        base.OnPlayerReady();
+        drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First());
+    }
+
+    protected override void PrepareCondition()
+    {
+        var pos = new List<Vector3>() { Vector3.right * 10, Vector3.left * 10, Vector3.up * 10, Vector3.down * 10 };
+        var diam = new List<int>() { 3, 5, 7 };
+        var col = new List<Color>() { Color.red, Color.green, Color.blue, Color.yellow };
+
+        var cond = new Dictionary<string, List<object>>
+        {
+            ["Diameter"] = diam.Cast<object>().ToList(),
+            ["Position"] = pos.Cast<object>().ToList(),
+            ["Color"] = col.Cast<object>().ToList(),
+        };
+
+        condmgr.PrepareCondition(cond.OrthoCombineFactor());
+    }
+
+    public new enum TASKSTATE
+    {
+        NONE = 401,
+        FIX_TARGET_ON,
+        FIX_ACQUIRED,
+        WAIT_DRAW
+    }
+
+    public new TASKSTATE TaskState { get; private set; }
+
+    public EnterStateCode EnterTaskState(TASKSTATE value, bool sync = false)
+    {
+        if (value == TaskState) { return EnterStateCode.AlreadyIn; }
+        switch (value)
+        {
+            case TASKSTATE.FIX_TARGET_ON:
+                SetEnvActiveParam("FixDotVisible", true);
+                WaitForFixTimeOut = GetExParam<double>("WaitForFixTimeOut");
+                FixTargetOnTime = TimeMS;
+                if (ex.HasCondTestState())
+                {
+                    condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), FixTargetOnTime);
+                }
+                break;
+            case TASKSTATE.FIX_ACQUIRED:
+                FixDur = RandFixDur;
+                FixOnTime = TimeMS;
+                if (ex.HasCondTestState())
+                {
+                    condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), FixOnTime);
+                }
+                break;
+            case TASKSTATE.WAIT_DRAW:
+                WaitForDrawOnTime = TimeMS;
+                if (ex.HasCondTestState())
+                {
+                    condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), WaitForDrawOnTime);
+                }
+                break;
+        }
+        TaskState = value;
+        if (sync) { SyncEvent(value.ToString()); }
+        return EnterStateCode.Success;
+    }
+
 
     protected virtual void TurnOnTarget()
     {
         if (ex.ID == "FixationRFMapping")
         {
-            SetEnvActiveParamByGameObject("Visible", "FixDot/Plaid", true);
+            SetEnvActiveParamByGameObject("Visible", "Plaid", true);
         }
         else
         {
@@ -50,7 +127,7 @@ public class FixationCondTest : Fixation
     {
         if (ex.ID == "FixationRFMapping")
         {
-            SetEnvActiveParamByGameObject("Visible", "FixDot/Plaid", false);
+            SetEnvActiveParamByGameObject("Visible", "Plaid", false);
         }
         else
         {
@@ -115,11 +192,9 @@ public class FixationCondTest : Fixation
                                     if (FixHold >= FixDur)
                                     {
                                         // Successfully hold fixation in required period
-                                        OnHit();
                                         SetEnvActiveParam("FixDotVisible", false);
                                         TurnOffTarget();
-                                        EnterTaskState(TASKSTATE.NONE);
-                                        EnterTrialState(TRIALSTATE.NONE);
+                                        EnterTaskState(TASKSTATE.WAIT_DRAW);
                                     }
                                     else if (PreICIHold >= ex.PreICI)
                                     {
@@ -141,6 +216,24 @@ public class FixationCondTest : Fixation
                                     }
                                     break;
                             }
+                        }
+                        break;
+                    case TASKSTATE.WAIT_DRAW:
+                        if (VisibleAction.WasPerformedThisFrame())
+                        {
+                            if (ex.HasCondTestState())
+                            {
+                                condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), "Confirm", TimeMS);
+                            }
+                            var isdraw = drawline.TryGetLine(out Vector3[] line);
+                            if (ex.HasCondTestState() && isdraw)
+                            {
+                                condtestmgr.AddInList("DrawLine", line);
+                            }
+                            drawline.Clear();
+                            if (isdraw) { OnHit(); } else { OnMiss(); }
+                            EnterTaskState(TASKSTATE.NONE);
+                            EnterTrialState(TRIALSTATE.NONE);
                         }
                         break;
                 }

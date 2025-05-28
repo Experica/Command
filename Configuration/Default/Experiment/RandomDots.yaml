@@ -1,15 +1,15 @@
 ID: RandomDots
 Name: RandomDots
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: RIGHT EYE
 Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_Name: Dunn
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Dots
 EnvParam:
@@ -26,31 +26,23 @@ EnvParam:
   Coherence@Dots@Dots: 0
   Position@Dots@Dots: 0 0 0
   Visible@Dots@Dots: true
-  Position@OrthoCamera@OrthoCamera: 0 0 -501
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.66849
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.950969
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
-  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
-  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
-  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
-  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
-  Size@ScaleGrid@OrthoCamera/ScaleGrid: 53.873 32.289 1
-  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
-  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: HLV1
 RecordSite: ODL9
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

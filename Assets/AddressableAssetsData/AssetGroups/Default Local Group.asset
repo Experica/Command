@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 388f8cb35bb74994cbb76550b2a6e2ce
+    m_Address: Assets/NetEnv/Object/DrawLine.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c7ae9ff31b94024586e5fabb6142d36
     m_Address: Assets/NetEnv/Object/Plaid.prefab
     m_ReadOnly: 0

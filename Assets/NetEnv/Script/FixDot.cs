@@ -24,7 +24,6 @@ using Unity.Netcode;
 using Unity.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.VFX;
 
 namespace Experica.NetEnv
 {
@@ -32,8 +31,13 @@ namespace Experica.NetEnv
     {
         public NetworkVariable<Vector3> FixDotPosition = new(Vector3.zero);
         public NetworkVariable<float> FixDotDiameter = new(1f);
+        public NetworkVariable<float> FixDotInnerRadius = new(0.25f);
+        public NetworkVariable<float> FixDotOuterRadius = new(0.5f);
+        public NetworkVariable<Color> FixDotInnerColor = new(Color.black);
+        public NetworkVariable<Color> FixDotOuterColor = new(Color.white);
         public NetworkVariable<bool> FixDotVisible = new(true);
         protected new Renderer renderer;
+        protected Mesh mesh;
 
         void Awake()
         {
@@ -43,6 +47,7 @@ namespace Experica.NetEnv
         protected virtual void OnAwake()
         {
             renderer = GetComponent<Renderer>();
+            mesh = GetComponent<MeshFilter>().mesh;
         }
 
         void Start()
@@ -60,6 +65,10 @@ namespace Experica.NetEnv
             FixDotVisible.OnValueChanged += OnFixDotVisible;
             FixDotPosition.OnValueChanged += OnFixDotPosition;
             FixDotDiameter.OnValueChanged += OnFixDotDiameter;
+            FixDotInnerRadius.OnValueChanged += OnFixDotInnerRadius;
+            FixDotOuterRadius.OnValueChanged += OnFixDotOuterRadius;
+            FixDotInnerColor.OnValueChanged += OnFixDotInnerColor;
+            FixDotOuterColor.OnValueChanged += OnFixDotOuterColor;
         }
 
         public override void OnNetworkDespawn()
@@ -67,6 +76,10 @@ namespace Experica.NetEnv
             FixDotVisible.OnValueChanged -= OnFixDotVisible;
             FixDotPosition.OnValueChanged -= OnFixDotPosition;
             FixDotDiameter.OnValueChanged -= OnFixDotDiameter;
+            FixDotInnerRadius.OnValueChanged -= OnFixDotInnerRadius;
+            FixDotOuterRadius.OnValueChanged -= OnFixDotOuterRadius;
+            FixDotInnerColor.OnValueChanged -= OnFixDotInnerColor;
+            FixDotOuterColor.OnValueChanged -= OnFixDotOuterColor;
         }
 
         protected virtual void OnFixDotVisible(bool p, bool c)
@@ -81,8 +94,38 @@ namespace Experica.NetEnv
 
         protected virtual void OnFixDotDiameter(float p, float c)
         {
-            transform.localScale = new Vector3(c, c, c);
+            // here we directly set vertices, so we don't need to scale FixDot to prevent scaling all its children
+            var vs = mesh.vertices;
+            var r = c / 2;
+            vs[0].x = -r;
+            vs[0].y = -r;
+            vs[1].x = r;
+            vs[1].y = -r;
+            vs[2].x = -r;
+            vs[2].y = r;
+            vs[3].x = r;
+            vs[3].y = r;
+            mesh.vertices = vs;
         }
 
+        protected virtual void OnFixDotInnerRadius(float p, float c)
+        {
+            renderer.material.SetFloat("_InnerRadius", c);
+        }
+
+        protected virtual void OnFixDotOuterRadius(float p, float c)
+        {
+            renderer.material.SetFloat("_OuterRadius", c);
+        }
+
+        protected virtual void OnFixDotInnerColor(Color p, Color c)
+        {
+            renderer.material.SetColor("_InnerColor", c);
+        }
+
+        protected virtual void OnFixDotOuterColor(Color p, Color c)
+        {
+            renderer.material.SetColor("_OuterColor", c);
+        }
     }
 }

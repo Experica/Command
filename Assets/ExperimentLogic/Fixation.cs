@@ -44,7 +44,7 @@ public class Fixation : ExperimentLogic
     public void RandFixDotPosition()
     {
         var fdpos = GetExParam<List<Vector3>>("FixDotPosition");
-        if (fdpos != null && fdpos.Count>0)
+        if (fdpos != null && fdpos.Count > 1)
         {
             var i = RNG.Next(fdpos.Count);
             fixdotposition.Value = fdpos[i];
@@ -53,11 +53,11 @@ public class Fixation : ExperimentLogic
 
     public InputAction MoveAction;
     public Vector2 FixPosition;
-    public float FixDotDiameter;
-    NetworkVariable<Vector3> fixdotposition;
+    protected NetworkVariable<Vector3> fixdotposition;
     protected List<ScaleGrid> scalegrid = new();
     DotTrail fixtrail;
     Circle fixcircle;
+    bool updatefixtrail;
 
     protected override void Enable()
     {
@@ -66,6 +66,7 @@ public class Fixation : ExperimentLogic
 
     public override void OnSceneReady(List<ulong> clientids)
     {
+        fixdotposition = envmgr.GetNetworkVariable<Vector3>("FixDotPosition");
         scalegrid.Clear();
         if (clientids.Count == 0) { return; }
         for (var i = 0; i < clientids.Count; i++)
@@ -73,7 +74,8 @@ public class Fixation : ExperimentLogic
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
             var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
-            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false);
+            // we want scalegrid to center on FixDot, so here spawn as a child of FixDot
+            var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false, parent: fixdotposition.GetBehaviour().transform);
             scalegrid.Add(sg);
         }
     }
@@ -83,23 +85,14 @@ public class Fixation : ExperimentLogic
     /// </summary>
     public override void OnPlayerReady()
     {
-        fixdotposition = envmgr.GetNetworkVariable<Vector3>("FixDotPosition");
-        // hook function to update only x/y positions
-        Action<NetEnvVisual, Vector3> upxy = (o, p) => o.Position.Value = new(p.x, p.y, o.Position.Value.z);
+        //Action<NetEnvVisual, Vector3> upxy = (o, p) => o.Position.Value = new(p.x, p.y, o.Position.Value.z);
 
         var fixradius = (float)ex.ExtendParam["FixRadius"];
-        fixcircle = envmgr.SpawnCircle(color: new(0.1f, 0.8f, 0.1f), size: new(2 * fixradius, 2 * fixradius, 1), parse: false);
-        fixdotposition.OnValueChanged += (p, c) => upxy(fixcircle, c); // center fixcircle with fixdot
-        upxy(fixcircle, fixdotposition.Value);
+        // here also spawn as a child of FixDot, so the circle would center FixDot
+        fixcircle = envmgr.SpawnCircle(color: new(0.1f, 0.8f, 0.1f), size: new(2 * fixradius, 2 * fixradius, 1), parse: false, parent: fixdotposition.GetBehaviour().transform);
         // hook a ExtendParam to a NetworkVariable
         ex.extendproperties["FixRadius"].propertyChanged += (o, e) => fixcircle.Size.Value = new(2 * (float)ex.ExtendParam["FixRadius"], 2 * (float)ex.ExtendParam["FixRadius"], 1);
-
-        foreach (var sg in scalegrid)
-        {
-            fixdotposition.OnValueChanged += (p, c) => upxy(sg, c); // center scalegrid with fixdot
-            upxy(sg, fixdotposition.Value);
-        }
-
+        // tracing fixation position
         fixtrail = envmgr.SpawnDotTrail(position: Vector3.back, size: new(0.25f, 0.25f, 1), color: new(1, 0.1f, 0.1f), parse: false);
     }
 
@@ -140,12 +133,26 @@ public class Fixation : ExperimentLogic
 
     protected override void OnUpdate()
     {
-        if (!ex.Input || envmgr.MainCamera.Count == 0 || MoveAction.phase != InputActionPhase.Started) { return; }
-        FixPosition += MoveAction.ReadValue<Vector2>();
-        if (fixtrail != null && fixtrail.Visible.Value)
+        if (ex.Input && envmgr.MainCamera.Count > 0 && MoveAction.phase == InputActionPhase.Started)
+        {
+            FixPosition += MoveAction.ReadValue<Vector2>();
+            clampPosition(ref FixPosition);
+            updatefixtrail = true;
+        }
+
+        if (updatefixtrail && fixtrail != null && fixtrail.Visible.Value)
         {
             fixtrail.Position.Value = FixPosition;
+            updatefixtrail = false;
         }
+    }
+
+    void clampPosition(ref Vector2 pos)
+    {
+        var r = GetExParam<float>("EyeMoveRadius");
+        if (r == 0) { r = 50; }
+        pos.x = Mathf.Clamp(pos.x, -r, r);
+        pos.y = Mathf.Clamp(pos.y, -r, r);
     }
 
     protected virtual bool FixOnTarget => Vector2.Distance(fixdotposition.Value, FixPosition) < (float)ex.ExtendParam["FixRadius"];
@@ -174,9 +181,6 @@ public class Fixation : ExperimentLogic
                 break;
             case TASKSTATE.FIX_ACQUIRED:
                 FixDur = RandFixDur;
-                // scale FixDot when fix acquired
-                FixDotDiameter = GetEnvActiveParam<float>("FixDotDiameter");
-                SetEnvActiveParam("FixDotDiameter", FixDotDiameter * GetExParam<float>("DotScaleOnFix"));
                 FixOnTime = TimeMS;
                 if (ex.HasCondTestState())
                 {
@@ -211,6 +215,17 @@ public class Fixation : ExperimentLogic
         condmgr.NSampleSkip = 1;
         ex.SufITI = RandSufITIDur;
         Debug.LogError("Early");
+    }
+
+    protected virtual void OnMiss()
+    {
+        if (ex.HasCondTestState())
+        {
+            condtestmgr.Add(nameof(CONDTESTPARAM.TaskResult), nameof(TASKRESULT.MISS));
+            condtestmgr.Add("FixHold", FixHold);
+        }
+        ex.SufITI = RandSufITIDur;
+        Debug.LogError("Miss");
     }
 
     protected virtual void OnHit()
@@ -274,16 +289,14 @@ public class Fixation : ExperimentLogic
                             // Fixation breaks in required period
                             OnEarly();
                             SetEnvActiveParam("FixDotVisible", false);
-                            SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
                             EnterTaskState(TASKSTATE.NONE);
-                            EnterTrialState(TRIALSTATE.SUFITI); // ITI as punishment
+                            EnterTrialState(TRIALSTATE.SUFITI); // long SUFITI as punishment
                         }
                         else if (FixHold >= FixDur)
                         {
                             // Successfully hold fixation in required period
                             OnHit();
                             SetEnvActiveParam("FixDotVisible", false);
-                            SetEnvActiveParam("FixDotDiameter", FixDotDiameter);
                             EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.NONE);
                         }

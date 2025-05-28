@@ -834,9 +834,9 @@ namespace Experica
             var go = parent == null ? GameObject.Instantiate(lineprefab) : GameObject.Instantiate(lineprefab, parent);
             go.name = string.IsNullOrEmpty(name) ? "Line" : name;
             var lr = go.GetComponent<LineRenderer>();
-            lr.positionCount = positions.Length;
+            lr.positionCount = positions == null ? 0 : positions.Length;
             lr.loop = loop;
-            lr.SetPositions(positions);
+            if (positions != null) { lr.SetPositions(positions); }
             return lr;
         }
 

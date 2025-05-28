@@ -19,7 +19,7 @@ EnvParam:
   OriOffset0@Plaid@Plaid: 0
   Ori1@Plaid@Plaid: -90
   OriOffset1@Plaid@Plaid: 0
-  Size@Plaid@Plaid: 30 4 30
+  Size@Plaid@Plaid: 30 30 30
   Diameter@Plaid@Plaid: 30
   MaskType@Plaid@Plaid: None
   MaskRadius@Plaid@Plaid: 0.5
@@ -72,7 +72,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 2.057878
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.937008
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -85,7 +85,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

@@ -194,6 +194,7 @@ MonoBehaviour:
       - rid: 8310275295814090755
       - rid: 6900619694075543552
       - rid: 6900619694075543553
+      - rid: 3764029119094849536
     m_RuntimeSettings:
       m_List:
       - rid: 1024916452897193984
@@ -213,6 +214,7 @@ MonoBehaviour:
       - rid: 8310275295814090753
       - rid: 8310275295814090755
       - rid: 6900619694075543552
+      - rid: 6900619694075543553
   renderingLayerNames:
   - Light Layer default
   - Light Layer 1
@@ -395,6 +397,15 @@ MonoBehaviour:
         m_EmissiveQuadMesh: {fileID: 4300000, guid: 1d5a8595286f94f4bb54171d49f473c3,
           type: 3}
         m_SphereMesh: {fileID: 4300000, guid: 9e0af751bc36ea146940ba245193e28c, type: 3}
+    - rid: 3764029119094849536
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+        m_DebugUIHandlerCanvasPrefab: {fileID: 1153602445894428, guid: cf6cbdd672089a84796e55a21fed1cbe,
+          type: 3}
+        m_DebugUIPersistentCanvasPrefab: {fileID: 1822588063230394, guid: f6b1a0fe75d5009449cf55ae76220e2b,
+          type: 3}
     - rid: 4086892664343232582
       type: {class: HDRPRayTracingResources, ns: UnityEngine.Rendering.HighDefinition,
         asm: Unity.RenderPipelines.HighDefinition.Runtime}

@@ -1,26 +1,18 @@
 ID: Image
 Name: Image
 Designer: Alex
-Experimenter: LZ
+Experimenter: KS
 Log: 
 Subject_ID: Test
-Subject_Name: AG5
-Subject_Species: M. F.
+Subject_Name: Dunn
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.4
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: ImageList
 EnvParam:
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.333333
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@Marker~OrthoCamera: 2
-  MarkerCorner@Marker@Marker~OrthoCamera: BottomLeft
-  Mark@Marker@Marker~OrthoCamera: false
   Ori@ImageList@ImageList: 0
   OriOffset@ImageList@ImageList: 0
   Size@ImageList@ImageList: 20 20 20
@@ -28,6 +20,7 @@ EnvParam:
   MaskType@ImageList@ImageList: None
   MaskRadius@ImageList@ImageList: 0.5
   MaskSigma@ImageList@ImageList: 0.15
+  MaskReverse@ImageList@ImageList: false
   MinColor@ImageList@ImageList: 0 0 0 1
   MaxColor@ImageList@ImageList: 1 1 1 1
   ImageSet@ImageList@ImageList: TestImageSet.UInt8
@@ -35,14 +28,23 @@ EnvParam:
   ChannelModulate@ImageList@ImageList: None
   Position@ImageList@ImageList: 0 0 0
   Visible@ImageList@ImageList: true
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: false
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -63,42 +65,42 @@ PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam:
-- Experimenter
-- Subject_ID
-- Subject_Name
-- Subject_Species
-- Subject_Gender
-- Subject_Size
-- Subject_Weight
-- Hemisphere
-- Eye
-- RecordSession
-- RecordSite
-- DataDir
-- TimerDriftSpeed
-- Display_ID
-- NotifyExperimenter
-- Subject_Birth
+  - Experimenter
+  - Subject_ID
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Size
+  - Subject_Weight
+  - Hemisphere
+  - Eye
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - TimerDriftSpeed
+  - Display_ID
+  - NotifyExperimenter
+  - Subject_Birth
 EnvInheritParam:
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- CLUT@OrthoCamera@OrthoCamera
-ExtendParam: {}
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
-  - DigitalOut
-  - Display
+    - DigitalOut
+    - Display
   NChannel: 1
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: SHORT
+CondTestShow: ALL
 NotifyExperimenter: true
 Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

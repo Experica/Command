@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NetEnv/Scene/FixationShowroom.unity
     guid: 8de0a0543321f0148af28ace267a9f2a
+  - enabled: 1
+    path: Assets/NetEnv/Scene/FixationQuadShowroom.unity
+    guid: 1d15e7a32577be645a2d66e590315da6
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1aa0d92f72f6a0c438cc237989f52627,
       type: 2}

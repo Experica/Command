@@ -141,7 +141,7 @@ namespace Experica.NetEnv
 
         public void UpdateView(INetEnvCamera camera)
         {
-            Position.Value = new(0, 0, camera.FarPlane - camera.NearPlane);
+            Position.Value = new(0, 0, camera.FarPlane - camera.NearPlane - (transform.parent.position.z-camera.Camera.transform.position.z));
             viewwidth = camera.Width; viewheight = camera.Height;
             // fixed ratio of linewidth to camera view size, so that line can not be too thin to render as invisible
             AxisWidth.Value = viewheight * 0.005f;

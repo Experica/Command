@@ -144,4 +144,22 @@ void colorlerp_float(float4 mincolor, float4 maxcolor, float4 color, float chann
 	}
 }
 
+// concentric two disk
+void twodisk_float(float2 uv, float inner_radius,float outer_radius,float4 inner_color,float4 outer_color, out float4 Out)
+{
+    float r = length(uv);
+    if (r > outer_radius)
+    {
+        Out = float4(0, 0, 0, 0);
+    }
+    else if (r > inner_radius)
+    {
+        Out = outer_color;
+    }
+    else
+    {
+        Out = inner_color;
+    }
+}
+
 #endif
