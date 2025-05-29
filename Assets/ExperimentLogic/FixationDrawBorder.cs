@@ -47,6 +47,8 @@ public class FixationDrawBorder : Fixation
     {
         base.OnPlayerReady();
         drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First());
+        // show scalegrid to help user locate object
+        foreach (var sg in scalegrid) { sg.NetworkObject.NetworkShowOnlyTo(sg.ClientID); }
     }
 
     protected override void PrepareCondition()

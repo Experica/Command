@@ -34,9 +34,8 @@ namespace Experica
     public class IntanRecorder : IRecorder
     {
         int disposecount = 0;
-        readonly object api = new object();
+        readonly object api = new();
         Socket intancmd = new(SocketType.Stream,ProtocolType.Tcp);
-        Process hellosglx = new Process();
 
         public IntanRecorder(string host = "localhost", int port = 5000)
         {
@@ -79,7 +78,7 @@ namespace Experica
 
         public bool IsConnected { get; private set; }
 
-        public bool Connect(string host = "localhost", int port = 4142)
+        public bool Connect(string host = "localhost", int port = 5000)
         {
             lock (api)
             {
@@ -127,7 +126,8 @@ namespace Experica
                 {
                     try
                     {
-                        send($"set Filename.Path {value}");
+                        send($"set Filename.BaseFilename {Path.GetFileNameWithoutExtension(value)}");
+                        send($"set Filename.Path {Path.GetDirectoryName(value)}");
                     }
                     catch (Exception e) { Debug.LogException(e); }
                 }

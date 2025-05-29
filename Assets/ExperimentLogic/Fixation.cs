@@ -52,6 +52,7 @@ public class Fixation : ExperimentLogic
     }
 
     public InputAction MoveAction;
+    public IEyeTracker EyeTracker;
     public Vector2 FixPosition;
     protected NetworkVariable<Vector3> fixdotposition;
     protected List<ScaleGrid> scalegrid = new();
@@ -62,6 +63,7 @@ public class Fixation : ExperimentLogic
     protected override void Enable()
     {
         MoveAction = InputSystem.actions.FindActionMap("Logic").FindAction("Move");
+        EyeTracker = new PupilLabsCore();
     }
 
     public override void OnSceneReady(List<ulong> clientids)
@@ -138,6 +140,11 @@ public class Fixation : ExperimentLogic
             FixPosition += MoveAction.ReadValue<Vector2>();
             clampPosition(ref FixPosition);
             updatefixtrail = true;
+        }
+
+        if (EyeTracker != null) {
+            FixPosition = EyeTracker.Gaze;
+            updatefixtrail= true;
         }
 
         if (updatefixtrail && fixtrail != null && fixtrail.Visible.Value)

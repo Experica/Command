@@ -37,7 +37,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.434694
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -59,7 +59,7 @@ EnvParam:
   Contrast@Plaid@FixDot/Plaid: 1
   SpatialFreq0@Plaid@FixDot/Plaid: 0.2
   SpatialFreq1@Plaid@FixDot/Plaid: 0.2
-  TemporalFreq0@Plaid@FixDot/Plaid: 1
+  TemporalFreq0@Plaid@FixDot/Plaid: 2
   TemporalFreq1@Plaid@FixDot/Plaid: 0
   ModulateTemporalFreq0@Plaid@FixDot/Plaid: 0.2
   ModulateTemporalFreq1@Plaid@FixDot/Plaid: 0.2
@@ -85,7 +85,7 @@ EnvParam:
   RotPositionOffset@Plaid@FixDot/Plaid: true
   PositionOffset@Plaid@FixDot/Plaid: 0 5 0
   Position@Plaid@FixDot/Plaid: 5 -5 5
-  Visible@Plaid@FixDot/Plaid: false
+  Visible@Plaid@FixDot/Plaid: true
 CondPath: Condition\FixationRFMapping_30Deg5DegStep_Ori[4].yaml
 Cond: 
 LogicPath: FixationCondTest
@@ -104,9 +104,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 401
+PreITI: 381
 TrialDur: 0
-SufITI: 523
+SufITI: 841
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0

@@ -24,7 +24,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.434694
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -44,7 +44,7 @@ EnvParam:
   MaskReverse@Quad@FixDot/Quad: false
   OriPositionOffset@Quad@FixDot/Quad: false
   PositionOffset@Quad@FixDot/Quad: 0 0 0
-  Position@Quad@FixDot/Quad: 0 10 0
+  Position@Quad@FixDot/Quad: 0 -10 0
   Visible@Quad@FixDot/Quad: false
 CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
@@ -64,9 +64,9 @@ BlockFactor: []
 PreICI: 0
 CondDur: 1000
 SufICI: 0
-PreITI: 398
+PreITI: 432
 TrialDur: 0
-SufITI: 857
+SufITI: 559
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0

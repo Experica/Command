@@ -3,8 +3,8 @@ Name: OriSF
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
+Subject_ID: Test
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -17,11 +17,12 @@ EnvParam:
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 270
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 4 4 4
-  Diameter@Grating@Grating: 4
+  Size@Grating@Grating: 70 70 70
+  Diameter@Grating@Grating: 70
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
+  MaskReverse@Grating@Grating: false
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
   SpatialFreq@Grating@Grating: 0.8
@@ -42,16 +43,16 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 2.9437 -2.1461 0
+  Position@Grating@Grating: -1.1786 -1.2874 0
   Visible@Grating@Grating: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.650131
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.657512
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
@@ -60,7 +61,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

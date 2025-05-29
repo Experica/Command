@@ -19,46 +19,42 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
-using System.Collections;
 using System;
-using System.Threading;
+using System.Collections;
 using System.Linq;
+using System.Threading;
+using UnityEngine;
+using MessagePack;
+using NetMQ.Sockets;
+using System.Collections.Generic;
+using NetMQ;
+using System.Text;
+
 
 namespace Experica
 {
     public enum EyeTracker
     {
         EyeLink,
-        Tobii
+        Tobii,
+        PupilLabs_Core
     }
 
-    public interface IEyeTracker : IDisposable
+    public interface IEyeTracker : IRecorder
     {
         EyeTracker Type { get; }
-        void PowerOn();
-        void PowerOff();
         float PupilSize { get; }
         Vector2 Gaze { get; }
     }
 
-    public class EyeLink : IEyeTracker
+    public class PupilLabsCore : IEyeTracker
     {
-        bool disposed = false;
-        oldSerialPort sp;
-        Timer timer = new Timer();
-        double timeout;
-
-        public EyeLink(string portname, int baudrate = 115200, double timeout_ms = 1.0)
-        {
-            sp = new oldSerialPort(portname: portname, baudrate: baudrate, newline: "\r");
-            timeout = timeout_ms;
-        }
-
-        ~EyeLink()
-        {
-            Dispose(false);
-        }
+        int disposecount = 0;
+        readonly object api = new();
+        RequestSocket pupil_remote;
+        string sub_port;
+        SubscriberSocket subscriber;
+        List<Vector2> gazes = new();
 
         public void Dispose()
         {
@@ -68,107 +64,81 @@ namespace Experica
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (1 == Interlocked.Exchange(ref disposecount, 1))
             {
-                if (disposing)
-                {
-                }
-                sp.Dispose();
-                disposed = true;
+                return;
             }
+            
         }
 
-        string cmdresp(string cmd, double timeout, bool isecho = true)
+        public PupilLabsCore(string host="localhost",int port=50020)
         {
-            sp.DiscardInBuffer();
-            sp.receiveddata = "";
-            sp.WriteLine(cmd);
-            var hr = timer.TimeoutMillisecond(x =>
-            {
-                var r = x.Read();
-                var i = r.IndexOf('\r');
-                if (i > -1)
-                {
-                    if (isecho)
-                    {
-                        var ii = r.LastIndexOf("\r");
-                        if (ii > i)
-                        {
-                            return r.Substring(i + 2, ii - (i + 2));
-                        }
-                    }
-                    else
-                    {
-                        return r.Substring(0, i);
-                    }
-                }
-                return null;
-            }, sp, timeout);
+             pupil_remote = new RequestSocket($"tcp://{host}:{port}");
+            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("SUB_PORT"));
+            sub_port = pupil_remote.ReceiveFrameString();
+            subscriber = new SubscriberSocket($"tcp://{host}:{sub_port}");
 
-            if (hr.Result != null)
-            {
-                return (string)hr.Result;
-            }
-            else
-            {
-                Debug.Log("\"" + cmd + "\"" + " timeout: " + hr.ElapsedMillisecond + " ms");
-                return null;
-            }
+            subscriber.Subscribe("gaze.");
         }
 
-        public float Power
+        ~PupilLabsCore()
         {
-            set
-            {
-                sp.WriteLine("p " + value.ToString());
-            }
+            Dispose(false);
         }
 
-        public void ClearFault()
+        public bool StartRecordAndAcquisite()
         {
-            sp.WriteLine("cf");
+            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("R"));
+            pupil_remote.ReceiveFrameString();
+            return true;
         }
 
-        public bool? AutoStart
+        public bool StopAcquisiteAndRecord()
         {
-            get
-            {
-                var r = cmdresp("@cobas?", timeout, false);
-                return r == null ? new bool?() : Convert.ToBoolean(int.Parse(r));
-            }
-            set
-            {
-                if (value.HasValue)
-                {
-                    sp.WriteLine("@cobas " + Convert.ToInt32(value.Value));
-                }
-            }
+            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("r"));
+            pupil_remote.ReceiveFrameString();
+            return true;
         }
 
-        public void LaserOn()
+        public bool Connect(string host, int port)
         {
-            sp.WriteLine("l1");
-            //var r = cmdresp("l1", timeout, false);
+            throw new NotImplementedException();
         }
 
-        public void LaserOff()
+        public void Disconnect()
         {
-            sp.WriteLine("l0");
-            //var r = cmdresp("l0", timeout, false);
+            throw new NotImplementedException();
         }
 
-        public void PowerOn()
+        public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)
         {
+            throw new NotImplementedException();
         }
 
-        public void PowerOff()
-        {
-        }
-
-        public EyeTracker Type => EyeTracker.EyeLink;
+        public EyeTracker Type => EyeTracker.PupilLabs_Core;
 
         public float PupilSize => throw new NotImplementedException();
 
-        public Vector2 Gaze => throw new NotImplementedException();
+        public Vector2 Gaze
+        {
+            get
+            {
+                var t = subscriber.ReceiveMultipartBytes(2);
+                var m = MsgPack.DeserializeMsgPack<Dictionary<string,object>>(t[1]);
+                return m["norm_pos"].Convert<Vector2>();
+            }
+        }
+
+        void receivegaze()
+        {
+            var t = subscriber.ReceiveMultipartBytes(2);
+            var m = MsgPack.DeserializeMsgPack<Dictionary<string, object>>(t[1]);
+            gazes.Add( m["norm_pos"].Convert<Vector2>());
+        }
+
+        public string DataFormat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string RecordPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public RecordStatus RecordStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public AcquisitionStatus AcquisitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

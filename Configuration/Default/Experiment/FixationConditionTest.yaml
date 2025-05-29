@@ -24,7 +24,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.434694
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
   MarkerSize@Marker@OrthoCamera/Marker: 4
@@ -32,7 +32,7 @@ EnvParam:
   Mark@Marker@OrthoCamera/Marker: false
   Rotation@Grating@FixDot/Grating: 0 0 0
   RotationOffset@Grating@FixDot/Grating: 0 0 0
-  Ori@Grating@FixDot/Grating: 300
+  Ori@Grating@FixDot/Grating: 30
   OriOffset@Grating@FixDot/Grating: 0
   Size@Grating@FixDot/Grating: 4 4 4
   Diameter@Grating@FixDot/Grating: 4
@@ -42,7 +42,7 @@ EnvParam:
   MaskReverse@Grating@FixDot/Grating: false
   Luminance@Grating@FixDot/Grating: 0.5
   Contrast@Grating@FixDot/Grating: 1
-  SpatialFreq@Grating@FixDot/Grating: 0.4
+  SpatialFreq@Grating@FixDot/Grating: 3.2
   TemporalFreq@Grating@FixDot/Grating: 1
   ModulateTemporalFreq@Grating@FixDot/Grating: 0.2
   ModulateTemporalPhase@Grating@FixDot/Grating: 0
@@ -80,9 +80,9 @@ BlockFactor: []
 PreICI: 250
 CondDur: 250
 SufICI: 0
-PreITI: 434
+PreITI: 410
 TrialDur: 0
-SufITI: 667
+SufITI: 682
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
