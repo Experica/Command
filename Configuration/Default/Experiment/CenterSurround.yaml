@@ -1,15 +1,15 @@
 ID: CenterSurround
 Name: CenterSurround
 Designer: Alex
-Experimenter: KS
+Experimenter: Alex
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
-Subject_Species: Macaque
-Subject_Gender: Male
+Subject_ID: Test
+Subject_Name: Test
+Subject_Species: ''
+Subject_Gender: None
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 27
+Subject_Weight: 0
 Subject_Log: 
 EnvPath: TwoGrating
 EnvParam:
@@ -87,11 +87,11 @@ EnvParam:
 CondPath: Condition\CS_8SColor.yaml
 Cond: 
 LogicPath: SpikeGLXColorCondTest
-Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: I:\
+Hemisphere: None
+Eye: None
+RecordSession: Display
+RecordSite: Calibration
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

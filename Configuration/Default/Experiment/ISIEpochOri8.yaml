@@ -3,7 +3,7 @@ Name: ISIEpochOri8
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG8
+Subject_ID: Test
 Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
@@ -60,7 +60,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

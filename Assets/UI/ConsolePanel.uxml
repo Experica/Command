@@ -1,8 +1,25 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/UI.uss?fileID=7433441132597879392&amp;guid=cb14c02e72197c24c8c495b1dbfa58c6&amp;type=3#UI" />
-    <ui:VisualElement name="Root" class="Panel">
-        <ui:Label text="Console" name="Title" />
-        <ui:VisualElement name="Content" style="flex-grow: 1;" />
-        <ui:VisualElement name="Status" />
-    </ui:VisualElement>
-</ui:UXML>
+<?xml version="1.0" encoding="utf-8"?>
+<UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns="UnityEngine.UIElements" 
+      xmlns:ui="UnityEditor.UIElements"
+      xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" 
+      xsi:schemaLocation="UnityEngine.UIElements ../../../UIElementsSchema/UnityEngine.UIElements.xsd">
+    <Style src="UI.uss" />
+    <VisualElement name="ConsolePanel" class="console-panel">
+        <VisualElement name="Header" class="console-header">
+            <Label name="Title" text="Console" class="title" />
+            <VisualElement class="tab-buttons-container">
+                <Button name="NormalTab" text="Normal" class="tab-button" />
+                <Button name="WarningTab" text="Warning" class="tab-button" />
+                <Button name="ErrorTab" text="Error" class="tab-button" />
+            </VisualElement>
+        </VisualElement>
+        <ScrollView name="LogContent" class="log-content" mode="Vertical">
+            <!-- 所有日志将显示在这里 -->
+        </ScrollView>
+        <VisualElement name="Status" class="status-bar">
+            <Label text="Ready" class="status-text" />
+            <Button name="ClearButton" text="Clear" class="tab-button clear-button" />
+        </VisualElement>
+    </VisualElement>
+</UXML> 

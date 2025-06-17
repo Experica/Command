@@ -27,6 +27,7 @@ using System.Linq;
 using System;
 using MessagePack;
 using System.Runtime.CompilerServices;
+//using System.Threading.Tasks;
 
 namespace Experica.Command
 {
@@ -155,6 +156,21 @@ namespace Experica.Command
         /// <param name="filepath"></param>
         public void SaveDefinition(string filepath)
         {
+            //todo 优化建议，路径合法性验证
+            //if (string.IsNullOrWhiteSpace(filepath) ||
+            //   Path.GetInvalidPathChars().Any(filepath.Contains))
+            //{
+            //    Debug.LogError("无效文件路径");
+            //    return;
+            //}
+
+            //todo 优化建议，文件存在检查
+            //if (File.Exists(filepath))
+            //{
+            //    Debug.LogWarning($"文件已存在: {filepath}");
+            //    return;
+            //}
+
             Version = Base.ExperimentVersion;
             var config = Config;
             var cond = Cond;
@@ -164,7 +180,14 @@ namespace Experica.Command
             Cond = null;
             CondTest = null;
             DataPath = null;
-            try { filepath.WriteYamlFile(this); }
+            try {
+                //todo 优化建议，异步序列化
+                //await Task.Run(() =>
+                //{
+                //    filepath.WriteYamlFile(this);
+                //});
+                filepath.WriteYamlFile(this); 
+            }
             catch (Exception ex) { Debug.LogException(ex); }
             finally
             {
@@ -205,6 +228,7 @@ namespace Experica.Command
                         Debug.Log($"Create Data Directory \"{DataDir}\".");
                     }
                 }
+                //todo 由于实验配置文件的NotifyParams参数和NotifyParam变量的字段存在差集，所以此处有大概率会报异常
                 NotifyParam ??= Config.NotifyParams;
             }
 

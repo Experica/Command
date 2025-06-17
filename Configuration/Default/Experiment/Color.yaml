@@ -3,8 +3,8 @@ Name: Color
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
+Subject_ID: Test
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -36,12 +36,12 @@ EnvParam:
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: ''
 Cond: 
-LogicPath: SpikeGLXCTColor
+LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

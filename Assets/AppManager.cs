@@ -40,6 +40,7 @@ using UnityEngine.SceneManagement;
 using Experica.NetEnv;
 using System.Threading.Tasks;
 
+
 namespace Experica.Command
 {
     public class AppManager : MonoBehaviour
@@ -63,7 +64,7 @@ namespace Experica.Command
         public ViewPanel viewpanel;
         public ConsolePanel consolepanel;
         public ConditionPanel condpanel;
-        public ConditionTestPanel ctpanel;
+        public ConditionTestPanel conditionTestPanel;
 
         public AgentStub agentstub;
         public TaskScheduler unitymainthreadscheduler;
@@ -79,10 +80,75 @@ namespace Experica.Command
 
         void Start()
         {
-            exmgr.CollectDefination(cfgmgr.config.ExDir);
-            exsmgr.CollectDefination(cfgmgr.config.ExSessionDir);
+             if (ui == null)
+            {
+                UnityEngine.Debug.LogError("找不到 UI 组件！");
+                return;
+            }
+
+            if (exmgr == null)
+            {
+                UnityEngine.Debug.LogError("找不到 ExperimentManager 组件！");
+                return;
+            }
+
+            if (cfgmgr == null)
+            {
+                UnityEngine.Debug.LogError("找不到 ConfigManager 组件！");
+                return;
+            }
+
+            if (consolepanel == null)
+            {
+                var consolePanelElement = ui.consolepanel;
+                if (consolePanelElement != null)
+                {
+                    var consolePanelObj = new GameObject("ConsolePanel");
+                    consolepanel = consolePanelObj.AddComponent<ConsolePanel>();
+                    consolepanel.Initialize(consolePanelElement);
+                    UnityEngine.Debug.Log("已创建并初始化 ConsolePanel");
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("在 UI 中找不到 ConsolePanel 元素！");
+                }
+            }
+
+            if (conditionTestPanel == null)
+            {
+                var conditionTestPanelElement = ui.conditiontestpanel;
+                if (conditionTestPanelElement != null)
+                {
+                    var conditionTestPanelObj = new GameObject("ConditionTestPanel");
+                    conditionTestPanel = conditionTestPanelObj.AddComponent<ConditionTestPanel>();
+                    conditionTestPanel.Initialize(conditionTestPanelElement);
+                    UnityEngine.Debug.Log("已创建并初始化 ConditionTestPanel");
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("在 UI 中找不到 ConditionTestPanel 元素！");
+                }
+            }
+            
+            //todo 文件读取可能出现IO异常，我们需要捕获异常，catch中应该重新加载有效实验路径，后续处理需跟张博沟通
+            try
+            {
+                exmgr.CollectDefination(cfgmgr.config.ExDir);
+                exsmgr.CollectDefination(cfgmgr.config.ExSessionDir);
+            }
+            catch (IOException e)
+            {
+                UnityEngine.Debug.LogWarning($"文件读取异常:{e.Message}");
+            }
+           
             ui.UpdateExperimentList(exmgr.deffile.Keys.ToList(), cfgmgr.config.FirstTestID);
             ui.UpdateExperimentSessionList(exsmgr.deffile.Keys.ToList());
+
+           
+
+            // 初始化 UI
+            ui.UpdateEnv();
+            ui.UpdateView();
         }
 
         bool Application_wantsToQuit()
@@ -187,7 +253,7 @@ namespace Experica.Command
 
         public void OnToggleCursorAction(InputAction.CallbackContext context)
         {
-            if (context.performed) { Cursor.visible = !Cursor.visible; }
+            if (context.performed) { UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible; }
         }
 
         public void OnQuitAction(InputAction.CallbackContext context)
@@ -201,6 +267,10 @@ namespace Experica.Command
             if (exmgr.el.envmgr.MainCamera.Count == 0) { return; }
             var lmc = exmgr.el.envmgr.MainCamera.Where(i => i.ClientID == NetworkManager.ServerClientId).First();
             lmc?.ReportRpc("ScreenAspect", Base.ScreenAspect);
+            if (ui != null)
+            {
+                ui.UpdateView();
+            }
         }
 
         public void OnExSessionChoiceChanged(string newValue)
@@ -263,6 +333,7 @@ namespace Experica.Command
                 var cd = exmgr.el.ex.Display_ID.GetDisplay(cfgmgr.config.Display);
                 if (cd != null)
                 {
+                    //todo 目前没有此方法的引用，但是可以未雨绸缪，优化建议：考虑缓存CLUT，当已经存在cd.CLUT时候，不用重复执行PrepareCLUT()，可以提高性能。
                     if (cd.PrepareCLUT())
                     {
                         tex = cd.CLUT;
@@ -550,6 +621,12 @@ namespace Experica.Command
                 var so = exmgr.el.GetEnvActiveParam("Size");
                 if (so != null)
                 {
+                    //todo 优化建议,空条件检查，添加默认值，并对Convert进行try-catch异常捕获。
+                    //var cameras = exmgr.el?.envmgr?.MainCamera;
+                    //if (cameras == null || !cameras.Any())
+                    //{
+                    //    var s = Vector3.zero; // 或其它默认值
+                    //}
                     var s = so.Convert<Vector3>();
                     s.x = exmgr.el.envmgr.MainCamera.First().Width;
                     //if (w.HasValue) { s.x = w.Value; }
@@ -675,5 +752,12 @@ namespace Experica.Command
 
         }
 
+        //todo 既然在Awake声明周期张注册了退出处理逻辑，那么Destroy声明周期就需要移除退出事件监听
+        void OnDestroy()
+        {
+            Application.wantsToQuit -= Application_wantsToQuit;
+        }
+
     }
+
 }

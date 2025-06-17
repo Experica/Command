@@ -61,7 +61,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

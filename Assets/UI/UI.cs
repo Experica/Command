@@ -41,13 +41,16 @@ namespace Experica.Command
             ParamString, ParamEnum, ParamBool, ParamInteger, ParamUInteger, ParamFloat, ParamDouble, ParamVector2, ParamVector3, ParamVector4,
             ExtendButton, viewport, ParamsFoldout, AboutWindow, ConfigWindow, AddExParamWindow, NewExWindow;
 
-        VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel, consolepanel, condpanel, condtestpanel, viewcontent;
+        VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel;
+        public VisualElement consolepanel;
+        VisualElement condpanel;
+        public VisualElement conditiontestpanel;
+        VisualElement viewcontent;
         public Toggle server, host, start, pause, startsession, fps;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
         ScrollView excontent, envcontent;
         MultiColumnListView condtestcontent;
-
 
         void OnEnable()
         {
@@ -96,17 +99,24 @@ namespace Experica.Command
             environmentpanel = root.Q("EnvironmentPanel");
             envcontent = environmentpanel.Q<ScrollView>("Content");
             environmentpanel.Q<Button>("LoadScene").RegisterCallback<ClickEvent>(e => appmgr.LoadCurrentScene());
-            //environmentpanel.Q<Button>("ParseScene").RegisterCallback<ClickEvent>(e => appmgr.OnEnvLoadCompleted());
             // View Panel
             viewpanel = root.Q("ViewPanel");
             viewcontent = viewpanel.Q("Content");
             // Console Panel
             consolepanel = root.Q("ConsolePanel");
+            if (consolepanel == null)
+            {
+                Debug.LogError("在 UI 中找不到 ConsolePanel 元素！");
+            }
             // Condition Panel
             condpanel = root.Q("ConditionPanel");
             // ConditionTest Panel
-            condtestpanel = root.Q("ConditionTestPanel");
-            condtestcontent = condtestpanel.Q<MultiColumnListView>("Content");
+            conditiontestpanel = root.Q("ConditionTestPanel");
+            if (conditiontestpanel == null)
+            {
+                Debug.LogError("在 UI 中找不到 ConditionTestPanel 元素！");
+            }
+            condtestcontent = conditiontestpanel.Q<MultiColumnListView>("Content");
         }
 
         void OnAboutWindow(VisualElement parent)
@@ -558,6 +568,13 @@ namespace Experica.Command
             {
                 for (var i = nvp - 1; i > nmc - 1; i--)
                 {
+                    //todo 优化建议，移除多余试图时释放关联纹理
+                    //var img = viewcontent[i].Q<Image>("Content");
+                    //if (img.image is RenderTexture oldRT)
+                    //{
+                    //    oldRT.Release();
+                    //    UnityEngine.Object.Destroy(oldRT);
+                    //}
                     viewcontent.RemoveAt(i);
                 }
             }
@@ -577,6 +594,12 @@ namespace Experica.Command
                 ui.Q<Label>("Client").text = ui.name;
                 var img = ui.Q<Image>("Content");
                 var size = new Vector2(0.97f * viewcontent.layout.width / viewcontent.childCount, 0.97f * viewcontent.layout.height);
+                //todo 优化建议，释放旧纹理
+                //if (img.image is RenderTexture existingRT)
+                //{
+                //    existingRT.Release();
+                //    UnityEngine.Object.Destroy(existingRT);
+                //}
                 var rt = GetRenderTexture(size, mc.Aspect, (RenderTexture)img.image);
                 mc.Camera.targetTexture = rt;
                 img.image = rt;
@@ -618,6 +641,12 @@ namespace Experica.Command
             }
             else
             {
+                //todo 优化建议,新增渲染目标解除逻辑
+                //if (rt.IsCreated())
+                //{
+                //    Graphics.SetRenderTarget(null);
+                //    rt.Release();
+                //}
                 rt.Release();
                 rt.width = width;
                 rt.height = height;
