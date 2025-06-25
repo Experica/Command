@@ -5,14 +5,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a22299e7e94eaa13ac17b326e0de8f2d3afa9e46"
+      "hash": "f789083c31250c83082da9b29be0c976152d699b"
     },
     "com.github.messagepack-csharp": {
       "version": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "1bf454c6b6ae1c39df8949ea311eea61aec63506"
+      "hash": "44aa149acce1de32881e007f53fad0f3db7dfdab"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -21,7 +21,7 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "2.5.0",
+      "version": "2.6.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -139,7 +139,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.netcode.gameobjects": {
-      "version": "2.4.0",
+      "version": "2.4.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {

@@ -1,15 +1,15 @@
 ID: Flash2Color
 Name: Flash2Color
 Designer: Alex
-Experimenter: Alex
+Experimenter: KS
 Log: 
 Subject_ID: Test
-Subject_Name: AF6
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 6.75
+Subject_Weight: 27
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
@@ -29,7 +29,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.657512
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -38,11 +38,11 @@ EnvParam:
 CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
-Hemisphere: None
-Eye: None
-RecordSession: HLV1
-RecordSite: ODL9
-DataDir: X:\
+Hemisphere: Left
+Eye: Right
+RecordSession: ''
+RecordSite: Full
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: Ascending
@@ -93,7 +93,7 @@ EnvInheritParam:
   - Position@Quad@Quad
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
-TimerDriftSpeed: 3.02E-05
+TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut

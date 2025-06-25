@@ -3,8 +3,8 @@ Name: HartleySubspace
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: AG7
-Subject_Name: DAQ1
+Subject_ID: Test
+Subject_Name: Dunn
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -17,11 +17,12 @@ EnvParam:
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 144.7824
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 2 2 2
-  Diameter@Grating@Grating: 2
+  Size@Grating@Grating: 20 20 20
+  Diameter@Grating@Grating: 20
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
+  MaskReverse@Grating@Grating: false
   Luminance@Grating@Grating: 0.5
   Contrast@Grating@Grating: 1
   SpatialFreq@Grating@Grating: 4.16173
@@ -42,25 +43,25 @@ EnvParam:
   ModulateTimeSecond@Grating@Grating: 0
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
-  Position@Grating@Grating: 2.9437 -2.1461 0
+  Position@Grating@Grating: 0 0 0
   Visible@Grating@Grating: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.650131
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\Hartley_k[0.2,6.6]_dk[0.2]_nblank[4].yaml
 Cond: 
 LogicPath: SpikeGLXColorCondTest
 Hemisphere: Left
 Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: I:\
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

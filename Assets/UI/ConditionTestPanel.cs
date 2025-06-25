@@ -28,12 +28,18 @@ namespace Experica.Command
 {
     public class ConditionTestPanel : MonoBehaviour
     {
+        public UI ui;
         private VisualElement root;
         private Label titleLabel;
         private MultiColumnListView content;
         private int condtestidx = -1;
         private Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
         private Button clearButton;
+
+        private void Start()
+        {
+            Initialize(ui.conditiontestpanel);
+        }
 
         public void Initialize(VisualElement conditionTestPanelElement)
         {

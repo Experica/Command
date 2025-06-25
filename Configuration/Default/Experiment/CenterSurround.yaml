@@ -4,12 +4,12 @@ Designer: Alex
 Experimenter: Alex
 Log: 
 Subject_ID: Test
-Subject_Name: Test
-Subject_Species: ''
-Subject_Gender: None
+Subject_Name: AF6
+Subject_Species: Macaque
+Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 0
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: TwoGrating
 EnvParam:
@@ -22,6 +22,7 @@ EnvParam:
   MaskType@Grating@Grating0: Disk
   MaskRadius@Grating@Grating0: 1
   MaskSigma@Grating@Grating0: 0.15
+  MaskReverse@Grating@Grating0: false
   Luminance@Grating@Grating0: 0.5
   Contrast@Grating@Grating0: 1
   SpatialFreq@Grating@Grating0: 0
@@ -53,6 +54,7 @@ EnvParam:
   MaskType@Grating@Grating1: Disk
   MaskRadius@Grating@Grating1: 0.5
   MaskSigma@Grating@Grating1: 0.15
+  MaskReverse@Grating@Grating1: false
   Luminance@Grating@Grating1: 0.5
   Contrast@Grating@Grating1: 1
   SpatialFreq@Grating@Grating1: 0
@@ -76,21 +78,21 @@ EnvParam:
   Position@Grating@Grating1: 0 0 1
   Visible@Grating@Grating1: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 2.089474
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: Condition\CS_8SColor.yaml
 Cond: 
 LogicPath: SpikeGLXColorCondTest
 Hemisphere: None
 Eye: None
-RecordSession: Display
-RecordSite: Calibration
+RecordSession: HLV1
+RecordSite: ODL9
 DataDir: X:\
 DataPath: 
 Input: false
@@ -142,7 +144,7 @@ EnvInheritParam:
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
   - Position@Grating@Grating
-TimerDriftSpeed: 6.5E-05
+TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut

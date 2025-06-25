@@ -230,13 +230,7 @@ namespace Experica.Command
 
         public void NewExParamPanel()
         {
-            newexparampanel = Instantiate(newexparampanelprefab);
-            newexparampanel.name = "NewExParamPanel";
-            newexparampanel.transform.SetParent(canvas.transform, false);
-            newexparampanel.GetComponent<NewExParamPanel>().uicontroller = uicontroller;
-
-            panelcontentcanvasgroup.interactable = false;
-            statusbarcanvasgroup.interactable = false;
+            
         }
 
         public void DeleteExParamPanel()

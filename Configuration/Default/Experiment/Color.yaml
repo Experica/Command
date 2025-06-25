@@ -1,47 +1,48 @@
 ID: Color
 Name: Color
 Designer: Alex
-Experimenter: KS
+Experimenter: Alex
 Log: 
 Subject_ID: Test
-Subject_Name: Dunn
+Subject_Name: AF6
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
-Subject_Weight: 27
+Subject_Weight: 6.75
 Subject_Log: 
 EnvPath: Quad
 EnvParam:
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 5 5 5
-  Diameter@Quad@Quad: 5
+  Size@Quad@Quad: 20 20 20
+  Diameter@Quad@Quad: 20
   Color@Quad@Quad: 1 0.3931 0.256 1
   MaskType@Quad@Quad: Disk
   MaskRadius@Quad@Quad: 0.5
   MaskSigma@Quad@Quad: 0.15
+  MaskReverse@Quad@Quad: false
   OriPositionOffset@Quad@Quad: false
   PositionOffset@Quad@Quad: 0 0 0
   Position@Quad@Quad: 0 0 0
   Visible@Quad@Quad: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
+  ScreenToEye@OrthoCamera@OrthoCamera: 40
+  ScreenHeight@OrthoCamera@OrthoCamera: 33.5
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
-Hemisphere: Left
-Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: Data
+Hemisphere: None
+Eye: None
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: X:\
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -93,7 +94,7 @@ EnvInheritParam:
   - MarkerCorner@Marker@Marker~OrthoCamera
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
-TimerDriftSpeed: 6.5E-05
+TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
   Routes:
     - DigitalOut

@@ -71,14 +71,18 @@ namespace Experica
             
         }
 
-        public PupilLabsCore(string host="localhost",int port=50020)
+        public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020)
         {
-             pupil_remote = new RequestSocket($"tcp://{host}:{port}");
-            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("SUB_PORT"));
-            sub_port = pupil_remote.ReceiveFrameString();
-            subscriber = new SubscriberSocket($"tcp://{host}:{sub_port}");
+            var t = new PupilLabsCore();
+            if (t.Connect(host, port)) { return t; } else
+            {
+                Debug.LogWarning("Can't Connect to PupilLabs Core, return Null.");
+                return null; 
+            }
+        }
 
-            subscriber.Subscribe("gaze.");
+        public PupilLabsCore()
+        {
         }
 
         ~PupilLabsCore()
@@ -100,9 +104,20 @@ namespace Experica
             return true;
         }
 
-        public bool Connect(string host, int port)
+        public bool Connect(string host = "localhost", int port = 50020)
         {
-            throw new NotImplementedException();
+            pupil_remote = new RequestSocket($"tcp://{host}:{port}");
+            pupil_remote.SendFrame( Encoding.UTF8.GetBytes("SUB_PORT"));
+            if (pupil_remote.TryReceiveFrameString(out sub_port))
+            {
+                 //pupil_remote.TryReceiveFrameString(out sub_port);
+                subscriber = new SubscriberSocket($"tcp://{host}:{sub_port}");
+
+                subscriber.Subscribe("gaze.");
+                return true;
+            }
+            pupil_remote.Close();
+            return false;
         }
 
         public void Disconnect()

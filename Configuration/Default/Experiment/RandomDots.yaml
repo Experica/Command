@@ -25,13 +25,13 @@ EnvParam:
   DotSize@Dots@Dots: 1 1
   Coherence@Dots@Dots: 0
   Position@Dots@Dots: 0 0 0
-  Visible@Dots@Dots: true
+  Visible@Dots@Dots: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.950969
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
@@ -39,10 +39,10 @@ CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Both
+Eye: Right
 RecordSession: HLV1
 RecordSite: ODL9
-DataDir: X:\
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

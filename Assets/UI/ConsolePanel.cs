@@ -21,7 +21,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace Experica.Command
 {
     public class ConsolePanel : MonoBehaviour
     {
-        private static ConsolePanel instance;
+        public UI ui;
         private VisualElement root;
         private ScrollView logContent;
         private Label titleLabel;
@@ -50,17 +49,12 @@ namespace Experica.Command
 
         private void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-                // 在 Awake 中初始化日志处理器
-                GlobalLogHandler.Initialize(HandleLog);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            GlobalLogHandler.Initialize(HandleLog);
+        }
+
+        private void Start()
+        {
+            Initialize( ui.consolepanel);
         }
 
         private class GlobalLogHandler : ILogHandler
@@ -295,15 +289,6 @@ namespace Experica.Command
         {
             Debug.Log("ConsolePanel OnDisable called");
             GlobalLogHandler.Cleanup();
-        }
-
-        void OnDestroy()
-        {
-            if (instance == this)
-            {
-                instance = null;
-                GlobalLogHandler.Cleanup();
-            }
         }
 
         private void HandleLog(string logString, string stackTrace, LogType type)

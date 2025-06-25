@@ -75,8 +75,7 @@ namespace Experica
         {
             if (!File.Exists(path))
             {
-                UnityEngine.Debug.LogError($"Condition File: {path} Not Found.");
-                UnityEngine.Debug.Log($"Test Condition File: {path} Not Found.");
+                Debug.LogError($"Condition File: {path} Not Found.");
                 return null;
             }
             return path.ReadYamlFile<Dictionary<string, List<object>>>();

@@ -19,16 +19,16 @@ EnvParam:
   FixDotOuterRadius@FixDot@FixDot: 0.5
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
-  FixDotVisible@FixDot@FixDot: false
+  FixDotVisible@FixDot@FixDot: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.672697
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
-  Mark@Marker@OrthoCamera/Marker: false
+  Mark@Marker@OrthoCamera/Marker: true
 CondPath: ''
 Cond: 
 LogicPath: Fixation
@@ -36,7 +36,7 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: Data
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement

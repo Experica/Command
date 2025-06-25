@@ -30,10 +30,10 @@ EnvParam:
   Visible@ImageList@ImageList: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
@@ -41,10 +41,10 @@ CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
 Hemisphere: Left
-Eye: Both
-RecordSession: ''
-RecordSite: Full
-DataDir: X:\
+Eye: Right
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement
@@ -99,7 +99,7 @@ EventSyncProtocol:
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShow: ALL
-NotifyExperimenter: true
+NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 

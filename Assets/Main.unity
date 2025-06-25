@@ -235,12 +235,7 @@ MonoBehaviour:
   networkcontroller: {fileID: 652919586}
   exmgr: {fileID: 195929017}
   exsmgr: {fileID: 1423087642}
-  expanel: {fileID: 0}
-  envpanel: {fileID: 0}
-  viewpanel: {fileID: 0}
-  consolepanel: {fileID: 0}
-  condpanel: {fileID: 0}
-  ctpanel: {fileID: 0}
+  consolepanel: {fileID: 570668884}
 --- !u!114 &355740906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +559,8 @@ GameObject:
   - component: {fileID: 570668882}
   - component: {fileID: 570668881}
   - component: {fileID: 570668883}
+  - component: {fileID: 570668884}
+  - component: {fileID: 570668885}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -678,6 +675,32 @@ MonoBehaviour:
     type: 3}
   NewExWindow: {fileID: 9197481963319205126, guid: 612ed07111b4da245b74f481472fd6ff,
     type: 3}
+--- !u!114 &570668884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570668880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972c4fd6d58f824478b71ab1866faf03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Experica.Command::Experica.Command.ConsolePanel
+  ui: {fileID: 570668883}
+--- !u!114 &570668885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570668880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584da06a78b045a429f43d5e1627f36a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Experica.Command::Experica.Command.ConditionTestPanel
+  ui: {fileID: 570668883}
 --- !u!1 &631312289
 GameObject:
   m_ObjectHideFlags: 1

@@ -17,8 +17,8 @@ EnvParam:
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 270
   OriOffset@Grating@Grating: 0
-  Size@Grating@Grating: 70 70 70
-  Diameter@Grating@Grating: 70
+  Size@Grating@Grating: 0.5 0.5 0.5
+  Diameter@Grating@Grating: 0.5
   MaskType@Grating@Grating: Disk
   MaskRadius@Grating@Grating: 0.5
   MaskSigma@Grating@Grating: 0.15
@@ -48,7 +48,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.657512
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -59,9 +59,9 @@ Cond:
 LogicPath: SpikeGLXColorCondTest
 Hemisphere: Left
 Eye: Right
-RecordSession: ''
-RecordSite: Full
-DataDir: X:\
+RecordSession: HLV1
+RecordSite: ODL9
+DataDir: Data
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

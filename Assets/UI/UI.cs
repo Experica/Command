@@ -41,11 +41,9 @@ namespace Experica.Command
             ParamString, ParamEnum, ParamBool, ParamInteger, ParamUInteger, ParamFloat, ParamDouble, ParamVector2, ParamVector3, ParamVector4,
             ExtendButton, viewport, ParamsFoldout, AboutWindow, ConfigWindow, AddExParamWindow, NewExWindow;
 
-        VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel;
+        VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel,viewcontent,condpanel;
         public VisualElement consolepanel;
-        VisualElement condpanel;
         public VisualElement conditiontestpanel;
-        VisualElement viewcontent;
         public Toggle server, host, start, pause, startsession, fps;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
@@ -99,23 +97,16 @@ namespace Experica.Command
             environmentpanel = root.Q("EnvironmentPanel");
             envcontent = environmentpanel.Q<ScrollView>("Content");
             environmentpanel.Q<Button>("LoadScene").RegisterCallback<ClickEvent>(e => appmgr.LoadCurrentScene());
+
             // View Panel
             viewpanel = root.Q("ViewPanel");
             viewcontent = viewpanel.Q("Content");
             // Console Panel
             consolepanel = root.Q("ConsolePanel");
-            if (consolepanel == null)
-            {
-                Debug.LogError("在 UI 中找不到 ConsolePanel 元素！");
-            }
             // Condition Panel
             condpanel = root.Q("ConditionPanel");
             // ConditionTest Panel
             conditiontestpanel = root.Q("ConditionTestPanel");
-            if (conditiontestpanel == null)
-            {
-                Debug.LogError("在 UI 中找不到 ConditionTestPanel 元素！");
-            }
             condtestcontent = conditiontestpanel.Q<MultiColumnListView>("Content");
         }
 

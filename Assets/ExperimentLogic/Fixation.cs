@@ -63,7 +63,8 @@ public class Fixation : ExperimentLogic
     protected override void Enable()
     {
         MoveAction = InputSystem.actions.FindActionMap("Logic").FindAction("Move");
-        EyeTracker = new PupilLabsCore();
+        
+        EyeTracker = PupilLabsCore.TryGetPupilLabsCore();
     }
 
     public override void OnSceneReady(List<ulong> clientids)
