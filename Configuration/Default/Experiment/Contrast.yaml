@@ -66,7 +66,7 @@ CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
 CondRepeat: 8
 BlockRepeat: 1
-BlockParam: []
+BlockFactor: []
 PreICI: 250
 CondDur: 500
 SufICI: 250
@@ -80,31 +80,31 @@ PushCondAtState: COND
 CondTestAtState: PREICI
 NotifyPerCondTest: 0
 NotifyParam:
-- CondIndex
-- Event
-- SyncEvent
+  - CondIndex
+  - Event
+  - SyncEvent
 InheritParam: []
 EnvInheritParam:
-- SpatialFreq@GratingQuad@GratingQuad
-- TemporalFreq@GratingQuad@GratingQuad
-- Ori@GratingQuad@GratingQuad
-- Diameter@GratingQuad@GratingQuad
-- Position@GratingQuad@GratingQuad
-- ScreenToEye@OrthoCamera@OrthoCamera
-- ScreenHeight@OrthoCamera@OrthoCamera
-- ScreenAspect@OrthoCamera@OrthoCamera
-- CLUT@OrthoCamera@OrthoCamera
-ExtendParam: {}
+  - SpatialFreq@GratingQuad@GratingQuad
+  - TemporalFreq@GratingQuad@GratingQuad
+  - Ori@GratingQuad@GratingQuad
+  - Diameter@GratingQuad@GratingQuad
+  - Position@GratingQuad@GratingQuad
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 3.02E-05
 EventSyncProtocol:
-  SyncMethods:
-  - GPIO
-  - Display
-  nSyncChannel: 1
-  nSyncpEvent: 1
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
 Display_ID: ROGPG279Q
-CondTestShowLevel: FULL
+CondTestShow: ALL
 NotifyExperimenter: false
-Version: 2
+Version: 3
 Config: 
 CondTest: 
+ExtendParam: {}

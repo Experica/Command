@@ -277,6 +277,7 @@ namespace Experica.Command
         /// </summary>
         protected virtual void PrepareCondition()
         {
+            //todo 优化建议，在Command/Configuration/Default/中的yaml文件中CondPath为空的情况下应该做异常处理
             condmgr.PrepareCondition(ex.CondPath);
         }
 
