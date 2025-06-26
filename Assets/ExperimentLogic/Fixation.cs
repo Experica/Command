@@ -67,6 +67,11 @@ public class Fixation : ExperimentLogic
         EyeTracker = PupilLabsCore.TryGetPupilLabsCore();
     }
 
+    protected override void Disable()
+    {
+        EyeTracker?.Dispose();
+    }
+
     public override void OnSceneReady(List<ulong> clientids)
     {
         fixdotposition = envmgr.GetNetworkVariable<Vector3>("FixDotPosition");
@@ -75,7 +80,7 @@ public class Fixation : ExperimentLogic
         for (var i = 0; i < clientids.Count; i++)
         {
             var cname = $"OrthoCamera{(i == 0 ? "" : i)}";
-            var oc = envmgr.SpawnMarkerOrthoCamera(cname, clientid: clientids[i]);
+            var oc = envmgr.SpawnTagMarkerOrthoCamera(cname, clientid: clientids[i]);
             oc.OnCameraChange += _ => appmgr.ui.UpdateView();
             // we want scalegrid to center on FixDot, so here spawn as a child of FixDot
             var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false, parent: fixdotposition.GetBehaviour().transform);

@@ -14,7 +14,7 @@ Subject_Log:
 EnvPath: Fixation
 EnvParam:
   FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 2
+  FixDotDiameter@FixDot@FixDot: 1
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
@@ -28,7 +28,23 @@ EnvParam:
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
-  Mark@Marker@OrthoCamera/Marker: true
+  Mark@Marker@OrthoCamera/Marker: false
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 2
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 2
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 2
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 2
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
 CondPath: ''
 Cond: 
 LogicPath: Fixation

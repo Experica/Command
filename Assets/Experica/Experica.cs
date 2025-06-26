@@ -793,6 +793,7 @@ namespace Experica
 
         #region Addressable Assets
         public static Dictionary<string, AsyncOperationHandle<GameObject>> addressprefab = new();
+        public static Dictionary<string, AsyncOperationHandle<Texture>> addresstexture = new();
 
         public static bool QueryPrefab(this string address, out GameObject go)
         {
@@ -823,6 +824,39 @@ namespace Experica
                 {
                     Addressables.Release(handle); Debug.LogError($"Failed to Load Prefab: {address}.");
                     go = null; return false;
+                }
+            }
+        }
+
+        public static bool QueryTexture(this string address, out Texture tex)
+        {
+            if (addresstexture.ContainsKey(address))
+            {
+                var handle = addresstexture[address];
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    tex = handle.Result; return true;
+                }
+                else
+                {
+                    addresstexture.Remove(address); Addressables.Release(handle);
+                    Debug.LogError($"Failed to Load Texture: {address}.");
+                    tex = null; return false;
+                }
+            }
+            else
+            {
+                var handle = Addressables.LoadAssetAsync<Texture>(address);
+                handle.WaitForCompletion();
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    addresstexture[address] = handle;
+                    tex = handle.Result; return true;
+                }
+                else
+                {
+                    Addressables.Release(handle); Debug.LogError($"Failed to Load Texture: {address}.");
+                    tex = null; return false;
                 }
             }
         }

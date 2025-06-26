@@ -68,7 +68,7 @@ namespace Experica
             {
                 return;
             }
-            
+            Disconnect();
         }
 
         public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020)
@@ -122,7 +122,8 @@ namespace Experica
 
         public void Disconnect()
         {
-            throw new NotImplementedException();
+            subscriber?.Close();
+            pupil_remote?.Close();
         }
 
         public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)

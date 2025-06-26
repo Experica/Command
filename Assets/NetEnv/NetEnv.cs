@@ -85,6 +85,30 @@ namespace Experica.NetEnv
         Each
     }
 
+    public enum AprilTag
+    {
+        tag25_09_00000,
+        tag25_09_00001,
+        tag25_09_00002,
+        tag25_09_00003,
+        tag25_09_00004,
+        tag25_09_00005,
+        tag25_09_00006,
+        tag25_09_00007,
+        tag25_09_00008,
+        tag25_09_00009,
+        tag25_09_00010,
+        tag25_09_00011,
+        tag36_11_00000,
+        tag36_11_00001,
+        tag36_11_00002,
+        tag36_11_00003,
+        tag36_11_00004,
+        tag36_11_00005,
+        tag36_11_00006,
+        tag36_11_00007,
+    }
+
     public enum DisplayType
     {
         CRT,

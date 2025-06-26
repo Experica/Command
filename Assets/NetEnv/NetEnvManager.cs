@@ -807,6 +807,15 @@ namespace Experica.NetEnv
             return nb;
         }
 
+        public OrthoCamera SpawnTagMarkerOrthoCamera(string name = "OrthoCamera", Transform parent = null, NetVisibility netvis = NetVisibility.Single, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
+        {
+            var nb = Spawn<OrthoCamera>("Assets/NetEnv/Object/TagMarkerOrthoCamera.prefab", name, parent, netvis, clientid, destroyWithScene, parse);
+            if (nb == null) { return null; }
+            nb.ClientID = clientid;
+            nb.OnReport = (string name, object value) => SetParamByGameObject(name, GetGameObjectFullName(nb.gameObject), value);
+            return nb;
+        }
+
         public T Spawn<T>(string addressprefab, string name = null, Transform parent = null, NetVisibility netvis = NetVisibility.All, ulong clientid = 0, bool destroyWithScene = true, bool parse = true)
         {
             if (!addressprefab.QueryPrefab(out GameObject prefab)) { Debug.LogError($"Can not find Prefab at address: {addressprefab}."); return default; }
