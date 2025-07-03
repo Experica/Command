@@ -13,35 +13,35 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 1
+  FixDotPosition@FixDot@FixDot: 10 0 0
+  FixDotDiameter@FixDot@FixDot: 2
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenToEye@OrthoCamera@OrthoCamera: 45
+  ScreenHeight@OrthoCamera@OrthoCamera: 32
   ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagSize@Tag@OrthoCamera/Tag0: 3
   TagMargin@Tag@OrthoCamera/Tag0: 2
   TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
   TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
-  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagSize@Tag@OrthoCamera/Tag1: 3
   TagMargin@Tag@OrthoCamera/Tag1: 2
   TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
   TagCorner@Tag@OrthoCamera/Tag1: BottomRight
-  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagSize@Tag@OrthoCamera/Tag2: 3
   TagMargin@Tag@OrthoCamera/Tag2: 2
   TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
   TagCorner@Tag@OrthoCamera/Tag2: TopRight
-  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagSize@Tag@OrthoCamera/Tag3: 3
   TagMargin@Tag@OrthoCamera/Tag3: 2
   TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
   TagCorner@Tag@OrthoCamera/Tag3: TopLeft
@@ -52,24 +52,24 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: Data
+DataDir: X:/
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 20
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
-CondDur: 250
+CondDur: 300
 SufICI: 0
-PreITI: 390
+PreITI: 332
 TrialDur: 0
-SufITI: 1588
+SufITI: 1414
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: NONE
+PushCondAtState: TRIAL
 CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -114,7 +114,7 @@ CondTest:
 ExtendParam:
   MinPreITIDur: 300
   MaxPreITIDur: 500
-  MinSufITIDur: 500
+  MinSufITIDur: 1000
   MaxSufITIDur: 2000
   MinFixDur: 1000
   MaxFixDur: 2000
@@ -122,9 +122,9 @@ ExtendParam:
   FixRadius: 5
   FixDotPosition:
     - 0 0 0
-    - 15 0 0
-    - -15 0 0
-    - 0 15 0
-    - 0 -15 0
-  EyeMoveRadius: 30
+    - 10 0 0
+    - -10 0 0
+    - 0 10 0
+    - 0 -10 0
+  MoveRadius: 30
   FixPreDur: 300

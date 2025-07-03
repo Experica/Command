@@ -42,8 +42,8 @@ Cond:
 LogicPath: ConditionTestLogic
 Hemisphere: Left
 Eye: Right
-RecordSession: HLV1
-RecordSite: ODL9
+RecordSession: ''
+RecordSite: Full
 DataDir: Data
 DataPath: 
 Input: false

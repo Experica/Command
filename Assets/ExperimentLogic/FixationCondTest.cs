@@ -32,9 +32,7 @@ using Experica.NetEnv;
 /// </summary>
 public class FixationCondTest : Fixation
 {
-    uint CondPerFix;
-
-    protected virtual void TurnOnTarget()
+    protected override void TurnOnTarget()
     {
         if (ex.ID == "FixationRFMapping")
         {
@@ -44,9 +42,10 @@ public class FixationCondTest : Fixation
         {
             SetEnvActiveParam("Visible", true);
         }
+        base.TurnOnTarget();
     }
 
-    protected virtual void TurnOffTarget()
+    protected override void TurnOffTarget()
     {
         if (ex.ID == "FixationRFMapping")
         {
@@ -56,6 +55,12 @@ public class FixationCondTest : Fixation
         {
             SetEnvActiveParam("Visible", false);
         }
+        base.TurnOffTarget();
+    }
+
+    protected override void PrepareCondition()
+    {
+        condmgr.PrepareCondition(ex.CondPath);
     }
 
     protected override void Logic()
@@ -97,7 +102,11 @@ public class FixationCondTest : Fixation
                             // Fixation breaks in required period
                             OnEarly();
                             SetEnvActiveParam("FixDotVisible", false);
-                            TurnOffTarget();
+                            if (IsTargetOn)
+                            {
+                                TurnOffTarget();
+                                EnterCondState(CONDSTATE.NONE, true);
+                            }
                             EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.SUFITI); // long SUFITI as punishment
                         }
@@ -117,7 +126,6 @@ public class FixationCondTest : Fixation
                                         // Successfully hold fixation in required period
                                         OnHit();
                                         SetEnvActiveParam("FixDotVisible", false);
-                                        TurnOffTarget();
                                         EnterTaskState(TASKSTATE.NONE);
                                         EnterTrialState(TRIALSTATE.NONE);
                                     }

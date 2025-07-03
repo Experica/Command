@@ -20,48 +20,75 @@ EnvParam:
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: false
-  Show@Showroom@FixDot/Showroom: Grating
+  Show@Showroom@FixDot/Showroom: Plaid
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.434694
+  ScreenToEye@OrthoCamera@OrthoCamera: 45
+  ScreenHeight@OrthoCamera@OrthoCamera: 32
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  Rotation@Grating@FixDot/Grating: 0 0 0
-  RotationOffset@Grating@FixDot/Grating: 0 0 0
-  Ori@Grating@FixDot/Grating: 30
-  OriOffset@Grating@FixDot/Grating: 0
-  Size@Grating@FixDot/Grating: 4 4 4
-  Diameter@Grating@FixDot/Grating: 4
-  MaskType@Grating@FixDot/Grating: Disk
-  MaskRadius@Grating@FixDot/Grating: 0.5
-  MaskSigma@Grating@FixDot/Grating: 0.15
-  MaskReverse@Grating@FixDot/Grating: false
-  Luminance@Grating@FixDot/Grating: 0.5
-  Contrast@Grating@FixDot/Grating: 1
-  SpatialFreq@Grating@FixDot/Grating: 3.2
-  TemporalFreq@Grating@FixDot/Grating: 1
-  ModulateTemporalFreq@Grating@FixDot/Grating: 0.2
-  ModulateTemporalPhase@Grating@FixDot/Grating: 0
-  SpatialPhase@Grating@FixDot/Grating: 0
-  MinColor@Grating@FixDot/Grating: 0 0 0 1
-  MaxColor@Grating@FixDot/Grating: 1 1 1 1
-  PauseTime@Grating@FixDot/Grating: false
-  PauseModulateTime@Grating@FixDot/Grating: true
-  GratingType@Grating@FixDot/Grating: Square
-  ModulateType@Grating@FixDot/Grating: Square
-  ReverseTime@Grating@FixDot/Grating: false
-  Duty@Grating@FixDot/Grating: 0.5
-  ModulateDuty@Grating@FixDot/Grating: 0.5
-  TimeSecond@Grating@FixDot/Grating: 0
-  ModulateTimeSecond@Grating@FixDot/Grating: 0
-  OriPositionOffset@Grating@FixDot/Grating: false
-  PositionOffset@Grating@FixDot/Grating: 0 0 0
-  Position@Grating@FixDot/Grating: 5 -5 0
-  Visible@Grating@FixDot/Grating: false
+  TagSize@Tag@OrthoCamera/Tag0: 2
+  TagMargin@Tag@OrthoCamera/Tag0: 2
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 2
+  TagMargin@Tag@OrthoCamera/Tag1: 2
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag1: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag2: 2
+  TagMargin@Tag@OrthoCamera/Tag2: 2
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag2: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag3: 2
+  TagMargin@Tag@OrthoCamera/Tag3: 2
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag3: BottomLeft
+  Rotation@Plaid@FixDot/Plaid: 0 0 0
+  RotationOffset@Plaid@FixDot/Plaid: 0 0 0
+  Ori0@Plaid@FixDot/Plaid: 0
+  OriOffset0@Plaid@FixDot/Plaid: 0
+  Ori1@Plaid@FixDot/Plaid: -90
+  OriOffset1@Plaid@FixDot/Plaid: 0
+  Size@Plaid@FixDot/Plaid: 1 1 1
+  Diameter@Plaid@FixDot/Plaid: 1
+  MaskType@Plaid@FixDot/Plaid: None
+  MaskRadius@Plaid@FixDot/Plaid: 0.5
+  MaskSigma@Plaid@FixDot/Plaid: 0.15
+  MaskReverse@Plaid@FixDot/Plaid: false
+  Luminance@Plaid@FixDot/Plaid: 0.5
+  Contrast@Plaid@FixDot/Plaid: 1
+  SpatialFreq0@Plaid@FixDot/Plaid: 0.2
+  SpatialFreq1@Plaid@FixDot/Plaid: 0.2
+  TemporalFreq0@Plaid@FixDot/Plaid: 1
+  TemporalFreq1@Plaid@FixDot/Plaid: 1
+  ModulateTemporalFreq0@Plaid@FixDot/Plaid: 0.2
+  ModulateTemporalFreq1@Plaid@FixDot/Plaid: 0.2
+  ModulateTemporalPhase0@Plaid@FixDot/Plaid: 0
+  ModulateTemporalPhase1@Plaid@FixDot/Plaid: 0
+  SpatialPhase0@Plaid@FixDot/Plaid: 0
+  SpatialPhase1@Plaid@FixDot/Plaid: 0
+  MinColor@Plaid@FixDot/Plaid: 0 0 0 1
+  MaxColor@Plaid@FixDot/Plaid: 1 1 1 1
+  PauseTime@Plaid@FixDot/Plaid: false
+  PauseModulateTime@Plaid@FixDot/Plaid: true
+  GratingType0@Plaid@FixDot/Plaid: Square
+  GratingType1@Plaid@FixDot/Plaid: Square
+  ModulateType0@Plaid@FixDot/Plaid: Square
+  ModulateType1@Plaid@FixDot/Plaid: Square
+  ReverseTime@Plaid@FixDot/Plaid: false
+  Duty0@Plaid@FixDot/Plaid: 0.5
+  Duty1@Plaid@FixDot/Plaid: 0.5
+  ModulateDuty0@Plaid@FixDot/Plaid: 0.5
+  ModulateDuty1@Plaid@FixDot/Plaid: 0.5
+  TimeSecond@Plaid@FixDot/Plaid: 0
+  ModulateTimeSecond@Plaid@FixDot/Plaid: 0
+  RotPositionOffset@Plaid@FixDot/Plaid: false
+  PositionOffset@Plaid@FixDot/Plaid: 0 0 0
+  Position@Plaid@FixDot/Plaid: 0 0 0
+  Visible@Plaid@FixDot/Plaid: true
 CondPath: Condition\Ori[12]_SF[5].yaml
 Cond: 
 LogicPath: FixationCondTest
@@ -69,7 +96,7 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: X:/
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement

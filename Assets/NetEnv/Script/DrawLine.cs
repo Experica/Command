@@ -42,6 +42,7 @@ namespace Experica.NetEnv
         public INetEnvCamera NetEnvCamera;
         LineRenderer currentline;
 
+        public bool EnableDraw { get; set; } = true;
         public ulong ClientID { get; set; }
 
         void Awake()
@@ -58,19 +59,25 @@ namespace Experica.NetEnv
 
         void Touch_onFingerDown(Finger finger)
         {
-            currentline = Base.AddLine(null, parent: transform);
-            currentline.startColor = LineColor.Value;
-            currentline.endColor = LineColor.Value;
-            currentline.widthMultiplier = LineWidth.Value;
-            currentline.positionCount++;
-            currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
-            Lines.Add(currentline);
+            if (EnableDraw)
+            {
+                currentline = Base.AddLine(null, parent: transform);
+                currentline.startColor = LineColor.Value;
+                currentline.endColor = LineColor.Value;
+                currentline.widthMultiplier = LineWidth.Value;
+                currentline.positionCount++;
+                currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
+                Lines.Add(currentline);
+            }
         }
 
         void Touch_onFingerMove(Finger finger)
         {
-            currentline.positionCount++;
-            currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
+            if (EnableDraw)
+            {
+                currentline.positionCount++;
+                currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
+            }
         }
 
         Vector3 ScreenToViewportPoint(Vector3 screenPosition)

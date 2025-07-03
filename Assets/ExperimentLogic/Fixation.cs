@@ -41,35 +41,33 @@ public class Fixation : ExperimentLogic
     public double RandPreITIDur => RNG.Next(GetExParam<int>("MinPreITIDur"), GetExParam<int>("MaxPreITIDur"));
     public double RandSufITIDur => RNG.Next(GetExParam<int>("MinSufITIDur"), GetExParam<int>("MaxSufITIDur"));
     public double RandFixDur => RNG.Next(GetExParam<int>("MinFixDur"), GetExParam<int>("MaxFixDur"));
-    public void RandFixDotPosition()
-    {
-        var fdpos = GetExParam<List<Vector3>>("FixDotPosition");
-        if (fdpos != null && fdpos.Count > 1)
-        {
-            var i = RNG.Next(fdpos.Count);
-            fixdotposition.Value = fdpos[i];
-        }
-    }
+
 
     public InputAction MoveAction;
     public IEyeTracker EyeTracker;
     public Vector2 FixPosition;
     protected NetworkVariable<Vector3> fixdotposition;
     protected List<ScaleGrid> scalegrid = new();
+    protected bool updatefixtrail, recordgaze;
+    Tag tag;
     DotTrail fixtrail;
     Circle fixcircle;
-    bool updatefixtrail;
+
 
     protected override void Enable()
     {
         MoveAction = InputSystem.actions.FindActionMap("Logic").FindAction("Move");
-        
+
         EyeTracker = PupilLabsCore.TryGetPupilLabsCore();
     }
 
     protected override void Disable()
     {
-        EyeTracker?.Dispose();
+        if (EyeTracker != null)
+        {
+            EyeTracker.Dispose();
+            EyeTracker = null;
+        }
     }
 
     public override void OnSceneReady(List<ulong> clientids)
@@ -86,6 +84,7 @@ public class Fixation : ExperimentLogic
             var sg = envmgr.SpawnScaleGrid(oc, clientid: clientids[i], parse: false, parent: fixdotposition.GetBehaviour().transform);
             scalegrid.Add(sg);
         }
+        tag = envmgr.GetNetworkVariableByGameObject<float>("TagMargin", "OrthoCamera/Tag0").GetBehaviour() as Tag;
     }
 
     /// <summary>
@@ -102,6 +101,20 @@ public class Fixation : ExperimentLogic
         ex.extendproperties["FixRadius"].propertyChanged += (o, e) => fixcircle.Size.Value = new(2 * (float)ex.ExtendParam["FixRadius"], 2 * (float)ex.ExtendParam["FixRadius"], 1);
         // tracing fixation position
         fixtrail = envmgr.SpawnDotTrail(position: Vector3.back, size: new(0.25f, 0.25f, 1), color: new(1, 0.1f, 0.1f), parse: false);
+    }
+
+    protected override void PrepareCondition()
+    {
+        var pos = GetExParam<List<Vector3>>("FixDotPosition");
+        if (pos == null || pos.Count == 0)
+        {
+            pos = new List<Vector3>() { Vector3.zero };
+        }
+        var cond = new Dictionary<string, List<object>>()
+        {
+            ["FixDotPosition"] = pos.Cast<object>().ToList(),
+        };
+        condmgr.PrepareCondition(cond);
     }
 
     public override bool Guide
@@ -144,13 +157,18 @@ public class Fixation : ExperimentLogic
         if (ex.Input && envmgr.MainCamera.Count > 0 && MoveAction.phase == InputActionPhase.Started)
         {
             FixPosition += MoveAction.ReadValue<Vector2>();
-            clampPosition(ref FixPosition);
+            clampMove(ref FixPosition);
             updatefixtrail = true;
         }
 
-        if (EyeTracker != null) {
-            FixPosition = EyeTracker.Gaze;
-            updatefixtrail= true;
+        if (EyeTracker != null && envmgr.MainCamera.Count > 0)
+        {
+            FixPosition = surfacegaze2cameragaze(EyeTracker.Gaze2D, envmgr.MainCamera.First(), tag.TagSurfaceMargin);
+            if (recordgaze && ex.HasCondTestState())
+            {
+                condtestmgr.AddInList(nameof(CONDTESTPARAM.Gaze), TimeMS, FixPosition);
+            }
+            updatefixtrail = true;
         }
 
         if (updatefixtrail && fixtrail != null && fixtrail.Visible.Value)
@@ -160,9 +178,16 @@ public class Fixation : ExperimentLogic
         }
     }
 
-    void clampPosition(ref Vector2 pos)
+    Vector2 surfacegaze2cameragaze(Vector2 sg, INetEnvCamera camera, float surfacemargin)
     {
-        var r = GetExParam<float>("EyeMoveRadius");
+        sg.x = sg.x - 0.5f;
+        sg.y = sg.y - 0.5f;
+        return new Vector2(sg.x * (camera.Width - 2 * surfacemargin), sg.y * (camera.Height - 2 * surfacemargin));
+    }
+
+    void clampMove(ref Vector2 pos)
+    {
+        var r = GetExParam<float>("MoveRadius");
         if (r == 0) { r = 50; }
         pos.x = Mathf.Clamp(pos.x, -r, r);
         pos.y = Mathf.Clamp(pos.y, -r, r);
@@ -183,6 +208,9 @@ public class Fixation : ExperimentLogic
         if (value == TaskState) { return EnterStateCode.AlreadyIn; }
         switch (value)
         {
+            case TASKSTATE.NONE:
+                recordgaze = false;
+                break;
             case TASKSTATE.FIX_TARGET_ON:
                 SetEnvActiveParam("FixDotVisible", true);
                 WaitForFixTimeOut = GetExParam<double>("WaitForFixTimeOut");
@@ -191,6 +219,7 @@ public class Fixation : ExperimentLogic
                 {
                     condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), FixTargetOnTime);
                 }
+                recordgaze = true;
                 break;
             case TASKSTATE.FIX_ACQUIRED:
                 FixDur = RandFixDur;
@@ -204,6 +233,18 @@ public class Fixation : ExperimentLogic
         TaskState = value;
         if (sync) { SyncEvent(value.ToString()); }
         return EnterStateCode.Success;
+    }
+
+    protected bool IsTargetOn { get; set; }
+
+    protected virtual void TurnOnTarget()
+    {
+        IsTargetOn = true;
+    }
+
+    protected virtual void TurnOffTarget()
+    {
+        IsTargetOn = false;
     }
 
     protected virtual void OnTimeOut()
@@ -248,7 +289,6 @@ public class Fixation : ExperimentLogic
             condtestmgr.Add(nameof(CONDTESTPARAM.TaskResult), nameof(TASKRESULT.HIT));
             condtestmgr.Add("FixHold", FixHold);
         }
-        RandFixDotPosition();
         Debug.Log("Hit");
     }
 

@@ -13,7 +13,7 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: FixationQuadShowroom
 EnvParam:
-  FixDotPosition@FixDot@FixDot: -3 3 0
+  FixDotPosition@FixDot@FixDot: 0 0 0
   FixDotDiameter@FixDot@FixDot: 2
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
@@ -25,25 +25,41 @@ EnvParam:
   OriOffset@Quad@FixDot/Quad: 0
   Size@Quad@FixDot/Quad: 50 50 50
   Diameter@Quad@FixDot/Quad: 50
-  Color@Quad@FixDot/Quad: 1 1 1 1
+  Color@Quad@FixDot/Quad: 0.5 0.5 0.5 1
   MaskType@Quad@FixDot/Quad: Disk
   MaskRadius@Quad@FixDot/Quad: 0.3
   MaskSigma@Quad@FixDot/Quad: 0.15
   MaskReverse@Quad@FixDot/Quad: true
   OriPositionOffset@Quad@FixDot/Quad: false
   PositionOffset@Quad@FixDot/Quad: 0 0 0
-  Position@Quad@FixDot/Quad: 5 -5 0
+  Position@Quad@FixDot/Quad: 0 0 0
   Visible@Quad@FixDot/Quad: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.434694
+  ScreenToEye@OrthoCamera@OrthoCamera: 45
+  ScreenHeight@OrthoCamera@OrthoCamera: 32
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  Rotation@Plaid@FixDot/Plaid: 0 0 180
+  TagSize@Tag@OrthoCamera/Tag0: 3
+  TagMargin@Tag@OrthoCamera/Tag0: 3
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 3
+  TagMargin@Tag@OrthoCamera/Tag1: 3
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 3
+  TagMargin@Tag@OrthoCamera/Tag2: 3
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 3
+  TagMargin@Tag@OrthoCamera/Tag3: 3
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
+  Rotation@Plaid@FixDot/Plaid: 0 0 90
   RotationOffset@Plaid@FixDot/Plaid: 0 0 0
   Ori0@Plaid@FixDot/Plaid: 0
   OriOffset0@Plaid@FixDot/Plaid: 0
@@ -83,9 +99,9 @@ EnvParam:
   TimeSecond@Plaid@FixDot/Plaid: 0
   ModulateTimeSecond@Plaid@FixDot/Plaid: 0
   RotPositionOffset@Plaid@FixDot/Plaid: true
-  PositionOffset@Plaid@FixDot/Plaid: 0 5 0
-  Position@Plaid@FixDot/Plaid: 5 -5 5
-  Visible@Plaid@FixDot/Plaid: true
+  PositionOffset@Plaid@FixDot/Plaid: 0 0 0
+  Position@Plaid@FixDot/Plaid: 0 0 0
+  Visible@Plaid@FixDot/Plaid: false
 CondPath: Condition\FixationRFMapping_30Deg5DegStep_Ori[4].yaml
 Cond: 
 LogicPath: FixationCondTest
@@ -93,7 +109,7 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: X:\
+DataDir: X:/
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
@@ -102,16 +118,16 @@ CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
-CondDur: 250
+CondDur: 300
 SufICI: 0
-PreITI: 381
+PreITI: 382
 TrialDur: 0
-SufITI: 841
+SufITI: 1036
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
 PushCondAtState: COND
-CondTestAtState: NONE
+CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
   - CondIndex
@@ -138,6 +154,7 @@ EnvInheritParam:
   - MarkerCorner@Marker@Marker~OrthoCamera
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
+  - CLUT@OrthoCamera@OrthoCamera
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -154,13 +171,13 @@ CondTest:
 ExtendParam:
   MinPreITIDur: 250
   MaxPreITIDur: 500
-  MinSufITIDur: 500
-  MaxSufITIDur: 1000
-  MinFixDur: 1000
-  MaxFixDur: 2000
+  MinSufITIDur: 1000
+  MaxSufITIDur: 2000
+  MinFixDur: 2000
+  MaxFixDur: 2100
   WaitForFixTimeOut: 3000
   FixRadius: 5
-  EyeMoveRadius: 30
+  MoveRadius: 30
   FixDotPosition:
     - -3 3 0
   FixPreDur: 200

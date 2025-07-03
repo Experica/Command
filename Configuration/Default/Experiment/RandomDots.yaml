@@ -25,7 +25,7 @@ EnvParam:
   DotSize@Dots@Dots: 1 1
   Coherence@Dots@Dots: 0
   Position@Dots@Dots: 0 0 0
-  Visible@Dots@Dots: false
+  Visible@Dots@Dots: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30

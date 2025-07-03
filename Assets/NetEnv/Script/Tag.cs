@@ -105,5 +105,6 @@ namespace Experica.NetEnv
             }
         }
 
+        public float TagSurfaceMargin => TagMargin.Value + TagSize.Value * (TagID.Value.ToString().StartsWith("tag25") ? 1f / 9f : 1f / 10f);
     }
 }

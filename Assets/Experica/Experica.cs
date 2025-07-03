@@ -576,7 +576,8 @@ namespace Experica
         Block,
         Task,
         TaskResult,
-        Cycle
+        Cycle,
+        Gaze
     }
 
     public enum DataFormat

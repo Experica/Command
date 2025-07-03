@@ -53,9 +53,21 @@ public class FixationDrawBorder : Fixation
 
     protected override void PrepareCondition()
     {
-        var pos = new List<Vector3>() { Vector3.right * 10, Vector3.left * 10, Vector3.up * 10, Vector3.down * 10 };
-        var diam = new List<int>() { 3, 5, 7 };
-        var col = new List<Color>() { Color.red, Color.green, Color.blue, Color.yellow };
+        var pos = GetExParam<List<Vector3>>("ObjectPosition");
+        if (pos == null || pos.Count == 0)
+        {
+            pos = new List<Vector3>() { Vector3.right * 10 };
+        }
+        var diam = GetExParam<List<float>>("ObjectDiameter");
+        if (diam == null || diam.Count == 0)
+        {
+            diam = new List<float>() { 5 };
+        }
+        var col = GetExParam<List<Color>>("ObjectColor");
+        if (col == null || col.Count == 0)
+        {
+            col = new List<Color>() { Color.blue };
+        }
 
         var cond = new Dictionary<string, List<object>>
         {
@@ -65,6 +77,18 @@ public class FixationDrawBorder : Fixation
         };
 
         condmgr.PrepareCondition(cond.OrthoCombineFactor());
+    }
+
+    protected override void TurnOnTarget()
+    {
+        SetEnvActiveParam("Visible", true);
+        base.TurnOnTarget();
+    }
+
+    protected override void TurnOffTarget()
+    {
+        SetEnvActiveParam("Visible", false);
+        base.TurnOffTarget();
     }
 
     public new enum TASKSTATE
@@ -82,6 +106,9 @@ public class FixationDrawBorder : Fixation
         if (value == TaskState) { return EnterStateCode.AlreadyIn; }
         switch (value)
         {
+            case TASKSTATE.NONE:
+                recordgaze = false;
+                break;
             case TASKSTATE.FIX_TARGET_ON:
                 SetEnvActiveParam("FixDotVisible", true);
                 WaitForFixTimeOut = GetExParam<double>("WaitForFixTimeOut");
@@ -90,6 +117,7 @@ public class FixationDrawBorder : Fixation
                 {
                     condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), FixTargetOnTime);
                 }
+                recordgaze = true;
                 break;
             case TASKSTATE.FIX_ACQUIRED:
                 FixDur = RandFixDur;
@@ -105,36 +133,12 @@ public class FixationDrawBorder : Fixation
                 {
                     condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), WaitForDrawOnTime);
                 }
+                drawline.EnableDraw = true;
                 break;
         }
         TaskState = value;
         if (sync) { SyncEvent(value.ToString()); }
         return EnterStateCode.Success;
-    }
-
-
-    protected virtual void TurnOnTarget()
-    {
-        if (ex.ID == "FixationRFMapping")
-        {
-            SetEnvActiveParamByGameObject("Visible", "Plaid", true);
-        }
-        else
-        {
-            SetEnvActiveParam("Visible", true);
-        }
-    }
-
-    protected virtual void TurnOffTarget()
-    {
-        if (ex.ID == "FixationRFMapping")
-        {
-            SetEnvActiveParamByGameObject("Visible", "Plaid", false);
-        }
-        else
-        {
-            SetEnvActiveParam("Visible", false);
-        }
     }
 
     protected override void Logic()
@@ -176,7 +180,11 @@ public class FixationDrawBorder : Fixation
                             // Fixation breaks in required period
                             OnEarly();
                             SetEnvActiveParam("FixDotVisible", false);
-                            TurnOffTarget();
+                            if (IsTargetOn)
+                            {
+                                TurnOffTarget();
+                                EnterCondState(CONDSTATE.NONE, true);
+                            }
                             EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.SUFITI); // long SUFITI as punishment
                         }
@@ -195,7 +203,6 @@ public class FixationDrawBorder : Fixation
                                     {
                                         // Successfully hold fixation in required period
                                         SetEnvActiveParam("FixDotVisible", false);
-                                        TurnOffTarget();
                                         EnterTaskState(TASKSTATE.WAIT_DRAW);
                                     }
                                     else if (PreICIHold >= ex.PreICI)
@@ -233,6 +240,7 @@ public class FixationDrawBorder : Fixation
                                 condtestmgr.AddInList("DrawLine", line);
                             }
                             drawline.Clear();
+                            drawline.EnableDraw = false;
                             if (isdraw) { OnHit(); } else { OnMiss(); }
                             EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.NONE);

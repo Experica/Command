@@ -27,8 +27,8 @@ EnvParam:
   Position@Quad@Quad: -1.1786 -1.2874 0
   Visible@Quad@Quad: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenToEye@OrthoCamera@OrthoCamera: 45
+  ScreenHeight@OrthoCamera@OrthoCamera: 32
   ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
@@ -39,7 +39,7 @@ CondPath: ''
 Cond: 
 LogicPath: SpikeGLXColor
 Hemisphere: Left
-Eye: Right
+Eye: Both
 RecordSession: ''
 RecordSite: Full
 DataDir: Data
@@ -102,7 +102,7 @@ EventSyncProtocol:
   NEdgePEvent: 1
 Display_ID: ROGPG279Q
 CondTestShow: ALL
-NotifyExperimenter: false
+NotifyExperimenter: true
 Version: 3
 Config: 
 CondTest: 

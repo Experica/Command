@@ -19,17 +19,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using NetMQ;
+using NetMQ.Sockets;
 using System;
 using System.Collections;
-using System.Linq;
-using System.Threading;
-using UnityEngine;
-using MessagePack;
-using NetMQ.Sockets;
 using System.Collections.Generic;
-using NetMQ;
+using System.Linq;
 using System.Text;
-
+using System.Threading;
+using System.Threading.Tasks;
+using UnityEngine;
+using CircularBuffer;
 
 namespace Experica
 {
@@ -44,17 +44,21 @@ namespace Experica
     {
         EyeTracker Type { get; }
         float PupilSize { get; }
-        Vector2 Gaze { get; }
+        Vector2 Gaze2D { get; }
+        Vector3 Gaze3D { get; }
+        float SamplingRate { get; set; }
     }
 
     public class PupilLabsCore : IEyeTracker
     {
         int disposecount = 0;
         readonly object api = new();
-        RequestSocket pupil_remote;
+        readonly object gazelock = new();
+        RequestSocket req_socket;
         string sub_port;
-        SubscriberSocket subscriber;
-        List<Vector2> gazes = new();
+        SubscriberSocket sub_socket;
+        CancellationTokenSource cts = new();
+        CircularBuffer<Vector2> gazes = new(30);
 
         public void Dispose()
         {
@@ -69,20 +73,23 @@ namespace Experica
                 return;
             }
             Disconnect();
+            //NetMQConfig.Cleanup(false);
         }
 
-        public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020)
+        public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020, float fs = 200)
         {
-            var t = new PupilLabsCore();
-            if (t.Connect(host, port)) { return t; } else
+            var t = new PupilLabsCore(fs);
+            if (t.Connect(host, port)) { return t; }
+            else
             {
                 Debug.LogWarning("Can't Connect to PupilLabs Core, return Null.");
-                return null; 
+                return null;
             }
         }
 
-        public PupilLabsCore()
+        public PupilLabsCore(float fs = 200)
         {
+            SamplingRate = fs;
         }
 
         ~PupilLabsCore()
@@ -92,38 +99,47 @@ namespace Experica
 
         public bool StartRecordAndAcquisite()
         {
-            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("R"));
-            pupil_remote.ReceiveFrameString();
+            req_socket.SendFrame(Encoding.UTF8.GetBytes("R"));
+            req_socket.ReceiveFrameString();
             return true;
         }
 
         public bool StopAcquisiteAndRecord()
         {
-            pupil_remote.SendFrame(Encoding.UTF8.GetBytes("r"));
-            pupil_remote.ReceiveFrameString();
+            req_socket.SendFrame(Encoding.UTF8.GetBytes("r"));
+            req_socket.ReceiveFrameString();
             return true;
         }
 
         public bool Connect(string host = "localhost", int port = 50020)
         {
-            pupil_remote = new RequestSocket($"tcp://{host}:{port}");
-            pupil_remote.SendFrame( Encoding.UTF8.GetBytes("SUB_PORT"));
-            if (pupil_remote.TryReceiveFrameString(out sub_port))
+            req_socket = new RequestSocket($"tcp://{host}:{port}");
+            req_socket.TrySendFrame("SUB_PORT");
+            if (req_socket.TryReceiveFrameString(TimeSpan.FromMilliseconds(500), out sub_port))
             {
-                 //pupil_remote.TryReceiveFrameString(out sub_port);
-                subscriber = new SubscriberSocket($"tcp://{host}:{sub_port}");
+                sub_socket = new SubscriberSocket($"tcp://{host}:{sub_port}");
 
-                subscriber.Subscribe("gaze.");
+                sub_socket.Subscribe("surfaces.");
+                Task.Run(() => receivegaze(cts.Token));
                 return true;
             }
-            pupil_remote.Close();
+            req_socket.Dispose();
+            req_socket = null;
             return false;
         }
 
         public void Disconnect()
         {
-            subscriber?.Close();
-            pupil_remote?.Close();
+            if (cts != null)
+            {
+                cts.Cancel();
+                cts = null;
+            }
+            sub_socket?.Dispose();
+            sub_socket = null;
+            req_socket?.Dispose();
+            req_socket = null;
+            NetMQConfig.Cleanup(false);
         }
 
         public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)
@@ -135,26 +151,61 @@ namespace Experica
 
         public float PupilSize => throw new NotImplementedException();
 
-        public Vector2 Gaze
+        public Vector2 Gaze2D
         {
             get
             {
-                var t = subscriber.ReceiveMultipartBytes(2);
-                var m = MsgPack.DeserializeMsgPack<Dictionary<string,object>>(t[1]);
-                return m["norm_pos"].Convert<Vector2>();
+                lock (gazelock) { return gazes.IsEmpty ? Vector2.zero : gazes.Back(); }
             }
         }
 
-        void receivegaze()
+        void receivegaze(CancellationToken token)
         {
-            var t = subscriber.ReceiveMultipartBytes(2);
-            var m = MsgPack.DeserializeMsgPack<Dictionary<string, object>>(t[1]);
-            gazes.Add( m["norm_pos"].Convert<Vector2>());
+            var msg = new NetMQMessage();
+            string topic;
+            byte[] payload;
+            Dictionary<string, object> payloadDict;
+            Dictionary<object, object> gazeDict;
+            while (!token.IsCancellationRequested)
+            {
+                Thread.Sleep(Mathf.FloorToInt(1000f / SamplingRate));
+                if (sub_socket.TryReceiveMultipartMessage(ref msg))
+                {
+                    if (msg.FrameCount == 2)
+                    {
+                        topic = msg[0].ConvertToString();
+                        payload = msg[1].ToByteArray();
+                        payloadDict = MsgPack.DeserializeMsgPack<Dictionary<string, object>>(payload);
+
+                        if (payloadDict.ContainsKey("gaze_on_surfaces"))
+                        {
+                            foreach (var gazeObj in payloadDict["gaze_on_surfaces"].AsList())
+                            {
+                                gazeDict = gazeObj as Dictionary<object, object>;
+                                if (gazeDict.ContainsKey("norm_pos"))
+                                {
+                                    var normPosList = gazeDict["norm_pos"].AsList();
+                                    var gaze = new Vector2(Convert.ToSingle(normPosList[0]), Convert.ToSingle(normPosList[1]));
+                                    lock (gazelock)
+                                    {
+                                        gazes.PushBack(gaze);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
         }
 
         public string DataFormat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string RecordPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public RecordStatus RecordStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public AcquisitionStatus AcquisitionStatus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Vector3 Gaze3D => throw new NotImplementedException();
+
+        public float SamplingRate { get; set; }
     }
 }
