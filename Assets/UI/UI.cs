@@ -42,13 +42,11 @@ namespace Experica.Command
             ExtendButton, viewport, ParamsFoldout, AboutWindow, ConfigWindow, AddExParamWindow, NewExWindow;
 
         VisualElement root, mainmenu, maincontent, controlpanel, experimentpanel, environmentpanel, viewpanel,viewcontent,condpanel;
-        public VisualElement consolepanel;
-        public VisualElement conditiontestpanel;
+        public VisualElement consolepanel, condtestpanel;
         public Toggle server, host, start, pause, startsession, fps;
         public Button newex, saveex, deleteex, addexextendparam;
         public DropdownField experimentlist, experimentsessionlist;
         ScrollView excontent, envcontent;
-        MultiColumnListView condtestcontent;
 
         void OnEnable()
         {
@@ -106,8 +104,7 @@ namespace Experica.Command
             // Condition Panel
             condpanel = root.Q("ConditionPanel");
             // ConditionTest Panel
-            conditiontestpanel = root.Q("ConditionTestPanel");
-            condtestcontent = conditiontestpanel.Q<MultiColumnListView>("Content");
+            condtestpanel = root.Q("ConditionTestPanel");
         }
 
         void OnAboutWindow(VisualElement parent)
@@ -645,43 +642,6 @@ namespace Experica.Command
             }
         }
 
-        public void OnNewCondTest()
-        {
-            // var ctmgr = appmgr.exmgr.el.condtestmgr;
-            // var show = appmgr.exmgr.el.ex.CondTestShow;
-            //if(show== CONDTESTSHOW.NONE || ctmgr.CondTestIndex < 0) { return; }
-            //var cnames = condtestcontent.columns.Select(c => c.title).ToList();
-            // var ct = ctmgr.CurrentCondTest;
-            // var newc = ct.Keys.Except(cnames);
-            // var oldci = Enumerable.Range(0,cnames.Count).Where(i=> ct.ContainsKey(cnames[i]));
-            // //foreach (var c in oldci)
-            // //{
-            // //  condtestcontent.columns[c].m;
-            // //}
-            // condtestcontent.dataSource ??= ctmgr.CondTest;
-            // condtestcontent.bindingSourceSelectionMode = BindingSourceSelectionMode.AutoAssign;
-            // foreach (var c in newc)
-            // {
-            //     var col = new Column
-            //     {
-            //         name = c,
-            //         title = c,
-            //         width = 100,
-            //         //bindingPath = PropertyPath.FromKey(c).ToString(),
-            //         bindingPath = $"[{c}]",
-            //         makeCell = () => new Label(),
-            //         bindCell = (VisualElement v, int i) =>  (v as Label).text = ctmgr.CondTest[c][i].Convert<string>() ?? ""
-            //     };
-            //     condtestcontent.columns.Add(col);
-            // }
-            // condtestcontent.RefreshItems();
-        }
-
-        public void OnCondTestClear()
-        {
-            //condtestcontent.Clear();
-            //condtestcontent.dataSource=null;
-        }
 
         void OnDisable()
         {

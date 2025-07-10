@@ -47,6 +47,7 @@ namespace Experica
         Vector2 Gaze2D { get; }
         Vector3 Gaze3D { get; }
         float SamplingRate { get; set; }
+        float ConfidenceThreshold { get; set; }
     }
 
     public class PupilLabsCore : IEyeTracker
@@ -73,12 +74,11 @@ namespace Experica
                 return;
             }
             Disconnect();
-            //NetMQConfig.Cleanup(false);
         }
 
-        public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020, float fs = 200)
+        public static PupilLabsCore TryGetPupilLabsCore(string host = "localhost", int port = 50020, float fs = 200, float confthreshold = 0.9f)
         {
-            var t = new PupilLabsCore(fs);
+            var t = new PupilLabsCore(fs, confthreshold);
             if (t.Connect(host, port)) { return t; }
             else
             {
@@ -87,9 +87,10 @@ namespace Experica
             }
         }
 
-        public PupilLabsCore(float fs = 200)
+        public PupilLabsCore(float fs = 200, float confthreshold = 0.9f)
         {
             SamplingRate = fs;
+            ConfidenceThreshold = confthreshold;
         }
 
         ~PupilLabsCore()
@@ -184,6 +185,8 @@ namespace Experica
                                 gazeDict = gazeObj as Dictionary<object, object>;
                                 if (gazeDict.ContainsKey("norm_pos"))
                                 {
+                                    var confidence = (double)gazeDict["confidence"];
+                                    if (confidence < ConfidenceThreshold) { continue; }
                                     var normPosList = gazeDict["norm_pos"].AsList();
                                     var gaze = new Vector2(Convert.ToSingle(normPosList[0]), Convert.ToSingle(normPosList[1]));
                                     lock (gazelock)
@@ -207,5 +210,6 @@ namespace Experica
         public Vector3 Gaze3D => throw new NotImplementedException();
 
         public float SamplingRate { get; set; }
+        public float ConfidenceThreshold { get; set; }
     }
 }

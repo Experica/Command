@@ -22,6 +22,7 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Experica.Command
@@ -38,7 +39,7 @@ namespace Experica.Command
 
         private void Start()
         {
-            Initialize(ui.conditiontestpanel);
+            Initialize(ui.condtestpanel);
         }
 
         public void Initialize(VisualElement conditionTestPanelElement)
@@ -169,6 +170,55 @@ namespace Experica.Command
             content.itemsSource = new List<Dictionary<string, string>>();
             content.RefreshItems();
             condtestidx = -1;
+        }
+
+        public void OnNewCondTest()
+        {
+             //var ctmgr = ui.appmgr.exmgr.el.condtestmgr;
+            // var show = appmgr.exmgr.el.ex.CondTestShow;
+            //if(show== CONDTESTSHOW.NONE || ctmgr.CondTestIndex < 0) { return; }
+            //var cnames = condtestcontent.columns.Select(c => c.title).ToList();
+            // var ct = ctmgr.CurrentCondTest;
+            // var newc = ct.Keys.Except(cnames);
+            // var oldci = Enumerable.Range(0,cnames.Count).Where(i=> ct.ContainsKey(cnames[i]));
+            // //foreach (var c in oldci)
+            // //{
+            // //  condtestcontent.columns[c].m;
+            // //}
+            // condtestcontent.dataSource ??= ctmgr.CondTest;
+            // condtestcontent.bindingSourceSelectionMode = BindingSourceSelectionMode.AutoAssign;
+            // foreach (var c in newc)
+            // {
+            //     var col = new Column
+            //     {
+            //         name = c,
+            //         title = c,
+            //         width = 100,
+            //         //bindingPath = PropertyPath.FromKey(c).ToString(),
+            //         bindingPath = $"[{c}]",
+            //         makeCell = () => new Label(),
+            //         bindCell = (VisualElement v, int i) =>  (v as Label).text = ctmgr.CondTest[c][i].Convert<string>() ?? ""
+            //     };
+            //     condtestcontent.columns.Add(col);
+            // }
+            // condtestcontent.RefreshItems();
+            UpdateHitRate();
+        }
+
+        public void UpdateHitRate()
+        {
+            var ctmgr = ui.appmgr.exmgr.el.condtestmgr;
+            if(ctmgr.CondTest.ContainsKey(nameof(CONDTESTPARAM.TaskResult)))
+            {
+                var tr = ctmgr.CondTest[nameof(CONDTESTPARAM.TaskResult)] as List<object>;
+                var vr = tr.Where(i => i != null);
+                float nh= vr.Where(i=>i.GetType() == typeof(string) && (string)i == nameof(TASKRESULT.HIT)).Count();
+                var hr = MathF.Round( nh/vr.Count()*100,1);
+            }
+            else
+            {
+                
+            }
         }
     }
 }

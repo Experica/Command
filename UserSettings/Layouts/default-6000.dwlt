@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1706.6667
     height: 976
   m_ShowMode: 4
-  m_Title: Build Profiles
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -4697,9 +4697,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: 80d10000
-    m_LastClickedID: 53632
-    m_ExpandedIDs: 0000000016d0000018d000001ad00000
+    m_SelectedIDs: 88d10000
+    m_LastClickedID: 53640
+    m_ExpandedIDs: 0000000014d0000016d0000018d00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4728,7 +4728,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000016d0000018d000001ad00000
+    m_ExpandedIDs: 0000000014d0000016d0000018d00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4811,7 +4811,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 66efffff7eefffffa0f2ffffb8f2ffffe0f2ffff08f3ffff24f3ffff40f3ffff5ef3ffff7af3ffff96f3ffffb2f3ffffc2f3ffffcef3fffff2f3ffff08fbffff
+      m_ExpandedIDs: 08fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

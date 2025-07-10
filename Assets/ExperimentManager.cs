@@ -168,8 +168,8 @@ namespace Experica.Command
 
         void RegisterCallback()
         {
-            el.condtestmgr.OnNewCondTest += appmgr.ui.OnNewCondTest;
-            el.condtestmgr.OnCondTestClear += appmgr.ui.OnCondTestClear;
+            el.condtestmgr.OnNewCondTest += appmgr.condtestpanel.OnNewCondTest;
+            el.condtestmgr.OnCondTestClear += appmgr.condtestpanel.Clear;
 
             //el.condmanager.OnSamplingInitialized = uicontroller.condpanel.RefreshCondition;
             //el.condtestmanager.OnNotifyCondTest = uicontroller.OnNotifyCondTest;

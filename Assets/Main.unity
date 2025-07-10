@@ -217,25 +217,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 570668883}
-  host: {fileID: 0}
-  server: {fileID: 0}
-  start: {fileID: 0}
-  startsession: {fileID: 0}
-  pause: {fileID: 0}
-  exs: {fileID: 0}
-  exss: {fileID: 0}
-  savedata: {fileID: 0}
-  newex: {fileID: 0}
-  saveex: {fileID: 0}
-  deleteex: {fileID: 0}
-  startstoptext: {fileID: 0}
-  startstopsessiontext: {fileID: 0}
-  pauseresumetext: {fileID: 0}
   postprocessing: {fileID: 355740907}
   networkcontroller: {fileID: 652919586}
   exmgr: {fileID: 195929017}
   exsmgr: {fileID: 1423087642}
   consolepanel: {fileID: 570668884}
+  condtestpanel: {fileID: 570668885}
 --- !u!114 &355740906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,9 +531,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 1
-  m_Priority: 0
-  m_BlendDistance: 0
-  m_Weight: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: bc3017157b016ca4698944e99ee3afb0, type: 2}
 --- !u!1 &570668880
 GameObject:

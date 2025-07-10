@@ -54,6 +54,7 @@ namespace Experica.Command
         // public AnalysisManager alsmanager;
 
         public ConsolePanel consolepanel;
+        public ConditionTestPanel condtestpanel;
 
         public AgentStub agentstub;
         public TaskScheduler unitymainthreadscheduler;
