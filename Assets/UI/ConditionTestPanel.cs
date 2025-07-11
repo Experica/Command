@@ -36,6 +36,8 @@ namespace Experica.Command
         private int condtestidx = -1;
         private Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
         private Button clearButton;
+        private VisualElement statusBar;
+        private Label hitRateLabel;
 
         private void Start()
         {
@@ -50,8 +52,10 @@ namespace Experica.Command
                 titleLabel = root.Query<Label>("Title").First();
                 content = root.Query<MultiColumnListView>("Content").First();
                 clearButton = root.Query<Button>("ClearButton").First();
+                statusBar = root.Query<VisualElement>("StatusBar").First();
+                hitRateLabel = root.Query<Label>("HitRateLabel").First();
 
-                if (titleLabel == null || content == null || clearButton == null)
+                if (titleLabel == null || content == null || clearButton == null || statusBar == null || hitRateLabel == null)
                 {
                     Debug.LogError("找不到必要的UI元素！");
                     return;
@@ -94,6 +98,12 @@ namespace Experica.Command
 
                 // 注册 Clear 按钮点击事件
                 clearButton.clicked += Clear;
+                
+                // 初始化HitRate显示 - 默认隐藏
+                if (hitRateLabel != null)
+                {
+                    hitRateLabel.style.display = DisplayStyle.None;
+                }
 
                 Debug.Log("ConditionTestPanel 初始化成功");
             }
@@ -170,6 +180,12 @@ namespace Experica.Command
             content.itemsSource = new List<Dictionary<string, string>>();
             content.RefreshItems();
             condtestidx = -1;
+            
+            // 重置HitRate显示 - 隐藏
+            if (hitRateLabel != null)
+            {
+                hitRateLabel.style.display = DisplayStyle.None;
+            }
         }
 
         public void OnNewCondTest()
@@ -208,16 +224,29 @@ namespace Experica.Command
         public void UpdateHitRate()
         {
             var ctmgr = ui.appmgr.exmgr.el.condtestmgr;
+            var hr = 0f;
+            
             if(ctmgr.CondTest.ContainsKey(nameof(CONDTESTPARAM.TaskResult)))
             {
                 var tr = ctmgr.CondTest[nameof(CONDTESTPARAM.TaskResult)] as List<object>;
                 var vr = tr.Where(i => i != null);
                 float nh= vr.Where(i=>i.GetType() == typeof(string) && (string)i == nameof(TASKRESULT.HIT)).Count();
-                var hr = MathF.Round( nh/vr.Count()*100,1);
+                hr = MathF.Round( nh/vr.Count()*100,1);
+                
+                // 只有在满足条件时才显示HitRate
+                if (hitRateLabel != null)
+                {
+                    hitRateLabel.text = $"HitRate: {hr}%";
+                    hitRateLabel.style.display = DisplayStyle.Flex;
+                }
             }
             else
             {
-                
+                // 不满足条件时隐藏HitRate
+                if (hitRateLabel != null)
+                {
+                    hitRateLabel.style.display = DisplayStyle.None;
+                }
             }
         }
     }
