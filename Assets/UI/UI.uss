@@ -440,9 +440,6 @@
 } */
 
 .condition-test-clear-button {
-    position: absolute;
-    bottom: 15px;
-    right: 5px;
     background-color: rgb(42, 149, 220);
     border-radius: 4px;
     color: rgb(255, 255, 255);
@@ -453,8 +450,7 @@
     -unity-text-outline-color:rgb(255, 255, 255);
     -unity-font-weight: 800; /* 最大加粗级别 */
     -unity-text-align: middle-center;
-    margin-bottom: 0px;
-    margin-right: 10px;
+    margin-left: auto;
 }
 
 .header-container {
@@ -605,15 +601,14 @@
 }
 
 .status-bar {
+    height: 50px;
+    border-top-width: 1px;
+    border-top-color: #444444;
+    padding: 8px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
-    background-color: rgb(190, 190, 190);
-    border-width: 1px;
-    border-color: #444444;
-    border-top-width: 0;
-    height: 45px;
+    background-color: rgb(190, 190, 190) !important;
     flex-shrink: 0;
 }
 
@@ -623,5 +618,14 @@
     -unity-font-style: bold;
     flex-shrink: 0;
     -unity-text-align: middle-center;
+    align-self: center;
+}
+
+.hit-rate-label {
+    color: rgb(30, 30, 30);
+    font-size: 25px;
+    -unity-font-style: bold;
+    flex-shrink: 0;
+    -unity-text-align: middle-left;
     align-self: center;
 }
