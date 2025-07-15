@@ -22,8 +22,8 @@ EnvParam:
   FixDotVisible@FixDot@FixDot: false
   Show@Showroom@FixDot/Showroom: Quad
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 45
-  ScreenHeight@OrthoCamera@OrthoCamera: 32
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
   ScreenAspect@OrthoCamera@OrthoCamera: 1.694444
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
@@ -54,14 +54,14 @@ EnvParam:
   OriOffset@Quad@FixDot/Quad: 0
   Size@Quad@FixDot/Quad: 7 7 7
   Diameter@Quad@FixDot/Quad: 7
-  Color@Quad@FixDot/Quad: 1 1 0 1
+  Color@Quad@FixDot/Quad: 0 0 0 1
   MaskType@Quad@FixDot/Quad: Gaussian
   MaskRadius@Quad@FixDot/Quad: 0.5
   MaskSigma@Quad@FixDot/Quad: 0.15
   MaskReverse@Quad@FixDot/Quad: false
   OriPositionOffset@Quad@FixDot/Quad: false
   PositionOffset@Quad@FixDot/Quad: 0 0 0
-  Position@Quad@FixDot/Quad: -10 0 0
+  Position@Quad@FixDot/Quad: 0 -10 0
   Visible@Quad@FixDot/Quad: false
 CondPath: ''
 Cond: 
@@ -81,7 +81,7 @@ BlockFactor: []
 PreICI: 0
 CondDur: 500
 SufICI: 0
-PreITI: 445
+PreITI: 314
 TrialDur: 0
 SufITI: 1305
 PreIBI: 0

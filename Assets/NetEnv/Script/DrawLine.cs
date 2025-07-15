@@ -37,10 +37,12 @@ namespace Experica.NetEnv
         public NetworkVariable<Color> LineColor = new(Color.black);
         public NetworkVariable<float> LineWidth = new(0.25f);
         public NetworkVariable<bool> LineVisible = new(true);
-        public NetworkVariable<bool> EnableDraw = new(true);
+        public NetworkVariable<bool> EnableDraw = new(false);
 
         public List<LineRenderer> Lines = new();
         public INetEnvCamera NetEnvCamera;
+        public bool Submit;
+        InputAction SubmitAction;
         LineRenderer currentline;
 
         public ulong ClientID { get; set; }
@@ -55,10 +57,18 @@ namespace Experica.NetEnv
             EnhancedTouchSupport.Enable();
             Touch.onFingerDown += Touch_onFingerDown;
             Touch.onFingerMove += Touch_onFingerMove;
-            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsClient)
+            var nm = NetworkManager.Singleton;
+            if (nm != null)
             {
-                NetEnvCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<INetEnvCamera>();
-                Touch.onFingerUp += Touch_onFingerUp;
+                if (nm.IsClient)
+                {
+                    NetEnvCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<INetEnvCamera>();
+                    Touch.onFingerUp += Touch_onFingerUp;
+                }
+                if (!nm.IsServer)
+                {
+                    SubmitAction = InputSystem.actions.FindActionMap("Logic").FindAction("Visible");
+                }
             }
         }
 
@@ -178,6 +188,20 @@ namespace Experica.NetEnv
         public void ReportRpc(string name, float value)
         {
             throw new System.NotImplementedException();
+        }
+
+        [Rpc(SendTo.Server)]
+        void ReportSubmitRpc()
+        {
+            Submit = true;
+        }
+
+        void Update()
+        {
+            if (EnableDraw.Value && SubmitAction != null && SubmitAction.WasPerformedThisFrame())
+            {
+                ReportSubmitRpc();
+            }
         }
     }
 }

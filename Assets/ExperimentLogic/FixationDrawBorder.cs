@@ -34,19 +34,12 @@ using Experica.NetEnv;
 public class FixationDrawBorder : Fixation
 {
     public double WaitForDrawOnTime;
-    public InputAction VisibleAction;
     DrawLine drawline;
-
-    protected override void Enable()
-    {
-        base.Enable();
-        VisibleAction = InputSystem.actions.FindActionMap("Logic").FindAction("Visible");
-    }
 
     public override void OnPlayerReady()
     {
         base.OnPlayerReady();
-        drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First(),netvis:NetVisibility.All);
+        drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First(), netvis: NetVisibility.All);
         // show scalegrid to help user locate object
         foreach (var sg in scalegrid) { sg.NetworkObject.NetworkShowOnlyTo(sg.ClientID); }
     }
@@ -228,11 +221,12 @@ public class FixationDrawBorder : Fixation
                         }
                         break;
                     case TASKSTATE.WAIT_DRAW:
-                        if (VisibleAction.WasPerformedThisFrame())
+                        if (drawline.Submit)
                         {
+                            drawline.Submit = false;
                             if (ex.HasCondTestState())
                             {
-                                condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), "Confirm", TimeMS);
+                                condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), "Submit", TimeMS);
                             }
                             var isdraw = drawline.TryGetLine(out Vector3[] line);
                             if (ex.HasCondTestState() && isdraw)
