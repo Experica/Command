@@ -37,12 +37,12 @@ namespace Experica.NetEnv
         public NetworkVariable<Color> LineColor = new(Color.black);
         public NetworkVariable<float> LineWidth = new(0.25f);
         public NetworkVariable<bool> LineVisible = new(true);
+        public NetworkVariable<bool> EnableDraw = new(true);
 
         public List<LineRenderer> Lines = new();
         public INetEnvCamera NetEnvCamera;
         LineRenderer currentline;
 
-        public bool EnableDraw { get; set; } = true;
         public ulong ClientID { get; set; }
 
         void Awake()
@@ -55,11 +55,36 @@ namespace Experica.NetEnv
             EnhancedTouchSupport.Enable();
             Touch.onFingerDown += Touch_onFingerDown;
             Touch.onFingerMove += Touch_onFingerMove;
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsClient)
+            {
+                NetEnvCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<INetEnvCamera>();
+                Touch.onFingerUp += Touch_onFingerUp;
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        void ReportCurrentLineRpc(Vector3[] pos)
+        {
+            currentline = Base.AddLine(null, parent: transform);
+            currentline.startColor = LineColor.Value;
+            currentline.endColor = LineColor.Value;
+            currentline.widthMultiplier = LineWidth.Value;
+            currentline.positionCount = pos.Length;
+            currentline.SetPositions(pos);
+            Lines.Add(currentline);
+        }
+
+        void Touch_onFingerUp(Finger finger)
+        {
+            var n = currentline.positionCount;
+            var pos = new Vector3[n];
+            currentline.GetPositions(pos);
+            ReportCurrentLineRpc(pos);
         }
 
         void Touch_onFingerDown(Finger finger)
         {
-            if (EnableDraw)
+            if (EnableDraw.Value)
             {
                 currentline = Base.AddLine(null, parent: transform);
                 currentline.startColor = LineColor.Value;
@@ -73,7 +98,7 @@ namespace Experica.NetEnv
 
         void Touch_onFingerMove(Finger finger)
         {
-            if (EnableDraw)
+            if (EnableDraw.Value)
             {
                 currentline.positionCount++;
                 currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
@@ -89,7 +114,8 @@ namespace Experica.NetEnv
             return vp;
         }
 
-        public void Clear()
+        [Rpc(SendTo.Everyone)]
+        public void ClearRpc()
         {
             for (int i = 0; i < Lines.Count; i++)
             {

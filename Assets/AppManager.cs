@@ -402,7 +402,7 @@ namespace Experica.Command
             ui.deleteex.SetEnabled(false);
 
             var msg = $"Experiment \"{exmgr.el.ex.ID}\" Started.";
-            //consolepanel.Log(msg);
+            consolepanel.Log(msg);
             if (exmgr.el.ex.NotifyExperimenter)
             {
                 exmgr.el.ex.Experimenter.GetAddresses(cfgmgr.config).Mail(body: msg);

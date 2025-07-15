@@ -46,7 +46,7 @@ public class FixationDrawBorder : Fixation
     public override void OnPlayerReady()
     {
         base.OnPlayerReady();
-        drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First());
+        drawline = envmgr.SpawnDrawLine(envmgr.MainCamera.First(),netvis:NetVisibility.All);
         // show scalegrid to help user locate object
         foreach (var sg in scalegrid) { sg.NetworkObject.NetworkShowOnlyTo(sg.ClientID); }
     }
@@ -133,7 +133,7 @@ public class FixationDrawBorder : Fixation
                 {
                     condtestmgr.AddInList(nameof(CONDTESTPARAM.Event), value.ToString(), WaitForDrawOnTime);
                 }
-                drawline.EnableDraw = true;
+                drawline.EnableDraw.Value = true;
                 break;
         }
         TaskState = value;
@@ -239,8 +239,8 @@ public class FixationDrawBorder : Fixation
                             {
                                 condtestmgr.AddInList("DrawLine", line);
                             }
-                            drawline.Clear();
-                            drawline.EnableDraw = false;
+                            drawline.ClearRpc();
+                            drawline.EnableDraw.Value = false;
                             if (isdraw) { OnHit(); } else { OnMiss(); }
                             EnterTaskState(TASKSTATE.NONE);
                             EnterTrialState(TRIALSTATE.NONE);
