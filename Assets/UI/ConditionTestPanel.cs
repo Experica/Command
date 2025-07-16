@@ -105,7 +105,7 @@ namespace Experica.Command
                     hitRateLabel.style.display = DisplayStyle.None;
                 }
 
-                Debug.Log("ConditionTestPanel 初始化成功");
+                // Debug.Log("ConditionTestPanel 初始化成功");
             }
             catch (Exception e)
             {

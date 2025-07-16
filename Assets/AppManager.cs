@@ -437,6 +437,9 @@ namespace Experica.Command
 
         public void OnEndStartExperiment()
         {
+            // 验证DataDir的有效性
+            ValidateDataDir();
+
             // if (alsmanager != null)
             // {
             //     using (var stream = new MemoryStream())
@@ -448,6 +451,81 @@ namespace Experica.Command
             // }
 
             exmgr.OnStart();
+        }
+
+        /// <summary>
+        /// 验证实验DataDir的有效性
+        /// </summary>
+        private void ValidateDataDir()
+        {
+            if (exmgr?.el?.ex == null)
+            {
+                consolepanel.LogError("无法验证DataDir：实验对象为空");
+                return;
+            }
+
+            var dataDir = exmgr.el.ex.DataDir;
+
+            // 检查路径是否为空
+            if (string.IsNullOrWhiteSpace(dataDir))
+            {
+                consolepanel.LogError("DataDir路径为空，请设置有效的数据目录");
+                return;
+            }
+
+            // 检查路径是否包含非法字符
+            if (Path.GetInvalidPathChars().Any(dataDir.Contains))
+            {
+                consolepanel.LogError($"DataDir路径包含非法字符: {dataDir}");
+                return;
+            }
+
+            try
+            {
+                // 检查路径是否合法
+                var fullPath = Path.GetFullPath(dataDir);
+                
+                // 检查路径是否存在
+                if (!Directory.Exists(fullPath))
+                {
+                    consolepanel.LogWarn($"DataDir目录不存在: {fullPath}");
+                    consolepanel.Log("尝试创建目录...");
+                    
+                    try
+                    {
+                        Directory.CreateDirectory(fullPath);
+                        consolepanel.Log($"成功创建DataDir目录: {fullPath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        consolepanel.LogError($"创建DataDir目录失败: {ex.Message}");
+                        return;
+                    }
+                }
+                else
+                {
+                    consolepanel.Log($"DataDir目录验证通过: {fullPath}");
+                }
+
+                // 检查目录是否可写
+                try
+                {
+                    var testFile = Path.Combine(fullPath, "test_write.tmp");
+                    File.WriteAllText(testFile, "test");
+                    File.Delete(testFile);
+                    consolepanel.Log("DataDir目录写入权限验证通过");
+                }
+                catch (Exception ex)
+                {
+                    consolepanel.LogError($"DataDir目录无写入权限: {ex.Message}");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                consolepanel.LogError($"DataDir路径验证失败: {ex.Message}");
+                return;
+            }
         }
 
         public void OnBeginStopExperiment() { }
