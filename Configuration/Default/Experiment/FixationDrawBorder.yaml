@@ -22,38 +22,39 @@ EnvParam:
   FixDotVisible@FixDot@FixDot: false
   Show@Showroom@FixDot/Showroom: Quad
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 45
-  ScreenHeight@OrthoCamera@OrthoCamera: 32
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.717533
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.694444
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  TagSize@Tag@OrthoCamera/Tag0: 3
-  TagMargin@Tag@OrthoCamera/Tag0: 3
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 4
   TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
   TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
-  TagSize@Tag@OrthoCamera/Tag1: 3
-  TagMargin@Tag@OrthoCamera/Tag1: 3
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 4
   TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
   TagCorner@Tag@OrthoCamera/Tag1: BottomRight
-  TagSize@Tag@OrthoCamera/Tag2: 3
-  TagMargin@Tag@OrthoCamera/Tag2: 3
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 4
   TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
   TagCorner@Tag@OrthoCamera/Tag2: TopRight
-  TagSize@Tag@OrthoCamera/Tag3: 3
-  TagMargin@Tag@OrthoCamera/Tag3: 3
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 4
   TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
   TagCorner@Tag@OrthoCamera/Tag3: TopLeft
   LineColor@DrawLine@DrawLine: 1 1 0 1
   LineWidth@DrawLine@DrawLine: 0.1
   LineVisible@DrawLine@DrawLine: true
+  EnableDraw@DrawLine@DrawLine: true
   Ori@Quad@FixDot/Quad: 0
   OriOffset@Quad@FixDot/Quad: 0
-  Size@Quad@FixDot/Quad: 5 5 5
-  Diameter@Quad@FixDot/Quad: 5
-  Color@Quad@FixDot/Quad: 1 1 0 1
+  Size@Quad@FixDot/Quad: 7 7 7
+  Diameter@Quad@FixDot/Quad: 7
+  Color@Quad@FixDot/Quad: 0 0 0 1
   MaskType@Quad@FixDot/Quad: Gaussian
   MaskRadius@Quad@FixDot/Quad: 0.5
   MaskSigma@Quad@FixDot/Quad: 0.15
@@ -80,9 +81,9 @@ BlockFactor: []
 PreICI: 0
 CondDur: 500
 SufICI: 0
-PreITI: 401
+PreITI: 314
 TrialDur: 0
-SufITI: 1997
+SufITI: 1305
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -136,7 +137,7 @@ ExtendParam:
   MinFixDur: 300
   MaxFixDur: 500
   WaitForFixTimeOut: 3000
-  FixRadius: 5
+  FixRadius: 500
   MoveRadius: 30
   FixPreDur: 200
   WaitForInputTimeOut: 5000

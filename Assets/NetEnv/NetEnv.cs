@@ -203,7 +203,7 @@ namespace Experica.NetEnv
             NV.SetDirty(true);
             dynamic nv = NV;
             dynamic v = nv.Value;
-            nv.OnValueChanged(v, v);
+            nv.OnValueChanged?.Invoke(v, v);
 
             ////Method.Invoker(NV, Value,Value);
         }

@@ -11,8 +11,8 @@
         </ui:VisualElement>
         <ui:MultiColumnListView name="Content" class="content" />
         <ui:VisualElement name="StatusBar" class="status-bar">
-            <ui:Label text="HitRate: 0%" name="HitRateLabel" class="hit-rate-label" />
-        <ui:Button text="Clear" name="ClearButton" class="condition-test-clear-button" />
+            <ui:Label text="Hit: 0%" name="HitRateLabel" class="hit-rate-label" />
+            <ui:Button text="Clear" name="ClearButton" class="condition-test-clear-button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

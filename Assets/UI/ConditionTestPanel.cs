@@ -236,7 +236,9 @@ namespace Experica.Command
                 // 只有在满足条件时才显示HitRate
                 if (hitRateLabel != null)
                 {
-                    hitRateLabel.text = $"HitRate: {hr}%";
+
+                    hitRateLabel.text = $"Hit: {hr}%";
+
                     hitRateLabel.style.display = DisplayStyle.Flex;
                 }
             }

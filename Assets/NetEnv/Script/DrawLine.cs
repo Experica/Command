@@ -37,12 +37,14 @@ namespace Experica.NetEnv
         public NetworkVariable<Color> LineColor = new(Color.black);
         public NetworkVariable<float> LineWidth = new(0.25f);
         public NetworkVariable<bool> LineVisible = new(true);
+        public NetworkVariable<bool> EnableDraw = new(false);
 
         public List<LineRenderer> Lines = new();
         public INetEnvCamera NetEnvCamera;
+        public bool Submit;
+        InputAction SubmitAction;
         LineRenderer currentline;
 
-        public bool EnableDraw { get; set; } = true;
         public ulong ClientID { get; set; }
 
         void Awake()
@@ -55,11 +57,44 @@ namespace Experica.NetEnv
             EnhancedTouchSupport.Enable();
             Touch.onFingerDown += Touch_onFingerDown;
             Touch.onFingerMove += Touch_onFingerMove;
+            var nm = NetworkManager.Singleton;
+            if (nm != null)
+            {
+                if (nm.IsClient)
+                {
+                    NetEnvCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<INetEnvCamera>();
+                    Touch.onFingerUp += Touch_onFingerUp;
+                }
+                if (!nm.IsServer)
+                {
+                    SubmitAction = InputSystem.actions.FindActionMap("Logic").FindAction("Visible");
+                }
+            }
+        }
+
+        [Rpc(SendTo.Server)]
+        void ReportCurrentLineRpc(Vector3[] pos)
+        {
+            currentline = Base.AddLine(null, parent: transform);
+            currentline.startColor = LineColor.Value;
+            currentline.endColor = LineColor.Value;
+            currentline.widthMultiplier = LineWidth.Value;
+            currentline.positionCount = pos.Length;
+            currentline.SetPositions(pos);
+            Lines.Add(currentline);
+        }
+
+        void Touch_onFingerUp(Finger finger)
+        {
+            var n = currentline.positionCount;
+            var pos = new Vector3[n];
+            currentline.GetPositions(pos);
+            ReportCurrentLineRpc(pos);
         }
 
         void Touch_onFingerDown(Finger finger)
         {
-            if (EnableDraw)
+            if (EnableDraw.Value)
             {
                 currentline = Base.AddLine(null, parent: transform);
                 currentline.startColor = LineColor.Value;
@@ -73,7 +108,7 @@ namespace Experica.NetEnv
 
         void Touch_onFingerMove(Finger finger)
         {
-            if (EnableDraw)
+            if (EnableDraw.Value)
             {
                 currentline.positionCount++;
                 currentline.SetPosition(currentline.positionCount - 1, ScreenToViewportPoint(finger.screenPosition));
@@ -89,7 +124,8 @@ namespace Experica.NetEnv
             return vp;
         }
 
-        public void Clear()
+        [Rpc(SendTo.Everyone)]
+        public void ClearRpc()
         {
             for (int i = 0; i < Lines.Count; i++)
             {
@@ -152,6 +188,20 @@ namespace Experica.NetEnv
         public void ReportRpc(string name, float value)
         {
             throw new System.NotImplementedException();
+        }
+
+        [Rpc(SendTo.Server)]
+        void ReportSubmitRpc()
+        {
+            Submit = true;
+        }
+
+        void Update()
+        {
+            if (EnableDraw.Value && SubmitAction != null && SubmitAction.WasPerformedThisFrame())
+            {
+                ReportSubmitRpc();
+            }
         }
     }
 }

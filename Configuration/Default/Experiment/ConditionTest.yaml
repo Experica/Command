@@ -14,15 +14,6 @@ Subject_Log:
 EnvPath: Showroom
 EnvParam:
   Show@Showroom@Showroom: Grating
-  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 45
-  ScreenHeight@OrthoCamera@OrthoCamera: 32
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.717533
-  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: true
-  MarkerSize@Marker@OrthoCamera/Marker: 2
-  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
-  Mark@Marker@OrthoCamera/Marker: false
   Rotation@Grating@Grating: 0 0 0
   RotationOffset@Grating@Grating: 0 0 0
   Ori@Grating@Grating: 78.18989
@@ -54,7 +45,7 @@ EnvParam:
   OriPositionOffset@Grating@Grating: false
   PositionOffset@Grating@Grating: 0 0 0
   Position@Grating@Grating: -1.1786 -1.2874 0
-  Visible@Grating@Grating: true
+  Visible@Grating@Grating: false
 CondPath: ''
 Cond: 
 LogicPath: ConditionTestLogic
