@@ -2663,6 +2663,12 @@ namespace Experica
 
         public static void Save(this string filepath, object obj, bool rmext = false)
         {
+            // 如果保存的是Experiment对象，验证DataDir
+            if (obj.GetType().FullName == "Experica.Command.Experiment")
+            {
+                ValidateExperimentDataDir(obj);
+            }
+
             var ext = Path.GetExtension(filepath);
             var file = rmext ? Path.ChangeExtension(filepath, null) : filepath;
             switch (ext)
@@ -2678,6 +2684,90 @@ namespace Experica
                 default:
                     Debug.LogWarning($"Saving format: \"{ext}\" not supported.");
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 验证Experiment的DataDir有效性
+        /// </summary>
+        /// <param name="experiment">要验证的实验对象</param>
+        private static void ValidateExperimentDataDir(object experiment)
+        {
+            if (experiment == null)
+            {
+                Debug.LogError("无法验证DataDir：实验对象为空");
+                return;
+            }
+
+            // 使用反射获取DataDir属性
+            var dataDirProperty = experiment.GetType().GetProperty("DataDir");
+            if (dataDirProperty == null)
+            {
+                Debug.LogError("无法找到DataDir属性");
+                return;
+            }
+
+            var dataDir = dataDirProperty.GetValue(experiment) as string;
+
+            // 检查路径是否为空
+            if (string.IsNullOrWhiteSpace(dataDir))
+            {
+                Debug.LogError("DataDir路径为空，请设置有效的数据目录");
+                return;
+            }
+
+            // 检查路径是否包含非法字符
+            if (Path.GetInvalidPathChars().Any(dataDir.Contains))
+            {
+                Debug.LogError($"DataDir路径包含非法字符: {dataDir}");
+                return;
+            }
+
+            try
+            {
+                // 检查路径是否合法
+                var fullPath = Path.GetFullPath(dataDir);
+                
+                // 检查路径是否存在
+                if (!Directory.Exists(fullPath))
+                {
+                    Debug.LogWarning($"DataDir目录不存在: {fullPath}");
+                    Debug.Log("尝试创建目录...");
+                    
+                    try
+                    {
+                        Directory.CreateDirectory(fullPath);
+                        Debug.Log($"成功创建DataDir目录: {fullPath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"创建DataDir目录失败: {ex.Message}");
+                        return;
+                    }
+                }
+                else
+                {
+                    Debug.Log($"DataDir目录验证通过: {fullPath}");
+                }
+
+                // 检查目录是否可写
+                try
+                {
+                    var testFile = Path.Combine(fullPath, "test_write.tmp");
+                    File.WriteAllText(testFile, "test");
+                    File.Delete(testFile);
+                    Debug.Log("DataDir目录写入权限验证通过");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"DataDir目录无写入权限: {ex.Message}");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"DataDir路径验证失败: {ex.Message}");
+                return;
             }
         }
 

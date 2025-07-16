@@ -39,13 +39,22 @@ namespace Experica.Command
         private Button warningButton;
         private Button errorButton;
         private Button clearButton;
-        private int maxEntry = 100;
+        private int maxEntry = 200;
         private int entryCount = 0;
         private List<Label> logEntries = new List<Label>();
         private int fontSize = 28;
         private string lastLogMessage = "";
         private int duplicateCount = 0;
         private Dictionary<LogType, bool> logTypeVisibility = new Dictionary<LogType, bool>();
+        private bool needsScroll = false;
+        private Dictionary<LogType, List<Label>> pendingLogs = new Dictionary<LogType, List<Label>>
+        {
+            { LogType.Log, new List<Label>() },
+            { LogType.Warning, new List<Label>() },
+            { LogType.Error, new List<Label>() },
+            { LogType.Exception, new List<Label>() },
+            { LogType.Assert, new List<Label>() }
+        };
 
         private void Awake()
         {
@@ -175,7 +184,7 @@ namespace Experica.Command
             logTypeVisibility[LogType.Log] = true;
             logTypeVisibility[LogType.Warning] = true;
             logTypeVisibility[LogType.Error] = true;
-            logTypeVisibility[LogType.Exception] = true;
+            logTypeVisibility[LogType.Exception] = true;  // Exception默认可见
             logTypeVisibility[LogType.Assert] = true;
 
             // 设置按钮点击事件
@@ -193,29 +202,54 @@ namespace Experica.Command
                 return;
             }
 
-            // 检查日志系统状态
-            Debug.Log($"日志系统状态检查:");
-            Debug.Log($"- 日志处理器类型: {Debug.unityLogger.logHandler.GetType().FullName}");
-            Debug.Log($"- 日志过滤级别: {Debug.unityLogger.filterLogType}");
-            Debug.Log($"- 日志系统启用状态: {Debug.unityLogger.logEnabled}");
-            Debug.Log($"- 当前日志处理器是否为我们自定义的处理器: {Debug.unityLogger.logHandler is GlobalLogHandler}");
-            
-            // 测试日志
-            Debug.Log("测试普通日志");
-            Debug.LogWarning("测试警告日志");
-            Debug.LogError("测试错误日志");
+            // 配置ScrollView以确保滚动功能正常
+            logContent.mode = ScrollViewMode.Vertical;
+            logContent.showHorizontal = false;
+            logContent.showVertical = true;
+            logContent.verticalScroller.value = 0;
         }
 
         private void ToggleLogVisibility(LogType logType)
         {
+            // 记录切换前的可见性
+            bool wasVisible = logTypeVisibility[logType];
+
             // 切换日志类型可见性
             logTypeVisibility[logType] = !logTypeVisibility[logType];
+            
+            // 如果切换的是Error类型，同时切换Exception类型
+            if (logType == LogType.Error)
+            {
+                logTypeVisibility[LogType.Exception] = logTypeVisibility[logType];
+                // Debug.Log($"ToggleLogVisibility: {logType} 和 Exception 从 {wasVisible} 切换为 {logTypeVisibility[logType]}");
+            }
+            else
+            {
+                // Debug.Log($"ToggleLogVisibility: {logType} 从 {wasVisible} 切换为 {logTypeVisibility[logType]}");
+            }
             
             // 更新按钮样式
             UpdateButtonStyle(logType);
             
             // 更新日志显示
             UpdateLogVisibility();
+
+            // 如果是从隐藏变为显示，主动滚动到底部，并显示pendingLogs
+            if (!wasVisible && logTypeVisibility[logType])
+            {
+                // Debug.Log($"显示pendingLogs[{logType}]，数量: {pendingLogs[logType].Count}");
+                // 按时间顺序插入pendingLogs
+                InsertPendingLogsInOrder(logType);
+                
+                // 如果是Error类型，也显示Exception的pendingLogs
+                if (logType == LogType.Error)
+                {
+                    // Debug.Log($"显示pendingLogs[Exception]，数量: {pendingLogs[LogType.Exception].Count}");
+                    InsertPendingLogsInOrder(LogType.Exception);
+                }
+                
+                ScheduleAutoScroll();
+            }
         }
 
         private void UpdateButtonStyle(LogType logType)
@@ -250,10 +284,31 @@ namespace Experica.Command
         private void UpdateLogVisibility()
         {
             // 更新所有日志条目的可见性
-            foreach (var label in logEntries)
+            for (int i = logEntries.Count - 1; i >= 0; i--)
             {
+                var label = logEntries[i];
                 var logType = GetLogTypeFromLabel(label);
-                label.style.display = logTypeVisibility[logType] ? DisplayStyle.Flex : DisplayStyle.None;
+                
+                if (logTypeVisibility[logType])
+                {
+                    // 如果类型可见，确保显示
+                    label.style.display = DisplayStyle.Flex;
+                    // 确保在UI中
+                    if (!logContent.Contains(label))
+                    {
+                        logContent.Add(label);
+                    }
+                }
+                else
+                {
+                    // 如果类型不可见，从UI中移除并暂存到pendingLogs
+                    if (logContent.Contains(label))
+                    {
+                        logContent.Remove(label);
+                        pendingLogs[logType].Add(label);
+                        // Debug.Log($"UpdateLogVisibility: 将已存在的 {logType} 日志移到pendingLogs，当前pendingLogs[{logType}]数量: {pendingLogs[logType].Count}");
+                    }
+                }
             }
         }
 
@@ -264,7 +319,12 @@ namespace Experica.Command
             if (color == Color.yellow)
                 return LogType.Warning;
             if (color == Color.red)
+            {
+                // 红色文本可能是Error或Exception，需要进一步判断
+                // 由于Exception和Error都显示为红色，我们将Exception也归类为Error
+                // 这样用户点击Error按钮时，Exception也会被隐藏
                 return LogType.Error;
+            }
             return LogType.Log;
         }
 
@@ -311,11 +371,6 @@ namespace Experica.Command
                 if (logString == lastLogMessage)
                 {
                     duplicateCount++;
-                    // 如果重复次数超过阈值，不显示
-                    if (duplicateCount > 3)
-                    {
-                        return;
-                    }
                 }
                 else
                 {
@@ -327,11 +382,6 @@ namespace Experica.Command
                 var timestamp = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                 string firstLine = logString.Split('\n')[0];
                 var logMessage = $"{timestamp}: {firstLine}";
-
-                if (duplicateCount > 0)
-                {
-                    logMessage += $" (重复 {duplicateCount} 次)";
-                }
 
                 var label = new Label(logMessage);
                 label.style.color = GetColorForLogType(type);
@@ -349,6 +399,14 @@ namespace Experica.Command
                 label.style.width = Length.Percent(100);
                 label.style.display = logTypeVisibility[type] ? DisplayStyle.Flex : DisplayStyle.None;
 
+                // 如果当前类型不可见，暂存到pendingLogs，不显示
+                if (!logTypeVisibility[type])
+                {
+                    pendingLogs[type].Add(label);
+                    // Debug.Log($"日志类型 {type} 被隐藏，已添加到pendingLogs，当前pendingLogs[{type}]数量: {pendingLogs[type].Count}");
+                    return;
+                }
+
                 // 添加到日志内容区域
                 logContent.Add(label);
                 logEntries.Add(label);
@@ -361,8 +419,8 @@ namespace Experica.Command
                     logEntries.RemoveAt(0);
                 }
 
-                // 自动滚动到底部
-                logContent.scrollOffset = new Vector2(0, logContent.contentRect.height);
+                // 修复自动滚动逻辑 - 使用正确的滚动方法
+                ScheduleAutoScroll();
             }
             catch (Exception e)
             {
@@ -378,13 +436,20 @@ namespace Experica.Command
                 logContent.Clear();
                 logEntries.Clear();
 
+                // 清空pendingLogs
+                foreach (var pendingList in pendingLogs.Values)
+                {
+                    pendingList.Clear();
+                }
+
                 // 重置计数器
                 entryCount = 0;
                 lastLogMessage = "";
                 duplicateCount = 0;
+                needsScroll = false;
 
                 // 重置滚动位置
-                logContent.scrollOffset = Vector2.zero;
+                logContent.verticalScroller.value = 0;
             }
             catch (Exception e)
             {
@@ -409,8 +474,15 @@ namespace Experica.Command
                 label.style.unityTextAlign = TextAnchor.UpperLeft;
                 label.style.unityTextOverflowPosition = TextOverflowPosition.End;
                 label.style.fontSize = fontSize;
-
                 label.style.display = logTypeVisibility[logType] ? DisplayStyle.Flex : DisplayStyle.None;
+
+                // 如果当前类型不可见，暂存到pendingLogs，不显示
+                if (!logTypeVisibility[logType])
+                {
+                    pendingLogs[logType].Add(label);
+                    // Debug.Log($"Log方法: 日志类型 {logType} 被隐藏，已添加到pendingLogs，当前pendingLogs[{logType}]数量: {pendingLogs[logType].Count}");
+                    return;
+                }
 
                 logContent.Add(label);
                 logEntries.Add(label);
@@ -423,8 +495,8 @@ namespace Experica.Command
                     logEntries.RemoveAt(0);
                 }
 
-                // 自动滚动到底部
-                logContent.scrollOffset = new Vector2(0, logContent.contentRect.height);
+                // 修复自动滚动逻辑 - 使用正确的滚动方法
+                ScheduleAutoScroll();
             }
             catch (Exception e)
             {
@@ -453,6 +525,94 @@ namespace Experica.Command
             Log(LogType.Error, message?.ToString() ?? "null");
         }
 
+        // 新增方法：调度自动滚动
+        private void ScheduleAutoScroll()
+        {
+            // 直接滚动到底部，添加修正偏移量
+            if (logContent != null && logContent.verticalScroller != null)
+            {
+                var scrollValue = logContent.verticalScroller.highValue + 20; // 添加20像素的修正偏移量
+                logContent.verticalScroller.value = scrollValue;
+            }
+            
+            // 同时设置标志，在Update中再次尝试
+            needsScroll = true;
+        }
+
+        private void Update()
+        {
+            // 在Update中再次执行滚动，确保滚动到底部
+            if (needsScroll && logContent != null && logContent.verticalScroller != null)
+            {
+                var scrollValue = logContent.verticalScroller.highValue + 20; // 添加20像素的修正偏移量
+                logContent.verticalScroller.value = scrollValue;
+                // Debug.Log($"Update中滚动: value={logContent.verticalScroller.value}, highValue={logContent.verticalScroller.highValue}, 修正后={scrollValue}");
+                needsScroll = false;
+            }
+        }
+
+        /// <summary>
+        /// 按时间顺序插入pendingLogs中的日志
+        /// </summary>
+        /// <param name="logType">要插入的日志类型</param>
+        private void InsertPendingLogsInOrder(LogType logType)
+        {
+            if (pendingLogs[logType].Count == 0) return;
+
+            // 合并logEntries和pendingLogs
+            var allLogs = new List<Label>(logEntries);
+            allLogs.AddRange(pendingLogs[logType]);
+            if (logType == LogType.Error)
+                allLogs.AddRange(pendingLogs[LogType.Exception]); // Error和Exception一起处理
+
+            // 按时间戳排序
+            allLogs.Sort((a, b) =>
+            {
+                DateTime ta = ParseLogTime(a.text);
+                DateTime tb = ParseLogTime(b.text);
+                return ta.CompareTo(tb);
+            });
+
+            // 清空UI和logEntries
+            logContent.Clear();
+            logEntries.Clear();
+
+            // 重新添加所有日志
+            foreach (var label in allLogs)
+            {
+                var type = GetLogTypeFromLabel(label);
+                label.style.display = logTypeVisibility[type] ? DisplayStyle.Flex : DisplayStyle.None;
+                logContent.Add(label);
+                logEntries.Add(label);
+            }
+
+            // 清空pendingLogs
+            pendingLogs[logType].Clear();
+            if (logType == LogType.Error)
+                pendingLogs[LogType.Exception].Clear();
+        }
+
+        /// <summary>
+        /// 根据时间戳找到正确的插入位置
+        /// </summary>
+        /// <param name="timestamp">要插入的时间戳</param>
+        /// <returns>插入位置索引</returns>
+        private int FindInsertPosition(DateTime timestamp)
+        {
+            for (int i = 0; i < logEntries.Count; i++)
+            {
+                var text = logEntries[i].text;
+                if (DateTime.TryParse(text.Substring(0, 19), out DateTime entryTime))
+                {
+                    if (timestamp <= entryTime)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return logEntries.Count; // 如果所有现有日志都更早，插入到末尾
+        }
+
         private Color GetColorForLogType(LogType type)
         {
             switch (type)
@@ -468,6 +628,13 @@ namespace Experica.Command
                 default:
                     return Color.white;
             }
+        }
+
+        private DateTime ParseLogTime(string text)
+        {
+            if (text.Length >= 19 && DateTime.TryParse(text.Substring(0, 19), out DateTime t))
+                return t;
+            return DateTime.MinValue;
         }
     }
 }

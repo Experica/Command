@@ -592,12 +592,8 @@
     border-color: #444444;
     border-top-width: 0;
     overflow-x: hidden;
-    -unity-overflow-style: hidden;
-}
-
-.log-content > .unity-scroll-view__content {
-    overflow-x: hidden;
-    -unity-overflow-style: hidden;
+    overflow-y: auto;
+    min-height: 200px;
 }
 
 .status-bar {

@@ -14,7 +14,10 @@
                 <Button name="ErrorTab" text="Error" class="tab-button" />
             </VisualElement>
         </VisualElement>
-        <ScrollView name="LogContent" class="log-content" mode="Vertical">
+        <ScrollView name="LogContent" class="log-content" 
+                    mode="Vertical" 
+                    show-horizontal-scroller="false" 
+                    show-vertical-scroller="true">
             <!-- 所有日志将显示在这里 -->
         </ScrollView>
         <VisualElement name="Status" class="status-bar">

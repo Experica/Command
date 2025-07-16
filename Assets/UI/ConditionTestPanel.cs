@@ -105,7 +105,7 @@ namespace Experica.Command
                     hitRateLabel.style.display = DisplayStyle.None;
                 }
 
-                Debug.Log("ConditionTestPanel 初始化成功");
+                // Debug.Log("ConditionTestPanel 初始化成功");
             }
             catch (Exception e)
             {
@@ -236,7 +236,9 @@ namespace Experica.Command
                 // 只有在满足条件时才显示HitRate
                 if (hitRateLabel != null)
                 {
+
                     hitRateLabel.text = $"Hit: {hr}%";
+
                     hitRateLabel.style.display = DisplayStyle.Flex;
                 }
             }
