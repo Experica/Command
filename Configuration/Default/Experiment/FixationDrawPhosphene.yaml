@@ -1,0 +1,162 @@
+ID: FixationDrawPhosphene
+Name: FixationDrawPhosphene
+Designer: Alex
+Experimenter: KS
+Log: Right Eye
+Subject_ID: lx
+Subject_Name: lixing
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 27
+Subject_Log: 
+EnvPath: FixationShowroom
+EnvParam:
+  FixDotPosition@FixDot@FixDot: 0 0 0
+  FixDotDiameter@FixDot@FixDot: 2
+  FixDotInnerRadius@FixDot@FixDot: 0.25
+  FixDotOuterRadius@FixDot@FixDot: 0.5
+  FixDotInnerColor@FixDot@FixDot: 0 0 0 1
+  FixDotOuterColor@FixDot@FixDot: 1 1 1 1
+  FixDotVisible@FixDot@FixDot: false
+  Show@Showroom@FixDot/Showroom: None
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.694444
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 4
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 4
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 4
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 4
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
+  LineColor@DrawLine@DrawLine: 1 1 0 1
+  LineWidth@DrawLine@DrawLine: 0.1
+  LineVisible@DrawLine@DrawLine: true
+  EnableDraw@DrawLine@DrawLine: false
+CondPath: ''
+Cond: 
+LogicPath: FixationDrawPhosphene
+Hemisphere: Left
+Eye: Both
+RecordSession: ''
+RecordSite: Full
+DataDir: X:/
+DataPath: 
+Input: true
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 1
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 0
+CondDur: 500
+SufICI: 0
+PreITI: 600
+TrialDur: 0
+SufITI: 1444
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREITI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_ID
+  - Hemisphere
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - CLUT@OrthoCamera@OrthoCamera
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  MinPreITIDur: 600
+  MaxPreITIDur: 800
+  MinSufITIDur: 1000
+  MaxSufITIDur: 2000
+  MinFixDur: 300
+  MaxFixDur: 500
+  WaitForFixTimeOut: 3000
+  FixRadius: 5
+  MoveRadius: 30
+  FixPreDur: 200
+  WaitForInputTimeOut: 5000
+  ObjectPosition:
+    - 10 0 0
+    - -10 0 0
+    - 0 10 0
+    - 0 -10 0
+  ObjectDiameter:
+    - 5
+    - 7
+    - 9
+  ObjectColor:
+    - 0 0 0 1
+    - 1 1 1 1
+    - 1 0 0 1
+    - 0 1 0 1
+    - 0 0 1 1
+  QuanLanDeviceID: '"390024350033"'
+  Channel:
+    - 0
+  Amplitude:
+    - 500
+    - 1000
+    - 1500
+    - 2000
+  PulseWidth:
+    - 1
+  NumOfPulse:
+    - 5
+    - 9
+  PulseInterval:
+    - 0.05
+  PulseFrequency:
+    - 50

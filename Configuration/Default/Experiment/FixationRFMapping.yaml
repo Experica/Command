@@ -3,8 +3,8 @@ Name: FixationRFMapping
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
-Subject_ID: Test
-Subject_Name: Dunn
+Subject_ID: lx
+Subject_Name: lixing
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -17,8 +17,8 @@ EnvParam:
   FixDotDiameter@FixDot@FixDot: 2
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
-  FixDotInnerColor@FixDot@FixDot: 1 0 0 1
-  FixDotOuterColor@FixDot@FixDot: 1 1 0 1
+  FixDotInnerColor@FixDot@FixDot: 0.5 0.1 0 1
+  FixDotOuterColor@FixDot@FixDot: 0.7 0.5 0 1
   FixDotVisible@FixDot@FixDot: false
   Show@Showroom@FixDot/Showroom: Plaid
   Ori@Quad@FixDot/Quad: 0
@@ -35,9 +35,9 @@ EnvParam:
   Position@Quad@FixDot/Quad: 0 0 0
   Visible@Quad@FixDot/Quad: true
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 45
-  ScreenHeight@OrthoCamera@OrthoCamera: 32
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.690058
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.775419
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -59,7 +59,7 @@ EnvParam:
   TagMargin@Tag@OrthoCamera/Tag3: 4
   TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
   TagCorner@Tag@OrthoCamera/Tag3: TopLeft
-  Rotation@Plaid@FixDot/Plaid: 0 0 90
+  Rotation@Plaid@FixDot/Plaid: 0 0 0
   RotationOffset@Plaid@FixDot/Plaid: 0 0 0
   Ori0@Plaid@FixDot/Plaid: 0
   OriOffset0@Plaid@FixDot/Plaid: 0
@@ -114,15 +114,15 @@ DataPath:
 Input: true
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 3
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
 CondDur: 300
 SufICI: 0
-PreITI: 382
+PreITI: 636
 TrialDur: 0
-SufITI: 1036
+SufITI: 1340
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -169,8 +169,8 @@ Version: 3
 Config: 
 CondTest: 
 ExtendParam:
-  MinPreITIDur: 250
-  MaxPreITIDur: 500
+  MinPreITIDur: 600
+  MaxPreITIDur: 800
   MinSufITIDur: 1000
   MaxSufITIDur: 2000
   MinFixDur: 2000

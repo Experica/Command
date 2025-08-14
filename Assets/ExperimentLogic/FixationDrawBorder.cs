@@ -29,7 +29,7 @@ using System.Linq;
 using Experica.NetEnv;
 
 /// <summary>
-/// Ask user to draw border of the object or phosephoen while eyes fixing on a target, with User Input Action mimicking eye movement, and helpful visual guides.
+/// Ask user to draw border of the object while eyes fixing on a target, with User Input Action mimicking eye movement, and helpful visual guides.
 /// </summary>
 public class FixationDrawBorder : Fixation
 {

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2340957455301910060}
   - component: {fileID: 584496705001357433}
   - component: {fileID: 4354406249516045043}
+  - component: {fileID: 6960711428139642211}
+  - component: {fileID: 2673389629281031031}
   m_Layer: 0
   m_Name: MarkerOrthoCamera
   m_TagString: Untagged
@@ -264,6 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  CameraPosition:
+    m_InternalValue: {x: 0, y: 0, z: -501}
   ScreenToEye:
     m_InternalValue: 57
   ScreenHeight:
@@ -274,6 +278,36 @@ MonoBehaviour:
     m_InternalValue: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   CLUT:
     m_InternalValue: 1
+--- !u!81 &6960711428139642211
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855581147602015741}
+  m_Enabled: 1
+--- !u!114 &2673389629281031031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855581147602015741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d6499a6bd256e47b859377446493a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.CustomPassVolume
+  m_IsGlobal: 0
+  fadeRadius: 0
+  priority: 0
+  customPasses: []
+  injectionPoint: 3
+  m_TargetCamera: {fileID: 5633157921642132045}
+  useTargetCamera: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6515436056563632550
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +370,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -357,6 +393,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

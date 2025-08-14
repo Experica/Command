@@ -209,6 +209,7 @@ MonoBehaviour:
       - rid: 5376348425393274889
       - rid: 5376348425393274892
       - rid: 5376348425393274893
+      - rid: 4086892664343232589
       - rid: 5376348425393274898
       - rid: 970017901043515393
       - rid: 8310275295814090753
@@ -402,10 +403,6 @@ MonoBehaviour:
         asm: Unity.RenderPipelines.Core.Runtime}
       data:
         m_version: 0
-        m_DebugUIHandlerCanvasPrefab: {fileID: 1153602445894428, guid: cf6cbdd672089a84796e55a21fed1cbe,
-          type: 3}
-        m_DebugUIPersistentCanvasPrefab: {fileID: 1822588063230394, guid: f6b1a0fe75d5009449cf55ae76220e2b,
-          type: 3}
     - rid: 4086892664343232582
       type: {class: HDRPRayTracingResources, ns: UnityEngine.Rendering.HighDefinition,
         asm: Unity.RenderPipelines.HighDefinition.Runtime}
@@ -1131,7 +1128,7 @@ MonoBehaviour:
         asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:
         m_Version: 0
-        m_DynamicRenderPassCulling: 0
+        m_DynamicRenderPassCulling: 1
     - rid: 5376348425393274889
       type: {class: ColorGradingSettings, ns: UnityEngine.Rendering.HighDefinition,
         asm: Unity.RenderPipelines.HighDefinition.Runtime}

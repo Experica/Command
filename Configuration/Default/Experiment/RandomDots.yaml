@@ -3,8 +3,8 @@ Name: RandomDots
 Designer: Alex
 Experimenter: KS
 Log: RIGHT EYE
-Subject_ID: Test
-Subject_Name: Dunn
+Subject_ID: lx
+Subject_Name: lixing
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -29,7 +29,7 @@ EnvParam:
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.723127
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.775419
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -42,7 +42,7 @@ Hemisphere: Left
 Eye: Right
 RecordSession: HLV1
 RecordSite: ODL9
-DataDir: Data
+DataDir: X:/
 DataPath: 
 Input: false
 CondSampling: UniformWithoutReplacement

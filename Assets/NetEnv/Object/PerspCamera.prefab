@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6964299793054386605}
   - component: {fileID: 3813347993484028329}
   - component: {fileID: 4968112241830705720}
+  - component: {fileID: 6732607127411798168}
   m_Layer: 0
   m_Name: PerspCamera
   m_TagString: Untagged
@@ -238,6 +239,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 1582694505
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
   ActiveSceneSynchronization: 0
@@ -245,6 +249,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &4968112241830705720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,3 +263,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be8357f4e0e44145a740ffea7e77f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!81 &6732607127411798168
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148660}
+  m_Enabled: 1

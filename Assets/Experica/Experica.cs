@@ -19,29 +19,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using UnityEngine;
+using Fasterflect;
+using MathNet.Numerics;
+using MathNet.Numerics.Interpolation;
+using MathNet.Numerics.LinearAlgebra;
 using System;
-using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using MathNet.Numerics;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.Interpolation;
-using Fasterflect;
-using Unity.Properties;
-using UnityEngine.UIElements;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using UnityEngine.SceneManagement;
-using Unity.Collections;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Unity.Collections;
+using Unity.Properties;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Windows.Forms;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 using MethodInvoker = Fasterflect.MethodInvoker;
 
 #if COMMAND
@@ -898,6 +899,16 @@ namespace Experica
 
         #endregion
 
+        #region Unity Main Thread Task Scheduler
+        public static TaskScheduler MainThreadScheduler;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void InitializeMainThreadScheduler()
+        {
+            MainThreadScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        }
+
+        #endregion
 
 #if COMMAND
         static IRecorder spikeglxrecorder, ripplerecorder, imagerrecorder = null;

@@ -56,16 +56,14 @@ namespace Experica.Command
         public ConsolePanel consolepanel;
         public ConditionTestPanel condtestpanel;
 
-        public AgentStub agentstub;
-        public TaskScheduler unitymainthreadscheduler;
+        public AgentServer agentstub;
 
 
         void Awake()
         {
             Application.wantsToQuit += Application_wantsToQuit;
-            unitymainthreadscheduler = TaskScheduler.FromCurrentSynchronizationContext();
             agentstub = new(this);
-            agentstub.StartStopAgentStub(true);
+            agentstub.StartStopAgentServer(true);
         }
 
         void Start()
@@ -101,7 +99,7 @@ namespace Experica.Command
             }
             exmgr.Clear();
             cfgmgr.Save(Base.CommandConfigManagerPath);
-            agentstub.StartStopAgentStub(false);
+            agentstub.StartStopAgentServer(false);
             return true;
         }
 

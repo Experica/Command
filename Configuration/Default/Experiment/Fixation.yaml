@@ -3,8 +3,8 @@ Name: Fixation
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
-Subject_ID: Test
-Subject_Name: Dunn
+Subject_ID: lx
+Subject_Name: lixing
 Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
@@ -13,7 +13,7 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  FixDotPosition@FixDot@FixDot: 10 0 0
+  FixDotPosition@FixDot@FixDot: 8 0 0
   FixDotDiameter@FixDot@FixDot: 2
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
@@ -21,9 +21,9 @@ EnvParam:
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 45
-  ScreenHeight@OrthoCamera@OrthoCamera: 32
-  ScreenAspect@OrthoCamera@OrthoCamera: 2.24031
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
@@ -57,15 +57,15 @@ DataPath:
 Input: true
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 20
+CondRepeat: 10
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
 CondDur: 300
 SufICI: 0
-PreITI: 338
+PreITI: 777
 TrialDur: 0
-SufITI: 1950
+SufITI: 1826
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -112,8 +112,8 @@ Version: 3
 Config: 
 CondTest: 
 ExtendParam:
-  MinPreITIDur: 300
-  MaxPreITIDur: 500
+  MinPreITIDur: 700
+  MaxPreITIDur: 800
   MinSufITIDur: 1000
   MaxSufITIDur: 2000
   MinFixDur: 1000
@@ -122,9 +122,9 @@ ExtendParam:
   FixRadius: 5
   FixDotPosition:
     - 0 0 0
-    - 10 0 0
-    - -10 0 0
-    - 0 10 0
-    - 0 -10 0
+    - 8 0 0
+    - -8 0 0
+    - 0 8 0
+    - 0 -8 0
   MoveRadius: 30
   FixPreDur: 300

@@ -16,9 +16,17 @@
 !Data/TestImageSet.UInt8.mpis
 
 # AgentDotNet
-/Agent/AgentDotNet/packages/
-/Agent/AgentDotNet/obj/
-/Agent/AgentDotNet/bin/
+Tool/Agent/AgentDotNet/packages/
+Tool/Agent/AgentDotNet/obj/
+Tool/Agent/AgentDotNet/bin/
+
+# QuanLan
+Tool/QuanLan/QuanLanServer/QuanLan
+Tool/QuanLan/QuanLanServer/env
+
+# WebRTC
+Tool/WebRTC_SignalingServer/build
+Tool/WebRTC_SignalingServer/node_modules
 
 # NuGet For Unity
 /Assets/Packages/

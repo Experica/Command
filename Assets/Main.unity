@@ -120,6 +120,128 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &175322422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175322423}
+  - component: {fileID: 175322424}
+  - component: {fileID: 175322425}
+  - component: {fileID: 175322428}
+  - component: {fileID: 175322427}
+  m_Layer: 0
+  m_Name: FrameStreamer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &175322423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175322422}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 652919583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &175322424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175322422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f397877fbf67f8a42b4e59c64a33e4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Experica::Experica.FrameStreamer
+--- !u!114 &175322425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175322422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045786cf504bd7347842d6948241cbd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderStreaming::Unity.RenderStreaming.SignalingManager
+  m_useDefault: 1
+  signalingSettingsObject: {fileID: 0}
+  signalingSettings:
+    rid: 1803795258036715718
+  handlers:
+  - {fileID: 175322428}
+  runOnAwake: 0
+  evaluateCommandlineArguments: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 1803795258036715718
+      type: {class: WebSocketSignalingSettings, ns: Unity.RenderStreaming, asm: Unity.RenderStreaming}
+      data:
+        m_url: ws://127.0.0.1
+        m_iceServers:
+        - m_urls:
+          - stun:stun.l.google.com:19302
+          m_username: 
+          m_credentialType: 0
+          m_credential: 
+--- !u!114 &175322427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175322422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcc82901c3f48a88d3408251afa3365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderStreaming::Unity.RenderStreaming.VideoStreamSender
+  m_TextureSize: {x: 640, y: 480}
+  m_Source: 3
+  m_Camera: {fileID: 0}
+  m_Texture: {fileID: 0}
+  m_WebCamDeviceIndex: 0
+  m_Depth: 16
+  m_AntiAliasing: 1
+  m_Codec:
+    m_MimeType: video/H264
+    m_SdpFmtpLine: implementation_name=NvCodec;level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=420033
+  m_FrameRate: 30
+  m_Bitrate:
+    min: 1500
+    max: 2000
+  m_ScaleFactor: 1
+  m_AutoRequestUserAuthorization: 1
+--- !u!114 &175322428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175322422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2307e7ad91222841b562bebd81a69a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderStreaming::Unity.RenderStreaming.Broadcast
+  streams:
+  - {fileID: 175322427}
 --- !u!1 &195929016
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +874,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 355740904}
+  - {fileID: 175322423}
   - {fileID: 195929019}
   - {fileID: 1423087641}
   - {fileID: 570668882}

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7262838789426105707}
   - component: {fileID: 3358880596119948361}
   - component: {fileID: -5849960182155809873}
+  - component: {fileID: 7000715240933431091}
+  - component: {fileID: 1761916135044685895}
   m_Layer: 0
   m_Name: OrthoCamera
   m_TagString: Untagged
@@ -263,6 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  CameraPosition:
+    m_InternalValue: {x: 0, y: 0, z: -501}
   ScreenToEye:
     m_InternalValue: 57
   ScreenHeight:
@@ -273,3 +277,33 @@ MonoBehaviour:
     m_InternalValue: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   CLUT:
     m_InternalValue: 1
+--- !u!81 &7000715240933431091
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076876508996715147}
+  m_Enabled: 1
+--- !u!114 &1761916135044685895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076876508996715147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d6499a6bd256e47b859377446493a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.CustomPassVolume
+  m_IsGlobal: 0
+  fadeRadius: 0
+  priority: 0
+  customPasses: []
+  injectionPoint: 3
+  m_TargetCamera: {fileID: 3343192975444610321}
+  useTargetCamera: 1
+  references:
+    version: 2
+    RefIds: []
