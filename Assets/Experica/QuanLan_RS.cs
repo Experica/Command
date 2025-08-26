@@ -118,8 +118,9 @@ namespace Experica
             {
                 channel = Channel,
                 current = BiPhasicPulse.Amplitude / 1000,
-                pulseWidth = Mathf.RoundToInt(BiPhasicPulse.PulseWidth),
+                pulseWidth = Mathf.RoundToInt(BiPhasicPulse.PulseWidth * 1000),
                 pulseInterval = Mathf.RoundToInt(BiPhasicPulse.InterPhaseInterval * 1000),
+                pulseWidthRatio = 1f,
                 duration = BiPhasicPulse.Duration / 1000,
                 frequency = BiPhasicPulse.Frequency
             };

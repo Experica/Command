@@ -4,8 +4,8 @@ AutoSaveData: true
 SaveConfigInData: true
 SaveConfigDisplayMeasurementInData: false
 SaveDataFormat: YAML
-ExDir: Configuration\Default\Experiment
-ExSessionDir: Configuration\Default\ExperimentSession
+ExDir: Configuration\ReVision\Experiment
+ExSessionDir: Configuration\ReVision\ExperimentSession
 DataDir: Data
 ExLogic: ConditionTestLogic
 NotifyParams:

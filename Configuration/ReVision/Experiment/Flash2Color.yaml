@@ -1,11 +1,11 @@
-ID: Flash
-Name: Flash
+ID: Flash2Color
+Name: Flash2Color
 Designer: Alex
 Experimenter: KS
 Log: 
-Subject_ID: DAQ1
-Subject_Name: DAQ1
-Subject_Species: Mouse
+Subject_ID: lx
+Subject_Name: lixing
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -15,42 +15,43 @@ EnvPath: Quad
 EnvParam:
   Ori@Quad@Quad: 0
   OriOffset@Quad@Quad: 0
-  Size@Quad@Quad: 200 200 200
-  Diameter@Quad@Quad: 200
-  Color@Quad@Quad: 0 0 0 1
+  Size@Quad@Quad: 70 70 70
+  Diameter@Quad@Quad: 70
+  Color@Quad@Quad: 1 1 1 1
   MaskType@Quad@Quad: None
-  MaskRadius@Quad@Quad: 0
-  MaskSigma@Quad@Quad: 0
+  MaskRadius@Quad@Quad: 0.5
+  MaskSigma@Quad@Quad: 0.15
+  MaskReverse@Quad@Quad: false
   OriPositionOffset@Quad@Quad: false
   PositionOffset@Quad@Quad: 0 0 0
-  Position@Quad@Quad: 18.921 -10.821 0
+  Position@Quad@Quad: -1.1786 -1.2874 0
   Visible@Quad@Quad: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
-  ScreenToEye@OrthoCamera@OrthoCamera: 22
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.777778
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.694444
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
-  MarkerSize@Marker@OrthoCamera/Marker: 4
-  MarkerCorner@Marker@OrthoCamera/Marker: TopLeft
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-CondPath: Condition\WhiteBlack.yaml
+CondPath: ''
 Cond: 
-LogicPath: SpikeGLXCondTest
+LogicPath: SpikeGLXColor
 Hemisphere: Left
 Eye: Right
-RecordSession: V1
-RecordSite: 1
-DataDir: X:\
+RecordSession: ''
+RecordSite: Full
+DataDir: X:/
 DataPath: 
 Input: false
 CondSampling: Ascending
 BlockSampling: Ascending
-CondRepeat: 120
+CondRepeat: 100
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 0
-CondDur: 300
+CondDur: 1500
 SufICI: 0
 PreITI: 0
 TrialDur: 0
@@ -71,26 +72,27 @@ InheritParam:
   - Subject_Name
   - Subject_Species
   - Subject_Gender
-  - Subject_Birth
   - Subject_Size
   - Subject_Weight
   - Hemisphere
-  - Eye
   - RecordSession
   - RecordSite
   - DataDir
   - TimerDriftSpeed
   - Display_ID
   - NotifyExperimenter
+  - Eye
+  - Subject_Birth
 EnvInheritParam:
-  - Position@Quad@Quad
   - ScreenToEye@OrthoCamera@OrthoCamera
   - ScreenHeight@OrthoCamera@OrthoCamera
   - ScreenAspect@OrthoCamera@OrthoCamera
   - CLUT@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - Position@Quad@Quad
   - MarkerSize@Marker@OrthoCamera/Marker
   - MarkerCorner@Marker@OrthoCamera/Marker
-  - Diameter@Quad@Quad
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -104,4 +106,8 @@ NotifyExperimenter: false
 Version: 3
 Config: 
 CondTest: 
-ExtendParam: {}
+ExtendParam:
+  ColorSpace: DKL
+  Color: X
+  Ori: []
+  SpatialFreq: []

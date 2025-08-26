@@ -19,6 +19,7 @@
 Tool/Agent/AgentDotNet/packages/
 Tool/Agent/AgentDotNet/obj/
 Tool/Agent/AgentDotNet/bin/
+Tool/Agent/AgentDotNet/generated/
 
 # QuanLan
 Tool/QuanLan/QuanLanServer/QuanLan
@@ -27,6 +28,7 @@ Tool/QuanLan/QuanLanServer/env
 # WebRTC
 Tool/WebRTC_SignalingServer/build
 Tool/WebRTC_SignalingServer/node_modules
+Tool/WebRTC_WebClient/node_modules
 
 # NuGet For Unity
 /Assets/Packages/

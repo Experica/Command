@@ -1,5 +1,5 @@
-ID: FixationDrawPhosphene
-Name: FixationDrawPhosphene
+ID: FixationDrawBorder
+Name: FixationDrawBorder
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
@@ -14,45 +14,58 @@ Subject_Log:
 EnvPath: FixationShowroom
 EnvParam:
   FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 1
+  FixDotDiameter@FixDot@FixDot: 2
   FixDotInnerRadius@FixDot@FixDot: 0.25
   FixDotOuterRadius@FixDot@FixDot: 0.5
   FixDotInnerColor@FixDot@FixDot: 0 0 0 1
   FixDotOuterColor@FixDot@FixDot: 1 1 1 1
   FixDotVisible@FixDot@FixDot: false
-  Show@Showroom@FixDot/Showroom: None
+  Show@Showroom@FixDot/Showroom: Quad
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
-  ScreenHeight@OrthoCamera@OrthoCamera: 30
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.819277
+  ScreenHeight@OrthoCamera@OrthoCamera: 33
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.775419
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
   CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  TagSize@Tag@OrthoCamera/Tag0: 2
-  TagMargin@Tag@OrthoCamera/Tag0: 2
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 4
   TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
   TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
-  TagSize@Tag@OrthoCamera/Tag1: 2
-  TagMargin@Tag@OrthoCamera/Tag1: 2
-  TagID@Tag@OrthoCamera/Tag1: tag25_09_00000
-  TagCorner@Tag@OrthoCamera/Tag1: BottomLeft
-  TagSize@Tag@OrthoCamera/Tag2: 2
-  TagMargin@Tag@OrthoCamera/Tag2: 2
-  TagID@Tag@OrthoCamera/Tag2: tag25_09_00000
-  TagCorner@Tag@OrthoCamera/Tag2: BottomLeft
-  TagSize@Tag@OrthoCamera/Tag3: 2
-  TagMargin@Tag@OrthoCamera/Tag3: 2
-  TagID@Tag@OrthoCamera/Tag3: tag25_09_00000
-  TagCorner@Tag@OrthoCamera/Tag3: BottomLeft
-  LineColor@DrawLine@DrawLine: 0 0 0 1
-  LineWidth@DrawLine@DrawLine: 0.5
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 4
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 4
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 4
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
+  LineColor@DrawLine@DrawLine: 1 1 0 1
+  LineWidth@DrawLine@DrawLine: 0.1
   LineVisible@DrawLine@DrawLine: true
-  EnableDraw@DrawLine@DrawLine: true
+  EnableDraw@DrawLine@DrawLine: false
+  Ori@Quad@FixDot/Quad: 0
+  OriOffset@Quad@FixDot/Quad: 0
+  Size@Quad@FixDot/Quad: 5 5 5
+  Diameter@Quad@FixDot/Quad: 5
+  Color@Quad@FixDot/Quad: 1 0 0 1
+  MaskType@Quad@FixDot/Quad: Gaussian
+  MaskRadius@Quad@FixDot/Quad: 0.5
+  MaskSigma@Quad@FixDot/Quad: 0.15
+  MaskReverse@Quad@FixDot/Quad: false
+  OriPositionOffset@Quad@FixDot/Quad: false
+  PositionOffset@Quad@FixDot/Quad: 0 0 0
+  Position@Quad@FixDot/Quad: 0 10 0
+  Visible@Quad@FixDot/Quad: false
 CondPath: ''
 Cond: 
-LogicPath: FixationDrawPhosphene
+LogicPath: FixationDrawBorder
 Hemisphere: Left
 Eye: Both
 RecordSession: ''
@@ -62,15 +75,15 @@ DataPath:
 Input: true
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 100
+CondRepeat: 1
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 0
 CondDur: 500
 SufICI: 0
-PreITI: 767
+PreITI: 629
 TrialDur: 0
-SufITI: 1253
+SufITI: 1063
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
@@ -143,16 +156,3 @@ ExtendParam:
     - 1 0 0 1
     - 0 1 0 1
     - 0 0 1 1
-  QuanLanDeviceID: '"390024340031"'
-  Channel:
-    - 1
-  Amplitude:
-    - -1000
-  PulseWidth:
-    - 1
-  NumOfPulse:
-    - 5
-  PulseInterval:
-    - 0.05
-  PulseFrequency:
-    - 100
