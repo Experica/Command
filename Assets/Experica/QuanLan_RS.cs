@@ -117,11 +117,11 @@ namespace Experica
             var s = new PulseStimulationParams()
             {
                 channel = Channel,
-                current = BiPhasicPulse.Amplitude / 1000,
+                current = BiPhasicPulse.Amplitude / 1000f,
                 pulseWidth = Mathf.RoundToInt(BiPhasicPulse.PulseWidth * 1000),
                 pulseInterval = Mathf.RoundToInt(BiPhasicPulse.InterPhaseInterval * 1000),
                 pulseWidthRatio = 1f,
-                duration = BiPhasicPulse.Duration / 1000,
+                duration = BiPhasicPulse.Duration / 1000f,
                 frequency = BiPhasicPulse.Frequency
             };
             return PulseStimulation(s);
@@ -145,6 +145,43 @@ namespace Experica
         public bool ReadDigitalInput(out Dictionary<int, List<double>> dintime, out Dictionary<int, List<int>> dinvalue)
         {
             throw new NotImplementedException();
+        }
+
+        public bool SetDCPulse(int Channel, DCPulse DCPulse)
+        {
+            var s = new DCStimulationParams()
+            {
+                channel = Channel,
+                current = DCPulse.Amplitude / 1000f,
+                duration = DCPulse.Duration / 1000f,
+            };
+            return DCStimulation(s);
+        }
+
+        public bool SetACPulse(int Channel, ACPulse ACPulse)
+        {
+            var s = new ACStimulationParams()
+            {
+                channel = Channel,
+                current = ACPulse.Amplitude / 1000f,
+                duration = ACPulse.Duration / 1000f,
+                frequency = ACPulse.Frequency,
+                phase = Mathf.RoundToInt(ACPulse.Phase * 360f)
+            };
+            return ACStimulation(s);
+        }
+
+        public bool SetSWPulse(int Channel, SWPulse SWPulse)
+        {
+            var s = new SquareWaveStimulationParams()
+            {
+                channel = Channel,
+                current = SWPulse.Amplitude / 1000f,
+                duration = SWPulse.Duration / 1000f,
+                frequency = SWPulse.Frequency,
+                duty = SWPulse.Duty
+            };
+            return SquareWaveStimulation(s);
         }
     }
 
