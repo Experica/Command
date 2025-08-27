@@ -6,8 +6,20 @@ This folder contains the files for QuanLan SDK Server that enable RPC call from 
 
 # QuanLan SDK Server
 
- 1. create `Conda` environment with `python=3.12` in `env` folder
- 2. activate local `Conda` `env`
- 3. `pip` install requirements.txt
- 4. `slice2py` generate module in ./QuanLan
- 5. run QuanLanICEServer.py
+ 1. create `Conda` environment with `python=3.12` in `env` subfolder:
+
+    **cd "this folder/QuanLanServer"**
+    
+    **conda create --prefix ./env python=3.12**
+ 2. activate local `Conda` `env`: 
+
+    **conda activate ./env**
+ 3. `pip` install requirements.txt: 
+
+    **pip install -r requirements.txt**
+ 4. `slice2py` generate module in ./QuanLan:
+    
+    **slice2py ../QuanLan.ice**
+ 5. run QuanLanICEServer.py: 
+
+    **python ./QuanLanICEServer.py**

@@ -32,6 +32,70 @@ namespace Experica
         Paused
     }
 
+    public struct DCPulse
+    {
+        /// <summary>
+        /// DCPulse Amplitude (μA)
+        /// </summary>
+        public float Amplitude;
+        /// <summary>
+        /// Duration of DCPulse (ms)
+        /// </summary>
+        public float Duration;
+    }
+
+    public struct ACPulse
+    {
+        /// <summary>
+        /// ACPulse Amplitude (μA)
+        /// </summary>
+        public float Amplitude;
+        /// <summary>
+        /// Duration of ACPulse (ms)
+        /// </summary>
+        public float Duration;
+        /// <summary>
+        /// SinWave Frequency (Hz)
+        /// </summary>
+        public float Frequency;
+        /// <summary>
+        /// SinWave Phase [0, 1]
+        /// </summary>
+        public float Phase;
+        /// <summary>
+        /// Period of the SinWave (ms)
+        /// </summary>
+        public float Period => 1000f / Frequency;
+    }
+
+    public struct SWPulse
+    {
+        /// <summary>
+        /// SWPulse Amplitude (μA)
+        /// </summary>
+        public float Amplitude;
+        /// <summary>
+        /// Duration of SWPulse (ms)
+        /// </summary>
+        public float Duration;
+        /// <summary>
+        /// SquareWave Frequency (Hz)
+        /// </summary>
+        public float Frequency;
+        /// <summary>
+        /// SquareWave Duty [0, 1]
+        /// </summary>
+        public float Duty;
+        /// <summary>
+        /// Period of the SquareWave (ms)
+        /// </summary>
+        public float Period => 1000f / Frequency;
+        /// <summary>
+        /// Duration of Pulse Phase (ms)
+        /// </summary>
+        public float PulseWidth => Duty * Period;
+    }
+
     public struct BiPhasicPulse
     {
         /// <summary>
@@ -90,6 +154,9 @@ namespace Experica
     public interface IStimulation : IDisposable
     {
         StimulationStatus StimulationStatus { get; }
+        bool SetDCPulse(int Channel, DCPulse DCPulse);
+        bool SetACPulse(int Channel, ACPulse ACPulse);
+        bool SetSWPulse(int Channel, SWPulse SWPulse);
         bool SetBiPhasicPulse(int Channel, BiPhasicPulse BiPhasicPulse);
         bool StartStimulation();
         bool StopStimulation();

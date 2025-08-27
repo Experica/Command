@@ -3,9 +3,9 @@ Name: Fixation
 Designer: Alex
 Experimenter: KS
 Log: Right Eye
-Subject_ID: AG7
-Subject_Name: DAQ1
-Subject_Species: Mouse
+Subject_ID: lx
+Subject_Name: lixing
+Subject_Species: Macaque
 Subject_Gender: Male
 Subject_Birth: ''
 Subject_Size: 0 0 0
@@ -13,26 +13,38 @@ Subject_Weight: 27
 Subject_Log: 
 EnvPath: Fixation
 EnvParam:
-  FixDotPosition@FixDot@FixDot: 0 0 0
-  FixDotDiameter@FixDot@FixDot: 3.2768
-  FixDotVisible@FixDot@FixDot: true
+  FixDotPosition@FixDot@FixDot: 8 0 0
+  FixDotDiameter@FixDot@FixDot: 2
+  FixDotInnerRadius@FixDot@FixDot: 0.25
+  FixDotOuterRadius@FixDot@FixDot: 0.5
+  FixDotInnerColor@FixDot@FixDot: 0 0 0 1
+  FixDotOuterColor@FixDot@FixDot: 1 1 1 1
+  FixDotVisible@FixDot@FixDot: false
   CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
   ScreenToEye@OrthoCamera@OrthoCamera: 57
   ScreenHeight@OrthoCamera@OrthoCamera: 33
-  ScreenAspect@OrthoCamera@OrthoCamera: 1.77951
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.6
   BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
-  CLUT@OrthoCamera@OrthoCamera: false
+  CLUT@OrthoCamera@OrthoCamera: true
   MarkerSize@Marker@OrthoCamera/Marker: 2
   MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
   Mark@Marker@OrthoCamera/Marker: false
-  AxisColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.1 0.1 0.1 1
-  AxisWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.1614434
-  TickColor@ScaleGrid@OrthoCamera/ScaleGrid: 0.3 0.3 0.3 1
-  TickWidth@ScaleGrid@OrthoCamera/ScaleGrid: 0.08072169
-  TickStep@ScaleGrid@OrthoCamera/ScaleGrid: 5
-  Size@ScaleGrid@OrthoCamera/ScaleGrid: 57.458 32.289 1
-  Position@ScaleGrid@OrthoCamera/ScaleGrid: 0 0 1000
-  Visible@ScaleGrid@OrthoCamera/ScaleGrid: true
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 4
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 4
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 4
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 4
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
 CondPath: ''
 Cond: 
 LogicPath: Fixation
@@ -40,24 +52,24 @@ Hemisphere: Left
 Eye: Both
 RecordSession: ''
 RecordSite: Full
-DataDir: I:\
+DataDir: X:/
 DataPath: 
 Input: true
 CondSampling: UniformWithoutReplacement
 BlockSampling: UniformWithoutReplacement
-CondRepeat: 1
+CondRepeat: 10
 BlockRepeat: 1
 BlockFactor: []
 PreICI: 250
-CondDur: 250
+CondDur: 300
 SufICI: 0
-PreITI: 635
+PreITI: 777
 TrialDur: 0
-SufITI: 866
+SufITI: 1826
 PreIBI: 0
 BlockDur: 0
 SufIBI: 0
-PushCondAtState: NONE
+PushCondAtState: TRIAL
 CondTestAtState: PREITI
 NotifyPerCondTest: 0
 NotifyParam:
@@ -84,6 +96,8 @@ EnvInheritParam:
   - MarkerSize@Marker@Marker~OrthoCamera
   - MarkerCorner@Marker@Marker~OrthoCamera
   - CLUT@OrthoCamera@OrthoCamera
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - MarkerSize@Marker@OrthoCamera/Marker
 TimerDriftSpeed: 6.5E-05
 EventSyncProtocol:
   Routes:
@@ -98,12 +112,19 @@ Version: 3
 Config: 
 CondTest: 
 ExtendParam:
-  MinPreITIDur: 500
+  MinPreITIDur: 700
   MaxPreITIDur: 800
-  MinSufITIDur: 500
+  MinSufITIDur: 1000
   MaxSufITIDur: 2000
   MinFixDur: 1000
   MaxFixDur: 2000
   WaitForFixTimeOut: 3000
-  FixRadius: 2
-  DotScaleOnFix: 0.8
+  FixRadius: 5
+  FixDotPosition:
+    - 0 0 0
+    - 8 0 0
+    - -8 0 0
+    - 0 8 0
+    - 0 -8 0
+  MoveRadius: 30
+  FixPreDur: 300

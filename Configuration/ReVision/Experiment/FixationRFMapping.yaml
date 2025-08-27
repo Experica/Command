@@ -1,0 +1,183 @@
+ID: FixationRFMapping
+Name: FixationRFMapping
+Designer: Alex
+Experimenter: KS
+Log: Right Eye
+Subject_ID: lx
+Subject_Name: lixing
+Subject_Species: Macaque
+Subject_Gender: Male
+Subject_Birth: ''
+Subject_Size: 0 0 0
+Subject_Weight: 27
+Subject_Log: 
+EnvPath: FixationQuadShowroom
+EnvParam:
+  FixDotPosition@FixDot@FixDot: 0 0 0
+  FixDotDiameter@FixDot@FixDot: 2
+  FixDotInnerRadius@FixDot@FixDot: 0.25
+  FixDotOuterRadius@FixDot@FixDot: 0.5
+  FixDotInnerColor@FixDot@FixDot: 0.5 0.1 0 1
+  FixDotOuterColor@FixDot@FixDot: 0.7 0.5 0 1
+  FixDotVisible@FixDot@FixDot: false
+  Show@Showroom@FixDot/Showroom: Plaid
+  Ori@Quad@FixDot/Quad: 0
+  OriOffset@Quad@FixDot/Quad: 0
+  Size@Quad@FixDot/Quad: 50 50 50
+  Diameter@Quad@FixDot/Quad: 50
+  Color@Quad@FixDot/Quad: 0.5 0.5 0.5 1
+  MaskType@Quad@FixDot/Quad: Disk
+  MaskRadius@Quad@FixDot/Quad: 0.3
+  MaskSigma@Quad@FixDot/Quad: 0.15
+  MaskReverse@Quad@FixDot/Quad: true
+  OriPositionOffset@Quad@FixDot/Quad: false
+  PositionOffset@Quad@FixDot/Quad: 0 0 0
+  Position@Quad@FixDot/Quad: 0 0 0
+  Visible@Quad@FixDot/Quad: true
+  CameraPosition@OrthoCamera@OrthoCamera: 0 0 -501
+  ScreenToEye@OrthoCamera@OrthoCamera: 57
+  ScreenHeight@OrthoCamera@OrthoCamera: 30
+  ScreenAspect@OrthoCamera@OrthoCamera: 1.775419
+  BGColor@OrthoCamera@OrthoCamera: 0.5 0.5 0.5 1
+  CLUT@OrthoCamera@OrthoCamera: true
+  MarkerSize@Marker@OrthoCamera/Marker: 2
+  MarkerCorner@Marker@OrthoCamera/Marker: BottomLeft
+  Mark@Marker@OrthoCamera/Marker: false
+  TagSize@Tag@OrthoCamera/Tag0: 4
+  TagMargin@Tag@OrthoCamera/Tag0: 4
+  TagID@Tag@OrthoCamera/Tag0: tag25_09_00000
+  TagCorner@Tag@OrthoCamera/Tag0: BottomLeft
+  TagSize@Tag@OrthoCamera/Tag1: 4
+  TagMargin@Tag@OrthoCamera/Tag1: 4
+  TagID@Tag@OrthoCamera/Tag1: tag25_09_00001
+  TagCorner@Tag@OrthoCamera/Tag1: BottomRight
+  TagSize@Tag@OrthoCamera/Tag2: 4
+  TagMargin@Tag@OrthoCamera/Tag2: 4
+  TagID@Tag@OrthoCamera/Tag2: tag25_09_00002
+  TagCorner@Tag@OrthoCamera/Tag2: TopRight
+  TagSize@Tag@OrthoCamera/Tag3: 4
+  TagMargin@Tag@OrthoCamera/Tag3: 4
+  TagID@Tag@OrthoCamera/Tag3: tag25_09_00003
+  TagCorner@Tag@OrthoCamera/Tag3: TopLeft
+  Rotation@Plaid@FixDot/Plaid: 0 0 0
+  RotationOffset@Plaid@FixDot/Plaid: 0 0 0
+  Ori0@Plaid@FixDot/Plaid: 0
+  OriOffset0@Plaid@FixDot/Plaid: 0
+  Ori1@Plaid@FixDot/Plaid: -90
+  OriOffset1@Plaid@FixDot/Plaid: 0
+  Size@Plaid@FixDot/Plaid: 1 1 1
+  Diameter@Plaid@FixDot/Plaid: 1
+  MaskType@Plaid@FixDot/Plaid: None
+  MaskRadius@Plaid@FixDot/Plaid: 0.5
+  MaskSigma@Plaid@FixDot/Plaid: 0.15
+  MaskReverse@Plaid@FixDot/Plaid: false
+  Luminance@Plaid@FixDot/Plaid: 0.5
+  Contrast@Plaid@FixDot/Plaid: 1
+  SpatialFreq0@Plaid@FixDot/Plaid: 0.2
+  SpatialFreq1@Plaid@FixDot/Plaid: 0.2
+  TemporalFreq0@Plaid@FixDot/Plaid: 2
+  TemporalFreq1@Plaid@FixDot/Plaid: 0
+  ModulateTemporalFreq0@Plaid@FixDot/Plaid: 0.2
+  ModulateTemporalFreq1@Plaid@FixDot/Plaid: 0.2
+  ModulateTemporalPhase0@Plaid@FixDot/Plaid: 0
+  ModulateTemporalPhase1@Plaid@FixDot/Plaid: 0
+  SpatialPhase0@Plaid@FixDot/Plaid: 0
+  SpatialPhase1@Plaid@FixDot/Plaid: 0
+  MinColor@Plaid@FixDot/Plaid: 0 0 0 1
+  MaxColor@Plaid@FixDot/Plaid: 1 1 1 1
+  PauseTime@Plaid@FixDot/Plaid: false
+  PauseModulateTime@Plaid@FixDot/Plaid: true
+  GratingType0@Plaid@FixDot/Plaid: Square
+  GratingType1@Plaid@FixDot/Plaid: Square
+  ModulateType0@Plaid@FixDot/Plaid: Square
+  ModulateType1@Plaid@FixDot/Plaid: Square
+  ReverseTime@Plaid@FixDot/Plaid: false
+  Duty0@Plaid@FixDot/Plaid: 0.5
+  Duty1@Plaid@FixDot/Plaid: 0.5
+  ModulateDuty0@Plaid@FixDot/Plaid: 0.5
+  ModulateDuty1@Plaid@FixDot/Plaid: 0.5
+  TimeSecond@Plaid@FixDot/Plaid: 0
+  ModulateTimeSecond@Plaid@FixDot/Plaid: 0
+  RotPositionOffset@Plaid@FixDot/Plaid: true
+  PositionOffset@Plaid@FixDot/Plaid: 0 0 0
+  Position@Plaid@FixDot/Plaid: 0 0 0
+  Visible@Plaid@FixDot/Plaid: false
+CondPath: Condition\FixationRFMapping_30Deg5DegStep_Ori[4].yaml
+Cond: 
+LogicPath: FixationCondTest
+Hemisphere: Left
+Eye: Both
+RecordSession: ''
+RecordSite: Full
+DataDir: X:/
+DataPath: 
+Input: true
+CondSampling: UniformWithoutReplacement
+BlockSampling: UniformWithoutReplacement
+CondRepeat: 3
+BlockRepeat: 1
+BlockFactor: []
+PreICI: 250
+CondDur: 300
+SufICI: 0
+PreITI: 636
+TrialDur: 0
+SufITI: 1340
+PreIBI: 0
+BlockDur: 0
+SufIBI: 0
+PushCondAtState: COND
+CondTestAtState: PREITI
+NotifyPerCondTest: 0
+NotifyParam:
+  - CondIndex
+  - Event
+  - SyncEvent
+InheritParam:
+  - Experimenter
+  - Subject_ID
+  - Hemisphere
+  - RecordSession
+  - RecordSite
+  - DataDir
+  - Subject_Name
+  - Subject_Species
+  - Subject_Gender
+  - Subject_Birth
+  - Subject_Size
+  - Subject_Weight
+EnvInheritParam:
+  - ScreenToEye@OrthoCamera@OrthoCamera
+  - ScreenHeight@OrthoCamera@OrthoCamera
+  - ScreenAspect@OrthoCamera@OrthoCamera
+  - MarkerSize@Marker@Marker~OrthoCamera
+  - MarkerCorner@Marker@Marker~OrthoCamera
+  - MarkerSize@Marker@OrthoCamera/Marker
+  - MarkerCorner@Marker@OrthoCamera/Marker
+  - CLUT@OrthoCamera@OrthoCamera
+TimerDriftSpeed: 6.5E-05
+EventSyncProtocol:
+  Routes:
+    - DigitalOut
+    - Display
+  NChannel: 1
+  NEdgePEvent: 1
+Display_ID: ROGPG279Q
+CondTestShow: ALL
+NotifyExperimenter: true
+Version: 3
+Config: 
+CondTest: 
+ExtendParam:
+  MinPreITIDur: 600
+  MaxPreITIDur: 800
+  MinSufITIDur: 1000
+  MaxSufITIDur: 2000
+  MinFixDur: 2000
+  MaxFixDur: 2100
+  WaitForFixTimeOut: 3000
+  FixRadius: 5
+  MoveRadius: 30
+  FixDotPosition:
+    - -3 3 0
+  FixPreDur: 200

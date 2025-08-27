@@ -10,17 +10,15 @@ module QuanLan{
         int range = 188; // [188,375,563,750,1125,2250,4500]
     };
 
-    // 直流刺激参数
     struct DCStimulationParams {
         int channel = 0; // zero based
-        float current = 1;// mA
+        float current = 1; // mA
         float duration = 1; // second
         float rampUp = 0; // second
         float rampDown = 0; // second
         bool update = true;
     };
 
-    // 交流刺激参数
     struct ACStimulationParams {
         int channel = 0;
         float current = 1;
@@ -32,7 +30,6 @@ module QuanLan{
         bool update = true;
     };
 
-    // 方波刺激参数
     struct SquareWaveStimulationParams {
         int channel = 0;
         float current = 1;
@@ -40,11 +37,10 @@ module QuanLan{
         float rampUp = 0;
         float rampDown = 0;
         float frequency = 50;
-        float duty = 50; // [0, 100]
+        float duty = 0.5; // [0, 1]
         bool update = true;
     };
 
-    // 脉冲刺激参数
     struct PulseStimulationParams {
         int channel = 0;
         float current = 1;
@@ -52,7 +48,7 @@ module QuanLan{
         float rampUp = 0;
         float rampDown = 0;
         float frequency = 50;
-        int pulseWidth = 1; // mSec
+        int pulseWidth = 100; // uSec
         float pulseWidthRatio = 1; // [0, 1]
         int pulseInterval = 0; // uSec
         float delayTime = 0; // second, not used by hardware yet

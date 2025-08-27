@@ -677,7 +677,7 @@ namespace QuanLan
             this.rampUp = 0F;
             this.rampDown = 0F;
             this.frequency = 50F;
-            this.duty = 50F;
+            this.duty = 0.5F;
             this.update = true;
             ice_initialize();
         }
@@ -912,7 +912,7 @@ namespace QuanLan
             this.rampUp = 0F;
             this.rampDown = 0F;
             this.frequency = 50F;
-            this.pulseWidth = 1;
+            this.pulseWidth = 100;
             this.pulseWidthRatio = 1F;
             this.pulseInterval = 0;
             this.delayTime = 0F;

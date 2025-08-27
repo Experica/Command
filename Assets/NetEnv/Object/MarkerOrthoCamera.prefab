@@ -301,13 +301,35 @@ MonoBehaviour:
   m_IsGlobal: 0
   fadeRadius: 0
   priority: 0
-  customPasses: []
+  customPasses:
+  - rid: 3583444077539229770
   injectionPoint: 3
   m_TargetCamera: {fileID: 5633157921642132045}
   useTargetCamera: 1
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3583444077539229770
+      type: {class: CopyMaskCustomPass, ns: Experica.NetEnv, asm: Experica.NetEnv}
+      data:
+        m_Name: Custom Pass
+        enabled: 1
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        EnableCopy: 1
+        CopyScale: 0.5
+        CopyRate: 30
+        EnableMask: 0
+        MaskRegion:
+          serializedVersion: 2
+          x: 0.2
+          y: 0.35
+          width: 0.3
+          height: 0.3
+        MaskColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &6515436056563632550
 GameObject:
   m_ObjectHideFlags: 0
